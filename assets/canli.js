@@ -89,7 +89,8 @@
   // ---- analog clock animation (canlı saat) ----
   function updateAnalogClock() {
     var now = new Date();
-    var hour = now.getHours() % 12;
+    var h24 = now.getHours();
+    var hour = h24 % 12;
     var minute = now.getMinutes();
     var second = now.getSeconds();
     var millisecond = now.getMilliseconds();
@@ -105,6 +106,13 @@
     if (hourHand) hourHand.setAttribute('transform', 'rotate(' + hourDegree.toFixed(2) + ' 100 100)');
     if (minuteHand) minuteHand.setAttribute('transform', 'rotate(' + minuteDegree.toFixed(2) + ' 100 100)');
     if (secondHand) secondHand.setAttribute('transform', 'rotate(' + secondDegree.toFixed(2) + ' 100 100)');
+
+    // ekran okuyucular için görsel-gizli dijital karşılık
+    var ekran = document.getElementById('cSaatEkran');
+    if (ekran) {
+      var iki = function (n) { return (n < 10 ? '0' : '') + n; };
+      ekran.textContent = iki(h24) + ':' + iki(minute) + ':' + iki(second);
+    }
   }
 
   // Update clock immediately and then every 50ms for smooth animation

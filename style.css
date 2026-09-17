@@ -661,9 +661,21 @@ section.koyu>*{position:relative;z-index:1}
 @media (prefers-reduced-motion:reduce){.rotor g{animation:none}#cIbre{transition:none}}
 
 @media (min-width:640px){.canli .wrap{grid-template-columns:1fr 1fr}}
-@media (min-width:1000px){.canli .wrap{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:1000px){.canli .wrap{grid-template-columns:repeat(4,1fr) .82fr}}
+@media (min-width:1280px){.canli .wrap{grid-template-columns:repeat(4,1fr) 1fr}}
 /* sağdaki bölüm noktalarıyla çakışmasın */
-@media (min-width:1280px){.canli .h:nth-child(4){padding-right:5rem}}
+@media (min-width:1280px){.canli .h:nth-child(5){padding-right:5rem}}
+
+/* canlı saat: gösterge güvertesindeki diğer kadranlarla aynı çizgisel dil */
+.canli .saat-dial{display:block;line-height:0}
+.canli .saat-dial svg{width:2.9rem;height:2.9rem}
+.canli .saat-dial .kadran{fill:none;stroke:var(--line);stroke-width:3}
+.canli .saat-dial .isaret line{stroke:var(--muted);stroke-width:3}
+.canli .saat-dial #hourHand{stroke:var(--ink);stroke-width:7;stroke-linecap:round}
+.canli .saat-dial #minuteHand{stroke:var(--ink);stroke-width:5;stroke-linecap:round;opacity:.82}
+.canli .saat-dial #secondHand{stroke:var(--beacon);stroke-width:2.5;stroke-linecap:round}
+.canli .saat-dial .mrk{fill:var(--ink)}
+@media (max-width:999px){.h-saat{display:none}}
 
 /* --- okuma çubuğu artık bir yükseklik göstergesi ----------------------- */
 #kot{display:none}
