@@ -49,7 +49,23 @@
     var gorsel = document.querySelector('.kapak-gorsel .kapak-kat');
     if (!gorsel) return;
     var hedef = kareSec(kod, vardiya);
-    if (hedef === LEVHA) return;                  // zaten duran kare
+
+    if (hedef === LEVHA) {
+      // gerçek kareye (fotoğraf + 3B sahne) dönüş: gece/kötü hava katmanı
+      // hiç eklenmediyse yapacak bir şey yok; eklendiyse yumuşakça kaldır ki
+      // 3B sahne (data-kare kilidi kalkınca) geri gelebilsin — sekme uzun
+      // süre açık kalıp vardiya gece→gündüze dönünce de bu çalışmalı.
+      if (kok.getAttribute('data-kare') !== 'hava') return;
+      kok.removeAttribute('data-kare');
+      var eskiler = document.querySelectorAll('.kapak-hava');
+      for (var k = 0; k < eskiler.length; k++) {
+        (function (el) {
+          el.classList.remove('acik');
+          setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1300);
+        })(eskiler[k]);
+      }
+      return;
+    }
 
     var im = document.createElement('img');
     im.className = 'kapak-hava';
@@ -157,27 +173,66 @@
   var kapakVar = !!document.querySelector('.kapak-gorsel .kapak-kat');
   if (!serit && !kapakVar) return;
 
-  fetch('/api/ruzgar?s=bergama', { headers: { accept: 'application/json' } })
-    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-    .then(function (d) {
-      // 1. kapak
-      if (kapakVar) {
-        var kod = d.current ? +d.current.weather_code : 0;
-        var vard = kok.getAttribute('data-vardiya') || 'gunduz';
-        if (isFinite(kod)) kapagiDegistir(kod, vard);
-        var ad = HAVA_AD[kod];
-        var e = document.getElementById('cHava');
-        if (e && ad) e.textContent = ad;
-      }
-      // 2. şerit
-      if (serit) {
-        var g = gunlukBantlar(d);
-        if (!g) throw 0;
-        seritCiz(serit, g);
-        serit.parentNode.setAttribute('data-hazir', '1');
-      }
-    })
-    .catch(function () {
-      if (serit) serit.parentNode.setAttribute('data-hazir', 'yok');
-    });
+  var sonKod = null;     // en son bilinen hava kodu (fetch başarısızsa null kalır)
+  var aktifKare = LEVHA; // o an ekranda duran kare — aynısını tekrar uygulamayalım
+
+  function uygula(kod, vardiya) {
+    var hedef = kareSec(kod, vardiya);
+    if (hedef === aktifKare) return;
+    aktifKare = hedef;
+    kapagiDegistir(kod, vardiya);
+  }
+
+  // Vardiya (gece/şafak/gündüz…) canli.js tarafından senkron olarak (hava
+  // isteği beklemeden) belirleniyor. Gece kararı da hava koduna hiç
+  // ihtiyaç duymuyor (kareSec'te ilk ve kesin kontrol) — o yüzden ağ isteği
+  // dönmeden bile doğru kareye geçebiliriz. Bu, sayfa yenilendiğinde bir
+  // anlığına yanlış/eski karenin görünmesini (gece → hâlâ gündüz karesi)
+  // önlüyor. Diğer vardiyalarda hava kodu gerekiyor, en son bilineni kullan.
+  function kapagiTazele() {
+    if (!kapakVar) return;
+    var vard = kok.getAttribute('data-vardiya') || 'gunduz';
+    if (vard === 'gece') { uygula(0, vard); return; }
+    if (sonKod !== null) uygula(sonKod, vard);
+  }
+
+  function havaTazele() {
+    fetch('/api/ruzgar?s=bergama', { headers: { accept: 'application/json' } })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (d) {
+        // 1. kapak
+        if (kapakVar) {
+          var kod = d.current ? +d.current.weather_code : 0;
+          if (isFinite(kod)) { sonKod = kod; kapagiTazele(); }
+          var ad = HAVA_AD[sonKod];
+          var e = document.getElementById('cHava');
+          if (e && ad) e.textContent = ad;
+        }
+        // 2. şerit
+        if (serit) {
+          var g = gunlukBantlar(d);
+          if (!g) throw 0;
+          seritCiz(serit, g);
+          serit.parentNode.setAttribute('data-hazir', '1');
+        }
+      })
+      .catch(function () {
+        if (serit) serit.parentNode.setAttribute('data-hazir', 'yok');
+      });
+  }
+
+  // hemen: geceyse hava isteği dönmeden karanlık kareye geç; ardından hava
+  // isteğini de yap (şerit + gündüz dışı kareler için gerekli)
+  kapagiTazele();
+  havaTazele();
+
+  // Sekme uzun süre açık kalırsa (örn. gece açılıp sabaha bırakılırsa)
+  // vardiya canli.js tarafından arka planda değişir; burada da yakalayıp
+  // gerekirse 3B sahneyi (LEVHA karesine dönerek) geri getirelim. Vardiya
+  // kontrolü ücretsiz (ağ isteği yok), hava kodu ise canli.js'le aynı
+  // sıklıkta tazeleniyor.
+  if (kapakVar) {
+    setInterval(kapagiTazele, 60000);
+    setInterval(havaTazele, 600000);
+  }
 })();
