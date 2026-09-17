@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04. Kule ve mekanik iş — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
+<meta name="description" content="Cıvata, tork, ön yük, yağlama, hizalama ve titreşim. Sahadaki mekanik işin gerçekte neye dayandığı ve neden tork anahtarının ayarı bir güvenlik konusudur.">
+<link rel="canonical" href="https://sonersoylu.com/egitim/mekanik-is/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="04. Kule ve mekanik iş">
+<meta property="og:description" content="Cıvata, tork, ön yük, yağlama, hizalama ve titreşim. Sahadaki mekanik işin gerçekte neye dayandığı ve neden tork anahtarının ayarı bir güvenlik konusudur.">
+<meta property="og:url" content="https://sonersoylu.com/egitim/mekanik-is/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-egitim.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:16ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.lede{margin-top:1.75rem}
+.gsec{border-top:1px solid var(--line);padding:4rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.ghead p.ac{margin-top:.75rem;max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.inl{border-bottom:1px solid var(--beacon);transition:color .2s}
+.inl:hover{color:var(--beacon)}
+.uyari{border-left:2px solid var(--beacon);padding:.1rem 0 .1rem 1.1rem;margin-top:2rem}
+.uyari p{max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.uyari b{color:var(--ink);font-weight:500}
+.nxt{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.nxt a{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.4rem;transition:background .2s}
+.nxt a:hover{background:var(--raise)}
+.nxt a b{font-weight:500;font-size:1rem}
+.nxt a span{font-size:.875rem;color:var(--muted);line-height:1.6}
+@media (min-width:960px){.g-hero h1{font-size:3.25rem}.nxt{grid-template-columns:1fr 1fr}}
+
+.bh{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon);margin-top:1.5rem}
+.bmeta{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hedef{border:1px solid var(--line);background:var(--surface);padding:1.4rem 1.5rem;margin-top:2rem}
+.hedef p.k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hedef ul{margin-top:.85rem;display:grid;gap:.55rem}
+.hedef li{position:relative;padding-left:1.2rem;font-size:.9375rem;line-height:1.6}
+.hedef li::before{content:"";position:absolute;left:0;top:.6em;width:.32rem;height:.32rem;background:var(--beacon)}
+
+.ders h2{font-size:1.5rem;letter-spacing:-.03em;font-weight:500;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line)}
+.ders h2:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.ders p{margin-top:1.15rem;max-width:68ch;font-size:1rem;line-height:1.8;color:var(--ink)}
+.ders p b{font-weight:500}
+.snot{margin-top:2.5rem;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.5rem 1.5rem}
+.snot p.k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.snot p{margin-top:.85rem;max-width:64ch;font-size:.9375rem;line-height:1.8;color:var(--muted)}
+.snot p.k+p{margin-top:.85rem}
+.trm{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.trm span.e{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:.5rem}
+.trm a{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+ border:1px solid var(--line);background:var(--surface);padding:.32rem .58rem;transition:.18s}
+.trm a:hover{color:var(--beacon);border-color:var(--beacon)}
+
+.sinav{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.75rem 1.6rem;margin-top:2rem}
+.soru{border-top:1px solid var(--line);padding-top:1.6rem;margin-top:1.6rem}
+.soru:first-child{border-top:0;padding-top:0;margin-top:0}
+.soru .q{font-size:1rem;line-height:1.55;display:flex;gap:.75rem}
+.soru .q i{font-style:normal;font-family:var(--mono);font-size:.625rem;color:var(--beacon);flex:none;padding-top:.25rem}
+.siklar{margin-top:1rem;display:grid;gap:.5rem}
+.siklar label{display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--line);background:var(--ground);
+ padding:.7rem .85rem;cursor:pointer;font-size:.9375rem;line-height:1.5;transition:.18s}
+.siklar label:hover{border-color:var(--muted)}
+.siklar input{margin-top:.28rem;accent-color:var(--beacon);flex:none}
+.siklar label.dogru{border-color:var(--beacon);background:var(--surface)}
+.siklar label.yanlis{border-color:var(--muted);opacity:.6}
+.acik{margin-top:.8rem;font-size:.875rem;line-height:1.65;color:var(--muted);border-left:2px solid var(--line);padding-left:.9rem}
+.acik[hidden]{display:none}
+.sonuc{margin-top:1.75rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.sonuc button{font-family:var(--sans);cursor:pointer}
+.snc{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.snc b{color:var(--beacon);font-weight:400}
+.gecti{margin-top:1.25rem;border-left:2px solid var(--beacon);padding-left:1rem;font-size:.9375rem;line-height:1.7}
+.gecti[hidden]{display:none}
+.gez{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2.5rem}
+.gez a{background:var(--surface);padding:1.3rem 1.4rem;display:grid;gap:.35rem;transition:background .2s}
+.gez a:hover{background:var(--raise)}
+.gez .y{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.gez b{font-weight:500;font-size:1rem}
+@media (min-width:640px){.gez{grid-template-columns:1fr 1fr}}
+
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "LearningResource",
+   "@id": "https://sonersoylu.com/egitim/mekanik-is/#ders",
+   "name": "Kule ve mekanik iş",
+   "description": "Cıvata, tork, ön yük, yağlama, hizalama ve titreşim. Sahadaki mekanik işin gerçekte neye dayandığı ve neden tork anahtarının ayarı bir güvenlik konusudur.",
+   "inLanguage": "tr-TR",
+   "educationalLevel": "Başlangıç",
+   "learningResourceType": "Ders",
+   "teaches": [
+    "Cıvata bağlantısında ön yükün ne olduğunu ve neden sıkma torkundan önemli olduğunu bilmek",
+    "Yağlama hatalarının hangi arızalara dönüştüğünü tanımak",
+    "Titreşim ve hizalama belirtilerini erken okumak"
+   ],
+   "timeRequired": "PT11M",
+   "isPartOf": {
+    "@type": "Course",
+    "name": "Sıfırdan rüzgâr türbini teknisyeni",
+    "url": "https://sonersoylu.com/egitim/"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "Soner Soylu",
+    "url": "https://sonersoylu.com/"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Ana sayfa",
+     "item": "https://sonersoylu.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Eğitim",
+     "item": "https://sonersoylu.com/egitim/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Kule ve mekanik iş",
+     "item": "https://sonersoylu.com/egitim/mekanik-is/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head>
+<body id="top">
+<a class="skip" href="#ana">İçeriğe atla</a>
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer" aria-current="true">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/" aria-current="true">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/" aria-current="true">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main id="ana">
+
+<section class="g-hero"><div class="wrap">
+ <a class="g-back" href="/egitim/">← Eğitim serisi</a>
+ <p class="bh">Bölüm 04 / 08</p>
+ <h1>Kule ve mekanik iş</h1>
+ <p class="lede">Cıvata, tork, ön yük, yağlama, hizalama ve titreşim. Sahadaki mekanik işin gerçekte neye dayandığı ve neden tork anahtarının ayarı bir güvenlik konusudur.</p>
+ <p class="bmeta"><span>11 dakika okuma</span><span>5 soruluk sınav</span></p>
+ <div class="hedef"><p class="k">Bu bölümü bitirdiğinizde</p><ul><li>Cıvata bağlantısında ön yükün ne olduğunu ve neden <a class="sz" href="/sozluk/#t-sikma-torku" title="Sıkma torku — sözlükte">sıkma torkundan</a> önemli olduğunu bilmek</li><li>Yağlama hatalarının hangi arızalara dönüştüğünü tanımak</li><li>Titreşim ve hizalama belirtilerini erken okumak</li></ul></div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ders"><h2>Türbini ayakta tutan şey: cıvata</h2><p>Bir türbinde binlerce cıvata vardır: <a class="sz" href="/sozluk/#t-temel" title="Temel — sözlükte">temeldeki</a> <a class="sz" href="/sozluk/#t-ankraj-kafesi" title="Ankraj kafesi — sözlükte">ankraj kafesinden</a> kule <a class="sz" href="/sozluk/#t-flans" title="Flanş — sözlükte">flanşlarına</a>, yaw çemberinden <a class="sz" href="/sozluk/#t-kanat-koku" title="Kanat kökü — sözlükte">kanat köküne</a> kadar. Bu bağlantıların hiçbiri &#8220;sıkı olsun yeter&#8221; mantığıyla çalışmaz. Her birinin belirli bir <b>ön yükü</b> (preload) vardır: cıvatanın içinde tutulan çekme kuvveti.</p><p>Ön yük yeterliyse, bağlantıya gelen değişken yükü cıvata değil, sıkıştırılmış parçalar taşır ve cıvata neredeyse sabit gerilimde kalır. Ön yük düşerse yükün tamamı cıvataya biner, gerilim her turda dalgalanır ve cıvata <b>yorulma</b> ile kırılır. Kırılma çoğu zaman sessizdir; komşu cıvatalara yük biner ve zincirleme başlar.</p><p>Ön yük doğrudan ölçülemediği için dolaylı yöntemler kullanılır. <b>Tork</b> en yaygın olanıdır ama en az hassas olanıdır: uygulanan torkun büyük kısmı sürtünmeyi yenmeye gider ve sürtünme yağ, kaplama, yüzey durumu ve sıcaklıkla değişir. Aynı torkla sıkılan iki cıvatanın ön yükü kolayca <b>±%25</b> farklı olabilir. Kritik bağlantılarda bu yüzden <b>hidrolik <a class="sz" href="/sozluk/#t-gerdirme" title="Gerdirme — sözlükte">gerdirme</a></b> (tensioning) ya da uzama ölçümü tercih edilir.</p><p>Sahadaki pratik sonuç: tork değeri her zaman üreticinin belgesinden alınır, sıkma sırası ve kademeleri belgede yazdığı gibi uygulanır, tork anahtarının kalibrasyonu takip edilir ve sıkılan cıvatalar işaretlenir. <a class="inl" href="/araclar/#tork">Araçlar sayfasındaki tork hesaplayıcı</a> sadece büyüklük mertebesini anlamak içindir; belgenin yerine geçmez.</p><h2>Yağlama: az da yanlış, çok da yanlış</h2><p>Yatak arızalarının büyük bölümü metal yorgunluğundan değil, <b>yağlama hatasından</b> doğar. Üç yaygın hata var: yetersiz gres, aşırı gres ve yanlış gres.</p><p>Yetersiz gres, metal-metal temasına ve hızlı aşınmaya götürür. <b>Aşırı gres</b> ise yaygın olarak &#8220;fazlası zarar vermez&#8221; sanılır ama verir: fazla gres yatak içinde çalkalanır, ısınır, ayrışır ve yatağı boğar. Otomatik gresleme sistemlerinin ayarı tam da bunun için vardır.</p><p><b>Yanlış gres</b> en sinsisidir. Farklı sabun bazlı iki gres karıştığında kıvamını kaybedip akabilir ya da sertleşebilir. Soğuk iklimde yaz gresi kullanmak, pitch motorlarının aşırı akım çekmesine kadar gider. Gres tipi değişikliği asla &#8220;elimizde bu vardı&#8221; diye yapılmaz.</p><p><a class="sz" href="/sozluk/#t-disli-kutusu" title="Dişli kutusu — sözlükte">Dişli kutusu</a> yağında ise takip edilecek şey seviye değil, <b>analiz</b>dir. Yıllık <a class="sz" href="/sozluk/#t-yag-analizi" title="Yağ analizi — sözlükte">yağ analizi</a>; parçacık sayımı, su içeriği, viskozite ve katık durumu verir. Analiz raporu, birçok büyük arızayı aylar öncesinden haber verir ve sektördeki en ucuz teşhis aracıdır.</p><h2>Hizalama ve kaplin</h2><p><a class="sz" href="/sozluk/#t-yuksek-hiz-mili" title="Yüksek hız mili — sözlükte">Yüksek hız mili</a> ile <a class="sz" href="/sozluk/#t-jenerator" title="Jeneratör — sözlükte">jeneratör</a> arasındaki kaplin, iki makinenin küçük hizasızlığını tolere etmek için vardır &#8212; ama sınırsız değil. Hizasızlık arttıkça kaplin elemanı ısınır, aşınır ve yataklar yük alır. Belirtisi genelde önce <b>titreşim spektrumunda</b>, sonra yatak sıcaklığında görünür.</p><p>Kaplin kontrolünde bakılacak şeyler: elastik elemanın çatlağı ve tozu, cıvata torkları, kaçıklık ölçümü ve <b>elektriksel yalıtımın</b> sağlamlığı. Sonuncusu çok atlanır: kaplin aynı zamanda jeneratörden gelen kaçak akımın dişli kutusuna geçmesini engelleyen yalıtım bariyeridir. Yalıtım bozulduğunda ortaya çıkan elektriksel yatak hasarı (fluting), mekanik gibi görünür ama sebebi elektriktir.</p><h2>Titreşimi okumak</h2><p>Titreşim, mekanik durumun en erken habercisidir. Ama &#8220;titreşim var&#8221; demek yetmez; <b>hangi frekansta</b> olduğu her şeyi söyler. Rotor devrinin katlarında görülen titreşim balans ve hizalamayı işaret eder; yatak geçiş frekanslarında görülen dar tepeler yatak hasarını; diş kavrama frekansı ve yan bantları dişli yüzeyini.</p><p>Bu yüzden durum izleme sistemi (CMS) olan makinelerde asıl iş, alarm beklemek değil <b>trendi izlemek</b>tir. Seviye üç aydır yavaşça yükseliyorsa, alarm eşiğine gelmesini beklemenin bir anlamı yok; o üç ay vinç ve parça planı yapmak için verilmiş süredir.</p><p>CMS olmayan makinelerde de elinizde iki araç var: <b>kulak</b> ve <b>el</b>. Aynı tip on türbine düzenli çıkan bir teknisyen, hangisinin farklı ses çıkardığını fark eder. Bu izlenim ölçüm değildir ama ölçüm istemek için yeterli sebeptir.</p></div>
+ <div class="snot"><p class="k">Sahadan not</p><p>Tork anahtarınızın kalibrasyon tarihini bilmiyorsanız, sıktığınız cıvatanın ön yükünü de bilmiyorsunuz demektir. Sahada gördüğüm en sessiz risk budur: herkes prosedüre uyar, ama aletin kendisi yalan söylüyordur.</p></div>
+ <p class="trm"><span class="e">Sözlükte</span><a href="/sozluk/?q=%C3%96n%20y%C3%BCk">Ön yük</a><a href="/sozluk/?q=Tork">Tork</a><a href="/sozluk/?q=Yorulma">Yorulma</a><a href="/sozluk/?q=Kaplin">Kaplin</a><a href="/sozluk/?q=Titre%C5%9Fim">Titreşim izleme</a></p>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">Sınav</p><h2>Anladınız mı, bakalım</h2>
+  <p class="ac">5 soru. Yanlış cevap ceza değil &#8212; her sorunun altında neden öyle olduğu yazıyor. 4 doğru bölümü tamamlamış sayılmanız için yeterli.</p></div>
+ <div class="sinav" id="sinav"><div class="soru" data-d="1"><p class="q"><i>01</i><span>Bir cıvata bağlantısında ön yük düşerse ne olur?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s0" value="0"><span>Cıvata gevşer ve düşer</span></label><label data-i="1"><input type="radio" name="s0" value="1"><span>Değişken yükün tamamı cıvataya biner ve yorulma başlar</span></label><label data-i="2"><input type="radio" name="s0" value="2"><span>Bağlantı daha esnek olur, bu iyidir</span></label><label data-i="3"><input type="radio" name="s0" value="3"><span>Hiçbir şey, tork doğruysa sorun yok</span></label></div><p class="acik" hidden>Ön yük yeterliyken yükü sıkıştırılmış parçalar taşır; düşünce cıvata her turda gerilir.</p></div><div class="soru" data-d="1"><p class="q"><i>02</i><span>Torkla sıkmanın temel zayıflığı nedir?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s1" value="0"><span>Çok yavaş bir yöntem olması</span></label><label data-i="1"><input type="radio" name="s1" value="1"><span>Uygulanan torkun büyük kısmının sürtünmeye gitmesi ve ön yükün ±%25 saçılması</span></label><label data-i="2"><input type="radio" name="s1" value="2"><span>Sadece küçük cıvatalarda kullanılabilmesi</span></label><label data-i="3"><input type="radio" name="s1" value="3"><span>Tork anahtarının pahalı olması</span></label></div><p class="acik" hidden>Bu yüzden kritik bağlantılarda hidrolik gerdirme ya da uzama ölçümü tercih edilir.</p></div><div class="soru" data-d="2"><p class="q"><i>03</i><span>Bir yatağa fazla gres basmanın sonucu nedir?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s2" value="0"><span>Sorun olmaz, fazlası dışarı taşar</span></label><label data-i="1"><input type="radio" name="s2" value="1"><span>Yatak daha uzun ömürlü olur</span></label><label data-i="2"><input type="radio" name="s2" value="2"><span>Gres çalkalanır, ısınır ve yatağı boğar</span></label><label data-i="3"><input type="radio" name="s2" value="3"><span>Sadece israf olur</span></label></div><p class="acik" hidden>Aşırı gresleme, yetersiz gresleme kadar sık arıza sebebidir.</p></div><div class="soru" data-d="1"><p class="q"><i>04</i><span>Kaplinin elektriksel yalıtımı bozulursa hangi hasar ortaya çıkar?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s3" value="0"><span>Jeneratör sargısı yanar</span></label><label data-i="1"><input type="radio" name="s3" value="1"><span>Dişli kutusu yatağında elektriksel hasar (fluting)</span></label><label data-i="2"><input type="radio" name="s3" value="2"><span>Konvertör devre dışı kalır</span></label><label data-i="3"><input type="radio" name="s3" value="3"><span>Rotor kilidi çalışmaz</span></label></div><p class="acik" hidden>Mekanik gibi görünen bu hasarın sebebi elektriktir; teşhiste sık atlanır.</p></div><div class="soru" data-d="2"><p class="q"><i>05</i><span>Durum izleme sisteminde bir seviye üç aydır yavaşça yükseliyorsa doğru tepki nedir?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s4" value="0"><span>Alarm eşiğine gelmesini beklemek</span></label><label data-i="1"><input type="radio" name="s4" value="1"><span>Sensörü sıfırlamak</span></label><label data-i="2"><input type="radio" name="s4" value="2"><span>Vinç ve parça planını erkene çekmek</span></label><label data-i="3"><input type="radio" name="s4" value="3"><span>Eşik değerini yükseltmek</span></label></div><p class="acik" hidden>Trend, size verilmiş planlama süresidir; alarm ise o sürenin bittiğinin haberi.</p></div>
+  <div class="sonuc">
+   <button class="plate" type="button" id="kontrol">Cevapları kontrol et</button>
+   <span class="snc" id="skor"></span>
+  </div>
+  <p class="gecti" id="gecti" hidden></p>
+ </div>
+ <div class="gez"><a href="/egitim/turbin-nasil-calisir/"><span class="y">← Önceki bölüm</span><b>03. Rüzgârdan şebekeye</b></a><a href="/egitim/elektrik-ve-kontrol/"><span class="y">Sonraki bölüm →</span><b>05. Elektrik ve kontrol</b></a></div>
+</div></section>
+
+</main>
+<footer><div class="wrap">
+<p class="mono">© 2026 Soner Soylu</p>
+<p class="mono">Son güncelleme: 5 Eylül 2026</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+(function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+b.setAttribute("aria-expanded",String(!a));m.classList.toggle("open",!a)});})();
+</script>
+<script>
+(function(){
+var ANAHTAR="egitimIlerleme", SLUG="mekanik-is", GECME=4;
+var sorular=[].slice.call(document.querySelectorAll("#sinav .soru"));
+var btn=document.getElementById("kontrol"),skor=document.getElementById("skor"),
+ gecti=document.getElementById("gecti");
+btn.addEventListener("click",function(){
+ var d=0;
+ sorular.forEach(function(s){
+  var dg=+s.dataset.d, sec=s.querySelector("input:checked");
+  [].forEach.call(s.querySelectorAll("label"),function(l){
+   l.classList.remove("dogru","yanlis");
+   if(+l.dataset.i===dg)l.classList.add("dogru");
+   else if(sec&&l.contains(sec))l.classList.add("yanlis");
+  });
+  s.querySelector(".acik").hidden=false;
+  if(sec&&+sec.value===dg)d++;
+ });
+ skor.innerHTML="<b>"+d+"</b> / "+sorular.length+" doğru";
+ if(d>=GECME){
+  gecti.hidden=false;
+  gecti.textContent="Bu bölümü tamamladınız. İlerlemeniz bu tarayıcıya kaydedildi.";
+  try{var v=JSON.parse(localStorage.getItem(ANAHTAR)||"{}");v[SLUG]={d:d,t:sorular.length,
+   z:new Date().toISOString().slice(0,10)};localStorage.setItem(ANAHTAR,JSON.stringify(v));}catch(e){}
+ }else{
+  gecti.hidden=false;
+  gecti.textContent="Tamamlanmış saymak için "+GECME+" doğru gerekiyor. Açıklamaları okuyup tekrar deneyebilirsiniz.";
+ }
+});
+})();
+</script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

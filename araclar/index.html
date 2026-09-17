@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rüzgâr Türbini Hesaplama Araçları — Kanat Ucu Hızı, Kapasite Faktörü, Cıvata Torku | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbini için ücretsiz hesaplama araçları: kanat ucu hızı ve TSR, rüzgârdaki güç, yükseklik düzeltmesi, kapasite faktörü, Weibull ile yıllık üretim tahmini ve cıvata sıkma torku. Formülleriyle birlikte.">
+<link rel="canonical" href="https://sonersoylu.com/araclar/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Rüzgâr Türbini Hesaplama Araçları">
+<meta property="og:description" content="Kanat ucu hızı, TSR, kapasite faktörü, yıllık üretim ve cıvata torku hesaplayıcıları — formülleriyle birlikte.">
+<meta property="og:url" content="https://sonersoylu.com/araclar/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-araclar.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.g-meta{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.lede{margin-top:1.75rem}
+
+.toc{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.5rem 1.6rem;margin-top:2.5rem}
+.toc p{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.toc ol{margin-top:1rem;display:grid;gap:.15rem;counter-reset:t}
+.toc li{counter-increment:t}
+.toc a{display:flex;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.9375rem;transition:color .2s}
+.toc li:last-child a{border-bottom:0}
+.toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;color:var(--muted);padding-top:.28rem}
+.toc a:hover{color:var(--beacon)}
+
+.tool{border-top:1px solid var(--line);padding:3.5rem 0}
+.tool>.wrap>.k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.tool h2{margin-top:.5rem;font-size:1.75rem;letter-spacing:-.035em}
+.tool .intro{margin-top:1rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+
+.calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);box-shadow:var(--shade)}
+.pane{background:var(--surface);padding:1.5rem}
+.f{display:grid;gap:1.25rem}
+.fi{display:grid;gap:.5rem}
+.fi label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fi .row{display:flex;align-items:center;gap:.75rem}
+.fi input[type=number],.fi select{flex:1;min-width:0;border:1px solid var(--line);background:var(--ground);padding:.6rem .7rem;font-family:var(--mono);font-size:.9375rem;color:var(--ink);outline:0}
+.fi input[type=number]:focus,.fi select:focus{border-color:var(--beacon)}
+.fi .u{flex:none;font-family:var(--mono);font-size:.75rem;color:var(--muted);min-width:3.2rem}
+.fi input[type=range]{width:100%;accent-color:var(--beacon);margin-top:.15rem}
+.fi .hint{font-size:.75rem;line-height:1.55;color:var(--muted)}
+.grid2{display:grid;gap:1.25rem}
+
+.out{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:0}
+.out>div{background:var(--ground);padding:1rem 1.1rem}
+.out dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.out dd{margin-top:.45rem;font-family:var(--mono);font-size:1.5rem;letter-spacing:-.02em;color:var(--ink);line-height:1.1}
+.out dd small{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-left:.35rem;letter-spacing:0}
+.out .hero{background:var(--surface)}
+.out .hero dd{font-size:2rem;color:var(--beacon)}
+.verdict{background:var(--surface)!important;font-size:.875rem;line-height:1.65;color:var(--ink)}
+.verdict b{font-weight:500}
+
+.formula{margin-top:1.5rem;border-left:2px solid var(--line);padding:.15rem 0 .15rem 1.1rem}
+.formula p{font-family:var(--mono);font-size:.8125rem;line-height:1.9;color:var(--ink)}
+.formula span{display:block;margin-top:.5rem;font-family:var(--sans);font-size:.8125rem;line-height:1.65;color:var(--muted)}
+
+.warn{margin-top:1.5rem;border-left:2px solid var(--beacon);background:var(--surface);padding:1.1rem 1.3rem}
+.warn p{font-size:.875rem;line-height:1.7;color:var(--muted)}
+.warn b{color:var(--ink);font-weight:500}
+
+.bars{margin-top:1.25rem;display:grid;gap:.3rem}
+.wbar{display:grid;grid-template-columns:3.2rem 1fr 5rem;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.6875rem;color:var(--muted)}
+.wbar .t{height:.55rem;background:var(--raise);position:relative;overflow:hidden}
+.wbar .t i{display:block;height:100%;background:var(--beacon);opacity:.75}
+.wbar .v{text-align:right}
+
+.pay{margin-top:1.25rem;display:flex;flex-wrap:wrap;align-items:center;gap:.9rem}
+.paydug{border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:.55rem .85rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:.18s}
+.paydug:hover{color:var(--ink);border-color:var(--muted)}
+.paymsg{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--beacon)}
+.gsec{border-top:1px solid var(--line);padding:4rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:1.25rem 0;display:flex;gap:1rem;align-items:baseline;font-size:1rem;transition:color .2s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--muted)}
+.faq details[open] summary::after{content:"–"}
+.faq summary:hover{color:var(--beacon)}
+.faq .a{padding:0 0 1.5rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.nxt{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.nxt a{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.4rem;transition:background .2s}
+.nxt a:hover{background:var(--raise)}
+.nxt a b{font-weight:500;font-size:1rem}
+.nxt a span{font-size:.875rem;color:var(--muted);line-height:1.6}
+
+@media (min-width:768px){
+ .g-hero h1{font-size:3.25rem}
+ .calc{grid-template-columns:1fr 1fr}
+ .out{grid-template-columns:1fr 1fr}
+ .out .wide{grid-column:1/-1}
+ .grid2{grid-template-columns:1fr 1fr}
+ .nxt{grid-template-columns:1fr 1fr}
+ .tool{padding:4.5rem 0}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","@id":"https://sonersoylu.com/araclar/#article",
+ "headline":"Rüzgâr Türbini Hesaplama Araçları",
+ "description":"Kanat ucu hızı ve TSR, rüzgârdaki güç, yükseklik düzeltmesi, kapasite faktörü, Weibull ile yıllık üretim tahmini ve cıvata sıkma torku hesaplayıcıları.",
+ "inLanguage":"tr-TR","datePublished":"2026-09-04","dateModified":"2026-09-04",
+ "author":{"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr türbini saha servis teknisyeni","url":"https://sonersoylu.com/"},
+ "publisher":{"@type":"Person","name":"Soner Soylu"},
+ "mainEntityOfPage":"https://sonersoylu.com/araclar/"},
+{"@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Ana sayfa","item":"https://sonersoylu.com/"},
+ {"@type":"ListItem","position":2,"name":"Hesaplama araçları","item":"https://sonersoylu.com/araclar/"}]},
+{"@type":"FAQPage","mainEntity":[
+ {"@type":"Question","name":"Kanat ucu hızı nasıl hesaplanır?","acceptedAnswer":{"@type":"Answer","text":"Kanat ucu hızı, açısal hız ile rotor yarıçapının çarpımıdır: v = (2·π·n / 60) · R. Burada n dakikadaki devir, R ise rotor yarıçapıdır. Örneğin 90 metre rotor çapına sahip bir türbin 18,1 d/dk dönüyorsa kanat ucu hızı yaklaşık 85 m/s olur."}},
+ {"@type":"Question","name":"Kapasite faktörü nedir, nasıl hesaplanır?","acceptedAnswer":{"@type":"Answer","text":"Kapasite faktörü, bir türbinin bir yıl içinde ürettiği enerjinin, aynı sürede kesintisiz tam güçte çalışsaydı üreteceği enerjiye oranıdır. Yıllık üretim (MWh) bölü kurulu güç (MW) çarpı 8760 saat. Türkiye'de karasal rüzgâr santrallerinde tipik değer yüzde 30 ile 38 arasındadır."}},
+ {"@type":"Question","name":"Rüzgârdaki güç neden hızın küpüyle artar?","acceptedAnswer":{"@type":"Answer","text":"Birim zamanda rotordan geçen hava kütlesi rüzgâr hızıyla doğru orantılıdır; bu kütlenin kinetik enerjisi ise hızın karesiyle artar. İkisi çarpıldığında güç hızın küpüne bağlı olur: P = 0,5 · ρ · A · v³. Bu yüzden rüzgâr hızındaki yüzde 10'luk bir artış, güçte yaklaşık yüzde 33 artış demektir."}},
+ {"@type":"Question","name":"Cıvata sıkma torku nasıl bulunur?","acceptedAnswer":{"@type":"Answer","text":"Yaklaşık tork, T = K · d · F bağıntısıyla bulunur: K sürtünme (nut) katsayısı, d cıvatanın anma çapı, F ise hedeflenen ön yükleme kuvvetidir. Ancak sahada esas olan her zaman türbin üreticisinin servis dokümanında verdiği tork değeridir; hesap yalnızca kontrol ve eğitim amaçlıdır."}}]}
+]}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head><body>
+<a class="skip" href="#top">İçeriğe geç</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak" aria-current="true">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/" aria-current="true">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <a class="lang" href="/en/tools/" hreflang="en" lang="en" title="English">EN</a>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/" aria-current="true">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+
+<main id="top">
+
+<section class="wrap g-hero">
+  <a class="g-back" href="/"><span aria-hidden="true">←</span> Ana sayfa</a>
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem;margin-top:2rem"><span class="beacon"></span>Hesaplama araçları</p>
+  <h1>Rüzgâr türbini hesaplayıcıları</h1>
+  <p class="lede">Sahada ve masa başında en sık ihtiyaç duyduğum altı hesap. Hepsi tarayıcınızda çalışıyor — hiçbir veri sunucuya gitmiyor, kayıt istemiyor. Her aracın altına kullandığı formülü ve varsayımlarını da yazdım; çünkü sayının kendisi kadar nereden geldiği de önemli.</p>
+  <p class="g-meta"><span>6 araç</span><span>Kayıt yok</span><span>Formüller açık</span><span>Son güncelleme: Eylül 2026</span></p>
+
+  <nav class="toc" aria-label="Araçlar">
+    <p>Araçlar</p>
+    <ol>
+      <li><a href="#ucucu">Kanat ucu hızı ve TSR</a></li>
+      <li><a href="#guc">Rüzgârdaki güç ve türbin gücü</a></li>
+      <li><a href="#yukseklik">Yükseklikle rüzgâr hızı düzeltmesi</a></li>
+      <li><a href="#kf">Kapasite faktörü</a></li>
+      <li><a href="#aep">Yıllık üretim tahmini (Weibull)</a></li>
+      <li><a href="#tork">Cıvata sıkma torku</a></li>
+    </ol>
+  </nav>
+</section>
+
+<!-- ================================================ 1 KANAT UCU HIZI -->
+<section class="tool" id="ucucu">
+ <div class="wrap">
+  <span class="k">Araç 01</span>
+  <h2>Kanat ucu hızı ve TSR</h2>
+  <p class="intro"><a class="sz" href="/sozluk/#t-kanat-ucu" title="Kanat ucu — sözlükte">Kanat ucunun</a> çizgisel hızı, hem gürültünün hem de ön kenar erozyonunun ana belirleyicisi. Karada gürültü sınırları yüzünden genelde 80 m/s civarında tutulur. <a class="sz" href="/sozluk/#t-kanat-ucu-hiz-orani" title="Kanat ucu hız oranı — sözlükte">Kanat ucu hız oranı</a> (TSR, λ) ise ucun rüzgârdan kaç kat hızlı gittiğini söyler; üç kanatlı türbinlerde verimin tepe yaptığı bölge 7–9 arasıdır.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="fi">
+      <label for="a1d">Rotor çapı</label>
+      <div class="row"><input id="a1d" type="number" value="90" min="10" max="250" step="0.1"><span class="u">m</span></div>
+      <input id="a1dr" type="range" min="20" max="240" step="1" value="90" aria-label="Rotor çapı kaydırıcı">
+     </div>
+     <div class="fi">
+      <label for="a1n">Rotor devri</label>
+      <div class="row"><input id="a1n" type="number" value="18.1" min="0" max="40" step="0.1"><span class="u">d/dk</span></div>
+      <input id="a1nr" type="range" min="0" max="30" step="0.1" value="18.1" aria-label="Rotor devri kaydırıcı">
+     </div>
+     <div class="fi">
+      <label for="a1v">Rüzgâr hızı</label>
+      <div class="row"><input id="a1v" type="number" value="11" min="0.5" max="30" step="0.1"><span class="u">m/s</span></div>
+      <input id="a1vr" type="range" min="1" max="30" step="0.1" value="11" aria-label="Rüzgâr hızı kaydırıcı">
+      <p class="hint">Varsayılan değerler Nordex N90/2500'e ait: 90 m rotor, anma devri 18,1 d/dk.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Kanat ucu hızı</dt><dd id="a1o1">—<small>m/s</small></dd></div>
+     <div><dt>Saatte</dt><dd id="a1o2">—<small>km/s</small></dd></div>
+     <div><dt>TSR (λ)</dt><dd id="a1o3">—</dd></div>
+     <div><dt>Açısal hız</dt><dd id="a1o4">—<small>rad/s</small></dd></div>
+     <div class="wide verdict" id="a1v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a1" data-hash="ucucu">Bu hesabın linkini kopyala</button><span class="paymsg" id="paymsg-a1"></span></p>
+  <div class="formula">
+   <p>ω = 2π · n / 60&nbsp;&nbsp;·&nbsp;&nbsp;v<sub>uç</sub> = ω · D/2&nbsp;&nbsp;·&nbsp;&nbsp;λ = v<sub>uç</sub> / v<sub>rüzgâr</sub></p>
+   <span>n: dakikadaki devir, D: rotor çapı, ω: açısal hız. TSR birimsizdir.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 2 GÜÇ -->
+<section class="tool" id="guc">
+ <div class="wrap">
+  <span class="k">Araç 02</span>
+  <h2>Rüzgârdaki güç ve türbin gücü</h2>
+  <p class="intro">Rüzgâr hızı iki katına çıktığında güç sekiz katına çıkar. Bu tek cümle, rüzgâr enerjisinde saha seçiminin neden her şeyden önemli olduğunu açıklıyor. Aşağıda hava yoğunluğunu sıcaklık ve rakımdan hesaplıyorum; sıcak bir yaz gününde aynı rüzgârdan daha az güç aldığınızı burada görebilirsiniz.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi"><label for="a2d">Rotor çapı</label><div class="row"><input id="a2d" type="number" value="90" min="1" step="0.1"><span class="u">m</span></div></div>
+      <div class="fi"><label for="a2v">Rüzgâr hızı</label><div class="row"><input id="a2v" type="number" value="11" min="0" step="0.1"><span class="u">m/s</span></div></div>
+     </div>
+     <div class="fi">
+      <label for="a2vr">Rüzgâr hızı kaydırıcı</label>
+      <input id="a2vr" type="range" min="0" max="30" step="0.1" value="11" aria-label="Rüzgâr hızı">
+     </div>
+     <div class="grid2">
+      <div class="fi"><label for="a2t">Hava sıcaklığı</label><div class="row"><input id="a2t" type="number" value="15" min="-40" max="55" step="0.5"><span class="u">°C</span></div></div>
+      <div class="fi"><label for="a2h">Rakım</label><div class="row"><input id="a2h" type="number" value="0" min="0" max="3000" step="10"><span class="u">m</span></div></div>
+     </div>
+     <div class="fi">
+      <label for="a2cp">Güç katsayısı Cp</label>
+      <div class="row"><input id="a2cp" type="number" value="0.45" min="0" max="0.593" step="0.005"><span class="u">–</span></div>
+      <input id="a2cpr" type="range" min="0" max="0.593" step="0.005" value="0.45" aria-label="Cp kaydırıcı">
+      <p class="hint">İyi bir modern türbinde tepe Cp değeri 0,45–0,50 aralığındadır. Teorik üst sınır (Betz) 0,593'tür.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Türbin gücü (Cp ile)</dt><dd id="a2o1">—<small>kW</small></dd></div>
+     <div><dt>Rüzgârdaki toplam güç</dt><dd id="a2o2">—<small>kW</small></dd></div>
+     <div><dt>Betz sınırı (%59,3)</dt><dd id="a2o3">—<small>kW</small></dd></div>
+     <div><dt>Süpürme alanı</dt><dd id="a2o4">—<small>m²</small></dd></div>
+     <div><dt>Güç yoğunluğu</dt><dd id="a2o5">—<small>W/m²</small></dd></div>
+     <div><dt>Hava yoğunluğu</dt><dd id="a2o6">—<small>kg/m³</small></dd></div>
+     <div class="wide verdict" id="a2v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a2" data-hash="guc">Bu hesabın linkini kopyala</button><span class="paymsg" id="paymsg-a2"></span></p>
+  <div class="formula">
+   <p>A = π·D²/4&nbsp;&nbsp;·&nbsp;&nbsp;P<sub>rüzgâr</sub> = ½ · ρ · A · v³&nbsp;&nbsp;·&nbsp;&nbsp;P<sub>türbin</sub> = P<sub>rüzgâr</sub> · C<sub>p</sub></p>
+   <p>ρ = p / (R · T)&nbsp;&nbsp;·&nbsp;&nbsp;p = 101325 · (1 − 2,25577·10⁻⁵ · h)<sup>5,25588</sup></p>
+   <span>R = 287,05 J/(kg·K), T mutlak sıcaklık (K), h rakım (m). Standart koşulda (15 °C, deniz seviyesi) ρ = 1,225 kg/m³.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 3 YÜKSEKLİK -->
+<section class="tool" id="yukseklik">
+ <div class="wrap">
+  <span class="k">Araç 03</span>
+  <h2>Yükseklikle rüzgâr hızı düzeltmesi</h2>
+  <p class="intro">Ölçüm direği 30 metrede, <a class="sz" href="/sozluk/#t-gobek" title="Göbek — sözlükte">göbek</a> 80 metrede. Aradaki farkı bilmeden üretim tahmini yapılamaz. Rüzgâr yerden yükseldikçe hızlanır; ne kadar hızlanacağını arazinin pürüzlülüğü belirler. Aşağıda hem üstel yasa (power law) hem de logaritmik yasa sonucunu birlikte veriyorum.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi"><label for="a3v1">Ölçülen hız</label><div class="row"><input id="a3v1" type="number" value="6.5" min="0" step="0.1"><span class="u">m/s</span></div></div>
+      <div class="fi"><label for="a3h1">Ölçüm yüksekliği</label><div class="row"><input id="a3h1" type="number" value="30" min="1" step="1"><span class="u">m</span></div></div>
+     </div>
+     <div class="fi"><label for="a3h2">Hedef yükseklik (göbek)</label><div class="row"><input id="a3h2" type="number" value="80" min="1" step="1"><span class="u">m</span></div>
+      <input id="a3h2r" type="range" min="10" max="200" step="1" value="80" aria-label="Hedef yükseklik">
+     </div>
+     <div class="fi">
+      <label for="a3z">Arazi tipi</label>
+      <div class="row"><select id="a3z">
+        <option value="0.0002|0.10">Açık deniz / göl yüzeyi</option>
+        <option value="0.03|0.14" selected>Açık düz arazi, kısa ot</option>
+        <option value="0.10|0.17">Tarım arazisi, seyrek yapı</option>
+        <option value="0.25|0.22">Çalılık, dağınık ağaç ve bina</option>
+        <option value="0.50|0.28">Orman, köy ve engebeli arazi</option>
+        <option value="1.00|0.35">Şehir, yüksek yapılar</option>
+      </select></div>
+      <p class="hint">Seçim hem pürüzlülük uzunluğunu (z₀) hem de üstel yasa katsayısını (α) belirler.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Hedef yükseklikte hız</dt><dd id="a3o1">—<small>m/s</small></dd></div>
+     <div><dt>Logaritmik yasa ile</dt><dd id="a3o2">—<small>m/s</small></dd></div>
+     <div><dt>Hız artışı</dt><dd id="a3o3">—<small>%</small></dd></div>
+     <div><dt>Güçteki artış</dt><dd id="a3o4">—<small>%</small></dd></div>
+     <div class="wide verdict" id="a3vd">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a3" data-hash="yukseklik">Bu hesabın linkini kopyala</button><span class="paymsg" id="paymsg-a3"></span></p>
+  <div class="formula">
+   <p>Üstel yasa: v₂ = v₁ · (h₂ / h₁)<sup>α</sup></p>
+   <p>Logaritmik yasa: v₂ = v₁ · ln(h₂/z₀) / ln(h₁/z₀)</p>
+   <span>Güç hızın küpüyle değiştiği için güçteki artış (v₂/v₁)³ − 1 kadardır. İki yasa aynı araziyi farklı yaklaştırır; sonuçların birbirine yakın çıkması iyi bir işarettir.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 4 KAPASİTE FAKTÖRÜ -->
+<section class="tool" id="kf">
+ <div class="wrap">
+  <span class="k">Araç 04</span>
+  <h2>Kapasite faktörü</h2>
+  <p class="intro">Bir santralin gerçek performansını tek sayıya indiren ölçü. Türkiye'de karasal rüzgâr santrallerinde tipik değer %30–38 arasında; %40 üstü çok iyi bir saha demektir. Eşdeğer tam yük saati de aynı bilgiyi saat cinsinden söyler — sektörde ikisi de kullanılır.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi"><label for="a4p">Kurulu güç</label><div class="row"><input id="a4p" type="number" value="2.5" min="0.001" step="0.1"><span class="u">MW</span></div></div>
+      <div class="fi"><label for="a4e">Üretilen enerji</label><div class="row"><input id="a4e" type="number" value="7800" min="0" step="10"><span class="u">MWh</span></div></div>
+     </div>
+     <div class="fi">
+      <label for="a4s">Dönem</label>
+      <div class="row"><select id="a4s">
+        <option value="8760" selected>Bir yıl (8760 saat)</option>
+        <option value="8784">Artık yıl (8784 saat)</option>
+        <option value="730">Bir ay (730 saat)</option>
+        <option value="2190">Üç ay (2190 saat)</option>
+        <option value="0">Elle gireceğim</option>
+      </select></div>
+     </div>
+     <div class="fi" id="a4sw" hidden><label for="a4sh">Dönem uzunluğu</label><div class="row"><input id="a4sh" type="number" value="8760" min="1" step="1"><span class="u">saat</span></div></div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Kapasite faktörü</dt><dd id="a4o1">—<small>%</small></dd></div>
+     <div><dt>Eşdeğer tam yük saati</dt><dd id="a4o2">—<small>saat</small></dd></div>
+     <div><dt>Ortalama çıkış gücü</dt><dd id="a4o3">—<small>kW</small></dd></div>
+     <div><dt>Teorik üst sınır üretim</dt><dd id="a4o4">—<small>MWh</small></dd></div>
+     <div class="wide verdict" id="a4v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a4" data-hash="kf">Bu hesabın linkini kopyala</button><span class="paymsg" id="paymsg-a4"></span></p>
+  <div class="formula">
+   <p>KF = E / (P · t)&nbsp;&nbsp;·&nbsp;&nbsp;Eşdeğer tam yük saati = E / P</p>
+   <span>E üretilen enerji (MWh), P kurulu güç (MW), t dönem uzunluğu (saat). Kapasite faktörü erişilebilirlik ile karıştırılmamalıdır: türbin yıl boyu çalışsa bile rüzgâr her zaman anma hızında esmediği için kapasite faktörü hiçbir zaman %100'e yaklaşmaz.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 5 AEP -->
+<section class="tool" id="aep">
+ <div class="wrap">
+  <span class="k">Araç 05</span>
+  <h2>Yıllık üretim tahmini (Weibull)</h2>
+  <p class="intro">Bir sahadaki rüzgârın yıl boyunca nasıl dağıldığı <a class="sz" href="/sozluk/#t-weibull-dagilimi" title="Weibull dağılımı — sözlükte">Weibull dağılımıyla</a> modellenir. Ortalama hızı ve şekil parametresini girdiğinizde, bu dağılımı türbinin <a class="sz" href="/sozluk/#t-guc-egrisi" title="Güç eğrisi — sözlükte">güç eğrisiyle</a> çarpıp yıl boyunca toplayarak beklenen üretimi buluyorum. Gerçek bir fizibilite raporunun yerini tutmaz ama büyüklük mertebesini doğru verir.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="fi">
+      <label for="a5t">Türbin</label>
+      <div class="row"><select id="a5t">
+        <option value="n90" selected>Nordex N90/2500 — gerçek güç eğrisi</option>
+        <option value="genel">Genel model — kübik yaklaşım</option>
+      </select></div>
+     </div>
+     <div class="fi">
+      <label for="a5v">Göbek yüksekliğinde ortalama rüzgâr hızı</label>
+      <div class="row"><input id="a5v" type="number" value="7.5" min="2" max="14" step="0.1"><span class="u">m/s</span></div>
+      <input id="a5vr" type="range" min="3" max="12" step="0.1" value="7.5" aria-label="Ortalama rüzgâr hızı">
+     </div>
+     <div class="fi">
+      <label for="a5k">Weibull şekil parametresi k</label>
+      <div class="row"><input id="a5k" type="number" value="2" min="1.2" max="4" step="0.1"><span class="u">–</span></div>
+      <input id="a5kr" type="range" min="1.2" max="4" step="0.1" value="2" aria-label="k parametresi">
+      <p class="hint">k = 2 (Rayleigh) çoğu kara sahası için makul varsayımdır. Rüzgârı düzenli sahalarda 2,5–3'e çıkar.</p>
+     </div>
+     <div class="fi">
+      <label for="a5l">Toplam kayıplar</label>
+      <div class="row"><input id="a5l" type="number" value="12" min="0" max="40" step="0.5"><span class="u">%</span></div>
+      <p class="hint"><a class="sz" href="/sozluk/#t-i-z-etkisi" title="İz etkisi — sözlükte">İz etkisi</a>, elektriksel kayıp, duruşlar ve <a class="sz" href="/sozluk/#t-erisilebilirlik" title="Erişilebilirlik — sözlükte">erişilebilirlik</a> birlikte tipik olarak %10–15 arasındadır.</p>
+     </div>
+     <div class="grid2" id="a5gw" hidden>
+      <div class="fi"><label for="a5pn">Anma gücü</label><div class="row"><input id="a5pn" type="number" value="3000" min="10" step="10"><span class="u">kW</span></div></div>
+      <div class="fi"><label for="a5vn">Anma hızı</label><div class="row"><input id="a5vn" type="number" value="12" min="6" max="20" step="0.5"><span class="u">m/s</span></div></div>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Yıllık net üretim</dt><dd id="a5o1">—<small>MWh</small></dd></div>
+     <div><dt>Kayıpsız brüt üretim</dt><dd id="a5o2">—<small>MWh</small></dd></div>
+     <div><dt>Kapasite faktörü</dt><dd id="a5o3">—<small>%</small></dd></div>
+     <div><dt>Eşdeğer tam yük saati</dt><dd id="a5o4">—<small>saat</small></dd></div>
+     <div><dt>Weibull ölçek param. c</dt><dd id="a5o5">—<small>m/s</small></dd></div>
+     <div><dt>Yaklaşık hane sayısı</dt><dd id="a5o6">—<small>hane</small></dd></div>
+     <div class="wide verdict" id="a5v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="mono" style="margin-top:2rem">Üretimin rüzgâr hızlarına dağılımı</p>
+  <div class="bars" id="a5bars"></div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a5" data-hash="aep">Bu hesabın linkini kopyala</button><span class="paymsg" id="paymsg-a5"></span></p>
+  <div class="formula">
+   <p>f(v) = (k/c)·(v/c)<sup>k−1</sup>·e<sup>−(v/c)<sup>k</sup></sup>&nbsp;&nbsp;·&nbsp;&nbsp;c = v̄ / Γ(1 + 1/k)</p>
+   <p>AEP = 8760 · Σ f(v)·P(v)·Δv · (1 − kayıp)</p>
+   <span>Hesap 0–30 m/s aralığında 0,25 m/s adımlarla yapılır. Hane sayısı, 3.000 kWh/yıl ortalama konut tüketimi kabulüyle bulunmuştur; sadece büyüklük fikri vermek içindir.</span>
+  </div>
+
+  <div class="warn">
+   <p><b>Bu bir fizibilite raporu değildir.</b> Gerçek bir proje kararı; en az bir yıllık saha ölçümü, türbin yerleşimine göre iz etkisi modellemesi, arazi ve engebe analizi ve belirsizlik hesabı gerektirir. Buradaki sonuç ilk büyüklük tahmini olarak kullanılmalıdır.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 6 TORK -->
+<section class="tool" id="tork">
+ <div class="wrap">
+  <span class="k">Araç 06</span>
+  <h2>Cıvata sıkma torku</h2>
+  <p class="intro">Kule flanşlarında, <a class="sz" href="/sozluk/#t-kanat-koku" title="Kanat kökü — sözlükte">kanat kökünde</a> ve <a class="sz" href="/sozluk/#t-yaw-yatagi" title="Yaw yatağı — sözlükte">yaw yatağında</a> yüzlerce cıvata var ve hepsinin işi aynı: yeterli <a class="sz" href="/sozluk/#t-on-yukleme" title="Ön yükleme — sözlükte">ön yüklemeyi</a> tutmak. Torkun kendisi amaç değil, ön yüklemeye ulaşmanın dolaylı yolu — üstelik oldukça kaba bir yol, çünkü uygulanan torkun büyük kısmı sürtünmeye gider. Bu araç, sürtünmenin sonucu ne kadar değiştirdiğini görmek için iyi bir alıştırma.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi">
+       <label for="a6d">Cıvata ölçüsü</label>
+       <div class="row"><select id="a6d">
+        <option value="8|36.6">M8</option><option value="10|58">M10</option>
+        <option value="12|84.3">M12</option><option value="14|115">M14</option>
+        <option value="16|157">M16</option><option value="20|245">M20</option>
+        <option value="22|303">M22</option><option value="24|353">M24</option>
+        <option value="27|459">M27</option><option value="30|561" selected>M30</option>
+        <option value="33|694">M33</option><option value="36|817">M36</option>
+        <option value="39|976">M39</option><option value="42|1120">M42</option>
+        <option value="48|1470">M48</option><option value="56|2030">M56</option>
+       </select></div>
+      </div>
+      <div class="fi">
+       <label for="a6c">Dayanım sınıfı</label>
+       <div class="row"><select id="a6c">
+        <option value="8.8">8.8</option>
+        <option value="10.9" selected>10.9</option>
+        <option value="12.9">12.9</option>
+       </select></div>
+      </div>
+     </div>
+     <div class="fi">
+      <label for="a6k">Sürtünme (nut) katsayısı K</label>
+      <div class="row"><select id="a6k">
+        <option value="0.20">0,20 — kuru, yağsız</option>
+        <option value="0.16" selected>0,16 — hafif yağlı</option>
+        <option value="0.13">0,13 — gres / MoS₂</option>
+        <option value="0.10">0,10 — çok iyi yağlanmış</option>
+      </select></div>
+     </div>
+     <div class="fi">
+      <label for="a6u">Hedef ön yükleme (akma sınırının yüzdesi)</label>
+      <div class="row"><input id="a6u" type="number" value="70" min="30" max="90" step="1"><span class="u">%</span></div>
+      <input id="a6ur" type="range" min="40" max="90" step="1" value="70" aria-label="Ön yükleme oranı">
+      <p class="hint">Tork ile sıkmada yaygın hedef %70'tir. Hidrolik gerdirmede %75–90'a çıkılabilir.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Yaklaşık sıkma torku</dt><dd id="a6o1">—<small>Nm</small></dd></div>
+     <div><dt>Hedef ön yükleme</dt><dd id="a6o2">—<small>kN</small></dd></div>
+     <div><dt>Gerilme kesit alanı</dt><dd id="a6o3">—<small>mm²</small></dd></div>
+     <div><dt>Akma sınırı</dt><dd id="a6o4">—<small>MPa</small></dd></div>
+     <div><dt>Kopma yükü (yaklaşık)</dt><dd id="a6o5">—<small>kN</small></dd></div>
+     <div><dt>Kuru sıkılsaydı tork</dt><dd id="a6o6">—<small>Nm</small></dd></div>
+     <div class="wide verdict" id="a6v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a6" data-hash="tork">Bu hesabın linkini kopyala</button><span class="paymsg" id="paymsg-a6"></span></p>
+  <div class="formula">
+   <p>F = (%hedef) · A<sub>s</sub> · R<sub>p0,2</sub>&nbsp;&nbsp;·&nbsp;&nbsp;T = K · d · F</p>
+   <span>A<sub>s</sub> gerilme kesit alanı (ISO 898-1 kaba diş), R<sub>p0,2</sub> sınıfın akma sınırı (8.8 için d ≤ 16 mm'de 640, d &gt; 16 mm'de 660 MPa; 10.9 için 940; 12.9 için 1100 MPa), d cıvatanın anma çapı, K sürtünme katsayısı.</span>
+  </div>
+
+  <div class="warn">
+   <p><b>Sahada geçerli olan tek değer, üreticinin servis dokümanındaki tork değeridir.</b> Buradaki hesap bir yaklaşımdır: gerçek sürtünme katsayısı yüzey kaplamasına, yağın türüne, somun altı pul durumuna ve hatta havanın sıcaklığına göre değişir; bu yüzden aynı torkla elde edilen ön yükleme ±%25 saçılabilir. Kritik bağlantılarda tork değil, hidrolik gerdirme veya cıvata boyu ölçümü tercih edilir. Bu aracı kontrol ve eğitim amacıyla kullanın, üretici değerinin yerine koymayın.</p>
+  </div>
+ </div>
+</section>
+
+<section class="wrap gsec">
+  <div class="ghead">
+    <span class="k">Sık sorulanlar</span>
+    <h2>Hesaplar hakkında</h2>
+  </div>
+  <div class="faq">
+    <details><summary>Rüzgârdaki güç neden hızın küpüyle artıyor?</summary><div class="a">Birim zamanda rotordan geçen hava kütlesi hızla doğru orantılı; o kütlenin kinetik enerjisi ise hızın karesiyle. İkisi çarpılınca güç hızın küpüne bağlanır. Pratik sonucu şu: rüzgâr hızındaki %10'luk bir fark, güçte yaklaşık %33 fark demek. Saha seçiminin neden bu kadar belirleyici olduğu buradan geliyor.</div></details>
+    <details><summary>Betz sınırı aşılabilir mi?</summary><div class="a">Hayır. Rotor rüzgârdaki enerjinin tamamını alsaydı hava rotorun arkasında durmak zorunda kalırdı, o zaman da arkadan gelen hava geçemezdi. Bu çelişkiyi çözen optimum nokta %59,3'tür. Gerçek türbinler sürtünme, kanat ucu kayıpları ve sonlu kanat sayısı yüzünden bunun altında, en iyi ihtimalle 0,45–0,50 Cp değerinde çalışır.</div></details>
+    <details><summary>Kapasite faktörü ile erişilebilirlik aynı şey mi?</summary><div class="a">Değil, sık karıştırılır. Erişilebilirlik türbinin üretime hazır olduğu sürenin oranıdır ve iyi işletilen bir sahada %97'nin üstündedir. Kapasite faktörü ise rüzgârın ne kadar estiğine bağlıdır ve %30–38 civarındadır. Türbin yıl boyunca hiç arıza yapmasa bile kapasite faktörü yükselmez, çünkü rüzgâr her zaman anma hızında esmez.</div></details>
+    <details><summary>Weibull k parametresini nereden bileceğim?</summary><div class="a">Kesin değeri ancak saha ölçümünden çıkar. Ölçümünüz yoksa kara sahaları için k = 2 (Rayleigh dağılımı) makul bir başlangıçtır. Rüzgârı düzenli, yönü oturmuş sahalarda 2,5–3, çok değişken sahalarda 1,5–1,8 görülür. k büyüdükçe dağılım daralır ve aynı ortalama hızda üretim bir miktar düşer, çünkü üretimin büyük kısmı ortalamanın üzerindeki hızlardan gelir.</div></details>
+    <details><summary>Hesaplarda girdiğim değerler bir yere kaydediliyor mu?</summary><div class="a">Hayır. Tüm hesaplar tarayıcınızın içinde çalışıyor, hiçbir veri sunucuya gönderilmiyor. Sayfayı kapattığınızda girdikleriniz de gidiyor.</div></details>
+  </div>
+</section>
+
+<section class="wrap gsec">
+  <div class="ghead">
+    <span class="k">Devamı</span>
+    <h2>Bunlara da bakın</h2>
+  </div>
+  <div class="nxt">
+    <a href="/sozluk/"><b>Terim sözlüğü →</b><span>148 rüzgâr türbini teriminin Türkçe–İngilizce karşılığı ve açıklaması.</span></a>
+    <a href="/rehber/"><b>Sahadan rehber →</b><span>Mesleğe giriş, GWO sertifikaları, sahada bir gün ve yaygın arızalar.</span></a>
+    <a href="/n90/"><b>N90 3B model →</b><span>Buradaki hesapların üzerinde çalıştığı türbini aşama aşama görün.</span></a>
+    <a href="/#iletisim"><b>Araç önerin →</b><span>Sahada ihtiyaç duyduğunuz başka bir hesap varsa yazın, ekleyeyim.</span></a>
+  </div>
+</section>
+
+<section class="wrap gsec" id="iletisim">
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>İletişim</p>
+  <p class="big" style="margin-top:1.5rem">Bana ulaşın</p>
+  <a class="mail" href="mailto:sonersoylu@yandex.com">sonersoylu@yandex.com</a>
+  <p style="margin-top:2.5rem"><a class="arrow" href="/">Ana sayfaya dön <i>→</i></a></p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Rüzgâr türbini saha servis teknisyeni</p>
+    <p class="mono">Aliağa, İzmir</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div>
+</footer>
+
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  function num(id) { var v = parseFloat($(id).value.replace(',', '.')); return isFinite(v) ? v : 0; }
+  function fmt(x, d) {
+    if (!isFinite(x)) return '—';
+    return x.toLocaleString('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function set(id, v, d) { $(id).firstChild.nodeValue = fmt(v, d === undefined ? 1 : d); }
+  function link(a, b, run) {
+    var A = $(a), B = $(b);
+    if (!A || !B) return;
+    A.addEventListener('input', function () { B.value = A.value; run(); });
+    B.addEventListener('input', function () { A.value = B.value; run(); });
+  }
+  function on(ids, run) {
+    ids.forEach(function (i) { var e = $(i); if (e) e.addEventListener('input', run); });
+  }
+
+  /* 01 kanat ucu hizi */
+  function t1() {
+    var D = num('a1d'), n = num('a1n'), v = num('a1v');
+    var w = 2 * Math.PI * n / 60;
+    var tip = w * D / 2;
+    var lam = v > 0 ? tip / v : 0;
+    set('a1o1', tip, 1); set('a1o2', tip * 3.6, 0);
+    set('a1o3', lam, 2); set('a1o4', w, 3);
+    var m = [];
+    if (tip > 95) m.push('Kanat ucu hızı <b>çok yüksek</b> — bu bölgede gürültü ve ön kenar erozyonu hızla artar; karada nadiren izin verilir.');
+    else if (tip > 80) m.push('Kanat ucu hızı modern karasal türbinlerin <b>üst sınırına</b> yakın; gürültü kısıtı olan sahalarda bu bölge sınırlanır.');
+    else if (tip > 55) m.push('Kanat ucu hızı <b>normal işletme aralığında</b>.');
+    else if (tip > 0) m.push('Kanat ucu hızı düşük — türbin <b>kısmi yükte</b> ya da rampa aşamasında görünüyor.');
+    if (v > 0) {
+      if (lam > 11) m.push('&lambda; = ' + fmt(lam, 1) + ' çok yüksek: rotor rüzgâra göre fazla hızlı dönüyor, Cp düşüyor.');
+      else if (lam >= 6.5 && lam <= 9.5) m.push('&lambda; = ' + fmt(lam, 1) + ' üç kanatlı bir rotor için <b>optimum bölgede</b> — verimin tepe yaptığı aralık burasıdır.');
+      else if (lam >= 4) m.push('&lambda; = ' + fmt(lam, 1) + ' optimumun bir miktar dışında; bu hızda türbin anma gücüne yaklaşıyor ve devri sabitlenmiş olabilir.');
+      else m.push('&lambda; = ' + fmt(lam, 1) + ' düşük: rotor rüzgâra göre yavaş, hücum açıları büyüyor ve kanat stall bölgesine giriyor.');
+    }
+    $('a1v1').innerHTML = m.join(' ');
+  }
+  link('a1d', 'a1dr', t1); link('a1n', 'a1nr', t1); link('a1v', 'a1vr', t1);
+
+  /* 02 guc */
+  function rho(tC, h) {
+    var p = 101325 * Math.pow(1 - 2.25577e-5 * h, 5.25588);
+    return p / (287.05 * (tC + 273.15));
+  }
+  function t2() {
+    var D = num('a2d'), v = num('a2v'), tC = num('a2t'), h = num('a2h'), cp = num('a2cp');
+    var r = rho(tC, h);
+    var A = Math.PI * D * D / 4;
+    var Pw = 0.5 * r * A * Math.pow(v, 3);
+    set('a2o1', Pw * cp / 1000, 0);
+    set('a2o2', Pw / 1000, 0);
+    set('a2o3', Pw * (16 / 27) / 1000, 0);
+    set('a2o4', A, 0);
+    set('a2o5', v > 0 ? Pw / A : 0, 0);
+    set('a2o6', r, 3);
+    var std = 1.225, fark = (r / std - 1) * 100;
+    var m = [];
+    if (Math.abs(fark) >= 1) {
+      m.push('Hava yoğunluğu standart koşula göre <b>%' + fmt(Math.abs(fark), 1) + ' ' + (fark < 0 ? 'düşük' : 'yüksek') +
+             '</b>; üretilen güç de aynı oranda ' + (fark < 0 ? 'azalır' : 'artar') + '. Sıcak yaz günlerinde aynı rüzgârdan daha az enerji almanızın sebebi budur.');
+    } else {
+      m.push('Hava yoğunluğu standart koşula (1,225 kg/m³) çok yakın.');
+    }
+    if (cp > 0.5) m.push('Girdiğiniz C<sub>p</sub> değeri gerçek türbinlerde <b>ölçülen aralığın üstünde</b>; teorik sınıra yaklaşıyorsunuz.');
+    m.push('Rüzgâr hızı %10 artsaydı güç <b>%' + fmt((Math.pow(1.1, 3) - 1) * 100, 0) + '</b> artardı.');
+    $('a2v1').innerHTML = m.join(' ');
+  }
+  link('a2v', 'a2vr', t2); link('a2cp', 'a2cpr', t2);
+  on(['a2d', 'a2t', 'a2h'], t2);
+
+  /* 03 yukseklik */
+  function t3() {
+    var v1 = num('a3v1'), h1 = num('a3h1'), h2 = num('a3h2');
+    var parts = $('a3z').value.split('|');
+    var z0 = parseFloat(parts[0]), al = parseFloat(parts[1]);
+    var vp = 0, vl = 0;
+    if (h1 > 0 && h2 > 0) {
+      vp = v1 * Math.pow(h2 / h1, al);
+      if (h1 > z0 && h2 > z0) vl = v1 * Math.log(h2 / z0) / Math.log(h1 / z0);
+    }
+    var art = v1 > 0 ? (vp / v1 - 1) * 100 : 0;
+    set('a3o1', vp, 2); set('a3o2', vl, 2);
+    set('a3o3', art, 1);
+    set('a3o4', v1 > 0 ? (Math.pow(vp / v1, 3) - 1) * 100 : 0, 1);
+    var m = ['Arazi katsayıları: &alpha; = ' + fmt(al, 2) + ', z&#8320; = ' + fmt(z0, 4) + ' m.'];
+    if (h2 <= h1) m.push('Hedef yükseklik ölçüm yüksekliğinden düşük — sonuç aşağı doğru düzeltmedir.');
+    var d = Math.abs(vp - vl);
+    if (d > 0.3) m.push('İki yasa arasında <b>' + fmt(d, 2) + ' m/s</b> fark var; bu kadar büyük bir fark, yükseklik farkının fazla veya arazi seçiminin sahayı iyi temsil etmediğinin işareti olabilir.');
+    else m.push('İki yöntem birbirine yakın sonuç veriyor, tahmin makul.');
+    $('a3vd').innerHTML = m.join(' ');
+  }
+  link('a3h2', 'a3h2r', t3);
+  on(['a3v1', 'a3h1', 'a3z'], t3);
+
+  /* 04 kapasite faktoru */
+  function t4() {
+    var P = num('a4p'), E = num('a4e');
+    var sel = parseFloat($('a4s').value);
+    var manual = sel === 0;
+    $('a4sw').hidden = !manual;
+    var t = manual ? num('a4sh') : sel;
+    var kf = (P > 0 && t > 0) ? E / (P * t) * 100 : 0;
+    set('a4o1', kf, 1);
+    set('a4o2', P > 0 ? E / P : 0, 0);
+    set('a4o3', t > 0 ? E / t * 1000 : 0, 0);
+    set('a4o4', P * t, 0);
+    var m = [];
+    if (kf > 100) m.push('<b>Kapasite faktörü %100 üstünde çıktı</b> — kurulu güç, enerji veya dönem uzunluğundan biri hatalı görünüyor.');
+    else if (kf >= 45) m.push('<b>Çok yüksek</b> bir değer. Denizüstü santrallerde ya da olağanüstü iyi bir kara sahasında görülür.');
+    else if (kf >= 38) m.push('<b>Çok iyi</b> bir saha performansı; Türkiye ortalamasının belirgin üstünde.');
+    else if (kf >= 30) m.push('Türkiye&rsquo;deki karasal rüzgâr santralleri için <b>tipik ve sağlıklı</b> bir aralık.');
+    else if (kf >= 22) m.push('<b>Ortalamanın altında.</b> Rüzgâr kaynağı zayıf olabileceği gibi, uzun duruşlar veya güç kısıtlaması da bu tabloyu yaratır.');
+    else if (kf > 0) m.push('<b>Düşük.</b> Bu seviyede arıza kaynaklı duruşları ve şebeke kısıtlarını ayrı ayrı incelemek gerekir.');
+    $('a4v1').innerHTML = m.join(' ');
+  }
+  on(['a4p', 'a4e', 'a4s', 'a4sh'], t4);
+
+  /* 05 AEP */
+  var N90 = [[0,0],[3,0],[4,65],[5,175],[6,340],[7,570],[8,870],[9,1230],[10,1620],
+             [11,2000],[12,2290],[13,2450],[13.5,2500],[25,2500],[25.01,0],[30,0]];
+  function pN90(v) {
+    if (v < 3 || v > 25) return 0;
+    for (var i = 1; i < N90.length; i++) {
+      if (v <= N90[i][0]) {
+        var a = N90[i - 1], b = N90[i];
+        var f = (b[0] - a[0]) === 0 ? 0 : (v - a[0]) / (b[0] - a[0]);
+        return a[1] + f * (b[1] - a[1]);
+      }
+    }
+    return 0;
+  }
+  function pGen(v, Pn, vn) {
+    var ci = 3, co = 25;
+    if (v < ci || v > co) return 0;
+    if (v >= vn) return Pn;
+    return Pn * (Math.pow(v, 3) - Math.pow(ci, 3)) / (Math.pow(vn, 3) - Math.pow(ci, 3));
+  }
+  function gamma(x) {
+    var g = [676.5203681218851, -1259.1392167224028, 771.32342877765313,
+             -176.61502916214059, 12.507343278686905, -0.13857109526572012,
+             9.9843695780195716e-6, 1.5056327351493116e-7];
+    if (x < 0.5) return Math.PI / (Math.sin(Math.PI * x) * gamma(1 - x));
+    x -= 1;
+    var a = 0.99999999999980993, t = x + 7.5;
+    for (var i = 0; i < g.length; i++) a += g[i] / (x + i + 1);
+    return Math.sqrt(2 * Math.PI) * Math.pow(t, x + 0.5) * Math.exp(-t) * a;
+  }
+  function t5() {
+    var gen = $('a5t').value === 'genel';
+    $('a5gw').hidden = !gen;
+    var vb = num('a5v'), k = num('a5k'), loss = num('a5l') / 100;
+    var Pn = gen ? num('a5pn') : 2500;
+    var vn = gen ? num('a5vn') : 13.5;
+    if (k < 1.05) k = 1.05;
+    var c = vb / gamma(1 + 1 / k);
+    var dv = 0.25, E = 0, bins = {}, tot = 0;
+    for (var v = dv / 2; v <= 30; v += dv) {
+      var f = (k / c) * Math.pow(v / c, k - 1) * Math.exp(-Math.pow(v / c, k));
+      var P = gen ? pGen(v, Pn, vn) : pN90(v);
+      var e = f * P * dv * 8760 / 1000;
+      E += e;
+      var b = Math.min(24, Math.floor(v / 3) * 3);
+      bins[b] = (bins[b] || 0) + e;
+      tot += e;
+    }
+    var net = E * (1 - loss);
+    var kf = Pn > 0 ? net / (Pn / 1000 * 8760) * 100 : 0;
+    set('a5o1', net, 0); set('a5o2', E, 0);
+    set('a5o3', kf, 1);
+    set('a5o4', Pn > 0 ? net / (Pn / 1000) : 0, 0);
+    set('a5o5', c, 2);
+    set('a5o6', net * 1000 / 3000, 0);
+    var rows = '';
+    for (var b2 = 0; b2 <= 24; b2 += 3) {
+      var val = bins[b2] || 0;
+      var pct = tot > 0 ? val / tot * 100 : 0;
+      rows += '<div class="wbar"><span>' + b2 + '&ndash;' + (b2 + 3) + '</span>' +
+              '<span class="t"><i style="width:' + pct.toFixed(1) + '%"></i></span>' +
+              '<span class="v">%' + fmt(pct, 1) + '</span></div>';
+    }
+    $('a5bars').innerHTML = rows;
+    var m = [];
+    if (kf >= 40) m.push('Bu rüzgâr kaynağı <b>çok güçlü</b> — bu sınıfta bir kapasite faktörü karada nadirdir.');
+    else if (kf >= 32) m.push('Sonuç <b>iyi bir kara sahası</b> profiline uyuyor.');
+    else if (kf >= 24) m.push('Sonuç <b>orta düzey</b> bir saha profiline uyuyor.');
+    else m.push('Bu kapasite faktörü <b>zayıf</b> bir rüzgâr kaynağına işaret ediyor; ticari yatırım için genelde yetersizdir.');
+    m.push('Kayıp olarak %' + fmt(loss * 100, 1) + ' düşüldü. Weibull ölçek parametresi c = ' + fmt(c, 2) + ' m/s.');
+    if (gen) m.push('<b>Genel model</b> seçili: güç eğrisi 3 m/s devreye girme, ' + fmt(vn, 1) + ' m/s anma ve 25 m/s devreden çıkma hızıyla kübik olarak yaklaştırıldı — gerçek bir katalog eğrisi değildir.');
+    $('a5v1').innerHTML = m.join(' ');
+  }
+  link('a5v', 'a5vr', t5); link('a5k', 'a5kr', t5);
+  on(['a5t', 'a5l', 'a5pn', 'a5vn'], t5);
+
+  /* 06 tork */
+  function t6() {
+    var dp = $('a6d').value.split('|');
+    var d = parseFloat(dp[0]), As = parseFloat(dp[1]);
+    var cls = $('a6c').value;
+    var Rp, Rm;
+    if (cls === '8.8') { Rp = d > 16 ? 660 : 640; Rm = 800; }
+    else if (cls === '10.9') { Rp = 940; Rm = 1040; }
+    else { Rp = 1100; Rm = 1220; }
+    var K = parseFloat($('a6k').value);
+    var u = num('a6u') / 100;
+    var F = u * As * Rp;
+    var T = K * (d / 1000) * F;
+    set('a6o1', T, 0);
+    set('a6o2', F / 1000, 0);
+    set('a6o3', As, 1);
+    set('a6o4', Rp, 0);
+    set('a6o5', As * Rm / 1000, 0);
+    set('a6o6', 0.20 * (d / 1000) * F, 0);
+    var Tk = 0.20 * (d / 1000) * F, Ty = 0.10 * (d / 1000) * F;
+    var m = ['Aynı ön yüklemeye ulaşmak için gereken tork, kuru bağlantıda <b>' + fmt(Tk, 0) +
+             ' Nm</b>, çok iyi yağlanmış bir bağlantıda <b>' + fmt(Ty, 0) +
+             ' Nm</b>. Aradaki iki kat fark, torkun neden tek başına güvenilir bir ölçü olmadığını gösteriyor.'];
+    if (u > 0.8) m.push('Girdiğiniz ön yükleme oranı <b>tork ile sıkma için yüksek</b>; bu seviye ancak gerdirme veya cıvata uzaması ölçümüyle güvenli biçimde hedeflenir.');
+    m.push('Gerçek ön yükleme, aynı torkta dahi <b>&plusmn;%25</b> saçılabilir.');
+    $('a6v1').innerHTML = m.join(' ');
+  }
+  link('a6u', 'a6ur', t6);
+  on(['a6d', 'a6c', 'a6k'], t6);
+
+  t1(); t2(); t3(); t4(); t5(); t6();
+})();
+</script>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script>
+(function () {
+  'use strict';
+  var ALAN = {
+    a1: ['a1d','a1n','a1v'],
+    a2: ['a2d','a2v','a2t','a2h','a2cp'],
+    a3: ['a3v1','a3h1','a3h2','a3z'],
+    a4: ['a4p','a4e','a4s','a4sh'],
+    a5: ['a5t','a5v','a5k','a5l','a5pn','a5vn'],
+    a6: ['a6d','a6c','a6k','a6u']
+  };
+
+  // 1) adresteki değerleri forma yaz
+  var p = new URLSearchParams(location.search);
+  var yazildi = false;
+  Object.keys(ALAN).forEach(function (a) {
+    ALAN[a].forEach(function (id) {
+      if (!p.has(id)) return;
+      var e = document.getElementById(id);
+      if (!e) return;
+      var d = p.get(id);
+      if (e.tagName === 'SELECT') {
+        var uyar = Array.prototype.some.call(e.options, function (o) { return o.value === d; });
+        if (!uyar) return;
+      }
+      e.value = d;
+      var ayna = document.getElementById(id + 'r');
+      if (ayna) ayna.value = d;
+      yazildi = true;
+    });
+  });
+  if (yazildi) {
+    ['a1d','a2d','a3v1','a4p','a5t','a6d'].forEach(function (id) {
+      var e = document.getElementById(id);
+      if (e) e.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    // seçim kutuları 'input' yerine 'change' de dinliyor olabilir
+    ['a3z','a4s','a5t','a6d','a6c','a6k'].forEach(function (id) {
+      var e = document.getElementById(id);
+      if (e) e.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
+
+  // 2) linki kopyala
+  Array.prototype.forEach.call(document.querySelectorAll('.paydug'), function (d) {
+    d.addEventListener('click', function () {
+      var a = d.getAttribute('data-arac');
+      var q = new URLSearchParams();
+      ALAN[a].forEach(function (id) {
+        var e = document.getElementById(id);
+        if (e && e.value !== '') q.set(id, e.value);
+      });
+      var url = location.origin + location.pathname + '?' + q.toString() + '#' + d.getAttribute('data-hash');
+      var msg = document.getElementById('paymsg-' + a);
+      function bitti(t) { msg.textContent = t; setTimeout(function () { msg.textContent = ''; }, 2600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { bitti('Kopyalandı'); },
+                                                function () { bitti('Kopyalanamadı'); });
+      } else {
+        var t = document.createElement('textarea');
+        t.value = url; document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); bitti('Kopyalandı'); }
+        catch (e) { bitti('Kopyalanamadı'); }
+        t.remove();
+      }
+    });
+  });
+})();
+</script>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

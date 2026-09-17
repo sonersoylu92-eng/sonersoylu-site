@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rüzgâr Türbini Teknisyenliği — Sahadan Rehber | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbini servis teknisyeni nasıl olunur? GWO sertifikaları, sahada bir günün gerçeği, türbinin çalışma prensibi ve yaygın arızalar. 2013'ten beri sahada çalışan bir teknisyenin kaleminden.">
+<link rel="canonical" href="https://sonersoylu.com/rehber/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Rüzgâr Türbini Teknisyenliği — Sahadan Rehber">
+<meta property="og:description" content="Mesleğe giriş, GWO sertifikaları, sahada bir gün, türbinin çalışma prensibi ve yaygın arızalar. Sahadan yazılmış rehber.">
+<meta property="og:url" content="https://sonersoylu.com/rehber/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-rehber.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/rehber/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/guide/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+.g-hero{padding:4rem 0 2.5rem}
+.g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.g-meta{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+.toc{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.5rem 1.6rem;margin-top:3rem}
+.toc p{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.toc ol{margin-top:1rem;display:grid;gap:.15rem;counter-reset:t}
+.toc li{counter-increment:t}
+.toc a{display:flex;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.9375rem;transition:color .2s}
+.toc li:last-child a{border-bottom:0}
+.toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;color:var(--muted);padding-top:.28rem}
+.toc a:hover{color:var(--beacon)}
+
+.prose{max-width:68ch}
+.prose h2{font-size:1.75rem;letter-spacing:-.035em;margin-top:0}
+.prose h3{margin-top:2.75rem;font-size:1.125rem;font-weight:500;letter-spacing:-.015em}
+.prose p{margin-top:1.15rem;font-size:1rem;line-height:1.78;color:var(--ink)}
+.prose p.dim{color:var(--muted)}
+.prose ul.bul{margin-top:1.15rem;display:grid;gap:.7rem}
+.prose ul.bul li{position:relative;padding-left:1.4rem;font-size:1rem;line-height:1.7;color:var(--ink)}
+.prose ul.bul li::before{content:"";position:absolute;left:0;top:.62em;width:.375rem;height:.375rem;background:var(--beacon)}
+.prose ul.bul li b{font-weight:500}
+.prose a.inl{border-bottom:1px solid var(--beacon);transition:color .2s}
+.prose a.inl:hover{color:var(--beacon)}
+.prose .callout{margin-top:2rem;border-left:2px solid var(--beacon);background:var(--surface);padding:1.15rem 1.35rem}
+.prose .callout p{margin-top:0;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.prose .callout p+p{margin-top:.8rem}
+.prose .callout b{color:var(--ink);font-weight:400}
+
+.gsec{border-top:1px solid var(--line);padding:4.5rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2.5rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+
+.cards{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.cards>div{background:var(--surface);padding:1.4rem 1.5rem}
+.cards dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.cards dd{margin-top:.6rem;font-size:.9375rem;line-height:1.65;color:var(--ink)}
+
+.steps{margin-top:2rem;border-top:1px solid var(--line)}
+.steps li{display:grid;gap:.5rem;padding:1.5rem 0;border-bottom:1px solid var(--line)}
+.steps .n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--beacon)}
+.steps h4{font-size:1.0625rem;font-weight:500;letter-spacing:-.015em}
+.steps p{font-size:.9375rem;line-height:1.7;color:var(--muted);max-width:62ch}
+
+.faq{border-top:1px solid var(--line);margin-top:2rem}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:1.25rem 0;display:flex;gap:1rem;align-items:baseline;font-size:1rem;color:var(--ink);transition:color .2s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--muted);transition:transform .2s}
+.faq details[open] summary::after{content:"–"}
+.faq summary:hover{color:var(--beacon)}
+.faq .a{padding:0 0 1.5rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+
+.offer{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:2rem 1.5rem}
+.offer h3{font-size:1.375rem;letter-spacing:-.025em;font-weight:500}
+.offer p{margin-top:1rem;max-width:56ch;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.offer ul{margin-top:1.5rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.offer ul li{background:var(--surface);padding:1rem 1.1rem;font-size:.9375rem;color:var(--ink)}
+.offer ul li span{display:block;margin-top:.3rem;font-size:.8125rem;color:var(--muted)}
+.offer .act{margin-top:1.75rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+
+.sub{border:1px solid var(--line);background:var(--raise);padding:2rem 1.5rem}
+.sub h3{font-size:1.25rem;font-weight:500;letter-spacing:-.02em}
+.sub p{margin-top:.85rem;max-width:52ch;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.sub form{margin-top:1.5rem;display:grid;gap:.7rem}
+.sub input{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--sans);font-size:.9375rem;padding:.85rem 1rem}
+.sub input:focus{outline:2px solid var(--beacon);outline-offset:2px}
+.sub button{border:1px solid var(--beacon);background:var(--beacon);color:#fff;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;padding:.9rem 1.2rem;cursor:pointer;transition:opacity .2s}
+.sub button:hover{opacity:.88}
+.sub .note{margin-top:.9rem;font-size:.75rem;color:var(--muted)}
+.sub .msg{margin-top:.9rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--beacon);min-height:1rem}
+
+.ytbox{display:grid;gap:1.5rem;border:1px solid var(--line);background:var(--surface);padding:1.75rem 1.5rem;box-shadow:var(--shade)}
+.ytbox h3{font-size:1.25rem;font-weight:500;letter-spacing:-.02em}
+.ytbox p{margin-top:.8rem;font-size:.9375rem;line-height:1.7;color:var(--muted);max-width:52ch}
+
+@media (min-width:768px){
+  .g-hero{padding:6rem 0 3rem}
+  .g-hero h1{font-size:3.5rem}
+  .gsec{padding:6rem 0}
+  .cards{grid-template-columns:1fr 1fr}
+  .steps li{grid-template-columns:minmax(0,16rem) minmax(0,1fr);gap:2.5rem;align-items:start}
+  .steps li>div:first-child{display:grid;gap:.4rem}
+  .offer{padding:2.5rem}
+  .offer ul{grid-template-columns:1fr 1fr}
+  .sub{padding:2.5rem}
+  .sub form{grid-template-columns:1fr auto}
+  .ytbox{grid-template-columns:minmax(0,1fr) minmax(0,20rem);align-items:center;padding:2.5rem}
+  .toc ol{grid-template-columns:1fr 1fr;gap:0 2.5rem}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"Rüzgâr türbini teknisyenliği — sahadan rehber","description":"Rüzgâr türbini servis teknisyeni nasıl olunur? GWO sertifikaları, sahada bir gün, türbinin çalışma prensibi ve yaygın arızalar.","inLanguage":"tr","url":"https://sonersoylu.com/rehber/","author":{"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni","url":"https://sonersoylu.com"},"publisher":{"@type":"Person","name":"Soner Soylu"},"about":["Rüzgâr enerjisi","Rüzgâr türbini bakımı","GWO sertifikası","Saha servis teknisyenliği"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Ana sayfa","item":"https://sonersoylu.com/"},
+{"@type":"ListItem","position":2,"name":"Rehber","item":"https://sonersoylu.com/rehber/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Rüzgâr türbini teknisyeni olmak için hangi bölümü okumak gerekir?","acceptedAnswer":{"@type":"Answer","text":"Zorunlu tek bir bölüm yok. Sahada en çok elektrik, elektromekanik, makine, mekatronik ve otomotiv teknolojisi mezunu bulursunuz. Önlisans yeterlidir; lisans şart değil. Belirleyici olan bölüm değil, GWO sertifikaları, İngilizce ve el becerisidir."}},
+{"@type":"Question","name":"GWO sertifikası nedir, kaç yıl geçerlidir?","acceptedAnswer":{"@type":"Answer","text":"GWO (Global Wind Organisation) sektörün ortak güvenlik eğitim standardıdır. Temel paket BST; yüksekte çalışma ve kurtarma, manuel taşıma, yangın farkındalığı ve ilk yardım modüllerinden oluşur. Sertifikalar iki yıl geçerlidir, sonrasında tazeleme eğitimi gerekir."}},
+{"@type":"Question","name":"Rüzgâr türbini teknisyeninin maaşı ne kadar?","acceptedAnswer":{"@type":"Answer","text":"Tek bir rakam vermek yanıltıcı olur. Maaşı belirleyen şeyler: taşeron mu üretici firmada mı çalıştığınız, mekanik ve elektrik yetkinliğine birlikte sahip olup olmadığınız, vardiya ve saha primi, yurt dışı projelere çıkıp çıkmadığınız. Yurt dışı montaj projelerinde günlük harcırahla birlikte gelir belirgin şekilde yükselir."}},
+{"@type":"Question","name":"Kuleye nasıl çıkılır, asansör var mı?","acceptedAnswer":{"@type":"Answer","text":"80 metre ve üzeri kulelerde genelde servis asansörü bulunur ama asansör sadece taşımayı kolaylaştırır; merdiven her zaman yedektir ve düşme durdurucu sistemle çıkılır. Asansör arızalandığında ya da tahliye gerektiğinde 80 metreyi merdivenle inip çıkabilecek durumda olmanız beklenir."}},
+{"@type":"Question","name":"Yükseklik korkusu olan bu işi yapabilir mi?","acceptedAnswer":{"@type":"Answer","text":"Yükseklik korkusu tek başına engel değil; kontrol edilemeyen panik engeldir. GWO yüksekte çalışma eğitimi bunu ölçer. Nacelle içi kapalı bir alandır, asıl zorlanma dış platforma çıkıldığında ve göbek içine girildiğinde yaşanır. Eğitimde zorlanıyorsanız sahada da zorlanırsınız."}},
+{"@type":"Question","name":"Rüzgâr türbini hangi hızda çalışır, ne zaman durur?","acceptedAnswer":{"@type":"Answer","text":"Tipik bir kara türbini 3 m/s civarında devreye girer, 12–14 m/s aralığında nominal gücüne ulaşır ve 25 m/s üzerinde emniyet için kanatları bayrak konumuna alıp durur. Fırtınada türbinin durması arıza değil, tasarımın gereğidir."}}
+]}]}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+<style>
+.reklam-yuvasi{margin:3.5rem auto}
+.reklam-etiket{font-family:var(--mono);font-size:.6875rem;text-transform:uppercase;
+ letter-spacing:.16em;color:var(--muted);margin:0 0 .6rem}
+.reklam-yuvasi ins{display:block}
+</style>
+</head><body>
+<a class="skip" href="#top">İçeriğe geç</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak" aria-current="true">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/" aria-current="true">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <a class="lang" href="/en/guide/" hreflang="en" lang="en" title="English">EN</a>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/" aria-current="true">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+
+<main id="top">
+
+<section class="wrap g-hero">
+  <a class="g-back" href="/"><span aria-hidden="true">←</span> Ana sayfa</a>
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem;margin-top:2rem"><span class="beacon"></span>Sahadan rehber</p>
+  <h1>Rüzgâr türbini teknisyenliği</h1>
+  <p class="lede">Bu mesleğe girmek isteyen çok insan var, ama internette bulduğunuz yazıların çoğu sahayı görmemiş kişiler tarafından yazılmış. Ben 2013'ten beri kule dibindeyim: Enercon, Nordex, Nordex Acciona ve Vestas türbinlerinde montaj, <a class="sz" href="/sozluk/#t-periyodik-bakim" title="Periyodik bakım — sözlükte">periyodik bakım</a>, arıza giderme ve <a class="sz" href="/sozluk/#t-devreye-alma" title="Devreye alma — sözlükte">devreye alma</a> yaptım. Aşağıdakiler o yılların özeti — süslemeden.</p>
+  <p class="g-meta"><span>13 yıl saha</span><span>300+ türbin</span><span>Aliağa &amp; Bergama RES</span><span>Son güncelleme: Eylül 2026</span></p>
+
+  <nav class="toc" aria-label="İçindekiler">
+    <p>İçindekiler</p>
+    <ol>
+      <li><a href="#giris">Mesleğe giriş yolu</a></li>
+      <li><a href="#gun">Sahada bir gün</a></li>
+      <li><a href="#calisma">Türbin nasıl çalışır</a></li>
+      <li><a href="#ariza">Arıza ve bakım</a></li>
+      <li><a href="#sss">Sık sorulan sorular</a></li>
+      <li><a href="#danismanlik">Saha notu ve kanal</a></li>
+    </ol>
+  </nav>
+</section>
+
+<!-- ============================================ 1. MESLEĞE GİRİŞ -->
+<section class="wrap gsec" id="giris">
+  <div class="ghead">
+    <span class="k">Bölüm 01</span>
+    <h2>Mesleğe giriş yolu</h2>
+  </div>
+
+  <div class="prose">
+    <p>Bu işe girmenin tek bir yolu yok. Benimki otomotiv mekanik teknolojisi önlisansından geçti, sonra Enercon'da çelik beton kule montajıyla başladım. Yanımda çalışan arkadaşlarım elektrik, elektromekanik, makine, mekatronik mezunuydu. Bazıları hiç bu bölümleri okumadan, gemi sanayiinden ya da endüstriyel bakımdan geldi.</p>
+    <p>Belirleyici olan diplomanın adı değil. Üç şeye bakılır: yüksekte çalışabiliyor musunuz, elinizle iş yapabiliyor musunuz, teknik İngilizceyi okuyabiliyor musunuz.</p>
+
+    <h3>Hangi eğitim işe yarar</h3>
+    <ul class="bul">
+      <li><b>Elektrik / elektromekanik:</b> <a class="sz" href="/sozluk/#t-konvertor" title="Konvertör — sözlükte">Konvertör</a>, pano, koruma röleleri ve arıza tespitinde en hızlı ilerleyen grup. Uzun vadede en çok kapı açan alan.</li>
+      <li><b>Makine / mekatronik:</b> Gear box, yataklar, hidrolik, tork ve <a class="sz" href="/sozluk/#t-gerdirme" title="Gerdirme — sözlükte">gerdirme</a> işleri. Büyük bileşen değişimlerinde aranan profil.</li>
+      <li><b>Otomotiv / endüstriyel bakım:</b> El becerisi ve arıza mantığı hazır gelir. Benim geldiğim yol bu.</li>
+      <li><b>Lisans şart değil:</b> Sahada önlisans mezunu çok teknisyen var. Lisans, ilerleyen yıllarda saha yöneticiliği veya mühendislik tarafına geçmek isterseniz işe yarar.</li>
+    </ul>
+
+    <h3>GWO sertifikaları</h3>
+    <p class="mono" style="margin-bottom:.75rem"><a class="arrow" href="/gwo/">Modül modül GWO: süre, geçerlilik, tazeleme, WINDA <span aria-hidden="true">→</span></a></p>
+    <p>GWO (Global Wind Organisation), rüzgâr sektörünün ortak güvenlik eğitim standardı. Sertifikasız bir sahaya giremezsiniz; bu bir formalite değil, giriş biletidir. <a class="sz" href="/sozluk/#t-temel" title="Temel — sözlükte">Temel</a> paket <b>BST</b> (Basic Safety Training) dört modülden oluşur:</p>
+    <ul class="bul">
+      <li><b>Yüksekte çalışma ve kurtarma:</b> Emniyet kemeri, <a class="sz" href="/sozluk/#t-dusme-durdurucu" title="Düşme durdurucu — sözlükte">düşme durdurucu</a>, ankraj noktaları ve en önemlisi — yaralı bir arkadaşınızı nacelle'den nasıl indireceğiniz.</li>
+      <li><b>Manuel taşıma:</b> Dar alanda ağır parça taşımanın doğru tekniği. Sırtınızı bu meslekte erken yakmamanın yolu.</li>
+      <li><b>Yangın farkındalığı:</b> Nacelle içinde yangın, kaçış yolunuzun 80 metre altında olması demektir. Bu modülü hafife alan olmaz.</li>
+      <li><b>İlk yardım:</b> En yakın ambulansın 40 dakika uzakta olduğu bir tepede, ilk müdahaleyi siz yaparsınız.</li>
+    </ul>
+    <p>Denizüstü projelere gidecekseniz <b>Sea Survival</b> modülü eklenir. Sertifikalar <b>iki yıl</b> geçerlidir; sonrasında tazeleme (BST-R) eğitimi alınır. Teknik tarafta <b>BTT</b> (Basic Technical Training) paketi var: mekanik, elektrik, hidrolik, cıvata gerdirme ve montaj modülleri. BTT zorunlu değil ama özgeçmişinizi rakiplerinizden ayırır.</p>
+    <p>Türkiye'de GWO eğitimi veren akredite merkezler İzmir, İstanbul ve Ankara'da bulunuyor. Eğitimi kendiniz almadan önce şunu bilin: <b>bazı firmalar işe aldıkları kişinin eğitimini kendileri karşılıyor.</b> Önce iş görüşmelerine girin, sertifikayı cebinizden ödemeden önce sorun.</p>
+
+    <div class="callout">
+      <p><b>Dikkat edilecek bir nokta.</b> Sertifika satan yerlerle eğitim veren yerler aynı şey değil. Bir günde &quot;yüksekte çalışma&quot; belgesi veren kurumdan aldığınız kâğıt, sahada kule dibinde işinize yaramaz. Kurtarma senaryosunu gerçekten uygulatan, kuleye benzer bir kule maketinde çalıştıran merkezleri tercih edin.</p>
+    </div>
+
+    <h3>Fiziksel ve idari şartlar</h3>
+    <ul class="bul">
+      <li><b>Sağlık raporu:</b> Yüksekte çalışmaya elverişli olduğunuzu gösteren rapor. Denge, kalp ve tansiyon değerlerine bakılır.</li>
+      <li><b>Kilo sınırı:</b> Emniyet ekipmanı ve kurtarma sistemleri belli bir kilo aralığına göre sertifikalıdır. Çoğu sahada üst sınır 100–110 kg civarındadır.</li>
+      <li><b>Ehliyet:</b> B sınıfı ehliyet neredeyse zorunlu. Saha içi ulaşımı çoğu zaman kendiniz yaparsınız.</li>
+      <li><b>İngilizce:</b> Servis dokümanları, hata kodları ve üretici bültenleri İngilizcedir. Konuşmanız şart değil ama <b>okumanız şart.</b></li>
+      <li><b>Askerlik:</b> Yurt dışı projelere çıkacaksanız tamamlanmış olması beklenir.</li>
+    </ul>
+
+    <h3>İlk işe nasıl girilir</h3>
+    <p class="mono" style="margin-bottom:.75rem"><a class="arrow" href="/nasil-olunur/">Sıfırdan başlayana 12 aylık yol haritası <span aria-hidden="true">→</span></a></p>
+    <ol class="steps">
+      <li>
+        <div><span class="n">Adım 01</span><h4>Doğru firmayı hedefleyin</h4></div>
+        <p>İki tür işveren var: türbin üreticisinin kendi servis organizasyonu (Enercon, Nordex, Vestas, Siemens Gamesa) ve santral sahibi ya da taşeron servis firmaları. Üretici tarafı daha kurumsal ve eğitimlidir; taşeron tarafı daha hızlı iş verir ama sizi daha çabuk yıpratır. Yeni başlıyorsanız girebildiğiniz yerden başlayın, iki yıl sonra seçici olabilirsiniz.</p>
+      </li>
+      <li>
+        <div><span class="n">Adım 02</span><h4>Montaj sezonunu kaçırmayın</h4></div>
+        <p>Kurulum projeleri toplu alım yapar ve genelde ilkbahar–sonbahar arasında yoğunlaşır. Montaj ekiplerine giriş, servis ekiplerine girmekten kolaydır ve size en hızlı sahayı öğretir. Ben de oradan başladım.</p>
+      </li>
+      <li>
+        <div><span class="n">Adım 03</span><h4>Özgeçmişi teknisyen gibi yazın</h4></div>
+        <p>&quot;Takım çalışmasına yatkın&quot; yazmayın. Hangi markanın hangi modelinde ne yaptığınızı yazın: tork değeri uyguladıysanız, kanat kontrolü yaptıysanız, konvertör kartı değiştirdiyseniz onu yazın. Sertifikalarınızı ve geçerlilik tarihlerini üste koyun.</p>
+      </li>
+      <li>
+        <div><span class="n">Adım 04</span><h4>İlk yıl her işi yapın</h4></div>
+        <p>Yeni gelen kişiye önce temizlik, yağlama, cıvata kontrolü ve malzeme taşıma verilir. Bunu küçümseyenler ilerlemiyor. Yağ değişimini yaparken gear box'ın nasıl çalıştığını sorun, tork uygularken neden o değer olduğunu öğrenin. Sahada ilerleme soru sormakla olur.</p>
+      </li>
+      <li>
+        <div><span class="n">Adım 05</span><h4>Uzmanlığınızı seçin</h4></div>
+        <p>İki üç yıl sonra bir yöne kayarsınız: elektrik arıza, <a class="sz" href="/sozluk/#t-buyuk-bilesen-degisimi" title="Büyük bileşen değişimi — sözlükte">büyük bileşen değişimi</a>, kanat, devreye alma ya da saha yöneticiliği. Hem mekanik hem elektrik yapabilen teknisyen sayısı azdır ve bu ikisini birden bilenin pazarlık gücü yüksektir.</p>
+      </li>
+    </ol>
+
+    <h3>Maaş konusunda dürüst konuşalım</h3>
+<p class="mono" style="margin-bottom:.75rem"><a class="arrow" href="/maas/">Teklif okuyucu: paketin ne kadarı sabit <span aria-hidden="true">→</span></a></p>
+    <p>İnternette gördüğünüz maaş rakamlarına güvenmeyin; çoğu kopyala-yapıştır ve güncelliğini kaybetmiş. Rakam vermek yerine <b>maaşı neyin belirlediğini</b> söyleyeyim, kendi teklifinizi buna göre okursunuz:</p>
+    <ul class="bul">
+      <li><b>Üretici mi taşeron mu:</b> Aynı işi yapan iki kişi arasında ciddi fark olabilir.</li>
+      <li><b>Çift yetkinlik:</b> Mekanik ve elektriği birlikte yapabilmek en büyük kaldıraç.</li>
+      <li><b>Saha primi ve vardiya:</b> Baz maaş yanıltıcıdır; yol, konaklama, yemek ve saha primiyle birlikte hesaplayın.</li>
+      <li><b>Yurt dışı projeler:</b> Avrupa montaj projelerinde günlük harcırah tabloyu tamamen değiştirir. Benim Danimarka ve Avrupa sahalarındaki dönemim böyleydi.</li>
+      <li><b>Sertifika seviyesi:</b> BST + BTT + üretici eğitimi olan teknisyen, sadece BST'lisiyle aynı parayı almaz.</li>
+    </ul>
+    <p class="dim">Teklif alırken tek soru sorun: &quot;Bu rakam brüt mü, saha primi dahil mi, konaklama ve yol kime ait?&quot; Cevap net gelmiyorsa dikkatli olun.</p>
+  </div>
+</section>
+
+<!-- ============================================ 2. SAHADA BİR GÜN -->
+<section class="wrap gsec" id="gun">
+  <div class="ghead">
+    <span class="k">Bölüm 02</span>
+    <h2>Sahada bir gün</h2>
+  </div>
+
+  <div class="prose">
+    <p>Bu bölümü kimse yazmıyor çünkü yazmak için orada olmak gerekiyor. Mesleği düşünen birinin gerçekten merak ettiği şeyler bunlar.</p>
+
+    <h3>Gün nasıl başlar</h3>
+    <p>Saha ekipleri genelde erken başlar. İlk iş hava durumudur — ama meteoroloji sitesindeki hava değil, türbinin kendi <a class="sz" href="/sozluk/#t-anemometre" title="Anemometre — sözlükte">anemometresinin</a> okuduğu rüzgâr. Rüzgâr limiti aşıldıysa o gün kuleye çıkılmaz; bu tartışılmaz. Yağış, yıldırım riski ve görüş de aynı listede.</p>
+    <p>Ardından günün iş emri, gerekli yedek parça ve alet listesi çıkarılır. Kule dibine çıkarken unuttuğunuz bir alet için 80 metre inip çıkmak istemezsiniz. Tecrübeli teknisyen, çantasını kuleye girmeden önce iki kez kontrol eder.</p>
+
+    <h3>Kuleye çıkış</h3>
+    <p>80 metre ve üzeri kulelerde genelde <a class="sz" href="/sozluk/#t-servis-asansoru" title="Servis asansörü — sözlükte">servis asansörü</a> bulunur. Ama asansör bir konfor değil, bir kolaylıktır: merdiven her zaman oradadır ve düşme durdurucu ray sistemine bağlanmadan tek bir basamak çıkılmaz. Asansör arızalanırsa ya da tahliye gerekirse 80 metreyi merdivenle inebilecek durumda olmanız beklenir.</p>
+    <p>Kule içi dar, sıcak ve gürültülüdür. Yaz aylarında Ege sahalarında kule içi sıcaklığı dışarıdan yüksektir. Nacelle'e vardığınızda ise rüzgârın uğultusu ve makine sesi vardır; kulak koruyucu isteğe bağlı değildir.</p>
+
+    <h3>LOTO — çalışmanın ilk kuralı</h3>
+    <p>Herhangi bir mekanik ya da elektrik işine başlamadan önce türbin emniyete alınır. <a class="sz" href="/sozluk/#t-rotor-kilidi" title="Rotor kilidi — sözlükte">Rotor kilidi</a> takılır, ilgili şalterler açılır, kilitlenir ve etiketlenir. Anahtarı kim taktıysa o kişide durur; başkası açamaz.</p>
+    <div class="callout">
+      <p><b>Bunu neden bu kadar önemsiyorum:</b> Sektörde yaşanan ağır kazaların büyük kısmı, ekipmanın enerjisiz sanıldığı anlarda oluyor. Rotoru kilitlemeden pitch bölgesine giren birinin ikinci şansı olmayabiliyor. LOTO prosedürü acele işlerde atlanır ve tam o gün bir şey ters gider.</p>
+    </div>
+
+    <h3>Nacelle içinde ne yapılır</h3>
+    <ul class="bul">
+      <li><b>Görsel kontrol:</b> Yağ kaçağı, aşınma tozu, gevşemiş bağlantı, kablo sürtünmesi, korozyon.</li>
+      <li><b>Tork ve gerdirme:</b> Ana bağlantı cıvataları belirli periyotlarla kontrol edilir; hidrolik tork/gerdirme aleti kullanılır.</li>
+      <li><b>Yağlama:</b> Yataklar, pitch dişlileri ve yaw dişlileri gres programına göre yağlanır.</li>
+      <li><b>Filtre ve yağ değişimi:</b> Gear box yağı ve filtreleri periyodik olarak değişir; numune alınıp analize gönderilir.</li>
+      <li><b>Elektrik kontrolleri:</b> Pano sıkma kontrolü, termal kontrol, koruma rölesi testleri, hata kaydı okuma.</li>
+      <li><b>Fonksiyon testleri:</b> Yaw, pitch, fren ve acil durdurma testleri; bakım sonunda türbin şebekeye geri verilir.</li>
+    </ul>
+    <p>Bir periyodik bakım, türbin modeline ve ekip sayısına göre genelde bir ile iki gün sürer. Büyük bileşen değişimi (gear box, jeneratör, ana yatak, kanat) ise vinç planlaması, hava penceresi ve lojistikle birlikte günler alan bir operasyondur.</p>
+
+    <h3>Kimsenin sormadığı ama herkesin merak ettiği şeyler</h3>
+    <ul class="bul">
+      <li><b>Tuvalet:</b> Nacelle'de tuvalet yok. Kuleye çıkmadan halledilir. Bu, gün içinde ne kadar su içeceğinizi de belirler — ama sıcak günlerde az su içmek daha tehlikelidir, dengeyi kurmayı öğrenirsiniz.</li>
+      <li><b>Yemek:</b> Öğle yemeği çoğu zaman nacelle'de ya da kule dibinde yenir. Aşağı inip tekrar çıkmak bir saatinizi alır.</li>
+      <li><b>Telefon:</b> Bazı sahalarda çeker, bazılarında çekmez. Ekip içi iletişim telsizle yürür.</li>
+      <li><b>Yalnızlık:</b> Kuleye asla tek başınıza çıkmazsınız — en az iki kişi. Bu kural kurtarma senaryosundan gelir.</li>
+      <li><b>Hareket:</b> Nacelle rüzgârda salınır. İlk seferinde tuhaf gelir, sonra fark etmez olursunuz.</li>
+      <li><b>Gece çalışması:</b> Şebeke kesintisi ya da kritik arızada gece de çıkılır. Kuleden gece bakınca Ege'nin üstündeki gökyüzü, bu işin kimsenin anlatmadığı tarafı.</li>
+    </ul>
+
+    <h3>Vardiya, izin ve hayat düzeni</h3>
+    <p>Saha çalışması normal bir ofis düzeni değildir. Bazı projelerde 20 gün çalışıp 10 gün izin gibi rotasyonlar olur; bazı sahalarda standart mesai artı nöbet düzeni vardır. Yurt dışı montaj projelerinde haftalarca evden uzak kalırsınız.</p>
+    <p>Bu mesleğin en çok konuşulmayan zorluğu yükseklik değil, <b>hayat düzeni</b>. Buna karar verirken kendinize değil, evinizdeki insanlara da sorun.</p>
+  </div>
+</section>
+
+<!-- ============================================ 3. TÜRBİN NASIL ÇALIŞIR -->
+<div class="wrap reklam-yuvasi">
+ <p class="reklam-etiket" hidden>Reklam</p>
+ <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-2186651222559424"
+      data-ad-slot="8003801416"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+ <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<section class="wrap gsec" id="calisma">
+  <div class="ghead">
+    <span class="k">Bölüm 03</span>
+    <h2>Türbin nasıl çalışır</h2>
+  </div>
+
+  <div class="prose">
+    <p>Rüzgâr türbini, adının çağrıştırdığı gibi rüzgârın kanadı &quot;itmesiyle&quot; dönmez. Kanat bir uçak kanadıdır; rüzgâr profilin iki yüzeyinden farklı hızlarda geçer, oluşan basınç farkı bir <b>kaldırma kuvveti</b> yaratır ve rotoru döndürür. Bu yüzden kanat kesiti kökten uca doğru burularak incelir: her yarıçapta rüzgârın kanada göreli açısı farklıdır.</p>
+
+    <dl class="cards">
+      <div><dt>Rüzgârdan güce</dt><dd>Havanın taşıdığı güç, hızın <b>küpüyle</b> artar. Rüzgâr iki katına çıkınca güç sekiz katına çıkar. Sahada &quot;bugün rüzgâr biraz arttı&quot; demenin karşılığı budur.</dd></div>
+      <div><dt>Betz sınırı</dt><dd>Hiçbir türbin rüzgârdaki enerjinin tamamını alamaz; teorik üst sınır yaklaşık <b>%59</b>'dur. Modern türbinler pratikte %45–50 civarında verim yakalar.</dd></div>
+      <div><dt>Pitch</dt><dd>Kanatların kendi ekseni etrafında dönmesi. Nominal gücün üstünde fazla enerjiyi &quot;kaçırmak&quot; ve durdurmada kanadı bayrağa almak için kullanılır. Asıl fren budur.</dd></div>
+      <div><dt>Yaw</dt><dd>Makine dairesinin rüzgâra dönmesi. Sapma açısı anemometreden okunur; motorlar nacelle'i saniyede yarım derece civarında çevirir.</dd></div>
+    </dl>
+
+    <h3>Enerjinin izlediği yol</h3>
+    <ol class="steps">
+      <li><div><span class="n">01</span><h4>Kanat ve göbek</h4></div><p>Kaldırma kuvveti rotoru döndürür. Kara türbinlerinde rotor devri dakikada 10–20 tur arasındadır. Kanat ucu ise saniyede 70–90 metreye ulaşır; yani ucu neredeyse 300 km/s hızla hareket eder.</p></li>
+      <li><div><span class="n">02</span><h4>Ana şaft ve ana yatak</h4></div><p>Rotorun bütün ağırlığı ve eğilme momenti buradan geçer. Kendinden hizalamalı makaralı yatak, şaftın küçük açısal sapmalarını tolere eder.</p></li>
+      <li><div><span class="n">03</span><h4>Dişli kutusu</h4></div><p>Düşük devir yüksek devre çıkar. Planet kademeleri ve bir alın dişli kademesiyle çevrim oranı 1:70–1:100 aralığındadır. Türbinin en pahalı ve en hassas parçası; yağ analizi bu yüzden ciddiye alınır.</p></li>
+      <li><div><span class="n">04</span><h4>Jeneratör</h4></div><p>Çift beslemeli asenkron ya da sabit mıknatıslı senkron tipler yaygındır. Çift beslemeli tipte rotor sargısı dönüştürücüden beslenir, böylece rüzgâr değişirken devir belli bir aralıkta serbest kalır ama şebeke frekansı sabit kalır.</p></li>
+      <li><div><span class="n">05</span><h4>Dönüştürücü ve trafo</h4></div><p>Üretilen gerilim (çoğu türbinde 400–690 V) trafo ile orta gerilime yükseltilir, saha içi hatlarla şalt sahasına, oradan şebekeye verilir.</p></li>
+      <li><div><span class="n">06</span><h4>Kontrol sistemi</h4></div><p>Rüzgârı ölçer, pitch ve yaw'ı yönetir, sınırları aşınca durdurur, arıza kaydı tutar ve SCADA üzerinden merkeze rapor verir. Sahaya çıkmadan önce bir teknisyenin ilk baktığı yer burasıdır.</p></li>
+    </ol>
+
+    <h3>Devreye giriş, nominal ve kesme</h3>
+    <p>Tipik bir kara türbini <b>3 m/s</b> civarında dönmeye başlar, <b>12–14 m/s</b> aralığında nominal gücüne ulaşır ve <b>25 m/s</b> üzerinde durur. Fırtınada türbinlerin durmasını çoğu insan arıza sanır; halbuki bu tasarımın gereğidir. Nominal güce ulaştıktan sonra rüzgâr artmaya devam etse de üretim sabit kalır — fazlası pitch ile kaçırılır.</p>
+
+    <div class="callout">
+      <p><b>Bunu ekranda görmek isterseniz:</b> Nordex N90/2500 türbininin gerçek ölçülerle çıkardığım 3B modelinde rüzgâr hızını kaydırıcıyla değiştirebilir, rotorun o hıza karşılık gelen gerçek devirde dönüşünü ve güç eğrisi üzerindeki yerini görebilirsiniz. Aynı sayfada dişli kutusundan yaw motoruna kadar parçalara tıklayıp ne işe yaradıklarını okuyabilirsiniz.</p>
+      <p><a class="inl" href="/n90/">3B türbin modelini aç →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ 4. ARIZA VE BAKIM -->
+<section class="wrap gsec" id="ariza">
+  <div class="ghead">
+    <span class="k">Bölüm 04</span>
+    <h2>Arıza ve bakım</h2>
+  </div>
+
+  <div class="prose">
+    <p>Bir türbin yılda birkaç bin saat çalışır ve bu süre boyunca değişken yük altındadır. Arızaların çoğu ansızın olmaz; sinyal verir. İyi teknisyen o sinyali erken okuyandır.</p>
+
+    <h3>Bakım türleri</h3>
+    <ul class="bul">
+      <li><b>Alıştırma bakımı:</b> Devreye almadan sonraki ilk dönemde yapılır. Cıvata torkları, yağ durumu ve titreşim tekrar kontrol edilir. Erken dönemde yakalanan hata, beş yıl sonraki büyük bileşen arızasını önler.</li>
+      <li><b>Periyodik bakım:</b> Genelde yılda bir ya da altı ayda bir. Görsel kontrol, yağlama, tork kontrolü, filtre ve yağ değişimi, elektrik testleri.</li>
+      <li><b>Beş yıllık büyük bakım:</b> Daha kapsamlı kontroller, endoskopik dişli kutusu incelemesi, kanat detay kontrolü.</li>
+      <li><b>Arıza bakımı:</b> Plansız. Türbin durur, ekip çıkar, arıza bulunur ve giderilir. İşin adrenalini de yorgunluğu da buradadır.</li>
+      <li><b>Durum izleme (CMS):</b> Titreşim ve sıcaklık sensörleriyle sürekli izleme. Yatak hasarını aylar öncesinden haber verebilir.</li>
+    </ul>
+
+    <h3>Sık karşılaşılan arızalar ve kök nedenleri</h3>
+
+    <dl class="cards">
+      <div><dt>Dişli kutusu hasarı</dt><dd>En pahalı arıza. Kök nedeni genelde yağ değil, <b>yük dalgalanması ve hizalama</b>. Yağ analizinde demir partikülünün artışı, endoskopide diş yüzeyindeki mikro çukurlaşma erken uyarıdır.</dd></div>
+      <div><dt>Ana yatak aşınması</dt><dd>Gres programının aksaması ve kirlenme başlıca sebep. Ses ve titreşim değişimi ilk belirti; ihmal edilirse rotor sökümü gerektiren bir işe dönüşür.</dd></div>
+      <div><dt>Pitch sistemi arızası</dt><dd>Akü/enerji depolama ünitesinin yaşlanması, slip ring kirlenmesi, encoder hatası. Pitch aynı zamanda aerodinamik fren olduğu için bu grup arızalar <b>emniyet kritiktir</b>, türbin kendini durdurur.</dd></div>
+      <div><dt>Yaw hatası</dt><dd>Motor, redüktör ya da yaw yatağı kaynaklı. Sürekli sapma açısı hatası, hem üretim kaybı hem de rotorda asimetrik yük demektir.</dd></div>
+      <div><dt>Konvertör ve pano arızaları</dt><dd>IGBT modülü, soğutma sistemi, gevşek bağlantıdan doğan ısınma. Termal kamerayla yapılan periyodik kontrol bunların çoğunu önler.</dd></div>
+      <div><dt>Kanat hasarı</dt><dd>Yağmur erozyonu, yıldırım, jelkot çatlağı, yapışma hattı ayrılması. Uçtaki erozyon önce verimi düşürür, sonra yapısal soruna döner.</dd></div>
+      <div><dt>Sıcaklık kaynaklı derating</dt><dd>Yaz aylarında yağ, jeneratör ya da konvertör sıcaklığı sınıra dayanınca kontrol sistemi gücü kendi kısar. Arıza değil koruma; ama soğutucu kirliyse gereksiz üretim kaybıdır.</dd></div>
+      <div><dt>Buzlanma</dt><dd>Kanat üzerinde buz, hem dengesizlik hem de buz atma riski demektir. Türbin titreşim ve güç eğrisi sapmasından bunu anlayıp durur. Kış aylarında yüksek rakımlı sahaların ana konusudur.</dd></div>
+      <div><dt>Nacelle yangını</dt><dd>Nadir ama en ağır sonuçlu olay. Kaynağı çoğunlukla elektriksel ark, aşırı ısınan fren balatası ya da sıcak yüzeye temas eden yağ. Yangın algılama ve söndürme sistemlerinin testi, hiçbir bakımda atlanmamalı.</dd></div>
+    </dl>
+
+    <h3>Arızaya nasıl yaklaşılır</h3>
+    <ol class="steps">
+      <li><div><span class="n">01</span><h4>Önce kaydı okuyun</h4></div><p>Kuleye çıkmadan SCADA'daki hata kodunu, öncesindeki sıcaklık ve güç eğrisini inceleyin. Arıza anının değil, arıza <b>öncesinin</b> verisi asıl bilgiyi verir.</p></li>
+      <li><div><span class="n">02</span><h4>Emniyete alın</h4></div><p>LOTO uygulanmadan hiçbir kapak açılmaz. Acele ettiğiniz gün kaza olur.</p></li>
+      <li><div><span class="n">03</span><h4>Belirtiyi değil nedeni arayın</h4></div><p>Yanan sigortayı değiştirmek arıza gidermek değildir. Neden yandığını bulmazsanız aynı türbine iki hafta sonra tekrar çıkarsınız.</p></li>
+      <li><div><span class="n">04</span><h4>Yazın</h4></div><p>Ne buldunuz, ne yaptınız, hangi değeri ölçtünüz. İyi tutulmuş bir servis raporu, üç yıl sonra o türbine çıkacak başka bir teknisyenin en değerli aletidir.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================ SSS -->
+<section class="wrap gsec" id="sss">
+  <div class="ghead">
+    <span class="k">Bölüm 05</span>
+    <h2>Sık sorulan sorular</h2>
+  </div>
+  <div class="faq">
+    <details><summary>Rüzgâr türbini teknisyeni olmak için hangi bölümü okumak gerekir?</summary><div class="a">Zorunlu tek bir bölüm yok. Sahada en çok elektrik, elektromekanik, makine, mekatronik ve otomotiv teknolojisi mezunu bulursunuz. Önlisans yeterlidir, lisans şart değil. Belirleyici olan bölüm değil; GWO sertifikaları, teknik İngilizce ve el becerisidir.</div></details>
+    <details><summary>GWO sertifikası nedir, kaç yıl geçerlidir?</summary><div class="a">GWO, rüzgâr sektörünün ortak güvenlik eğitim standardıdır. Temel paket BST dört modülden oluşur: yüksekte çalışma ve kurtarma, manuel taşıma, yangın farkındalığı, ilk yardım. Sertifikalar iki yıl geçerlidir; sonrasında tazeleme (BST-R) eğitimi alınır. Denizüstü için Sea Survival modülü eklenir.</div></details>
+    <details><summary>Sertifikayı kendim mi almalıyım, firma mı karşılar?</summary><div class="a">Bazı firmalar işe aldıkları kişinin eğitim masrafını üstleniyor. Cebinizden ödemeden önce iş görüşmelerinde bunu sorun. Kendiniz alacaksanız akredite ve gerçekten uygulama yaptıran bir merkez seçin.</div></details>
+    <details><summary>Rüzgâr türbini teknisyeninin maaşı ne kadar?</summary><div class="a">Tek bir rakam yanıltıcı olur. Maaşı belirleyenler: üretici firmada mı taşeronda mı çalıştığınız, mekanik ve elektrik yetkinliğine birlikte sahip olup olmadığınız, vardiya ve saha primi, yurt dışı projelere çıkıp çıkmadığınız. Teklif alırken brüt/net, saha primi, konaklama ve yolun kime ait olduğunu net sorun.</div></details>
+    <details><summary>Kuleye nasıl çıkılır, asansör var mı?</summary><div class="a">80 metre ve üzeri kulelerde genelde servis asansörü bulunur, ama merdiven her zaman yedektir ve düşme durdurucu sistemle çıkılır. Asansör arızalandığında ya da tahliye gerektiğinde 80 metreyi merdivenle inip çıkabilecek durumda olmanız beklenir.</div></details>
+    <details><summary>Yükseklik korkusu olan bu işi yapabilir mi?</summary><div class="a">Yükseklik korkusu tek başına engel değil; kontrol edilemeyen panik engeldir. GWO yüksekte çalışma eğitimi bunu ölçer. Nacelle içi kapalı bir alandır; asıl zorlanma dış platforma çıkıldığında ve göbek içine girildiğinde olur. Eğitimde zorlanıyorsanız sahada da zorlanırsınız.</div></details>
+    <details><summary>Fırtınada türbinler neden duruyor?</summary><div class="a">Arıza değil, tasarım. Kesme rüzgârı olan 25 m/s aşıldığında kontrol sistemi kanatları bayrak konumuna alıp rotoru durdurur. Bu, yapısal yükleri sınırlamak için yapılır.</div></details>
+    <details><summary>Kadın teknisyen bu işi yapabilir mi?</summary><div class="a">Yapabilir ve yapıyor. İşin fiziksel tarafı ağır parça taşımaktan çok doğru teknik ve ekipman kullanmakla ilgili. Sahalarda kadın teknisyen sayısı artıyor; asıl engel fiziksel değil, sahaların hâlâ bu duruma tam hazırlıklı olmaması.</div></details>
+    <details><summary>Bu meslek geleceğinde var mı?</summary><div class="a">Türkiye'nin kurulu rüzgâr gücü büyümeye devam ediyor ve mevcut türbinler yaşlanıyor. Yeni kurulumun yanında <b>işletme, bakım ve yenileme</b> tarafında iş hacmi artıyor. Sahayı bilen teknisyen bulmak, sahayı bilmeyen mühendis bulmaktan zor.</div></details>
+  </div>
+</section>
+
+<!-- ============================================ SAHA NOTU VE KANAL -->
+<section class="wrap gsec" id="danismanlik">
+  <div class="ghead">
+    <span class="k">Bölüm 06</span>
+    <h2>Saha notu ve kanal</h2>
+  </div>
+
+  <div style="display:grid;gap:1.5rem;margin-top:1.5rem" class="n90grid">
+    <div class="sub">
+      <h3>Aylık saha notu</h3>
+      <p>Ayda bir, sahadan çıkan bir konuyu yazıyorum: bir arıza vakası, bir bakım detayı, sektörden bir gelişme. Reklam yok, satış yok.</p>
+      <form id="subForm" novalidate>
+        <input type="email" id="subMail" name="email" placeholder="E-posta adresiniz" autocomplete="email" required>
+        <button type="submit">Kaydol</button>
+      </form>
+      <p class="msg" id="subMsg" role="status"></p>
+      <p class="note">Adresiniz üçüncü taraflarla paylaşılmaz. İstediğiniz zaman çıkabilirsiniz.</p>
+    </div>
+
+    <div class="ytbox">
+      <div>
+        <h3>The Turbine Tech</h3>
+        <p>Türbin işini videoyla anlattığım YouTube kanalım. Sahadan görüntüler, ekipman tanıtımları ve mesleğe dair sorular.</p>
+        <p style="margin-top:1.5rem"><a class="arrow" href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer">Kanala git <i>→</i></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap gsec" id="kaynaklar">
+  <div class="ghead">
+    <span class="k">Devam&#305;</span>
+    <h2>Bu sayfay&#305; okuduktan sonra</h2>
+  </div>
+  <div class="cards" style="margin-top:0">
+    <div><dt>S&#246;zl&#252;k</dt><dd>Yukar&#305;da ge&#231;en b&#252;t&#252;n terimlerin T&#252;rk&#231;e&#8211;&#304;ngilizce kar&#351;&#305;l&#305;&#287;&#305; ve k&#305;sa a&#231;&#305;klamas&#305;. 148 terim, aranabilir. <a class="arrow" style="margin-top:.8rem" href="/sozluk/">S&#246;zl&#252;&#287;&#252; a&#231; <i>&#8594;</i></a></dd></div>
+    <div><dt>Hesaplama ara&#231;lar&#305;</dt><dd>Kanat ucu h&#305;z&#305;, kapasite fakt&#246;r&#252;, y&#305;ll&#305;k &#252;retim ve c&#305;vata torku hesab&#305; &mdash; form&#252;lleriyle birlikte. <a class="arrow" style="margin-top:.8rem" href="/araclar/">Ara&#231;lar&#305; a&#231; <i>&#8594;</i></a></dd></div>
+    <div><dt>3B t&#252;rbin modeli</dt><dd>Anlat&#305;lan makinenin temelden kanada a&#351;ama a&#351;ama kurulumu, d&#246;nd&#252;r&#252;lebilir bir modelde. <a class="arrow" style="margin-top:.8rem" href="/n90/">Modeli a&#231; <i>&#8594;</i></a></dd></div>
+  </div>
+</section>
+<section class="wrap gsec" id="iletisim">
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>İletişim</p>
+  <p class="big" style="margin-top:1.5rem">Bana ulaşın</p>
+  <a class="mail" href="mailto:sonersoylu@yandex.com">sonersoylu@yandex.com</a>
+  <p style="margin-top:2.5rem"><a class="arrow" href="/">Ana sayfaya dön <i>→</i></a></p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Rüzgâr türbini saha servis teknisyeni</p>
+    <p class="mono">Aliağa, İzmir</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div>
+</footer>
+
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+
+document.getElementById('subForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var mail = document.getElementById('subMail');
+  var msg = document.getElementById('subMsg');
+  var val = (mail.value || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) { msg.textContent = 'Geçerli bir e-posta yazın'; return; }
+  msg.textContent = 'Gönderiliyor…';
+  try {
+    var r = await fetch('/api/abone', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: val, kaynak: 'rehber' })
+    });
+    if (r.ok) { msg.textContent = 'Kaydınız alındı, teşekkürler'; mail.value = ''; }
+    else { msg.textContent = 'Şu an kaydedilemedi, birazdan tekrar deneyin'; }
+  } catch (err) {
+    msg.textContent = 'Bağlantı kurulamadı, birazdan tekrar deneyin';
+  }
+});
+</script>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+<script>
+/* reklamYuvaKontrol: reklam dolmazsa yuvayi tamamen gizle,
+   dolarsa "Reklam" etiketini goster. Onay bekleyen donemde
+   sayfanin ortasinda bos alan kalmasin diye. */
+(function(){
+  var y = document.querySelector('.reklam-yuvasi');
+  if (!y) return;
+  var ins = y.querySelector('ins.adsbygoogle');
+  var etiket = y.querySelector('.reklam-etiket');
+  var bitti = false;
+  function karar(){
+    if (bitti) return;
+    var durum = ins.getAttribute('data-ad-status');
+    if (durum === 'filled') {
+      if (etiket) etiket.hidden = false;
+      bitti = true;
+    } else if (durum === 'unfilled') {
+      y.style.display = 'none';
+      bitti = true;
+    }
+  }
+  try {
+    new MutationObserver(karar).observe(ins, {attributes:true, attributeFilter:['data-ad-status']});
+  } catch(e){}
+  setTimeout(karar, 2000);
+  setTimeout(function(){
+    if (!bitti && ins.getAttribute('data-ad-status') !== 'filled') y.style.display = 'none';
+  }, 4500);
+})();
+</script>
+</body></html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07. Arızaya yaklaşım — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
+<meta name="description" content="Kod okumaktan kök nedene: sahada teşhis nasıl kurulur, hangi sırayla ilerlenir ve parça değiştirmeden önce hangi sorular sorulur.">
+<link rel="canonical" href="https://sonersoylu.com/egitim/arizaya-yaklasim/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="07. Arızaya yaklaşım">
+<meta property="og:description" content="Kod okumaktan kök nedene: sahada teşhis nasıl kurulur, hangi sırayla ilerlenir ve parça değiştirmeden önce hangi sorular sorulur.">
+<meta property="og:url" content="https://sonersoylu.com/egitim/arizaya-yaklasim/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-egitim.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:16ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.lede{margin-top:1.75rem}
+.gsec{border-top:1px solid var(--line);padding:4rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.ghead p.ac{margin-top:.75rem;max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.inl{border-bottom:1px solid var(--beacon);transition:color .2s}
+.inl:hover{color:var(--beacon)}
+.uyari{border-left:2px solid var(--beacon);padding:.1rem 0 .1rem 1.1rem;margin-top:2rem}
+.uyari p{max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.uyari b{color:var(--ink);font-weight:500}
+.nxt{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.nxt a{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.4rem;transition:background .2s}
+.nxt a:hover{background:var(--raise)}
+.nxt a b{font-weight:500;font-size:1rem}
+.nxt a span{font-size:.875rem;color:var(--muted);line-height:1.6}
+@media (min-width:960px){.g-hero h1{font-size:3.25rem}.nxt{grid-template-columns:1fr 1fr}}
+
+.bh{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon);margin-top:1.5rem}
+.bmeta{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hedef{border:1px solid var(--line);background:var(--surface);padding:1.4rem 1.5rem;margin-top:2rem}
+.hedef p.k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hedef ul{margin-top:.85rem;display:grid;gap:.55rem}
+.hedef li{position:relative;padding-left:1.2rem;font-size:.9375rem;line-height:1.6}
+.hedef li::before{content:"";position:absolute;left:0;top:.6em;width:.32rem;height:.32rem;background:var(--beacon)}
+
+.ders h2{font-size:1.5rem;letter-spacing:-.03em;font-weight:500;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line)}
+.ders h2:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.ders p{margin-top:1.15rem;max-width:68ch;font-size:1rem;line-height:1.8;color:var(--ink)}
+.ders p b{font-weight:500}
+.snot{margin-top:2.5rem;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.5rem 1.5rem}
+.snot p.k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.snot p{margin-top:.85rem;max-width:64ch;font-size:.9375rem;line-height:1.8;color:var(--muted)}
+.snot p.k+p{margin-top:.85rem}
+.trm{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.trm span.e{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:.5rem}
+.trm a{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+ border:1px solid var(--line);background:var(--surface);padding:.32rem .58rem;transition:.18s}
+.trm a:hover{color:var(--beacon);border-color:var(--beacon)}
+
+.sinav{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.75rem 1.6rem;margin-top:2rem}
+.soru{border-top:1px solid var(--line);padding-top:1.6rem;margin-top:1.6rem}
+.soru:first-child{border-top:0;padding-top:0;margin-top:0}
+.soru .q{font-size:1rem;line-height:1.55;display:flex;gap:.75rem}
+.soru .q i{font-style:normal;font-family:var(--mono);font-size:.625rem;color:var(--beacon);flex:none;padding-top:.25rem}
+.siklar{margin-top:1rem;display:grid;gap:.5rem}
+.siklar label{display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--line);background:var(--ground);
+ padding:.7rem .85rem;cursor:pointer;font-size:.9375rem;line-height:1.5;transition:.18s}
+.siklar label:hover{border-color:var(--muted)}
+.siklar input{margin-top:.28rem;accent-color:var(--beacon);flex:none}
+.siklar label.dogru{border-color:var(--beacon);background:var(--surface)}
+.siklar label.yanlis{border-color:var(--muted);opacity:.6}
+.acik{margin-top:.8rem;font-size:.875rem;line-height:1.65;color:var(--muted);border-left:2px solid var(--line);padding-left:.9rem}
+.acik[hidden]{display:none}
+.sonuc{margin-top:1.75rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.sonuc button{font-family:var(--sans);cursor:pointer}
+.snc{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.snc b{color:var(--beacon);font-weight:400}
+.gecti{margin-top:1.25rem;border-left:2px solid var(--beacon);padding-left:1rem;font-size:.9375rem;line-height:1.7}
+.gecti[hidden]{display:none}
+.gez{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2.5rem}
+.gez a{background:var(--surface);padding:1.3rem 1.4rem;display:grid;gap:.35rem;transition:background .2s}
+.gez a:hover{background:var(--raise)}
+.gez .y{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.gez b{font-weight:500;font-size:1rem}
+@media (min-width:640px){.gez{grid-template-columns:1fr 1fr}}
+
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "LearningResource",
+   "@id": "https://sonersoylu.com/egitim/arizaya-yaklasim/#ders",
+   "name": "Arızaya yaklaşım",
+   "description": "Kod okumaktan kök nedene: sahada teşhis nasıl kurulur, hangi sırayla ilerlenir ve parça değiştirmeden önce hangi sorular sorulur.",
+   "inLanguage": "tr-TR",
+   "educationalLevel": "Başlangıç",
+   "learningResourceType": "Ders",
+   "teaches": [
+    "Kod ve olay kaydını doğru sırayla okumak",
+    "Teşhisi daraltan soruları alışkanlık hâline getirmek",
+    "Parça değişimini son adım olarak konumlandırmak"
+   ],
+   "timeRequired": "PT11M",
+   "isPartOf": {
+    "@type": "Course",
+    "name": "Sıfırdan rüzgâr türbini teknisyeni",
+    "url": "https://sonersoylu.com/egitim/"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "Soner Soylu",
+    "url": "https://sonersoylu.com/"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Ana sayfa",
+     "item": "https://sonersoylu.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Eğitim",
+     "item": "https://sonersoylu.com/egitim/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Arızaya yaklaşım",
+     "item": "https://sonersoylu.com/egitim/arizaya-yaklasim/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head>
+<body id="top">
+<a class="skip" href="#ana">İçeriğe atla</a>
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer" aria-current="true">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/" aria-current="true">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/" aria-current="true">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main id="ana">
+
+<section class="g-hero"><div class="wrap">
+ <a class="g-back" href="/egitim/">← Eğitim serisi</a>
+ <p class="bh">Bölüm 07 / 08</p>
+ <h1>Arızaya yaklaşım</h1>
+ <p class="lede">Kod okumaktan kök nedene: sahada teşhis nasıl kurulur, hangi sırayla ilerlenir ve parça değiştirmeden önce hangi sorular sorulur.</p>
+ <p class="bmeta"><span>11 dakika okuma</span><span>5 soruluk sınav</span></p>
+ <div class="hedef"><p class="k">Bu bölümü bitirdiğinizde</p><ul><li>Kod ve olay kaydını doğru sırayla okumak</li><li>Teşhisi daraltan soruları alışkanlık hâline getirmek</li><li>Parça değişimini son adım olarak konumlandırmak</li></ul></div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ders"><h2>Kodun kendisi teşhis değildir</h2><p>Ekranda gördüğünüz kod, olayın <b>sonucu</b>dur. &#8220;Aşırı titreşim&#8221; kodu size titreşim olduğunu söyler; neden olduğunu söylemez. Teşhis, o kodun arkasındaki nedeni bulmaktır ve neredeyse hiçbir zaman tek satırda yazmaz.</p><p>İlk hareket her zaman aynı: kod listesini olayın saniyesinden <b>geriye doğru</b> açmak. Bir arıza genelde bir kod değil, bir dizi kod üretir; ilk düşen çoğu zaman sorunun kendisi, sonrakiler onun yankısıdır. Sadece son kodu okuyup yola çıkmak, yanlış bileşeni suçlamanın en hızlı yoludur.</p><h2>Teşhisi daraltan altı soru</h2><p><b>1. Başka kim etkilendi?</b> Sahadaki diğer türbinler de aynı saniyede kod verdiyse sorun türbinde değil, şebekede ya da santral kontrolündedir. Bu tek soru, birçok gereksiz kule çıkışını önler.</p><p><b>2. Ne sıklıkta oluyor?</b> Tek seferlik olay ile ayda üç kere tekrarlayan ve sıklığı artan olay iki ayrı iştir. Artan sıklık, bir bileşenin size zamanla bozulduğunu söylemesidir.</p><p><b>3. Hangi şartta oluyor?</b> Sıcaklık, rüzgâr hızı, yön, güç seviyesi, gün içi saat. &#8220;Sadece 25 °C üstünde ve tam yükte&#8221; bilgisi, arızanın yarısını çözer.</p><p><b>4. Ne değişti?</b> Son bakım, son parça değişimi, son yazılım güncellemesi ne zamandı? Yeni başlayan bir arızanın sebebi çoğu zaman yakın geçmişte yapılan bir iştir.</p><p><b>5. Sensör mü, gerçek mi?</b> Aynı büyüklüğü ölçen başka bir sensör var mı ve o ne diyor? Ayrışan sensör, gerçek arızadan çok daha sık karşınıza çıkar.</p><p><b>6. Şart hâlâ duruyor mu?</b> Kod bir eşiğin aşılmasıyla düştüyse ve eşik hâlâ aşılıyorsa, <a class="sz" href="/sozluk/#t-reset" title="Reset — sözlükte">reset</a> yalnızca aynı hatayı tekrarlatır.</p><h2>Ölçmeden değiştirmeyin</h2><p>Parça değiştirerek teşhis koymak (&#8220;shotgun&#8221; yöntemi) bazen işe yarar ve tam bu yüzden tehlikelidir: kod gider, sebep bilinmez, altı ay sonra geri gelir ve bu kez elinizde hiçbir veri yoktur. Çünkü değiştirdiğiniz her parça, teşhisin izini siler.</p><p>Doğru sıra şudur: <b>gözle bak, ölç, karşılaştır, sonra değiştir.</b> Gözle bakmak çoğu zaman en verimli adımdır &#8212; yanmış bir klemens, sızmış bir yağ izi, gevşemiş bir konnektör, kayan bir işaret çizgisi. Ölçüm, gözün göremediğini verir. Karşılaştırma (aynı türbindeki eş bileşen, ya da yan türbinin aynı bileşeni), neyin normal olduğunu söyler.</p><p>Değiştirdiğinizde ise <b>eski parçayı atmayın</b>. Söktüğünüz yatağın, filtrenin, kartın üzerinde teşhisin geri kalanı yazılıdır.</p><h2>Kök neden: &#8220;niye&#8221;yi beş kere sormak</h2><p>Yatak aşırı ısındı. Niye? Yağlama yetersizdi. Niye? Otomatik gresleme pompası çalışmıyordu. Niye? Besleme sigortası atmıştı. Niye? Pompa motoru fazla akım çekiyordu. Niye? Gres hattı tıkanmıştı.</p><p>Yatağı değiştirip işi bitiren ekip, altı ay sonra aynı yeri tekrar açar. Gres hattını temizleyen ekip, sorunu çözmüştür. Aradaki fark bir alet ya da yetenek farkı değil, <b>durma noktası</b> farkıdır: nerede &#8220;tamam, buldum&#8221; dediğiniz.</p><p>Bu yaklaşımın adı sektörde <a class="sz" href="/sozluk/#t-kok-neden-analizi" title="Kök neden analizi — sözlükte">kök neden analizidir</a> ve büyük arızalarda resmî bir süreç olarak yürür. Ama asıl değeri küçük tekrar eden arızalarda ortaya çıkar &#8212; çünkü onları kimse resmî sürece almaz.</p><h2>Ne zaman durup sormalı</h2><p>Teşhis inatçılık işi değildir. Şu üç durumda durup ekip liderini ya da üretici desteğini aramak doğru karardır: güvenlikle ilgili bir kod (aşırı hız, yapısal, pitch bayrağa alma süresi), yetkiniz dışında bir müdahale gerektiren durum, ve iki saattir aynı noktada dönüyor olmanız.</p><p>Sahada &#8220;bilmiyorum&#8221; demek zayıflık değil; yanlış bir müdahaleden çok daha ucuzdur. Deneyimli teknisyenleri ayıran şey her arızayı bilmeleri değil, nerede duracaklarını bilmeleridir.</p></div>
+ <div class="snot"><p class="k">Sahadan not</p><p>Arıza kaydını yazarken şunu ekleyin: &#8220;bir sonraki sefer ilk buraya bakın.&#8221; O tek cümle, aynı arıza tekrarladığında iki saat kazandırıyor &#8212; ve çoğu zaman onu okuyan yine siz oluyorsunuz.</p></div>
+ <p class="trm"><span class="e">Sözlükte</span><a href="/sozluk/?q=K%C3%B6k%20neden">Kök neden analizi</a><a href="/sozluk/?q=Alarm">Alarm</a><a href="/sozluk/?q=SCADA">SCADA</a><a href="/sozluk/?q=Durum%20izleme">Durum izleme</a></p>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">Sınav</p><h2>Anladınız mı, bakalım</h2>
+  <p class="ac">5 soru. Yanlış cevap ceza değil &#8212; her sorunun altında neden öyle olduğu yazıyor. 4 doğru bölümü tamamlamış sayılmanız için yeterli.</p></div>
+ <div class="sinav" id="sinav"><div class="soru" data-d="1"><p class="q"><i>01</i><span>Bir arızada kod listesi hangi yönde okunur?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s0" value="0"><span>Baştan sona, en eskiden yeniye</span></label><label data-i="1"><input type="radio" name="s0" value="1"><span>Olayın saniyesinden geriye doğru</span></label><label data-i="2"><input type="radio" name="s0" value="2"><span>Sadece en son kod okunur</span></label><label data-i="3"><input type="radio" name="s0" value="3"><span>Sadece kırmızı renkli kodlar okunur</span></label></div><p class="acik" hidden>İlk düşen kod genelde sorunun kendisi, sonrakiler onun yankısıdır.</p></div><div class="soru" data-d="1"><p class="q"><i>02</i><span>Sahadaki bütün türbinler aynı saniyede aynı kodu verdiyse ne düşünülür?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s1" value="0"><span>Toplu bir sensör arızası</span></label><label data-i="1"><input type="radio" name="s1" value="1"><span>Sorun türbinlerde değil, şebekede veya santral kontrolündedir</span></label><label data-i="2"><input type="radio" name="s1" value="2"><span>SCADA yazılımı çökmüştür</span></label><label data-i="3"><input type="radio" name="s1" value="3"><span>Bakım modu aktiftir</span></label></div><p class="acik" hidden>Bu tek soru, birçok gereksiz kule çıkışını önler.</p></div><div class="soru" data-d="2"><p class="q"><i>03</i><span>Parça değiştirerek teşhis koymanın en büyük zararı nedir?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s2" value="0"><span>Pahalı olması</span></label><label data-i="1"><input type="radio" name="s2" value="1"><span>Zaman alması</span></label><label data-i="2"><input type="radio" name="s2" value="2"><span>Teşhisin izini silmesi — arıza geri gelirse elde veri kalmaması</span></label><label data-i="3"><input type="radio" name="s2" value="3"><span>Garantiyi bozması</span></label></div><p class="acik" hidden>Doğru sıra: gözle bak, ölç, karşılaştır, sonra değiştir.</p></div><div class="soru" data-d="1"><p class="q"><i>04</i><span>“Niye” sorusunu beş kere sormanın amacı nedir?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s3" value="0"><span>Raporu uzatmak</span></label><label data-i="1"><input type="radio" name="s3" value="1"><span>Belirtiyi değil, kök nedeni bulmak</span></label><label data-i="2"><input type="radio" name="s3" value="2"><span>Üreticiye kanıt sunmak</span></label><label data-i="3"><input type="radio" name="s3" value="3"><span>Ekip içinde tartışma yaratmak</span></label></div><p class="acik" hidden>Yatağı değiştiren ekip altı ay sonra döner; gres hattını temizleyen ekip sorunu çözer.</p></div><div class="soru" data-d="3"><p class="q"><i>05</i><span>Aşağıdakilerden hangisi durup destek istemek için geçerli bir sebep değildir?</span></p><div class="siklar"><label data-i="0"><input type="radio" name="s4" value="0"><span>Güvenlikle ilgili bir kod</span></label><label data-i="1"><input type="radio" name="s4" value="1"><span>Yetki dışı bir müdahale gerekmesi</span></label><label data-i="2"><input type="radio" name="s4" value="2"><span>İki saattir aynı noktada dönmek</span></label><label data-i="3"><input type="radio" name="s4" value="3"><span>Arızanın daha önce görülmemiş olması</span></label></div><p class="acik" hidden>Yeni bir arıza tek başına durma sebebi değildir; ilk üçü ise açık sınırlardır.</p></div>
+  <div class="sonuc">
+   <button class="plate" type="button" id="kontrol">Cevapları kontrol et</button>
+   <span class="snc" id="skor"></span>
+  </div>
+  <p class="gecti" id="gecti" hidden></p>
+ </div>
+ <div class="gez"><a href="/egitim/periyodik-bakim/"><span class="y">← Önceki bölüm</span><b>06. Periyodik bakım: sıkıcı olan, arızayı önleyen</b></a><a href="/egitim/kariyer/"><span class="y">Sonraki bölüm →</span><b>08. Kariyer ve sonraki adım</b></a></div>
+</div></section>
+
+</main>
+<footer><div class="wrap">
+<p class="mono">© 2026 Soner Soylu</p>
+<p class="mono">Son güncelleme: 5 Eylül 2026</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+(function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+b.setAttribute("aria-expanded",String(!a));m.classList.toggle("open",!a)});})();
+</script>
+<script>
+(function(){
+var ANAHTAR="egitimIlerleme", SLUG="arizaya-yaklasim", GECME=4;
+var sorular=[].slice.call(document.querySelectorAll("#sinav .soru"));
+var btn=document.getElementById("kontrol"),skor=document.getElementById("skor"),
+ gecti=document.getElementById("gecti");
+btn.addEventListener("click",function(){
+ var d=0;
+ sorular.forEach(function(s){
+  var dg=+s.dataset.d, sec=s.querySelector("input:checked");
+  [].forEach.call(s.querySelectorAll("label"),function(l){
+   l.classList.remove("dogru","yanlis");
+   if(+l.dataset.i===dg)l.classList.add("dogru");
+   else if(sec&&l.contains(sec))l.classList.add("yanlis");
+  });
+  s.querySelector(".acik").hidden=false;
+  if(sec&&+sec.value===dg)d++;
+ });
+ skor.innerHTML="<b>"+d+"</b> / "+sorular.length+" doğru";
+ if(d>=GECME){
+  gecti.hidden=false;
+  gecti.textContent="Bu bölümü tamamladınız. İlerlemeniz bu tarayıcıya kaydedildi.";
+  try{var v=JSON.parse(localStorage.getItem(ANAHTAR)||"{}");v[SLUG]={d:d,t:sorular.length,
+   z:new Date().toISOString().slice(0,10)};localStorage.setItem(ANAHTAR,JSON.stringify(v));}catch(e){}
+ }else{
+  gecti.hidden=false;
+  gecti.textContent="Tamamlanmış saymak için "+GECME+" doğru gerekiyor. Açıklamaları okuyup tekrar deneyebilirsiniz.";
+ }
+});
+})();
+</script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

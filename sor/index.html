@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sahadan Sor — Rüzgâr Türbini Teknisyenliği Soru-Cevap | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbini sahasından gelen soruları cevaplıyorum: arıza ve kod, mesleğe giriş, sahada çalışma düzeni, kariyer. Cevaplar herkese açık olarak burada yayımlanıyor.">
+<link rel="canonical" href="https://sonersoylu.com/sor/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Sahadan sorun, cevabı herkese kalsın">
+<meta property="og:description" content="Rüzgâr türbini teknisyenliği hakkında soru-cevap. Sorun; cevabı adınız olmadan burada yayımlanır.">
+<meta property="og:url" content="https://sonersoylu.com/sor/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-sor.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:15ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.lede{margin-top:1.75rem}
+.gsec{border-top:1px solid var(--line);padding:4rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.ghead p.ac{margin-top:.75rem;max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.inl{border-bottom:1px solid var(--beacon);transition:color .2s}
+.inl:hover{color:var(--beacon)}
+
+.form{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.75rem 1.6rem;margin-top:2rem}
+.alan{margin-top:1.4rem}
+.alan:first-child{margin-top:0}
+.alan label{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.alan label b{color:var(--beacon);font-weight:400}
+.alan textarea,.alan input,.alan select{margin-top:.55rem;width:100%;border:1px solid var(--line);background:var(--ground);
+ padding:.75rem .85rem;font-family:var(--sans);font-size:.9375rem;color:var(--ink);outline:none;transition:border-color .2s}
+.alan textarea{min-height:9rem;resize:vertical;line-height:1.65}
+.alan textarea:focus,.alan input:focus,.alan select:focus{border-color:var(--muted)}
+.alan .ip{margin-top:.45rem;font-size:.8125rem;line-height:1.55;color:var(--muted)}
+.ikili{display:grid;gap:1.4rem}
+.tuzak{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.gonder{margin-top:1.75rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.sayacs{font-family:var(--mono);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dnm{margin-top:1.25rem;font-size:.9375rem;line-height:1.7;border-left:2px solid var(--beacon);padding-left:1rem;color:var(--ink)}
+.dnm[hidden]{display:none}
+.dnm.kotu{border-color:var(--muted);color:var(--muted)}
+button.plate{font-family:var(--sans);cursor:pointer}
+button.plate[disabled]{opacity:.5;cursor:default}
+
+.kural{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.kural>div{background:var(--surface);padding:1.3rem 1.35rem}
+.kural h2{font-size:.9375rem;font-weight:500;letter-spacing:0}
+.kural p{margin-top:.6rem;font-size:.875rem;line-height:1.7;color:var(--muted)}
+
+.cip{margin-top:0;display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+.cip button{border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:.4rem .8rem;
+ font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:.18s}
+.cip button:hover{color:var(--ink);border-color:var(--muted)}
+.cip button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+
+.qa{border-top:1px solid var(--line)}
+.qa details{border-bottom:1px solid var(--line)}
+.qa details[hidden]{display:none}
+.qa summary{list-style:none;cursor:pointer;padding:1.3rem 0;display:flex;gap:1rem;align-items:baseline;font-size:1.0625rem;line-height:1.4;transition:color .2s}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--muted);flex:none}
+.qa details[open] summary::after{content:"–"}
+.qa summary:hover{color:var(--beacon)}
+.qa summary .kn{font-family:var(--mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--beacon);flex:none;width:7.5rem}
+.qa .a{padding:0 0 1.6rem 8.5rem;max-width:74ch;font-size:.9375rem;line-height:1.8;color:var(--muted)}
+@media (max-width:719px){.qa summary{flex-wrap:wrap}.qa summary .kn{width:100%;margin-bottom:.3rem}.qa .a{padding-left:0}}
+
+.gelen{border:1px dashed var(--line);background:var(--surface);padding:2rem 1.6rem;margin-top:2rem;text-align:center}
+.gelen p{max-width:52ch;margin:0 auto;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.gelen p.b{color:var(--ink);font-size:1rem;margin-bottom:.75rem}
+
+.nxt{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.nxt a{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.4rem;transition:background .2s}
+.nxt a:hover{background:var(--raise)}
+.nxt a b{font-weight:500;font-size:1rem}
+.nxt a span{font-size:.875rem;color:var(--muted);line-height:1.6}
+@media (min-width:640px){.kural{grid-template-columns:1fr 1fr}.ikili{grid-template-columns:1fr 1fr}}
+@media (min-width:960px){.g-hero h1{font-size:3.25rem}.kural{grid-template-columns:repeat(4,1fr)}.nxt{grid-template-columns:1fr 1fr}}
+
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "@id": "https://sonersoylu.com/sor/#faq",
+   "inLanguage": "tr-TR",
+   "name": "Rüzgâr türbini teknisyenliği hakkında sık sorulan sorular",
+   "author": {
+    "@type": "Person",
+    "name": "Soner Soylu",
+    "url": "https://sonersoylu.com/"
+   },
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Bu mesleğe girmek için hangi bölümü okumak gerekir?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tek bir doğru bölüm yok. Sahada en sık gördüğüm profiller elektrik, elektrik-elektronik, makine, mekatronik ve otomotiv teknolojisi mezunları. Ben otomotiv mekanik teknolojisi önlisansından geldim ve elektrik tarafını sahada öğrendim; tersini yapan çok arkadaşım var. İşveren aslında iki şeye bakıyor: temel elektrik ve mekanik mantığını kurabiliyor musunuz, ve yükseklikte disiplinli çalışabilecek misiniz. Diploma bu ikisinin garantisi değil, sadece başlangıç noktası."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GWO sertifikası olmadan işe alınır mıyım?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Çoğu firmada hayır — ama bu bir engel değil, sıra meselesi. GWO Basic Safety Training (yüksekte çalışma, ilk yardım, yangın, manuel taşıma, kurtarma) işe girişte ya da hemen sonrasında istenir. Bazı firmalar işe aldıktan sonra eğitimi kendileri veriyor; bazıları sertifikayla gelmenizi bekliyor. Kendi cebinizden almadan önce başvurduğunuz firmaya sorun: gereksiz yere ödeme yapıyor olabilirsiniz. Sertifikanın iki yılda bir yenilendiğini de baştan bilin."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Yükseklik korkusu olan biri bu işi yapabilir mi?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Dürüst cevap: kısmen. Herkes ilk kez 80 metrede kapağı açtığında bir şey hisseder; bu normal ve zamanla azalır. Ama gerçek bir yükseklik fobisi varsa, bu iş sizi her gün onunla karşı karşıya bırakır ve dikkatinizi işten çalar — dikkat, bu meslekte güvenlik ekipmanı kadar önemli. GWO eğitiminde kule simülasyonunda kendinizi test edebilirsiniz; oradaki tepkiniz iyi bir göstergedir. Kendinizi zorlayarak değil, deneyerek karar verin."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bir servis teknisyeninin günü nasıl geçiyor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Gün, sahaya çıkmadan önce başlar: iş emri, hangi türbin, hangi iş, hangi ekipman, hava durumu. Rüzgâr yüksekse kuleye çıkılmaz — bu karar tartışılmaz. Kule dibinde LOTO (kilitle-etiketle) ve rotor kilidi; sonra tırmanış ya da asansör. Yukarıda iş, periyodik bakımsa listeye göre, arızaysa teşhise göre ilerler. İnişten sonra rapor, kullanılan malzeme, kalan işler. Bir günde bir türbinde tam bakım bitmeyebilir; iki kişilik ekip için normal bir ritim budur."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Sahaya ilk çıkışta yanımda ne olmalı?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kişisel koruyucu donanımınız eksiksiz: baret (çeneden bağlı), emniyet kemeri, düşme durdurucu, eldiven, gözlük, çelik burunlu ayakkabı. Bunların dışında: su, yiyecek, telsiz veya telefon, kafa lambası. Kuleye çıkardığınız her şeyin bağlı olması gerekir; düşen bir anahtar aşağıda insan öldürür. İlk aylarda en çok işinize yarayacak şey ise küçük bir defter: gördüğünüz her kod, her ölçüm, her prosedür adımı. Altı ay sonra o defter sizin en değerli kaynağınız olur."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Kuleye çıkarken en çok yapılan hata ne?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Acele. Ekip ne kadar deneyimliyse çıkış öncesi kontrol o kadar kısalır, ve kısalan kontrol bir gün bir şeyi atlar. İkinci sırada, kule içinde iken aşağıda ne olduğunu bilmemek geliyor: alt kattaki panoda çalışan biri varsa, sizin yukarıdaki hareketiniz onu etkiler. Üçüncüsü de en sinsisi: “bir dakikalık iş” diye LOTO yapmadan bir şeye dokunmak. Sahada duyduğum bütün ciddi kazalar bu üç cümleden birinin içinde başlıyor."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Kışın ve yazın iş nasıl değişiyor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kışın rüzgâr çok, üretim yüksek, ama kule soğuk ve rüzgâr sınırı yüzünden çıkamadığınız günler artar; buzlanma varsa türbinin altına bile yaklaşılmaz. Yazın ise tam tersi: çıkabilirsiniz ama nasel içi 45 derecenin üstüne çıkar, elektronik ısınır, konvertör sıcaklık kodları çoğalır. Yaz ayları aynı zamanda planlı bakım sezonudur çünkü üretim düşük ve duruş daha ucuza gelir. Yani mevsim sadece havayı değil, yaptığınız işin türünü de değiştirir."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mekanik mi elektrik mi ağırlıklı öğrenmeliyim?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "İkisini de, ama sırayla. Başlangıçta mekanik tarafı öğrenmek daha kolay ve daha çabuk işe yarar: cıvata, tork, yağlama, hizalama, kaplin, fren. Elektrik tarafı ise sizi uzun vadede ayrıştırır — pano, konvertör, sensör ve kod okuma bilen teknisyen her zaman daha az bulunur. En değerli profil ikisini birden yapabilendir; çünkü bir arızanın mekanik mi elektrik mi olduğunu çoğu zaman ancak ikisini de bilen biri ayırt eder."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "İngilizce şart mı?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Şart değil ama sınır koyar. Türbinin arayüzü, servis kılavuzu, hata açıklamaları ve üretici destek hattı büyük ölçüde İngilizce. Teknik İngilizce, günlük İngilizceden çok daha dar bir kelime kümesi — iki üç yüz kelimeyle kılavuz okunur hâle gelirsiniz. Yurt dışında çalışmak ya da üretici tarafına geçmek istiyorsanız ise İngilizce artık tercih değil, giriş bileti."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Hangi markayla başlamak avantajlı?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hangisini bulursanız. Markalar arasında mimari farkları var — doğrudan tahrikli bir Enercon ile dişli kutulu bir Nordex ya da Vestas sahada farklı işler çıkarır — ama temel mantık, güvenlik prosedürü ve teşhis yaklaşımı ortak. İlk markanızı seçmeye çalışmak yerine, ilk markanızı iyi öğrenin; ikincisi çok daha hızlı gelir. Birden fazla platform görmüş olmak, birkaç yıl sonra sizi en çok öne çıkaran şey olacak."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bir arızada nereden başlamalıyım?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Koddan değil, kayıttan. Kodun düştüğü saniyeden geriye doğru açın: ilk düşen kod genelde sorunun kendisi, sonrakiler onun yankısı. Sonra üç soru: sahadaki diğer türbinler de aynı anda kod verdi mi (verdiyse sorun türbinde değil), bu kod ne sıklıkta tekrar ediyor, ve o anda hava ve yük neydi. Bu üç soruyu geçmeden alet çantasını açmayın. Kod kütüphanesi ve arıza ağacı tam bunun için var."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bu işte kariyer nereye gider?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Birkaç yol var ve hepsi sahadan başlıyor. Teknisyenden takım liderliğine, oradan saha sorumluluğuna ve işletme müdürlüğüne giden çizgi en bilinen olanı. İkinci yol uzmanlık: devreye alma, büyük bileşen değişimi, kanat onarımı, durum izleme ya da uçtan uca arıza analizi. Üçüncü yol üretici ya da bağımsız denetim tarafına geçmek: teknik destek, eğitim, bilirkişilik. Hepsinin ortak şartı aynı: sahada geçirilmiş yıl ve kayıt tutma alışkanlığı."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Yurt dışında çalışmak mümkün mü?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Evet, ve Türkiye’den giden çok teknisyen var. Aranan şeyler net: GWO sertifikaları güncel, İngilizce yeterli, birden fazla platformda deneyim ve temiz bir çalışma geçmişi. Offshore tarafı ayrı bir dünya — ek sertifikalar (deniz hayatta kalma, helikopter tahliyesi) ve farklı bir çalışma düzeni gerektirir, ama ücret de farklıdır. Kararınızı vermeden önce rotasyon düzenini iyi anlayın: iki hafta sahada, iki hafta evde çalışmak herkesin hayat düzenine uymuyor."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Deneyimsizken kendimi nasıl ayrıştırırım?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kayıt tutarak. İlk yılında düzgün not tutan teknisyen, üçüncü yılında ekibin en hızlı teşhis koyanı oluyor — çünkü elinde başkasında olmayan bir veri var. İkincisi, öğrendiğinizi anlatın: bir arızayı ekip arkadaşınıza anlatabiliyorsanız gerçekten anlamışsınızdır. Üçüncüsü, güvenlik konusunda taviz vermeyen kişi olun; bu itibar sahada her şeyden hızlı yayılır ve size en çok kapıyı o açar."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Ana sayfa",
+     "item": "https://sonersoylu.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Sahadan sor",
+     "item": "https://sonersoylu.com/sor/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head>
+<body id="top">
+<a class="skip" href="#ana">İçeriğe atla</a>
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/" aria-current="true">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/" aria-current="true">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main id="ana">
+
+<section class="g-hero"><div class="wrap">
+ <a class="g-back" href="/">← Ana sayfa</a>
+ <h1>Sahadan sorun, cevabı herkese kalsın</h1>
+ <p class="lede">Bir kod anlam vermediğinde, bir prosedür kafa karıştırdığında ya da bu mesleğe girmeyi düşünürken aklınıza takıldığında sorun. Cevabı size yazarım; cevap genel bir işe yarıyorsa &#8212; ki çoğu zaman yarıyor &#8212; adınız olmadan bu sayfaya eklerim. Böylece aynı soruyu soracak bir sonraki kişi cevabı hazır bulur.</p>
+
+ <div class="form">
+  <form id="soruForm" novalidate>
+   <div class="alan">
+    <label for="fSoru">Sorunuz <b>*</b></label>
+    <textarea id="fSoru" name="soru" required minlength="15" maxlength="1200"
+     placeholder="Örnek: Pitch açı sapması kodu sadece 15 m/s üstünde ve tek kanatta düşüyor. Enkoderi kontrol ettik, sıfır referansı doğru. Bundan sonra nereye bakmalıyım?"></textarea>
+    <p class="ip">Ne kadar somut yazarsanız cevap o kadar işe yarar: hangi bileşen, hangi şartta, ne denediniz.</p>
+   </div>
+   <div class="ikili">
+    <div class="alan">
+     <label for="fKonu">Konu</label>
+     <select id="fKonu" name="konu"><option value="meslek">Mesleğe giriş</option><option value="saha">Sahada çalışmak</option><option value="teknik">Teknik</option><option value="kariyer">Kariyer</option><option value="ariza">Arıza / kod</option><option value="genel">Diğer</option></select>
+    </div>
+    <div class="alan">
+     <label for="fAd">Adınız <span style="text-transform:none;letter-spacing:0">(isteğe bağlı)</span></label>
+     <input id="fAd" name="ad" type="text" maxlength="60" autocomplete="off" placeholder="Boş bırakabilirsiniz">
+    </div>
+   </div>
+   <div class="alan">
+    <label for="fMail">E-posta <span style="text-transform:none;letter-spacing:0">(isteğe bağlı &#8212; sadece cevabı size ulaştırmak için)</span></label>
+    <input id="fMail" name="eposta" type="email" maxlength="190" autocomplete="email" inputmode="email" placeholder="ornek@eposta.com">
+    <p class="ip">Yazmazsanız da soru bana ulaşır; cevabı bu sayfada yayımlarım. E-postanız hiçbir listeye eklenmez, kimseyle paylaşılmaz.</p>
+   </div>
+   <div class="tuzak" aria-hidden="true"><label for="fWeb">Web sitesi</label><input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+   <div class="gonder">
+    <button class="plate" type="submit" id="fGonder">Soruyu gönder</button>
+    <span class="sayacs" id="fSayac">0 / 1200</span>
+   </div>
+   <p class="dnm" id="fDurum" hidden></p>
+  </form>
+ </div>
+
+ <div class="kural">
+  <div><h2>Gizli bilgi yazmayın</h2><p>Sözleşme, müşteri adı, saha koordinatı ya da üreticinin belgesinden alınmış metin göndermeyin. Soruyu genel hâliyle sorun; cevabı da öyle veririm.</p></div>
+  <div><h2>Acil durum için burası değil</h2><p>Şu anda kulede bir güvenlik sorunu varsa ekibinizi ve işletmecinizi arayın. Ben burada saatler içinde değil, günler içinde cevap veririm.</p></div>
+  <div><h2>Cevap üretici prosedürünün yerine geçmez</h2><p>Yazdıklarım kendi saha deneyimim. Uygulamadan önce kendi makinenizin belgesiyle karşılaştırın; ikisi çelişirse belge kazanır.</p></div>
+  <div><h2>Adınız yayımlanmaz</h2><p>Sayfaya yalnızca soru ve cevap eklenir. Ad, e-posta ve gönderim bilgileri yayımlanmaz.</p></div>
+ </div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">Başlangıç</p><h2>Sık sorulanlar</h2>
+  <p class="ac">Bu 14 cevap, en çok karşılaştığım sorulara benim verdiğim cevaplar. Gelen sorularla birlikte büyüyecek.</p></div>
+ <div class="cip" id="sorCip" role="group" aria-label="Konuya göre süz"><button type="button" data-k="" aria-pressed="true">Hepsi</button><button type="button" data-k="meslek" aria-pressed="false">Mesleğe giriş (3)</button><button type="button" data-k="saha" aria-pressed="false">Sahada çalışmak (4)</button><button type="button" data-k="teknik" aria-pressed="false">Teknik (4)</button><button type="button" data-k="kariyer" aria-pressed="false">Kariyer (3)</button></div>
+ <div class="qa" id="sorListe"><details data-k="meslek"><summary><span class="kn">Mesleğe giriş</span><span>Bu mesleğe girmek için hangi bölümü okumak gerekir?</span></summary><div class="a">Tek bir doğru bölüm yok. Sahada en sık gördüğüm profiller elektrik, elektrik-elektronik, makine, mekatronik ve otomotiv teknolojisi mezunları. Ben otomotiv mekanik teknolojisi önlisansından geldim ve elektrik tarafını sahada öğrendim; tersini yapan çok arkadaşım var. İşveren aslında iki şeye bakıyor: temel elektrik ve mekanik mantığını kurabiliyor musunuz, ve yükseklikte disiplinli çalışabilecek misiniz. Diploma bu ikisinin garantisi değil, sadece başlangıç noktası.</div></details><details data-k="meslek"><summary><span class="kn">Mesleğe giriş</span><span>GWO sertifikası olmadan işe alınır mıyım?</span></summary><div class="a">Çoğu firmada hayır &#8212; ama bu bir engel değil, sıra meselesi. GWO Basic Safety Training (yüksekte çalışma, ilk yardım, yangın, manuel taşıma, kurtarma) işe girişte ya da hemen sonrasında istenir. Bazı firmalar işe aldıktan sonra eğitimi kendileri veriyor; bazıları sertifikayla gelmenizi bekliyor. Kendi cebinizden almadan önce başvurduğunuz firmaya sorun: gereksiz yere ödeme yapıyor olabilirsiniz. Sertifikanın iki yılda bir yenilendiğini de baştan bilin.</div></details><details data-k="meslek"><summary><span class="kn">Mesleğe giriş</span><span>Yükseklik korkusu olan biri bu işi yapabilir mi?</span></summary><div class="a">Dürüst cevap: kısmen. Herkes ilk kez 80 metrede kapağı açtığında bir şey hisseder; bu normal ve zamanla azalır. Ama gerçek bir yükseklik fobisi varsa, bu iş sizi her gün onunla karşı karşıya bırakır ve dikkatinizi işten çalar &#8212; dikkat, bu meslekte güvenlik ekipmanı kadar önemli. GWO eğitiminde kule simülasyonunda kendinizi test edebilirsiniz; oradaki tepkiniz iyi bir göstergedir. Kendinizi zorlayarak değil, deneyerek karar verin.</div></details><details data-k="saha"><summary><span class="kn">Sahada çalışmak</span><span>Bir servis teknisyeninin günü nasıl geçiyor?</span></summary><div class="a">Gün, sahaya çıkmadan önce başlar: iş emri, hangi türbin, hangi iş, hangi ekipman, hava durumu. Rüzgâr yüksekse kuleye çıkılmaz &#8212; bu karar tartışılmaz. Kule dibinde LOTO (kilitle-etiketle) ve rotor kilidi; sonra tırmanış ya da asansör. Yukarıda iş, periyodik bakımsa listeye göre, arızaysa teşhise göre ilerler. İnişten sonra rapor, kullanılan malzeme, kalan işler. Bir günde bir türbinde tam bakım bitmeyebilir; iki kişilik ekip için normal bir ritim budur.</div></details><details data-k="saha"><summary><span class="kn">Sahada çalışmak</span><span>Sahaya ilk çıkışta yanımda ne olmalı?</span></summary><div class="a">Kişisel koruyucu donanımınız eksiksiz: baret (çeneden bağlı), emniyet kemeri, düşme durdurucu, eldiven, gözlük, çelik burunlu ayakkabı. Bunların dışında: su, yiyecek, telsiz veya telefon, kafa lambası. Kuleye çıkardığınız her şeyin bağlı olması gerekir; düşen bir anahtar aşağıda insan öldürür. İlk aylarda en çok işinize yarayacak şey ise küçük bir defter: gördüğünüz her kod, her ölçüm, her prosedür adımı. Altı ay sonra o defter sizin en değerli kaynağınız olur.</div></details><details data-k="saha"><summary><span class="kn">Sahada çalışmak</span><span>Kuleye çıkarken en çok yapılan hata ne?</span></summary><div class="a">Acele. Ekip ne kadar deneyimliyse çıkış öncesi kontrol o kadar kısalır, ve kısalan kontrol bir gün bir şeyi atlar. İkinci sırada, kule içinde iken aşağıda ne olduğunu bilmemek geliyor: alt kattaki panoda çalışan biri varsa, sizin yukarıdaki hareketiniz onu etkiler. Üçüncüsü de en sinsisi: &#8220;bir dakikalık iş&#8221; diye LOTO yapmadan bir şeye dokunmak. Sahada duyduğum bütün ciddi kazalar bu üç cümleden birinin içinde başlıyor.</div></details><details data-k="saha"><summary><span class="kn">Sahada çalışmak</span><span>Kışın ve yazın iş nasıl değişiyor?</span></summary><div class="a">Kışın rüzgâr çok, üretim yüksek, ama kule soğuk ve rüzgâr sınırı yüzünden çıkamadığınız günler artar; buzlanma varsa türbinin altına bile yaklaşılmaz. Yazın ise tam tersi: çıkabilirsiniz ama nasel içi 45 derecenin üstüne çıkar, elektronik ısınır, konvertör sıcaklık kodları çoğalır. Yaz ayları aynı zamanda planlı bakım sezonudur çünkü üretim düşük ve duruş daha ucuza gelir. Yani mevsim sadece havayı değil, yaptığınız işin türünü de değiştirir.</div></details><details data-k="teknik"><summary><span class="kn">Teknik</span><span>Mekanik mi elektrik mi ağırlıklı öğrenmeliyim?</span></summary><div class="a">İkisini de, ama sırayla. Başlangıçta mekanik tarafı öğrenmek daha kolay ve daha çabuk işe yarar: cıvata, tork, yağlama, hizalama, kaplin, fren. Elektrik tarafı ise sizi uzun vadede ayrıştırır &#8212; pano, konvertör, sensör ve kod okuma bilen teknisyen her zaman daha az bulunur. En değerli profil ikisini birden yapabilendir; çünkü bir arızanın mekanik mi elektrik mi olduğunu çoğu zaman ancak ikisini de bilen biri ayırt eder.</div></details><details data-k="teknik"><summary><span class="kn">Teknik</span><span>İngilizce şart mı?</span></summary><div class="a">Şart değil ama sınır koyar. Türbinin arayüzü, servis kılavuzu, hata açıklamaları ve üretici destek hattı büyük ölçüde İngilizce. Teknik İngilizce, günlük İngilizceden çok daha dar bir kelime kümesi &#8212; iki üç yüz kelimeyle kılavuz okunur hâle gelirsiniz. Yurt dışında çalışmak ya da üretici tarafına geçmek istiyorsanız ise İngilizce artık tercih değil, giriş bileti.</div></details><details data-k="teknik"><summary><span class="kn">Teknik</span><span>Hangi markayla başlamak avantajlı?</span></summary><div class="a">Hangisini bulursanız. Markalar arasında mimari farkları var &#8212; doğrudan tahrikli bir Enercon ile dişli kutulu bir Nordex ya da Vestas sahada farklı işler çıkarır &#8212; ama temel mantık, güvenlik prosedürü ve teşhis yaklaşımı ortak. İlk markanızı seçmeye çalışmak yerine, ilk markanızı iyi öğrenin; ikincisi çok daha hızlı gelir. Birden fazla platform görmüş olmak, birkaç yıl sonra sizi en çok öne çıkaran şey olacak.</div></details><details data-k="teknik"><summary><span class="kn">Teknik</span><span>Bir arızada nereden başlamalıyım?</span></summary><div class="a">Koddan değil, kayıttan. Kodun düştüğü saniyeden geriye doğru açın: ilk düşen kod genelde sorunun kendisi, sonrakiler onun yankısı. Sonra üç soru: sahadaki diğer türbinler de aynı anda kod verdi mi (verdiyse sorun türbinde değil), bu kod ne sıklıkta tekrar ediyor, ve o anda hava ve yük neydi. Bu üç soruyu geçmeden alet çantasını açmayın. <a class="inl" href="/kodlar/">Kod kütüphanesi</a> ve <a class="inl" href="/ariza/">arıza ağacı</a> tam bunun için var.</div></details><details data-k="kariyer"><summary><span class="kn">Kariyer</span><span>Bu işte kariyer nereye gider?</span></summary><div class="a">Birkaç yol var ve hepsi sahadan başlıyor. Teknisyenden takım liderliğine, oradan saha sorumluluğuna ve işletme müdürlüğüne giden çizgi en bilinen olanı. İkinci yol uzmanlık: devreye alma, büyük bileşen değişimi, kanat onarımı, durum izleme ya da uçtan uca arıza analizi. Üçüncü yol üretici ya da bağımsız denetim tarafına geçmek: teknik destek, eğitim, bilirkişilik. Hepsinin ortak şartı aynı: sahada geçirilmiş yıl ve kayıt tutma alışkanlığı.</div></details><details data-k="kariyer"><summary><span class="kn">Kariyer</span><span>Yurt dışında çalışmak mümkün mü?</span></summary><div class="a">Evet, ve Türkiye&#8217;den giden çok teknisyen var. Aranan şeyler net: GWO sertifikaları güncel, İngilizce yeterli, birden fazla platformda deneyim ve temiz bir çalışma geçmişi. Offshore tarafı ayrı bir dünya &#8212; ek sertifikalar (deniz hayatta kalma, helikopter tahliyesi) ve farklı bir çalışma düzeni gerektirir, ama ücret de farklıdır. Kararınızı vermeden önce rotasyon düzenini iyi anlayın: iki hafta sahada, iki hafta evde çalışmak herkesin hayat düzenine uymuyor.</div></details><details data-k="kariyer"><summary><span class="kn">Kariyer</span><span>Deneyimsizken kendimi nasıl ayrıştırırım?</span></summary><div class="a">Kayıt tutarak. İlk yılında düzgün not tutan teknisyen, üçüncü yılında ekibin en hızlı teşhis koyanı oluyor &#8212; çünkü elinde başkasında olmayan bir veri var. İkincisi, öğrendiğinizi anlatın: bir arızayı ekip arkadaşınıza anlatabiliyorsanız gerçekten anlamışsınızdır. Üçüncüsü, güvenlik konusunda taviz vermeyen kişi olun; bu itibar sahada her şeyden hızlı yayılır ve size en çok kapıyı o açar.</div></details></div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">Gelen sorular</p><h2>Bu bölüm sizinle dolacak</h2></div>
+ <div class="gelen">
+  <p class="b">Henüz yayımlanmış bir soru yok.</p>
+  <p>Gelen sorulardan genel bir işe yarayacak olanları, cevabıyla birlikte buraya ekliyorum. İlk soruyu siz sorabilirsiniz &#8212; yukarıdaki kutu tam bunun için.</p>
+ </div>
+ <div class="nxt">
+  <a href="/kodlar/"><b>Kod kütüphanesi</b><span>Elinizde bir kod varsa: 50 koşul, hangi aileye ait, sahada ne kontrol edilir.</span></a>
+  <a href="/rehber/"><b>Mesleğe giriş rehberi</b><span>Bu işe nasıl girilir, sahada bir gün nasıl geçer, ne öğrenmek gerekir.</span></a>
+ </div>
+</div></section>
+
+</main>
+<footer><div class="wrap">
+<p class="mono">© 2026 Soner Soylu</p>
+<p class="mono">Son güncelleme: 5 Eylül 2026</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+(function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+b.setAttribute("aria-expanded",String(!a));m.classList.toggle("open",!a)});})();
+</script>
+<script>
+(function(){
+var f=document.getElementById("soruForm"),d=document.getElementById("fDurum"),
+ b=document.getElementById("fGonder"),t=document.getElementById("fSoru"),s=document.getElementById("fSayac");
+function say(){s.textContent=t.value.length+" / 1200";}
+t.addEventListener("input",say); say();
+function goster(m,kotu){d.hidden=false;d.textContent=m;d.className="dnm"+(kotu?" kotu":"");}
+f.addEventListener("submit",function(ev){
+ ev.preventDefault();
+ var soru=t.value.trim();
+ if(soru.length<15){goster("Soruyu biraz daha açar mısınız? En az 15 karakter gerekiyor.",true);t.focus();return;}
+ var mail=document.getElementById("fMail").value.trim();
+ if(mail&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)){goster("E-posta adresi geçerli görünmüyor. Boş da bırakabilirsiniz.",true);return;}
+ b.disabled=true; goster("Gönderiliyor…");
+ fetch("/api/soru",{method:"POST",headers:{"content-type":"application/json"},
+  body:JSON.stringify({soru:soru,ad:document.getElementById("fAd").value.trim(),
+   eposta:mail,konu:document.getElementById("fKonu").value,
+   website:document.getElementById("fWeb").value})})
+ .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+ .then(function(x){
+  if(x.ok&&x.j.ok){f.reset();say();
+   goster("Sorunuz bana ulaştı. Cevabı" + (mail?" e-postayla gönderirim ve":"") + " genel bir işe yarıyorsa bu sayfaya eklerim. Teşekkürler.");
+   b.disabled=false; return;}
+  if(x.j&&x.j.hata==="cok-fazla"){goster("Bu saat içinde birkaç soru gönderdiniz. Bir süre sonra tekrar deneyin.",true);}
+  else if(x.j&&x.j.hata==="kisa-soru"){goster("Soru çok kısa geldi; biraz daha açar mısınız?",true);}
+  else{goster("Şu an gönderilemedi. Doğrudan sonersoylu@yandex.com adresine de yazabilirsiniz.",true);}
+  b.disabled=false;})
+ .catch(function(){goster("Bağlantı kurulamadı. Çevrimdışıysanız bağlantı gelince tekrar deneyin; ya da sonersoylu@yandex.com adresine yazın.",true);b.disabled=false;});
+});
+// konu süzgeci
+var cip=document.getElementById("sorCip"),liste=document.getElementById("sorListe");
+cip.addEventListener("click",function(ev){
+ var x=ev.target.closest("button[data-k]"); if(!x)return;
+ var k=x.getAttribute("data-k");
+ [].forEach.call(cip.querySelectorAll("button"),function(y){y.setAttribute("aria-pressed",String(y===x));});
+ [].forEach.call(liste.querySelectorAll("details"),function(y){
+  var ok=!k||y.dataset.k===k; y.hidden=!ok; if(!ok)y.open=false;});
+});
+})();
+</script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

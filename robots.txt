@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /veri/
+Disallow: /api/
+
+Sitemap: https://sonersoylu.com/sitemap.xml

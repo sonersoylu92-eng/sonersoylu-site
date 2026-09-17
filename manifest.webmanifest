@@ -1,0 +1,25 @@
+{
+  "name": "Soner Soylu — Rüzgâr Türbini Kaynakları",
+  "short_name": "Türbin",
+  "description": "Rüzgâr türbini terim sözlüğü, hesaplama araçları, arıza teşhis ağacı ve sahadan rehber. Kapsama alanı dışında da çalışır.",
+  "id": "/",
+  "start_url": "/?kaynak=uygulama",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f4f0",
+  "theme_color": "#f6f4f0",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": ["education", "utilities", "productivity"],
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Terim sözlüğü", "short_name": "Sözlük", "url": "/sozluk/", "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Hesaplama araçları", "short_name": "Araçlar", "url": "/araclar/", "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Arıza teşhis ağacı", "short_name": "Arıza", "url": "/ariza/", "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

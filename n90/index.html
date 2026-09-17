@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nordex N90/2500 — Aşama Aşama Montaj | Soner Soylu</title>
+<meta name="description" content="Nordex N90/2500 rüzgâr türbininin gerçek ölçülere dayalı 3B modeli. Temelden devreye almaya kadar yedi montaj aşaması, teknik veriler ve saha notlarıyla.">
+<link rel="canonical" href="https://sonersoylu.com/n90/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Nordex N90/2500 — Aşama Aşama Montaj">
+<meta property="og:description" content="Gerçek ölçülere dayalı 3B model: temel, kule, nacelle, göbek, kanatlar ve devreye alma.">
+<meta property="og:url" content="https://sonersoylu.com/n90/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-n90.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+/* ---- N90 sayfasına özel ---- */
+.n-hero{padding:4rem 0 3rem}
+.n-hero h1{font-size:2.5rem;line-height:1.05;margin-top:1.5rem}
+.n-hero .lede{margin-top:1.5rem}
+.n-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.n-back:hover{color:var(--ink)}
+
+.stage-wrap{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);overflow:hidden}
+.stage-view{position:relative;background:#eceae4}
+#scene{display:block;width:100%;height:56vh;min-height:340px;max-height:720px;touch-action:none;cursor:grab}
+#scene:active{cursor:grabbing}
+.stage-view .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);background:#eceae4;transition:opacity .5s}
+.stage-view .loading.gone{opacity:0;pointer-events:none}
+.hud{position:absolute;left:1rem;bottom:1rem;transition:opacity .25s;display:flex;flex-direction:column;gap:.3rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(246,244,240,.82);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.6rem .75rem;pointer-events:none}
+.hud b{color:var(--ink);font-weight:400}
+.viewtools{position:absolute;right:1rem;top:1rem;display:flex;flex-direction:column;gap:.4rem}
+.viewtools button{border:1px solid var(--line);background:rgba(246,244,240,.9);backdrop-filter:blur(6px);color:var(--ink);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem .7rem;cursor:pointer;transition:background .2s}
+.viewtools button:hover{background:var(--raise)}
+.viewtools button[aria-pressed=true]{background:var(--beacon);color:#fff;border-color:var(--beacon)}
+
+.timeline{display:flex;gap:0;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
+.timeline button{flex:1 0 auto;min-width:8.5rem;border:0;border-right:1px solid var(--line);background:var(--surface);padding:1rem .9rem;text-align:left;cursor:pointer;transition:background .2s;position:relative}
+.timeline button:last-child{border-right:0}
+.timeline button:hover{background:var(--raise)}
+.timeline button .k{display:block;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--muted)}
+.timeline button .t{display:block;margin-top:.4rem;font-size:.875rem;color:var(--ink)}
+.timeline button[aria-current=true]{background:var(--raise)}
+.timeline button[aria-current=true]::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--beacon)}
+.timeline button[aria-current=true] .k{color:var(--beacon)}
+
+.transport{display:flex;align-items:center;gap:1rem;border-top:1px solid var(--line);padding:1rem 1.25rem;flex-wrap:wrap}
+.transport .bar{flex:1;min-width:8rem;height:2px;background:var(--line);position:relative}
+.transport .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--beacon);transition:width .4s cubic-bezier(.16,1,.3,1)}
+.tbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;padding:.55rem .95rem;cursor:pointer;transition:background .2s}
+.tbtn:hover{background:var(--raise)}
+.tbtn[disabled]{opacity:.4;cursor:default}
+
+.stage-body{display:grid;gap:2.5rem;padding:2rem 1.25rem 2.25rem;border-top:1px solid var(--line)}
+.stage-body h2{font-size:1.5rem}
+.stage-body .lead{margin-top:1rem;max-width:60ch;font-size:1rem;line-height:1.7;color:var(--ink)}
+.stage-body .note{margin-top:1.5rem;max-width:62ch;border-left:1px solid var(--beacon);padding-left:1.25rem;font-size:.875rem;line-height:1.7;color:var(--muted)}
+.factgrid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.factgrid div{background:var(--surface);padding:1rem 1.1rem}
+.factgrid dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.factgrid dd{margin-top:.5rem;font-size:1rem;color:var(--ink)}
+
+.spec{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.spec .row{display:grid;grid-template-columns:minmax(0,1fr);gap:.35rem;background:var(--surface);padding:1rem 1.1rem}
+.spec .row dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.spec .row dd{font-size:.9375rem;color:var(--ink)}
+.spec h3{grid-column:1/-1;background:var(--raise);padding:.85rem 1.1rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400}
+
+/* hotspot */
+.hotspots{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hs{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;gap:.45rem;background:none;border:0;padding:0;cursor:pointer;white-space:nowrap;transition:opacity .25s}
+.hs .dot{width:15px;height:15px;flex:none;border-radius:50%;border:1.5px solid var(--beacon);background:rgba(246,244,240,.92);position:relative;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center}
+.hs .dot i{display:none;font-style:normal;font-family:var(--mono);font-size:.625rem;color:var(--beacon);line-height:1}
+.hs .dot::after{content:"";position:absolute;inset:3.5px;border-radius:50%;background:var(--beacon);opacity:0;transition:opacity .2s}
+.hs:hover .dot,.hs[aria-pressed=true] .dot{transform:scale(1.15)}
+.hs[aria-pressed=true] .dot::after{opacity:1}
+.hs .lb{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(246,244,240,.88);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.28rem .5rem}
+.hs.hidden{opacity:0;pointer-events:none}
+.stage-view.paneled .hud{opacity:0}
+.hspanel{position:absolute;right:1rem;bottom:1rem;width:min(21rem,calc(100% - 2rem));background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:var(--shade);padding:1.1rem 1.2rem;display:none}
+.hspanel.open{display:block}
+.hspanel h3{font-size:1rem;font-weight:500;letter-spacing:-.01em}
+.hspanel p{margin-top:.6rem;font-size:.8125rem;line-height:1.65;color:var(--muted)}
+.hspanel ul{margin-top:.75rem;display:grid;gap:.3rem}
+.hspanel li{font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hspanel li b{color:var(--ink);font-weight:400}
+.hspanel .x{position:absolute;top:.55rem;right:.6rem;border:0;background:none;font-family:var(--mono);font-size:.75rem;color:var(--muted);cursor:pointer;padding:.25rem .4rem}
+.hspanel .x:hover{color:var(--ink)}
+
+/* rüzgâr paneli */
+.windwrap{border-top:1px solid var(--line);display:grid;gap:0}
+.windctl{padding:1.75rem 1.25rem;display:grid;gap:1.25rem;align-content:start}
+.windctl .lab{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.windctl .lab .v{font-size:2rem;letter-spacing:-.03em}
+.windctl input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--line);outline:none}
+.windctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--beacon);cursor:pointer;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line)}
+.windctl input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--beacon);cursor:pointer;border:3px solid var(--surface)}
+.windout{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.windout div{background:var(--surface);padding:.9rem 1rem}
+.windout dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.windout dd{margin-top:.35rem;font-size:1.25rem;letter-spacing:-.02em}
+.windstate{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.curve{padding:1.25rem;border-top:1px solid var(--line)}
+.curve svg{width:100%;height:auto;display:block}
+
+/* ölçek */
+.scalebox{padding:1.75rem 1.25rem;border-top:1px solid var(--line)}
+.scalebox svg{width:100%;height:auto;display:block;max-width:44rem;margin:0 auto}
+
+.srcs{margin-top:1.5rem;font-size:.8125rem;line-height:1.8;color:var(--muted)}
+.srcs a{border-bottom:1px solid var(--line)}
+.srcs a:hover{color:var(--ink)}
+
+@media (max-width:719px){
+  .hs .lb{display:none}
+  .hs .dot{width:24px;height:24px;background:rgba(246,244,240,.96)}
+  .hs .dot i{display:block}
+  .hs[aria-pressed=true] .dot{background:var(--beacon)}
+  .hs[aria-pressed=true] .dot i{color:#fff}
+  .hs[aria-pressed=true] .dot::after{opacity:0}
+  .hspanel{left:0;right:0;bottom:0;width:auto;max-height:56%;overflow:auto;border-left:0;border-right:0;border-bottom:0;padding:1rem 1.1rem 1.25rem}
+  .viewtools{gap:.3rem;right:.6rem;top:.6rem}
+  .viewtools button{padding:.42rem .55rem;font-size:.625rem}
+}
+@media (min-width:768px){
+  .windwrap{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+  .curve{border-top:0;border-left:1px solid var(--line)}
+  .windctl{padding:2rem}
+  .n-hero h1{font-size:3.75rem}
+  #scene{height:64vh}
+  .stage-body{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:3.5rem;padding:2.5rem 2rem 3rem}
+  .factgrid{grid-template-columns:1fr 1fr}
+  .spec{grid-template-columns:1fr 1fr}
+}
+@media (min-width:1024px){
+  .spec{grid-template-columns:1fr 1fr 1fr}
+}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Nordex N90/2500 — aşama aşama montaj","about":"Rüzgâr türbini montajı","author":{"@type":"Person","name":"Soner Soylu","url":"https://sonersoylu.com"},"inLanguage":"tr","url":"https://sonersoylu.com/n90/"}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head><body>
+<a class="skip" href="#top">İçeriğe geç</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin" aria-current="true">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/" aria-current="true">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/" aria-current="true">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+
+<main id="top">
+
+<section class="wrap n-hero">
+  <a class="n-back" href="/"><span aria-hidden="true">←</span> Ana sayfa</a>
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem;margin-top:2rem"><span class="beacon"></span>Nordex N90/2500 · 2,5 MW</p>
+  <h1>Bir türbin<br>nasıl kurulur</h1>
+  <p class="lede">Sahada on üç yılda öğrendiğim montaj sırasını, üzerinde çalıştığım makinelerden biri üzerinden anlatıyorum. Aşağıdaki model Nordex N90/2500'ün yayınlanmış teknik verilerinden birebir ölçeklendi: 90 metre rotor çapı, 43,8 metre kanat, 80 metre <a class="sz" href="/sozluk/#t-gobek" title="Göbek — sözlükte">göbek</a> yüksekliği. Yedi aşamayı sırayla gezebilir, modeli döndürüp yakınlaştırabilirsiniz.</p>
+</section>
+
+<section class="wrap" style="border-top:0;padding-top:0">
+  <div class="stage-wrap">
+    <div class="stage-view">
+      <canvas id="scene" aria-label="Nordex N90/2500 türbininin üç boyutlu montaj modeli"></canvas>
+      <div class="loading" id="loading">Model yükleniyor</div>
+      <div class="viewtools">
+        <button id="btnCut" aria-pressed="false" title="Nacelle kapağını saydamlaştırıp güç aktarma organlarını gösterir">İç aksam</button>
+        <button id="btnTags" aria-pressed="true" title="Parça etiketlerini gösterir veya gizler">Etiketler</button>
+        <button id="btnLight" aria-pressed="false" title="Gün batımı ışığına geçer">Gün batımı</button>
+        <button id="btnSpin" aria-pressed="false" title="Rotoru döndürür">Rotor</button>
+        <button id="btnReset" title="Kamerayı aşamanın varsayılan açısına döndürür">Görünüm</button>
+      </div>
+      <div class="hotspots" id="hotspots"></div>
+      <div class="hspanel" id="hspanel">
+        <button class="x" id="hsx" aria-label="Kapat">✕</button>
+        <h3 id="hsTitle"></h3>
+        <p id="hsText"></p>
+        <ul id="hsFacts"></ul>
+      </div>
+      <div class="hud">
+        <span>Göbek yüksekliği <b>80 m</b></span>
+        <span>Rotor çapı <b>90 m</b></span>
+        <span id="hudStage">Aşama <b>1 / 7</b></span>
+      </div>
+    </div>
+
+    <div class="timeline" id="timeline" role="tablist" aria-label="Montaj aşamaları"></div>
+
+    <div class="transport">
+      <button class="tbtn" id="prev">← Önceki</button>
+      <button class="tbtn" id="next">Sonraki →</button>
+      <button class="tbtn" id="play">Otomatik</button>
+      <div class="bar"><i id="progress" style="width:14%"></i></div>
+    </div>
+
+    <div class="windwrap">
+      <div class="windctl">
+        <div>
+          <p class="mono">Rüzgâr hızı</p>
+          <div class="lab"><span class="v" id="wV">10,0 m/s</span><span class="windstate" id="wState">Üretimde</span></div>
+        </div>
+        <input type="range" id="wind" min="0" max="30" step="0.5" value="10" aria-label="Rüzgâr hızı">
+        <dl class="windout">
+          <div><dt>Çıkış gücü</dt><dd id="wP">1.620 kW</dd></div>
+          <div><dt>Rotor devri</dt><dd id="wR">17,0 d/dk</dd></div>
+          <div><dt>Kanat ucu hızı</dt><dd id="wT">80 m/s</dd></div>
+          <div><dt>Kapasite oranı</dt><dd id="wC">%65</dd></div>
+        </dl>
+        <p style="font-size:.8125rem;line-height:1.6;color:var(--muted)">Kaydırıcıyı çevirin: rotor bu hıza karşılık gelen gerçek devirde döner. 3 m/s altında durur, 13,5 m/s'te nominal güce ulaşır, 25 m/s üstünde emniyet için kanatlar bayrağa alınır ve türbin durur.</p>
+      </div>
+      <div class="curve" id="curveBox"></div>
+    </div>
+
+    <div class="stage-body">
+      <div>
+        <h2 id="stTitle">Temel ve ankraj kafesi</h2>
+        <p class="lead" id="stLead"></p>
+        <p class="note" id="stNote"></p>
+      </div>
+      <dl class="factgrid" id="stFacts"></dl>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="olcek">
+  <div class="head">
+    <h2>Ölçek</h2>
+    <p class="mono"><a class="sz" href="/sozluk/#t-kanat-ucu" title="Kanat ucu — sözlükte">Kanat ucu</a> 125 metreye çıkar</p>
+  </div>
+  <div class="stage-wrap"><div class="scalebox" id="scaleBox"></div></div>
+</section>
+
+<section class="wrap" id="kunye">
+  <div class="head">
+    <h2>Teknik künye</h2>
+    <p class="mono">Nordex N90/2500 · LS ve HS varyantları</p>
+  </div>
+  <dl class="spec">
+    <h3>Rotor</h3>
+    <div class="row"><dt>Çap</dt><dd>90,0 m</dd></div>
+    <div class="row"><dt>Süpürme alanı</dt><dd>6.362 m²</dd></div>
+    <div class="row"><dt>Kanat sayısı</dt><dd>3</dd></div>
+    <div class="row"><dt>Kanat uzunluğu</dt><dd>43,8 m</dd></div>
+    <div class="row"><dt>Kanat malzemesi</dt><dd>Cam elyaf takviyeli plastik, ≈ 10,2 t</dd></div>
+    <div class="row"><dt>Rotor devri</dt><dd>maks. 18,1 d/dk</dd></div>
+    <div class="row"><dt>Kanat ucu hızı</dt><dd>≈ 85 m/s</dd></div>
+    <div class="row"><dt>Rotor ağırlığı</dt><dd>≈ 55 t</dd></div>
+
+    <h3>Göbek ve pitch</h3>
+    <div class="row"><dt>Göbek malzemesi</dt><dd>EN-GJS-400-18U-LT küresel grafitli dökme demir</dd></div>
+    <div class="row"><dt>Göbek + pitch ağırlığı</dt><dd>≈ 25 t</dd></div>
+    <div class="row"><dt>Pitch sistemi</dt><dd>Elektrikli, kanat başına bağımsız</dd></div>
+    <div class="row"><dt>Acil durum</dt><dd>Enerji depolama ile bayrak konumuna alma</dd></div>
+
+    <h3>Güç aktarma</h3>
+    <div class="row"><dt>Ana şaft</dt><dd>42CrMo4 / 34CrNiMo6, ≈ 11,8 t</dd></div>
+    <div class="row"><dt>Ana yatak</dt><dd>Kendinden hizalamalı makaralı rulman</dd></div>
+    <div class="row"><dt>Dişli kutusu</dt><dd>Çok kademeli planet + 1 alın kademesi, ≈ 18,5 t</dd></div>
+    <div class="row"><dt>Çevrim oranı</dt><dd>1:77,44 (LS) · 1:71,88 (HS)</dd></div>
+    <div class="row"><dt>Mekanik fren</dt><dd>Yüksek devir milinde disk, Ø 1.030 mm</dd></div>
+
+    <h3>Jeneratör ve elektrik</h3>
+    <div class="row"><dt>Tip</dt><dd>Çift beslemeli asenkron, ≈ 12 t</dd></div>
+    <div class="row"><dt>Güç / gerilim</dt><dd>2.500 kW · 660 V</dd></div>
+    <div class="row"><dt>Devir aralığı</dt><dd>740 – 1.310 d/dk</dd></div>
+    <div class="row"><dt>Şebeke bağlantısı</dt><dd>IGBT dönüştürücü, 50 Hz</dd></div>
+    <div class="row"><dt>Kontrol</dt><dd>Nordex Control 2, çift anemometre, SCADA, UPS</dd></div>
+
+    <h3>Kule ve yaw</h3>
+    <div class="row"><dt>Kule tipi</dt><dd>Boru kesitli çelik (S355) / hibrit</dd></div>
+    <div class="row"><dt>Göbek yükseklikleri</dt><dd>70 · 75 · 80 · 100 · 120 m</dd></div>
+    <div class="row"><dt>Segment sayısı</dt><dd>4 – 6 (yüksekliğe göre)</dd></div>
+    <div class="row"><dt>Kule ağırlığı</dt><dd>maks. 319 t</dd></div>
+    <div class="row"><dt>Yaw tahriki</dt><dd>2 asenkron motor, 4 kademeli planet redüktör</dd></div>
+    <div class="row"><dt>Yaw hızı</dt><dd>≈ 0,5°/s</dd></div>
+
+    <h3>İşletme</h3>
+    <div class="row"><dt>Nominal güç</dt><dd>2.500 kW</dd></div>
+    <div class="row"><dt>Devreye giriş</dt><dd>3,0 m/s</dd></div>
+    <div class="row"><dt>Nominal rüzgâr</dt><dd>13,5 m/s</dd></div>
+    <div class="row"><dt>Kesme rüzgârı</dt><dd>25,0 m/s</dd></div>
+    <div class="row"><dt>Rüzgâr sınıfı</dt><dd>IEC 2a / DIBt 3 (LS) · IEC 1b (HS)</dd></div>
+    <div class="row"><dt>Toplam ağırlık</dt><dd>≈ 465 t</dd></div>
+  </dl>
+
+  <p class="srcs">
+    Model, üreticinin teknik tanımı ve kamuya açık türbin veritabanındaki değerlerden ölçeklendi. Bir CAD kopyası değil; ölçüleri doğru, ayrıntıları anlatım için sadeleştirilmiş bir gösterimdir.
+    Kaynaklar: <a href="https://en.wind-turbine-models.com/turbines/734-nordex-n90-2500" target="_blank" rel="noreferrer">wind-turbine-models.com — Nordex N90/2500</a> ·
+    <a href="http://windturbine.co.kr/homepage/data/file/submenu4_1/1346264786_BrtRAfMq_Nordex_2500kw_spec.pdf" target="_blank" rel="noreferrer">Nordex N90/2500 LS / HS teknik tanım (PDF)</a>
+  </p>
+</section>
+
+<section class="wrap" id="iletisim" style="padding-top:4rem">
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>İletişim</p>
+  <p class="big" style="margin-top:1.5rem">Bana ulaşın</p>
+  <a class="mail" href="mailto:sonersoylu@yandex.com">sonersoylu@yandex.com</a>
+  <p style="margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem"><a class="arrow" href="/rehber/">Rüzgâr türbini teknisyenliği rehberi <i>→</i></a><a class="arrow" href="/">Ana sayfaya dön <i>→</i></a></p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Rüzgâr türbini saha servis teknisyeni</p>
+    <p class="mono">Aliağa, İzmir</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div>
+</footer>
+
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+
+<script type="module">
+import * as THREE from '/assets/vendor/three.module.min.js';
+import { createScene, STAGES, SPEC } from './n90.js?v=6';
+
+const canvas = document.getElementById('scene');
+const S = createScene(canvas);
+const { renderer, scene, camera, controls, parts } = S;
+window.__n90 = S;   // teşhis kancası
+
+/* ---------- aşama tanımı: hangi parçalar sahnede ---------- */
+const visibleAt = i => ({
+  foundation: true,
+  cage: i === 0,
+  tower: i === 0 ? 0 : i === 1 ? 2 : 4,
+  nacelle: i >= 3,
+  hub: i >= 4,
+  blades: i >= 5 ? (i === 5 ? 3 : 3) : 0,
+  crane: i >= 1 && i <= 5,
+  groundBlade: i >= 1 && i <= 5,
+  drivetrainAvail: i >= 4,
+});
+
+let stage = 0;
+let cutaway = false;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let spinning = false;
+let spinVel = 0;
+
+/* ---------- animasyonlu yerleşme ---------- */
+const drops = [];        // gerçek zamana bağlı: kare hızından bağımsız
+function drop(obj, targetY, delay = 0, dur = 0.95) {
+  obj.visible = true;
+  drops.push({ obj, y0: targetY + 62, y1: targetY, t0: performance.now() + delay * 1000, dur: dur * 1000 });
+  obj.position.y = targetY + 62;
+}
+function flushDrops() {
+  drops.forEach(d => { d.obj.position.y = d.y1; });
+  drops.length = 0;
+  growTimers.forEach(clearTimeout); growTimers.length = 0;
+  growTargets.forEach(g => g.obj.scale.setScalar(1));
+  growTargets.length = 0;
+}
+const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+function applyStage(i, animate) {
+  flushDrops();
+  const v = visibleAt(i);
+
+  parts.foundation.visible = true;
+  parts.foundation.getObjectByName('cage').visible = v.cage;
+
+  parts.towerSegs.forEach((seg, k) => {
+    const want = k < v.tower;
+    const was = seg.visible;
+    const baseY = 4.0 + segY(k);
+    if (want && !was && animate) drop(seg, baseY, (k % 2) * 0.35);
+    else { seg.visible = want; seg.position.y = baseY; }
+  });
+
+  const nacY = S.towerTopY + SPEC.nacelleHei / 2 + 0.25;
+  if (v.nacelle && !parts.yaw.visible && animate) drop(parts.yaw, nacY, 0.15, 1.35);
+  else { parts.yaw.visible = v.nacelle; parts.yaw.position.y = nacY; }
+
+  parts.hub.visible = v.hub;
+  parts.blades.forEach((b, k) => { b.visible = v.blades > k; });
+  if (v.blades && animate) {
+    parts.blades.forEach((b, k) => {
+      b.scale.setScalar(0.001);
+      growTimers.push(setTimeout(() => growBlade(b), k * 380));
+    });
+  } else {
+    parts.blades.forEach(b => b.scale.setScalar(1));
+  }
+
+  parts.crane.visible = v.crane;
+  parts.groundBlade.visible = v.groundBlade;
+  parts.drivetrain.visible = cutaway && v.drivetrainAvail;
+  setCutaway(cutaway && v.drivetrainAvail);
+
+  document.getElementById('btnCut').disabled = !v.drivetrainAvail;
+
+  // vinç kancasını aşamaya göre yerleştir
+  placeHook(i);
+
+  // kamera
+  const cam = STAGES[i].cam;
+  flyTo(cam.pos, cam.target);
+}
+
+const growTargets = [];
+const growTimers = [];
+function growBlade(b) {
+  growTargets.push({ obj: b, t0: performance.now() });
+}
+
+function segY(k) {
+  const H = SPEC.hubHeight - 2.2;
+  return (H / 4) * k;
+}
+
+function setCutaway(on) {
+  parts.nacelle.traverse(o => {
+    if (o.isMesh) {
+      o.material.transparent = on;
+      o.material.opacity = on ? 0.22 : 1;
+      o.material.depthWrite = !on;
+      o.material.needsUpdate = true;
+    }
+  });
+  parts.drivetrain.visible = on;
+}
+
+/* ---------- vinç ---------- */
+const boom = parts.crane.getObjectByName('boom');
+const rope = parts.crane.getObjectByName('rope');
+const hook = parts.crane.getObjectByName('hook');
+const _w = new THREE.Vector3();
+
+function placeHook(i) {
+  const heights = [6, 22, 46, S.towerTopY + 6, S.towerTopY + 8, S.towerTopY + 10, 0];
+  const h = heights[i] || 6;
+  const tipLocal = new THREE.Vector3(0, 96, 0);
+  boom.localToWorld(tipLocal);
+  parts.crane.worldToLocal(tipLocal);
+  hook.position.set(tipLocal.x, Math.min(h, tipLocal.y - 3), tipLocal.z);
+  const len = tipLocal.y - hook.position.y;
+  rope.scale.y = Math.max(len, 0.1);
+  rope.position.set(tipLocal.x, hook.position.y + len / 2, tipLocal.z);
+}
+
+/* ---------- kamera geçişi ---------- */
+let fly = null;
+function flyTo(pos, target) {
+  fly = {
+    p0: camera.position.clone(), p1: new THREE.Vector3(...pos),
+    tA: controls.target.clone(), tB: new THREE.Vector3(...target),
+    t0ms: performance.now(), dur: 1000,
+  };
+}
+
+/* ---------- arayüz ---------- */
+const tl = document.getElementById('timeline');
+STAGES.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('role', 'tab');
+  b.innerHTML = '<span class="k">' + String(i + 1).padStart(2, '0') + '</span><span class="t">' + s.title + '</span>';
+  b.addEventListener('click', () => go(i));
+  tl.appendChild(b);
+});
+
+function go(i, animate = true) {
+  stage = Math.max(0, Math.min(STAGES.length - 1, i));
+  const s = STAGES[stage];
+  document.getElementById('stTitle').textContent = s.title;
+  document.getElementById('stLead').textContent = s.lead;
+  document.getElementById('stNote').textContent = s.note;
+  document.getElementById('hudStage').innerHTML = 'Aşama <b>' + (stage + 1) + ' / ' + STAGES.length + '</b>';
+  document.getElementById('progress').style.width = ((stage + 1) / STAGES.length * 100) + '%';
+  const facts = document.getElementById('stFacts');
+  facts.innerHTML = s.facts.map(f => '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>').join('');
+  [...tl.children].forEach((b, k) => b.setAttribute('aria-current', String(k === stage)));
+  tl.children[stage].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  document.getElementById('prev').disabled = stage === 0;
+  document.getElementById('next').disabled = stage === STAGES.length - 1;
+  applyStage(stage, animate);
+  if (stage === STAGES.length - 1 && !reduceMotion) setSpin(true);
+}
+
+document.getElementById('prev').addEventListener('click', () => go(stage - 1));
+document.getElementById('next').addEventListener('click', () => go(stage + 1));
+
+let auto = null;
+document.getElementById('play').addEventListener('click', function () {
+  if (auto) { clearInterval(auto); auto = null; this.textContent = 'Otomatik'; return; }
+  this.textContent = 'Durdur';
+  if (stage === STAGES.length - 1) go(0);
+  auto = setInterval(() => {
+    if (stage >= STAGES.length - 1) { clearInterval(auto); auto = null; this.textContent = 'Otomatik'; return; }
+    go(stage + 1);
+  }, 4200);
+});
+
+document.getElementById('btnCut').addEventListener('click', function () {
+  cutaway = !cutaway;
+  this.setAttribute('aria-pressed', String(cutaway));
+  setCutaway(cutaway && visibleAt(stage).drivetrainAvail);
+});
+
+function setSpin(on) {
+  spinning = on;
+  document.getElementById('btnSpin').setAttribute('aria-pressed', String(on));
+}
+document.getElementById('btnSpin').addEventListener('click', () => setSpin(!spinning));
+document.getElementById('btnReset').addEventListener('click', () => {
+  const c = STAGES[stage].cam; flyTo(c.pos, c.target);
+});
+
+addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') go(stage + 1);
+  if (e.key === 'ArrowLeft') go(stage - 1);
+});
+
+
+/* ---------- parça etiketleri ---------- */
+const HOTSPOTS = [
+  { k:'cage', at:[0], title:'Ankraj kafesi', text:'Kule cıvatalarının betona gömülü hâli. Kafenin düzlemselliği ve cıvata boylarının eşitliği burada tutmazsa, kule bütün ömrü boyunca o hatayı taşır.',
+    facts:[['Cıvata','100–140 adet, M42–M48'],['Ön germe','Kademeli, çapraz sıra'],['Kontrol','İlk dolu yükten önce tekrar']] },
+  { k:'flange', at:[1,2], title:'Kule flanşı', text:'İki segmentin birleştiği yer. Yüzeyler kaldırma öncesi temizlenir; cıvatalar önce el sıkılığında, sonra hidrolik germeyle üç turda son değerine getirilir.',
+    facts:[['Malzeme','S355 çelik'],['Segment','4 adet (80 m göbek)'],['Bağlantı','L-flanş, ön gerilmeli cıvata']] },
+  { k:'yawDrive', at:[3,4,5,6], title:'Yaw sistemi', text:'Makine dairesini rüzgâra çeviren tahrik. İki asenkron motor dört kademeli planet redüktörle bilyeli yaw yatağını döndürür; sapma açısı nacelle üstündeki anemometreden gelir.',
+    facts:[['Tahrik','2 asenkron motor'],['Redüktör','4 kademeli planet'],['Dönüş hızı','≈ 0,5°/s'],['Yatak','Bilyeli']] },
+  { k:'mainBearing', at:[4,5,6], cut:true, title:'Ana yatak', text:'Rotorun bütün ağırlığını ve eğilme momentini taşıyan yatak. Kendinden hizalamalı makaralı tip, şaftın küçük açısal sapmalarını tolere eder.',
+    facts:[['Tip','Kendinden hizalamalı makaralı'],['Ana şaft','42CrMo4 / 34CrNiMo6'],['Şaft ağırlığı','≈ 11,8 t']] },
+  { k:'gearbox', at:[4,5,6], cut:true, title:'Dişli kutusu', text:'Rotorun 18 d/dk\'lık dönüşünü jeneratörün ihtiyaç duyduğu binlerce devre çıkarır. Üç planet kademesi ve bir alın dişli kademesi var; yağ sıcaklığı ve partikül sayımı bakımda ilk bakılan yerlerden.',
+    facts:[['Yapı','3 planet + 1 alın kademe'],['Çevrim','1:77,44 (LS) · 1:71,88 (HS)'],['Ağırlık','≈ 18,5 t']] },
+  { k:'brake', at:[4,5,6], cut:true, title:'Disk fren', text:'Yüksek devir milindeki mekanik fren. Asıl frenleme aerodinamiktir — kanatlar bayrağa alınır; disk fren park ve servis kilidi için.',
+    facts:[['Konum','Yüksek devir mili'],['Disk çapı','Ø 1.030 mm'],['Birincil fren','Bireysel kanat pitch']] },
+  { k:'generator', at:[4,5,6], cut:true, title:'Jeneratör', text:'Çift beslemeli asenkron makine. Rotor sargısı IGBT dönüştürücü üzerinden beslendiği için devir belli bir aralıkta değişebilir; şebeke frekansı sabit kalırken rotor rüzgâra göre hızlanır.',
+    facts:[['Tip','Çift beslemeli asenkron'],['Güç / gerilim','2.500 kW · 660 V'],['Devir','740 – 1.310 d/dk'],['Ağırlık','≈ 12 t']] },
+  { k:'anemo', at:[3,4,5,6], title:'Anemometre direği', text:'Nacelle üstünde çift anemometre ve rüzgâr yön sensörü. Kontrol sistemi devreye giriş, yaw düzeltmesi ve kesme kararını buradan gelen veriyle verir.',
+    facts:[['Sensör','Çift anemometre'],['Kontrol','Nordex Control 2'],['Yedek','UPS destekli']] },
+  { k:'pitch', at:[4,5,6], title:'Pitch sistemi', text:'Her kanadın kendi elektrikli tahriki var. Güç sınırlaması ve durdurma bu sistemle yapılır; şebeke gidince kanatları bayrağa alacak enerji göbek içindeki depolama ünitelerinde bekler.',
+    facts:[['Tahrik','Elektrikli, kanat başına bağımsız'],['Acil durum','Enerji depolamayla bayrak konumu'],['Göbek + pitch','≈ 25 t']] },
+  { k:'bladeRoot', at:[5], title:'Kanat kökü', text:'Kanadın pitch yatağına oturduğu bilezik. T-bolt bağlantıları çapraz sırayla ve kademeli torkla sıkılır; kaldırma öncesi jelkot çatlağı, nakliye izi ve şimşek iletim noktaları kontrol edilir.',
+    facts:[['Uzunluk','43,8 m'],['Ağırlık','≈ 10,2 t'],['Malzeme','Cam elyaf takviyeli plastik']] },
+];
+
+const hsLayer = document.getElementById('hotspots');
+const hsPanel = document.getElementById('hspanel');
+let tagsOn = true, activeHs = null;
+
+const hsEls = HOTSPOTS.map((h, i) => {
+  const b = document.createElement('button');
+  b.className = 'hs hidden';
+  b.type = 'button';
+  b.setAttribute('aria-pressed', 'false');
+  b.innerHTML = '<span class="dot"><i>' + (i + 1) + '</i></span><span class="lb">' + h.title + '</span>';
+  b.addEventListener('click', () => openHs(i));
+  hsLayer.appendChild(b);
+  return b;
+});
+
+function openHs(i) {
+  const h = HOTSPOTS[i];
+  activeHs = i;
+  hsEls.forEach((e, k) => e.setAttribute('aria-pressed', String(k === i)));
+  document.getElementById('hsTitle').textContent = h.title;
+  document.getElementById('hsText').textContent = h.text;
+  document.getElementById('hsFacts').innerHTML = h.facts.map(f => '<li>' + f[0] + ' <b>' + f[1] + '</b></li>').join('');
+  hsPanel.classList.add('open');
+  document.querySelector('.stage-view').classList.add('paneled');
+}
+function closeHs() {
+  activeHs = null;
+  hsEls.forEach(e => e.setAttribute('aria-pressed', 'false'));
+  hsPanel.classList.remove('open');
+  document.querySelector('.stage-view').classList.remove('paneled');
+}
+document.getElementById('hsx').addEventListener('click', closeHs);
+
+document.getElementById('btnTags').addEventListener('click', function () {
+  tagsOn = !tagsOn;
+  this.setAttribute('aria-pressed', String(tagsOn));
+  if (!tagsOn) closeHs();
+});
+
+const _v = new THREE.Vector3();
+function updateHotspots() {
+  const anchors = parts.anchors;
+  if (!anchors) return;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  const live = [];
+  HOTSPOTS.forEach((hs, i) => {
+    const el = hsEls[i];
+    const anchor = anchors[hs.k];
+    const stageOk = hs.at.includes(stage);
+    const cutOk = !hs.cut || cutaway;
+    if (!tagsOn || !anchor || !stageOk || !cutOk) { el.classList.add('hidden'); return; }
+    anchor.getWorldPosition(_v);
+    _v.project(camera);
+    if (_v.z > 1) { el.classList.add('hidden'); return; }
+    const x = (_v.x * 0.5 + 0.5) * w, y = (-_v.y * 0.5 + 0.5) * h;
+    if (x < 12 || x > w - 12 || y < 12 || y > h - 12) { el.classList.add('hidden'); return; }
+    if (w < 720 && x > w - 108 && y < 210) { el.classList.add('hidden'); return; }
+    live.push({ el, x, y });
+  });
+  // üst üste binenleri dikeyde ayır
+  live.sort((a, b) => a.y - b.y);
+  const GAP = w < 720 ? 30 : 27;
+  for (let i = 1; i < live.length; i++) {
+    const prev = live[i - 1], cur = live[i];
+    if ((w < 720 ? Math.abs(cur.x - prev.x) < 46 : Math.abs(cur.x - prev.x) < 155) && cur.y - prev.y < GAP) cur.y = prev.y + GAP;
+  }
+  live.forEach(({ el, x, y }) => {
+    el.style.left = x + 'px';
+    el.style.top = Math.min(y, h - 14) + 'px';
+    el.classList.remove('hidden');
+  });
+}
+
+/* ---------- ışık modu ---------- */
+let sunset = false;
+document.getElementById('btnLight').addEventListener('click', function () {
+  sunset = !sunset;
+  this.setAttribute('aria-pressed', String(sunset));
+  this.textContent = sunset ? 'Gündüz' : 'Gün batımı';
+  S.setLight(sunset ? 'sunset' : 'day');
+});
+
+/* ---------- rüzgâr, güç ve devir ---------- */
+// N90/2500 için nominal 13,5 m/s'e oturtulmuş güç eğrisi (kW)
+const PC = [[0,0],[3,0],[4,65],[5,175],[6,340],[7,570],[8,870],[9,1230],[10,1620],[11,2000],[12,2290],[13,2450],[13.5,2500],[25,2500],[25.01,0],[30,0]];
+function powerAt(v) {
+  if (v < 3 || v > 25) return 0;
+  for (let i = 1; i < PC.length; i++) {
+    if (v <= PC[i][0]) {
+      const [x0, y0] = PC[i - 1], [x1, y1] = PC[i];
+      return y0 + (y1 - y0) * (v - x0) / (x1 - x0 || 1);
+    }
+  }
+  return 0;
+}
+// λ ≈ 8 ile değişken devir, 18,1 d/dk'da sınırlı
+function rpmAt(v) {
+  if (v < 3 || v > 25) return 0;
+  return Math.min(8 * v / 45 * 60 / (2 * Math.PI), 18.1);
+}
+const nf = (n, d = 0) => n.toLocaleString('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+const wind = document.getElementById('wind');
+let windV = 10;
+function applyWind(v) {
+  windV = v;
+  const P = powerAt(v), R = rpmAt(v);
+  document.getElementById('wV').textContent = nf(v, 1) + ' m/s';
+  document.getElementById('wP').textContent = nf(P) + ' kW';
+  document.getElementById('wR').textContent = nf(R, 1) + ' d/dk';
+  document.getElementById('wT').textContent = nf(R / 60 * 2 * Math.PI * 45) + ' m/s';
+  document.getElementById('wC').textContent = '%' + nf(P / 2500 * 100);
+  const st = document.getElementById('wState');
+  st.textContent = v < 3 ? 'Durdu — devreye giriş altı'
+    : v > 25 ? 'Kesme — kanatlar bayrakta'
+    : P >= 2499 ? 'Nominal güçte' : 'Üretimde';
+  drawCurve(v);
+}
+wind.addEventListener('input', e => applyWind(parseFloat(e.target.value)));
+
+/* güç eğrisi çizimi */
+const curveBox = document.getElementById('curveBox');
+function drawCurve(v) {
+  const W = 560, H = 312, ml = 52, mr = 16, mt = 16, mb = 46;
+  const px = x => ml + (x / 30) * (W - ml - mr);
+  const py = y => H - mb - (y / 2600) * (H - mt - mb);
+  let path = '';
+  for (let x = 0; x <= 30; x += 0.25) path += (path ? 'L' : 'M') + px(x).toFixed(1) + ' ' + py(powerAt(x)).toFixed(1) + ' ';
+  const gx = [0, 5, 10, 15, 20, 25, 30], gy = [0, 500, 1000, 1500, 2000, 2500];
+  curveBox.innerHTML =
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Nordex N90/2500 güç eğrisi">' +
+    gy.map(y => '<line x1="' + ml + '" y1="' + py(y) + '" x2="' + (W - mr) + '" y2="' + py(y) + '" stroke="var(--line)" stroke-width="1"/>' +
+      '<text x="' + (ml - 8) + '" y="' + (py(y) + 4) + '" text-anchor="end" font-family="var(--mono)" font-size="10" fill="var(--muted)">' + nf(y) + '</text>').join('') +
+    gx.map(x => '<text x="' + px(x) + '" y="' + (H - 12) + '" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--muted)">' + x + '</text>').join('') +
+    '<line x1="' + px(3) + '" y1="' + mt + '" x2="' + px(3) + '" y2="' + py(0) + '" stroke="var(--line)" stroke-dasharray="3 3"/>' +
+    '<line x1="' + px(13.5) + '" y1="' + mt + '" x2="' + px(13.5) + '" y2="' + py(0) + '" stroke="var(--line)" stroke-dasharray="3 3"/>' +
+    '<line x1="' + px(25) + '" y1="' + mt + '" x2="' + px(25) + '" y2="' + py(0) + '" stroke="var(--line)" stroke-dasharray="3 3"/>' +
+    '<text x="' + (px(3) + 4) + '" y="' + (mt + 10) + '" font-family="var(--mono)" font-size="9" fill="var(--muted)">GİRİŞ</text>' +
+    '<text x="' + (px(13.5) + 4) + '" y="' + (mt + 10) + '" font-family="var(--mono)" font-size="9" fill="var(--muted)">NOMİNAL</text>' +
+    '<text x="' + (px(25) - 4) + '" y="' + (mt + 10) + '" text-anchor="end" font-family="var(--mono)" font-size="9" fill="var(--muted)">KESME</text>' +
+    '<path d="' + path + '" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>' +
+    '<circle cx="' + px(v) + '" cy="' + py(powerAt(v)) + '" r="5.5" fill="var(--beacon)"/>' +
+    '<text x="' + (W - mr) + '" y="' + (H - 2) + '" text-anchor="end" font-family="var(--mono)" font-size="9" fill="var(--muted)">RÜZGÂR HIZI, m/s</text>' +
+    '<text x="' + ml + '" y="' + (H - 2) + '" font-family="var(--mono)" font-size="9" fill="var(--muted)">GÜÇ, kW</text>' +
+    '</svg>';
+}
+
+/* ---------- ölçek diyagramı ---------- */
+(function drawScale() {
+  const box = document.getElementById('scaleBox');
+  if (!box) return;
+  const W = 760, H = 340, base = H - 46, sc = (H - 78) / 125;
+  const m = v => base - v * sc;
+  const ink = 'var(--ink)', mut = 'var(--muted)', line = 'var(--line)', surf = 'var(--surface)';
+  const lab = (x, y, big, small) =>
+    '<text x="' + x + '" y="' + (y - 22) + '" text-anchor="middle" font-size="14" fill="' + ink + '">' + big + '</text>' +
+    '<text x="' + x + '" y="' + (y - 8) + '" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="1.4" fill="' + mut + '">' + small + '</text>';
+
+  let g = '';
+  // ızgara
+  [0, 25, 50, 75, 100, 125].forEach(v => {
+    g += '<line x1="44" y1="' + m(v) + '" x2="' + (W - 20) + '" y2="' + m(v) + '" stroke="' + line + '" stroke-dasharray="2 5"/>' +
+         '<text x="38" y="' + (m(v) + 4) + '" text-anchor="end" font-family="var(--mono)" font-size="10" fill="' + mut + '">' + v + '</text>';
+  });
+  g += '<line x1="44" y1="' + base + '" x2="' + (W - 20) + '" y2="' + base + '" stroke="' + mut + '"/>';
+
+  // insan 1,8 m
+  const hx = 92, hh = 1.8 * sc;
+  g += '<rect x="' + (hx - 1.4) + '" y="' + m(1.8) + '" width="2.8" height="' + hh + '" rx="1.4" fill="var(--beacon)"/>' + lab(hx, m(1.8), '1,8 m', 'İNSAN');
+
+  // ev 7 m
+  const ex = 178, ew = 22;
+  g += '<path d="M' + (ex - ew / 2) + ' ' + base + ' L' + (ex - ew / 2) + ' ' + m(4.6) + ' L' + ex + ' ' + m(7) + ' L' + (ex + ew / 2) + ' ' + m(4.6) + ' L' + (ex + ew / 2) + ' ' + base + ' Z" fill="' + surf + '" stroke="' + ink + '" stroke-width="1.5"/>' + lab(ex, m(7), '7 m', 'İKİ KATLI EV');
+
+  // apartman 45 m
+  const ax = 300, aw = 34;
+  g += '<rect x="' + (ax - aw / 2) + '" y="' + m(45) + '" width="' + aw + '" height="' + (45 * sc) + '" fill="' + surf + '" stroke="' + ink + '" stroke-width="1.5"/>';
+  for (let f = 3; f < 45; f += 3) g += '<line x1="' + (ax - aw / 2) + '" y1="' + m(f) + '" x2="' + (ax + aw / 2) + '" y2="' + m(f) + '" stroke="' + line + '"/>';
+  g += lab(ax, m(45), '45 m', '15 KATLI BLOK');
+
+  // türbin
+  const tx = 560, tb = 4.3 * sc / 2, tt = 2.9 * sc / 2, hub = m(80), R = 45 * sc;
+  g += '<path d="M' + (tx - tb) + ' ' + base + ' L' + (tx - tt) + ' ' + hub + ' L' + (tx + tt) + ' ' + hub + ' L' + (tx + tb) + ' ' + base + ' Z" fill="' + surf + '" stroke="' + ink + '" stroke-width="1.5"/>';
+  g += '<g stroke="' + ink + '" stroke-width="2.4" stroke-linecap="round">' +
+       '<line x1="' + tx + '" y1="' + hub + '" x2="' + tx + '" y2="' + (hub - R) + '"/>' +
+       '<line x1="' + tx + '" y1="' + hub + '" x2="' + (tx + R * 0.866) + '" y2="' + (hub + R * 0.5) + '"/>' +
+       '<line x1="' + tx + '" y1="' + hub + '" x2="' + (tx - R * 0.866) + '" y2="' + (hub + R * 0.5) + '"/></g>' +
+       '<circle cx="' + tx + '" cy="' + hub + '" r="4.5" fill="' + ink + '"/>';
+  // göbek ve uç kotları
+  g += '<line x1="' + (tx + tb + 8) + '" y1="' + hub + '" x2="' + (W - 20) + '" y2="' + hub + '" stroke="var(--beacon)" stroke-dasharray="3 3"/>' +
+       '<text x="' + (W - 20) + '" y="' + (hub - 7) + '" text-anchor="end" font-family="var(--mono)" font-size="9" letter-spacing="1.4" fill="var(--beacon)">GÖBEK 80 M</text>';
+  g += '<line x1="' + (tx + 10) + '" y1="' + (hub - R) + '" x2="' + (W - 20) + '" y2="' + (hub - R) + '" stroke="var(--beacon)" stroke-dasharray="3 3"/>' +
+       '<text x="' + (W - 20) + '" y="' + (hub - R - 7) + '" text-anchor="end" font-family="var(--mono)" font-size="9" letter-spacing="1.4" fill="var(--beacon)">KANAT UCU 125 M</text>';
+  g += '<text x="' + tx + '" y="' + (base + 20) + '" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="1.4" fill="' + mut + '">NORDEX N90/2500</text>';
+  g += '<text x="44" y="' + (base + 20) + '" font-family="var(--mono)" font-size="9" letter-spacing="1.4" fill="' + mut + '">YÜKSEKLİK, METRE</text>';
+
+  box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Nordex N90/2500 ölçek karşılaştırması: insan, ev, 15 katlı blok ve türbin">' + g + '</svg>';
+})();
+
+/* ---------- döngü ---------- */
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== w || canvas.height !== h) {
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+}
+
+const clock = new THREE.Clock();
+let tickErrors = 0;
+function tick() {
+  try { frame(); } catch (e) {
+    if (tickErrors++ < 3) console.error('sahne karesi:', e);
+  }
+  requestAnimationFrame(tick);
+}
+
+function frame() {
+  const dt = Math.min(clock.getDelta(), 0.1);
+  resize();
+
+  const now = performance.now();
+
+  for (let i = drops.length - 1; i >= 0; i--) {
+    const d = drops[i];
+    if (now < d.t0) continue;
+    const k = Math.min((now - d.t0) / d.dur, 1);
+    d.obj.position.y = d.y0 + (d.y1 - d.y0) * easeOut(k);
+    if (k >= 1) drops.splice(i, 1);
+  }
+
+  for (let i = growTargets.length - 1; i >= 0; i--) {
+    const g = growTargets[i];
+    const k = Math.min((now - g.t0) / 600, 1);
+    g.obj.scale.setScalar(easeOut(k));
+    if (k >= 1) growTargets.splice(i, 1);
+  }
+
+  if (fly) {
+    const k = Math.min((now - fly.t0ms) / fly.dur, 1);
+    const e = easeOut(k);
+    camera.position.lerpVectors(fly.p0, fly.p1, e);
+    controls.target.lerpVectors(fly.tA, fly.tB, e);
+    if (k >= 1) fly = null;
+  }
+
+  const targetVel = spinning ? rpmAt(windV) * Math.PI / 30 : 0;
+  spinVel += (targetVel - spinVel) * Math.min(dt * 0.9, 1);
+  parts.spin.rotation.z -= spinVel * dt;
+  if (spinning) parts.yaw.rotation.y += Math.sin(performance.now() / 9000) * 0.00035;
+  parts.farm.children.forEach(t => { t.userData.spin.rotation.z -= t.userData.speed * dt; });
+
+  controls.update();
+  updateHotspots();
+  renderer.render(scene, camera);
+}
+
+applyWind(10);
+go(0, false);
+resize();
+renderer.render(scene, camera);
+requestAnimationFrame(tick);
+setTimeout(() => document.getElementById('loading').classList.add('gone'), 260);
+</script>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Canlı Rüzgâr — Ege ve Marmara Sahaları | Soner Soylu</title>
+<meta name="description" content="Aliağa, Bergama, Çeşme, Bandırma, Bozcaada, Datça ve Bahçe için göbek yüksekliğinde canlı rüzgâr hızı, yön, hava yoğunluğu ve N90 ile N117 güç eğrilerinden hesaplanan tahmini türbin çıkışı.">
+<link rel="canonical" href="https://sonersoylu.com/ruzgar/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Şu anda sahada rüzgâr ne yapıyor">
+<meta property="og:description" content="Yedi rüzgâr bölgesi için göbek yüksekliğinde canlı rüzgâr ve tahmini türbin çıkışı.">
+<meta property="og:url" content="https://sonersoylu.com/ruzgar/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ruzgar.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:15ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.lede{margin-top:1.75rem}
+.gsec{border-top:1px solid var(--line);padding:4rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.ghead p.ac{margin-top:.75rem;max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+
+.sahalar{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem}
+.sahalar button{border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:.55rem .95rem;
+ font-family:var(--sans);font-size:.875rem;color:var(--muted);transition:.18s}
+.sahalar button:hover{color:var(--ink);border-color:var(--muted)}
+.sahalar button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+.sahalar button small{display:block;margin-top:.15rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.sahalar button[aria-pressed=true] small{color:inherit;opacity:.75}
+
+.simdi{margin-top:2rem;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade)}
+.simdi-ust{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;align-items:baseline;
+ padding:.9rem 1.1rem;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.625rem;
+ letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.simdi-ust b{color:var(--ink);font-weight:400}
+.simdi-gov{display:grid;gap:1px;background:var(--line)}
+.hucre{background:var(--surface);padding:1.4rem 1.2rem}
+.hucre .v{font-family:var(--mono);font-size:1.75rem;letter-spacing:-.03em;color:var(--ink);line-height:1}
+.hucre .v small{font-size:.875rem;color:var(--muted);letter-spacing:0}
+.hucre .n{margin-top:.5rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hucre .x{margin-top:.55rem;font-size:.8125rem;line-height:1.5;color:var(--muted)}
+.pusula{display:flex;align-items:center;gap:1rem}
+.pusula svg{flex:none}
+.ok{transform-origin:32px 32px;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.pus-c{fill:none;stroke:var(--line);stroke-width:1.2}
+.pus-t{font-family:var(--mono);font-size:8px;fill:var(--muted);text-anchor:middle}
+.pus-ok{fill:var(--beacon)}
+
+.tkart{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+.tkart>div{background:var(--surface);padding:1.5rem 1.4rem}
+.tkart h2{font-size:1.125rem;font-weight:500;letter-spacing:-.02em;display:flex;align-items:baseline;gap:.6rem}
+.tkart h2 span{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tkart .guc{margin-top:1.1rem;font-family:var(--mono);font-size:2.25rem;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+.tkart .guc small{font-size:.9375rem;color:var(--muted);letter-spacing:0}
+.cubuk{margin-top:1rem;height:6px;background:var(--raise);position:relative;overflow:hidden}
+.cubuk i{position:absolute;inset:0 auto 0 0;background:var(--beacon);width:0;transition:width .6s cubic-bezier(.16,1,.3,1)}
+.tkart .dr{margin-top:.9rem;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.625rem;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tkart .dr i{width:.4rem;height:.4rem;background:var(--muted);flex:none;font-style:normal}
+.tkart .dr.uretim i{background:var(--beacon)}
+.tkart .not{margin-top:1rem;font-size:.8125rem;line-height:1.6;color:var(--muted)}
+
+.grafik{margin-top:1.5rem;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade)}
+.grafik-ust{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-bottom:1px solid var(--line)}
+.gk{display:flex;gap:1rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.gk span{display:inline-flex;align-items:center;gap:.4rem}
+.gk i{width:.75rem;height:2px;flex:none}
+.grafik-gov{padding:1rem .6rem .4rem;overflow-x:auto}
+#tahminSvg{display:block;min-width:640px;width:100%;height:auto}
+.gx{font-family:var(--mono);font-size:9px;fill:var(--muted)}
+.gline{fill:none;stroke:var(--ink);stroke-width:1.6}
+.garea{fill:var(--beacon);opacity:.13}
+.gaks{stroke:var(--line);stroke-width:1}
+.ggece{fill:var(--raise);opacity:.55}
+.gsinir{stroke:var(--beacon);stroke-width:1;stroke-dasharray:3 4;opacity:.55}
+.gsimdi{stroke:var(--beacon);stroke-width:1.2}
+
+.ozet{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+.ozet>div{background:var(--surface);padding:1.15rem 1.2rem}
+.ozet .v{font-family:var(--mono);font-size:1.25rem;color:var(--ink)}
+.ozet .n{margin-top:.4rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.uyari{border-left:2px solid var(--beacon);padding:.1rem 0 .1rem 1.1rem;margin-top:2rem}
+.uyari p{max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.uyari b{color:var(--ink);font-weight:500}
+.hata{margin-top:1.5rem;border:1px solid var(--line);background:var(--raise);padding:1.1rem 1.2rem;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.hata[hidden]{display:none}
+.yukleniyor{opacity:.45;transition:opacity .3s}
+
+table.egri{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:.8125rem}
+table.egri th,table.egri td{border-bottom:1px solid var(--line);padding:.55rem .5rem;text-align:right;font-family:var(--mono)}
+table.egri th:first-child,table.egri td:first-child{text-align:left}
+table.egri thead th{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.tablo-kaydir{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.kaynak{margin-top:1.5rem;display:grid;gap:.6rem}
+.kaynak li{font-size:.875rem;line-height:1.6;color:var(--muted)}
+.kaynak a{border-bottom:1px solid var(--line)}
+.kaynak a:hover{color:var(--beacon);border-color:var(--beacon)}
+.nxt{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.nxt a{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.4rem;transition:background .2s}
+.nxt a:hover{background:var(--raise)}
+.nxt a b{font-weight:500;font-size:1rem}
+.nxt a span{font-size:.875rem;color:var(--muted);line-height:1.6}
+.inl{border-bottom:1px solid var(--beacon);transition:color .2s}
+.inl:hover{color:var(--beacon)}
+@media (min-width:640px){.simdi-gov{grid-template-columns:1fr 1fr}.tkart{grid-template-columns:1fr 1fr}.ozet{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:960px){.g-hero h1{font-size:3.25rem}.simdi-gov{grid-template-columns:repeat(4,1fr)}.ozet{grid-template-columns:repeat(4,1fr)}.nxt{grid-template-columns:1fr 1fr}}
+
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://sonersoylu.com/ruzgar/#page",
+   "name": "Canlı rüzgâr — Ege ve Marmara rüzgâr sahaları",
+   "description": "Aliağa, Bergama, Çeşme, Bandırma, Bozcaada, Datça ve Bahçe için göbek yüksekliğinde canlı rüzgâr hızı, hava yoğunluğu ve N90 ile N117 güç eğrilerinden hesaplanan tahmini türbin çıkışı.",
+   "inLanguage": "tr-TR",
+   "author": {
+    "@type": "Person",
+    "name": "Soner Soylu",
+    "url": "https://sonersoylu.com/"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Ana sayfa",
+     "item": "https://sonersoylu.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Canlı rüzgâr",
+     "item": "https://sonersoylu.com/ruzgar/"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Bu sayfadaki rüzgâr verisi nereden geliyor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Veri Open-Meteo üzerinden gelen sayısal hava tahmini modelinden alınıyor; saha anemometresi ölçümü değil. Model, seçilen koordinat için 10, 80, 120 ve 180 metredeki rüzgâr hızını üretiyor. Gerçek bir türbinin nasel anemometresi ile bu değer arasında çoğu zaman fark olur."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Gösterilen güç değeri gerçek üretim mi?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hayır. Tahmin edilen rüzgâr hızının güç eğrisine uygulanmasıyla bulunan teorik bir değer. Gerçek üretim; türbin durumu, kısıtlama, buzlanma, sektör yönetimi, iz etkisi ve bakım duruşları yüzünden bundan farklı olur."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Hangi güç eğrileri kullanılıyor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "N90/2500 için üreticinin yayımladığı güç eğrisi, N117/3000 için ise süpürme alanı ve güç katsayısından türetilmiş fiziksel bir model kullanılıyor. N117 eğrisi üreticinin resmî eğrisi değildir; sayfada bu açıkça belirtilmiştir."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Neden 80 ve 120 metre?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "N90/2500'ün yaygın göbek yüksekliği 80 metre, N117/3000 Delta'nın çelik kule seçeneği ise 120 metre. Rüzgâr hızı yükseklikle arttığı için her türbini kendi göbek yüksekliğindeki rüzgârla değerlendirmek gerekir."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head>
+<body id="top">
+<a class="skip" href="#ana">İçeriğe atla</a>
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/" aria-current="true">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/" aria-current="true">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main id="ana">
+
+<section class="g-hero"><div class="wrap">
+ <a class="g-back" href="/">← Ana sayfa</a>
+ <h1>Şu anda sahada rüzgâr ne yapıyor</h1>
+ <p class="lede">Ege ve Marmara&#8217;nın yedi rüzgâr bölgesi için <a class="sz" href="/sozluk/#t-gobek" title="Göbek — sözlükte">göbek</a> yüksekliğindeki rüzgâr hızı, hava yoğunluğu ve bu rüzgârda bir N90 ile bir N117&#8217;nin ne kadar üreteceğinin tahmini. Veri sayısal hava tahmini modelinden geliyor &#8212; saha ölçümü değil, ama sahaya çıkmadan önce ne bekleyeceğinizi bilmeye yeter.</p>
+
+ <div class="sahalar" id="sahalar" role="group" aria-label="Saha seçimi"><button type="button" data-s="aliaga" aria-pressed="true">Aliağa<small>İzmir</small></button><button type="button" data-s="bergama" aria-pressed="false">Bergama<small>İzmir</small></button><button type="button" data-s="cesme" aria-pressed="false">Çeşme–Karaburun<small>İzmir</small></button><button type="button" data-s="bandirma" aria-pressed="false">Bandırma<small>Balıkesir</small></button><button type="button" data-s="bozcaada" aria-pressed="false">Bozcaada<small>Çanakkale</small></button><button type="button" data-s="datca" aria-pressed="false">Datça<small>Muğla</small></button><button type="button" data-s="bahce" aria-pressed="false">Bahçe<small>Osmaniye</small></button></div>
+
+ <div class="simdi" id="simdi">
+  <div class="simdi-ust">
+   <span>Şu an &#183; <b id="sahaAd">Aliağa</b></span>
+   <span id="zaman">yükleniyor…</span>
+  </div>
+  <div class="simdi-gov">
+   <div class="hucre">
+    <p class="v"><span id="v120">–</span> <small>m/s</small></p>
+    <p class="n">120 m&#8217;de rüzgâr</p>
+    <p class="x" id="v80x">80 m&#8217;de <span id="v80">–</span> m/s &#183; hamle <span id="vham">–</span> m/s</p>
+   </div>
+   <div class="hucre">
+    <div class="pusula">
+     <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+      <circle class="pus-c" cx="32" cy="32" r="26"/>
+      <text class="pus-t" x="32" y="9">K</text><text class="pus-t" x="32" y="61">G</text>
+      <text class="pus-t" x="59" y="35">D</text><text class="pus-t" x="5" y="35">B</text>
+      <g class="ok" id="okg"><path class="pus-ok" d="M32 12 L37 34 L32 30 L27 34 Z"/><circle class="pus-ok" cx="32" cy="32" r="2"/></g>
+     </svg>
+     <div>
+      <p class="v" style="font-size:1.375rem"><span id="yonD">–</span>°</p>
+      <p class="n" id="yonAd">yön</p>
+     </div>
+    </div>
+    <p class="x">Ok, rüzgârın <b>geldiği</b> yönü gösterir &#8212; <a class="sz" href="/sozluk/#t-nasel" title="Nasel — sözlükte">nasel</a> de oraya döner.</p>
+   </div>
+   <div class="hucre">
+    <p class="v"><span id="sic">–</span> <small>°C</small></p>
+    <p class="n">Sıcaklık (2 m)</p>
+    <p class="x">Basınç <span id="bas">–</span> hPa</p>
+   </div>
+   <div class="hucre">
+    <p class="v"><span id="rho">–</span> <small>kg/m³</small></p>
+    <p class="n">Hava yoğunluğu</p>
+    <p class="x">Standart 1,225&#8217;e göre <span id="rhoFark">–</span></p>
+   </div>
+  </div>
+ </div>
+
+ <div class="hata" id="hata" hidden></div>
+
+ <div class="tkart">
+  <div>
+   <h2>Nordex N90/2500 <span>göbek 80 m</span></h2>
+   <p class="guc"><span id="p90">–</span> <small>kW</small></p>
+   <div class="cubuk"><i id="c90"></i></div>
+   <p class="dr" id="d90"><i></i><span>—</span></p>
+   <p class="not">Üreticinin yayımladığı <a class="sz" href="/sozluk/#t-guc-egrisi" title="Güç eğrisi — sözlükte">güç eğrisi</a>. <a class="inl" href="/n90/">3B montaj sayfası &#8594;</a></p>
+  </div>
+  <div>
+   <h2>Nordex N117/3000 <span>göbek 120 m</span></h2>
+   <p class="guc"><span id="p117">–</span> <small>kW</small></p>
+   <div class="cubuk"><i id="c117"></i></div>
+   <p class="dr" id="d117"><i></i><span>—</span></p>
+   <p class="not">Modellenmiş eğri (aşağıda açıklandı). <a class="inl" href="/n117/">15 duraklık tur &#8594;</a></p>
+  </div>
+ </div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">72 saat</p><h2>Önümüzdeki üç gün</h2>
+  <p class="ac">Çizgi göbek yüksekliğindeki rüzgâr hızı, taralı alan aynı saatte bir N117&#8217;nin vereceği güç. Gri bantlar geceyi, kırmızı kesik çizgiler kesme rüzgârlarını (3 ve 25 m/s) gösterir.</p></div>
+ <div class="grafik">
+  <div class="grafik-ust">
+   <span class="gk"><span><i style="background:var(--ink)"></i>Rüzgâr 120 m</span><span><i style="background:var(--beacon);opacity:.4;height:8px"></i>N117 gücü</span></span>
+   <span class="gk" id="grafikSaha">Aliağa</span>
+  </div>
+  <div class="grafik-gov"><svg id="tahminSvg" viewBox="0 0 900 260" role="img" aria-label="72 saatlik rüzgâr ve güç tahmini"></svg></div>
+ </div>
+ <div class="ozet">
+  <div><p class="v"><span id="ozOrt">–</span> m/s</p><p class="n">72 s ortalama rüzgâr</p></div>
+  <div><p class="v"><span id="ozMaks">–</span> m/s</p><p class="n">En yüksek</p></div>
+  <div><p class="v">%<span id="ozKf">–</span></p><p class="n">N117 kapasite kullanımı</p></div>
+  <div><p class="v"><span id="ozDur">–</span> saat</p><p class="n">Kesme altında duruş</p></div>
+ </div>
+ <div class="uyari">
+  <p><b>Bu bir üretim raporu değil.</b> Gerçek bir türbin; kısıtlama, sektör yönetimi, <a class="sz" href="/sozluk/#t-buzlanma" title="Buzlanma — sözlükte">buzlanma</a>, gürültü modu, <a class="sz" href="/sozluk/#t-i-z-etkisi" title="İz etkisi — sözlükte">iz etkisi</a>, bakım ve arıza duruşları yüzünden bu değerlerin altında kalır. Sayfadaki rakam, &#8220;bu rüzgârda makine ne verirdi&#8221; sorusunun teorik cevabı.</p>
+ </div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">Yöntem</p><h2>Rakamlar nasıl çıkıyor</h2></div>
+ <p class="ac" style="max-width:66ch;font-size:.9375rem;line-height:1.75;color:var(--muted)">Model, seçilen koordinat için 10, 80, 120 ve 180 metredeki rüzgâr hızını doğrudan veriyor; bu yüzden yükseklik düzeltmesi yapmıyorum &#8212; her türbini kendi göbek yüksekliğindeki rüzgârla değerlendiriyorum. Hava yoğunluğunu sıcaklık ve basınçtan hesaplıyorum (&#961; = p/(R&#183;T), R = 287,05 J/kg&#183;K), basıncı da deniz seviyesi değerinden göbek yüksekliğine barometrik olarak indiriyorum. Güç eğrileri 1,225 kg/m³ için verildiği için, yoğunluk farkını rüzgâr hızına eşdeğer bir düzeltme olarak uyguluyorum: v<sub>eş</sub> = v &#183; (&#961;/1,225)<sup>1/3</sup>. Bu, IEC 61400-12 yaklaşımının basitleştirilmiş hâli.</p>
+ <div class="tablo-kaydir">
+ <table class="egri">
+  <thead><tr><th>Rüzgâr (m/s)</th><th>N90/2500 (kW)</th><th>N117/3000 (kW)</th></tr></thead>
+  <tbody><tr><td>3</td><td>0</td><td>18</td></tr><tr><td>4</td><td>65</td><td>71</td></tr><tr><td>5</td><td>175</td><td>257</td></tr><tr><td>6</td><td>340</td><td>613</td></tr><tr><td>7</td><td>570</td><td>1.017</td></tr><tr><td>8</td><td>870</td><td>1.515</td></tr><tr><td>9</td><td>1.230</td><td>2.116</td></tr><tr><td>10</td><td>1.620</td><td>2.657</td></tr><tr><td>11</td><td>2.000</td><td>2.913</td></tr><tr><td>12</td><td>2.290</td><td>2.980</td></tr><tr><td>13</td><td>2.450</td><td>2.995</td></tr><tr><td>14</td><td>2.500</td><td>2.999</td></tr><tr><td>15</td><td>2.500</td><td>3.000</td></tr><tr><td>20</td><td>2.500</td><td>3.000</td></tr><tr><td>25</td><td>2.500</td><td>3.000</td></tr></tbody>
+ </table>
+ </div>
+ <p class="ac" style="max-width:66ch;margin-top:1.25rem;font-size:.9375rem;line-height:1.75;color:var(--muted)"><b style="color:var(--ink);font-weight:500">N90 eğrisi</b> üreticinin yayımladığı eğridir. <b style="color:var(--ink);font-weight:500">N117 eğrisi bana ait bir modeldir</b>: P = ½&#183;&#961;&#183;A&#183;v³&#183;C<sub>p</sub>, <a class="sz" href="/sozluk/#t-supurme-alani" title="Süpürme alanı — sözlükte">süpürme alanı</a> 10.715 m², plato <a class="sz" href="/sozluk/#t-guc-katsayisi" title="Güç katsayısı — sözlükte">güç katsayısı</a> 0,452, <a class="sz" href="/sozluk/#t-anma-gucu" title="Anma gücü — sözlükte">anma gücünde</a> yumuşak sınırlama. Nordex&#8217;in N117/3000 için resmî güç eğrisi kamuya açık olmadığı için, eğriyi uydurmak yerine fizikten kurdum ve bunu burada açıkça yazıyorum. Süpürme alanına göre ölçeklenmiş N90 eğrisiyle 6&#8211;10 m/s bandında %2&#8211;7 aralığında örtüşüyor.</p>
+ <div class="uyari" style="border-color:var(--line)">
+  <p>Kullandığım koordinatlar ilçe merkezine yakın temsilî noktalar; belirli bir santralin türbin koordinatı değil. Rüzgâr, birkaç kilometre içinde ve özellikle sırt üstünde ciddi biçimde değişir. Sayfayı &#8220;bugün rüzgâr var mı, kule ne yapıyor olur&#8221; sorusuna cevap olarak kullanın; performans hesabı için saha ölçümü gerekir.</p>
+ </div>
+</div></section>
+
+<section class="gsec"><div class="wrap">
+ <div class="ghead"><p class="k">Kaynak</p><h2>Veri ve lisans</h2></div>
+ <ul class="kaynak">
+  <li>Hava tahmini verisi: <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a> &#8212; CC BY 4.0. Sayfa, veriyi kendi sunucusu üzerinden 15 dakika önbellekleyerek çeker.</li>
+  <li>N90/2500 güç eğrisi: üreticinin yayımladığı teknik tanım.</li>
+  <li>N117/3000 rotor ölçüleri: Nordex ürün belgeleri; süpürme alanı 10.715 m², rotor çapı 116,8 m.</li>
+  <li>Yoğunluk düzeltmesi yaklaşımı: IEC 61400-12 güç eğrisi ölçümü ilkesinin sadeleştirilmiş hâli.</li>
+ </ul>
+ <div class="nxt">
+  <a href="/araclar/"><b>Hesaplama araçları</b><span>Weibull ile yıllık üretim, kapasite faktörü, uç hızı, hava yoğunluğu &#8212; kendi sayılarınızla.</span></a>
+  <a href="/n117/"><b>N117 Delta turu</b><span>Kule kapısından kanat ucuna 15 durak, kesit ve 3B model.</span></a>
+ </div>
+</div></section>
+
+<section class="wrap" style="padding-bottom:3.5rem"><p class="mono" style="border-top:1px solid var(--line);padding-top:1.25rem;color:var(--muted);font-size:.8125rem;line-height:1.9;max-width:52rem">Buradaki sahalardan Bozcaada, Türkiye&#8217;nin ilk deniz üstü YEKA ihalesi için belirlenen dört aday alandan biri. İhale 2027&#8217;nin ilk çeyreğinde yapılacak. <a href="/deniz-ustu/">Deniz üstü rüzgâr türbini sayfasında</a> temel tipleri, erişim ve teknisyen için değişenler var.</p></section>
+</main>
+<footer><div class="wrap">
+<p class="mono">© 2026 Soner Soylu</p>
+<p class="mono">Son güncelleme: 5 Eylül 2026</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+(function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+b.setAttribute("aria-expanded",String(!a));m.classList.toggle("open",!a)});})();
+</script>
+<script>
+(function(){
+"use strict";
+var PC90=[[0, 0], [3, 0], [4, 65], [5, 175], [6, 340], [7, 570], [8, 870], [9, 1230], [10, 1620], [11, 2000], [12, 2290], [13, 2450], [13.5, 2500], [25, 2500], [25.01, 0], [30, 0]];
+var PC117=[[0.0, 0], [0.5, 0], [1.0, 0], [1.5, 0], [2.0, 0], [2.5, 0], [3.0, 18], [3.5, 34], [4.0, 71], [4.5, 143], [5.0, 257], [5.5, 417], [6.0, 613], [6.5, 815], [7.0, 1017], [7.5, 1250], [8.0, 1515], [8.5, 1807], [9.0, 2116], [9.5, 2413], [10.0, 2657], [10.5, 2822], [11.0, 2913], [11.5, 2959], [12.0, 2980], [12.5, 2990], [13.0, 2995], [13.5, 2998], [14.0, 2999], [14.5, 2999], [15.0, 3000], [15.5, 3000], [16.0, 3000], [16.5, 3000], [17.0, 3000], [17.5, 3000], [18.0, 3000], [18.5, 3000], [19.0, 3000], [19.5, 3000], [20.0, 3000], [20.5, 3000], [21.0, 3000], [21.5, 3000], [22.0, 3000], [22.5, 3000], [23.0, 3000], [23.5, 3000], [24.0, 3000], [24.5, 3000], [25.0, 3000], [25.5, 0], [26.0, 0], [26.5, 0], [27.0, 0], [27.5, 0], [28.0, 0], [28.5, 0], [29.0, 0], [29.5, 0], [30.0, 0]];
+var SAHA=[["aliaga", "Aliağa", "İzmir", 38.85, 27.0], ["bergama", "Bergama", "İzmir", 39.12, 27.3], ["cesme", "Çeşme–Karaburun", "İzmir", 38.55, 26.5], ["bandirma", "Bandırma", "Balıkesir", 40.3, 27.9], ["bozcaada", "Bozcaada", "Çanakkale", 39.83, 26.05], ["datca", "Datça", "Muğla", 36.72, 27.7], ["bahce", "Bahçe", "Osmaniye", 37.2, 36.55]];
+var YON=["K","KKD","KD","DKD","D","DGD","GD","GGD","G","GGB","GB","BGB","B","BKB","KB","KKB"];
+function guc(pc,v){if(!(v>0))return 0;for(var i=1;i<pc.length;i++){if(v<=pc[i][0]){var a=pc[i-1],b=pc[i];
+ if(b[0]===a[0])return b[1];return a[1]+(b[1]-a[1])*(v-a[0])/(b[0]-a[0]);}}return 0;}
+function yogunluk(tC,pHpa,h){var T=tC+273.15;var p=pHpa*100*Math.exp(-h/8434.5);return p/(287.05*T);}
+function esdeger(v,rho){return v*Math.pow(rho/1.225,1/3);}
+function say(x,b){return (Math.round(x*Math.pow(10,b))/Math.pow(10,b)).toLocaleString("tr-TR",{minimumFractionDigits:b,maximumFractionDigits:b});}
+function el(i){return document.getElementById(i);}
+
+var secili="aliaga", istek=0;
+
+function durumMetni(v,p){
+ if(!(v>0))return["bekliyor","veri yok"];
+ if(v<3)return["bekliyor","rüzgâr kesme altında — rotor duruyor"];
+ if(v>25)return["bekliyor","fırtına kesmesi — türbin durdurulur"];
+ if(p>=0.98*(arguments[2]||3000))return["uretim","anma gücünde"];
+ return["uretim","üretimde"];
+}
+
+function ciz(d){
+ var c=d.current, h=d.hourly;
+ el("zaman").textContent=new Date(c.time).toLocaleString("tr-TR",{weekday:"short",hour:"2-digit",minute:"2-digit"})+" (yerel)";
+ var v120=c.wind_speed_120m, v80=c.wind_speed_80m, yon=c.wind_direction_120m;
+ el("v120").textContent=say(v120,1); el("v80").textContent=say(v80,1);
+ el("vham").textContent=say(c.wind_gusts_10m,1);
+ el("yonD").textContent=Math.round(yon);
+ el("yonAd").textContent=YON[Math.round(yon/22.5)%16]+" yönünden";
+ el("okg").style.transform="rotate("+(yon+180)+"deg)";
+ el("sic").textContent=say(c.temperature_2m,1);
+ el("bas").textContent=Math.round(c.pressure_msl);
+ var r120=yogunluk(c.temperature_2m,c.pressure_msl,120);
+ var r80=yogunluk(c.temperature_2m,c.pressure_msl,80);
+ el("rho").textContent=say(r120,3);
+ var f=(r120/1.225-1)*100;
+ el("rhoFark").textContent=(f>=0?"+":"")+say(f,1)+"%";
+
+ var p90=guc(PC90,esdeger(v80,r80)), p117=guc(PC117,esdeger(v120,r120));
+ el("p90").textContent=Math.round(p90).toLocaleString("tr-TR");
+ el("p117").textContent=Math.round(p117).toLocaleString("tr-TR");
+ el("c90").style.width=Math.min(100,p90/2500*100)+"%";
+ el("c117").style.width=Math.min(100,p117/3000*100)+"%";
+ [["d90",v80,p90,2500],["d117",v120,p117,3000]].forEach(function(x){
+   var s=durumMetni(x[1],x[2],x[3]); var n=el(x[0]);
+   n.className="dr"+(s[0]==="uretim"?" uretim":""); n.querySelector("span").textContent=s[1];
+ });
+
+ // ---- 72 saatlik grafik
+ var t=h.time, vv=h.wind_speed_120m, tt=h.temperature_2m, pp=h.pressure_msl;
+ var n=Math.min(t.length,72);
+ var W=900,H=260,L=42,R=14,T=14,B=30;
+ var maks=Math.max(14,Math.ceil(Math.max.apply(null,vv.slice(0,n))+1));
+ function X(i){return L+(W-L-R)*i/(n-1);}
+ function Y(v){return T+(H-T-B)*(1-v/maks);}
+ var s=[];
+ // gece bantları
+ for(var i=0;i<n-1;i++){var hh=new Date(t[i]).getHours();
+  if(hh<6||hh>=20)s.push('<rect class="ggece" x="'+X(i).toFixed(1)+'" y="'+T+'" width="'+(X(i+1)-X(i)).toFixed(1)+'" height="'+(H-T-B)+'"/>');}
+ // güç alanı
+ var pa="M "+L+" "+(H-B);
+ for(var i=0;i<n;i++){var rr=yogunluk(tt[i],pp[i],120);var p=guc(PC117,esdeger(vv[i],rr));
+  pa+=" L "+X(i).toFixed(1)+" "+(H-B-(H-T-B)*p/3000).toFixed(1);}
+ pa+=" L "+X(n-1).toFixed(1)+" "+(H-B)+" Z";
+ s.push('<path class="garea" d="'+pa+'"/>');
+ // ızgara + eksen
+ for(var g=0;g<=maks;g+=(maks>18?5:(maks>9?3:2))){
+  s.push('<line class="gaks" x1="'+L+'" y1="'+Y(g).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(g).toFixed(1)+'"/>');
+  s.push('<text class="gx" x="'+(L-7)+'" y="'+(Y(g)+3).toFixed(1)+'" text-anchor="end">'+g+'</text>');}
+ [3,25].forEach(function(k){if(k<=maks)s.push('<line class="gsinir" x1="'+L+'" y1="'+Y(k).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(k).toFixed(1)+'"/>');});
+ // rüzgâr çizgisi
+ var d2="";for(var i=0;i<n;i++){d2+=(i?" L ":"M ")+X(i).toFixed(1)+" "+Y(vv[i]).toFixed(1);}
+ s.push('<path class="gline" d="'+d2+'"/>');
+ // gün etiketleri
+ for(var i=0;i<n;i++){var dt=new Date(t[i]);
+  if(dt.getHours()%12===0){s.push('<text class="gx" x="'+X(i).toFixed(1)+'" y="'+(H-10)+'" text-anchor="middle">'+
+   dt.toLocaleDateString("tr-TR",{weekday:"short"})+" "+String(dt.getHours()).padStart(2,"0")+":00</text>");}}
+ // şimdi çizgisi
+ var simdi=new Date(c.time).getTime(), yak=0, en=1e15;
+ for(var i=0;i<n;i++){var f2=Math.abs(new Date(t[i]).getTime()-simdi);if(f2<en){en=f2;yak=i;}}
+ s.push('<line class="gsimdi" x1="'+X(yak).toFixed(1)+'" y1="'+T+'" x2="'+X(yak).toFixed(1)+'" y2="'+(H-B)+'"/>');
+ s.push('<text class="gx" x="'+(X(yak)+4).toFixed(1)+'" y="'+(T+10)+'" fill="var(--beacon)">şimdi</text>');
+ s.push('<text class="gx" x="8" y="'+(T+8)+'">m/s</text>');
+ el("tahminSvg").innerHTML=s.join("");
+
+ // özet
+ var top=0,mx=0,en3=0,pt=0;
+ for(var i=0;i<n;i++){var rr=yogunluk(tt[i],pp[i],120);var ve=esdeger(vv[i],rr);
+  top+=vv[i]; if(vv[i]>mx)mx=vv[i]; if(vv[i]<3||vv[i]>25)en3++; pt+=guc(PC117,ve);}
+ el("ozOrt").textContent=say(top/n,1);
+ el("ozMaks").textContent=say(mx,1);
+ el("ozKf").textContent=say(pt/n/3000*100,1);
+ el("ozDur").textContent=en3;
+}
+
+function yukle(k){
+ var no=++istek;
+ var s=SAHA.filter(function(x){return x[0]===k;})[0];
+ el("sahaAd").textContent=s[1]; el("grafikSaha").textContent=s[1];
+ el("simdi").classList.add("yukleniyor");
+ el("hata").hidden=true;
+ fetch("/api/ruzgar?s="+encodeURIComponent(k))
+  .then(function(r){if(!r.ok)throw 0;return r.json();})
+  .then(function(d){ if(no!==istek)return;
+    if(!d||!d.current)throw 0;
+    ciz(d); el("simdi").classList.remove("yukleniyor");})
+  .catch(function(){ if(no!==istek)return;
+    el("simdi").classList.remove("yukleniyor");
+    var h=el("hata"); h.hidden=false;
+    h.textContent="Rüzgâr verisi şu an alınamadı. Bağlantınız yoksa sayfanın geri kalanı yine de açılır; birkaç dakika sonra tekrar deneyin.";});
+}
+
+document.getElementById("sahalar").addEventListener("click",function(ev){
+ var b=ev.target.closest("button[data-s]"); if(!b)return;
+ [].forEach.call(this.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(x===b));});
+ secili=b.getAttribute("data-s"); yukle(secili);
+ try{localStorage.setItem("ruzgarSaha",secili);}catch(e){}
+});
+try{var kayit=localStorage.getItem("ruzgarSaha");
+ if(kayit&&SAHA.some(function(x){return x[0]===kayit;})){secili=kayit;
+  [].forEach.call(document.querySelectorAll("#sahalar button"),function(x){x.setAttribute("aria-pressed",String(x.getAttribute("data-s")===kayit));});}}catch(e){}
+yukle(secili);
+})();
+</script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wind Turbine Calculators — Tip Speed, Capacity Factor, Bolt Torque | Soner Soylu</title>
+<meta name="description" content="Free wind turbine calculators: tip speed and TSR, power in the wind, wind shear correction, capacity factor, Weibull annual energy production and bolt tightening torque. Every formula shown.">
+<link rel="canonical" href="https://sonersoylu.com/en/tools/">
+<meta property="og:type" content="article"><meta property="og:locale" content="en_GB"><meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:title" content="Wind Turbine Calculators">
+<meta property="og:description" content="Tip speed and TSR, capacity factor, annual energy production and bolt torque calculators — with the formulas shown.">
+<meta property="og:url" content="https://sonersoylu.com/en/tools/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-en-tools.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=d0fb7b54">
+<style>
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.g-meta{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.lede{margin-top:1.75rem}
+
+.toc{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);padding:1.5rem 1.6rem;margin-top:2.5rem}
+.toc p{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.toc ol{margin-top:1rem;display:grid;gap:.15rem;counter-reset:t}
+.toc li{counter-increment:t}
+.toc a{display:flex;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.9375rem;transition:color .2s}
+.toc li:last-child a{border-bottom:0}
+.toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;color:var(--muted);padding-top:.28rem}
+.toc a:hover{color:var(--beacon)}
+
+.tool{border-top:1px solid var(--line);padding:3.5rem 0}
+.tool>.wrap>.k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.tool h2{margin-top:.5rem;font-size:1.75rem;letter-spacing:-.035em}
+.tool .intro{margin-top:1rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+
+.calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);box-shadow:var(--shade)}
+.pane{background:var(--surface);padding:1.5rem}
+.f{display:grid;gap:1.25rem}
+.fi{display:grid;gap:.5rem}
+.fi label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fi .row{display:flex;align-items:center;gap:.75rem}
+.fi input[type=number],.fi select{flex:1;min-width:0;border:1px solid var(--line);background:var(--ground);padding:.6rem .7rem;font-family:var(--mono);font-size:.9375rem;color:var(--ink);outline:0}
+.fi input[type=number]:focus,.fi select:focus{border-color:var(--beacon)}
+.fi .u{flex:none;font-family:var(--mono);font-size:.75rem;color:var(--muted);min-width:3.2rem}
+.fi input[type=range]{width:100%;accent-color:var(--beacon);margin-top:.15rem}
+.fi .hint{font-size:.75rem;line-height:1.55;color:var(--muted)}
+.grid2{display:grid;gap:1.25rem}
+
+.out{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:0}
+.out>div{background:var(--ground);padding:1rem 1.1rem}
+.out dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.out dd{margin-top:.45rem;font-family:var(--mono);font-size:1.5rem;letter-spacing:-.02em;color:var(--ink);line-height:1.1}
+.out dd small{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-left:.35rem;letter-spacing:0}
+.out .hero{background:var(--surface)}
+.out .hero dd{font-size:2rem;color:var(--beacon)}
+.verdict{background:var(--surface)!important;font-size:.875rem;line-height:1.65;color:var(--ink)}
+.verdict b{font-weight:500}
+
+.formula{margin-top:1.5rem;border-left:2px solid var(--line);padding:.15rem 0 .15rem 1.1rem}
+.formula p{font-family:var(--mono);font-size:.8125rem;line-height:1.9;color:var(--ink)}
+.formula span{display:block;margin-top:.5rem;font-family:var(--sans);font-size:.8125rem;line-height:1.65;color:var(--muted)}
+
+.warn{margin-top:1.5rem;border-left:2px solid var(--beacon);background:var(--surface);padding:1.1rem 1.3rem}
+.warn p{font-size:.875rem;line-height:1.7;color:var(--muted)}
+.warn b{color:var(--ink);font-weight:500}
+
+.bars{margin-top:1.25rem;display:grid;gap:.3rem}
+.wbar{display:grid;grid-template-columns:3.2rem 1fr 5rem;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.6875rem;color:var(--muted)}
+.wbar .t{height:.55rem;background:var(--raise);position:relative;overflow:hidden}
+.wbar .t i{display:block;height:100%;background:var(--beacon);opacity:.75}
+.wbar .v{text-align:right}
+
+.pay{margin-top:1.25rem;display:flex;flex-wrap:wrap;align-items:center;gap:.9rem}
+.paydug{border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:.55rem .85rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:.18s}
+.paydug:hover{color:var(--ink);border-color:var(--muted)}
+.paymsg{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--beacon)}
+.gsec{border-top:1px solid var(--line);padding:4rem 0}
+.ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:1.25rem 0;display:flex;gap:1rem;align-items:baseline;font-size:1rem;transition:color .2s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--muted)}
+.faq details[open] summary::after{content:"–"}
+.faq summary:hover{color:var(--beacon)}
+.faq .a{padding:0 0 1.5rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.nxt{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.nxt a{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.4rem;transition:background .2s}
+.nxt a:hover{background:var(--raise)}
+.nxt a b{font-weight:500;font-size:1rem}
+.nxt a span{font-size:.875rem;color:var(--muted);line-height:1.6}
+
+@media (min-width:768px){
+ .g-hero h1{font-size:3.25rem}
+ .calc{grid-template-columns:1fr 1fr}
+ .out{grid-template-columns:1fr 1fr}
+ .out .wide{grid-column:1/-1}
+ .grid2{grid-template-columns:1fr 1fr}
+ .nxt{grid-template-columns:1fr 1fr}
+ .tool{padding:4.5rem 0}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","@id":"https://sonersoylu.com/en/tools/#article",
+ "headline":"Wind Turbine Calculators",
+ "description":"Tip speed and TSR, power in the wind, wind shear correction, capacity factor, Weibull annual energy production and bolt tightening torque calculators.",
+ "inLanguage":"en-GB","datePublished":"2026-09-04","dateModified":"2026-09-04",
+ "author":{"@type":"Person","name":"Soner Soylu","jobTitle":"Wind turbine field service technician","url":"https://sonersoylu.com/en/"},
+ "publisher":{"@type":"Person","name":"Soner Soylu"},
+ "mainEntityOfPage":"https://sonersoylu.com/en/tools/"},
+{"@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Home","item":"https://sonersoylu.com/en/"},
+ {"@type":"ListItem","position":2,"name":"Calculators","item":"https://sonersoylu.com/en/tools/"}]},
+{"@type":"FAQPage","mainEntity":[
+ {"@type":"Question","name":"How do you calculate blade tip speed?","acceptedAnswer":{"@type":"Answer","text":"Tip speed is angular velocity times rotor radius: v = (2 x pi x n / 60) x R, where n is revolutions per minute and R is the rotor radius. A 90 metre rotor turning at 18.1 rpm gives a tip speed of about 85 metres per second."}},
+ {"@type":"Question","name":"What is capacity factor and how is it calculated?","acceptedAnswer":{"@type":"Answer","text":"Capacity factor is the energy a turbine actually produces over a year divided by what it would have produced running at rated power the whole time: energy in MWh divided by rated power in MW times 8760 hours. Typical onshore values in Turkiye run between 30 and 38 percent."}},
+ {"@type":"Question","name":"Why does power in the wind scale with the cube of wind speed?","acceptedAnswer":{"@type":"Answer","text":"The mass of air passing the rotor each second is proportional to wind speed, and the kinetic energy of that air scales with the square of speed. Multiplied together, power depends on speed cubed: P = 0.5 x rho x A x v^3. A ten percent increase in wind speed therefore means roughly a thirty-three percent increase in power."}},
+ {"@type":"Question","name":"How is bolt tightening torque calculated?","acceptedAnswer":{"@type":"Answer","text":"Approximate torque follows T = K x d x F, where K is the nut factor, d the nominal bolt diameter and F the target preload. On site, however, the only value that governs is the torque given in the manufacturer's service documentation; the calculation is for checking and training only."}}]}
+]}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/" aria-current="true">Tools</a><a href="/n90/">3D Model</a><a href="/en/#contact">Contact</a></nav>
+  <div class="hd-right">
+   <a class="lang" href="/araclar/" hreflang="tr" lang="tr" title="Türkçe">TR</a>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/n90/">3D Model</a><a href="/en/#contact">Contact</a><a href="/araclar/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main id="top">
+
+<section class="wrap g-hero">
+  <a class="g-back" href="/"><span aria-hidden="true">&larr;</span> Home</a>
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem;margin-top:2rem"><span class="beacon"></span>Calculators</p>
+  <h1>Wind turbine calculators</h1>
+  <p class="lede">The six calculations I reach for most often, on site and at the desk. Everything runs in your browser: no data leaves the page and nothing asks you to sign up. Under each tool I have written the formula and the assumptions behind it, because where a number comes from matters as much as the number itself.</p>
+  <p class="g-meta"><span>6 tools</span><span>No sign-up</span><span>Formulas shown</span><span>Updated September 2026</span></p>
+
+  <nav class="toc" aria-label="Tools">
+    <p>Tools</p>
+    <ol>
+      <li><a href="#ucucu">Tip speed and TSR</a></li>
+      <li><a href="#guc">Power in the wind and turbine power</a></li>
+      <li><a href="#yukseklik">Wind speed correction with height</a></li>
+      <li><a href="#kf">Capacity factor</a></li>
+      <li><a href="#aep">Annual energy production (Weibull)</a></li>
+      <li><a href="#tork">Bolt tightening torque</a></li>
+    </ol>
+  </nav>
+</section>
+
+<!-- ================================================ 1 KANAT UCU HIZI -->
+<section class="tool" id="ucucu">
+ <div class="wrap">
+  <span class="k">Tool 01</span>
+  <h2>Tip speed and TSR</h2>
+  <p class="intro">The linear speed of the blade tip drives both noise and leading edge erosion. Onshore it is usually held near 80 m/s because of noise limits. The tip speed ratio (TSR, &lambda;) tells you how many times faster the tip travels than the wind; on three-bladed rotors efficiency peaks between 7 and 9.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="fi">
+      <label for="a1d">Rotor diameter</label>
+      <div class="row"><input id="a1d" type="number" value="90" min="10" max="250" step="0.1"><span class="u">m</span></div>
+      <input id="a1dr" type="range" min="20" max="240" step="1" value="90" aria-label="Rotor diameter slider">
+     </div>
+     <div class="fi">
+      <label for="a1n">Rotor speed</label>
+      <div class="row"><input id="a1n" type="number" value="18.1" min="0" max="40" step="0.1"><span class="u">rpm</span></div>
+      <input id="a1nr" type="range" min="0" max="30" step="0.1" value="18.1" aria-label="Rotor speed slider">
+     </div>
+     <div class="fi">
+      <label for="a1v">Wind speed</label>
+      <div class="row"><input id="a1v" type="number" value="11" min="0.5" max="30" step="0.1"><span class="u">m/s</span></div>
+      <input id="a1vr" type="range" min="1" max="30" step="0.1" value="11" aria-label="Wind speed slider">
+      <p class="hint">The default values are those of a Nordex N90/2500: 90 m rotor, rated speed 18.1 rpm.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Tip speed</dt><dd id="a1o1">—<small>m/s</small></dd></div>
+     <div><dt>Per hour</dt><dd id="a1o2">—<small>km/h</small></dd></div>
+     <div><dt>TSR (&lambda;)</dt><dd id="a1o3">—</dd></div>
+     <div><dt>Angular velocity</dt><dd id="a1o4">—<small>rad/s</small></dd></div>
+     <div class="wide verdict" id="a1v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a1" data-hash="ucucu">Copy a link to this calculation</button><span class="paymsg" id="paymsg-a1"></span></p>
+  <div class="formula">
+   <p>&omega; = 2&pi; &middot; n / 60&nbsp;&nbsp;&middot;&nbsp;&nbsp;v<sub>tip</sub> = &omega; &middot; D/2&nbsp;&nbsp;&middot;&nbsp;&nbsp;&lambda; = v<sub>tip</sub> / v<sub>wind</sub></p>
+   <span>n: revolutions per minute, D: rotor diameter, &omega;: angular velocity. TSR is dimensionless.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 2 GÜÇ -->
+<section class="tool" id="guc">
+ <div class="wrap">
+  <span class="k">Tool 02</span>
+  <h2>Power in the wind and turbine power</h2>
+  <p class="intro">Double the wind speed and power goes up eightfold. That one sentence explains why site selection matters more than anything else in wind energy. Below, air density is calculated from temperature and altitude, so you can see for yourself why the same wind gives you less power on a hot summer day.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi"><label for="a2d">Rotor diameter</label><div class="row"><input id="a2d" type="number" value="90" min="1" step="0.1"><span class="u">m</span></div></div>
+      <div class="fi"><label for="a2v">Wind speed</label><div class="row"><input id="a2v" type="number" value="11" min="0" step="0.1"><span class="u">m/s</span></div></div>
+     </div>
+     <div class="fi">
+      <label for="a2vr">Wind speed slider</label>
+      <input id="a2vr" type="range" min="0" max="30" step="0.1" value="11" aria-label="Wind speed">
+     </div>
+     <div class="grid2">
+      <div class="fi"><label for="a2t">Air temperature</label><div class="row"><input id="a2t" type="number" value="15" min="-40" max="55" step="0.5"><span class="u">°C</span></div></div>
+      <div class="fi"><label for="a2h">Altitude</label><div class="row"><input id="a2h" type="number" value="0" min="0" max="3000" step="10"><span class="u">m</span></div></div>
+     </div>
+     <div class="fi">
+      <label for="a2cp">Power coefficient Cp</label>
+      <div class="row"><input id="a2cp" type="number" value="0.45" min="0" max="0.593" step="0.005"><span class="u">–</span></div>
+      <input id="a2cpr" type="range" min="0" max="0.593" step="0.005" value="0.45" aria-label="Cp slider">
+      <p class="hint">A good modern turbine peaks between 0.45 and 0.50. The theoretical ceiling, the Betz limit, is 0.593.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Turbine power (with Cp)</dt><dd id="a2o1">—<small>kW</small></dd></div>
+     <div><dt>Total power in the wind</dt><dd id="a2o2">—<small>kW</small></dd></div>
+     <div><dt>Betz limit (59.3%)</dt><dd id="a2o3">—<small>kW</small></dd></div>
+     <div><dt>Swept area</dt><dd id="a2o4">—<small>m²</small></dd></div>
+     <div><dt>Power density</dt><dd id="a2o5">—<small>W/m²</small></dd></div>
+     <div><dt>Air density</dt><dd id="a2o6">—<small>kg/m³</small></dd></div>
+     <div class="wide verdict" id="a2v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a2" data-hash="guc">Copy a link to this calculation</button><span class="paymsg" id="paymsg-a2"></span></p>
+  <div class="formula">
+   <p>A = &pi;&middot;D&sup2;/4&nbsp;&nbsp;&middot;&nbsp;&nbsp;P<sub>wind</sub> = &frac12; &middot; &rho; &middot; A &middot; v&sup3;&nbsp;&nbsp;&middot;&nbsp;&nbsp;P<sub>turbine</sub> = P<sub>wind</sub> &middot; C<sub>p</sub></p>
+   <p>&rho; = p / (R &middot; T)&nbsp;&nbsp;&middot;&nbsp;&nbsp;p = 101325 &middot; (1 &minus; 2.25577&middot;10<sup>&minus;5</sup> &middot; h)<sup>5.25588</sup></p>
+   <span>R = 287.05 J/(kg&middot;K), T absolute temperature (K), h altitude (m). Under standard conditions (15 &deg;C, sea level) &rho; = 1.225 kg/m&sup3;.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 3 YÜKSEKLİK -->
+<section class="tool" id="yukseklik">
+ <div class="wrap">
+  <span class="k">Tool 03</span>
+  <h2>Wind speed correction with height</h2>
+  <p class="intro">The met mast sits at 30 metres and the hub at 80. You cannot estimate production without bridging that gap. Wind speeds up with height, and how much depends on the roughness of the terrain. Below you get the power law and the logarithmic law side by side.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi"><label for="a3v1">Measured speed</label><div class="row"><input id="a3v1" type="number" value="6.5" min="0" step="0.1"><span class="u">m/s</span></div></div>
+      <div class="fi"><label for="a3h1">Measurement height</label><div class="row"><input id="a3h1" type="number" value="30" min="1" step="1"><span class="u">m</span></div></div>
+     </div>
+     <div class="fi"><label for="a3h2">Target height (hub)</label><div class="row"><input id="a3h2" type="number" value="80" min="1" step="1"><span class="u">m</span></div>
+      <input id="a3h2r" type="range" min="10" max="200" step="1" value="80" aria-label="Target height">
+     </div>
+     <div class="fi">
+      <label for="a3z">Terrain type</label>
+      <div class="row"><select id="a3z">
+        <option value="0.0002|0.10">Open sea or lake surface</option>
+        <option value="0.03|0.14" selected>Open flat terrain, short grass</option>
+        <option value="0.10|0.17">Farmland with scattered buildings</option>
+        <option value="0.25|0.22">Scrub, scattered trees and buildings</option>
+        <option value="0.50|0.28">Forest, villages and broken terrain</option>
+        <option value="1.00|0.35">City with tall buildings</option>
+      </select></div>
+      <p class="hint">The choice sets both the roughness length (z&#8320;) and the power law exponent (&alpha;).</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Speed at target height</dt><dd id="a3o1">—<small>m/s</small></dd></div>
+     <div><dt>By the logarithmic law</dt><dd id="a3o2">—<small>m/s</small></dd></div>
+     <div><dt>Increase in speed</dt><dd id="a3o3">—<small>%</small></dd></div>
+     <div><dt>Increase in power</dt><dd id="a3o4">—<small>%</small></dd></div>
+     <div class="wide verdict" id="a3vd">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a3" data-hash="yukseklik">Copy a link to this calculation</button><span class="paymsg" id="paymsg-a3"></span></p>
+  <div class="formula">
+   <p>Power law: v&#8322; = v&#8321; &middot; (h&#8322; / h&#8321;)<sup>&alpha;</sup></p>
+   <p>Logarithmic law: v&#8322; = v&#8321; &middot; ln(h&#8322;/z&#8320;) / ln(h&#8321;/z&#8320;)</p>
+   <span>Because power goes with the cube of speed, the gain in power is (v&#8322;/v&#8321;)&sup3; &minus; 1. The two laws approximate the same terrain differently; results close to each other are a good sign.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 4 KAPASİTE FAKTÖRÜ -->
+<section class="tool" id="kf">
+ <div class="wrap">
+  <span class="k">Tool 04</span>
+  <h2>Capacity factor</h2>
+  <p class="intro">The single number that captures how a plant is really performing. Onshore in T&uuml;rkiye the typical range is 30 to 38 percent; anything above 40 means an unusually good site. Equivalent full load hours say the same thing in hours, and both are used in the industry.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi"><label for="a4p">Rated power</label><div class="row"><input id="a4p" type="number" value="2.5" min="0.001" step="0.1"><span class="u">MW</span></div></div>
+      <div class="fi"><label for="a4e">Energy produced</label><div class="row"><input id="a4e" type="number" value="7800" min="0" step="10"><span class="u">MWh</span></div></div>
+     </div>
+     <div class="fi">
+      <label for="a4s">Period</label>
+      <div class="row"><select id="a4s">
+        <option value="8760" selected>One year (8760 hours)</option>
+        <option value="8784">Leap year (8784 hours)</option>
+        <option value="730">One month (730 hours)</option>
+        <option value="2190">Three months (2190 hours)</option>
+        <option value="0">I will enter it myself</option>
+      </select></div>
+     </div>
+     <div class="fi" id="a4sw" hidden><label for="a4sh">Period length</label><div class="row"><input id="a4sh" type="number" value="8760" min="1" step="1"><span class="u">hours</span></div></div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Capacity factor</dt><dd id="a4o1">—<small>%</small></dd></div>
+     <div><dt>Equivalent full load hours</dt><dd id="a4o2">—<small>hours</small></dd></div>
+     <div><dt>Average output power</dt><dd id="a4o3">—<small>kW</small></dd></div>
+     <div><dt>Theoretical maximum production</dt><dd id="a4o4">—<small>MWh</small></dd></div>
+     <div class="wide verdict" id="a4v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a4" data-hash="kf">Copy a link to this calculation</button><span class="paymsg" id="paymsg-a4"></span></p>
+  <div class="formula">
+   <p>CF = E / (P &middot; t)&nbsp;&nbsp;&middot;&nbsp;&nbsp;Equivalent full load hours = E / P</p>
+   <span>E is energy produced (MWh), P rated power (MW), t the length of the period (hours). Capacity factor should not be confused with availability: even a turbine that never faults will not approach 100 percent, because the wind does not blow at rated speed all year.</span>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 5 AEP -->
+<section class="tool" id="aep">
+ <div class="wrap">
+  <span class="k">Tool 05</span>
+  <h2>Annual energy production (Weibull)</h2>
+  <p class="intro">How wind is distributed across a year at a given site is modelled with a Weibull distribution. Enter the mean speed and the shape parameter, and the tool multiplies that distribution by the turbine power curve and integrates it over the year. It is not a substitute for a real feasibility study, but it gets the order of magnitude right.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="fi">
+      <label for="a5t">Turbine</label>
+      <div class="row"><select id="a5t">
+        <option value="n90" selected>Nordex N90/2500 &mdash; real power curve</option>
+        <option value="genel">Generic model &mdash; cubic approximation</option>
+      </select></div>
+     </div>
+     <div class="fi">
+      <label for="a5v">Mean wind speed at hub height</label>
+      <div class="row"><input id="a5v" type="number" value="7.5" min="2" max="14" step="0.1"><span class="u">m/s</span></div>
+      <input id="a5vr" type="range" min="3" max="12" step="0.1" value="7.5" aria-label="Mean wind speed">
+     </div>
+     <div class="fi">
+      <label for="a5k">Weibull shape parameter k</label>
+      <div class="row"><input id="a5k" type="number" value="2" min="1.2" max="4" step="0.1"><span class="u">–</span></div>
+      <input id="a5kr" type="range" min="1.2" max="4" step="0.1" value="2" aria-label="k parameter">
+      <p class="hint">k = 2 (Rayleigh) is a reasonable assumption for most onshore sites. Where the wind is steady it rises to 2.5 or 3.</p>
+     </div>
+     <div class="fi">
+      <label for="a5l">Total losses</label>
+      <div class="row"><input id="a5l" type="number" value="12" min="0" max="40" step="0.5"><span class="u">%</span></div>
+      <p class="hint">Wake effects, electrical losses, downtime and availability together typically come to 10 to 15 percent.</p>
+     </div>
+     <div class="grid2" id="a5gw" hidden>
+      <div class="fi"><label for="a5pn">Rated power</label><div class="row"><input id="a5pn" type="number" value="3000" min="10" step="10"><span class="u">kW</span></div></div>
+      <div class="fi"><label for="a5vn">Rated wind speed</label><div class="row"><input id="a5vn" type="number" value="12" min="6" max="20" step="0.5"><span class="u">m/s</span></div></div>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Net annual production</dt><dd id="a5o1">—<small>MWh</small></dd></div>
+     <div><dt>Gross production before losses</dt><dd id="a5o2">—<small>MWh</small></dd></div>
+     <div><dt>Capacity factor</dt><dd id="a5o3">—<small>%</small></dd></div>
+     <div><dt>Equivalent full load hours</dt><dd id="a5o4">—<small>hours</small></dd></div>
+     <div><dt>Weibull scale parameter c</dt><dd id="a5o5">—<small>m/s</small></dd></div>
+     <div><dt>Approximate households</dt><dd id="a5o6">—<small>homes</small></dd></div>
+     <div class="wide verdict" id="a5v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="mono" style="margin-top:2rem">How production is spread across wind speeds</p>
+  <div class="bars" id="a5bars"></div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a5" data-hash="aep">Copy a link to this calculation</button><span class="paymsg" id="paymsg-a5"></span></p>
+  <div class="formula">
+   <p>f(v) = (k/c)&middot;(v/c)<sup>k&minus;1</sup>&middot;e<sup>&minus;(v/c)<sup>k</sup></sup>&nbsp;&nbsp;&middot;&nbsp;&nbsp;c = v&#772; / &Gamma;(1 + 1/k)</p>
+   <p>AEP = 8760 &middot; &Sigma; f(v)&middot;P(v)&middot;&Delta;v &middot; (1 &minus; losses)</p>
+   <span>The sum runs from 0 to 30 m/s in 0.25 m/s steps. The household figure assumes an average domestic consumption of 3,000 kWh per year and is only there to give a sense of scale.</span>
+  </div>
+
+  <div class="warn">
+   <p><b>This is not a feasibility study.</b> A real project decision needs at least a year of on-site measurement, wake modelling against the actual layout, terrain and roughness analysis and an uncertainty budget. Treat the number here as a first estimate of magnitude.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ================================================ 6 TORK -->
+<section class="tool" id="tork">
+ <div class="wrap">
+  <span class="k">Tool 06</span>
+  <h2>Bolt tightening torque</h2>
+  <p class="intro">There are hundreds of bolts in the tower flanges, the blade roots and the yaw bearing, and every one of them has the same job: to hold enough preload. Torque is not the goal, only an indirect route to preload &mdash; and a fairly crude one, since most of the applied torque is spent on friction. This tool is a good way to see how much friction changes the answer.</p>
+
+  <div class="calc">
+   <div class="pane">
+    <div class="f">
+     <div class="grid2">
+      <div class="fi">
+       <label for="a6d">Bolt size</label>
+       <div class="row"><select id="a6d">
+        <option value="8|36.6">M8</option><option value="10|58">M10</option>
+        <option value="12|84.3">M12</option><option value="14|115">M14</option>
+        <option value="16|157">M16</option><option value="20|245">M20</option>
+        <option value="22|303">M22</option><option value="24|353">M24</option>
+        <option value="27|459">M27</option><option value="30|561" selected>M30</option>
+        <option value="33|694">M33</option><option value="36|817">M36</option>
+        <option value="39|976">M39</option><option value="42|1120">M42</option>
+        <option value="48|1470">M48</option><option value="56|2030">M56</option>
+       </select></div>
+      </div>
+      <div class="fi">
+       <label for="a6c">Property class</label>
+       <div class="row"><select id="a6c">
+        <option value="8.8">8.8</option>
+        <option value="10.9" selected>10.9</option>
+        <option value="12.9">12.9</option>
+       </select></div>
+      </div>
+     </div>
+     <div class="fi">
+      <label for="a6k">Nut factor K</label>
+      <div class="row"><select id="a6k">
+        <option value="0.20">0.20 &mdash; dry, unlubricated</option>
+        <option value="0.16" selected>0.16 &mdash; lightly oiled</option>
+        <option value="0.13">0.13 &mdash; grease or MoS&#8322;</option>
+        <option value="0.10">0.10 &mdash; well lubricated</option>
+      </select></div>
+     </div>
+     <div class="fi">
+      <label for="a6u">Target preload (percentage of yield)</label>
+      <div class="row"><input id="a6u" type="number" value="70" min="30" max="90" step="1"><span class="u">%</span></div>
+      <input id="a6ur" type="range" min="40" max="90" step="1" value="70" aria-label="Preload ratio">
+      <p class="hint">With torque tightening the common target is 70 percent. Hydraulic tensioning can go to 75 or 90.</p>
+     </div>
+    </div>
+   </div>
+   <div class="pane" style="padding:0">
+    <dl class="out">
+     <div class="hero"><dt>Approximate tightening torque</dt><dd id="a6o1">—<small>Nm</small></dd></div>
+     <div><dt>Target preload</dt><dd id="a6o2">—<small>kN</small></dd></div>
+     <div><dt>Tensile stress area</dt><dd id="a6o3">—<small>mm²</small></dd></div>
+     <div><dt>Yield strength</dt><dd id="a6o4">—<small>MPa</small></dd></div>
+     <div><dt>Approximate breaking load</dt><dd id="a6o5">—<small>kN</small></dd></div>
+     <div><dt>Torque if tightened dry</dt><dd id="a6o6">—<small>Nm</small></dd></div>
+     <div class="wide verdict" id="a6v1">—</div>
+    </dl>
+   </div>
+  </div>
+
+  <p class="pay"><button type="button" class="paydug" data-arac="a6" data-hash="tork">Copy a link to this calculation</button><span class="paymsg" id="paymsg-a6"></span></p>
+  <div class="formula">
+   <p>F = (target %) &middot; A<sub>s</sub> &middot; R<sub>p0.2</sub>&nbsp;&nbsp;&middot;&nbsp;&nbsp;T = K &middot; d &middot; F</p>
+   <span>A<sub>s</sub> is the tensile stress area (ISO 898-1, coarse thread), R<sub>p0.2</sub> the yield strength of the class (for 8.8: 640 MPa at d &le; 16 mm, 660 MPa above; 10.9: 940 MPa; 12.9: 1100 MPa), d the nominal bolt diameter and K the nut factor.</span>
+  </div>
+
+  <div class="warn">
+   <p><b>On site the only value that counts is the torque in the manufacturer's service documentation.</b> What you get here is an approximation: the real friction coefficient depends on the surface coating, the type of lubricant, the state of the washer under the nut and even the air temperature, so the preload achieved at a given torque can scatter by plus or minus 25 percent. On critical joints, hydraulic tensioning or bolt elongation measurement is preferred over torque. Use this for checking and training, not in place of the manufacturer's figure.</p>
+  </div>
+ </div>
+</section>
+
+<section class="wrap gsec">
+  <div class="ghead">
+    <span class="k">Frequently asked</span>
+    <h2>About these calculations</h2>
+  </div>
+  <div class="faq">
+    <details><summary>Why does power scale with the cube of wind speed?</summary><div class="a">The mass of air passing the rotor per second is proportional to speed, and the kinetic energy of that air scales with speed squared. Multiply the two and power depends on speed cubed. The practical consequence: a 10 percent difference in wind speed is roughly a 33 percent difference in power. That is why site selection decides so much.</div></details>
+    <details><summary>Can the Betz limit be beaten?</summary><div class="a">No. If the rotor took all the energy out of the wind, the air behind it would have to stop, and then nothing could pass through. The optimum that resolves that contradiction is 59.3 percent. Real turbines sit below it because of friction, tip losses and a finite number of blades, peaking at a Cp of 0.45 to 0.50 at best.</div></details>
+    <details><summary>Is capacity factor the same as availability?</summary><div class="a">No, though they are often confused. Availability is the share of time the turbine is ready to produce, and on a well-run site it is above 97 percent. Capacity factor depends on how much the wind blows and sits around 30 to 38 percent. A turbine that never faults all year still will not raise its capacity factor, because the wind does not blow at rated speed.</div></details>
+    <details><summary>How do I know the Weibull k for my site?</summary><div class="a">Only measurement gives you the real figure. Without it, k = 2 (the Rayleigh distribution) is a reasonable starting point onshore. Sites with steady wind from a settled direction run at 2.5 to 3; very variable sites at 1.5 to 1.8. As k rises the distribution narrows and, at the same mean speed, production falls slightly, because most of the energy comes from speeds above the mean.</div></details>
+    <details><summary>Is anything I type here stored?</summary><div class="a">No. Every calculation runs inside your browser and nothing is sent to a server. Close the page and your inputs are gone.</div></details>
+  </div>
+</section>
+
+<section class="wrap gsec">
+  <div class="ghead">
+    <span class="k">More</span>
+    <h2>Also worth a look</h2>
+  </div>
+  <div class="nxt">
+    <a href="/en/glossary/"><b>Glossary &rarr;</b><span>148 wind turbine terms in English and Turkish with practical definitions.</span></a>
+    <a href="/en/guide/"><b>Field guide &rarr;</b><span>Getting into the trade, GWO certificates, a real day on site.</span></a>
+    <a href="/n90/"><b>N90 3D model &rarr;</b><span>See the machine these calculations are built around, assembled stage by stage.</span></a>
+    <a href="/araclar/" hreflang="tr" lang="tr"><b>T&uuml;rk&ccedil;e s&uuml;r&uuml;m &rarr;</b><span>Ayn&#305; ara&ccedil;lar&#305;n T&uuml;rk&ccedil;e a&ccedil;&#305;klamal&#305; hali.</span></a>
+  </div>
+</section>
+
+<section class="wrap gsec" id="contact">
+  <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>Contact</p>
+  <p class="big" style="margin-top:1.5rem">Get in touch</p>
+  <a class="mail" href="mailto:sonersoylu@yandex.com">sonersoylu@yandex.com</a>
+  <p style="margin-top:2.5rem"><a class="arrow" href="/en/">Back to the home page <i>&rarr;</i></a></p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu &middot; Wind turbine field service technician</p>
+    <p class="mono">Aliaga, Izmir &middot; T&uuml;rkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">Email</a></p>
+<p class="mono"><a href="/gelir/">Ad &amp; revenue policy</a></p>
+<p class="mono"><a href="/gizlilik/">Privacy policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p>
+<p class="mono"><a href="/en/ad-policy/">Ad &amp; revenue policy</a></p></div>
+</footer>
+
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  function num(id) { var v = parseFloat($(id).value.replace(',', '.')); return isFinite(v) ? v : 0; }
+  function fmt(x, d) {
+    if (!isFinite(x)) return '—';
+    return x.toLocaleString('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function set(id, v, d) { $(id).firstChild.nodeValue = fmt(v, d === undefined ? 1 : d); }
+  function link(a, b, run) {
+    var A = $(a), B = $(b);
+    if (!A || !B) return;
+    A.addEventListener('input', function () { B.value = A.value; run(); });
+    B.addEventListener('input', function () { A.value = B.value; run(); });
+  }
+  function on(ids, run) {
+    ids.forEach(function (i) { var e = $(i); if (e) e.addEventListener('input', run); });
+  }
+
+  /* 01 kanat ucu hizi */
+  function t1() {
+    var D = num('a1d'), n = num('a1n'), v = num('a1v');
+    var w = 2 * Math.PI * n / 60;
+    var tip = w * D / 2;
+    var lam = v > 0 ? tip / v : 0;
+    set('a1o1', tip, 1); set('a1o2', tip * 3.6, 0);
+    set('a1o3', lam, 2); set('a1o4', w, 3);
+    var m = [];
+    if (tip > 95) m.push('Tip speed is <b>very high</b> — noise and leading edge erosion climb quickly in this range and it is rarely permitted onshore.');
+    else if (tip > 80) m.push('Tip speed is near the <b>upper limit</b> for modern onshore machines; sites with noise constraints cap this range.');
+    else if (tip > 55) m.push('Tip speed is in the <b>normal operating range</b>.');
+    else if (tip > 0) m.push('Tip speed is low — the turbine looks to be at <b>part load</b> or still ramping up.');
+    if (v > 0) {
+      if (lam > 11) m.push('&lambda; = ' + fmt(lam, 1) + ' is very high: the rotor is turning too fast for the wind and Cp falls.');
+      else if (lam >= 6.5 && lam <= 9.5) m.push('&lambda; = ' + fmt(lam, 1) + ' sits in the <b>optimum range</b> for a three-bladed rotor — this is where efficiency peaks.');
+      else if (lam >= 4) m.push('&lambda; = ' + fmt(lam, 1) + ' is somewhat off optimum; at this wind speed the turbine is approaching rated power and rotor speed may already be capped.');
+      else m.push('&lambda; = ' + fmt(lam, 1) + ' is low: the rotor is slow for the wind, angles of attack grow and the blade moves toward stall.');
+    }
+    $('a1v1').innerHTML = m.join(' ');
+  }
+  link('a1d', 'a1dr', t1); link('a1n', 'a1nr', t1); link('a1v', 'a1vr', t1);
+
+  /* 02 guc */
+  function rho(tC, h) {
+    var p = 101325 * Math.pow(1 - 2.25577e-5 * h, 5.25588);
+    return p / (287.05 * (tC + 273.15));
+  }
+  function t2() {
+    var D = num('a2d'), v = num('a2v'), tC = num('a2t'), h = num('a2h'), cp = num('a2cp');
+    var r = rho(tC, h);
+    var A = Math.PI * D * D / 4;
+    var Pw = 0.5 * r * A * Math.pow(v, 3);
+    set('a2o1', Pw * cp / 1000, 0);
+    set('a2o2', Pw / 1000, 0);
+    set('a2o3', Pw * (16 / 27) / 1000, 0);
+    set('a2o4', A, 0);
+    set('a2o5', v > 0 ? Pw / A : 0, 0);
+    set('a2o6', r, 3);
+    var std = 1.225, fark = (r / std - 1) * 100;
+    var m = [];
+    if (Math.abs(fark) >= 1) {
+      m.push('Air density is <b>' + fmt(Math.abs(fark), 1) + '% ' + (fark < 0 ? 'below' : 'above') +
+             '</b> the standard value, and power changes by the same proportion. This is why the same wind gives you less energy on a hot summer day.');
+    } else {
+      m.push('Air density is very close to the standard value of 1.225 kg/m&sup3;.');
+    }
+    if (cp > 0.5) m.push('The C<sub>p</sub> you entered is <b>above what is measured on real turbines</b>; you are approaching the theoretical limit.');
+    m.push('A 10% higher wind speed would raise power by <b>' + fmt((Math.pow(1.1, 3) - 1) * 100, 0) + '%</b>.');
+    $('a2v1').innerHTML = m.join(' ');
+  }
+  link('a2v', 'a2vr', t2); link('a2cp', 'a2cpr', t2);
+  on(['a2d', 'a2t', 'a2h'], t2);
+
+  /* 03 yukseklik */
+  function t3() {
+    var v1 = num('a3v1'), h1 = num('a3h1'), h2 = num('a3h2');
+    var parts = $('a3z').value.split('|');
+    var z0 = parseFloat(parts[0]), al = parseFloat(parts[1]);
+    var vp = 0, vl = 0;
+    if (h1 > 0 && h2 > 0) {
+      vp = v1 * Math.pow(h2 / h1, al);
+      if (h1 > z0 && h2 > z0) vl = v1 * Math.log(h2 / z0) / Math.log(h1 / z0);
+    }
+    var art = v1 > 0 ? (vp / v1 - 1) * 100 : 0;
+    set('a3o1', vp, 2); set('a3o2', vl, 2);
+    set('a3o3', art, 1);
+    set('a3o4', v1 > 0 ? (Math.pow(vp / v1, 3) - 1) * 100 : 0, 1);
+    var m = ['Terrain coefficients: &alpha; = ' + fmt(al, 2) + ', z&#8320; = ' + fmt(z0, 4) + ' m.'];
+    if (h2 <= h1) m.push('The target height is below the measurement height, so this is a downward correction.');
+    var d = Math.abs(vp - vl);
+    if (d > 0.3) m.push('The two laws differ by <b>' + fmt(d, 2) + ' m/s</b>. A gap this wide can mean the height difference is large or that the terrain class does not represent the site well.');
+    else m.push('The two methods agree closely, so the estimate is reasonable.');
+    $('a3vd').innerHTML = m.join(' ');
+  }
+  link('a3h2', 'a3h2r', t3);
+  on(['a3v1', 'a3h1', 'a3z'], t3);
+
+  /* 04 kapasite faktoru */
+  function t4() {
+    var P = num('a4p'), E = num('a4e');
+    var sel = parseFloat($('a4s').value);
+    var manual = sel === 0;
+    $('a4sw').hidden = !manual;
+    var t = manual ? num('a4sh') : sel;
+    var kf = (P > 0 && t > 0) ? E / (P * t) * 100 : 0;
+    set('a4o1', kf, 1);
+    set('a4o2', P > 0 ? E / P : 0, 0);
+    set('a4o3', t > 0 ? E / t * 1000 : 0, 0);
+    set('a4o4', P * t, 0);
+    var m = [];
+    if (kf > 100) m.push('<b>Capacity factor came out above 100%</b> — the rated power, the energy figure or the period length must be wrong.');
+    else if (kf >= 45) m.push('A <b>very high</b> value, seen offshore or at an exceptionally good onshore site.');
+    else if (kf >= 38) m.push('<b>Very good</b> site performance, clearly above the Turkish average.');
+    else if (kf >= 30) m.push('A <b>typical and healthy</b> range for onshore wind in T&uuml;rkiye.');
+    else if (kf >= 22) m.push('<b>Below average.</b> The wind resource may be weak, but long outages or curtailment produce the same picture.');
+    else if (kf > 0) m.push('<b>Low.</b> At this level, fault-related downtime and grid curtailment need to be examined separately.');
+    $('a4v1').innerHTML = m.join(' ');
+  }
+  on(['a4p', 'a4e', 'a4s', 'a4sh'], t4);
+
+  /* 05 AEP */
+  var N90 = [[0,0],[3,0],[4,65],[5,175],[6,340],[7,570],[8,870],[9,1230],[10,1620],
+             [11,2000],[12,2290],[13,2450],[13.5,2500],[25,2500],[25.01,0],[30,0]];
+  function pN90(v) {
+    if (v < 3 || v > 25) return 0;
+    for (var i = 1; i < N90.length; i++) {
+      if (v <= N90[i][0]) {
+        var a = N90[i - 1], b = N90[i];
+        var f = (b[0] - a[0]) === 0 ? 0 : (v - a[0]) / (b[0] - a[0]);
+        return a[1] + f * (b[1] - a[1]);
+      }
+    }
+    return 0;
+  }
+  function pGen(v, Pn, vn) {
+    var ci = 3, co = 25;
+    if (v < ci || v > co) return 0;
+    if (v >= vn) return Pn;
+    return Pn * (Math.pow(v, 3) - Math.pow(ci, 3)) / (Math.pow(vn, 3) - Math.pow(ci, 3));
+  }
+  function gamma(x) {
+    var g = [676.5203681218851, -1259.1392167224028, 771.32342877765313,
+             -176.61502916214059, 12.507343278686905, -0.13857109526572012,
+             9.9843695780195716e-6, 1.5056327351493116e-7];
+    if (x < 0.5) return Math.PI / (Math.sin(Math.PI * x) * gamma(1 - x));
+    x -= 1;
+    var a = 0.99999999999980993, t = x + 7.5;
+    for (var i = 0; i < g.length; i++) a += g[i] / (x + i + 1);
+    return Math.sqrt(2 * Math.PI) * Math.pow(t, x + 0.5) * Math.exp(-t) * a;
+  }
+  function t5() {
+    var gen = $('a5t').value === 'genel';
+    $('a5gw').hidden = !gen;
+    var vb = num('a5v'), k = num('a5k'), loss = num('a5l') / 100;
+    var Pn = gen ? num('a5pn') : 2500;
+    var vn = gen ? num('a5vn') : 13.5;
+    if (k < 1.05) k = 1.05;
+    var c = vb / gamma(1 + 1 / k);
+    var dv = 0.25, E = 0, bins = {}, tot = 0;
+    for (var v = dv / 2; v <= 30; v += dv) {
+      var f = (k / c) * Math.pow(v / c, k - 1) * Math.exp(-Math.pow(v / c, k));
+      var P = gen ? pGen(v, Pn, vn) : pN90(v);
+      var e = f * P * dv * 8760 / 1000;
+      E += e;
+      var b = Math.min(24, Math.floor(v / 3) * 3);
+      bins[b] = (bins[b] || 0) + e;
+      tot += e;
+    }
+    var net = E * (1 - loss);
+    var kf = Pn > 0 ? net / (Pn / 1000 * 8760) * 100 : 0;
+    set('a5o1', net, 0); set('a5o2', E, 0);
+    set('a5o3', kf, 1);
+    set('a5o4', Pn > 0 ? net / (Pn / 1000) : 0, 0);
+    set('a5o5', c, 2);
+    set('a5o6', net * 1000 / 3000, 0);
+    var rows = '';
+    for (var b2 = 0; b2 <= 24; b2 += 3) {
+      var val = bins[b2] || 0;
+      var pct = tot > 0 ? val / tot * 100 : 0;
+      rows += '<div class="wbar"><span>' + b2 + '&ndash;' + (b2 + 3) + '</span>' +
+              '<span class="t"><i style="width:' + pct.toFixed(1) + '%"></i></span>' +
+              '<span class="v">%' + fmt(pct, 1) + '</span></div>';
+    }
+    $('a5bars').innerHTML = rows;
+    var m = [];
+    if (kf >= 40) m.push('This is a <b>very strong</b> wind resource — a capacity factor in this class is rare onshore.');
+    else if (kf >= 32) m.push('The result fits a <b>good onshore site</b>.');
+    else if (kf >= 24) m.push('The result fits a <b>mid-range site</b>.');
+    else m.push('This capacity factor points to a <b>weak</b> wind resource, usually too low for a commercial project.');
+    m.push('Losses of ' + fmt(loss * 100, 1) + '% were deducted. Weibull scale parameter c = ' + fmt(c, 2) + ' m/s.');
+    if (gen) m.push('<b>Generic model</b> selected: the power curve is a cubic approximation with 3 m/s cut-in, ' + fmt(vn, 1) + ' m/s rated and 25 m/s cut-out — it is not a real catalogue curve.');
+    $('a5v1').innerHTML = m.join(' ');
+  }
+  link('a5v', 'a5vr', t5); link('a5k', 'a5kr', t5);
+  on(['a5t', 'a5l', 'a5pn', 'a5vn'], t5);
+
+  /* 06 tork */
+  function t6() {
+    var dp = $('a6d').value.split('|');
+    var d = parseFloat(dp[0]), As = parseFloat(dp[1]);
+    var cls = $('a6c').value;
+    var Rp, Rm;
+    if (cls === '8.8') { Rp = d > 16 ? 660 : 640; Rm = 800; }
+    else if (cls === '10.9') { Rp = 940; Rm = 1040; }
+    else { Rp = 1100; Rm = 1220; }
+    var K = parseFloat($('a6k').value);
+    var u = num('a6u') / 100;
+    var F = u * As * Rp;
+    var T = K * (d / 1000) * F;
+    set('a6o1', T, 0);
+    set('a6o2', F / 1000, 0);
+    set('a6o3', As, 1);
+    set('a6o4', Rp, 0);
+    set('a6o5', As * Rm / 1000, 0);
+    set('a6o6', 0.20 * (d / 1000) * F, 0);
+    var Tk = 0.20 * (d / 1000) * F, Ty = 0.10 * (d / 1000) * F;
+    var m = ['Reaching the same preload takes <b>' + fmt(Tk, 0) +
+             ' Nm</b> on a dry joint and <b>' + fmt(Ty, 0) +
+             ' Nm</b> on a well lubricated one. That factor of two is why torque alone is not a reliable measure.'];
+    if (u > 0.8) m.push('The preload ratio you entered is <b>high for torque tightening</b>; that level is only safely targeted with tensioning or bolt elongation measurement.');
+    m.push('Real preload can scatter by <b>&plusmn;25%</b> even at the same torque.');
+    $('a6v1').innerHTML = m.join(' ');
+  }
+  link('a6u', 'a6ur', t6);
+  on(['a6d', 'a6c', 'a6k'], t6);
+
+  t1(); t2(); t3(); t4(); t5(); t6();
+})();
+</script>
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script>
+(function () {
+  'use strict';
+  var ALAN = {
+    a1: ['a1d','a1n','a1v'],
+    a2: ['a2d','a2v','a2t','a2h','a2cp'],
+    a3: ['a3v1','a3h1','a3h2','a3z'],
+    a4: ['a4p','a4e','a4s','a4sh'],
+    a5: ['a5t','a5v','a5k','a5l','a5pn','a5vn'],
+    a6: ['a6d','a6c','a6k','a6u']
+  };
+
+  // 1) adresteki değerleri forma yaz
+  var p = new URLSearchParams(location.search);
+  var yazildi = false;
+  Object.keys(ALAN).forEach(function (a) {
+    ALAN[a].forEach(function (id) {
+      if (!p.has(id)) return;
+      var e = document.getElementById(id);
+      if (!e) return;
+      var d = p.get(id);
+      if (e.tagName === 'SELECT') {
+        var uyar = Array.prototype.some.call(e.options, function (o) { return o.value === d; });
+        if (!uyar) return;
+      }
+      e.value = d;
+      var ayna = document.getElementById(id + 'r');
+      if (ayna) ayna.value = d;
+      yazildi = true;
+    });
+  });
+  if (yazildi) {
+    ['a1d','a2d','a3v1','a4p','a5t','a6d'].forEach(function (id) {
+      var e = document.getElementById(id);
+      if (e) e.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    // seçim kutuları 'input' yerine 'change' de dinliyor olabilir
+    ['a3z','a4s','a5t','a6d','a6c','a6k'].forEach(function (id) {
+      var e = document.getElementById(id);
+      if (e) e.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
+
+  // 2) linki kopyala
+  Array.prototype.forEach.call(document.querySelectorAll('.paydug'), function (d) {
+    d.addEventListener('click', function () {
+      var a = d.getAttribute('data-arac');
+      var q = new URLSearchParams();
+      ALAN[a].forEach(function (id) {
+        var e = document.getElementById(id);
+        if (e && e.value !== '') q.set(id, e.value);
+      });
+      var url = location.origin + location.pathname + '?' + q.toString() + '#' + d.getAttribute('data-hash');
+      var msg = document.getElementById('paymsg-' + a);
+      function bitti(t) { msg.textContent = t; setTimeout(function () { msg.textContent = ''; }, 2600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { bitti('Copied'); },
+                                                function () { bitti('Copy failed'); });
+      } else {
+        var t = document.createElement('textarea');
+        t.value = url; document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); bitti('Copied'); }
+        catch (e) { bitti('Copy failed'); }
+        t.remove();
+      }
+    });
+  });
+})();
+</script>
+<script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+<div class="doku" aria-hidden="true"></div>
+<script src="/assets/canli.js?v=f2dd4778" defer></script>
+<script src="/assets/olcum.js?v=37c7cfab" defer></script>
+</body></html>

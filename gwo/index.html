@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GWO Sertifikası Nedir, Nasıl Alınır — BST, BTT ve Tazeleme | Soner Soylu</title>
+<meta name="description" content="GWO nedir, BST hangi modüllerden oluşur, kaç gün sürer, kaç yıl geçerlidir? Tazeleme, BTT, WINDA doğrulaması ve eğitimi kimin ödediği — sahadan, sertifika satan bir siteden değil.">
+<link rel="canonical" href="https://sonersoylu.com/gwo/">
+<meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="GWO sertifikası nedir, nasıl alınır">
+<meta property="og:description" content="GWO nedir, BST hangi modüllerden oluşur, kaç gün sürer, kaç yıl geçerlidir? Tazeleme, BTT, WINDA doğrulaması ve eğitimi kimin ödediği — sahadan, sertifika satan bir siteden değil.">
+<meta property="og:url" content="https://sonersoylu.com/gwo/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-gwo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4f0">
+<meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+<meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+<link rel="stylesheet" href="/style.css">
+<style>
+
+.g-hero{padding:4rem 0 2rem}
+.g-hero h1{font-size:clamp(2rem,1.5rem + 2.2vw,2.75rem);line-height:1.08;
+ margin-top:1.5rem;max-width:22ch}
+.g-back{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);
+ font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);
+ transition:color .2s}
+.g-back:hover{color:var(--ink)}
+.g-meta{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;
+ font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--muted)}
+.lede{margin-top:1.75rem}
+
+.toc{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shade);
+ padding:1.5rem 1.6rem;margin-top:2.5rem}
+.toc p{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;
+ text-transform:uppercase;color:var(--muted)}
+.toc ol{margin-top:1rem;display:grid;gap:.15rem;counter-reset:t}
+.toc li{counter-increment:t}
+.toc a{display:flex;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);
+ font-size:.9375rem;transition:color .2s}
+.toc li:last-child a{border-bottom:0}
+.toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);
+ font-size:.6875rem;letter-spacing:.14em;color:var(--muted);padding-top:.28rem}
+.toc a:hover{color:var(--beacon)}
+
+/* kısa cevap: sayfanın ilk on saniyesi. Arayan cevabı burada bulmalı. */
+.kisa{margin-top:2.5rem;border:1px solid var(--line);border-left:3px solid var(--beacon);
+ background:var(--surface);box-shadow:var(--shade);padding:1.5rem 1.6rem}
+.kisa .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;
+ text-transform:uppercase;color:var(--beacon)}
+.kisa p{margin-top:.85rem;font-size:1rem;line-height:1.75}
+.kisa ol{margin-top:.85rem;padding-left:1.15rem;display:grid;gap:.5rem}
+.kisa li{font-size:.9375rem;line-height:1.7}
+.kisa li::marker{font-family:var(--mono);font-size:.8125rem;color:var(--beacon)}
+
+.gsec{border-top:1px solid var(--line);padding:3.5rem 0}
+.ghead .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;
+ text-transform:uppercase;color:var(--beacon)}
+.ghead h2{margin-top:.5rem;font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem);letter-spacing:-.035em}
+.prose{margin-top:1.75rem;max-width:68ch}
+.prose p{margin-top:1.1rem;font-size:1rem;line-height:1.8}
+.prose h3{margin-top:2.5rem;font-family:var(--sans);font-weight:500;
+ font-variation-settings:normal;font-size:1.0625rem;letter-spacing:-.01em}
+.prose h4{margin-top:1.75rem;font-family:var(--sans);font-weight:500;font-size:.9375rem}
+.bul{margin-top:1rem;display:grid;gap:.75rem;list-style:none;padding:0}
+.bul li{position:relative;padding-left:1.35rem;font-size:.9375rem;line-height:1.75}
+.bul li::before{content:"";position:absolute;left:0;top:.65em;width:.375rem;height:1px;
+ background:var(--beacon)}
+.bul b{font-weight:500}
+
+.callout{margin-top:1.75rem;border-left:2px solid var(--beacon);background:var(--surface);
+ padding:1.15rem 1.35rem}
+.callout p{font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.callout b{color:var(--ink);font-weight:500}
+
+.steps{margin-top:1.5rem;list-style:none;padding:0;display:grid;gap:0}
+.steps li{border-top:1px solid var(--line);padding:1.5rem 0;display:grid;
+ gap:.6rem 2rem;grid-template-columns:1fr}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+@media (min-width:760px){.steps li{grid-template-columns:15rem 1fr}}
+.steps .n{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.18em;
+ text-transform:uppercase;color:var(--muted)}
+.steps h4{margin-top:.4rem;font-family:var(--sans);font-weight:500;font-size:1rem;
+ letter-spacing:-.01em}
+.steps p{font-size:.9375rem;line-height:1.75;color:var(--muted)}
+.steps p+p{margin-top:.75rem}
+
+/* zaman çizgisi: ay ay ne yapılacağı */
+.plan{margin-top:1.75rem;display:grid;gap:1px;background:var(--line);
+ border:1px solid var(--line);box-shadow:var(--shade)}
+.plan>div{background:var(--surface);padding:1.35rem 1.5rem;display:grid;gap:.55rem 1.75rem}
+@media (min-width:760px){.plan>div{grid-template-columns:9rem 1fr;align-items:start}}
+.plan .ay{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--beacon)}
+.plan b{display:block;font-weight:500;font-size:.9375rem}
+.plan p{margin-top:.4rem;font-size:.875rem;line-height:1.7;color:var(--muted)}
+
+.cards{margin-top:1.5rem;display:grid;gap:1px;background:var(--line);
+ border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.cards>div{background:var(--surface);padding:1.35rem 1.45rem}
+.cards dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--muted)}
+.cards dd{margin-top:.6rem;font-size:.9375rem;line-height:1.7}
+.cards dd b{font-weight:500}
+
+/* karşılaştırma: kötü örnek / iyi örnek */
+.vs{margin-top:1.5rem;display:grid;gap:1px;background:var(--line);
+ border:1px solid var(--line)}
+@media (min-width:760px){.vs{grid-template-columns:1fr 1fr}}
+.vs>div{background:var(--surface);padding:1.35rem 1.45rem}
+.vs .et{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--muted)}
+.vs .kotu .et{color:var(--muted)}
+.vs .iyi .et{color:var(--beacon)}
+.vs p{margin-top:.7rem;font-size:.9375rem;line-height:1.7}
+.vs .kotu p{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+
+.tablo{margin-top:1.5rem;overflow-x:auto;border:1px solid var(--line);box-shadow:var(--shade)}
+.tablo table{width:100%;border-collapse:collapse;background:var(--surface);
+ font-size:.875rem;min-width:34rem}
+.tablo th,.tablo td{padding:.85rem 1rem;text-align:left;border-bottom:1px solid var(--line);
+ vertical-align:top;line-height:1.6}
+.tablo th{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap}
+.tablo tr:last-child td{border-bottom:0}
+.tablo td b{font-weight:500}
+.tablo .sn{font-family:var(--mono);color:var(--muted);white-space:nowrap}
+
+.faq{margin-top:1.5rem;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:1.1rem 0;font-size:.9375rem;font-weight:500;
+ list-style:none;display:flex;justify-content:space-between;gap:1.5rem;
+ transition:color .2s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--beacon);flex:none}
+.faq details[open] summary::after{content:"−"}
+.faq summary:hover{color:var(--beacon)}
+.faq .a{padding:0 0 1.35rem;font-size:.9375rem;line-height:1.8;color:var(--muted);
+ max-width:68ch}
+.faq .a a{color:var(--ink)}
+
+/* alt gezinme: üç kariyer sayfası birbirini tutsun */
+.komsu{margin-top:2.5rem;display:grid;gap:1px;background:var(--line);
+ border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))}
+.komsu a{background:var(--surface);padding:1.35rem 1.45rem;text-decoration:none;
+ color:inherit;display:grid;gap:.4rem;transition:background .25s}
+.komsu a:hover{background:var(--raise)}
+.komsu .et{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--beacon)}
+.komsu b{font-family:var(--serif);font-weight:400;font-variation-settings:"opsz" 40;
+ font-size:1.125rem;letter-spacing:-.01em}
+.komsu span{font-size:.8125rem;line-height:1.6;color:var(--muted)}
+
+.bolumler{margin-top:3rem;padding-top:1.75rem;border-top:1px solid var(--line)}
+.bolumler>p{margin:0 0 1rem;color:var(--muted);font-size:.875rem}
+.bolumler ol{list-style:none;margin:0;padding:0;display:grid;gap:.35rem;
+ grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.bolumler a{display:flex;gap:.6rem;align-items:baseline;padding:.5rem .65rem;
+ border:1px solid var(--line);border-radius:6px;text-decoration:none;color:inherit;
+ transition:border-color .2s,background-color .2s}
+.bolumler a:hover,.bolumler a:focus-visible{border-color:var(--aksan);background:rgba(0,0,0,.02)}
+.bolumler a i{font-style:normal;color:var(--muted);font-size:.75rem;
+ font-variant-numeric:tabular-nums;flex:none}
+
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "@id": "https://sonersoylu.com/gwo/#sss",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "GWO sertifikası nedir?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GWO (Global Wind Organisation), türbin üreticileri ve santral sahiplerinin ortak belirlediği güvenlik eğitim standardıdır. GWO sertifikası, standardı tanıyan her firmanın sahasında geçerli olan ortak giriş belgesidir."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GWO BST kaç gün sürer?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Dört gün. Yüksekte çalışma ve kurtarma 2 gün, ilk yardım 1 gün, yangın farkındalığı yarım gün, manuel taşıma yarım gün. Denizüstü için Sea Survival eklenirse toplam beş güne çıkar."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GWO sertifikası kaç yıl geçerli?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "İki yıl. Süre dolmadan tazeleme eğitimi (BST Refresher) alınır ve geçerlilik yeniden iki yıl uzar. Süre geçtikten sonra tazeleme yapılamaz; dört günlük tam BST baştan alınır."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GWO eğitimini kim öder?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kural olarak işveren: çalışan bir teknisyenin BST'si ve tazelemesi işverenin sorumluluğudur. Sahadaki gerçek ise farklı — sektöre yeni girenlerin çoğu, iş bulamama korkusuyla eğitimi kendi cebinden alıyor ve bu gerçekten işe yarıyor, çünkü firmalar sahaya hemen çıkabilecek adayı öne koyuyor. Acele etmiyorsanız önce görüşmelere girip \"eğitim ve tazeleme kime ait\" diye sorun; kendiniz ödeyecekseniz yalnızca BST alın, merkezi doğrulayın ve o sertifikayı görüşmede pazarlık kozu olarak kullanın."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GWO eğitimi ne kadar tutuyor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Merkeze, döneme ve kura göre değiştiği için burada sabit bir rakam vermiyorum; internette gördüğünüz sabit fiyatların çoğu güncelliğini kaybetmiş sayfalardan geliyor. Üç akredite merkezden \"dört modül, WINDA kaydı ve ekipman dahil\" teklifi isteyin."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bir eğitim merkezinin GWO akredite olduğunu nasıl anlarım?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GWO'nun kendi sağlayıcı arama sayfasından kontrol edin. Listede firma adı, eğitim sitesinin şehri ve hangi modüllerde sertifikalı olduğu yazar. Eğitim sonrası sertifikanızın WINDA kaydında görünmesi kesin ölçüdür."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "WINDA nedir?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GWO'nun eğitim kayıt sistemi. Aldığınız her modül WINDA ID'nize işlenir ve işverenler geçerliliği oradan doğrular. Kayıt firmaya değil size aittir; iş değiştirdiğinizde sizinle gelir."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "BTT almalı mıyım?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Zorunlu değil ama özgeçmişinizi ayırır. Yeni başlıyorsanız hemen almayın: önce sahaya girin, mekanik mi elektrik mi tarafına kayacağınızı görün, ikinci yılda o tarafın modülünü alın."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GWO ile İSG eğitimi aynı şey mi?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hayır. Türkiye'de 6331 sayılı kanun kapsamındaki İSG eğitimleri yasal zorunluluktur; GWO ise sektör standardıdır. Sahaya girerken ikisi de ayrı ayrı istenir ve biri diğerinin yerine geçmez."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "@id": "https://sonersoylu.com/gwo/#makale",
+   "headline": "GWO sertifikası nedir, nasıl alınır",
+   "description": "GWO nedir, BST hangi modüllerden oluşur, kaç gün sürer, kaç yıl geçerlidir? Tazeleme, BTT, WINDA doğrulaması ve eğitimi kimin ödediği — sahadan, sertifika satan bir siteden değil.",
+   "inLanguage": "tr-TR",
+   "dateModified": "2026-09-08",
+   "author": {
+    "@type": "Person",
+    "name": "Soner Soylu",
+    "@id": "https://sonersoylu.com/#soner"
+   },
+   "publisher": {
+    "@id": "https://sonersoylu.com/#soner"
+   },
+   "about": {
+    "@type": "Thing",
+    "name": "Global Wind Organisation",
+    "sameAs": "https://www.globalwindsafety.org/"
+   },
+   "mainEntityOfPage": "https://sonersoylu.com/gwo/"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://sonersoylu.com/gwo/",
+   "url": "https://sonersoylu.com/gwo/",
+   "name": "GWO sertifikası nedir, nasıl alınır",
+   "isPartOf": {
+    "@id": "https://sonersoylu.com/#site"
+   },
+   "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+     {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Ana sayfa",
+      "item": "https://sonersoylu.com/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Sahadan rehber",
+      "item": "https://sonersoylu.com/rehber/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GWO sertifikası"
+     }
+    ]
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body id="top">
+<a class="skip" href="#ana">İçeriğe atla</a>
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Altı saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer" aria-current="true">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/" aria-current="true">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <a class="lang" href="/en/gwo/" hreflang="en" lang="en" title="English">EN</a>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/" aria-current="true">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main id="ana">
+<section class="wrap g-hero">
+<a class="g-back" href="/rehber/"><span aria-hidden="true">&larr;</span> Sahadan rehber</a>
+<p class="mono" style="display:flex;align-items:center;gap:.75rem;margin-top:2rem"><span class="beacon"></span>Kariyer · Sertifika</p>
+<h1>GWO sertifikası nedir, nasıl alınır</h1>
+<p class="lede">GWO, rüzgâr sektörünün ortak güvenlik eğitim standardı. Sertifikasız bir sahaya giremezsiniz; bu bir formalite değil, giriş biletidir. Bu sayfayı yazma sebebim şu: sertifika satan sitelerin anlattığıyla kule dibindeki gerçek aynı şey değil. Aşağıdakiler hem GWO'nun kendi standardından, hem de o eğitimleri alıp on üç yıl sahada kullanmış birinden.</p>
+<p class="g-meta"><span>13 yıl saha</span><span>BST · BTT</span><span>Aliağa &amp; Bergama RES</span><span>Son güncelleme: Eylül 2026</span></p>
+<nav class="toc" aria-label="İçindekiler"><p>İçindekiler</p><ol><li><a href="#kisa-cevap">Kısa cevap</a></li><li><a href="#nedir">GWO nedir, kim tanır</a></li><li><a href="#bst">BST: dört modül, dört gün</a></li><li><a href="#offshore">Denizüstü: Sea Survival</a></li><li><a href="#gecerlilik">Geçerlilik ve tazeleme</a></li><li><a href="#btt">BTT: teknik paket</a></li><li><a href="#digerleri">Diğer GWO standartları</a></li><li><a href="#dogrulama">Merkez akredite mi</a></li><li><a href="#winda">WINDA kaydı</a></li><li><a href="#kimoder">Eğitimi kim öder</a></li><li><a href="#fiziksel">Fiziksel şartlar</a></li><li><a href="#sss">Sık sorulan sorular</a></li></ol></nav>
+</section>
+<section class="wrap"><div class="kisa"><p class="k">Kısa cevap</p>
+<p><b>GWO</b> (Global Wind Organisation), türbin üreticileri ve santral
+sahiplerinin ortak kurduğu, güvenlik eğitimi standardını yazan kuruluştur.
+<a class="sz" href="/sozluk/#t-temel" title="Temel — sözlükte">Temel</a> paket <b>BST</b> (Basic Safety Training) dört modülden oluşur ve
+<b>dört gün</b> sürer:</p>
+<ol>
+ <li>Yüksekte çalışma ve kurtarma — 2 gün</li>
+ <li>İlk yardım — 1 gün</li>
+ <li>Yangın farkındalığı — yarım gün</li>
+ <li>Manuel taşıma — yarım gün</li>
+</ol>
+<p>Sertifika <b>iki yıl</b> geçerlidir; sonrasında tazeleme (BST Refresher)
+alınır. Denizüstü projeler için <b>Sea Survival</b> modülü eklenir. Eğitimi
+almadan önce iki şeyi doğrulayın: merkez GWO akredite mi, ve sertifikanız
+<b>WINDA</b> kaydında görünüyor mu. Görünmüyorsa elinizdeki kâğıdın sahada
+hükmü yok.</p></div></section>
+<section class="wrap gsec" id="nedir">
+<div class="ghead"><span class="k">Bölüm 01</span><h2>GWO nedir, kim tanır</h2></div>
+<div class="prose">
+<p>GWO'yu türbin üreticileri ve santral sahipleri birlikte kurdu. Amaç basitti:
+bir teknisyen Almanya'da eğitim alıp Türkiye'de sahaya çıkabilsin, her firma
+kendi eğitimini baştan yaptırmasın. Bugün sektörün ortak dili bu.</p>
+
+<p>Pratikte şu anlama geliyor: <b>GWO sertifikanız, standardı tanıyan her
+üreticinin sahasında geçerli.</b> Enercon'da aldığınız BST ile Vestas sahasına
+çıkabilirsiniz. Türkiye'de de yurt dışında da aynı kâğıt iş görür — Avrupa
+montaj projesine gidebilmenizin sebebi budur.</p>
+
+<h3>GWO ile İSG eğitimi aynı şey değil</h3>
+<p>Bu ikisi sürekli karıştırılıyor. Türkiye'de 6331 sayılı kanun kapsamında
+işverenin vermesi gereken İSG eğitimleri var — bunlar <b>yasal zorunluluk</b>.
+GWO ise <b>sektör standardı</b>: kanun istemiyor, işveren istiyor. Sahaya
+girerken ikisi de ayrı ayrı sorulur, biri diğerinin yerine geçmez.</p>
+
+<div class="callout"><p><b>Bir günde "yüksekte çalışma belgesi" veren yerler var.</b>
+O kâğıt GWO değildir ve kule dibinde işinize yaramaz. Ayırt etmenin en net yolu:
+GWO eğitiminde <b>kurtarma senaryosunu gerçekten uygularsınız</b> — kule maketinde,
+askıda kalmış bir kişiyi indirirsiniz. Bunu yaptırmayan merkez GWO eğitimi
+vermiyordur.</p></div></div>
+</section>
+<section class="wrap gsec" id="bst">
+<div class="ghead"><span class="k">Bölüm 02</span><h2>BST: dört modül, dört gün</h2></div>
+<div class="prose">
+<p>Temel paket. Sahaya çıkmanın ön şartı. Modüller ayrı ayrı da alınabilir ama
+çoğu merkez dört günü blok halinde veriyor.</p>
+
+<div class="tablo"><table>
+<thead><tr><th>Modül</th><th class="sn">Süre</th><th>Ne öğretilir</th>
+<th>Sahada karşılığı</th></tr></thead>
+<tbody>
+<tr><td><b>Yüksekte çalışma ve kurtarma</b><br><span class="sn">Working at Heights</span></td>
+ <td class="sn">2 gün</td>
+ <td>Emniyet kemeri, düşme durdurucu, ankraj noktaları, dikey hat kullanımı ve
+  askıda kalmış bir kişinin kurtarılması.</td>
+ <td>Paketin en ağır ve en önemli modülü. Yaralı bir arkadaşınızı nacelle'den
+  nasıl indireceğinizi burada öğreniyorsunuz. Kuleye tek başınıza çıkmama
+  kuralının sebebi de burada anlaşılıyor.</td></tr>
+<tr><td><b>İlk yardım</b><br><span class="sn">First Aid</span></td>
+ <td class="sn">1 gün</td>
+ <td>Yaşamı tehdit eden durumu tanıma, temel yaşam desteği, kanama kontrolü,
+  dar alanda müdahale.</td>
+ <td>En yakın ambulansın kırk dakika uzakta olduğu bir tepede ilk müdahaleyi
+  siz yaparsınız. Bu cümleyi abartı sanmayın.</td></tr>
+<tr><td><b>Yangın farkındalığı</b><br><span class="sn">Fire Awareness</span></td>
+ <td class="sn">yarım gün</td>
+ <td>Yangın türleri, söndürücü seçimi, tahliye ve önleme.</td>
+ <td>Nacelle içinde yangın demek, kaçış yolunuzun 80 metre altında olması
+  demek. Bu modülü hafife alan görmedim.</td></tr>
+<tr><td><b>Manuel taşıma</b><br><span class="sn">Manual Handling</span></td>
+ <td class="sn">yarım gün</td>
+ <td>Dar alanda ağır parça taşımanın doğru tekniği, ergonomi, sırt koruma.</td>
+ <td>Yarım günlük modül, kariyerinizin uzunluğunu belirliyor. Bu meslekte
+  sırt erken gider; gitmemesinin yolu burada anlatılıyor.</td></tr>
+</tbody></table></div>
+
+<p>Eğitimin sonunda teorik ve pratik değerlendirme var. Pratikte özellikle
+kurtarma senaryosunda zorlanan oluyor; sınıfta iki kez tekrar ettirdikleri
+oldu, bu normal.</p></div>
+</section>
+<section class="wrap gsec" id="offshore">
+<div class="ghead"><span class="k">Bölüm 03</span><h2>Denizüstü: Sea Survival</h2></div>
+<div class="prose">
+<p>Denizüstü (offshore) projelere gidecekseniz BST paketine <b>Sea Survival</b>
+modülü eklenir; süre bir gün uzar, toplam beş güne çıkar.</p>
+<ul class="bul">
+ <li><b>Ne öğretilir:</b> can yeleği ve dalma elbisesi kullanımı, suya kontrollü
+  giriş, can salına geçiş, grupla suda hayatta kalma, transfer sırasında düşme
+  senaryosu.</li>
+ <li><b>Kimin alması gerekir:</b> denizüstü sahaya çıkacak herkes. Karada
+  çalışacaksanız gerekmez ve masrafı boşuna yapmayın.</li>
+ <li><b>Türkiye açısından:</b> ülkemizde henüz işletmede denizüstü RES yok,
+  ama Avrupa'da denizüstü projeler karadan belirgin şekilde iyi ödüyor.
+  Yurt dışını hedefliyorsanız bu modül yatırım.</li>
+</ul></div>
+</section>
+<section class="wrap gsec" id="gecerlilik">
+<div class="ghead"><span class="k">Bölüm 04</span><h2>Geçerlilik ve tazeleme</h2></div>
+<div class="prose">
+<p>GWO sertifikaları <b>iki yıl</b> geçerli. Süre dolmadan tazeleme eğitimi
+(<b>BST Refresher</b>, kısaca BSTR) alınır ve geçerlilik yeniden iki yıl uzar.</p>
+
+<ul class="bul">
+ <li><b>Tazeleme süresi kısadır.</b> Sağlayıcıya ve modül birleşimine göre iki
+  ila üç gün; bazı modüller birleştirilerek verilir (yüksekte çalışma ve manuel
+  taşıma çoğu yerde tek modülde birleşir).</li>
+ <li><b>Süresi geçerse tazeleme yapılamaz.</b> Bu en pahalı hata. Sertifikanız
+  düşerse dört günlük tam BST'yi baştan almanız gerekir. Takvime not düşün —
+  ben telefonuma iki ay önceden hatırlatıcı koyuyorum.</li>
+ <li><b>Modüller ayrı ayrı düşer.</b> İlk yardımı Mart'ta, yüksekte çalışmayı
+  Eylül'de aldıysanız iki ayrı tarihiniz var. Çoğu kişi bunu karıştırıp bir
+  modülü düşürüyor.</li>
+ <li><b>İşe girerken sorulan ilk şey geçerlilik tarihidir.</b> Özgeçmişinizde
+  sertifikanın yanına tarihi yazın; işe alan teknisyen ilk oraya bakar.</li>
+</ul>
+
+<div class="callout"><p><b>Tazelemeyi işten ayrılmadan önce yaptırın.</b> Firma
+karşılıyorsa ve ayrılmayı düşünüyorsanız, tazelemeyi bekleyip öyle ayrılmak
+cebinizde bir eğitim ücreti bırakır. Bu bir oyun değil, sektörde herkesin
+bildiği bir düzen.</p></div></div>
+</section>
+<section class="wrap gsec" id="btt">
+<div class="ghead"><span class="k">Bölüm 05</span><h2>BTT: teknik paket</h2></div>
+<div class="prose">
+<p>BST güvenlik paketi; <b>BTT</b> (Basic Technical Training) teknik paket.
+BTT zorunlu değil — ama özgeçmişinizi rakiplerinizden ayıran şey bu. Yedi
+modülden oluşuyor:</p>
+
+<dl class="cards">
+ <div><dt>BTT Mekanik</dt><dd>Ana bileşenler, mekanik sistemler, cıvatalı ve
+  kaynaklı bağlantılar, el aletlerinin güvenli kullanımı.</dd></div>
+ <div><dt>BTT Elektrik</dt><dd>Elektriğin temelleri, bileşen ve sembol tanıma,
+  sensör tipleri, elektrik şeması okuma ve ölçüm.</dd></div>
+ <div><dt>BTT Hidrolik</dt><dd>Tecrübeli teknisyen gözetiminde temel hidrolik
+  işleri güvenli yapabilme.</dd></div>
+ <div><dt>BTT Cıvata sıkma</dt><dd>Senaryo temelli; güçlü ekipmanla tork ve
+  gerdirme işlerine hazırlık. Firma içi cıvata eğitiminin ön adımı.</dd></div>
+ <div><dt>BTT Montaj — mekanik</dt><dd>Gözetim altında temel montaj işleri.
+  Montaj ekibine gireceklerin modülü.</dd></div>
+ <div><dt>BTT Montaj — elektrik</dt><dd>Montaj tarafının elektrik ayağı.
+  Mekanikle birlikte iki tam gün olarak veriliyor.</dd></div>
+ <div><dt>BTT Tehlikeli enerjiler</dt><dd>Tehlikeli enerjilerin yakınında güvenli
+  çalışma. LOTO mantığının temeli burada kuruluyor.</dd></div>
+</dl>
+
+<p>Benim tavsiyem: yeni başlıyorsanız BTT'yi hemen almayın. Önce sahaya girin,
+hangi tarafa kayacağınızı görün — mekanik mi, elektrik mi. İkinci yılda o
+tarafın modülünü alın; hem daha ucuz olur hem de anlattıkları bir işe yarar,
+çünkü artık neyden bahsettiklerini biliyorsunuzdur.</p></div>
+</section>
+<section class="wrap gsec" id="digerleri">
+<div class="ghead"><span class="k">Bölüm 06</span><h2>Diğer GWO standartları</h2></div>
+<div class="prose">
+<p>BST ve BTT dışında, uzmanlaştıkça karşınıza çıkacak standartlar var. Hepsini
+almanız gerekmiyor; hangi işi yapacağınıza göre biri gerekiyor.</p>
+
+<div class="tablo"><table>
+<thead><tr><th>Standart</th><th>Kime gerekir</th></tr></thead>
+<tbody>
+<tr><td><b>Advanced Rescue Training</b> (ART)</td>
+ <td>Kurtarma ekibinde görev alacaklara. Nacelle, hub ve kanat içinden kurtarma
+  senaryolarını kapsar. Tazelemesi ayrıca var.</td></tr>
+<tr><td><b>Control of Hazardous Energies</b> (CoHE)</td>
+ <td>LOTO uygulayacak herkese. Enerjinin kilitlenip etiketlenmesi işinin
+  standardı; sorumluluk alan teknisyende aranıyor.</td></tr>
+<tr><td><b>Enhanced First Aid</b> (EFA)</td>
+ <td>Sahada ilk yardım sorumlusu olacaklara. BST ilk yardımın üstüne gelir.</td></tr>
+<tr><td><b>Slinger Signaller</b></td>
+ <td>Yük bağlayıp vinç yönlendirecek olanlara. Montaj tarafında çok işe yarar.</td></tr>
+<tr><td><b>Crane and Hoist</b></td>
+ <td>Kule içi vinç ve kaldırma ekipmanı kullananlara.</td></tr>
+<tr><td><b>Service Lift</b></td>
+ <td>Kule içi servis asansörünü kullanacaklara. Kısa ama sık istenen bir modül.</td></tr>
+<tr><td><b>High Voltage</b></td>
+ <td>Yüksek gerilim tarafında çalışacaklara. Elektrik tarafında ilerleyenin
+  hedefi olmalı.</td></tr>
+<tr><td><b>Blade Repair</b></td>
+ <td>Kanat onarımı yapacaklara. Ayrı bir uzmanlık dalı; iyi ödüyor.</td></tr>
+<tr><td><b>Wind Limited Access</b></td>
+ <td>Sahaya kısa süreli girecek, teknisyen olmayan kişilere (ziyaretçi,
+  denetçi, tedarikçi).</td></tr>
+<tr><td><b>Entry Level Wind Technician Framework</b></td>
+ <td>Bir eğitim değil, bir çerçeve: sektöre yeni girecekler için üç profil
+  tanımlıyor — ön montaj (pre-assembly), montaj (installation) ve işletme-bakım
+  (O&amp;M). Hangi eğitimleri almanız gerektiğini bu profillere göre
+  seçebilirsiniz.</td></tr>
+</tbody></table></div></div>
+</section>
+<section class="wrap gsec" id="dogrulama">
+<div class="ghead"><span class="k">Bölüm 07</span><h2>Merkez gerçekten akredite mi</h2></div>
+<div class="prose">
+<p>Bu bölümü en çok işinize yarayacak yer olarak yazıyorum. Türkiye'de "GWO
+eğitimi" başlığıyla tanıtım yapan çok yer var; hepsi GWO tarafından sertifikalı
+değil. Üç dakikada kendiniz kontrol edebilirsiniz:</p>
+
+<ol class="steps">
+ <li><div><span class="n">Adım 01</span><h4>GWO'nun kendi eğitim sağlayıcı
+  arama sayfasına girin</h4></div>
+  <p><a href="https://www.globalwindsafety.org/trainingproviders/findttraningprovider"
+  target="_blank" rel="noreferrer noopener">globalwindsafety.org üzerindeki
+  sağlayıcı listesi</a> resmî kaynaktır. Ülkeye göre filtreleyin.</p></li>
+ <li><div><span class="n">Adım 02</span><h4>Merkezin adını ve şehrini eşleştirin</h4></div>
+  <p>Listede firma adı, eğitim sitesinin şehri ve <b>hangi modüllerde sertifikalı
+  olduğu</b> yazar. Bir merkez sadece "İlk yardım" ve "Yangın" için sertifikalı
+  olabilir; size dört modülü de vereceğini söylüyorsa orada durun.</p></li>
+ <li><div><span class="n">Adım 03</span><h4>Eğitim sitesinin adresini sorun</h4></div>
+  <p>Sertifika, firmanın merkez adresine değil <b>eğitim sitesine</b> verilir.
+  "Sizin eğitiminizi hangi sitede alacağım" diye sorun; cevap listedekiyle
+  uyuşmuyorsa alacağınız kâğıt sorunlu olabilir.</p></li>
+ <li><div><span class="n">Adım 04</span><h4>Eğitim bitince WINDA kaydına bakın</h4></div>
+  <p>Kurstan çıkınca kaydınız birkaç gün içinde WINDA'ya düşmeli. Düşmediyse
+  merkezi arayın; bu, kâğıdın geçerli olup olmadığını gösteren tek kesin
+  ölçüdür.</p></li>
+</ol>
+
+<div class="callout"><p><b>Somut örnek.</b> GWO'nun resmî listesinde Türkiye
+için görünen merkezlerden biri İzmir Güzelbahçe'de; ilk yardım, manuel taşıma,
+yangın farkındalığı, yüksekte çalışma ve kanat onarımı modüllerinde sertifikalı.
+Bunu bir tavsiye olarak değil, <b>listenin nasıl okunacağının örneği</b> olarak
+yazıyorum: siz de kendi bulduğunuz merkezi aynı şekilde kontrol edin. Liste
+değişir, doğrulama alışkanlığı kalır.</p></div></div>
+</section>
+<section class="wrap gsec" id="winda">
+<div class="ghead"><span class="k">Bölüm 08</span><h2>WINDA kaydı: kâğıdın gerçek karşılığı</h2></div>
+<div class="prose">
+<p><b>WINDA</b>, GWO'nun eğitim kayıt sistemi. Aldığınız her modül buraya
+işlenir ve işveren buradan kontrol eder. Elinizdeki basılı sertifika değil,
+<b>WINDA kaydı</b> esastır.</p>
+
+<ul class="bul">
+ <li><b>WINDA ID'niz size aittir,</b> firmaya değil. İş değiştirdiğinizde
+  kayıtlarınız sizinle gelir.</li>
+ <li><b>Kaydı kendiniz açabilirsiniz;</b> eğitim merkezi de kayıt açtırabilir.
+  Merkeze giderken zaten bir ID'niz varsa söyleyin — ikinci bir kayıt açılırsa
+  sertifikalarınız iki hesaba bölünür ve bu can sıkıcı bir düzeltme işi olur.</li>
+ <li><b>Özgeçmişe WINDA ID yazmak fark yaratır.</b> İşe alan teknisyen, kâğıdı
+  istemeden geçerliliğinizi görebilir. Ciddiye alındığınızı gösterir.</li>
+ <li><b>Geçerlilik takibini oradan yapın.</b> Modüllerin bitiş tarihleri ayrı
+  ayrı görünür; hangi modülün ne zaman düşeceğini karıştırmazsınız.</li>
+</ul></div>
+</section>
+<section class="wrap gsec" id="kimoder">
+<div class="ghead"><span class="k">Bölüm 09</span><h2>Eğitimi kim öder</h2></div>
+<div class="prose">
+<p>Bu bölümü iki kere yazdım. İlkinde "işverenin sorumluluğudur, ödemeyin"
+demiştim. Doğruydu ama eksikti — sahada olan bu değil.</p>
+
+<dl class="cards">
+ <div><dt>Kural</dt><dd>Çalışan bir teknisyenin BST'si ve tazelemesi
+  <b>işverenin sorumluluğudur.</b> Sektörde standart budur. Karşılamayan firma,
+  kendisi hakkında bir şey söylemiş olur.</dd></div>
+ <div><dt>Sahadaki gerçek</dt><dd>Sahaya yeni gelen arkadaşlara "GWO'yu kendin
+  mi aldın?" diye soruyorum; cevap neredeyse her zaman <b>evet</b>. Kimse parası
+  fazla olduğu için almıyor — iş bulamama korkusuyla alıyor.</dd></div>
+</dl>
+
+<p>Ve işin acı tarafı şu: <b>bu gerçekten işe yarıyor.</b> Firma personel alırken
+sertifikası cebinde olan adayı öne koyuyor. İki sebepten: o kişi sahaya günler
+içinde çıkabiliyor, ve eğitimin masrafı firmanın kasasından çıkmıyor. Aday
+farkında olmadan kendi parasıyla bir öncelik satın almış oluyor.</p>
+
+<p>Yani soru "ödemeli miyim" değil. Soru şu: <b>mecbur kaldığınız için mi
+ödüyorsunuz, yoksa ne yaptığınızı bilerek mi?</b> İkisi arasındaki fark,
+aynı parayla çok farklı yerlere varmanız demek.</p>
+
+<h3>Duruma göre ne yapmalı</h3>
+<ul class="bul">
+ <li><b>Çalışıyorsanız:</b> istemeye hakkınız var, isteyin — eğitimi de
+  tazelemesini de. Bu bir lütuf değil, işin gereği.</li>
+ <li><b>İşe yeni giriyorsanız, acele etmiyorsanız:</b> önce görüşmelere girin ve
+  "GWO eğitimi ve tazelemesi kime ait" diye açıkça sorun. Karşılayan firmalar
+  var, özellikle montaj sezonunda toplu alım yaparken. Bu tek soru cebinizde
+  ciddi bir para bırakabilir.</li>
+ <li><b>Kendiniz ödeyecekseniz, bilerek ödeyin:</b> yalnızca <b>BST</b> alın —
+  BTT ve diğer modülleri sahaya girdikten, hangi tarafta ilerleyeceğinizi
+  gördükten sonra alırsınız. Merkezin akredite olduğunu
+  <a href="#dogrulama">kendiniz doğrulayın</a> ve WINDA kaydınızı kontrol edin.</li>
+ <li><b>Ödediyseniz, o parayı görüşmede kullanın.</b> "Sertifikam geçerli,
+  ilk hafta sahaya çıkabilirim" cümlesi, ödediğiniz paranın karşılığıdır.
+  Söylemezseniz kimse fark etmez.</li>
+ <li><b>Taahhüde dikkat edin.</b> Firma eğitimi karşılıyorsa karşılığında bir
+  çalışma süresi taahhüdü isteyebilir. Süreyi ve cezai şartı imzalamadan okuyun.</li>
+ <li><b>Fiyat sorarken net olun:</b> "dört modülün tamamı, WINDA kaydı ve ekipman
+  dahil fiyat nedir" diye sorun. Bazı yerlerde ekipman kirası veya WINDA kaydı
+  ayrı çıkabiliyor.</li>
+</ul>
+
+<h3>Aynı şey ekipmanda da var</h3>
+<p>Baret, KKD, iş ayakkabısı… "İdare et, muhasebe alacak" cümlesini duymamış
+teknisyen yoktur. O cümle bazen aylarca uzar. Oysa <a class="sz" href="/sozluk/#t-kisisel-koruyucu-donanim" title="Kişisel koruyucu donanım — sözlükte">kişisel koruyucu donanımı</a>
+<b>ücretsiz sağlamak işverenin yasal yükümlülüğüdür</b> — 6331 sayılı kanun ve
+KKD yönetmeliği bunu açıkça yazar.</p>
+<p>Buna rağmen sahaya kendi baretiyle, kendi ayakkabısıyla gelen teknisyen ilk
+günden çalışmaya başlıyor ve bu ona bir adım kazandırıyor. Yaparsanız yapın —
+ama <b>hakkınızı bilerek yapın.</b> Bilmeden yapan, kalıcı olarak kendi cebinden
+ödemeye başlıyor.</p>
+
+<div class="callout"><p><b>Fiyat vermiyorum, bilerek.</b> Eğitim ücretleri
+merkeze, döneme ve kurdaki değişime göre farklılaşıyor; buraya bugün yazacağım
+rakam altı ay sonra yanlış olur. İnternette gördüğünüz sabit rakamların çoğu
+zaten güncelliğini kaybetmiş sayfalardan geliyor. Üç akredite merkezden teklif
+alın, aynı soruyu üçüne de sorun.</p></div></div>
+</section>
+<section class="wrap gsec" id="fiziksel">
+<div class="ghead"><span class="k">Bölüm 10</span><h2>Fiziksel şartlar</h2></div>
+<div class="prose">
+<p>Eğitime kayıtta sağlık beyanı doldurursunuz; merkez ayrıca ağırlık ve beden
+ölçüsü sınırları koyar. Sebebi ahlaki değil, teknik: <b>emniyet ve kurtarma
+ekipmanı belli bir yük aralığına göre sertifikalıdır.</b></p>
+
+<ul class="bul">
+ <li><b>Toplam ağırlık sınırı:</b> kıyafet ve ekipman dahil, sağlayıcıya göre
+  genelde 136–140 kg civarında. Bu ekipmanın sertifikalı sınırıdır.</li>
+ <li><b>Önerilen vücut ağırlığı:</b> çoğu merkezde 120 kg civarı üst sınır
+  olarak veriliyor.</li>
+ <li><b>Bel ölçüsü:</b> emniyet kemerinin oturması için genelde 120 cm
+  civarında bir sınır var.</li>
+ <li><b>Sahadaki pratik sınır daha düşük olabilir.</b> Kendi çalıştığım
+  sahalarda 100–110 kg civarında bir üst sınır uygulandığını gördüm; saha ve
+  ekipman politikasına göre değişiyor. Eğitim merkezinin sınırını geçmiyor
+  olmanız, her sahanın sizi alacağı anlamına gelmiyor.</li>
+ <li><b>Sağlık beyanı ciddiye alınır.</b> Denge, kalp, tansiyon, epilepsi ve
+  vertigo öyküsü sorulur. Gizlemenin faydası yok: kurtarma senaryosunda ortaya
+  çıkar ve kötü çıkar.</li>
+</ul></div>
+</section>
+<section class="wrap gsec" id="sss">
+<div class="ghead"><span class="k">Bölüm 11</span><h2>Sık sorulan sorular</h2></div>
+<div class="prose"><div class="faq"><details><summary>GWO sertifikası nedir?</summary><div class="a">GWO (Global Wind Organisation), türbin üreticileri ve santral sahiplerinin ortak belirlediği güvenlik eğitim standardıdır. GWO sertifikası, standardı tanıyan her firmanın sahasında geçerli olan ortak giriş belgesidir.</div></details><details><summary>GWO BST kaç gün sürer?</summary><div class="a">Dört gün. Yüksekte çalışma ve kurtarma 2 gün, ilk yardım 1 gün, yangın farkındalığı yarım gün, manuel taşıma yarım gün. Denizüstü için Sea Survival eklenirse toplam beş güne çıkar.</div></details><details><summary>GWO sertifikası kaç yıl geçerli?</summary><div class="a">İki yıl. Süre dolmadan tazeleme eğitimi (BST Refresher) alınır ve geçerlilik yeniden iki yıl uzar. Süre geçtikten sonra tazeleme yapılamaz; dört günlük tam BST baştan alınır.</div></details><details><summary>GWO eğitimini kim öder?</summary><div class="a">Kural olarak işveren: çalışan bir teknisyenin BST'si ve tazelemesi işverenin sorumluluğudur. Sahadaki gerçek ise farklı — sektöre yeni girenlerin çoğu, iş bulamama korkusuyla eğitimi kendi cebinden alıyor ve bu gerçekten işe yarıyor, çünkü firmalar sahaya hemen çıkabilecek adayı öne koyuyor. Acele etmiyorsanız önce görüşmelere girip "eğitim ve tazeleme kime ait" diye sorun; kendiniz ödeyecekseniz yalnızca BST alın, merkezi doğrulayın ve o sertifikayı görüşmede pazarlık kozu olarak kullanın.</div></details><details><summary>GWO eğitimi ne kadar tutuyor?</summary><div class="a">Merkeze, döneme ve kura göre değiştiği için burada sabit bir rakam vermiyorum; internette gördüğünüz sabit fiyatların çoğu güncelliğini kaybetmiş sayfalardan geliyor. Üç akredite merkezden "dört modül, WINDA kaydı ve ekipman dahil" teklifi isteyin.</div></details><details><summary>Bir eğitim merkezinin GWO akredite olduğunu nasıl anlarım?</summary><div class="a">GWO'nun kendi sağlayıcı arama sayfasından kontrol edin. Listede firma adı, eğitim sitesinin şehri ve hangi modüllerde sertifikalı olduğu yazar. Eğitim sonrası sertifikanızın WINDA kaydında görünmesi kesin ölçüdür.</div></details><details><summary>WINDA nedir?</summary><div class="a">GWO'nun eğitim kayıt sistemi. Aldığınız her modül WINDA ID'nize işlenir ve işverenler geçerliliği oradan doğrular. Kayıt firmaya değil size aittir; iş değiştirdiğinizde sizinle gelir.</div></details><details><summary>BTT almalı mıyım?</summary><div class="a">Zorunlu değil ama özgeçmişinizi ayırır. Yeni başlıyorsanız hemen almayın: önce sahaya girin, mekanik mi elektrik mi tarafına kayacağınızı görün, ikinci yılda o tarafın modülünü alın.</div></details><details><summary>GWO ile İSG eğitimi aynı şey mi?</summary><div class="a">Hayır. Türkiye'de 6331 sayılı kanun kapsamındaki İSG eğitimleri yasal zorunluluktur; GWO ise sektör standardıdır. Sahaya girerken ikisi de ayrı ayrı istenir ve biri diğerinin yerine geçmez.</div></details></div></div>
+</section>
+<section class="wrap" style="padding-bottom:4rem"><div class="komsu"><a href="/nasil-olunur/"><span class="et">Kariyer</span><b>Nasıl teknisyen olunur</b><span>Okul, sertifika, ilk iş ve ilk yıl — 12 aylık yol haritası.</span></a><a href="/maas/"><span class="et">Ücret</span><b>Teknisyen maaşı</b><span>Rakam yerine formül: teklifini kendin oku.</span></a><a href="/egitim/"><span class="et">Eğitim</span><b>Sıfırdan teknisyen</b><span>Ücretsiz 8 bölümlük eğitim, sonunda katılım belgesi.</span></a></div></section>
+<section class="wrap"><p class="dk-ip" style="margin:0 0 1.1rem;font-family:var(--mono);font-size:.78rem;color:var(--muted);line-height:1.85">Deniz üstünde çalışacaksanız temel eğitime <b>Sea Survival</b> modülü ekleniyor: 7 saat 25 dakika, 24 ay geçerli. Ayrıntısı <a href="/deniz-ustu/">deniz üstü sayfasında</a>.</p><div class="bolumler"><p>Ücretsiz eğitim serisinin bölümleri — <a href="/egitim/">seriye genel bakış</a></p><ol><li><a href="/egitim/bu-is-ne-is/"><i>01</i><span>Bu iş ne iş</span></a></li><li><a href="/egitim/guvenlik/"><i>02</i><span>Güvenlik</span></a></li><li><a href="/egitim/turbin-nasil-calisir/"><i>03</i><span>Rüzgârdan şebekeye</span></a></li><li><a href="/egitim/mekanik-is/"><i>04</i><span>Kule ve mekanik iş</span></a></li><li><a href="/egitim/elektrik-ve-kontrol/"><i>05</i><span>Elektrik ve kontrol</span></a></li><li><a href="/egitim/periyodik-bakim/"><i>06</i><span>Periyodik bakım</span></a></li><li><a href="/egitim/arizaya-yaklasim/"><i>07</i><span>Arızaya yaklaşım</span></a></li><li><a href="/egitim/kariyer/"><i>08</i><span>Kariyer ve sonraki adım</span></a></li></ol></div></section>
+</main>
+<footer><div class="wrap">
+<p class="mono">© 2026 Soner Soylu</p>
+<p class="mono">Son güncelleme: 8 Eylül 2026</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+</div></footer>
+<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+ <div class="ara-ic">
+  <div class="ara-ust">
+   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
+          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
+  </div>
+  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
+  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+ </div>
+</div>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/ara.js" defer></script>
+<script>
+(function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+b.setAttribute("aria-expanded",String(!a));m.classList.toggle("open",!a)});})();
+</script>
+</body></html>
