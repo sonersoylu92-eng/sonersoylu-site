@@ -1,5 +1,8 @@
 {
   "name": "soner-portfolio",
   "compatibility_date": "2026-09-16",
-  "pages_build_output_dir": "."
+  "pages_build_output_dir": ".",
+  "kv_namespaces": [
+    { "binding": "ABONE", "id": "a3645496ffc64d919ec50120945484b0" }
+  ]
 }
