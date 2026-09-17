@@ -194,9 +194,14 @@
   }
 
   // ---- 1. Power Output Chart ----
-  function initPowerChart() {
+  function initPowerChart(deneme) {
     var canvas = document.getElementById('powerChart');
-    if (!canvas || !window.Chart) return;
+    if (!canvas) return;
+    if (!window.Chart) {
+      // Chart.js CDN henüz yüklenmemiş olabilir — kısa süre bekleyip tekrar dene
+      if ((deneme || 0) < 40) setTimeout(function () { initPowerChart((deneme || 0) + 1); }, 150);
+      return;
+    }
 
     var ctx = canvas.getContext('2d');
     var now = new Date();
@@ -242,9 +247,13 @@
   }
 
   // ---- 2. Wind Rose Chart ----
-  function initWindRose() {
+  function initWindRose(deneme) {
     var canvas = document.getElementById('windRoseChart');
-    if (!canvas || !window.Chart) return;
+    if (!canvas) return;
+    if (!window.Chart) {
+      if ((deneme || 0) < 40) setTimeout(function () { initWindRose((deneme || 0) + 1); }, 150);
+      return;
+    }
 
     var ctx = canvas.getContext('2d');
     // 16 yön için veri (K, KKD, KD, ... B, KB)
