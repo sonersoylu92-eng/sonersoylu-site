@@ -1138,6 +1138,12 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
  border-bottom:1px solid var(--line);padding-bottom:1.25rem}
 .ozellik h2{font-size:1.875rem;letter-spacing:-.04em;font-weight:500;color:var(--ink)}
 .ozellik .mono{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.16em}
+.ozellik .not{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;align-items:center;
+ margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--line);
+ font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--muted)}
+.ozellik .not span:not(:first-child){position:relative;padding-left:1.2rem}
+.ozellik .not span:not(:first-child)::before{content:"·";position:absolute;left:0}
 
 /* ---- 1. Grafik Container ---- */
 .chart-wrapper{background:var(--surface);border:1px solid var(--line);
