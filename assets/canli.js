@@ -459,9 +459,17 @@
       if (forcedNight.checked) {
         kok.setAttribute('data-vardiya', 'gece');
         kok.style.setProperty('--gunes', '0');
+        if (eIsik) eIsik.textContent = ISIK.gece;
+      } else {
+        // zorlama kapatıldıysa gerçek güneş konumuna geri dön
+        kok.setAttribute('data-vardiya', v0);
+        kok.style.setProperty('--gunes', Math.max(0, Math.min(1, (h0 + 6) / 30)).toFixed(3));
+        if (eIsik) eIsik.textContent = ISIK[v0] || '';
       }
       if (reducedMotion.checked) {
         kok.style.setProperty('--animation-duration', '0s');
+      } else {
+        kok.style.removeProperty('--animation-duration');
       }
     }
 
