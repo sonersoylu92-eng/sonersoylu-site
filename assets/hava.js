@@ -28,9 +28,11 @@
     if (kod >= 51 && kod <= 82) return '/assets/saha/lisans-sirt-yolu.webp';
     if (kod === 45 || kod === 48) return '/assets/saha/bulut-ve-sira.webp';
     if (kod === 3) return '/assets/saha/lisans-bulut-ustu-sira.webp';
-    if (vardiya === 'safak' || vardiya === 'aksam')
-      return '/assets/saha/hero-gun-batimi.webp';
-    return LEVHA;                                 // 0,1,2 gündüz: kendi karem
+    // safak/aksam/altin/gündüz hepsi kendi kareme kalıyor: hero3d.js zaten
+    // bu dört vardiyanın hepsi için ışık modu biliyor (day/sunset), 3B sahne
+    // artık şafakta ve akşamüstünde de dönüyor, sadece tam gecede fotoğrafa
+    // dönüyoruz.
+    return LEVHA;
   }
   var HAVA_AD = {
     0: 'açık', 1: 'az bulutlu', 2: 'parçalı bulutlu', 3: 'kapalı',

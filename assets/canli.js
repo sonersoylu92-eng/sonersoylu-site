@@ -58,23 +58,32 @@
     return 'gunduz';
   }
 
-  // ---- güneşi hemen uygula (rüzgârı beklemeye gerek yok) -------------------
-  var simdi = new Date();
-  var g0 = gunesYuksekligi(39.12, 27.30, simdi);
-  var h0 = g0.h;
-  var h1 = gunesYuksekligi(39.12, 27.30, new Date(simdi.getTime() + 600000)).h;
-  var v0 = vardiya(h0, h1 > h0);
-  kok.setAttribute('data-vardiya', v0);
-  kok.style.setProperty('--gunes', Math.max(0, Math.min(1, (h0 + 6) / 30)).toFixed(3));
-  // ışık lekesi: güneş yükseldikçe karede yukarı çıkıyor, azimutla yana kayıyor
-  kok.style.setProperty('--isik-y', (42 - Math.max(0, Math.min(60, h0)) * 0.55).toFixed(1) + '%');
-  // kare kabaca güneye bakıyor: güneyden sapma karede yatay kaymaya dönüşüyor
-  kok.style.setProperty('--isik-x',
-    Math.max(6, Math.min(94, 50 + (g0.az - 180) * 0.30)).toFixed(1) + '%');
+  // ---- güneş: hemen uygula, sonra periyodik tazele --------------------------
+  // Sekme uzun süre açık kalırsa (biri gece yarısını geçerse) vardiya/etiket
+  // bayatlamasın diye 10 dakikada bir yeniden hesaplanıyor. Zorlama gece modu
+  // açıksa (bkz. initNightMode) dokunmuyoruz, kullanıcı tercihini ezmesin.
   var ISIK = { gece: 'gece', safak: 'şafak', aksam: 'akşam',
                altin: 'altın saat', gunduz: 'gündüz' };
   var eIsik = document.getElementById('cIsik');
-  if (eIsik) eIsik.textContent = ISIK[v0] || '';
+  var h0 = 0, v0 = 'gunduz';
+  function gunuGuncelle() {
+    try { if (localStorage.getItem('forcedNightMode') === 'true') return; } catch (e) {}
+    var simdi = new Date();
+    var g0 = gunesYuksekligi(39.12, 27.30, simdi);
+    h0 = g0.h;
+    var h1 = gunesYuksekligi(39.12, 27.30, new Date(simdi.getTime() + 600000)).h;
+    v0 = vardiya(h0, h1 > h0);
+    kok.setAttribute('data-vardiya', v0);
+    kok.style.setProperty('--gunes', Math.max(0, Math.min(1, (h0 + 6) / 30)).toFixed(3));
+    // ışık lekesi: güneş yükseldikçe karede yukarı çıkıyor, azimutla yana kayıyor
+    kok.style.setProperty('--isik-y', (42 - Math.max(0, Math.min(60, h0)) * 0.55).toFixed(1) + '%');
+    // kare kabaca güneye bakıyor: güneyden sapma karede yatay kaymaya dönüşüyor
+    kok.style.setProperty('--isik-x',
+      Math.max(6, Math.min(94, 50 + (g0.az - 180) * 0.30)).toFixed(1) + '%');
+    if (eIsik) eIsik.textContent = ISIK[v0] || '';
+  }
+  gunuGuncelle();
+  setInterval(gunuGuncelle, 600000);
 
   // ---- rüzgâr ---------------------------------------------------------------
   var kutu = document.getElementById('canli');
