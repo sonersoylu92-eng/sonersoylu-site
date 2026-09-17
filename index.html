@@ -66,7 +66,7 @@ main > section .head{margin-bottom:1.9rem}
 <section class="kapak" id="kapak">
  <div class="kapak-fon" aria-hidden="true"><img alt="" src="/assets/saha/ege-levha.webp" width="1179" height="1564" aria-hidden="true"></div>
  <div class="kapak-cam">
-  <div class="kapak-gorsel"><div class="kapak-kat"><img alt="Ege makiliğine kurulu rüzgâr santrali; ön planda tek bir türbin, arkada sırtlara dizilmiş onlarcası" src="/assets/saha/ege-levha.webp" width="1179" height="1564" fetchpriority="high"><svg class="kapak-rotor" viewBox="0 0 1179 1564" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g transform="translate(497 883)"><g class="pal"><image href="/assets/saha/ege-pal.webp" x="-222" y="-222" width="444" height="444"></image></g></g></svg>
+  <div class="kapak-gorsel"><div class="kapak-kat"><img alt="Ege makiliğine kurulu rüzgâr santrali; ön planda tek bir türbin, arkada sırtlara dizilmiş onlarcası" src="/assets/saha/ege-levha.webp" width="1179" height="1564" fetchpriority="high"><canvas class="kapak-3d" id="kapak3d" aria-hidden="true"></canvas>
 </div></div>
   <div class="kapak-isik" aria-hidden="true"></div>
   <div class="kapak-pus" aria-hidden="true"></div>
@@ -606,4 +606,29 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
 <div class="doku" aria-hidden="true"></div>
 <script src="/assets/canli.js" defer></script><script src="/assets/hava.js" defer></script><script src="/assets/giris.js" defer></script>
 <script src="/assets/olcum.js" defer></script>
+<script>
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+  var canvas = document.getElementById('kapak3d');
+  if (!canvas) return;
+  function destek() {
+    try {
+      var t = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (t.getContext('webgl2') || t.getContext('webgl')));
+    } catch (e) { return false; }
+  }
+  if (!destek()) return;
+  function baslat() {
+    import('/assets/hero3d.js?v=1').then(function (m) { m.kapak3BBaslat(canvas); })
+      .catch(function (e) { console.error('kapak3b yüklenemedi:', e); });
+  }
+  function boslaBekle() {
+    if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 2500 });
+    else setTimeout(baslat, 800);
+  }
+  if (document.readyState === 'complete') boslaBekle();
+  else window.addEventListener('load', boslaBekle);
+})();
+</script>
 </body></html>

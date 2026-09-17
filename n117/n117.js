@@ -467,6 +467,7 @@ function roundedBox(w, h, d, r) {
 const SKY = {
   day:    ['#5f93c4', '#95b8d6', '#cfd9dc', '#c6bda9'],
   sunset: ['#2c4770', '#6d7a97', '#d9a273', '#c8a382'],
+  night:  ['#050810', '#0b1224', '#12192e', '#0d1220'],
 };
 
 function skyDome(mode) {
@@ -730,18 +731,19 @@ export function createScene(canvas) {
 
   function setLight(mode) {
     const sunset = mode === 'sunset';
-    const st = (sunset ? SKY.sunset : SKY.day);
+    const night = mode === 'night';
+    const st = night ? SKY.night : (sunset ? SKY.sunset : SKY.day);
     ['c0', 'c1', 'c2', 'c3'].forEach((k, i) => sky.material.uniforms[k].value.set(st[i]));
-    scene.background.set(sunset ? 0xc9ac8c : 0xc9cfd0);
-    scene.fog.color.set(sunset ? 0xc9ac8c : 0xc9cfd0);
-    sun.color.set(sunset ? 0xffab63 : 0xfff2dd);
-    sun.intensity = sunset ? 2.3 : 2.2;
-    sun.position.set(sunset ? -330 : -150, sunset ? 78 : 245, sunset ? 170 : 150);
-    hemi.color.set(sunset ? 0xcdd4e0 : 0xdfe9f2);
-    hemi.groundColor.set(sunset ? 0x6b6151 : 0xb2a98f);
-    hemi.intensity = sunset ? 0.62 : 1.15;
-    fill.intensity = sunset ? 0.18 : 0.32;
-    renderer.toneMappingExposure = sunset ? 1.0 : 1.05;
+    scene.background.set(night ? 0x060a14 : (sunset ? 0xc9ac8c : 0xc9cfd0));
+    scene.fog.color.set(night ? 0x060a14 : (sunset ? 0xc9ac8c : 0xc9cfd0));
+    sun.color.set(night ? 0x8fa4d8 : (sunset ? 0xffab63 : 0xfff2dd));
+    sun.intensity = night ? 0.30 : (sunset ? 2.3 : 2.2);
+    sun.position.set(night ? -150 : (sunset ? -330 : -150), night ? 210 : (sunset ? 78 : 245), night ? 150 : (sunset ? 170 : 150));
+    hemi.color.set(night ? 0x1c2a48 : (sunset ? 0xcdd4e0 : 0xdfe9f2));
+    hemi.groundColor.set(night ? 0x090b12 : (sunset ? 0x6b6151 : 0xb2a98f));
+    hemi.intensity = night ? 0.26 : (sunset ? 0.62 : 1.15);
+    fill.intensity = night ? 0.06 : (sunset ? 0.18 : 0.32);
+    renderer.toneMappingExposure = night ? 0.82 : (sunset ? 1.0 : 1.05);
   }
 
   return { renderer, scene, camera, controls, parts, towerTopY, SPEC, setLight };
