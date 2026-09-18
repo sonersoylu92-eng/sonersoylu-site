@@ -9,12 +9,12 @@
    ───────────────────────────────────────────────────────────────── */
 :root {
   /* Dark luxury palette */
-  --dark-bg: #0f172a;
-  --dark-surface: #1a2543;
-  --dark-raised: #243456;
-  --dark-border: #2d3d52;
-  --dark-text: #f1f5f9;
-  --dark-muted: #94a3b8;
+  --dark-bg: #1a1410;
+  --dark-surface: #252220;
+  --dark-raised: #322d28;
+  --dark-border: #3d3632;
+  --dark-text: #f5f3f0;
+  --dark-muted: #a8a39d;
 
   /* Light editorial palette */
   --light-bg: #f8f6f3;
