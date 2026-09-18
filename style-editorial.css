@@ -81,7 +81,7 @@
 }
 
 html {
-  background: var(--ground);
+  background: #ffffff;
   color: var(--text);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -92,6 +92,10 @@ body {
   background: var(--ground);
   background-attachment: fixed;
   font-family: var(--sans);
+}
+
+main {
+  background: transparent !important;
   font-size: clamp(15px, 2vw, 16px);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -241,18 +245,23 @@ section:first-of-type {
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   FEATURE SECTIONS (Dark/Light alternating)
+   FEATURE SECTIONS (Clean white - no alternating)
    ───────────────────────────────────────────────────────────────── */
 .feature {
   padding: var(--space-8) 0;
+  background: transparent !important;
 }
 
 .feature:nth-child(odd) {
-  background: var(--ground);
+  background: transparent !important;
 }
 
 .feature:nth-child(even) {
-  background: var(--raised);
+  background: transparent !important;
+}
+
+section {
+  background: transparent !important;
 }
 
 .feature-content {
