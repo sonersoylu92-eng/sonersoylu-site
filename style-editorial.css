@@ -920,3 +920,47 @@ main > section:nth-child(even) {
     grid-template-columns: 1fr;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   GECE MODU VE AYARLAR — LIGHT THEME OVERRIDE
+   ───────────────────────────────────────────────────────────────── */
+/* Gece modu ayarları paneli — krem renk */
+.settings-panel {
+  background: #fafaf8 !important;
+  border: 1px solid #e5e5e0 !important;
+  color: #1a1a1a !important;
+}
+
+.setting-item {
+  border-bottom-color: #e5e5e0 !important;
+}
+
+.setting-item label {
+  color: #1a1a1a !important;
+}
+
+.setting-hint {
+  color: #666666 !important;
+}
+
+/* Header tema toggle butonları — beyaz/krem */
+.hd-right button,
+.hd-right a.lang {
+  background: transparent !important;
+  color: #1a1a1a !important;
+  border: 1px solid #e5e5e0;
+}
+
+.hd-right button:hover,
+.hd-right a.lang:hover {
+  background: #f5f5f3 !important;
+}
+
+/* Theme toggle button siyahı kaldır */
+button[aria-label*="Tema"],
+button[aria-label*="tema"],
+button[aria-label*="dark"],
+button[aria-label*="mode"] {
+  background: transparent !important;
+  color: #1a1a1a !important;
+}
