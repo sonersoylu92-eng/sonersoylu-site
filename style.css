@@ -1156,8 +1156,12 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
 .meteo-data{color:var(--ink);white-space:pre-wrap;word-break:break-word;
  background:var(--ground);padding:.75rem;border-radius:.25rem;min-height:60px}
 .meteo-time{font-size:.75rem;color:var(--muted);margin-top:.5rem}
+.meteo-ozet{margin:1.5rem 0 0;font-size:1.0625rem;line-height:1.7;color:var(--ink);
+ max-width:68ch}
+.meteo-ozet.bekliyor{color:var(--muted)}
 
-/* ---- 3. Alan Günlüğü (Notes) ---- */
+/* ---- 2. Alan Günlüğü (Notes) ---- */
+
 .notes-app{margin:2rem 0}
 .note-editor{background:var(--surface);border:1px solid var(--line);
  border-radius:.5rem;padding:1.25rem;margin-bottom:1.5rem;box-shadow:var(--shade)}
@@ -1194,6 +1198,8 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
  text-align:center;color:var(--muted)}
 .alert-status.warning{border-color:#f39c12;background:rgba(243,156,18,.05)}
 .alert-status.critical{border-color:#e74c3c;background:rgba(231,76,60,.08)}
+.alert-status.shutdown{border-color:var(--beacon);background:rgba(192,57,47,.12)}
+.threshold.active .level-tag{color:var(--ink)}
 .alert-status p{font-weight:500;color:var(--ink)}
 .alert-thresholds{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
  gap:1rem;margin:1.5rem 0}
