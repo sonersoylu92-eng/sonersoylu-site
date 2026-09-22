@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sahadan #7: Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu | Soner Soylu</title>
+<meta name="description" content="Vestas V126'da dar bir rüzgâr bandında yükselen nasel titreşimi. 1P harmoniği, pitch açısı asimetrisi ve enkoder kayması: adım adım teşhis.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sahadan #7: Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu">
+<meta property="og:description" content="Titreşim spektrumunu rotor deviriyle okumak: 1P harmoniği dengesizliği, pitch asimetrisi ve çözümü.">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Sahadan #7: Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu",
+ "description": "Vestas V126'da dar rüzgâr bandında yükselen titreşimin saha teşhisi: 1P/3P harmonik okuma, pitch açısı fiziksel doğrulama, enkoder kalibrasyonu.",
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "author": {"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni"},
+ "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb">
+   <a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Kanat Titreşimi</span>
+  </nav>
+
+  <p class="kb-kicker">Sahadan · Vaka 07</p>
+  <h1>Sahadan #7: Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu</h1>
+  <p class="kb-lead">Vestas V126. İşletmeci &quot;kanatlardan biri hasarlı olmalı&quot; diyerek aradı; titreşim belirli bir rüzgârda hissedilir hâle geliyordu. Kanat incelemesi pahalı bir iştir, bu yüzden kanata dokunmadan önce titreşimin kendisine bakmak istedim. İyi ki de bakmışım — kanatlarda hiçbir sorun yoktu.</p>
+
+  <h2>Belirti</h2>
+  <ul>
+   <li><strong>Şikâyet:</strong> Nasel'de hissedilir titreşim, kule tabanından da duyulabiliyor</li>
+   <li><strong>Koşul:</strong> Sadece 7–9 m/s rüzgâr bandında. Altında ve üstünde titreşim normal.</li>
+   <li><strong>SCADA:</strong> Titreşim değeri o bantta yükseliyor ama alarm eşiğine ulaşmıyor</li>
+   <li><strong>Üretim:</strong> Güç eğrisi o bantta beklenenin bir miktar altında</li>
+   <li><strong>Görsel:</strong> Yerden dürbünle bakıldığında kanatlarda görünür hasar, çatlak veya yüzey bozukluğu yok</li>
+  </ul>
+
+  <h2>İlk Değerlendirme</h2>
+  <p>Titreşimin dar bir rüzgâr bandına sıkışmış olması en önemli ipucuydu. Kanatta yapısal bir hasar olsaydı, etkisinin sadece o bantta ortaya çıkması beklenmezdi; hasarlı bir kanat rüzgâr arttıkça daha çok sorun çıkarır.</p>
+  <p>Dar bantta ortaya çıkan titreşim ise rezonansın imzasıdır: rotor belirli bir devirde dönerken oluşan zorlama frekansı, yapının kendi doğal frekansına yaklaşır ve titreşim büyür. Ama rezonans tek başına bir sebep değildir — onu besleyen bir zorlama olmalıdır. Aradığım şey, rotoru her turda bir kez dürten bir dengesizlikti.</p>
+  <div class="kb-callout">
+   <p><strong>1P ve 3P nedir?</strong> Rotor devrinin kendisine 1P denir: rotor saniyede kaç tur atıyorsa, o frekans. Üç kanatlı bir rotorda kanatların kuleden geçişi ise devrin üç katı frekansta olur, buna 3P denir. Bu ayrım teşhisin merkezindedir: <strong>3P</strong> yükselmesi kule etkileşimi ve aerodinamik kaynaklıdır, <strong>1P</strong> yükselmesi ise rotorun dengesiz olduğunu söyler — üç kanattan biri diğerlerinden farklı davranıyordur.</p>
+  </div>
+
+  <h2>Adım Adım Teşhis</h2>
+  <ol class="kb-steps">
+   <li><strong>Titreşim verisini rotor deviriyle birlikte kaydettim.</strong> Titreşimin sadece genliğine bakmak yetersizdir. Aynı anda rotor devrini de kaydettim ki frekansı 1P ve 3P cinsinden okuyabileyim.</li>
+   <li><strong>Spektrumu çıkardım ve baskın bileşeni buldum.</strong> Titreşimin ezici çoğunluğu <strong>1P</strong> frekansındaydı; 3P bileşeni normal seviyedeydi. Bu tek ölçüm, vakanın yönünü tamamen değiştirdi: sorun aerodinamik veya kule etkileşimi değil, <strong>rotor dengesizliğiydi</strong>.</li>
+   <li><strong>Dengesizliğin kütle mi yoksa aerodinamik mi olduğunu ayırdım.</strong> Kütle dengesizliği (kanadın içinde su birikmesi, onarım malzemesi) rotor dönerken her devirde sabit etki yapar ve rüzgâr hızından görece bağımsızdır. Aerodinamik dengesizlik ise rüzgâra bağlıdır — çünkü kuvvet rüzgârdan gelir. Titreşim rüzgâra sıkı biçimde bağlı olduğu için aerodinamik dengesizliğe yöneldim.</li>
+   <li><strong>SCADA'da üç kanadın pitch açısını karşılaştırdım.</strong> Kontrol sistemi üç kanadı da aynı açıda gösteriyordu. Kâğıt üzerinde sorun yoktu. Ama bu değer enkoderden geliyordu — yani sistemin kanadın nerede olduğuna dair <em>inancıydı</em>, kanadın gerçekte nerede olduğu değil.</li>
+   <li><strong>Pitch açısını fiziksel olarak ölçtüm.</strong> Türbin durdurulup emniyete alındıktan sonra, göbeğe çıkıp üç kanadın açısını referans yüzeye göre tek tek ölçtüm. Sonuç: bir kanat, diğer ikisinden <strong>yaklaşık 2.5° farklı</strong> duruyordu. Enkoder ise üçünü de aynı gösteriyordu.</li>
+   <li><strong>Kanat–kule açıklığını kontrol ettim.</strong> Titreşimin kanadı kuleye tehlikeli biçimde yaklaştırıp yaklaştırmadığını görmek için. Açıklık kabul edilebilir sınırlardaydı — acil bir risk yoktu, planlı müdahale yapılabilirdi.</li>
+   <li><strong>Kanat köklerini ve pitch yataklarını inceledim.</strong> Yapısal bir sorun olmadığını doğrulamak için. Çatlak, delaminasyon veya yatak boşluğu bulunmadı. Kanatlar sağlamdı.</li>
+  </ol>
+
+  <h2>Kök Neden</h2>
+  <p>Bir kanadın pitch enkoderinde kalibrasyon kayması vardı. Kontrol sistemi o kanadı diğerleriyle aynı açıda sandığı için hepsine aynı komutu veriyordu; gerçekte ise o kanat yaklaşık 2.5° farklı bir açıda çalışıyordu.</p>
+  <p>Bunun sonucu, o kanadın rüzgârdan diğerlerinden farklı bir kuvvet üretmesidir. Rotor her turda bir kez asimetrik zorlanır — tam olarak 1P frekansında bir tahrik. 7–9 m/s bandında rotor devri, bu tahrikin yapının doğal frekansına yaklaştığı noktaya denk geliyordu ve titreşim orada büyüyordu. Bandın dışında aynı asimetri vardı ama rezonans olmadığı için hissedilmiyordu.</p>
+  <p>Güç eğrisindeki düşüş de aynı nedenden: bir kanat optimum açının dışında çalışınca rotorun toplam verimi düşer.</p>
+
+  <h2>Çözüm</h2>
+  <ol>
+   <li><strong>Pitch enkoder kalibrasyonu (4 saat):</strong> Üç kanat fiziksel referans konumuna alındı, enkoder sıfır noktaları yeniden tanımlandı ve kontrol sisteminin okuduğu değerlerle fiziksel ölçüm eşitlendi.</li>
+   <li><strong>Doğrulama ölçümü (1 saat):</strong> Kalibrasyon sonrası üç kanat birkaç farklı açıya sürülüp her konumda fiziksel ölçümle karşılaştırıldı. Sapma tolerans içine girdi.</li>
+   <li><strong>Devreye alma ve titreşim takibi (2 hafta):</strong> Türbin çalıştırıldı, özellikle 7–9 m/s bandında titreşim yeniden ölçüldü. 1P bileşeni belirgin biçimde düştü; hissedilir titreşim ortadan kalktı.</li>
+   <li><strong>Güç eğrisi kontrolü (4 hafta):</strong> O banttaki üretim beklenen seviyeye döndü.</li>
+  </ol>
+
+  <h2>Titreşim Spektrumunu Okuma Rehberi</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Baskın bileşen</th><th>Ne anlatır</th><th>İlk bakılacak yer</th></tr>
+   <tr><td><strong>1P</strong> (rotor devri)</td><td>Rotor dengesizliği — bir kanat diğerlerinden farklı davranıyor</td><td>Pitch açısı asimetrisi, kanat kütle dengesi</td></tr>
+   <tr><td><strong>3P</strong> (devir × kanat sayısı)</td><td>Kanatların kuleden geçiş etkisi</td><td>Kule gölgesi, rüzgâr profili, yaw hizası</td></tr>
+   <tr><td>Yüksek frekans, dar tepe</td><td>Dönen bir elemanda lokal hasar</td><td>Yatak, dişli kutusu, jeneratör</td></tr>
+   <tr><td>Geniş bantta genel artış</td><td>Yapısal gevşeme</td><td>Cıvata torkları, kule flanşı, mesnetler</td></tr>
+   <tr><td>Belirli rüzgâr bandında büyüme</td><td>Rezonans — ama bir tahrik kaynağı var</td><td>Önce tahriki bul; rezonans sadece büyütür</td></tr>
+  </table></div>
+
+  <h2>Önleyici Bakım</h2>
+  <ul>
+   <li><strong>Pitch açısını periyodik olarak fiziksel ölçün.</strong> Enkoder değerine güvenmek yeterli değildir; kalibrasyon zamanla kayar. Fiziksel ölçümle karşılaştırma, bu tür sorunları ortaya çıkmadan yakalar.</li>
+   <li><strong>Titreşimi her zaman rotor deviriyle birlikte kaydedin.</strong> Devir bilgisi olmayan bir titreşim ölçümü, 1P mi 3P mi olduğunu söyleyemez — yani en değerli bilgisini kaybetmiş olur.</li>
+   <li><strong>Şikâyette rüzgâr bandını sorun.</strong> &quot;Titreşim var&quot; ile &quot;7–9 m/s arasında titreşim var&quot; arasında teşhis açısından uçurum vardır. Bandın darlığı doğrudan rezonansa işaret eder.</li>
+   <li><strong>Kanat incelemesine karar vermeden önce spektruma bakın.</strong> Kanat incelemesi pahalı ve zaman alıcıdır. 1P baskınsa sorun büyük olasılıkla kanatta değil, kanadın <em>açısındadır</em>.</li>
+   <li><strong>Güç eğrisi sapmasını titreşimle birlikte değerlendirin.</strong> İkisi aynı bantta bozuluyorsa ortak bir sebep arayın; bu vakada ortak sebep tek bir kalibrasyon hatasıydı.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Saha Notu</p>
+   <p>Bu vakayı severim çünkü sahada en pahalı hatayı göstermeye çok yakındık. &quot;Titreşim var, kanat hasarlıdır&quot; sezgisi güçlüdür ve doğrudan kanat incelemesine, hatta kanat sökümüne gidebilir. Oysa çözüm dört saatlik bir kalibrasyondu.</p>
+   <p>Buradan çıkan kural bende şu şekilde yerleşti: <strong>enkoder ne gösteriyorsa onu değil, kanadın gerçekte nerede olduğunu ölç.</strong> Kontrol sistemi asla yalan söylemez, sadece kendisine söylenene inanır. Kalibrasyon kaydığında sistem sorunsuz görünür, çünkü kendi ölçüsüne göre her şey yolundadır. Fiziksel ölçüm bu kör noktayı kapatan tek şeydir.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr Türbini Saha Servis Teknisyeni — Enercon, Nordex, Vestas · GWO sertifikalı</span></p>
+  </aside>
+
+  <div class="kb-callout">
+   <p><strong>Uyarı:</strong> Göbekte yapılan her işlem rotor kilitli, türbin durdurulmuş ve LOTO uygulanmış durumda yapılır. Pitch sistemi üzerinde çalışırken yedek besleme de devre dışı bırakılmalıdır. Bu not saha deneyimidir, üretici servis dokümanının yerine geçmez.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">İlgili kaynaklar</p>
+   <ul>
+    <li><a href="/sistemler/pitch/">Pitch Sistemi — motor, redüktör, sensör ve kontrol</a></li>
+    <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Sahadan #1: Pitch Motor Yüksek Akım</a></li>
+    <li><a href="/turbinler/vestas/v126/">Vestas V126 — model rehberi</a></li>
+    <li><a href="/turbinler/vestas/v136/">Vestas V136 — uzun kanatta titreşim yönetimi</a></li>
+    <li><a href="/saha-notlari/">Tüm saha notları</a></li>
+    <li><a href="/ariza/">Arıza teşhis ağacı</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+</body>
+</html>

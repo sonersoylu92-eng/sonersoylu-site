@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi? | Soner Soylu</title>
-<meta name="description" content="Jeneratör sıcaklık alarmı geliyor ama türbin sorunsuza çalışıyor. Sensor hatalı mı? Soğutma sistem arızası mı?">
+<title>Sahadan #4: Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi? | Soner Soylu</title>
+<meta name="description" content="Vestas V126'da 116 °C jeneratör alarmı. IR termometre ile SCADA arasında 41 °C fark: sensör kalibrasyon kayması.">
 <link rel="canonical" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jeneratör Sıcaklık Alarmı — Kontrol ve Ayarlama">
+<meta property="og:title" content="Sahadan #4: Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?">
 <meta property="og:url" content="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Jeneratör sıcaklık alarmı vakası — Yanlış Sensor mi, Gerçek Problem mi?",
+  "headline": "Sahadan #4: Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?",
   "description": "Türbin full power üretiyor ama jeneratör sıcaklık alarm veriyor. Sensor kalibrasyonu ve soğutma sistem teşhisi.",
   "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
   "datePublished": "2026-09-22T00:00:00Z",
@@ -34,7 +34,7 @@
  <article>
   <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Jeneratör sıcaklık alarmı vakası — Sistem Çalışıyor, Uyarı Hatalı Mı?</span></nav>
   <p class="kb-kicker">Sahadan</p>
-  <h1>Jeneratör sıcaklık alarmı vakası — Sistem Çalışıyor, Uyarı Hatalı Mı?</h1>
+  <h1>Sahadan #4: Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?</h1>
   <p class="kb-lead"><strong>Arıza Bildirimi:</strong> "Vestas V126 dün akşam 'Jeneratör temperature high' alarmı verdi, fakat türbin normale dönüp kapandı. Motor ses tamam, verimi normal gözüküyor. Bu alarm gereksiz mi?"</p>
 
   <section id="senaryo">
@@ -42,9 +42,9 @@
    <p><strong>Tarih çizelgesi:</strong></p>
    <ul>
     <li><strong>Gün 1, 18:00:</strong> Jeneratör temperature alarm (Treshold: 115°C, reading: 116°C). Türbin pitch-down, power sıfır, 5 dakika sonra reset manual reset.</li>
-    <li><strong>Gün 1, 19:00:</strong> Tekrar normal operation, alarm yok. Rüzgar: 12-14 m/s, jeneratör nominal çalışması.</li>
-    <li><strong>Gün 2, 09:00:</strong> Aynı rüzgarla tekrar alarm (116°C). Alarm sonra saatde 2-3 kere tekrarlanıyor.</li>
-    <li><strong>Bugün:</strong> Teknikyen gönderildi. Soğuk sabah, rüzgar 15 m/s, jeneratör sıcaklığı SCADA'da: 103°C (normal)</li>
+    <li><strong>Gün 1, 19:00:</strong> Tekrar normal operation, alarm yok. Rüzgâr: 12-14 m/s, jeneratör nominal çalışması.</li>
+    <li><strong>Gün 2, 09:00:</strong> Aynı rüzgârla tekrar alarm (116°C). Alarm sonra saatde 2-3 kere tekrarlanıyor.</li>
+    <li><strong>Bugün:</strong> Teknikyen gönderildi. Soğuk sabah, rüzgâr 15 m/s, jeneratör sıcaklığı SCADA'da: 103°C (normal)</li>
    </ul>
    <p><strong>Araştırma başladığında teşhis bulguları:</strong></p>
    <ul>
@@ -125,12 +125,12 @@
     <li>Kaç gün önce bu alarm başladı? (Kesin tarih)</li>
     <li>Alarm sıklığı: Sabah mı, akşam mı, tüm gün mı?</li>
     <li>Alarm sıcaklığı: Her seferinde aynı mı (116°C) yoksa değişen mi?</li>
-    <li>Rüzgar koşulları: Alarm zamanı rüzgar hızı neydi?</li>
+    <li>Rüzgâr koşulları: Alarm zamanı rüzgâr hızı neydi?</li>
    </ul>
    <p><strong>Log Analizi:</strong></p>
    <ul>
     <li>Alarm zamanı: 16:00-18:00 (öğleden sonra, dış sıcaklık max)</li>
-    <li>Rüzgar: 13-15 m/s (nominal power bölgesinde)</li>
+    <li>Rüzgâr: 13-15 m/s (nominal power bölgesinde)</li>
     <li>Sıcaklık: Hep 115-116°C, kesinlikle threshold değer</li>
     <li>Trend: Son 3 gün ısı drift yüksek (110°C → 112°C → 116°C)</li>
    </ul>

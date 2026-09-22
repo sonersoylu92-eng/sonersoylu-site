@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sahadan #6: Yaw Yatağı Aşınması — Gres Tahliyesindeki Metal | Soner Soylu</title>
+<meta name="description" content="Enercon E92'de rutin greslemede fark edilen yaw yatağı aşınması. Tıkalı otomatik yağlama hattı, tek sektörde başlayan hasar ve sektör haritası yöntemi.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sahadan #6: Yaw Yatağı Aşınması — Gres Tahliyesindeki Metal">
+<meta property="og:description" content="Rutin bakımda yakalanan yatak aşınması: gres incelemesi, sektör haritalama, ring dişli boşluğu ve yağlama hattı doğrulaması.">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Sahadan #6: Yaw Yatağı Aşınması — Gres Tahliyesindeki Metal",
+ "description": "Enercon E92'de rutin greslemede yakalanan yaw yatağı aşınmasının saha teşhisi: gres incelemesi, sektör haritalama, otomatik yağlama hattı kontrolü.",
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "author": {"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni"},
+ "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb">
+   <a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Yaw Yatağı Aşınması</span>
+  </nav>
+
+  <p class="kb-kicker">Sahadan · Vaka 06</p>
+  <h1>Sahadan #6: Yaw Yatağı Aşınması — Gres Tahliyesindeki Metal</h1>
+  <p class="kb-lead">Bu vakanın diğerlerinden farkı şu: ortada bir alarm yoktu. Türbin çalışıyordu, SCADA temizdi, kimse bir şikâyette bulunmamıştı. Arızayı rutin bir gresleme işi sırasında, tahliye olan eski gresin rengine bakarken yakaladık. Enercon E92, planlı yıllık bakım.</p>
+
+  <h2>Belirti</h2>
+  <ul>
+   <li><strong>Alarm:</strong> Yok. Türbin normal üretimde.</li>
+   <li><strong>İlk işaret:</strong> Gresleme sırasında tahliye olan eski gresin bir kısmı koyu gri ve metalik parıltılı. Diğer noktalardan çıkan gres ise normal renkte.</li>
+   <li><strong>Yaw motor akımı:</strong> SCADA'da ortalama değer normal sınırlarda, ancak tepe değerlerde son aylarda hafif artış var.</li>
+   <li><strong>Ses:</strong> Yaw hareketi sırasında belirli bir konumdan geçerken duyulabilir bir sürtünme sesi.</li>
+  </ul>
+
+  <h2>İlk Değerlendirme</h2>
+  <p>Grестe metal görmek tek başına panik sebebi değildir; yeni bir yatakta rodaj döneminde de bir miktar metal çıkar. Burada dikkat çeken şey metalin varlığı değil, <strong>dağılımıydı</strong>. Halka yatağın bütün gresleme noktalarından metal çıksaydı bu yaygın bir yaşlanma olurdu. Sadece bazı noktalardan çıkması, hasarın yatağın tamamında değil belirli bir bölgesinde olduğunu söylüyordu.</p>
+  <p>Bir halka yatakta hasarın tek bölgede toplanmasının iki klasik nedeni vardır: ya o bölge orantısız yük görüyordur, ya da o bölge yeterince yağlanmıyordur. İkincisi çok daha sık karşılaşılandır ve nedeni neredeyse her zaman aynıdır — beslemeyi yapan yağlama hattının tıkanması.</p>
+
+  <h2>Adım Adım Teşhis</h2>
+  <ol class="kb-steps">
+   <li><strong>Tahliye gresini nokta nokta ayrı ayrı topladım.</strong> Hepsini tek kaba almak vakayı öldürürdü. Her gresleme noktasından çıkan gresi ayrı ayrı, numarasıyla birlikte kaydettim. Bu, sonraki her adımın dayanağı oldu.</li>
+   <li><strong>Her numuneyi beyaz bir yüzeye yayıp inceledim.</strong> Basit ama etkili: ince bir tabaka hâlinde yayılan gresin içindeki metal parçacıkları çıplak gözle görünür hale gelir. Mıknatısla da kontrol ettim — parçacıkların manyetik olması yatak çeliği kaynaklı olduğunu destekliyordu.</li>
+   <li><strong>Sektör haritası çıkardım.</strong> Hangi noktadan ne kadar metal çıktığını yatağın çevresi üzerinde işaretledim. Desen nettir: metal, birbirine komşu üç gresleme noktasında yoğunlaşmış, kalan noktalarda yok denecek kadar azdı. Yani hasar yatağın yaklaşık dörtte birlik bir yayında toplanmıştı.</li>
+   <li><strong>Otomatik yağlama sistemini kontrol ettim.</strong> Pompa çalışıyordu, hazne doluydu — ilk bakışta sorun yok. Ama dağıtıcıdan çıkan hatları tek tek takip edince, metal çıkan bölgeyi besleyen hattın bağlantı noktasında sertleşmiş gres tıkacı buldum.</li>
+   <li><strong>Hattı sökerek doğruladım.</strong> Pompa çalışırken diğer hatlardan gres geliyordu, tıkalı hattan gelmiyordu. Teşhis bu adımda kesinleşti: o sektör bir süredir besleniyor değildi.</li>
+   <li><strong>Ring dişli boşluğunu ölçtüm.</strong> Aşınmanın yatağa mı yoksa dişliye mi yayıldığını anlamak için. Dişli boşluğu üretici toleransı içindeydi — iyi haberdi, hasar henüz dişliye geçmemişti.</li>
+   <li><strong>Yaw hareketini gözleyerek sesin konumunu tespit ettim.</strong> Sürtünme sesi, tam olarak metal çıkan sektörden geçerken duyuluyordu. Üç bağımsız kanıt — gres, yağlama hattı, ses — aynı bölgeyi gösteriyordu.</li>
+  </ol>
+
+  <h2>Kök Neden</h2>
+  <p>Otomatik yağlama hattındaki bir tıkanma, halka yatağın bir sektörünü gres beslemesinden mahrum bırakmıştı. O bölge kuru çalışmaya başlamış, yuvarlanma yüzeyinde aşınma ve hafif çizilme oluşmuştu. Çıkan metal parçacıkları da aşınmayı hızlandıran ikinci bir etken hâline gelmişti — aşınma kendi kendini besleyen bir döngüye girmişti.</p>
+  <p>Hasarın ne kadar sürede oluştuğunu kesin söylemek mümkün değil, ama gresin sertleşme derecesi ve aşınmanın seviyesi bunun aylar mertebesinde bir süreç olduğunu gösteriyordu. Alarm üretmemesinin sebebi basit: yaw motoru artan sürtünmeyi bir süre daha fazla akım çekerek karşılayabiliyor ve bu artış alarm eşiğine ulaşmıyor.</p>
+
+  <h2>Çözüm</h2>
+  <ol>
+   <li><strong>Yağlama hattının açılması (2 saat):</strong> Tıkalı hat söküldü, temizlendi, bağlantı elemanı değiştirildi. Pompa çalıştırılarak her hattan gres geldiği tek tek doğrulandı.</li>
+   <li><strong>Yatağın yoğun greslenmesi (3 saat):</strong> Aç kalan sektör, eski gres ve metal parçacıkları dışarı çıkana kadar kademeli olarak greslendi. Tahliye gresi temiz renge dönene kadar devam edildi.</li>
+   <li><strong>Kısa aralıklı takip (3 ay):</strong> Normalde yıllık olan gres kontrolü, bu türbin için üç aylık yapıldı. Amaç, metal çıkışının azalıp azalmadığını görmekti.</li>
+   <li><strong>İzleme sonucu:</strong> İkinci kontrolde metal miktarı belirgin azalmıştı, üçüncüde normal seviyedeydi. Aşınma durmuştu. Yatak değişimi gerekmedi.</li>
+  </ol>
+
+  <h2>Gres Tahliyesinde Ne Aranır?</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Görünüm</th><th>Olası anlam</th><th>Ne yapmalı</th></tr>
+   <tr><td>Açık renk, homojen kıvam</td><td>Normal</td><td>Standart aralıkta devam</td></tr>
+   <tr><td>Koyulaşmış ama metalsiz</td><td>Yaşlanma, kirlenme</td><td>Gres aralığını gözden geçir</td></tr>
+   <tr><td>İnce metalik parıltı, yaygın</td><td>Genel yaşlanma veya rodaj</td><td>Kaydet, bir sonraki bakımda karşılaştır</td></tr>
+   <tr><td><strong>Metalik parıltı, tek bölgede</strong></td><td><strong>Yerel yağlama eksikliği</strong></td><td><strong>Yağlama hatlarını kontrol et</strong></td></tr>
+   <tr><td>İri metal parçacık / talaş</td><td>İlerlemiş hasar</td><td>Durdur, ayrıntılı inceleme ve OEM'e danış</td></tr>
+   <tr><td>Su karışmış, süt görünümlü</td><td>Sızdırmazlık kaybı</td><td>Keçe ve kapak contalarını kontrol et</td></tr>
+  </table></div>
+
+  <h2>Önleyici Bakım</h2>
+  <ul>
+   <li><strong>Tahliye gresini ayrı ayrı toplayın.</strong> Bu vakanın tamamı bu tek alışkanlığa dayanıyor. Hepsini tek kaba alırsanız desen kaybolur ve elinizde sadece &quot;biraz metal var&quot; kalır.</li>
+   <li><strong>Sektör haritası tutun.</strong> Hangi noktadan ne çıktığını yatağın çevresi üzerinde işaretleyin ve kaydı saklayın. Bir sonraki bakımda karşılaştırma yapabilmek, tek seferlik gözlemden kat kat değerlidir.</li>
+   <li><strong>Otomatik yağlamayı &quot;pompa çalışıyor&quot; diye geçmeyin.</strong> Pompanın çalışması, gresin her noktaya ulaştığı anlamına gelmez. Hatların çıkışını tek tek doğrulayın.</li>
+   <li><strong>Yaw motor akımının tepe değerlerini izleyin.</strong> Ortalama akım normal görünürken tepe değerlerdeki tırmanış, sürtünme artışının erken işaretidir.</li>
+   <li><strong>Sesin konumunu not edin.</strong> &quot;Yaw dönerken ses var&quot; yetersiz bir kayıttır. Hangi yaw açısından geçerken duyulduğunu yazın — teşhisi doğrudan o bölgeye götürür.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Saha Notu</p>
+   <p>Bu vaka bana periyodik bakımın neden &quot;yapılmış görünmesi&quot; ile &quot;yapılmış olması&quot; arasında fark olduğunu hatırlatır. Gresleme yapılmıştı, kayıtlarda işaretliydi, pompa da çalışıyordu. Eksik olan tek şey, tahliye gresine bakmaktı. Beş dakikalık bir iş, bir halka yatağı kurtardı.</p>
+   <p>Bir de şunu öğrendim: alarm beklemek pahalı bir alışkanlık. Yaw motoru artan sürtünmeyi uzun süre sessizce karşılıyor ve alarm geldiğinde hasar çoktan ilerlemiş oluyor. Bu sistemde erken uyarı SCADA'dan değil, elinizdeki eski gresten geliyor.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr Türbini Saha Servis Teknisyeni — Enercon, Nordex, Vestas · GWO sertifikalı</span></p>
+  </aside>
+
+  <div class="kb-callout">
+   <p><strong>Uyarı:</strong> Yaw sisteminde yapılan her işlem öncesi türbin durdurulmalı, yaw tahriki devre dışı bırakılmalı ve LOTO uygulanmalıdır. Bu not saha deneyimidir, üretici servis dokümanının yerine geçmez.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">İlgili kaynaklar</p>
+   <ul>
+    <li><a href="/sistemler/yaw/">Yaw Sistemi — halka yatak, ring dişli, vane sensörü</a></li>
+    <li><a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Salınımı — aynı sistemin farklı arızası</a></li>
+    <li><a href="/turbinler/enercon/e92/">Enercon E92 — model rehberi</a></li>
+    <li><a href="/saha-notlari/">Tüm saha notları</a></li>
+    <li><a href="/ariza/">Arıza teşhis ağacı</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+</body>
+</html>

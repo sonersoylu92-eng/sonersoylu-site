@@ -2,19 +2,19 @@
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Yaw Sistemi — Nasel Yönlendirme, Halka Yatak ve Arızalar | Soner Soylu</title>
-<meta name="description" content="Rüzgar türbininde yaw sistemi: Motor, bearing, sensor, kontrol. Yaw hunting, asimetri, sensor arızası teşhisi.">
+<meta name="description" content="Rüzgâr türbininde yaw sistemi: Motor, yatak, sensör, kontrol. Yaw hunting, asimetri, sensor arızası teşhisi.">
 <link rel="canonical" href="https://sonersoylu.com/sistemler/yaw/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yaw Sistemi — Rotor Rüzgar Yöneliş">
+<meta property="og:title" content="Yaw Sistemi — Rotor Rüzgâr Yöneliş">
 <meta property="og:url" content="https://sonersoylu.com/sistemler/yaw/">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Yaw Sistemi — Rotor Rüzgar Yöneliş Mekanizması",
-  "description": "Rüzgar türbini yaw sistemi detaylı rehberi. Motor, bearing, vane sensor, kontrol elektronikleri, ortak arızalar.",
+  "headline": "Yaw Sistemi — Rotor Rüzgâr Yöneliş Mekanizması",
+  "description": "Rüzgâr türbini yaw sistemi detaylı rehberi. Motor, halka yatak, vane sensörü, kontrol elektroniği, ortak arızalar.",
   "datePublished": "2024-01-01T00:00:00Z",
   "dateModified": "2024-10-22T00:00:00Z",
   "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
@@ -36,10 +36,10 @@
   <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Yaw Sistemi</span></nav>
   <p class="kb-kicker">Teknik Referans</p>
   <h1>Yaw Sistemi</h1>
-  <p class="kb-lead">Rüzgar yönü değiştikçe rotor (kanat grubu + nacelle) otomatik olarak rüzgara yöneliş yapan sistem. Türbinin maksimum çıkış gücü sağlayan mekanizmalarından biridir.</p>
+  <p class="kb-lead">Rüzgâr yönü değiştikçe rotor (kanat grubu + nacelle) otomatik olarak rüzgâra yöneliş yapan sistem. Türbinin maksimum çıkış gücü sağlayan mekanizmalarından biridir.</p>
 
   <h2>Yaw Nedir?</h2>
-  <p>Yaw: Rotor ve nacelle'ın yatay ekseni etrafında (Z-axis) dönmesi. Rüzgar yönü değişebilir, türbin yöneliş sabit kalamazsa güç kaybı ciddi hale gelir.</p>
+  <p>Yaw: Rotor ve nacelle'ın yatay ekseni etrafında (Z-axis) dönmesi. Rüzgâr yönü değişebilir, türbin yöneliş sabit kalamazsa güç kaybı ciddi hale gelir.</p>
 
   <h2>Temel Bileşenler</h2>
 
@@ -52,9 +52,9 @@
    <li><strong>Torque:</strong> Kinetic energy'i güç dönüştürmek için yeterince güçlü (Ring gear döndürme)</li>
   </ul>
 
-  <h3>2. Yaw Bearing (Ana Yatak)</h3>
+  <h3>2. Yaw Yatağı (Halka Yatak)</h3>
   <ul>
-   <li><strong>Tipi:</strong> Büyük çaplı (3000-5000 mm) slewing bearing (halka yatak)</li>
+   <li><strong>Tipi:</strong> Büyük çaplı (3000-5000 mm) halka yatak (slewing bearing)</li>
    <li><strong>Konstrüksiyon:</strong> Sabit outer ring (kule üzerine) + döner inner ring (nacelle tabanına)</li>
    <li><strong>Taşıma Kapasitesi:</strong> 400+ ton (N90) - 800+ ton (N117) radyal yük</li>
    <li><strong>Yağlama:</strong> Grease, periyodik yağlama gerekli (12 aylık aralık)</li>
@@ -73,23 +73,23 @@
   <ul>
    <li><strong>Tipi:</strong> Potansiyometrik (pot) veya magnetik (Hall)</li>
    <li><strong>Konumu:</strong> Nacelle tepesinde, rotor arkası</li>
-   <li><strong>Fonksiyon:</strong> Rüzgar yönünü 0-360° ölçer, 0-10V (analog) veya CAN sinyal</li>
+   <li><strong>Fonksiyon:</strong> Rüzgâr yönünü 0-360° ölçer, 0-10V (analog) veya CAN sinyal</li>
    <li><strong>Doğruluk:</strong> ±2-3° (magnetik tipler daha kötü, pot'lar daha iyi)</li>
-   <li><strong>Kalibrasyonu:</strong> 0° = kuzeye doğru (TÜRKİYE'de, batı rüzgarlar geliyor ise -90° offset)</li>
+   <li><strong>Kalibrasyonu:</strong> 0° = kuzeye doğru (TÜRKİYE'de, batı rüzgârlar geliyor ise -90° offset)</li>
   </ul>
 
   <h3>5. Yaw Kontrol Elektronikleri</h3>
   <ul>
    <li><strong>PLC/SCADA Algoritma:</strong> Proportional-Integral-Derivative (PID) kontrolcü</li>
    <li><strong>Parametre:</strong> P (Orantı), I (İntegral), D (Türev)</li>
-   <li><strong>Hedef:</strong> Rotor ekseni rüzgar vektörüne paralel (±2° tolerans)</li>
-   <li><strong>Güvenlik:</strong> Rüzgar alarmında (25+ m/s) yaw motorunu disable et, mekanik fren uygula (eski modeller)</li>
+   <li><strong>Hedef:</strong> Rotor ekseni rüzgâr vektörüne paralel (±2° tolerans)</li>
+   <li><strong>Güvenlik:</strong> Rüzgâr alarmında (25+ m/s) yaw motorunu disable et, mekanik fren uygula (eski modeller)</li>
   </ul>
 
   <h2>Yaw Kontrol Algoritması</h2>
   <p><strong>Basit PID Loop:</strong></p>
   <ol>
-   <li>Rüzgar vane sensörü rüzgar yönünü ölç → 0-10V analog</li>
+   <li>Rüzgâr vane sensörü rüzgâr yönünü ölç → 0-10V analog</li>
    <li>Mevcut nacelle yönü SCADA IMU veya optik konum sensöründen oku</li>
    <li>Hata hesapla: Hedef açı - Mevcut açı</li>
    <li>Eğer hata > Deadzone (±3°), yaw motor start</li>
@@ -101,13 +101,13 @@
   <h2>Yaw Sistemi İşletim Modları</h2>
 
   <h3>1. Normal Yöneliş (Normal Yaw)</h3>
-  <p><strong>Koşul:</strong> Rüzgar 3-25 m/s, türbin açık ve güç üretiyor</p>
-  <p><strong>Hedef:</strong> Rotor ekseni rüzgar yönüne paralel (± 2-3°)</p>
+  <p><strong>Koşul:</strong> Rüzgâr 3-25 m/s, türbin açık ve güç üretiyor</p>
+  <p><strong>Hedef:</strong> Rotor ekseni rüzgâr yönüne paralel (± 2-3°)</p>
   <p><strong>Motor Dönemesi:</strong> Sadece error > deadzone ise (örnek her 30 saniye)</p>
 
   <h3>2. Yaw Stop Modu (Park Position)</h3>
   <p><strong>Koşul:</strong> Türbin durmuş (pitch safe veya shutdown)</p>
-  <p><strong>Hedef:</strong> Rotoru "stow" konumuna yönelit (rüzgarın karşısına, 0°)</p>
+  <p><strong>Hedef:</strong> Rotoru "stow" konumuna yönelit (rüzgârın karşısına, 0°)</p>
   <p><strong>Güvenlik:</strong> Motor güç kaybı halinde fren uygulanır (genellikle friction brake nacelle'da), yaw motor OFF</p>
 
   <h3>3. Yaw Hold Modu (Manual/Emergency)</h3>
@@ -116,16 +116,16 @@
 
   <h2>Ortak Yaw Arızaları</h2>
 
-  <h3>1. Yaw Hunting (Tutarsız Yöneliş)</h3>
+  <h3>1. Yaw Salınımı (Tutarsız Yöneliş)</h3>
   <p><strong>Belirti:</strong> Nacelle ±10-20° aralığında sallanıyor, stabil konuma gelemiyor</p>
-  <p><strong>Sebep:</strong> Bearing sürüklenmesi, sensor jitter, PLC parametre hatalı</p>
-  <p><strong>Detaylı Teşhis:</strong> <a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Hunting</a></p>
+  <p><strong>Sebep:</strong> Yatak sürüklenmesi, sensör titremesi, PLC parametre hatalı</p>
+  <p><strong>Detaylı Teşhis:</strong> <a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Salınımı</a></p>
 
   <h3>2. Yaw Motor Arızası</h3>
   <p><strong>Belirti:</strong> Motor alarmı, yaw hiç hareket etmiyor veya çok yavaş</p>
   <p><strong>Test:</strong> Motor bobinlerine direkt 400V uygulanırsa dönmeli</p>
 
-  <h3>3. Yaw Bearing Aşınması</h3>
+  <h3>3. Yaw Yatağı Aşınması</h3>
   <p><strong>Belirti:</strong> Yaw yöneliş sırasında gürültü, takırtı, veya takılma</p>
   <p><strong>Sebep:</strong> Periyodik grease yağlaması yapılmamış, pitting başlamış</p>
   <p><strong>Kontrol:</strong> Nacelle'ı manuel döndürmeyi dene — sıkı veya pürüzlü mu?</p>
@@ -143,8 +143,8 @@
   <div class="kb-table-scroll"><table>
    <tr><th>Bakım Tipi</th><th>Aralık</th><th>Süresi</th><th>Not</th></tr>
    <tr><td>Vane Sensor Kontrol</td><td>Aylık</td><td>5 min</td><td>Voltaj stabilitesi, calibration drift</td></tr>
-   <tr><td>Yaw Motor Akımı Kontrol</td><td>3 Aylık</td><td>2 min</td><td>SCADA'dan okut: Normal 8-10A, yüksek 12A+ = bearing sürüklenmesi</td></tr>
-   <tr><td>Yaw Bearing Greasing</td><td>12 Aylık</td><td>2 saat</td><td>Özel yaw bearing greaser, NLGI 2 grade</td></tr>
+   <tr><td>Yaw Motor Akımı Kontrol</td><td>3 Aylık</td><td>2 min</td><td>SCADA'dan okut: Normal 8-10A, yüksek 12A+ = yatak sürüklenmesi</td></tr>
+   <tr><td>Yaw Yatağı Greslemesi</td><td>12 Aylık</td><td>2 saat</td><td>Özel yaw bearing greaser, NLGI 2 grade</td></tr>
    <tr><td>Ring Gear Görsel Kontrol</td><td>24 Aylık</td><td>30 min</td><td>Pitting, çatlak, oyulma</td></tr>
    <tr><td>Yaw Motor Direnç Ölçümü</td><td>24 Aylık</td><td>10 min</td><td>Bobinler başına ~10-15Ω normal</td></tr>
    <tr><td>PLC Parametre Revizyonu</td><td>24 Aylık</td><td>1 saat</td><td>P, I, D değerleri güncel mi?</td></tr>
@@ -162,7 +162,7 @@
   <h3>10-15 Dakika (Teşhis)</h3>
   <ul>
    <li>SCADA yaw açı trendi çek (1 saat)</li>
-   <li>Rüzgar yönü vs nacelle yönü farkı hesapla (ideal: <2-3°)</li>
+   <li>Rüzgâr yönü vs nacelle yönü farkı hesapla (ideal: <2-3°)</li>
    <li>Motor akımı ölç (normal: 8-10A, yüksek: 12A+)</li>
    <li>Vane sensor voltajı kontrol (0-10V smoothly mı değişiyor)</li>
   </ul>
@@ -178,7 +178,7 @@
   <h2>İlgili Kaynaklar</h2>
   <ul>
    <li><a href="/sistemler/">← Tüm Sistemler</a></li>
-   <li><a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Hunting — Dönerken Titreşim</a></li>
+   <li><a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Salınımı — Dönerken Titreşim</a></li>
    <li><a href="/sistemler/pitch/">Pitch Sistemi — Kanat Ayar</a></li>
    <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
   </ul>

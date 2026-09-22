@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sahadan #5: Converter Aşırı Akım — Sadece Yüksek Güçte Atan Arıza | Soner Soylu</title>
+<meta name="description" content="Vestas V110'da converter aşırı akım hatası: yalnızca belirli güç seviyesinin üstünde atıyor, serviste hiçbir şey bulunmuyor. Yedi adımlık teşhis ve kök neden.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sahadan #5: Converter Aşırı Akım — Sadece Yüksek Güçte Atan Arıza">
+<meta property="og:description" content="Aralıklı converter hatasının adım adım teşhisi: fault log, güç korelasyonu, termal kamera ve busbar torku.">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/converter-asiri-akim/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Sahadan #5: Converter Aşırı Akım — Sadece Yüksek Güçte Atan Arıza",
+ "description": "Vestas V110'da aralıklı converter aşırı akım arızasının saha teşhisi: fault log okuma, güç korelasyonu, termal görüntüleme, busbar bağlantı torku.",
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "author": {"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni"},
+ "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb">
+   <a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Converter Aşırı Akım</span>
+  </nav>
+
+  <p class="kb-kicker">Sahadan · Vaka 05</p>
+  <h1>Sahadan #5: Converter Aşırı Akım — Sadece Yüksek Güçte Atan Arıza</h1>
+  <p class="kb-lead">Vestas V110. Türbin günlerce sorunsuz çalışıyor, sonra birden converter hatası verip duruyor, reset atınca yine çalışıyor. Servise çıktığımızda hiçbir şey bulamıyoruz. Bu tip &quot;yok olan&quot; arızalar en sinir bozucu olanlardır — ve neredeyse her zaman bir koşula bağlıdırlar. Buradaki koşul güçtü.</p>
+
+  <h2>Belirti</h2>
+  <ul>
+   <li><strong>Hata kodu:</strong> Rotor tarafı aşırı akım / converter arızası, ardından otomatik durdurma</li>
+   <li><strong>Sıklık:</strong> Başlangıçta ayda 1–2 kez, altı hafta içinde haftada 3–4 keze çıktı</li>
+   <li><strong>Reset sonrası:</strong> Türbin normal devreye giriyor, saatlerce sorunsuz üretiyor</li>
+   <li><strong>Serviste:</strong> Duran türbinde yapılan ölçümlerin tamamı normal — yalıtım, faz dengesi, kablo bağlantıları, soğutma sıvısı seviyesi</li>
+   <li><strong>Şebeke tarafı:</strong> Voltaj ve frekans kayıtlarında arıza anlarına denk gelen bir bozulma yok</li>
+  </ul>
+
+  <h2>İlk Değerlendirme</h2>
+  <p>Duran türbinde her şeyin normal çıkması aslında bir bilgidir: arıza, çalışma koşullarının bir yerinde ortaya çıkıyor ve durunca kayboluyor. Bu da ilk listeyi şuna indirir — ısınmayla ortaya çıkan bir temas sorunu, yük altında kendini gösteren bir güç elektroniği bileşeni, veya şebekeden gelip kaydedilemeyen kısa bir bozulma.</p>
+  <p>Şebeke kayıtları temiz olduğu için üçüncü ihtimali geri plana attım. Kalan ikisinin ortak özelliği şuydu: ikisi de <strong>yük arttıkça</strong> belirginleşir. Yani arızayı aramak yerine, önce arızanın hangi koşulda çıktığını bulmam gerekiyordu.</p>
+
+  <h2>Adım Adım Teşhis</h2>
+  <ol class="kb-steps">
+   <li><strong>Fault log'u ham haliyle çıkardım.</strong> Sadece hata kodunu değil, hatanın zaman damgasını. OEM arayüzünde sadece son 20 kayıt görünüyordu; tam listeyi dışa aktardım. Altı haftada 19 olay vardı.</li>
+   <li><strong>Her olayı o andaki üretim verisiyle eşleştirdim.</strong> Bu adım vakayı çözen adımdır. SCADA'dan arıza anlarındaki güç değerlerini çektim: 19 olayın 17'si <strong>2.4 MW'ın üzerinde</strong> gerçekleşmişti. Kalan ikisi de 2.3 MW civarındaydı. Düşük güçte tek bir olay yoktu. Arıza rastgele değildi; bir eşiği vardı.</li>
+   <li><strong>Rüzgâr hızıyla değil, güçle ilişkili olduğunu doğruladım.</strong> Bu ayrım önemli. Rüzgâr yüksek olup türbinin kısıtlı çalıştığı saatlerde arıza yoktu. Yani tetikleyen şey rüzgâr değil, akımdı.</li>
+   <li><strong>Converter kabinini yük altında termal kamerayla taradım.</strong> Türbini durdurup bakmak bu vakada işe yaramıyordu; soğuyunca iz kalmıyordu. Türbin üretirken, güvenli mesafeden, kabin içi ölçüm aldım. DC bara bağlantılarından birinde komşu bağlantılara göre <strong>yaklaşık 30 °C daha yüksek</strong> bir nokta çıktı.</li>
+   <li><strong>IGBT modüllerini ayrıca kontrol ettim.</strong> Aynı taramada modüllerden birinin sıcaklığı da diğerlerinden yüksekti, ama fark daha küçüktü (8–10 °C). Bunu not ettim; tek başına suçlu ilan etmedim.</li>
+   <li><strong>Türbini durdurup o bağlantının torkunu ölçtüm.</strong> Sıcak çıkan baranın cıvatası, OEM değerinin belirgin altındaydı. Gevşek bir güç bağlantısı, temas direncini yükseltir; direnç akımın karesiyle ısı üretir. Düşük güçte önemsiz, yüksek güçte belirleyici hale gelir. Eşiğin nedeni buydu.</li>
+   <li><strong>Bağlantı yüzeyini açıp inceledim.</strong> Temas yüzeyinde oksitlenme ve hafif renk değişimi vardı — uzun süredir ısınıp soğuduğunun izi.</li>
+  </ol>
+
+  <h2>Kök Neden</h2>
+  <p>Gevşemiş bir DC bara bağlantısı. Temas direnci yükselmiş, yüksek akımda bağlantı noktası aşırı ısınıyor, bu ısı komşusundaki IGBT modülünün çalışma sıcaklığını da yukarı çekiyordu. Modül, kendi koruma eşiğine sıcakken daha erken ulaşıyor ve aşırı akım olarak atıyordu.</p>
+  <p>Bu yüzden iki şey aynı anda doğruydu: bağlantı asıl sebepti, ama modül de gerçekten zorlanmış durumdaydı. Sadece cıvatayı sıkıp gitmek, zaten yorulmuş modülü yerinde bırakmak olurdu.</p>
+  <div class="kb-callout">
+   <p><strong>Kanıt zinciri:</strong> arıza yalnızca 2.3 MW üzerinde çıkıyor → yüksek akımda ortaya çıkan bir ısı sorunu → yük altında termal taramada 30 °C'lik sıcak nokta → o noktada tork OEM değerinin altında → temas yüzeyinde oksitlenme. Her adım bir öncekini doğruluyor.</p>
+  </div>
+
+  <h2>Çözüm</h2>
+  <ol>
+   <li><strong>Bağlantı yüzeyinin bakımı (2 saat):</strong> Bara söküldü, temas yüzeyleri oksitten temizlendi, uygun temas malzemesiyle yeniden montaj yapıldı ve OEM torkuyla yıldız deseninde sıkıldı.</li>
+   <li><strong>Kabindeki tüm güç bağlantılarının kontrolü (3 saat):</strong> Bir tanesi gevşemişse diğerleri de şüphelidir. Hepsi tek tek tork kontrolünden geçirildi; iki bağlantı daha sınırda çıktı ve düzeltildi.</li>
+   <li><strong>Zorlanan IGBT modülünün değişimi (planlı, 1 gün):</strong> Aynı gün stok yoktu. Türbin geçici olarak 2.2 MW güç sınırıyla çalıştırıldı — eşiğin altında kaldığı için arıza tekrarlamadı ve türbin üretimde kaldı. Modül gelince değiştirildi.</li>
+   <li><strong>Takip (4 hafta):</strong> Güç sınırı kaldırıldıktan sonra dört hafta boyunca fault log izlendi. Yeni olay olmadı.</li>
+  </ol>
+
+  <h2>Arızanın Güç Eşiğiyle İlişkisi</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Üretim aralığı</th><th>Bu aralıkta geçen süre</th><th>Arıza sayısı (6 hafta)</th><th>Yorum</th></tr>
+   <tr><td>0 – 1.5 MW</td><td>Sürenin büyük bölümü</td><td>0</td><td>Akım düşük, temas direnci önemsiz</td></tr>
+   <tr><td>1.5 – 2.3 MW</td><td>Orta</td><td>0</td><td>Isınma var ama eşiğin altında</td></tr>
+   <tr><td>2.3 – 2.4 MW</td><td>Az</td><td>2</td><td>Eşiğin başlangıcı</td></tr>
+   <tr><td>2.4 MW ve üzeri</td><td>En az</td><td>17</td><td>Arızanın neredeyse tamamı burada</td></tr>
+  </table></div>
+  <p><small>Tablodaki asıl mesaj şu: arıza, türbinin <em>en az</em> zaman geçirdiği aralıkta yoğunlaşmıştı. Bu yüzden &quot;rastgele&quot; görünüyordu. Olayları süreyle değil güçle eşleştirince desen ortaya çıktı.</small></p>
+
+  <h2>Önleyici Bakım</h2>
+  <ul>
+   <li><strong>Güç bağlantılarında periyodik tork kontrolü:</strong> Converter ve trafo bağlantıları, OEM'in verdiği aralıkta tork kontrolünden geçmeli. Bu iş atlanması en kolay, karşılığı en yüksek işlerden biri.</li>
+   <li><strong>Yük altında termal tarama:</strong> Yılda bir kez, türbin üretirken yapılan termal görüntüleme, duran türbinde hiç görünmeyecek sorunları yakalar. Duran makinede yapılan tarama bu arızayı asla bulamazdı.</li>
+   <li><strong>Fault log'u güçle birlikte okuma alışkanlığı:</strong> Hata kodunun tek başına anlattığı sınırlıdır. Her olayı o andaki güç, rüzgâr ve sıcaklık değeriyle yan yana koyun.</li>
+   <li><strong>Aralıklı arızada reset sayısını kaydedin:</strong> Sıklığın artması, sorunun ilerlediğinin en erken işaretidir. Ayda 1'den haftada 3'e çıkması bizim için &quot;artık beklemeyelim&quot; sinyaliydi.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Saha Notu</p>
+   <p>Bu vakadan çıkardığım ders teknik değil, yöntemsel. Aralıklı arızalarda parçayı aramak yerine <strong>koşulu</strong> aramak gerekiyor. &quot;Ne zaman oluyor?&quot; sorusunun cevabı, &quot;ne bozuldu?&quot; sorusunun cevabından önce gelir. Burada koşul güçtü; başka vakalarda sıcaklık, rüzgâr yönü veya günün saati olabilir.</p>
+   <p>İkinci bir not: geçici güç sınırı koymak bu işte çok kullanışlı bir araç. Parça beklerken türbini tamamen durdurmak yerine eşiğin altında çalıştırdık; hem üretim devam etti hem de teşhisimizin doğru olduğu pratikte kanıtlanmış oldu. Arıza tekrarlamayınca eşik hipotezinden emin olduk.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr Türbini Saha Servis Teknisyeni — Enercon, Nordex, Vestas · GWO sertifikalı</span></p>
+  </aside>
+
+  <div class="kb-callout">
+   <p><strong>Uyarı:</strong> Converter kabini yüksek gerilim barındırır ve durdurulduktan sonra bile DC bara kondansatörlerinde tehlikeli enerji kalır. Kabin içinde hiçbir işlem, OEM'in belirttiği boşalma süresi beklenmeden ve gerilim yokluğu ölçümle doğrulanmadan yapılmaz. Bu not saha deneyimidir, servis dokümanının yerine geçmez.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">İlgili kaynaklar</p>
+   <ul>
+    <li><a href="/sistemler/jenerator/">Jeneratör ve Converter Sistemi — DFIG ve güç elektroniği</a></li>
+    <li><a href="/turbinler/vestas/v110/">Vestas V110 — model rehberi</a></li>
+    <li><a href="/saha-notlari/jenerator-sicaklik/">Sahadan #4: Jeneratör Sıcaklık Alarmı</a></li>
+    <li><a href="/araclar/civata-germe/">Cıvata germe ve tork hesaplayıcısı</a></li>
+    <li><a href="/saha-notlari/">Tüm saha notları</a></li>
+    <li><a href="/ariza/">Arıza teşhis ağacı — belirtiden nedene</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+</body>
+</html>
