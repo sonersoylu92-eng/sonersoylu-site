@@ -135,8 +135,6 @@
 
   // ---- veri depolama (son hava verileri) ----
   var sonVeri = { hiz: 0, yon: 0, rho: 1.225, kw: 0 };
-  // uyarı kutusunu yeni veri geldiği anda tazeleyen kanca; initWindAlerts dolduruyor
-  var uyariYenile = function () {};
 
   // ---- rüzgâr verisi: yükle, sonra düzenli tazele -------------------------
   // Eskiden tek sefer çekiliyordu; sekme saatlerce açık kalınca sayfa bayat
@@ -185,7 +183,6 @@
     var dr = document.getElementById('cRotor');
     if (dr && !az && d117 > 0) dr.style.animationDuration = (60 / d117).toFixed(2) + 's';
     kutu.setAttribute('data-hazir', '1');
-    uyariYenile();
     return true;
   }
 
@@ -206,49 +203,4 @@
   ruzgariGetir(true);
   setInterval(function () { ruzgariGetir(true); }, 10 * 60 * 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) ruzgariGetir(false); });
-
-  // Rüzgâr verisi gelmese de kurulur; veri geldiğinde kendi kendine tazelenir.
-  initWindAlerts();
-
-  // ---- Rüzgâr Uyarı Sistemi ----
-  function initWindAlerts() {
-    var uyariKutusu = document.getElementById('currentAlertState');
-    if (!uyariKutusu) return;
-    var esikKutulari = document.querySelectorAll('.threshold');
-    var ESIK = { warning: 15, critical: 20, shutdown: 25 };
-
-    var p = uyariKutusu.querySelector('p') || uyariKutusu.appendChild(document.createElement('p'));
-
-    function guncelle(hiz) {
-      if (typeof hiz !== 'number' || !isFinite(hiz)) return;
-      var durum = 'normal';
-      var metin = 'Normal — ' + hiz.toFixed(1) + ' m/s';
-
-      if (hiz >= ESIK.shutdown) {
-        durum = 'shutdown';
-        metin = 'Kesinti eşiği — ' + hiz.toFixed(1) + ' m/s · bu rüzgârda türbinin durmuş olması beklenir';
-      } else if (hiz >= ESIK.critical) {
-        durum = 'critical';
-        metin = 'Kritik — ' + hiz.toFixed(1) + ' m/s · kesintiye yakın, üretimde hızlı düşüş beklenir';
-      } else if (hiz >= ESIK.warning) {
-        durum = 'warning';
-        metin = 'Uyarı — ' + hiz.toFixed(1) + ' m/s · yüksek rüzgâr, kuleye çıkış planlanmaz';
-      }
-
-      uyariKutusu.className = 'alert-status ' + durum;
-      p.textContent = metin;
-
-      for (var i = 0; i < esikKutulari.length; i++) {
-        var d = esikKutulari[i].getAttribute('data-level');
-        esikKutulari[i].classList.toggle('active', durum !== 'normal' && hiz >= ESIK[d]);
-      }
-    }
-
-    p.textContent = 'Rüzgâr verisi bekleniyor…';
-    uyariYenile = function () { guncelle(sonVeri.hiz); };
-    if (sonVeri.hiz > 0) uyariYenile();
-    // yeni veri geldiğinde ruzgariIsle zaten çağırıyor; bu yalnızca emniyet ağı
-    setInterval(uyariYenile, 60000);
-  }
-
 })();
