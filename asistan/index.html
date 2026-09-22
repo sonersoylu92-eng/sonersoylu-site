@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saha Asistanı — Rüzgâr Türbini Sorularınızı Yanıtlar | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbini sorularınızı bu sitenin kendi saha içeriğinden yanıtlayan asistan. Cevabı hangi sayfadan aldığını gösterir, bilmediğinde bilmediğini söyler.">
+<link rel="canonical" href="https://sonersoylu.com/asistan/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/asistan/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/asistan/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Saha Asistanı — Rüzgâr Türbini Sorularınızı Yanıtlar">
+<meta property="og:description" content="Sorunuzu bu sitenin kendi saha içeriğinden yanıtlar, kaynağını gösterir, bilmediğinde bilmediğini söyler.">
+<meta property="og:url" content="https://sonersoylu.com/asistan/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "Saha Asistanı",
+ "url": "https://sonersoylu.com/asistan/",
+ "applicationCategory": "ReferenceApplication",
+ "operatingSystem": "Web",
+ "inLanguage": "tr-TR",
+ "isAccessibleForFree": true,
+ "offers": {"@type":"Offer","price":"0","priceCurrency":"TRY"},
+ "description": "Rüzgâr türbini sorularını sonersoylu.com'un kendi saha içeriğinden yanıtlayan, kaynak gösteren asistan.",
+ "author": {"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni"}
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<style>
+.as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+.as-form{display:grid;gap:.8rem}
+.as-form textarea{width:100%;min-height:5.5rem;padding:.85rem .9rem;font-family:var(--sans);
+  font-size:1rem;line-height:1.6;color:var(--ink);background:var(--ground);
+  border:1px solid var(--line);border-radius:3px;resize:vertical}
+.as-form textarea:focus{outline:2px solid var(--beacon);outline-offset:1px}
+.as-alt{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between}
+.as-gonder{font-family:var(--sans);font-size:.9375rem;padding:.7rem 1.4rem;cursor:pointer;
+  color:var(--kagit);background:var(--ink);border:1px solid var(--ink);border-radius:3px;
+  transition:background .18s,border-color .18s}
+.as-gonder:hover:not(:disabled){background:var(--beacon);border-color:var(--beacon)}
+.as-gonder:disabled{opacity:.5;cursor:not-allowed}
+.as-sayac{font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+.as-ornekler{margin:1.25rem 0 0;display:flex;flex-wrap:wrap;gap:.5rem}
+.as-ornekler button{font-family:var(--mono);font-size:.6875rem;letter-spacing:.06em;
+  padding:.45rem .75rem;cursor:pointer;color:var(--muted);background:var(--raise);
+  border:1px solid var(--line);border-radius:999px;transition:color .18s,border-color .18s}
+.as-ornekler button:hover{color:var(--ink);border-color:var(--beacon)}
+.as-cevap{margin:1.5rem 0 0;padding:1.3rem 1.4rem;background:var(--raise);border:1px solid var(--line);display:none}
+.as-cevap.acik{display:block}
+.as-cevap .k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0}
+.as-cevap .metin{margin:.75rem 0 0;line-height:1.75;white-space:pre-wrap}
+.as-kaynak{margin:1.4rem 0 0;padding-top:1rem;border-top:1px solid var(--line)}
+.as-kaynak p.k{margin:0 0 .5rem}
+.as-kaynak a{display:block;padding:.45rem 0;font-size:.9375rem;color:var(--ink);
+  text-decoration:none;border-bottom:1px solid var(--line);transition:padding-left .18s,color .18s}
+.as-kaynak a:last-child{border-bottom:0}
+.as-kaynak a:hover{padding-left:.4rem;color:var(--beacon)}
+.as-bekle{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;
+  background:var(--beacon);animation:asnb 1s ease-in-out infinite}
+@keyframes asnb{0%,100%{opacity:.25}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.as-bekle{animation:none;opacity:.6}}
+</style>
+</head><body>
+<a class="skip" href="#top">İçeriğe geç</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <span aria-current="page">Saha Asistanı</span></nav>
+
+  <p class="kb-kicker">Saha Aracı</p>
+  <h1>Saha Asistanı</h1>
+  <p class="kb-lead">Rüzgâr türbiniyle ilgili sorunuzu yazın. Asistan cevabı bu sitenin kendi içeriğinden çıkarır ve hangi sayfadan aldığını gösterir. Sitede bilgi yoksa uydurmaz — bilmediğini söyler.</p>
+
+  <div class="as-kutu">
+   <form class="as-form" id="asForm">
+    <label for="asSoru" class="as-sayac">Sorunuz</label>
+    <textarea id="asSoru" maxlength="500" placeholder="Örnek: Dişli kutusu sıcaklığı rüzgâr hızıyla birlikte artıyorsa ne bakmalıyım?" required></textarea>
+    <input type="text" id="asWeb" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <div class="as-alt">
+     <button class="as-gonder" id="asGonder" type="submit">Sor</button>
+     <span class="as-sayac" id="asDurum">Saatte en fazla 12 soru</span>
+    </div>
+   </form>
+
+   <div class="as-ornekler" id="asOrnek">
+    <button type="button">Pitch motor akımı neden yükselir?</button>
+    <button type="button">Yaw salınımının sebepleri neler?</button>
+    <button type="button">Jeneratör sıcaklık alarmı sensörden mi geliyor nasıl anlarım?</button>
+    <button type="button">Direct-drive ile dişli kutulu türbin arasındaki fark nedir?</button>
+    <button type="button">Gres tahliyesinde metal görürsem ne yapmalıyım?</button>
+   </div>
+
+   <div class="as-cevap" id="asCevap" aria-live="polite">
+    <p class="k" id="asCevapBaslik">Cevap</p>
+    <div class="metin" id="asMetin"></div>
+    <div class="as-kaynak" id="asKaynak" hidden>
+     <p class="k">Bu cevap şu sayfalardan çıkarıldı</p>
+     <div id="asKaynakListe"></div>
+    </div>
+   </div>
+  </div>
+
+  <h2>Bu asistan ne yapar, ne yapmaz</h2>
+  <p>Asistan bir arama motoru değil, bir sohbet robotu da değil. Sorduğunuz soruyla ilgili bölümleri bu sitedeki yazılardan bulup yalnızca onlara dayanarak cevap verir. Cevabın altında hangi sayfalardan çıkarıldığı listelenir; oradan asıl yazıya gidip tam bağlamı okuyabilirsiniz.</p>
+  <p>Bunu bilinçli olarak böyle kurdum. Rüzgâr türbini işinde uydurulmuş bir tork ya da sıcaklık değeri sahada gerçek bir riske dönüşür. Bu yüzden asistanın genel bilgiden konuşması kapalı: sitede yazmayan bir şeyi söylemesi yerine "bulamadım" demesi tercih edildi.</p>
+
+  <div class="kb-callout">
+   <p><strong>Uyarı:</strong> Buradaki cevaplar saha deneyimidir, üreticinin servis dokümanının yerine geçmez. Her müdahalede kendi türbininizin OEM talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir. Şüphedeyseniz çalıştırmayın.</p>
+  </div>
+
+  <h2>Cevap bulamazsa</h2>
+  <p>Asistan sitede olmayan bir konuda cevap veremez. Böyle bir durumda soruyu doğrudan bana iletebilirsiniz: <a href="/sor/">Sor sayfası</a>. Gelen sorulardan sık tekrarlananları siteye kalıcı olarak ekliyorum — yani sorduğunuz şey zamanla asistanın da bileceği bir konuya dönüşüyor.</p>
+
+  <div class="kb-rel">
+   <p class="k">Doğrudan kaynaklar</p>
+   <ul>
+    <li><a href="/ariza/">Arıza teşhis ağacı — belirtiden olası nedene</a></li>
+    <li><a href="/saha-notlari/">Saha notları — gerçek arıza vakaları</a></li>
+    <li><a href="/sistemler/">Türbin sistemleri — pitch, yaw, dişli kutusu, jeneratör</a></li>
+    <li><a href="/turbinler/">Türbin model rehberi</a></li>
+    <li><a href="/araclar/">Hesaplama araçları</a></li>
+    <li><a href="/sozluk/">Terimler sözlüğü</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Rüzgâr türbini saha servis teknisyeni</p>
+    <p class="mono">Aliağa, İzmir</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+<script>
+(function () {
+  var form   = document.getElementById('asForm');
+  var soru   = document.getElementById('asSoru');
+  var web    = document.getElementById('asWeb');
+  var gonder = document.getElementById('asGonder');
+  var durum  = document.getElementById('asDurum');
+  var kutu   = document.getElementById('asCevap');
+  var baslik = document.getElementById('asCevapBaslik');
+  var metin  = document.getElementById('asMetin');
+  var kSar   = document.getElementById('asKaynak');
+  var kList  = document.getElementById('asKaynakListe');
+
+  document.getElementById('asOrnek').addEventListener('click', function (e) {
+    if (e.target.tagName !== 'BUTTON') return;
+    soru.value = e.target.textContent;
+    soru.focus();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var s = soru.value.trim();
+    if (s.length < 6) { durum.textContent = 'Soru çok kısa'; return; }
+
+    gonder.disabled = true;
+    durum.innerHTML = '<span class="as-bekle"></span> Sitede aranıyor…';
+    kutu.classList.add('acik');
+    baslik.textContent = 'Cevap';
+    metin.textContent = '';
+    kSar.hidden = true;
+    kList.innerHTML = '';
+
+    fetch('/api/asistan', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ soru: s, dil: 'tr', website: web.value })
+    })
+    .then(function (r) { return r.json().then(function (d) { return { s: r.status, d: d }; }); })
+    .then(function (x) {
+      gonder.disabled = false;
+      durum.textContent = 'Saatte en fazla 12 soru';
+
+      if (x.s === 429) {
+        baslik.textContent = 'Sınır';
+        metin.textContent = 'Bu saat için soru hakkınız doldu. Bir süre sonra tekrar deneyebilir ya da soruyu /sor/ sayfasından doğrudan iletebilirsiniz.';
+        return;
+      }
+      if (!x.d || !x.d.ok) {
+        baslik.textContent = 'Şu an cevap veremiyorum';
+        metin.textContent = 'Asistan geçici olarak yanıt veremedi. Birazdan tekrar deneyin; acele ediyorsanız arıza teşhis ağacı ve saha notları sayfaları aynı bilgiyi elle taranabilir biçimde içeriyor.';
+        return;
+      }
+
+      metin.textContent = x.d.cevap || '';
+      var k = x.d.kaynaklar || [];
+      if (k.length) {
+        kSar.hidden = false;
+        k.forEach(function (it) {
+          var a = document.createElement('a');
+          a.href = it.u; a.textContent = it.b;
+          kList.appendChild(a);
+        });
+      }
+    })
+    .catch(function () {
+      gonder.disabled = false;
+      durum.textContent = 'Saatte en fazla 12 soru';
+      baslik.textContent = 'Bağlantı kurulamadı';
+      metin.textContent = 'İnternet bağlantınızı kontrol edip tekrar deneyin.';
+    });
+  });
+})();
+</script>
+</body>
+</html>

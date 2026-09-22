@@ -4,6 +4,7 @@
 // /api/arama  → sonuç bulunamayan aramaların kaydı (KV)
 // /api/ruzgar → Open-Meteo tahmin verisi (uçta 15 dk önbellekli)
 // /api/soru   → sahadan gelen soruların kaydı (KV)
+// /api/asistan → saha asistanı: soruyu sitenin kendi içeriğinden yanıtlar (RAG)
 // /api/olcum  → sayfa içi davranış sayaçları (KV, anonim ve toplu)
 // /api/olcum/rapor → sayaçların özeti (anahtarla korumalı)
 // www.sonersoylu.com → sonersoylu.com kalıcı yönlendirme (SEO: tek kanonik alan adı)
@@ -49,6 +50,11 @@ export default {
 
     if (url.pathname === '/api/soru') {
       if (request.method === 'POST') return soruKaydet(request, env);
+      return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
+    }
+
+    if (url.pathname === '/api/asistan') {
+      if (request.method === 'POST') return asistan(request, env);
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
     }
 
@@ -292,4 +298,211 @@ function json(veri, status = 200) {
     status,
     headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
   });
+}
+
+
+// ================================================================ saha asistanı
+//
+// Soruyu sitenin KENDİ içeriğinden yanıtlar. Çalışma sırası:
+//   1) soruyu Türkçe-duyarlı biçimde sadeleştir
+//   2) /assets/bilgi-<dil>.json içinden en alakalı bölümleri seç (anahtar kelime)
+//   3) yalnızca o bölümleri bağlam olarak vererek modele sor
+//   4) cevabı kaynak bağlantılarıyla döndür
+//
+// Tasarım kararı: model serbest bilgiden cevap VERMEZ. Rüzgâr türbini işinde
+// uydurulmuş bir tork ya da sıcaklık değeri sahada gerçek bir riske dönüşür.
+// Bu yüzden bağlamda olmayan şey için "sitede bilgi yok" demesi isteniyor.
+
+let INDEKS = { tr: null, en: null };   // isolate ömrü boyunca bellekte kalır
+
+const DURAK = new Set(('bir bu şu ve ile için gibi daha çok az var yok olan olarak ' +
+  'nedir nasıl neden ne mi mı mu mü de da ki den dan the a an of to in is are and or ' +
+  'for with how what why when which that this it be on at from').split(' '));
+
+// Türkçe arama için sadeleştirme: şapka, büyük/küçük ve aksan farkını siler
+function sade(x) {
+  return String(x).toLowerCase()
+    .replace(/[âÂ]/g,'a').replace(/[îÎ]/g,'i').replace(/[ûÛ]/g,'u')
+    .replace(/ı/g,'i').replace(/ş/g,'s').replace(/ğ/g,'g')
+    .replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c')
+    .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+function kelimeler(x) {
+  return sade(x).split(' ').filter((w) => w.length > 2 && !DURAK.has(w));
+}
+
+async function indeksAl(env, dil) {
+  if (INDEKS[dil]) return INDEKS[dil];
+  const r = await env.ASSETS.fetch(new Request('https://x/assets/bilgi-' + dil + '.json'));
+  if (!r.ok) return [];
+  const ham = await r.json();
+  // her parça için arama anahtarlarını bir kez hesapla
+  INDEKS[dil] = ham.map((k) => ({ ...k, _a: new Set(kelimeler(k.b + ' ' + k.h + ' ' + k.t)) }));
+  return INDEKS[dil];
+}
+
+// Basit ama bu boyutta fazlasıyla yeterli bir puanlama:
+// nadir kelimeler daha değerli, başlıkta geçmesi gövdede geçmesinden ağır basar.
+function sec(parcalar, soru, adet) {
+  const ks = kelimeler(soru);
+  if (!ks.length) return [];
+  const df = {};
+  for (const k of ks) {
+    let n = 0;
+    for (const p of parcalar) if (p._a.has(k)) n++;
+    df[k] = n || 1;
+  }
+  const N = parcalar.length;
+  const puanli = [];
+  for (const p of parcalar) {
+    let puan = 0;
+    const basSade = sade(p.b + ' ' + p.h);
+    for (const k of ks) {
+      if (!p._a.has(k)) continue;
+      const idf = Math.log(1 + N / df[k]);
+      puan += idf * (basSade.includes(k) ? 2.5 : 1);
+    }
+    if (puan > 0) puanli.push({ p, puan });
+  }
+  puanli.sort((a, b) => b.puan - a.puan);
+  // aynı sayfadan en fazla 2 bölüm: cevap tek sayfaya saplanmasın
+  const sayac = {}, secilen = [];
+  for (const { p } of puanli) {
+    sayac[p.u] = (sayac[p.u] || 0) + 1;
+    if (sayac[p.u] > 2) continue;
+    secilen.push(p);
+    if (secilen.length >= adet) break;
+  }
+  return secilen;
+}
+
+const TALIMAT_TR = [
+  'Sen sonersoylu.com sitesinin saha asistanısın. Soner Soylu bir rüzgâr türbini saha servis teknisyenidir;',
+  'bu sitedeki her şey onun saha deneyimidir.',
+  '',
+  'KURALLAR — istisnasız uyulacak:',
+  '1. Yalnızca aşağıdaki ALINTILAR bölümündeki bilgiyi kullan. Kendi genel bilginden cevap verme.',
+  '2. Soruyla ilgili bilgi alıntılarda yoksa, uydurma. Açıkça "Bu konuda sitede bir bilgi bulamadım" de',
+  '   ve varsa en yakın konudaki sayfayı öner.',
+  '3. Sayı uydurma. Tork, sıcaklık, basınç, akım gibi değerleri yalnızca alıntıda geçiyorsa yaz.',
+  '4. Bakım veya müdahale prosedürü anlatırken şunu mutlaka ekle: bu bilgi saha deneyimidir,',
+  '   üreticinin servis dokümanının yerine geçmez; LOTO ve iş güvenliği kuralları geçerlidir.',
+  '5. Türkçe, sade ve doğrudan yaz. Teknisyenle konuşur gibi ol, pazarlama dili kullanma.',
+  '6. Cevabın sonuna kaynak listesi EKLEME; kaynaklar ayrıca gösteriliyor.',
+  '7. Cevabı kısa tut: en fazla 4 paragraf.',
+].join('\n');
+
+const TALIMAT_EN = [
+  'You are the field assistant for sonersoylu.com. Soner Soylu is a wind turbine field service',
+  'technician; everything on this site is his own field experience.',
+  '',
+  'RULES — follow without exception:',
+  '1. Use only the information in the EXCERPTS below. Do not answer from your own general knowledge.',
+  '2. If the excerpts do not cover the question, do not invent anything. Say plainly that you could not',
+  '   find it on the site, and point to the closest relevant page if there is one.',
+  '3. Never invent numbers. Give torque, temperature, pressure or current values only if they appear',
+  '   in an excerpt.',
+  '4. Whenever you describe a maintenance or intervention procedure, add that this is field experience',
+  '   and does not replace the manufacturer service documentation; LOTO and site safety rules govern.',
+  '5. Write in plain, direct English, technician to technician. No marketing language.',
+  '6. Do NOT append a source list; sources are shown separately.',
+  '7. Keep it short: four paragraphs at most.',
+].join('\n');
+
+async function asistan(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return json({ ok: false, hata: 'gecersiz-istek' }, 400); }
+
+  const soru = String(body.soru || '').trim().slice(0, 500);
+  if (soru.length < 6) return json({ ok: false, hata: 'soru-kisa' }, 400);
+  if (String(body.website || '')) return json({ ok: true, cevap: '' });   // bal küpü
+
+  // Dil: istekten gelirse ona uy, yoksa sorudan tahmin et
+  let dil = body.dil === 'en' ? 'en' : body.dil === 'tr' ? 'tr' : null;
+  if (!dil) dil = /[ğşıçöü]|\b(nedir|nasıl|neden|kaç|mi|mı)\b/i.test(soru) ? 'tr' : 'en';
+
+  // Saatte 12 soru — maliyeti ve kötüye kullanımı sınırlar
+  if (env.ABONE) {
+    const ip = request.headers.get('cf-connecting-ip') || '0';
+    const anahtar = 'ai:' + (await ozet(ip)) + ':' + new Date().toISOString().slice(0, 13);
+    const mevcut = Number((await env.ABONE.get(anahtar)) || 0);
+    if (mevcut >= 12) return json({ ok: false, hata: 'cok-fazla-soru' }, 429);
+    await env.ABONE.put(anahtar, String(mevcut + 1), { expirationTtl: 7200 });
+  }
+
+  const parcalar = await indeksAl(env, dil);
+  if (!parcalar.length) return json({ ok: false, hata: 'indeks-yok' }, 503);
+
+  const secilen = sec(parcalar, soru, 6);
+  if (!secilen.length) {
+    return json({
+      ok: true, bulundu: false, kaynaklar: [],
+      cevap: dil === 'tr'
+        ? 'Bu konuda sitede bir bilgi bulamadım. Soruyu biraz farklı kelimelerle sorabilir ya da /sor/ sayfasından doğrudan Soner’e iletebilirsiniz.'
+        : 'I could not find anything on the site about this. Try different wording, or send the question straight to Soner from the /sor/ page.',
+    });
+  }
+
+  const alintilar = secilen.map((p, i) =>
+    '[' + (i + 1) + '] ' + p.b + (p.h ? ' — ' + p.h : '') + '\n' + p.t).join('\n\n');
+  const talimat = dil === 'tr' ? TALIMAT_TR : TALIMAT_EN;
+  const istem = (dil === 'tr' ? 'ALINTILAR:\n' : 'EXCERPTS:\n') + alintilar +
+                (dil === 'tr' ? '\n\nSORU: ' : '\n\nQUESTION: ') + soru;
+
+  let cevap = null;
+  try {
+    cevap = env.CLAUDE_ANAHTAR
+      ? await claudeSor(env.CLAUDE_ANAHTAR, talimat, istem)
+      : await workersAiSor(env, talimat, istem);
+  } catch { cevap = null; }
+
+  if (!cevap) {
+    return json({ ok: false, hata: 'model-yanit-vermedi' }, 502);
+  }
+
+  // Kaynaklar: aynı sayfa bir kez
+  const gorulen = new Set(), kaynaklar = [];
+  for (const p of secilen) {
+    if (gorulen.has(p.u)) continue;
+    gorulen.add(p.u);
+    kaynaklar.push({ u: p.u, b: p.b });
+  }
+
+  return json({ ok: true, bulundu: true, cevap, kaynaklar, dil });
+}
+
+// Anahtar tanımlıysa Claude kullanılır (daha iyi Türkçe)
+async function claudeSor(anahtar, talimat, istem) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': anahtar,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5',
+      max_tokens: 900,
+      system: talimat,
+      messages: [{ role: 'user', content: istem }],
+    }),
+  });
+  if (!r.ok) return null;
+  const d = await r.json();
+  return (d.content && d.content[0] && d.content[0].text) ? d.content[0].text.trim() : null;
+}
+
+// Anahtar yoksa Cloudflare'in kendi modeli — ücretsiz kotayla çalışır
+async function workersAiSor(env, talimat, istem) {
+  if (!env.AI) return null;
+  const d = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+    max_tokens: 900,
+    messages: [
+      { role: 'system', content: talimat },
+      { role: 'user', content: istem },
+    ],
+  });
+  const t = d && (d.response || d.result);
+  return t ? String(t).trim() : null;
 }
