@@ -26,7 +26,7 @@
 @font-face{font-family:"Geist Mono";font-style:normal;font-display:swap;font-weight:500;
  src:url(/assets/font/mono-latinext-500.woff2) format("woff2");
  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-:root{--ground:#f6f4f0;--surface:#ffffff;--raise:#ece8e2;--line:#ddd7cf;--ink:#16191c;--muted:#62686e;--beacon:#c0392f;--shade:0 1px 2px rgba(22,25,28,.04),0 8px 24px rgba(22,25,28,.05);
+:root{color-scheme:light;--ground:#f6f4f0;--surface:#ffffff;--raise:#ece8e2;--line:#ddd7cf;--ink:#16191c;--muted:#62686e;--beacon:#c0392f;--shade:0 1px 2px rgba(22,25,28,.04),0 8px 24px rgba(22,25,28,.05);
 --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--ground);color:var(--ink);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -358,12 +358,12 @@ section[id]{scroll-margin-top:80px}
 .head .mono{margin-top:.9rem}
 
 /* --- açık/koyu ritmi --- */
-section.koyu{--ground:#101315;--surface:#171b1e;--raise:#1f2429;--line:#2f373d;
- --ink:#f4f1ec;--muted:#a9b1b8;--beacon:#ef6a52;
- --shade:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
+section.koyu{--ground:#ece7de;--surface:#f6f4f0;--raise:#e0d9cd;--line:#d3ccc0;
+ --ink:#16191c;--muted:#5d636a;--beacon:#a8322a;
+ --shade:0 1px 2px rgba(22,25,28,.05),0 10px 28px rgba(22,25,28,.07);
  background:var(--ground);color:var(--ink);border-top-color:transparent}
 section.koyu .plate{background:var(--raise);border-color:var(--line);color:var(--ink)}
-section.koyu .plate:hover{background:#262d33}
+section.koyu .plate:hover{background:#d8d0c3}
 section.koyu .rule::after,section.koyu #burger span{background:var(--ink)}
 section.koyu b{color:var(--ink)}
 section.koyu iframe{border-color:var(--line)}
@@ -433,7 +433,7 @@ body.kapakli header.sabit .ikon{border-color:var(--line);background:var(--surfac
 body.kapakli header.sabit #burger span{background:var(--ink)}
 
 /* --- tam genişlik fotoğraf kesiti --- */
-.kesit{position:relative;overflow:hidden;background:#2b3136;
+.kesit{position:relative;overflow:hidden;background:#ece7de;
  height:clamp(19rem,54vh,32rem);isolation:isolate}
 .kesit img{position:absolute;inset:-9% 0;width:100%;height:118%;object-fit:cover;
  object-position:50% 42%;will-change:transform}
@@ -546,13 +546,13 @@ section.koyu>*{position:relative;z-index:1}
 }
 
 /* --- 4. terim şeridi: kendiliğinden değil, kaydırmayla ilerler --- */
-.serit{overflow:hidden;background:#101315;color:#e8e3dc;border-top:1px solid #2f373d;
- border-bottom:1px solid #2f373d;padding:.9rem 0}
+.serit{overflow:hidden;background:#ece7de;color:#16191c;border-top:1px solid #d3ccc0;
+ border-bottom:1px solid #d3ccc0;padding:.9rem 0}
 .serit ul{display:flex;gap:2.5rem;width:max-content;will-change:transform;
  transform:translate3d(var(--kay,0),0,0)}
 .serit li{display:flex;align-items:center;gap:2.5rem;font-family:var(--mono);
  font-size:.6875rem;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
-.serit li::after{content:"";width:.25rem;height:.25rem;background:#ef6a52;flex:none}
+.serit li::after{content:"";width:.25rem;height:.25rem;background:#a8322a;flex:none}
 
 /* --- 5. fotoğraf kesitine dergi numarası --- */
 .kesit{cursor:default}
@@ -614,12 +614,12 @@ section.koyu>*{position:relative;z-index:1}
 /* --- gösterge bandı ---------------------------------------------------- */
 /* kapağın hemen altındaki koyu "gösterge güvertesi": ölçüm + terim şeridi
    tek blok gibi okunsun diye üstten/alttan boşluk yok */
-.canli{background:#101315;color:#f4f1ec;padding:0;border-top:0;
+.canli{background:#ece7de;color:#16191c;padding:0;border-top:0;
  --ink:#f4f1ec;--muted:#a9b1b8;--line:#2f373d;--beacon:#ef6a52}
 .canli+.serit{border-top:1px solid #2f373d}
 .canli .wrap{display:grid;gap:1px;background:var(--line);
  grid-template-columns:1fr;padding:0;max-width:none;margin:0}
-.canli .h{background:#101315;padding:1.1rem 1.5rem;display:grid;gap:.45rem;align-content:start}
+.canli .h{background:#e4ddd1;padding:1.1rem 1.5rem;display:grid;gap:.45rem;align-content:start}
 .canli .e{font-family:var(--mono);font-size:.5625rem;letter-spacing:.22em;
  text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.5rem}
 .canli .v{font-family:var(--serif);font-size:1.75rem;line-height:1;letter-spacing:-.02em;
@@ -627,7 +627,7 @@ section.koyu>*{position:relative;z-index:1}
 .canli .v small{font-family:var(--mono);font-size:.6875rem;letter-spacing:.06em;
  margin-left:.4rem;color:var(--muted)}
 .canli .a{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;color:var(--muted)}
-.canli .not{background:#101315;padding:.75rem 1.5rem;grid-column:1/-1;
+.canli .not{background:#e4ddd1;padding:.75rem 1.5rem;grid-column:1/-1;
  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:center;
  font-family:var(--mono);font-size:.5625rem;letter-spacing:.16em;
  text-transform:uppercase;color:var(--muted)}
@@ -928,7 +928,7 @@ section.kapak{isolation:auto;overflow:visible;
 .kapak-dok .hap{height:2.85rem;padding:0 clamp(1.5rem,4vw,2.75rem);border-radius:999px;
  background:rgba(10,13,16,.82);font-size:.9375rem;letter-spacing:.01em;
  border-color:rgba(255,255,255,.18)}
-.kapak-dok .hap:hover{background:#12171b}
+.kapak-dok .hap:hover{background:#e0d9cd}
 
 /* --- panelin altındaki künye satırı --- */
 .kapak-alt{grid-row:2;position:relative;z-index:1;display:grid;
@@ -1074,7 +1074,7 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
    Windy gibi bir tahmin panelinin sıkıştırılmış hâli: her gün için göbek
    yüksekliğindeki en düşük–en yüksek rüzgâr bandı. Blok, üstündeki dört
    hücreyle aynı ızgaranın satırı olduğu için tam genişliği kaplıyor. */
-.canli .hava10{grid-column:1/-1;background:#101315;padding:1.4rem 1.5rem 1.25rem}
+.canli .hava10{grid-column:1/-1;background:#e4ddd1;padding:1.4rem 1.5rem 1.25rem}
 .hava10[data-hazir="0"],.hava10[data-hazir="yok"]{display:none}
 .hava10 .h10-ust{display:flex;flex-wrap:wrap;justify-content:space-between;
  align-items:baseline;gap:.4rem 1.5rem;margin-bottom:1rem}
@@ -1086,7 +1086,7 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
 .hava10 .h10-ust a:hover{color:var(--ink);border-color:var(--beacon)}
 .h10{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:1px;
  background:var(--line);border:1px solid var(--line)}
-.h10>div{background:#101315;padding:.8rem .35rem .75rem;display:grid;gap:.4rem;
+.h10>div{background:#f6f4f0;padding:.8rem .35rem .75rem;display:grid;gap:.4rem;
  justify-items:center;align-content:start}
 .h10 .gun{font-family:var(--mono);font-size:.5625rem;letter-spacing:.1em;
  text-transform:uppercase;color:var(--muted);white-space:nowrap}
@@ -1100,7 +1100,7 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
 .h10 .mm b{font-weight:500}
 .h10 .mm span{color:var(--muted);font-size:.625rem}
 .h10 .yon{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;color:var(--muted)}
-.h10 .bugun{background:#161b1e}
+.h10 .bugun{background:#e0d9cd}
 .h10 .bugun .gun{color:var(--beacon)}
 .hava10 .h10-alt{margin-top:.8rem;font-family:var(--mono);font-size:.5rem;
  letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}

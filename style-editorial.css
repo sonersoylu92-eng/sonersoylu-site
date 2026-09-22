@@ -8,6 +8,7 @@
    ROOT VARIABLES & COLOR PALETTE
    ───────────────────────────────────────────────────────────────── */
 :root {
+  color-scheme: light;
   /* Clean Editorial Light Palette */
   --light-bg: #fafaf8;
   --light-surface: #ffffff;
@@ -59,17 +60,8 @@
   --shadow-xl: 0 20px 48px rgba(0,0,0,0.16);
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ground: var(--dark-bg);
-    --surface: var(--dark-surface);
-    --raised: var(--dark-raised);
-    --border: var(--dark-border);
-    --text: var(--dark-text);
-    --muted: var(--dark-muted);
-  }
-}
+/* Koyu mod bilinçli olarak devre dışı: site her zaman krem/açık tema.
+   Ziyaretçinin işletim sistemi koyu temada olsa bile sayfa krem kalır. */
 
 /* ─────────────────────────────────────────────────────────────────
    RESET & BASE STYLES
@@ -444,11 +436,6 @@ header {
   border-bottom: 1px solid var(--border);
 }
 
-@media (prefers-color-scheme: dark) {
-  header {
-    background: rgba(13, 13, 11, 0.98);
-  }
-}
 
 .header-content {
   display: flex;

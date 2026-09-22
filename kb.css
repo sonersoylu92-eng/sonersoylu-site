@@ -125,12 +125,7 @@
   .kb *,.kb *::before,.kb *::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
 
-/* ---- koyu tema uyumu (site .gece/dark kullanıyorsa) ---- */
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .kb th{color:var(--muted)}
-  :root:not([data-theme="light"]) .kb-calc,
-  :root:not([data-theme="light"]) .kb table{background:var(--surface)}
-}
+/* Koyu mod yok: bilgi bankası sayfaları da her zaman krem tema. */
 
 /* ---- yazdırma ---- */
 @media print{
