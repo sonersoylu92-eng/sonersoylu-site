@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case 01: Pitch Motor High Current — Field Diagnosis and Fix | Soner Soylu</title>
+<meta name="description" content="Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step field diagnosis, root cause in the pitch gearbox, and the permanent fix.">
+<link rel="canonical" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Case 01: Pitch Motor High Current">
+<meta property="og:description" content="Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step field diagnosis, root cause in the pitch gearbox, and the permanent fix.">
+<meta property="og:url" content="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Case 01: Pitch Motor High Current",
+ "description": "Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step field diagnosis, root cause in the pitch gearbox, and the permanent fix.",
+ "url": "https://sonersoylu.com/en/field-notes/pitch-motor-high-current/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Field notes",
+    "item": "https://sonersoylu.com/en/field-notes/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Pitch motor high current",
+    "item": "https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" aria-current="true">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/saha-notlari/pitch-motor-yuksek-akim/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/saha-notlari/pitch-motor-yuksek-akim/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Pitch motor high current</span></nav>
+
+  <p class="kb-kicker">From the field · Case 01</p>
+  <h1>Case 01: Pitch Motor High Current</h1>
+  <p class="kb-lead">A Nordex N117. The pitch motor on one blade was pulling around 18 A where the other two sat at 12 A. Nothing had failed yet and the turbine was still producing — which is exactly the kind of fault worth catching, because the machine is telling you something before it breaks.</p>
+  <h2>Symptom</h2>
+  <ul>
+   <li><strong>SCADA:</strong> pitch motor current on blade 2 at 17–18 A; blades 1 and 3 at 11–12 A under the same conditions</li>
+   <li><strong>Behaviour:</strong> pitch movement completes, but more slowly than the other two blades</li>
+   <li><strong>Alarm:</strong> intermittent &quot;pitch motor current high&quot; warning, no shutdown yet</li>
+   <li><strong>Trend:</strong> looking back through SCADA, the current had been climbing gradually for about two months</li>
+  </ul>
+
+  <h2>First assessment</h2>
+  <p>A motor pulling more current is doing more work. On a pitch axis that means one of three things: the electrical side has a problem (winding, connection, drive), something mechanical is resisting the movement, or the blade itself has become harder to turn. The fact that the rise was <strong>gradual</strong> pushed me away from an electrical fault — electrical faults tend to appear suddenly. A slow climb over two months is the signature of something mechanical getting worse.</p>
+
+  <h2>Step-by-step diagnosis</h2>
+  <ol class="kb-steps">
+   <li><strong>Turned the blade by hand at the gearbox output.</strong> With the turbine stopped, rotor locked and the pitch drive isolated. The resistance on blade 2 was noticeably higher than on the other two. That single check moved the fault from &quot;electrical&quot; to &quot;mechanical&quot; and saved a lot of time.</li>
+   <li><strong>Measured motor winding resistance.</strong> To rule out the motor itself. All three phases were balanced and matched the other two motors. The motor was healthy; it was simply working against something.</li>
+   <li><strong>Checked the pitch gearbox oil.</strong> This is where it was found. The level was below the mark, the oil was dark, and there was a metallic sheen in it. The gearbox was running short of lubrication.</li>
+   <li><strong>Looked for the leak path.</strong> Oil does not disappear. There was a trace of oil on the gearbox housing and, following it up, a hairline crack roughly 2 mm long on the casing near the mounting face.</li>
+   <li><strong>Checked the sensors.</strong> The pitch encoder and limit switches read correctly and matched the physical position, so the control side was not commanding anything unusual.</li>
+   <li><strong>Went back to the SCADA trend.</strong> Comparing the current climb against the estimated oil loss lined up: as the level fell, the current rose. The story was consistent from both ends.</li>
+  </ol>
+
+  <h2>Root cause</h2>
+  <p>A hairline crack in the pitch gearbox casing had been leaking oil slowly over roughly two to three months. As the level dropped, the gear set ran with progressively poorer lubrication, friction rose, and the motor compensated by drawing more current. The metallic sheen in the oil showed wear had already begun inside.</p>
+  <p>Nothing here happened suddenly. The turbine had been signalling for two months through a number in SCADA that nobody had plotted as a trend.</p>
+
+  <h2>Fix</h2>
+  <ol>
+   <li><strong>Containment (1 hour):</strong> the leak was temporarily sealed and the oil topped up so the machine could be brought to a safe state without running the gears dry.</li>
+   <li><strong>Permanent repair (3 hours):</strong> the crack was TIG welded and the repair checked by non-destructive testing before the gearbox was put back into service.</li>
+   <li><strong>Oil replacement (2 hours):</strong> the contaminated oil was drained completely and replaced with fresh oil to the correct level, since the old charge already carried wear metal.</li>
+   <li><strong>Total downtime:</strong> about six hours. Caught later, this would have been a gearbox replacement.</li>
+  </ol>
+
+  <h2>Preventive maintenance</h2>
+  <ul>
+   <li><strong>Compare the three pitch motor currents against each other, not against a threshold.</strong> An 18 A reading may sit below the alarm limit and still be wrong if its two siblings are at 12 A. The asymmetry is the signal.</li>
+   <li><strong>Plot the trend, not the value.</strong> A single reading says almost nothing. The same number over eight weeks says everything.</li>
+   <li><strong>Include the pitch gearbox in visual inspections.</strong> An oil trace on the casing is the cheapest early warning you will ever get.</li>
+   <li><strong>Turn the blade by hand when you suspect a pitch fault.</strong> It takes two minutes and separates mechanical from electrical faster than any instrument.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Field note</p>
+   <p>The habit that pays here is boring: look at the three blades side by side. A pitch fault almost never starts as a failure — it starts as one axis behaving slightly differently from the other two. If you read each value against the alarm threshold instead of against its siblings, you will miss it every time.</p>
+   <p>The second thing is that a six-hour repair and a gearbox replacement were separated only by the two months of trend data nobody had looked at.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+  </aside>
+  <div class="kb-callout">
+   <p><strong>Warning:</strong> All work in the hub is done with the rotor locked, the turbine stopped, the pitch drive and its backup supply isolated, and LOTO applied. This note is field experience and does not replace the manufacturer's service documentation.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/pitch/">Pitch System — motor, gearbox, sensor and control</a></li>
+    <li><a href="/en/turbines/">Turbine model guide</a></li>
+    <li><a href="/en/field-notes/blade-vibration/">Case 07: Blade Vibration — the same system, a different fault</a></li>
+    <li><a href="/en/field-notes/">All field notes</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

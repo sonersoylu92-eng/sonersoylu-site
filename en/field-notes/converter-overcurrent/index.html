@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case 05: Converter Overcurrent — The Fault That Only Trips at High Power | Soner Soylu</title>
+<meta name="description" content="A Vestas V110 converter tripping only above 2.3 MW, with nothing to find on a stopped machine. Seven-step diagnosis, power-threshold method and root cause.">
+<link rel="canonical" href="https://sonersoylu.com/en/field-notes/converter-overcurrent/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/converter-overcurrent/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Case 05: Converter Overcurrent — The Fault That Only Trips at High Power">
+<meta property="og:description" content="A Vestas V110 converter tripping only above 2.3 MW, with nothing to find on a stopped machine. Seven-step diagnosis, power-threshold method and root cause.">
+<meta property="og:url" content="https://sonersoylu.com/en/field-notes/converter-overcurrent/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Case 05: Converter Overcurrent — The Fault That Only Trips at High Power",
+ "description": "A Vestas V110 converter tripping only above 2.3 MW, with nothing to find on a stopped machine. Seven-step diagnosis, power-threshold method and root cause.",
+ "url": "https://sonersoylu.com/en/field-notes/converter-overcurrent/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Field notes",
+    "item": "https://sonersoylu.com/en/field-notes/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Converter overcurrent",
+    "item": "https://sonersoylu.com/en/field-notes/converter-overcurrent/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" aria-current="true">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/saha-notlari/converter-asiri-akim/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/saha-notlari/converter-asiri-akim/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Converter overcurrent</span></nav>
+
+  <p class="kb-kicker">From the field · Case 05</p>
+  <h1>Case 05: Converter Overcurrent — The Fault That Only Trips at High Power</h1>
+  <p class="kb-lead">A Vestas V110. The turbine runs for days without trouble, then throws a converter fault and stops; you reset it and it runs again. When we went out to service it we could not find anything. These &quot;disappearing&quot; faults are the most maddening kind — and almost always they are tied to a condition. Here the condition was power.</p>
+  <h2>Symptom</h2>
+  <ul>
+   <li><strong>Fault code:</strong> rotor-side overcurrent / converter fault, followed by automatic shutdown</li>
+   <li><strong>Frequency:</strong> once or twice a month at first, rising to three or four times a week over six weeks</li>
+   <li><strong>After reset:</strong> the turbine comes back online normally and produces for hours without issue</li>
+   <li><strong>On service:</strong> every measurement on the stopped machine reads normal — insulation, phase balance, cable connections, coolant level</li>
+   <li><strong>Grid side:</strong> no disturbance in the voltage or frequency records at the moments of the trips</li>
+  </ul>
+
+  <h2>First assessment</h2>
+  <p>Everything reading normal on a stopped turbine is itself information: the fault appears somewhere inside the operating condition and vanishes when the machine stops. That narrows the list to three — a contact problem that shows up with heat, a power-electronics component that only misbehaves under load, or a short grid disturbance too brief to be recorded.</p>
+  <p>The grid records were clean, so I pushed the third option back. What the remaining two have in common is that both get worse <strong>as load rises</strong>. So instead of hunting for the faulty part, I first had to find the condition under which the fault appeared.</p>
+
+  <h2>Step-by-step diagnosis</h2>
+  <ol class="kb-steps">
+   <li><strong>Pulled the fault log in raw form.</strong> Not just the code — the timestamps. The OEM interface only showed the last 20 entries, so I exported the full list. Nineteen events across six weeks.</li>
+   <li><strong>Matched every event against the production data at that moment.</strong> This is the step that solved the case. I pulled the power values at each trip from SCADA: 17 of the 19 events happened <strong>above 2.4 MW</strong>. The other two were around 2.3 MW. Not a single event at low power. The fault was not random; it had a threshold.</li>
+   <li><strong>Confirmed it tracked power, not wind speed.</strong> This distinction matters. During hours when the wind was high but the turbine was curtailed, there were no faults. So the trigger was not wind — it was current.</li>
+   <li><strong>Thermal-imaged the converter cabinet under load.</strong> Stopping the turbine to look was useless here; once it cooled there was no trace. With the turbine producing, from a safe distance, I took readings inside the cabinet. One of the DC busbar joints came out roughly <strong>30 °C hotter</strong> than its neighbours.</li>
+   <li><strong>Checked the IGBT modules separately.</strong> In the same scan one module was also running hotter than the others, but by a smaller margin (8–10 °C). I noted it without declaring it guilty on its own.</li>
+   <li><strong>Stopped the turbine and torque-checked that joint.</strong> The bolt on the hot busbar was well below the OEM value. A loose power connection raises contact resistance; resistance generates heat with the square of the current. Negligible at low power, decisive at high power. That was the threshold.</li>
+   <li><strong>Opened and inspected the contact face.</strong> There was oxidation and slight discolouration — the mark of something that has been heating and cooling for a long time.</li>
+  </ol>
+
+  <h2>Root cause</h2>
+  <p>A loosened DC busbar joint. Contact resistance had risen, the joint overheated at high current, and that heat was pulling the working temperature of the neighbouring IGBT module up with it. Running hot, the module reached its own protection threshold earlier and tripped as an overcurrent.</p>
+  <p>So two things were true at once: the joint was the real cause, but the module had genuinely been stressed. Simply tightening the bolt and leaving would have left an already fatigued module in place.</p>
+  <div class="kb-callout">
+   <p><strong>Chain of evidence:</strong> the fault only appears above 2.3 MW → a heat problem that emerges at high current → a 30 °C hot spot under load on thermal imaging → torque below the OEM value at that joint → oxidation on the contact face. Each step confirms the one before it.</p>
+  </div>
+
+  <h2>Fix</h2>
+  <ol>
+   <li><strong>Joint refurbishment (2 hours):</strong> busbar removed, contact faces cleaned of oxide, reassembled with proper contact compound and torqued to the OEM value in a star pattern.</li>
+   <li><strong>Check of every power connection in the cabinet (3 hours):</strong> if one has loosened, the others are suspect. All were torque-checked; two more were marginal and corrected.</li>
+   <li><strong>Replacement of the stressed IGBT module (planned, 1 day):</strong> no spare on site that day. The turbine was temporarily run with a 2.2 MW power cap — below the threshold, so the fault did not recur and the machine stayed in production. The module was swapped when it arrived.</li>
+   <li><strong>Follow-up (4 weeks):</strong> with the cap lifted, the fault log was watched for four weeks. No new events.</li>
+  </ol>
+
+  <h2>How the fault related to the power threshold</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Production band</th><th>Time spent in band</th><th>Faults (6 weeks)</th><th>Comment</th></tr>
+   <tr><td>0 – 1.5 MW</td><td>Most of the time</td><td>0</td><td>Current low, contact resistance irrelevant</td></tr>
+   <tr><td>1.5 – 2.3 MW</td><td>Moderate</td><td>0</td><td>Heating present but below threshold</td></tr>
+   <tr><td>2.3 – 2.4 MW</td><td>Little</td><td>2</td><td>Start of the threshold</td></tr>
+   <tr><td>2.4 MW and above</td><td>Least</td><td>17</td><td>Almost every fault sits here</td></tr>
+  </table></div>
+  <p><small>The real message in the table: the fault clustered in the band where the turbine spent the <em>least</em> time. That is why it looked random. Matching events to power rather than to elapsed time is what made the pattern appear.</small></p>
+
+  <h2>Preventive maintenance</h2>
+  <ul>
+   <li><strong>Periodic torque checks on power connections:</strong> converter and transformer joints should be torque-checked at the OEM interval. It is one of the easiest jobs to skip and one of the highest-return ones.</li>
+   <li><strong>Thermal scanning under load:</strong> an annual thermal survey taken while the turbine is producing catches problems that are invisible on a stopped machine. A scan of a stopped machine would never have found this fault.</li>
+   <li><strong>Read the fault log together with power:</strong> the code alone says little. Put every event next to the power, wind and temperature at that moment.</li>
+   <li><strong>Record reset counts on intermittent faults:</strong> a rising frequency is the earliest sign that the problem is progressing. Going from monthly to three times a week was our signal to stop waiting.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Field note</p>
+   <p>What I took from this case is a method, not a technical fact. With intermittent faults you look for the <strong>condition</strong> rather than the part. &quot;When does it happen?&quot; comes before &quot;what broke?&quot;. Here the condition was power; in other cases it has been temperature, wind direction or time of day.</p>
+   <p>A second note: a temporary power cap is a very useful tool in this work. Rather than stopping the turbine completely while waiting for a part, we ran it below the threshold — production continued and our diagnosis was proved in practice. When the fault did not recur, we knew the threshold hypothesis was right.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+  </aside>
+
+  <div class="kb-callout">
+   <p><strong>Warning:</strong> a converter cabinet carries high voltage, and dangerous energy remains in the DC-link capacitors even after shutdown. No work is done inside the cabinet before the OEM's stated discharge time has elapsed and the absence of voltage has been verified by measurement. This note is field experience and does not replace service documentation.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/generator/">Generator and Converter System — DFIG and power electronics</a></li>
+    <li><a href="/en/turbines/vestas/v110/">Vestas V110 — model guide</a></li>
+    <li><a href="/en/field-notes/generator-temperature/">Case 04: Generator Temperature Alarm</a></li>
+    <li><a href="/en/field-notes/">All field notes</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Field Fault Cases — Step-by-Step Diagnosis Notes | Soner Soylu</title>
+<meta name="description" content="Step-by-step diagnosis notes from real wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.">
+<link rel="canonical" href="https://sonersoylu.com/en/field-notes/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Field Notes">
+<meta property="og:description" content="Step-by-step diagnosis notes from real wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.">
+<meta property="og:url" content="https://sonersoylu.com/en/field-notes/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Field Notes",
+ "description": "Step-by-step diagnosis notes from real wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.",
+ "url": "https://sonersoylu.com/en/field-notes/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Field notes",
+    "item": "https://sonersoylu.com/en/field-notes/"
+   }
+  ]
+ },
+ "mainEntity": {
+  "@type": "ItemList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Pitch Motor High Current",
+    "url": "https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Gearbox Temperature Rise",
+    "url": "https://sonersoylu.com/en/field-notes/gearbox-temperature/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Yaw Hunting",
+    "url": "https://sonersoylu.com/en/field-notes/yaw-hunting/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 4,
+    "name": "Generator Temperature Alarm",
+    "url": "https://sonersoylu.com/en/field-notes/generator-temperature/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 5,
+    "name": "Converter Overcurrent",
+    "url": "https://sonersoylu.com/en/field-notes/converter-overcurrent/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 6,
+    "name": "Yaw Bearing Wear",
+    "url": "https://sonersoylu.com/en/field-notes/yaw-bearing-wear/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 7,
+    "name": "Blade Vibration",
+    "url": "https://sonersoylu.com/en/field-notes/blade-vibration/"
+   }
+  ]
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What should you do first when a turbine faults?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Before you read the alarm, make it safe: stop the turbine, apply LOTO, isolate the system you are going to touch. Then pull the OEM fault log and the SCADA trend. The trend tells you far more than a single instantaneous reading: did this start today, or has it been growing for weeks?"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does a SCADA value differ from what you measure on site?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The most common reason is sensor calibration drift. RTD temperature sensors in particular change resistance over the years and SCADA then reports a value that does not exist. That is why the first move on a temperature alarm is to take a physical reading with an IR thermometer and compare: a large gap tells you the fault is in the sensor."
+   }
+  }
+ ]
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" aria-current="true">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/saha-notlari/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/saha-notlari/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <span aria-current="page">Field notes</span></nav>
+
+  <p class="kb-kicker">From the field</p>
+  <h1>Field Notes</h1>
+  <p class="kb-lead">These are not from a book; they came out of the tower. Each one follows a single fault from start to finish: what the alarm said, what I thought it was, which measurement I took, which possibilities it ruled out, what the root cause turned out to be and how we closed it. The point is not the answer — it is the order of the diagnosis.</p>
+ <p>A fault tree gives you a fast route from symptom to cause; these pages show you what it is like inside one case. The two complement each other: narrow it down with the <a href="/ariza/">tree</a> first, then read the closest case here.</p>
+ <div class="kb-callout"><p><strong>Note:</strong> these are field experience, not a substitute for the manufacturer's service documentation. Your own turbine's OEM instructions, LOTO procedure and site safety rules govern every intervention.</p></div>
+ <div class="kb-grid">
+  <a class="kb-card" href="/en/field-notes/pitch-motor-high-current/"><span class="n">Case 01</span><span class="t">Pitch Motor High Current</span><span class="d">Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step diagnosis; root cause was a gearbox oil leak.</span></a>
+  <a class="kb-card" href="/en/field-notes/gearbox-temperature/"><span class="n">Case 02</span><span class="t">Gearbox Temperature Rise</span><span class="d">Oil temperature at 78–82 °C on a Vestas V126. Eight-month trend analysis; oil loss through a failing shaft seal.</span></a>
+  <a class="kb-card" href="/en/field-notes/yaw-hunting/"><span class="n">Case 03</span><span class="t">Yaw Hunting</span><span class="d">Nacelle oscillating ±18° on an Enercon E92. Bearing drag, sensor jitter and a drifted PLC parameter.</span></a>
+  <a class="kb-card" href="/en/field-notes/generator-temperature/"><span class="n">Case 04</span><span class="t">Generator Temperature Alarm</span><span class="d">A 116 °C alarm on a Vestas V126. A 41 °C gap between the IR thermometer and SCADA: sensor calibration drift.</span></a>
+  <a class="kb-card" href="/en/field-notes/converter-overcurrent/"><span class="n">Case 05</span><span class="t">Converter Overcurrent</span><span class="d">An intermittent fault on a Vestas V110 that only tripped above 2.3 MW. A loosened DC busbar joint, found by chasing the condition.</span></a>
+  <a class="kb-card" href="/en/field-notes/yaw-bearing-wear/"><span class="n">Case 06</span><span class="t">Yaw Bearing Wear</span><span class="d">Damage caught with no alarm on an Enercon E92. A blocked lubrication line starved one sector of the race.</span></a>
+  <a class="kb-card" href="/en/field-notes/blade-vibration/"><span class="n">Case 07</span><span class="t">Blade Vibration</span><span class="d">Vibration in a narrow 7–9 m/s band on a Vestas V126. 1P harmonic, 2.5° pitch asymmetry — calibration, not the blade.</span></a>
+ </div>
+
+  <h2>Frequently asked</h2>
+  <h3>What should you do first when a turbine faults?</h3>
+  <p>Before you read the alarm, make it safe: stop the turbine, apply LOTO, isolate the system you are going to touch. Then pull the OEM fault log and the SCADA trend. The trend tells you far more than a single instantaneous reading: did this start today, or has it been growing for weeks?</p>
+  <h3>Why does a SCADA value differ from what you measure on site?</h3>
+  <p>The most common reason is sensor calibration drift. RTD temperature sensors in particular change resistance over the years and SCADA then reports a value that does not exist. That is why the first move on a temperature alarm is to take a physical reading with an IR thermometer and compare: a large gap tells you the fault is in the sensor.</p>
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

@@ -164,94 +164,324 @@
 <url><loc>https://sonersoylu.com/deniz-ustu/</loc><lastmod>2026-09-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url>
     <loc>https://sonersoylu.com/sistemler/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/pitch/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/pitch/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/pitch/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/pitch/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/yaw/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/yaw/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/disli-kutusu/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/jenerator/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/jenerator/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/vestas/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/vestas/v110/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v110/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v110/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v110/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/vestas/v126/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v126/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v126/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v126/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/vestas/v136/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v136/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v136/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v136/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/enercon/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/enercon/e70/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e70/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e70/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e70/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/enercon/e82/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e82/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e82/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e82/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/gearbox-temperature/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/yaw-salinimi/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-hunting/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/jenerator-sicaklik/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/generator-temperature/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/araclar/civata-germe/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/civata-germe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/bolt-tension/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/civata-germe/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/turbinler/enercon/e92/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e92/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e92/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e92/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/converter-asiri-akim/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/converter-overcurrent/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-bearing-wear/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/kanat-titresimi/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/systems/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/systems/pitch/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/pitch/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/pitch/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/pitch/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/systems/yaw/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/yaw/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/systems/gearbox/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/systems/generator/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/jenerator/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/vestas/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/vestas/v110/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v110/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v110/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v110/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/vestas/v126/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v126/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v126/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v126/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/vestas/v136/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v136/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v136/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v136/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/enercon/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/enercon/e70/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e70/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e70/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e70/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/enercon/e82/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e82/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e82/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e82/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/turbines/enercon/e92/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e92/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e92/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e92/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/pitch-motor-high-current/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/gearbox-temperature/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/gearbox-temperature/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/yaw-hunting/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-hunting/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/generator-temperature/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/generator-temperature/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/converter-overcurrent/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/converter-overcurrent/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/yaw-bearing-wear/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-bearing-wear/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/field-notes/blade-vibration/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/tools/bolt-tension/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/civata-germe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/bolt-tension/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/civata-germe/"/>
+    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
   </url>
 </urlset>

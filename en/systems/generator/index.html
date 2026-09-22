@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generator and Converter — DFIG, Direct-Drive and Cooling | Soner Soylu</title>
+<meta name="description" content="Wind turbine generator technical reference: induction, DFIG and direct-drive designs, converter and power electronics, cooling, insulation and typical faults.">
+<link rel="canonical" href="https://sonersoylu.com/en/systems/generator/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/jenerator/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generator and Converter System">
+<meta property="og:description" content="Wind turbine generator technical reference: induction, DFIG and direct-drive designs, converter and power electronics, cooling, insulation and typical faults.">
+<meta property="og:url" content="https://sonersoylu.com/en/systems/generator/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Generator and Converter System",
+ "description": "Wind turbine generator technical reference: induction, DFIG and direct-drive designs, converter and power electronics, cooling, insulation and typical faults.",
+ "url": "https://sonersoylu.com/en/systems/generator/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Systems",
+    "item": "https://sonersoylu.com/en/systems/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Generator",
+    "item": "https://sonersoylu.com/en/systems/generator/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/" aria-current="true">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/sistemler/jenerator/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/sistemler/jenerator/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/systems/">Systems</a> <i>/</i> <span aria-current="page">Generator</span></nav>
+
+  <p class="kb-kicker">Technical reference</p>
+  <h1>Generator and Converter System</h1>
+  <p class="kb-lead">The system that converts mechanical torque into electrical power, and the electronics that make that power fit for the grid. Which generator a turbine uses determines almost everything else about its drivetrain — including whether it has a gearbox at all.</p>
+  <h2>Generator types</h2>
+
+  <h3>Squirrel-cage induction — fixed speed</h3>
+  <p>The older approach, common through the 1980s and 1990s. The generator runs effectively at grid frequency with a few percent of slip. Simple, robust and cheap, but the rotor cannot vary its speed to follow the wind, so energy capture is poorer and every gust is transmitted into the drivetrain as a load rather than absorbed as a speed change. Requires a gearbox.</p>
+
+  <h3>Doubly-fed induction generator (DFIG) — the modern geared standard</h3>
+  <p>The stator connects directly to the grid; the rotor connects through a converter. Because only the rotor circuit passes through power electronics, the converter handles a fraction of total power rather than all of it, which keeps it smaller and cheaper than a full converter. In exchange the machine can vary its speed across roughly ±30% and track the optimum tip speed ratio.</p>
+  <p>The trade-off is complexity. Diagnosis on a DFIG almost always means working with the converter, and converter faults are often intermittent and condition-dependent — as in <a href="/en/field-notes/converter-overcurrent/">Case 05</a>.</p>
+
+  <h3>Direct-drive — the gearless alternative</h3>
+  <p>The rotor drives a many-poled annular generator directly, with no reduction stage. Speed is low (roughly 6–18 rpm) and the generator diameter is correspondingly large. There is no gear wear, no oil change and no reduction-stage failure; the cost is a very heavy generator that complicates transport and erection, and a shift of maintenance attention onto thermal management. This is the Enercon design philosophy.</p>
+
+  <h2>The converter</h2>
+  <ul>
+   <li><strong>Topology:</strong> AC–DC–AC, bidirectional, built around IGBT modules.</li>
+   <li><strong>Function:</strong> controls rotor current and phase so that stator output stays synchronised and within grid requirements, including reactive power support.</li>
+   <li><strong>Cooling:</strong> usually liquid, with a pump and fan in the kilowatt range.</li>
+   <li><strong>Protection:</strong> overcurrent, grid fault ride-through, soft start.</li>
+   <li><strong>Field reality:</strong> most converter cabinet faults that look electronic turn out to be thermal or mechanical — a blocked cooling path or a loosened power joint.</li>
+  </ul>
+
+  <h2>Cooling and insulation</h2>
+  <p>Passive cooling uses finned radiators and natural convection; active cooling adds liquid circulation and thermostatically controlled fans, with a typical target of 50–65 °C nominal, alarm above 80 °C and shutdown above 95 °C. Insulation is the slower concern: windings age, absorb moisture, and their insulation resistance falls. A megohm test with a target above 10 MΩ is the standard check, and it is worth doing on schedule rather than after a fault.</p>
+
+  <h2>Typical faults</h2>
+  <ul>
+   <li><strong>High temperature:</strong> most often a blocked radiator or cooling duct. But sensor calibration drift produces an identical picture, which is why a physical reading comes first — see <a href="/en/field-notes/generator-temperature/">Case 04</a>.</li>
+   <li><strong>Overcurrent and grid faults:</strong> converter trips that may be genuine grid events or, as often, a thermal or contact problem inside the cabinet.</li>
+   <li><strong>Insulation degradation:</strong> falling megohm readings and rising leakage current, driven by moisture and age.</li>
+   <li><strong>Bearing wear:</strong> changed sound and rising vibration, typically after several years of service.</li>
+   <li><strong>Grid interaction:</strong> harmonics and reactive power issues, more pronounced on weak grids.</li>
+  </ul>
+
+  <h2>Maintenance schedule</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Task</th><th>Interval</th><th>Note</th></tr>
+   <tr><td>Fan and cooling circuit check</td><td>3 months</td><td>Sound, current, coolant level</td></tr>
+   <tr><td>Radiator and cooling duct cleaning</td><td>6 months</td><td>The primary job on direct-drive machines</td></tr>
+   <tr><td>Generator temperature trend</td><td>Monthly (from SCADA)</td><td>Read against load, not in isolation</td></tr>
+   <tr><td>Thermal scan under load</td><td>12 months</td><td>Finds hot joints invisible on a stopped machine</td></tr>
+   <tr><td>Power connection torque check</td><td>12–24 months</td><td>Converter and transformer joints</td></tr>
+   <tr><td>Megohm insulation test</td><td>24 months</td><td>Target above 10 MΩ; sample must be dry</td></tr>
+   <tr><td>Converter diagnostic health check</td><td>24 months</td><td>Requires OEM tooling</td></tr>
+   <tr><td>Generator bearing regreasing</td><td>~60 months</td><td>Per OEM specification</td></tr>
+  </table></div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/">All systems</a></li>
+    <li><a href="/en/field-notes/generator-temperature/">Case 04: Generator Temperature Alarm</a></li>
+    <li><a href="/en/field-notes/converter-overcurrent/">Case 05: Converter Overcurrent</a></li>
+    <li><a href="/en/turbines/enercon/">Enercon series — direct-drive</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

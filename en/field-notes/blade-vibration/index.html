@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case 07: Blade Vibration — It Was the Calibration, Not the Blade | Soner Soylu</title>
+<meta name="description" content="Nacelle vibration rising in a narrow wind band on a Vestas V126. 1P harmonic, pitch angle asymmetry and encoder drift: a step-by-step diagnosis.">
+<link rel="canonical" href="https://sonersoylu.com/en/field-notes/blade-vibration/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Case 07: Blade Vibration — It Was the Calibration, Not the Blade">
+<meta property="og:description" content="Nacelle vibration rising in a narrow wind band on a Vestas V126. 1P harmonic, pitch angle asymmetry and encoder drift: a step-by-step diagnosis.">
+<meta property="og:url" content="https://sonersoylu.com/en/field-notes/blade-vibration/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Case 07: Blade Vibration — It Was the Calibration, Not the Blade",
+ "description": "Nacelle vibration rising in a narrow wind band on a Vestas V126. 1P harmonic, pitch angle asymmetry and encoder drift: a step-by-step diagnosis.",
+ "url": "https://sonersoylu.com/en/field-notes/blade-vibration/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Field notes",
+    "item": "https://sonersoylu.com/en/field-notes/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Blade vibration",
+    "item": "https://sonersoylu.com/en/field-notes/blade-vibration/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" aria-current="true">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/saha-notlari/kanat-titresimi/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/saha-notlari/kanat-titresimi/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Blade vibration</span></nav>
+
+  <p class="kb-kicker">From the field · Case 07</p>
+  <h1>Case 07: Blade Vibration — It Was the Calibration, Not the Blade</h1>
+  <p class="kb-lead">A Vestas V126. The operator called saying &quot;one of the blades must be damaged&quot;; the vibration became noticeable at a particular wind speed. A blade inspection is an expensive job, so before touching the blade I wanted to look at the vibration itself. Just as well — there was nothing wrong with the blades.</p>
+  <h2>Symptom</h2>
+  <ul>
+   <li><strong>Complaint:</strong> noticeable vibration in the nacelle, audible from the tower base as well</li>
+   <li><strong>Condition:</strong> only in the 7–9 m/s wind band. Below and above it, vibration is normal.</li>
+   <li><strong>SCADA:</strong> the vibration value rises in that band but does not reach the alarm threshold</li>
+   <li><strong>Production:</strong> the power curve sits slightly below expectation in that band</li>
+   <li><strong>Visual:</strong> no visible damage, cracking or surface defect on the blades through binoculars from the ground</li>
+  </ul>
+
+  <h2>First assessment</h2>
+  <p>The single most important clue was that the vibration was confined to a narrow wind band. If there were structural damage in a blade, you would not expect its effect to appear only in that band; a damaged blade causes more trouble as the wind rises.</p>
+  <p>Vibration that appears in a narrow band is the signature of resonance: at a particular rotor speed the forcing frequency approaches a natural frequency of the structure and the vibration grows. But resonance is not a cause on its own — something has to be feeding it. What I was looking for was an imbalance giving the rotor one push per revolution.</p>
+  <div class="kb-callout">
+   <p><strong>What are 1P and 3P?</strong> The rotor's own rotational frequency is called 1P: however many turns per second the rotor makes, that is the frequency. On a three-bladed rotor the blades pass the tower at three times that rate, which is 3P. The distinction is central to the diagnosis: a rise in <strong>3P</strong> points to tower interaction and aerodynamics, while a rise in <strong>1P</strong> says the rotor is unbalanced — one of the three blades is behaving differently from the others.</p>
+  </div>
+
+  <h2>Step-by-step diagnosis</h2>
+  <ol class="kb-steps">
+   <li><strong>Recorded the vibration data together with rotor speed.</strong> Looking only at the amplitude of the vibration is not enough. I recorded rotor speed at the same time so that I could read the frequency in terms of 1P and 3P.</li>
+   <li><strong>Produced the spectrum and found the dominant component.</strong> The overwhelming majority of the vibration sat at <strong>1P</strong>; the 3P component was at a normal level. That single measurement turned the case around completely: the problem was not aerodynamic or tower interaction, it was <strong>rotor imbalance</strong>.</li>
+   <li><strong>Separated mass imbalance from aerodynamic imbalance.</strong> This distinction matters. Mass imbalance (water collected inside a blade, repair material) acts identically every revolution and is relatively independent of wind speed. Aerodynamic imbalance depends on the wind, because the force comes from the wind. Since the vibration tracked the wind closely, I moved toward aerodynamic imbalance.</li>
+   <li><strong>Compared the pitch angles of the three blades in SCADA.</strong> The control system showed all three at the same angle. On paper there was no problem. But that value came from the encoder — it was the system's <em>belief</em> about where the blade was, not where the blade actually was.</li>
+   <li><strong>Measured the pitch angle physically.</strong> After the turbine was stopped and secured, I went into the hub and measured each of the three blade angles against a reference surface, one by one. Result: one blade sat roughly <strong>2.5° away</strong> from the other two. The encoder was showing all three as identical.</li>
+   <li><strong>Checked blade–tower clearance.</strong> To see whether the vibration was bringing a blade dangerously close to the tower. Clearance was within acceptable limits — there was no immediate risk and the work could be planned rather than rushed.</li>
+   <li><strong>Inspected the blade roots and pitch bearings.</strong> To confirm there was no structural problem. No cracking, delamination or bearing play was found. The blades were sound.</li>
+  </ol>
+
+  <h2>Root cause</h2>
+  <p>Calibration drift in one blade's pitch encoder. Because the control system believed that blade was at the same angle as the others, it was giving all three the same command; in reality that blade was operating at an angle roughly 2.5° different.</p>
+  <p>The consequence is that the blade produces a different force from the wind than its neighbours. The rotor is loaded asymmetrically once per revolution — forcing at exactly 1P. In the 7–9 m/s band the rotor speed coincided with the point where that forcing approached a natural frequency of the structure, and the vibration grew there. Outside the band the same asymmetry existed, but without resonance it was not noticeable.</p>
+  <p>The drop in the power curve came from the same cause: when one blade works outside the optimum angle, the total efficiency of the rotor falls.</p>
+
+  <h2>Fix</h2>
+  <ol>
+   <li><strong>Pitch encoder calibration (4 hours):</strong> all three blades were brought to the physical reference position, encoder zero points redefined, and the values read by the control system matched to the physical measurement.</li>
+   <li><strong>Verification measurement (1 hour):</strong> after calibration the three blades were driven to several different angles and compared against physical measurement at each. The deviation came within tolerance.</li>
+   <li><strong>Restart and vibration monitoring (2 weeks):</strong> the turbine was restarted and vibration re-measured, particularly in the 7–9 m/s band. The 1P component dropped markedly; the perceptible vibration disappeared.</li>
+   <li><strong>Power curve check (4 weeks):</strong> production in that band returned to the expected level.</li>
+  </ol>
+
+  <h2>Reading a vibration spectrum</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Dominant component</th><th>What it tells you</th><th>Where to look first</th></tr>
+   <tr><td><strong>1P</strong> (rotor speed)</td><td>Rotor imbalance — one blade is behaving differently</td><td>Pitch angle asymmetry, blade mass balance</td></tr>
+   <tr><td><strong>3P</strong> (speed × blade count)</td><td>Blades passing the tower</td><td>Tower shadow, wind profile, yaw alignment</td></tr>
+   <tr><td>High frequency, narrow peak</td><td>Local damage in a rotating element</td><td>Bearing, gearbox, generator</td></tr>
+   <tr><td>Broadband rise</td><td>Structural loosening</td><td>Bolt torques, tower flange, mounts</td></tr>
+   <tr><td>Growth in a specific wind band</td><td>Resonance — but there is a forcing source</td><td>Find the forcing first; resonance only amplifies</td></tr>
+  </table></div>
+
+  <h2>Preventive maintenance</h2>
+  <ul>
+   <li><strong>Measure pitch angle physically at intervals.</strong> Trusting the encoder value is not enough; calibration drifts over time. Comparing against a physical measurement catches this kind of problem before it surfaces.</li>
+   <li><strong>Always record vibration together with rotor speed.</strong> A vibration measurement without the speed cannot tell you whether it is 1P or 3P — that is, it has lost its most valuable information.</li>
+   <li><strong>Ask for the wind band when a complaint comes in.</strong> There is a gulf, diagnostically, between &quot;there is vibration&quot; and &quot;there is vibration between 7 and 9 m/s&quot;. The narrowness of the band points directly at resonance.</li>
+   <li><strong>Look at the spectrum before deciding on a blade inspection.</strong> Blade inspection is expensive and slow. If 1P dominates, the problem is most likely not in the blade but in the blade's <em>angle</em>.</li>
+   <li><strong>Assess power curve deviation together with vibration.</strong> If both degrade in the same band, look for a common cause; in this case the common cause was a single calibration error.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Field note</p>
+   <p>I like this case because we came very close to making the most expensive mistake on site. The instinct &quot;there is vibration, so the blade is damaged&quot; is strong, and it leads straight to a blade inspection or even a blade removal. The fix was a four-hour calibration.</p>
+   <p>The rule that settled in me from it: <strong>do not measure what the encoder shows, measure where the blade actually is.</strong> A control system never lies; it simply believes what it has been told. When the calibration drifts the system looks perfectly healthy, because by its own measure everything is in order. A physical measurement is the only thing that closes that blind spot.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+  </aside>
+
+  <div class="kb-callout">
+   <p><strong>Warning:</strong> all work in the hub is done with the rotor locked, the turbine stopped and LOTO applied. When working on the pitch system the backup supply must also be isolated. This note is field experience and does not replace the manufacturer's service documentation.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/pitch/">Pitch System — motor, gearbox, sensor and control</a></li>
+    <li><a href="/en/field-notes/pitch-motor-high-current/">Case 01: Pitch Motor High Current</a></li>
+    <li><a href="/en/turbines/vestas/v126/">Vestas V126 — model guide</a></li>
+    <li><a href="/en/turbines/vestas/v136/">Vestas V136 — vibration management on long blades</a></li>
+    <li><a href="/en/field-notes/">All field notes</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

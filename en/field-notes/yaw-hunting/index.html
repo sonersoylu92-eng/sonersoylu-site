@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case 03: Yaw Hunting — The Nacelle Oscillates While Turning | Soner Soylu</title>
+<meta name="description" content="A nacelle oscillating ±18° on an Enercon E92. Six-step diagnosis across bearing drag, sensor jitter and a drifted PLC parameter — and why the cause was all three.">
+<link rel="canonical" href="https://sonersoylu.com/en/field-notes/yaw-hunting/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-hunting/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Case 03: Yaw Hunting — The Nacelle Oscillates While Turning">
+<meta property="og:description" content="A nacelle oscillating ±18° on an Enercon E92. Six-step diagnosis across bearing drag, sensor jitter and a drifted PLC parameter — and why the cause was all three.">
+<meta property="og:url" content="https://sonersoylu.com/en/field-notes/yaw-hunting/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Case 03: Yaw Hunting — The Nacelle Oscillates While Turning",
+ "description": "A nacelle oscillating ±18° on an Enercon E92. Six-step diagnosis across bearing drag, sensor jitter and a drifted PLC parameter — and why the cause was all three.",
+ "url": "https://sonersoylu.com/en/field-notes/yaw-hunting/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Field notes",
+    "item": "https://sonersoylu.com/en/field-notes/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Yaw hunting",
+    "item": "https://sonersoylu.com/en/field-notes/yaw-hunting/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" aria-current="true">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/saha-notlari/yaw-salinimi/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/saha-notlari/yaw-salinimi/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Yaw hunting</span></nav>
+
+  <p class="kb-kicker">From the field · Case 03</p>
+  <h1>Case 03: Yaw Hunting — The Nacelle Oscillates While Turning</h1>
+  <p class="kb-lead">An Enercon E92. Instead of settling into the wind, the nacelle kept overshooting and coming back — swinging about ±18° at roughly 0.5 to 1 Hz. Yaw hunting is one of those faults where looking for a single culprit wastes your day, because it is usually several small things adding up.</p>
+  <h2>Symptom</h2>
+  <ul>
+   <li><strong>Behaviour:</strong> the nacelle oscillates ±18° about the wind direction instead of settling</li>
+   <li><strong>Frequency:</strong> roughly 0.5–1.0 Hz</li>
+   <li><strong>Yaw motor current:</strong> elevated, because the drive is working almost continuously</li>
+   <li><strong>Production:</strong> below expectation, since the rotor spends much of its time off-axis</li>
+   <li><strong>Sound:</strong> a friction noise from the yaw deck during movement</li>
+  </ul>
+
+  <h2>First assessment</h2>
+  <p>Yaw is a closed loop: a sensor reports the wind direction, a controller decides, a drive moves the nacelle, and the sensor reads the result. Hunting means that loop has become unstable. Instability comes from one of three places — the sensor is feeding in noise, the controller is reacting too hard, or the mechanics are not responding the way the controller expects.</p>
+  <p>The friction noise made me suspect the mechanical side, but I did not want to assume. With a control loop it pays to examine every element, because the answer is often a combination rather than a single fault.</p>
+
+  <h2>Step-by-step diagnosis</h2>
+  <ol class="kb-steps">
+   <li><strong>Looked at the SCADA trend for the oscillation shape.</strong> A regular, sustained oscillation rather than a decaying one. That already suggests the controller is feeding the motion rather than damping it.</li>
+   <li><strong>Drove the yaw manually in controlled steps.</strong> With the automatic loop disabled. The nacelle moved, but not smoothly — the resistance varied through the rotation.</li>
+   <li><strong>Checked bearing drag.</strong> Measuring the current needed to start and sustain the movement showed it was higher than it should be, and it varied by position. The bearing was dragging.</li>
+   <li><strong>Examined the vane sensor.</strong> Its mounting was slightly loose. A loose sensor produces small, fast fluctuations in the reported direction — jitter — which a controller will faithfully chase.</li>
+   <li><strong>Checked the drive electronics.</strong> Motor windings and drive output were normal. Nothing to explain the behaviour on the electrical side.</li>
+   <li><strong>Read the controller parameters.</strong> The proportional gain sat at 1.5 against a design value of 0.6. A gain that high makes the loop react aggressively to every small error, including sensor noise. This was the piece that turned a sluggish mechanism into an oscillation.</li>
+  </ol>
+
+  <h2>Root cause</h2>
+  <p>Three factors compounding. The bearing was dragging, so the nacelle did not respond the way the controller expected. The vane sensor was loose, so the controller was being fed jitter. And the proportional gain had been left at 1.5 instead of 0.6, so the controller amplified both problems instead of absorbing them.</p>
+  <p>Any one of these alone would have produced a mildly imperfect yaw. Together they produced a loop that would not settle. This is the normal shape of a control-loop fault: no single part is dramatically broken, but the combination is unstable.</p>
+
+  <h2>Fix</h2>
+  <ol>
+   <li><strong>Controller parameter restored (30 minutes):</strong> proportional gain set back to the design value of 0.6.</li>
+   <li><strong>Vane sensor remounted (1 hour):</strong> mounting tightened and alignment verified, removing the jitter at source.</li>
+   <li><strong>Bearing lubrication (2 hours):</strong> the slewing bearing was lubricated and the lubrication delivery checked at each point.</li>
+   <li><strong>Result:</strong> the oscillation narrowed to about ±2–3° within two weeks, which is normal operating behaviour, and the yaw motor current came back down.</li>
+  </ol>
+
+  <h2>Preventive maintenance</h2>
+  <ul>
+   <li><strong>Treat hunting as a loop problem, not a part problem.</strong> Check the sensor, the controller and the mechanics in turn; expect the answer to be a combination.</li>
+   <li><strong>Record controller parameters after every intervention.</strong> A gain left at a commissioning or troubleshooting value is a common and invisible cause.</li>
+   <li><strong>Check vane sensor mounting at every service.</strong> It takes a minute and a loose sensor poisons every downstream decision.</li>
+   <li><strong>Watch yaw motor current as a mechanical health signal.</strong> Rising current with no change in duty is the earliest sign of bearing drag.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Field note</p>
+   <p>The temptation with hunting is to keep adjusting the controller until the oscillation stops. You can usually make it go away that way — by detuning the loop so far that the yaw becomes lazy. The mechanical problem is still there, and now it is hidden.</p>
+   <p>What worked here was fixing the mechanics and the sensor first, then putting the gain back where it was designed to be, rather than compensating for the other two faults with a number.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+  </aside>
+  <div class="kb-callout">
+   <p><strong>Warning:</strong> Work on the yaw system requires the turbine stopped, the yaw drive isolated and LOTO applied; the yaw deck is a place where pinch injuries happen. This note is field experience and does not replace the manufacturer's service documentation.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/yaw/">Yaw System — slewing bearing, ring gear, vane sensor</a></li>
+    <li><a href="/en/field-notes/yaw-bearing-wear/">Case 06: Yaw Bearing Wear — the same system, a different fault</a></li>
+    <li><a href="/en/turbines/enercon/e92/">Enercon E92 — model guide</a></li>
+    <li><a href="/en/field-notes/">All field notes</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

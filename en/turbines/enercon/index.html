@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enercon Wind Turbines — E70, E82 and E92 Direct-Drive Guide | Soner Soylu</title>
+<meta name="description" content="Field-oriented technical guides to the Enercon E70, E82 and E92: gearless direct-drive design, annular generator, storm control, assembly, maintenance and typical faults.">
+<link rel="canonical" href="https://sonersoylu.com/en/turbines/enercon/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Enercon Series">
+<meta property="og:description" content="Field-oriented technical guides to the Enercon E70, E82 and E92: gearless direct-drive design, annular generator, storm control, assembly, maintenance and typical faults.">
+<meta property="og:url" content="https://sonersoylu.com/en/turbines/enercon/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Enercon Series",
+ "description": "Field-oriented technical guides to the Enercon E70, E82 and E92: gearless direct-drive design, annular generator, storm control, assembly, maintenance and typical faults.",
+ "url": "https://sonersoylu.com/en/turbines/enercon/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Turbines",
+    "item": "https://sonersoylu.com/en/turbines/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Enercon",
+    "item": "https://sonersoylu.com/en/turbines/enercon/"
+   }
+  ]
+ },
+ "mainEntity": {
+  "@type": "ItemList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Enercon E70",
+    "url": "https://sonersoylu.com/en/turbines/enercon/e70/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Enercon E82",
+    "url": "https://sonersoylu.com/en/turbines/enercon/e82/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Enercon E92",
+    "url": "https://sonersoylu.com/en/turbines/enercon/e92/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/" aria-current="true">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/turbinler/enercon/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/turbinler/enercon/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/turbines/">Turbines</a> <i>/</i> <span aria-current="page">Enercon</span></nav>
+
+  <p class="kb-kicker">Manufacturer</p>
+  <h1>Enercon Series</h1>
+  <p class="kb-lead">Enercon's design signature is that it uses no gearbox. The rotor drives an annular generator directly. That removes the single largest failure category in the industry; in exchange it brings a very heavy generator and a sensitivity to thermal management.</p>
+ <p>The field consequence of the gearless design is plain: there is no oil change, no gear pitting and no reduction-stage failure on the maintenance list. What replaces them is the generator cooling ducts — a blocked duct comes straight back as a temperature alarm.</p>
+ <div class="kb-grid">
+  <a class="kb-card" href="/en/turbines/enercon/e70/"><span class="n">2.3 MW</span><span class="t">Enercon E70</span><span class="d">70 m rotor, direct-drive annular generator, no gearbox. Cooling-duct cleaning is the main periodic job.</span></a>
+  <a class="kb-card" href="/en/turbines/enercon/e82/"><span class="n">2.0–3.0 MW</span><span class="t">Enercon E82</span><span class="d">82 m rotor, direct-drive. E2 and E4 variants, storm control, annular generator maintenance.</span></a>
+  <a class="kb-card" href="/en/turbines/enercon/e92/"><span class="n">2.35 MW</span><span class="t">Enercon E92</span><span class="d">92 m rotor, low-wind design. Large rotor with deliberately low rated power; yaw bearing monitoring comes to the front.</span></a>
+ </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

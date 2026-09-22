@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case 04: Generator Temperature Alarm — Is the Fault in the Sensor? | Soner Soylu</title>
+<meta name="description" content="A 116 °C generator alarm on a Vestas V126 with the machine running normally. A 41 °C gap between IR thermometer and SCADA led to RTD calibration drift.">
+<link rel="canonical" href="https://sonersoylu.com/en/field-notes/generator-temperature/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/generator-temperature/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Case 04: Generator Temperature Alarm — Is the Fault in the Sensor?">
+<meta property="og:description" content="A 116 °C generator alarm on a Vestas V126 with the machine running normally. A 41 °C gap between IR thermometer and SCADA led to RTD calibration drift.">
+<meta property="og:url" content="https://sonersoylu.com/en/field-notes/generator-temperature/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Case 04: Generator Temperature Alarm — Is the Fault in the Sensor?",
+ "description": "A 116 °C generator alarm on a Vestas V126 with the machine running normally. A 41 °C gap between IR thermometer and SCADA led to RTD calibration drift.",
+ "url": "https://sonersoylu.com/en/field-notes/generator-temperature/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Field notes",
+    "item": "https://sonersoylu.com/en/field-notes/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Generator temperature",
+    "item": "https://sonersoylu.com/en/field-notes/generator-temperature/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" aria-current="true">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/saha-notlari/jenerator-sicaklik/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/saha-notlari/jenerator-sicaklik/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Generator temperature</span></nav>
+
+  <p class="kb-kicker">From the field · Case 04</p>
+  <h1>Case 04: Generator Temperature Alarm — Is the Fault in the Sensor?</h1>
+  <p class="kb-lead">A Vestas V126 was alarming at 116 °C on generator temperature and derating itself, but everything else about the machine looked healthy — no unusual noise, no vibration, cooling running. When the readings and the behaviour disagree like this, one of them is wrong, and it is worth finding out which before you start dismantling anything.</p>
+  <h2>Symptom</h2>
+  <ul>
+   <li><strong>SCADA:</strong> generator temperature 116 °C, against a nominal limit below 100 °C</li>
+   <li><strong>Consequence:</strong> the control system was derating output to protect the machine</li>
+   <li><strong>But:</strong> no unusual noise, no vibration, cooling fan running, radiator clean</li>
+   <li><strong>Trend:</strong> the reading had climbed by roughly 2 °C per day over the preceding three days</li>
+  </ul>
+
+  <h2>First assessment</h2>
+  <p>A generator genuinely at 116 °C does not behave politely. You would expect it to smell, to change its sound, and for the cooling circuit to show the load somewhere. None of that was present. That mismatch — a severe number with none of its consequences — is the classic shape of an instrumentation fault rather than a machine fault.</p>
+  <p>The other clue was the trend. A real thermal problem tracks load and weather; it does not climb by a tidy 2 °C every day regardless. A steady daily drift looks like something in the measurement chain moving, not something in the machine heating up.</p>
+
+  <h2>Step-by-step diagnosis</h2>
+  <ol class="kb-steps">
+   <li><strong>Took a physical reading with an IR thermometer.</strong> This is the step that decides the case. The generator housing measured around 75 °C where SCADA claimed 116 °C — a gap of roughly <strong>41 °C</strong>. The machine was not hot; the reading was.</li>
+   <li><strong>Took several readings around the housing.</strong> To be sure the IR reading was not a local artefact. The distribution was even and consistent with a healthy machine under that load.</li>
+   <li><strong>Checked the cooling circuit.</strong> Fan running, radiator clean, airflow normal. Nothing to explain a real 116 °C, which reinforced the instrumentation hypothesis.</li>
+   <li><strong>Measured the RTD sensor resistance.</strong> The element read about 68 Ω where roughly 110 Ω was expected at that temperature. The sensor was reporting a resistance that corresponds to a much hotter machine than the one in front of us.</li>
+   <li><strong>Checked the wiring and terminals.</strong> To rule out a loose connection or corroded terminal adding resistance, which can mimic this. Connections were sound, so the drift was in the element itself.</li>
+   <li><strong>Reviewed the sensor's service age.</strong> The element had been in service about four years — well within the range where RTD drift becomes common.</li>
+  </ol>
+
+  <h2>Root cause</h2>
+  <p>Calibration drift in the generator RTD temperature sensor. After roughly four years in service the element's resistance characteristic had shifted, and SCADA was faithfully converting that wrong resistance into a wrong temperature. The control system then did exactly what it was designed to do — protect the machine — and derated a generator that was in perfectly good health.</p>
+  <p>The cost of this fault was not damage. It was lost production, plus the risk of someone opening up a healthy generator chasing a number.</p>
+
+  <h2>Fix</h2>
+  <ol>
+   <li><strong>Immediate: SCADA offset applied (30 minutes):</strong> a −30 °C correction was entered so the displayed value matched physical measurement, restoring full output while the replacement was arranged. Applied as a documented temporary measure, not a permanent setting.</li>
+   <li><strong>Threshold reviewed:</strong> the alarm limit was temporarily raised in a controlled way so the machine would not keep derating on a known-bad reading.</li>
+   <li><strong>Sensor replaced (planned, 3 hours):</strong> the drifted RTD element was replaced and the new reading verified against the IR thermometer across several load points.</li>
+   <li><strong>Offset removed:</strong> the temporary correction was taken out once the new sensor was confirmed accurate — leaving it in place would have been the dangerous outcome of this repair.</li>
+  </ol>
+
+  <h2>Distinguishing a real thermal fault from a sensor fault</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Check</th><th>Real overheating</th><th>Sensor drift</th></tr>
+   <tr><td>IR thermometer vs SCADA</td><td>Agree within a few degrees</td><td>Large, consistent gap</td></tr>
+   <tr><td>Relationship to load</td><td>Rises and falls with load</td><td>Largely independent of load</td></tr>
+   <tr><td>Trend shape</td><td>Irregular, weather-driven</td><td>Steady daily drift</td></tr>
+   <tr><td>Sound and smell</td><td>Usually changed</td><td>Normal</td></tr>
+   <tr><td>Cooling circuit</td><td>Often shows a cause</td><td>Nothing to find</td></tr>
+   <tr><td>RTD resistance</td><td>Matches the temperature</td><td>Does not match</td></tr>
+  </table></div>
+
+  <h2>Preventive maintenance</h2>
+  <ul>
+   <li><strong>On any temperature alarm, take a physical reading first.</strong> An IR thermometer costs minutes and settles the question of whether you have a machine problem or a measurement problem.</li>
+   <li><strong>Treat RTD sensors as consumables.</strong> They drift with age. Include a resistance check in the periodic schedule rather than waiting for a nonsense reading.</li>
+   <li><strong>Log temporary offsets and put an end date on them.</strong> An offset left in place permanently will one day hide a real fault.</li>
+   <li><strong>Read the trend shape, not just the value.</strong> A tidy, load-independent daily climb is almost never a thermal problem.</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Field note</p>
+   <p>The rule I carry out of this one: when a number and the machine's behaviour disagree, believe the machine until you have proved the number. A generator genuinely at 116 °C announces itself. This one was quiet, and the quiet was the evidence.</p>
+   <p>The part that needs discipline is the offset. It is the right move to keep the turbine producing while you wait for a sensor — and it is exactly the kind of temporary fix that becomes permanent if nobody writes it down. Removing it after the replacement is part of the repair, not an afterthought.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+  </aside>
+  <div class="kb-callout">
+   <p><strong>Warning:</strong> Generator terminals carry high voltage; measurement and sensor work require the turbine stopped, the circuit isolated, absence of voltage verified and LOTO applied. This note is field experience and does not replace the manufacturer's service documentation.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/generator/">Generator and Converter System</a></li>
+    <li><a href="/en/field-notes/converter-overcurrent/">Case 05: Converter Overcurrent</a></li>
+    <li><a href="/en/turbines/vestas/v126/">Vestas V126 — model guide</a></li>
+    <li><a href="/en/field-notes/">All field notes</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

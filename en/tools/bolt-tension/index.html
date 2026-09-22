@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bolt Tension Calculator — Preload, Tensioner Pressure, Load Cell | Soner Soylu</title>
+<meta name="description" content="Bolt tension calculator for wind turbine field service: target preload, hydraulic tensioner pressure tables for M20/M24/M30, load cell verification protocol and formulae.">
+<link rel="canonical" href="https://sonersoylu.com/en/tools/bolt-tension/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/bolt-tension/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/civata-germe/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/civata-germe/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bolt Tension Calculator">
+<meta property="og:description" content="Bolt tension calculator for wind turbine field service: target preload, hydraulic tensioner pressure tables for M20/M24/M30, load cell verification protocol and formulae.">
+<meta property="og:url" content="https://sonersoylu.com/en/tools/bolt-tension/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-araclar.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Bolt Tension Calculator",
+ "description": "Bolt tension calculator for wind turbine field service: target preload, hydraulic tensioner pressure tables for M20/M24/M30, load cell verification protocol and formulae.",
+ "url": "https://sonersoylu.com/en/tools/bolt-tension/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Tools",
+    "item": "https://sonersoylu.com/en/tools/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Bolt tension",
+    "item": "https://sonersoylu.com/en/tools/bolt-tension/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/araclar/civata-germe/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/araclar/civata-germe/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/tools/">Tools</a> <i>/</i> <span aria-current="page">Bolt tension</span></nav>
+
+  <p class="kb-kicker">Field tool</p>
+  <h1>Bolt Tension Calculator</h1>
+  <p class="kb-lead">Preload calculations for wind turbine blade root bolts, nacelle connections, gearbox flanges and hub joints. Target preload to tensioner pressure, plus the load cell verification that confirms you actually got it.</p>
+  <div class="kb-calc">
+   <div class="kb-field">
+    <label for="boltSize">Bolt diameter</label>
+    <select id="boltSize">
+     <option value="m10">M10 (Ø 10 mm)</option>
+     <option value="m12">M12 (Ø 12 mm)</option>
+     <option value="m16">M16 (Ø 16 mm)</option>
+     <option value="m20" selected>M20 (Ø 20 mm)</option>
+     <option value="m24">M24 (Ø 24 mm)</option>
+     <option value="m30">M30 (Ø 30 mm)</option>
+    </select>
+   </div>
+   <div class="kb-field">
+    <label for="tensionKN">Target preload (kN)</label>
+    <input type="number" id="tensionKN" value="50" min="0" max="1000" step="1" inputmode="decimal">
+    <small>1 kN is about 102 kgf. The recommended limit for the selected diameter is checked automatically.</small>
+   </div>
+   <div class="kb-out">
+    <p class="k">Target preload</p>
+    <p class="v" id="forceResult">&mdash;</p>
+    <p class="sub" id="limitNote"></p>
+    <p class="sub" id="torqueEquivalent"></p>
+   </div>
+  </div>
+
+  <h2>Hydraulic tensioner pressure tables</h2>
+  <p>On a wind turbine, blade root and gearbox flange joints are normally made up with a hydraulic tensioner rather than a torque wrench. These tables give a starting pressure for a target preload.</p>
+
+  <h3>M20 bolt — grade 8.8 (ISO 898)</h3>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Target preload</th><th>Tensioner pressure</th><th>Air delivery (L/min @ 7 bar)</th><th>Estimated time</th></tr>
+   <tr><td>50 kN</td><td>10–12 bar</td><td>15–20</td><td>5–10 s</td></tr>
+   <tr><td>100 kN</td><td>20–25 bar</td><td>30–40</td><td>8–12 s</td></tr>
+   <tr><td>150 kN</td><td>30–35 bar</td><td>45–55</td><td>10–15 s</td></tr>
+   <tr><td>200 kN</td><td>40–45 bar</td><td>60–70</td><td>12–20 s</td></tr>
+  </table></div>
+
+  <h3>M24 bolt — grade 10.9</h3>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Target preload</th><th>Tensioner pressure</th><th>Air delivery (L/min @ 7 bar)</th><th>Estimated time</th></tr>
+   <tr><td>100 kN</td><td>15–18 bar</td><td>25–30</td><td>6–10 s</td></tr>
+   <tr><td>150 kN</td><td>22–27 bar</td><td>40–50</td><td>10–15 s</td></tr>
+   <tr><td>200 kN</td><td>30–35 bar</td><td>55–65</td><td>12–18 s</td></tr>
+   <tr><td>250 kN</td><td>40–50 bar</td><td>70–85</td><td>15–25 s</td></tr>
+   <tr><td>300 kN</td><td>55–65 bar</td><td>90–110</td><td>20–30 s</td></tr>
+  </table></div>
+
+  <h3>M30 bolt — grade 10.9 (blade root flange)</h3>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Target preload</th><th>Tensioner pressure</th><th>Air delivery (L/min @ 7 bar)</th><th>Estimated time</th></tr>
+   <tr><td>200 kN</td><td>20–25 bar</td><td>35–45</td><td>10–15 s</td></tr>
+   <tr><td>300 kN</td><td>30–40 bar</td><td>55–70</td><td>15–25 s</td></tr>
+   <tr><td>400 kN</td><td>45–55 bar</td><td>80–100</td><td>20–35 s</td></tr>
+   <tr><td>500 kN</td><td>60–75 bar</td><td>110–130</td><td>30–40 s</td></tr>
+  </table></div>
+
+  <p><small><strong>Note:</strong> tensioner pressure varies with the condition of the tool, ambient temperature and lubrication. These are starting estimates only; verification with a load cell is mandatory.</small></p>
+
+  <h2>Load cell verification</h2>
+  <p>After tensioning, the achieved preload is confirmed with a load cell. The protocol:</p>
+  <ol>
+   <li><strong>Load cell (600 t capacity is typical):</strong> positioned over the bolt</li>
+   <li><strong>Baseline:</strong> unloaded reading of 0 ± 0.5 kN</li>
+   <li><strong>Calibrated pull cylinder:</strong> lightly load the bolt already tensioned by the tool</li>
+   <li><strong>Reading:</strong> compare against target preload; ±5% is normally acceptable</li>
+   <li><strong>Documentation:</strong> every bolt's load cell reading is recorded</li>
+  </ol>
+  <p><strong>Blade root example:</strong> eight M30 bolts, target 250 kN each. Load cell readings 248 kN, 252 kN, 251 kN and so on — all within ±5% of 250 kN, so the joint is accepted.</p>
+
+  <h2>Formulae</h2>
+  <h3>Preload estimate</h3>
+  <p><code>T = (C × d × F_y × S) / 1000</code></p>
+  <ul>
+   <li><strong>T:</strong> preload (kN)</li>
+   <li><strong>C:</strong> tension coefficient (about 0.75 for dry surfaces)</li>
+   <li><strong>d:</strong> bolt diameter (mm)</li>
+   <li><strong>F_y:</strong> yield strength (grade 8.8 = 640 MPa, grade 10.9 = 900 MPa)</li>
+   <li><strong>S:</strong> safety factor, usually 0.75 to stay below 75% of yield</li>
+  </ul>
+  <h3>Tensioner pressure</h3>
+  <p><code>P = T / A_piston</code></p>
+  <ul>
+   <li><strong>P:</strong> required pressure (bar)</li>
+   <li><strong>A_piston:</strong> piston area (cm²)</li>
+  </ul>
+  <h3>Rough torque equivalent</h3>
+  <p><code>Torque (N·m) ≈ K × F (N) × d (m)</code>, with K about 0.20 for unlubricated steel.</p>
+  <p>This is for comparison only. Torque control scatters preload by roughly ±25% because most of the applied torque goes into friction rather than tension, which is exactly why critical joints are tensioned hydraulically and verified with a load cell.</p>
+
+  <h2>Safety notes</h2>
+  <ul>
+   <li><strong>Compressed air system:</strong> check the tensioner circuit for leaks weekly.</li>
+   <li><strong>Over-tensioning:</strong> taking a bolt above about 80% of yield risks stress cracking and sudden failure.</li>
+   <li><strong>Under-tensioning:</strong> a joint below target will loosen and fret under vibration.</li>
+   <li><strong>Star pattern:</strong> always tension in a crossing sequence so load distributes evenly around the flange.</li>
+   <li><strong>Records:</strong> all readings must be documented — OEM warranty terms normally require it.</li>
+  </ul>
+
+  <div class="kb-callout">
+   <p><strong>The manufacturer's value governs.</strong> Everything on this page is a field aid for estimation and cross-checking. The target preload, tool and sequence for your specific joint come from the OEM documentation.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/tools/">All calculators</a></li>
+    <li><a href="/en/turbines/vestas/v136/">Vestas V136 — blade root bolting on long blades</a></li>
+    <li><a href="/en/systems/gearbox/">Gearbox System</a></li>
+    <li><a href="/en/field-notes/">Field fault cases</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+<script>
+const boltData = {
+  m10: {d:10, maxKN:35},  m12: {d:12, maxKN:50},  m16: {d:16, maxKN:100},
+  m20: {d:20, maxKN:160}, m24: {d:24, maxKN:230}, m30: {d:30, maxKN:370}
+};
+function calc(){
+  const sel=document.getElementById('boltSize'), inp=document.getElementById('tensionKN');
+  if(!sel||!inp) return;
+  const b=boltData[sel.value], t=parseFloat(inp.value);
+  const out=document.getElementById('forceResult'),
+        lim=document.getElementById('limitNote'),
+        tq=document.getElementById('torqueEquivalent');
+  if(!b||isNaN(t)||t<=0){ out.textContent='\u2014'; lim.textContent=''; tq.textContent=''; return; }
+  out.textContent = t.toLocaleString('en-GB') + ' kN';
+  if(t > b.maxKN){
+    lim.innerHTML = '<span class="kb-warn">Warning: the recommended limit for ' + sel.value.toUpperCase() +
+      ' is ' + b.maxKN + ' kN. This value exceeds it \u2014 risk of approaching yield.</span>';
+  } else {
+    lim.textContent = sel.value.toUpperCase() + ': ' + Math.round(t/b.maxKN*100) +
+      '% of the recommended limit (' + b.maxKN + ' kN).';
+  }
+  const tork = Math.round(0.20 * (t*1000) * (b.d/1000));
+  tq.textContent = 'Rough torque equivalent about ' + tork.toLocaleString('en-GB') +
+    ' N\u00b7m (K=0.20). For comparison only \u2014 on critical joints use a tensioner and verify with a load cell.';
+}
+document.addEventListener('DOMContentLoaded', function(){
+  const sel=document.getElementById('boltSize'), inp=document.getElementById('tensionKN');
+  if(sel) sel.addEventListener('change', calc);
+  if(inp) inp.addEventListener('input', calc);
+  calc();
+});
+</script>
+</body>
+</html>

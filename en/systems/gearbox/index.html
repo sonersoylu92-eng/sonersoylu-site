@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gearbox System — Reduction Stages, Oil Management and Diagnosis | Soner Soylu</title>
+<meta name="description" content="Wind turbine gearbox technical reference: parallel-axis and planetary designs, oil management, temperature control, typical faults and maintenance intervals.">
+<link rel="canonical" href="https://sonersoylu.com/en/systems/gearbox/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/disli-kutusu/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gearbox System">
+<meta property="og:description" content="Wind turbine gearbox technical reference: parallel-axis and planetary designs, oil management, temperature control, typical faults and maintenance intervals.">
+<meta property="og:url" content="https://sonersoylu.com/en/systems/gearbox/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Gearbox System",
+ "description": "Wind turbine gearbox technical reference: parallel-axis and planetary designs, oil management, temperature control, typical faults and maintenance intervals.",
+ "url": "https://sonersoylu.com/en/systems/gearbox/",
+ "inLanguage": "en",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Wind Turbine Field Service Technician"
+ },
+ "datePublished": "2026-09-22T00:00:00Z",
+ "dateModified": "2026-09-22T00:00:00Z",
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://sonersoylu.com/en/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Systems",
+    "item": "https://sonersoylu.com/en/systems/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Gearbox",
+    "item": "https://sonersoylu.com/en/systems/gearbox/"
+   }
+  ]
+ }
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/" aria-current="true">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/">Field notes<span>Real fault cases, step by step</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/sistemler/disli-kutusu/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/sistemler/disli-kutusu/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/systems/">Systems</a> <i>/</i> <span aria-current="page">Gearbox</span></nav>
+
+  <p class="kb-kicker">Technical reference</p>
+  <h1>Gearbox System</h1>
+  <p class="kb-lead">The rotor turns at 6–15 rpm; a conventional generator wants 1000–1500 rpm. The gearbox bridges that gap, and in doing so it becomes the component that carries the highest torque in the machine — and the one that accounts for a large share of serious downtime.</p>
+  <h2>Why the gearbox is the critical component</h2>
+  <p>At the input the gearbox sees torque in the thousands of kilonewton-metres, delivered by a rotor that never turns at a constant load. Every gust, every tower passage and every yaw movement arrives as a load variation. A ratio in the region of 1:80 to 1:100 turns that slow, heavy input into fast, light output — and every stage of that conversion is a place where heat is generated and material fatigues.</p>
+  <p>This is also why the gearless alternative exists. Removing the gearbox removes this entire category of failure, at the cost of a very large and heavy generator. That trade-off is what separates the <a href="/en/turbines/vestas/">Vestas</a> and <a href="/en/turbines/enercon/">Enercon</a> philosophies.</p>
+
+  <h2>Design types</h2>
+  <ul>
+   <li><strong>Parallel-axis:</strong> several stages of parallel shafts. Simple, robust, well understood. Heavier and noisier for the same ratio. Used on the Vestas V110 generation.</li>
+   <li><strong>Planetary (epicyclic):</strong> a central sun gear with planets in a ring. Much more compact and quieter for the same torque because load is shared across several meshes, but the individual meshes are highly stressed, which makes pitting the characteristic failure. Used on the V126.</li>
+   <li><strong>Hybrid:</strong> a planetary input stage feeding helical output stages. The usual arrangement on 4 MW-class machines such as the V136, where torque is high but package size matters.</li>
+  </ul>
+
+  <h2>Oil: the system inside the system</h2>
+  <p>Gearbox oil does three jobs at once — it separates the gear surfaces, it carries heat away, and it carries wear debris to the filter. It is common to treat oil as a consumable; in practice it is a diagnostic instrument. Its temperature, colour, smell and metal content describe the health of everything it touches.</p>
+  <ul>
+   <li><strong>Volume:</strong> roughly 500–600 L on a 2.5 MW machine, 700–800 L at 3 MW, around 1000 L on 4 MW-class boxes.</li>
+   <li><strong>Nominal temperature:</strong> typically 45–65 °C. Alarm around 75–80 °C, shutdown around 90–95 °C.</li>
+   <li><strong>The threshold that matters:</strong> above roughly 75 °C viscosity falls and oxidation accelerates, which degrades the oil and raises the temperature further — a self-reinforcing loop.</li>
+   <li><strong>Metal analysis:</strong> the concentration trend matters more than any single figure. A rising slope is a warning even while absolute values look acceptable.</li>
+  </ul>
+
+  <h2>Cooling</h2>
+  <p>Passive systems rely on a finned radiator and natural convection; active systems add a pump and thermostatically controlled fan. Either way the failure mode is the same and it is mundane: a radiator blocked with dust or salt. In coastal and dusty sites radiator cleaning is one of the highest-return maintenance tasks there is.</p>
+
+  <h2>Reading temperature correctly</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Pattern</th><th>What it suggests</th><th>Where to look</th></tr>
+   <tr><td>Rise grows with load</td><td>Oil problem — level or condition</td><td>Level, leak path, oil state</td></tr>
+   <tr><td>Rise flat across load</td><td>Cooling problem</td><td>Radiator, fan, coolant level</td></tr>
+   <tr><td>Sudden step change</td><td>Sensor or circulation fault</td><td>Sensor resistance, pump, filter blockage</td></tr>
+   <tr><td>Slow climb over months</td><td>Progressive degradation</td><td>Metal trend, seal condition</td></tr>
+  </table></div>
+  <p><small>A temperature reading without a load reference cannot be interpreted. This is the method used in <a href="/en/field-notes/gearbox-temperature/">Case 02</a>.</small></p>
+
+  <h2>Typical faults</h2>
+  <ul>
+   <li><strong>Gear pitting:</strong> surface fatigue on the tooth flanks, characteristic of highly loaded planetary stages. First evidence is usually in the metal analysis, not in a temperature or noise change.</li>
+   <li><strong>Shaft seal leakage:</strong> the common cause of gradual oil loss, typically appearing after 8–12 years. Worked through in <a href="/en/field-notes/gearbox-temperature/">Case 02</a>.</li>
+   <li><strong>Bearing damage:</strong> shows in vibration spectra as a narrow high-frequency peak long before it is audible.</li>
+   <li><strong>Filter blockage:</strong> reduces circulation and raises temperature; often mistaken for a cooling fault.</li>
+   <li><strong>Oil degradation:</strong> oxidised oil loses its load-carrying ability even at the correct level.</li>
+  </ul>
+
+  <h2>Maintenance schedule</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Task</th><th>Interval</th><th>Note</th></tr>
+   <tr><td>Visual check for leaks and oil level</td><td>Monthly</td><td>A falling level is a leak until proven otherwise</td></tr>
+   <tr><td>Oil temperature trend at a fixed wind band</td><td>Monthly (from SCADA)</td><td>Pick a band and watch the slope</td></tr>
+   <tr><td>Oil sampling and metal analysis</td><td>6–12 months</td><td>Trend matters more than the absolute value</td></tr>
+   <tr><td>Radiator cleaning</td><td>6 months</td><td>More often at dusty or coastal sites</td></tr>
+   <tr><td>Oil and hydraulic filter change</td><td>12–24 months</td><td>Larger oil volumes load filters faster</td></tr>
+   <tr><td>Vibration measurement</td><td>12 months</td><td>Record with rotor speed so harmonics can be read</td></tr>
+   <tr><td>Internal borescope inspection</td><td>24–36 months</td><td>Tooth flank and bearing condition</td></tr>
+  </table></div>
+
+  <div class="kb-rel">
+   <p class="k">Related</p>
+   <ul>
+    <li><a href="/en/systems/">All systems</a></li>
+    <li><a href="/en/field-notes/gearbox-temperature/">Case 02: Gearbox Temperature Rise</a></li>
+    <li><a href="/en/turbines/vestas/">Vestas series — parallel-axis vs planetary</a></li>
+    <li><a href="/en/turbines/enercon/">Enercon series — the gearless alternative</a></li>
+    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=a3da19f9" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>
