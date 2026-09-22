@@ -317,7 +317,11 @@ let INDEKS = { tr: null, en: null };   // isolate ömrü boyunca bellekte kalır
 
 const DURAK = new Set(('bir bu şu ve ile için gibi daha çok az var yok olan olarak ' +
   'nedir nasıl neden ne mi mı mu mü de da ki den dan the a an of to in is are and or ' +
-  'for with how what why when which that this it be on at from').split(' '));
+  'for with how what why when which that this it be on at from ' +
+  'neler niçin nicin hangi kaç kac kim kimi şey sey şeyi seyi her hep tüm tum bütün butun ' +
+  'ama fakat ancak sonra önce once ise eğer eger yani ayrıca ayrica yine artık artik ' +
+  'does do did done should could would can will shall may might must ' +
+  'they them their there here about into over under than then also very just').split(' '));
 
 // Türkçe arama için sadeleştirme: şapka, büyük/küçük ve aksan farkını siler
 function sade(x) {
@@ -328,8 +332,20 @@ function sade(x) {
     .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
 }
 
+// Türkçe sondan eklemeli bir dil: "salınımı", "salınımının", "salınımları" aynı
+// kökten gelir. Kelimenin hem tamamını hem de altı harflik kökünü anahtar sayarak
+// bu ekleri geçiyoruz; tam eşleşme iki kez sayıldığı için doğal olarak öne çıkıyor.
+function kok(w) { return w.length > 6 ? w.slice(0, 6) : w; }
+
 function kelimeler(x) {
-  return sade(x).split(' ').filter((w) => w.length > 2 && !DURAK.has(w));
+  const c = new Set();
+  for (const w of sade(x).split(' ')) {
+    if (w.length < 3 || DURAK.has(w)) continue;
+    c.add(w);
+    const k = kok(w);
+    if (k !== w && k.length > 3) c.add(k);
+  }
+  return [...c];
 }
 
 async function indeksAl(env, dil) {
