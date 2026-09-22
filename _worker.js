@@ -466,12 +466,16 @@ async function asistan(request, env) {
   const istem = (dil === 'tr' ? 'ALINTILAR:\n' : 'EXCERPTS:\n') + alintilar +
                 (dil === 'tr' ? '\n\nSORU: ' : '\n\nQUESTION: ') + soru;
 
+  const tani = body.tani === 'ac' ? [] : null;
   let cevap = null;
   try {
     cevap = env.CLAUDE_ANAHTAR
       ? await claudeSor(env.CLAUDE_ANAHTAR, talimat, istem)
-      : await workersAiSor(env, talimat, istem);
-  } catch { cevap = null; }
+      : await workersAiSor(env, talimat, istem, tani);
+  } catch (e) {
+    if (tani) tani.push('genel hata: ' + String(e && e.message || e).slice(0, 200));
+    cevap = null;
+  }
 
   // Model yoksa ya da cevap vermediyse: sitedeki metinden CIKARIMSIZ ozet uret.
   // Boylece asistan hicbir kurulum olmadan da calisir ve asla uydurmaz.
@@ -486,7 +490,7 @@ async function asistan(request, env) {
     kaynaklar.push({ u: p.u, b: p.b });
   }
 
-  return json({ ok: true, bulundu: true, uretim, cevap, kaynaklar, dil });
+  return json({ ok: true, bulundu: true, uretim, cevap, kaynaklar, dil, tani: tani || undefined });
 }
 
 // ---------------------------------------------------------------------------
@@ -580,15 +584,37 @@ async function claudeSor(anahtar, talimat, istem) {
 }
 
 // Anahtar yoksa Cloudflare'in kendi modeli — ücretsiz kotayla çalışır
-async function workersAiSor(env, talimat, istem) {
-  if (!env.AI) return null;
-  const d = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-    max_tokens: 900,
-    messages: [
-      { role: 'system', content: talimat },
-      { role: 'user', content: istem },
-    ],
-  });
-  const t = d && (d.response || d.result);
-  return t ? String(t).trim() : null;
+// Anahtar yoksa Cloudflare'in kendi modeli - ucretsiz kotayla calisir.
+// Model adlari zamanla degisebildigi icin sirayla denenir; ilk calisan kullanilir.
+const AI_MODELLER = [
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  '@cf/meta/llama-3.1-8b-instruct-fast',
+  '@cf/meta/llama-3.1-8b-instruct',
+  '@cf/qwen/qwen2.5-14b-instruct',
+  '@cf/mistral/mistral-7b-instruct-v0.2',
+];
+
+async function workersAiSor(env, talimat, istem, tani) {
+  if (!env.AI) { if (tani) tani.push('AI baglantisi yok'); return null; }
+  for (const model of AI_MODELLER) {
+    try {
+      const d = await env.AI.run(model, {
+        max_tokens: 900,
+        messages: [
+          { role: 'system', content: talimat },
+          { role: 'user', content: istem },
+        ],
+      });
+      const t = d && (d.response || d.result || (d.choices && d.choices[0] &&
+                d.choices[0].message && d.choices[0].message.content));
+      if (t && String(t).trim()) {
+        if (tani) tani.push(model + ' → tamam');
+        return String(t).trim();
+      }
+      if (tani) tani.push(model + ' → bos yanit ' + JSON.stringify(d).slice(0, 160));
+    } catch (e) {
+      if (tani) tani.push(model + ' → ' + String(e && e.message || e).slice(0, 200));
+    }
+  }
+  return null;
 }
