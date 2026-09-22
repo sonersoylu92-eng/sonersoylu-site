@@ -1,0 +1,141 @@
+/* ============================================================
+   kb.css — Saha Bilgi Bankası (Knowledge Base) katmanı
+   style.css üzerine biner; sitenin mevcut token'larını kullanır:
+   --ground --surface --raise --line --ink --muted --beacon
+   --sans --mono --serif --shade
+   ============================================================ */
+
+.kb{max-width:50rem;margin:0 auto;padding:0 1.5rem 5rem}
+
+/* ---- üst gezinme ---- */
+.kb-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
+  padding:2rem 0 0;font-family:var(--mono);font-size:.6875rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kb-crumb a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;transition:color .18s,border-color .18s}
+.kb-crumb a:hover{color:var(--ink);border-bottom-color:var(--line)}
+.kb-crumb span[aria-current]{color:var(--ink)}
+.kb-crumb i{font-style:normal;opacity:.45}
+
+/* ---- başlık bloğu ---- */
+.kb h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);line-height:1.08;
+  letter-spacing:-.02em;margin:1.75rem 0 0;max-width:20ch}
+.kb-kicker{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--beacon);margin:2rem 0 0}
+.kb-lead{font-size:1.0625rem;line-height:1.75;color:var(--muted);
+  margin:1.5rem 0 0;max-width:64ch}
+.kb-meta{margin:1.75rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* ---- gövde tipografisi ---- */
+.kb h2{font-family:var(--serif);font-size:1.625rem;line-height:1.2;letter-spacing:-.015em;
+  margin:3.5rem 0 0;padding-top:2rem;border-top:1px solid var(--line)}
+.kb h3{font-size:1.125rem;line-height:1.35;margin:2.25rem 0 0;letter-spacing:-.01em}
+.kb h4{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin:1.75rem 0 0}
+.kb p{margin:1rem 0 0;line-height:1.75;max-width:68ch}
+.kb ul,.kb ol{margin:1rem 0 0;padding-left:1.25rem;max-width:68ch}
+.kb li{margin:.5rem 0;line-height:1.7}
+.kb li>strong{color:var(--ink)}
+.kb a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .18s}
+.kb a:hover{border-bottom-color:var(--beacon)}
+.kb code{font-family:var(--mono);font-size:.875em;background:var(--raise);
+  padding:.15em .4em;border-radius:3px}
+.kb small{font-size:.8125rem;color:var(--muted);line-height:1.65}
+
+/* ---- tablolar ---- */
+.kb-table-scroll{overflow-x:auto;margin:1.75rem 0 0;-webkit-overflow-scrolling:touch}
+.kb table{width:100%;border-collapse:collapse;font-size:.875rem;
+  background:var(--surface);border:1px solid var(--line)}
+.kb th,.kb td{border:1px solid var(--line);padding:.7rem .85rem;text-align:left;
+  vertical-align:top;line-height:1.55}
+.kb th{background:var(--raise);font-family:var(--mono);font-size:.6875rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+.kb tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--raise) 35%,transparent)}
+.kb td strong{color:var(--ink)}
+
+/* ---- saha notu / uyarı kutusu ---- */
+.kb-note{margin:2.5rem 0 0;padding:1.4rem 1.5rem;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--beacon);box-shadow:var(--shade)}
+.kb-note>p:first-child{margin-top:0;font-family:var(--mono);font-size:.6875rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--beacon)}
+.kb-note h3{margin-top:0}
+
+.kb-callout{margin:2rem 0 0;padding:1.2rem 1.4rem;background:var(--raise);
+  border:1px solid var(--line);font-size:.9375rem;line-height:1.7}
+.kb-callout>*:first-child{margin-top:0}
+
+/* ---- adım listesi (teşhis akışı) ---- */
+.kb-steps{list-style:none;padding:0;counter-reset:kbstep;margin:1.75rem 0 0}
+.kb-steps>li{counter-increment:kbstep;position:relative;padding:1.1rem 0 1.1rem 3rem;
+  border-bottom:1px solid var(--line);margin:0}
+.kb-steps>li:first-child{border-top:1px solid var(--line)}
+.kb-steps>li::before{content:counter(kbstep,decimal-leading-zero);position:absolute;left:0;top:1.1rem;
+  font-family:var(--mono);font-size:.75rem;color:var(--beacon);letter-spacing:.05em}
+
+/* ---- hesaplayıcı ---- */
+.kb-calc{margin:2rem 0 0;padding:1.6rem;background:var(--surface);
+  border:1px solid var(--line);box-shadow:var(--shade)}
+.kb-field{display:grid;gap:.4rem;margin:0 0 1.1rem}
+.kb-field label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+.kb-field input,.kb-field select{width:100%;padding:.7rem .8rem;font-family:var(--sans);
+  font-size:1rem;color:var(--ink);background:var(--ground);
+  border:1px solid var(--line);border-radius:3px}
+.kb-field input:focus,.kb-field select:focus{outline:2px solid var(--beacon);outline-offset:1px}
+.kb-field small{display:block;font-size:.75rem;color:var(--muted)}
+.kb-out{margin:1.4rem 0 0;padding:1.2rem 1.3rem;background:var(--raise);border:1px solid var(--line)}
+.kb-out .k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted)}
+.kb-out .v{font-family:var(--mono);font-size:1.75rem;letter-spacing:-.02em;
+  color:var(--ink);margin:.3rem 0 0;line-height:1.1}
+.kb-out .sub{font-size:.8125rem;color:var(--muted);margin:.6rem 0 0;line-height:1.6}
+.kb-warn{color:var(--beacon);font-weight:500}
+.kb-chart{margin:2rem 0 0;padding:1rem;background:var(--surface);border:1px solid var(--line)}
+
+/* ---- kart ızgarası (hub sayfaları) ---- */
+.kb-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:2rem 0 0}
+@media(min-width:40rem){.kb-grid{grid-template-columns:repeat(2,1fr)}}
+.kb-card{display:block;background:var(--surface);padding:1.3rem 1.4rem;
+  text-decoration:none;border:0;transition:background .18s;cursor:pointer}
+.kb-card:hover{background:var(--raise);border:0}
+.kb-card .n{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--beacon)}
+.kb-card .t{display:block;font-size:1.0625rem;line-height:1.3;color:var(--ink);margin:.45rem 0 0;letter-spacing:-.01em}
+.kb-card .d{display:block;font-size:.875rem;line-height:1.65;color:var(--muted);margin:.5rem 0 0}
+
+/* ---- ilgili bağlantılar ---- */
+.kb-rel{margin:4rem 0 0;padding-top:2rem;border-top:1px solid var(--line)}
+.kb-rel p.k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin:0}
+.kb-rel ul{list-style:none;padding:0;margin:1rem 0 0}
+.kb-rel li{margin:0;border-bottom:1px solid var(--line)}
+.kb-rel li a{display:block;padding:.8rem 0;border:0;font-size:.9375rem;transition:padding-left .18s,color .18s}
+.kb-rel li a:hover{padding-left:.5rem;color:var(--beacon);border:0}
+
+/* ---- yazar künyesi ---- */
+.kb-author{margin:3rem 0 0;padding:1.3rem 1.4rem;background:var(--raise);border:1px solid var(--line)}
+.kb-author .who{font-size:.9375rem;color:var(--ink)}
+.kb-author .role{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:.3rem 0 0}
+
+/* ---- erişilebilirlik ---- */
+.kb :focus-visible{outline:2px solid var(--beacon);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+  .kb *,.kb *::before,.kb *::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+
+/* ---- koyu tema uyumu (site .gece/dark kullanıyorsa) ---- */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .kb th{color:var(--muted)}
+  :root:not([data-theme="light"]) .kb-calc,
+  :root:not([data-theme="light"]) .kb table{background:var(--surface)}
+}
+
+/* ---- yazdırma ---- */
+@media print{
+  .kb-crumb,.kb-rel,.kb-calc{display:none}
+  .kb{max-width:none;padding:0}
+  .kb h2{page-break-after:avoid}
+  .kb table{page-break-inside:avoid}
+}

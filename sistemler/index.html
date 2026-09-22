@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rüzgâr Türbini Sistemleri — Pitch, Yaw, Dişli Kutusu, Jeneratör | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbinindeki ana sistemlerin saha odaklı teknik referansı: pitch, yaw, dişli kutusu ve jeneratör. Çalışma mantığı, ölçüm değerleri, tipik arızalar ve periyodik bakım.">
+<link rel="canonical" href="https://sonersoylu.com/sistemler/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Türbin Sistemleri">
+<meta property="og:description" content="Rüzgâr türbinindeki ana sistemlerin saha odaklı teknik referansı: pitch, yaw, dişli kutusu ve jeneratör. Çalışma mantığı, ölçüm değerleri, tipik arızalar ve periyodik bakım.">
+<meta property="og:url" content="https://sonersoylu.com/sistemler/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Türbin Sistemleri",
+ "description": "Rüzgâr türbinindeki ana sistemlerin saha odaklı teknik referansı: pitch, yaw, dişli kutusu ve jeneratör. Çalışma mantığı, ölçüm değerleri, tipik arızalar ve periyodik bakım.",
+ "url": "https://sonersoylu.com/sistemler/",
+ "inLanguage": "tr-TR",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"
+ },
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Anasayfa",
+    "item": "/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Sistemler",
+    "item": "/sistemler/"
+   }
+  ]
+ },
+ "mainEntity": {
+  "@type": "ItemList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Pitch Sistemi",
+    "url": "https://sonersoylu.com/sistemler/pitch/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Yaw Sistemi",
+    "url": "https://sonersoylu.com/sistemler/yaw/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Dişli Kutusu",
+    "url": "https://sonersoylu.com/sistemler/disli-kutusu/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 4,
+    "name": "Jeneratör ve Converter",
+    "url": "https://sonersoylu.com/sistemler/jenerator/"
+   }
+  ]
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Rüzgâr türbininde en çok arızalanan sistem hangisi?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Dişli kutulu tasarımlarda arızaların önemli bir bölümü dişli kutusu ve yağ yönetimi kaynaklıdır; pitch sistemi ise en sık alarm üreten sistemdir. Direct-drive (Enercon) tasarımlarda dişli kutusu hiç olmadığı için bu arıza kalemi ortadan kalkar, yerine jeneratör ısıl yönetimi öne çıkar."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Pitch ve yaw sistemi arasındaki fark nedir?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Pitch kanadın kendi ekseni etrafındaki açısını değiştirir, yani rüzgârdan alınan gücü ayarlar ve fren görevi görür. Yaw ise tüm nasel'i yatay düzlemde döndürerek rotoru rüzgâra karşı tutar. Pitch güç kontrolü, yaw yönlendirme işidir."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Dişli kutusu yağ sıcaklığı kaç derece olmalı?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Model ve yüke göre değişir; tipik nominal aralık 45–65 °C'dir. 75 °C üzeri genellikle alarm, 90–95 °C üzeri ise durdurma eşiğidir. Önemli olan tek bir değer değil, aynı rüzgâr hızındaki sıcaklığın haftalar içindeki trendidir."
+   }
+  }
+ ]
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <span aria-current="page">Sistemler</span></nav>
+ <p class="kb-kicker">Teknik Referans</p>
+ <h1>Türbin Sistemleri</h1>
+ <p class="kb-lead">Bir türbini arızasından tanımak, sistemlerini tek tek tanımaktan geçiyor. Buradaki dört sayfa sahada en çok elimi soktuğum sistemleri anlatıyor: ne işe yarar, normal değeri nedir, bozulunca ne gösterir, hangi aralıkta bakımı gelir.</p>
+ <p>Her sayfa aynı sırayı izliyor: sistemin görevi, bileşenleri, çalışma mantığı, normal çalışma değerleri, tipik arızalar ve periyodik bakım tablosu. Arıza yaşayıp belirtiden yola çıkmak istiyorsanız <a href="/ariza/">arıza teşhis ağacı</a> daha hızlı sonuç verir; gerçek bir vakanın adım adım nasıl çözüldüğünü görmek için <a href="/saha-notlari/">saha notlarına</a> bakın.</p>
+ <div class="kb-grid">
+  <a class="kb-card" href="/sistemler/pitch/"><span class="n">01</span><span class="t">Pitch Sistemi</span><span class="d">Kanat açısını rüzgâra göre ayarlayan mekanizma. Motor, redüktör, sensör ve PID kontrol; yüksek akım ve asimetri arızaları.</span></a>
+  <a class="kb-card" href="/sistemler/yaw/"><span class="n">02</span><span class="t">Yaw Sistemi</span><span class="d">Nasel'i rüzgâra döndüren sistem. Motor, halka yatak, ring dişli, vane sensör; yaw salınımı ve yatak aşınması.</span></a>
+  <a class="kb-card" href="/sistemler/disli-kutusu/"><span class="n">03</span><span class="t">Dişli Kutusu</span><span class="d">Düşük devirli rotoru jeneratör devrine çıkaran redüktör. Paralel eksen ve planet tasarım, yağ yönetimi, sıcaklık kontrolü.</span></a>
+  <a class="kb-card" href="/sistemler/jenerator/"><span class="n">04</span><span class="t">Jeneratör ve Converter</span><span class="d">Mekanik torku elektriğe çeviren sistem. Asenkron, DFIG ve direct-drive; converter, soğutma ve yalıtım.</span></a>
+ </div>
+
+  <h2>Sık Sorulanlar</h2>
+  <h3>Rüzgâr türbininde en çok arızalanan sistem hangisi?</h3>
+  <p>Dişli kutulu tasarımlarda arızaların önemli bir bölümü dişli kutusu ve yağ yönetimi kaynaklıdır; pitch sistemi ise en sık alarm üreten sistemdir. Direct-drive (Enercon) tasarımlarda dişli kutusu hiç olmadığı için bu arıza kalemi ortadan kalkar, yerine jeneratör ısıl yönetimi öne çıkar.</p>
+  <h3>Pitch ve yaw sistemi arasındaki fark nedir?</h3>
+  <p>Pitch kanadın kendi ekseni etrafındaki açısını değiştirir, yani rüzgârdan alınan gücü ayarlar ve fren görevi görür. Yaw ise tüm nasel'i yatay düzlemde döndürerek rotoru rüzgâra karşı tutar. Pitch güç kontrolü, yaw yönlendirme işidir.</p>
+  <h3>Dişli kutusu yağ sıcaklığı kaç derece olmalı?</h3>
+  <p>Model ve yüke göre değişir; tipik nominal aralık 45–65 °C'dir. 75 °C üzeri genellikle alarm, 90–95 °C üzeri ise durdurma eşiğidir. Önemli olan tek bir değer değil, aynı rüzgâr hızındaki sıcaklığın haftalar içindeki trendidir.</p>
+ <div class="kb-rel">
+  <p class="k">Bunlara da bakın</p>
+  <ul>
+   <li><a href="/rehber/">Sahadan Rehber — teknisyenlik nasıl yürür</a></li>
+   <li><a href="/ariza/">Arıza Teşhis Ağacı — belirtiden nedene</a></li>
+   <li><a href="/araclar/">Hesaplama Araçları</a></li>
+   <li><a href="/sozluk/">Terimler Sözlüğü (TR / EN)</a></li>
+   <li><a href="/egitim/">Ücretsiz 8 Bölümlük Eğitim</a></li>
+  </ul>
+ </div>
+</main>
+</body>
+</html>

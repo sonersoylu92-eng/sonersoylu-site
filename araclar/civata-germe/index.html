@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cıvata Germe Hesaplayıcısı — Germe Kuvveti, Piston Pres, Load Cell | Soner Soylu</title>
+<meta name="description" content="Rüzgar türbini saha servisi için bolt tension hesaplayıcı. Montaj kuvveti, strain gauge, piston presle sıkma tabloları.">
+<link rel="canonical" href="https://sonersoylu.com/araclar/civata-germe/">
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/araclar/">Araçlar</a> <i>/</i> <span aria-current="page">Cıvata Germe Hesaplayıcısı</span></nav>
+  <p class="kb-kicker">Saha Aracı</p>
+  <h1>Cıvata Germe Hesaplayıcısı</h1>
+  <p class="kb-lead">Rüzgar türbini kanat montajı, nacelle bağlantıları, gearbox flanş'leri ve rotor bobu için bolt tension (cıvata gerginliği) hesaplamaları. Montaj kuvveti → Torque dönüşümü, piston press sıkması.</p>
+
+  <section id="strain-converter">
+   <h2>Bolt Tension — Montaj Kuvveti Dönüşümü</h2>
+   <div class="kb-calc">
+    <div class="kb-field">
+     <label for="boltSize">Cıvata çapı</label>
+     <select id="boltSize">
+      <option value="m10">M10 (Ø 10 mm)</option>
+      <option value="m12">M12 (Ø 12 mm)</option>
+      <option value="m16">M16 (Ø 16 mm)</option>
+      <option value="m20" selected>M20 (Ø 20 mm)</option>
+      <option value="m24">M24 (Ø 24 mm)</option>
+      <option value="m30">M30 (Ø 30 mm)</option>
+     </select>
+    </div>
+    <div class="kb-field">
+     <label for="tensionKN">Hedef germe kuvveti (kN)</label>
+     <input type="number" id="tensionKN" value="50" min="0" max="1000" step="1" inputmode="decimal">
+     <small>1 kN yaklaşık 102 kg kuvvete denktir. Cıvata çapına göre önerilen üst sınır otomatik kontrol edilir.</small>
+    </div>
+    <div class="kb-out">
+     <p class="k">Hedef germe kuvveti</p>
+     <p class="v" id="forceResult">—</p>
+     <p class="sub" id="limitNote"></p>
+     <p class="sub" id="torqueEquivalent"></p>
+    </div>
+   </div>
+  </section>
+
+  <section id="piston-press">
+   <h2>Piston Presle Sıkma Tabloları</h2>
+   <p>Rüzgar türbininde kanat montajı veya gearbox flanş'leri genellikle piston press ile yapılır. İstenen tension'ı ayarlamak için piston basıncı tablosu:</p>
+
+   <h3>M20 Bolt — Grade 8.8 (ISO 898)</h3>
+   <div class="kb-table-scroll"><table>
+    <tr><th>İstenen Tension (kN)</th><th>Piston Basıncı (bar)</th><th>Piston Hava Çıkışı (L/min @ 7 bar)</th><th>Tahmin Zaman</th></tr>
+    <tr><td>50 kN</td><td>10-12 bar</td><td>15-20</td><td>5-10 sn</td></tr>
+    <tr><td>100 kN</td><td>20-25 bar</td><td>30-40</td><td>8-12 sn</td></tr>
+    <tr><td>150 kN</td><td>30-35 bar</td><td>45-55</td><td>10-15 sn</td></tr>
+    <tr><td>200 kN</td><td>40-45 bar</td><td>60-70</td><td>12-20 sn</td></tr>
+   </table></div>
+
+   <h3>M24 Bolt — Grade 10.9</h3>
+   <div class="kb-table-scroll"><table>
+    <tr><th>İstenen Tension (kN)</th><th>Piston Basıncı (bar)</th><th>Piston Hava Çıkışı (L/min @ 7 bar)</th><th>Tahmin Zaman</th></tr>
+    <tr><td>100 kN</td><td>15-18 bar</td><td>25-30</td><td>6-10 sn</td></tr>
+    <tr><td>150 kN</td><td>22-27 bar</td><td>40-50</td><td>10-15 sn</td></tr>
+    <tr><td>200 kN</td><td>30-35 bar</td><td>55-65</td><td>12-18 sn</td></tr>
+    <tr><td>250 kN</td><td>40-50 bar</td><td>70-85</td><td>15-25 sn</td></tr>
+    <tr><td>300 kN</td><td>55-65 bar</td><td>90-110</td><td>20-30 sn</td></tr>
+   </table></div>
+
+   <h3>M30 Bolt — Grade 10.9 (Kanat Root Flange)</h3>
+   <div class="kb-table-scroll"><table>
+    <tr><th>İstenen Tension (kN)</th><th>Piston Basıncı (bar)</th><th>Piston Hava Çıkışı (L/min @ 7 bar)</th><th>Tahmin Zaman</th></tr>
+    <tr><td>200 kN</td><td>20-25 bar</td><td>35-45</td><td>10-15 sn</td></tr>
+    <tr><td>300 kN</td><td>30-40 bar</td><td>55-70</td><td>15-25 sn</td></tr>
+    <tr><td>400 kN</td><td>45-55 bar</td><td>80-100</td><td>20-35 sn</td></tr>
+    <tr><td>500 kN</td><td>60-75 bar</td><td>110-130</td><td>30-40 sn</td></tr>
+   </table></div>
+
+   <p><small><strong>Not:</strong> Piston basıncı, piston ekranı kalitesi, hava sıcaklığı, yağlanma durumuna göre değişir. Başlangıç tahminidir; dinamometre ile kontrol mutlaka yapılmalıdır.</small></p>
+  </section>
+
+  <section id="load-cell">
+   <h2>Load Cell (Dinamometre) ile Montaj Verifikasyonu</h2>
+   <p>Piston press ile sıkma işleminden sonra, çekme cihazı veya load cell ile tension'ı kontrol edilir. Protokol:</p>
+   <ol>
+    <li><strong>Load cell (600 ton kapasitesi tipik):</strong> Bolt üstüne yerleştir</li>
+    <li><strong>Önceki Baseline:</strong> Yüksüz okuması = 0 ± 0.5 kN</li>
+    <li><strong>Kalibre çekme cilindri:</strong> Piston press ile monte edilen bolts'u hafifçe çek</li>
+    <li><strong>Okunan değer:</strong> Hedef tension'ı kontrol et (±5% tolerans normal)</li>
+    <li><strong>Dokumentasyon:</strong> Her bolt için load cell okuması kaydedilmeli</li>
+   </ol>
+   <p><strong>Kanat Montaj Örneği:</strong> 8 adet M30 bolt, her biri 250 kN tension hedefi. Load cell okuma: 248 kN, 252 kN, 251 kN ... (tüm 250 ±5% içinde = başarılı)</p>
+  </section>
+
+  <section id="formulas">
+   <h2>Hesaplama Formülleri</h2>
+
+   <h3>Bolt Tension Tahmin Formülü</h3>
+   <p><code>T = (C × d × F_y × S) / 1000</code></p>
+   <ul>
+    <li><strong>T:</strong> Tension (kN)</li>
+    <li><strong>C:</strong> Tension coefficient (0.75 daha kuru yüzeyler için)</li>
+    <li><strong>d:</strong> Bolt çapı (mm)</li>
+    <li><strong>F_y:</strong> Yield strength (Grade 8.8 = 640 MPa, Grade 10.9 = 900 MPa)</li>
+    <li><strong>S:</strong> Güvenlik faktörü (genellikle 0.75, %75 yield strength'in altında tutmak)</li>
+   </ul>
+
+   <h3>Piston Basıncı Tahmini</h3>
+   <p><code>P = T / A_piston</code></p>
+   <ul>
+    <li><strong>P:</strong> Gerekli piston basıncı (bar)</li>
+    <li><strong>T:</strong> İstenen tension (kN)</li>
+    <li><strong>A_piston:</strong> Piston kesit alanı (cm²)</li>
+   </ul>
+
+   <h3>Kontrol: Torque Dönüşümü (Başlangıç Tahmini)</h3>
+   <p><code>Torque (N·m) ≈ T (kN) × d (mm) × 0.4</code></p>
+   <ul>
+    <li>Piston sıkması kontrol edilmediyse, eski montajlar için torque wrench referansı olarak</li>
+    <li>Tam doğru değil, fakat ±15% tahmini</li>
+   </ul>
+  </section>
+
+  <section id="safety">
+   <h2>Güvenlik Notları</h2>
+   <ul>
+    <li><strong>Basınçlı Hava Sistemi:</strong> Piston sisteminde hava sızıntısı denetimi yapılmalı (haftada 1x)</li>
+    <li><strong>Aşırı Tension Riski:</strong> Bolts'ü %80 yield üzerinde sıkma → Gerilme çatlaması, ani kırılma</li>
+    <li><strong>Altı Tension Riski:</strong> Titreşim altında bolts gevşeme ve kaymalar → Arıza</li>
+    <li><strong>Çapraz Sıkma (Star Pattern):</strong> Her bolt'un eşit tension almasını garantilemek için çapraz sıra sıkma (yıldız deseni)</li>
+    <li><strong>Kontrol Sonrası Kaydı:</strong> Tüm tension okumalarını dokumentasyon yapısı'na kaydedilmeli (OEM şartları)</li>
+   </ul>
+  </section>
+
+  <section id="related">
+   <h2>İlgili Araçlar</h2>
+   <ul>
+    <li><a href="/araclar/">← Tüm Hesaplayıcılar</a></li>
+    <li><a href="/araclar/">Torque Hesaplayıcı (N·m dönüşümü)</a></li>
+    <li><a href="/saha-notlari/">Saha Teşhisleri</a></li>
+   </ul>
+  </section>
+
+ </article>
+</main>
+
+<script>
+const boltData = {
+  m10: {d:10, maxKN:35},
+  m12: {d:12, maxKN:50},
+  m16: {d:16, maxKN:100},
+  m20: {d:20, maxKN:160},
+  m24: {d:24, maxKN:230},
+  m30: {d:30, maxKN:370}
+};
+
+function hesapla(){
+  const sel = document.getElementById('boltSize');
+  const inp = document.getElementById('tensionKN');
+  if(!sel || !inp) return;
+  const b = boltData[sel.value];
+  const t = parseFloat(inp.value);
+  const out   = document.getElementById('forceResult');
+  const limit = document.getElementById('limitNote');
+  const tq    = document.getElementById('torqueEquivalent');
+
+  if(!b || isNaN(t) || t <= 0){
+    out.textContent = '\u2014';
+    limit.textContent = '';
+    tq.textContent = '';
+    return;
+  }
+
+  out.textContent = t.toLocaleString('tr-TR') + ' kN';
+
+  if(t > b.maxKN){
+    limit.innerHTML = '<span class="kb-warn">Uyari: ' + sel.value.toUpperCase() +
+      ' icin onerilen ust sinir ' + b.maxKN +
+      ' kN. Bu deger asildi \u2014 akma sinirina yaklasma riski var.</span>';
+  } else {
+    const oran = Math.round(t / b.maxKN * 100);
+    limit.textContent = sel.value.toUpperCase() + ' icin onerilen ust sinirin %' +
+      oran + ' kadari (sinir: ' + b.maxKN + ' kN).';
+  }
+
+  const tork = Math.round(0.20 * (t * 1000) * (b.d / 1000));
+  tq.textContent = 'Kaba tork karsiligi yaklasik ' + tork.toLocaleString('tr-TR') +
+    ' N\u00b7m (K=0,20 kabulu). Bu yalnizca kiyas icindir; kritik baglantida piston pres ve load cell dogrulamasi esastir.';
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  const sel = document.getElementById('boltSize');
+  const inp = document.getElementById('tensionKN');
+  if(sel) sel.addEventListener('change', hesapla);
+  if(inp) inp.addEventListener('input', hesapla);
+  hesapla();
+});
+</script>
+</body>
+</html>

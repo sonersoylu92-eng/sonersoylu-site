@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dişli Kutusu Sistemi — Redüktör, Yağ Yönetimi ve Arıza Teşhisi | Soner Soylu</title>
+<meta name="description" content="Rüzgar türbinlerinde gearbox (redüktör): Tasarım, yağlama, sıcaklık yönetimi, ortak arızalar ve saha teşhisi.">
+<link rel="canonical" href="https://sonersoylu.com/sistemler/disli-kutusu/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dişli kutusu Sistemi — Redüktör Teknik Rehberi">
+<meta property="og:url" content="https://sonersoylu.com/sistemler/disli-kutusu/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Dişli kutusu Sistemi — Redüktör Teknolojisi, Yağlama ve Teşhis",
+  "description": "Rüzgar türbini gearbox sisteminin derinlemesine rehberi. Dişli tipi, yağlama, sıcaklık kontrolü, ortak arızalar.",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-10-15T00:00:00Z",
+  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
+  "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Dişli Kutusu Sistemi</span></nav>
+  <p class="kb-kicker">Teknik Referans</p>
+  <h1>Dişli Kutusu Sistemi</h1>
+  <p class="kb-lead">Türbin rotoru çok yavaş (10 rpm) dönerken, jeneratör 1200+ rpm hızında elektrik üretmeli. Bu dönüşümü sağlayan gearbox (redüktör), türbinin en kritik mekanik sistemidir.</p>
+
+  <h2>Dişli kutusu Nedir?</h2>
+  <p>Rüzgar türbininin ana şaftından gelen yavaş, yüksek-torque hareketi; bir dizi dişli sistemi (gear stages) kullanarak hızlı, düşük-torque harekete dönüştürür. Bu oran genellikle 1:50 ile 1:100 arasındadır.</p>
+
+  <h2>Tasarım Tipi</h2>
+
+  <h3>Paralel Eksenli (Parallel-Axis) Dişli kutusu</h3>
+  <p><strong>Kullanım:</strong> Nordex, Enercon, eski Vestas modelleri</p>
+  <p><strong>Özellik:</strong> Dişli eksenleri paralel, spur ve/veya helical dişli kombinasyonu</p>
+  <p><strong>Avantajlar:</strong> Basit tasarım, yüksek verim (~98%), hızlı onarım</p>
+  <p><strong>Dezavantajlar:</strong> Daha gürültülü, dişli boyutu büyük</p>
+
+  <h3>Spiral Eksenli (Epicyclic/Planetary) Dişli kutusu</h3>
+  <p><strong>Kullanım:</strong> Modern Vestas V126/V136, yeni Siemens modelleri</p>
+  <p><strong>Özellik:</strong> Merkezi güneş dişlisinin etrafında uydu dişlileri dönmesi</p>
+  <p><strong>Avantajlar:</strong> Daha küçük, daha hafif, daha sessiz, yüksek oranlar (1:100+)</p>
+  <p><strong>Dezavantajlar:</strong> Karmaşık tasarım, onarım daha zor, özel bilgi gerekli</p>
+
+  <h2>Temel Bileşenler</h2>
+
+  <h3>Giriş Şaftı (Low-Speed Shaft)</h3>
+  <ul>
+   <li><strong>Kaynağı:</strong> Ana yataktan (main bearing) gelir</li>
+   <li><strong>Hız:</strong> 10-12 rpm (rotor hızı ile eşit)</li>
+   <li><strong>Torque:</strong> 7000+ kN·m (N90'da), 10000+ kN·m (N117'de)</li>
+   <li><strong>Malzeme:</strong> Alaşımlı çelik, dinamik yüke dayanıklı</li>
+  </ul>
+
+  <h3>Dişli Sistemi (Gear Stages)</h3>
+  <ul>
+   <li><strong>Kademeler:</strong> Genellikle 3-4 aşamalı (her aşama oran ~3-4x)</li>
+   <li><strong>Taş (Pinion/Gear):</strong> Açık ve kapalı tipler</li>
+   <li><strong>Soğutma:</strong> Dişlilerin temas yüzeyinde yağ filmi (film bearing)</li>
+   <li><strong>Gürültü Yönetimi:</strong> Spiral (helical) dişliler daha sessiz</li>
+  </ul>
+
+  <h3>Çıkış Şaftı (High-Speed Shaft)</h3>
+  <ul>
+   <li><strong>Hedef:</strong> Jeneratör birliği</li>
+   <li><strong>Hız:</strong> 1000-1500 rpm (jeneratör tasarımına göre)</li>
+   <li><strong>Torque:</strong> Giriş'ten ~100 kat düşük (yüksek hız, düşük torque)</li>
+  </ul>
+
+  <h3>Yatak Sistemi (Bearings)</h3>
+  <ul>
+   <li><strong>Tür:</strong> Silindirik makaralı yataklar (cylindrical roller bearings), koniler</li>
+   <li><strong>Adet:</strong> 4-6 yatak, aşama başına 1-2</li>
+   <li><strong>Görevi:</strong> Şaft sapmaları tutmak, radyal ve eksenel yükleri taşımak</li>
+   <li><strong>Yağlama:</strong> Dişli kutusu yağ akışıyla lubricate edilir (splash + pump)</li>
+  </ul>
+
+  <h3>Yağlama Sistemi (Lubrication)</h3>
+  <ul>
+   <li><strong>Kapasite:</strong> N90: 500-600 L, N117: 700-800 L, V136: 900-1000 L</li>
+   <li><strong>Grade:</strong> ISO VG 220 veya VG 320 (ısıl indeks yüksek)</li>
+   <li><strong>Döngü:</strong> Dişlilerin alt kısmı yağa batır (splash), pompa ile üst kısma pompalanır (sprey)</li>
+   <li><strong>Sıcaklık Kontrolü:</strong> Soğutucudan geçerek 50-70°C'de tutulur</li>
+   <li><strong>Filtrasyon:</strong> Yağ filtreleri, 3-10 μm geçmişlik (piston elemanı)</li>
+  </ul>
+
+  <h3>Soğutma Sistemi (Cooling)</h3>
+  <ul>
+   <li><strong>Tipi:</strong> Passive (radyatör) veya Active (fan)</li>
+   <li><strong>Passive:</strong> Alüminyum finli soğutucu, doğal konveksiyon (N90)</li>
+   <li><strong>Active:</strong> Elektrik fan, termostat kontrollü (N117, V126)</li>
+   <li><strong>Hedef Sıcaklık:</strong> 50-65°C nominal, alarm >80°C, shutdown >90°C</li>
+  </ul>
+
+  <h2>Dişli kutusu Sıcaklık Yönetimi</h2>
+
+  <h3>Enerji Akışı ve Isı Kaynaklari</h3>
+  <div class="kb-table-scroll"><table class="heat-sources">
+   <tr><th>Kaynak</th><th>Güç Durumu</th><th>Isı Kontribüsyonu</th><th>Kontrol Yöntemi</th></tr>
+   <tr><td>Mekanik Güç Kaybı (Gear Friction)</td><td>Yüklü (Rüzgar)</td><td>~1-2% güç (dominant)</td><td>Yağ kalitesi + seviyen</td></tr>
+   <tr><td>Yatak Friksiyonu</td><td>Sürekli</td><td>Orta</td><td>Yağ akışı + soğutucu</td></tr>
+   <tr><td>Conta ve Seal Friksiyonu</td><td>Sürekli</td><td>Küçük</td><td>Seal tasarımı</td></tr>
+   <tr><td>Pompa Motoru (Circulation)</td><td>Sürekli</td><td>Çok küçük</td><td>Pump efficiency</td></tr>
+  </table></div>
+
+  <h3>Sıcaklık Arttığında Neler Olur?</h3>
+  <ol>
+   <li><strong>Viskositet Düşer</strong> — Yağ ince hale gelir, dişli aralarında hava boşluğu oluşur</li>
+   <li><strong>Dişli Temas Yüksekliği Düşer</strong> — Metalik temas riski artar (half-fluid lubrication)</li>
+   <li><strong>Isı Oluşumu Artar</strong> — Daha fazla metal-metal friction</li>
+   <li><strong>Oksidasyon Hızlanır</strong> — Yağ kimyası bozulur, TAN (Total Acid Number) yükselir</li>
+   <li><strong>Yağ Kabuğunun Bağlantısı Kopabilir</strong> — Viskositet Index çöküyor, peroksit oluşumu</li>
+   <li><strong>Aşınma Hızlanır</strong> — Metal partikülü üretim 10x artar (>75°C)</li>
+  </ol>
+
+  <h2>Ortak Dişli kutusu Arızaları</h2>
+
+  <h3>1. Yüksek Sıcaklık (Temperature High)</h3>
+  <p><strong>Belirti:</strong> Dişli kutusu sıcaklığı normal rüzgar koşullarında 75-80°C+ (normal: 60-68°C)</p>
+  <p><strong>Olası Nedenler:</strong></p>
+  <ul>
+   <li>Yağ seviyesi düşük (→ soğutma alanı azalmış)</li>
+   <li>Yağ kalitesi kötü (oksidasyon, viskozitet shift)</li>
+   <li>Soğutucunun finleri toz tıkalı (→ radyasyon kötü)</li>
+   <li>Fan motor arızası (aktif soğutma sistemi çalışmıyor)</li>
+   <li>Dişli aşınması aşırı (metal-metal temas artan)</li>
+  </ul>
+  <p><strong>Saha Kontrolü:</strong> <a href="/saha-notlari/disli-kutusu-sicaklik/">Sahadan #2: Dişli kutusu Sıcaklığı Rüzgar Hızıyla Artıyor</a></p>
+
+  <h3>2. Yağ Sızıntısı (Oil Leak)</h3>
+  <p><strong>Belirti:</strong> Dişli kutusu altında yağlı lekeler, dipstick seviyesi haftada 10+ cm düşüş</p>
+  <p><strong>Olası Nedenler:</strong></p>
+  <ul>
+   <li>Mil seal bozulması (elastomer çatlamış, kabarmış)</li>
+   <li>Dişli kutusu kasa çatlağı (önceki Sahadan #1)</li>
+   <li>Pluglar veya kapaklar gevşek</li>
+  </ul>
+  <p><strong>Test Yöntemi:</strong> 50 mL/saat kuralı — Haftada 350 mL+ kaybı = servis gerekli</p>
+
+  <h3>3. Anormal Gürültü veya Titreşim</h3>
+  <p><strong>Ses Karakteri:</strong> Çıtırtı (clicking), tıkırtı (knocking), veya kesintili gürültü</p>
+  <p><strong>Sebepler:</strong></p>
+  <ul>
+   <li>Dişli diş eksikliği veya çatlağı (yaşlı gearbox)</li>
+   <li>Yatak pitting (yüzey hasarı, lokal çökmeler)</li>
+   <li>Mil sapması (misalignment)</li>
+  </ul>
+  <p><strong>Ölçüm:</strong> Steteskop veya vibration meter (Hz, amplitude)</p>
+
+  <h3>4. Yağ Renk/Koku Anormallikleri</h3>
+  <p><strong>Renk Değişimi:</strong> Açık altın → koyu kahve → siyah (oksidasyon seviyeleri)</p>
+  <p><strong>Koku:</strong> Yanmış kokusu (burn odor) = sıcaklık >120°C, acil durum</p>
+  <p><strong>Lab Analizi Önerileri:</strong></p>
+  <ul>
+   <li>6 ayda bir: TAN (Acid Number), viscosity, Fe (iron) konsantrasyonu</li>
+   <li>Anormal semptom: Peroxide number, oksidation stability ASTM D2272</li>
+  </ul>
+
+  <h3>5. Bakteri/Su Bulaşması</h3>
+  <p><strong>Sebep:</strong> Hava filtresi hasarlı, kapaklar açık, yağ depolama kötü</p>
+  <p><strong>Etki:</strong> Mikrobiyel korrozyon (MIC), asitleşme, metal korozyonu</p>
+  <p><strong>Kontrol:</strong> Yağ örneğinde Karl Fischer su analizi (%<0.3 normal)</p>
+
+  <h2>Periyodik Bakım</h2>
+
+  <div class="kb-table-scroll"><table>
+   <tr><th>Bakım Tipi</th><th>Aralık</th><th>Süresi</th><th>Not</th></tr>
+   <tr><td>Yağ Seviyesi Kontrolü</td><td>Aylık</td><td>5 min</td><td>Visual + dipstick</td></tr>
+   <tr><td>Yağ Renk/Koku Kontrolü</td><td>Aylık</td><td>2 min</td><td>Anomali işareti</td></tr>
+   <tr><td>Soğutucusu Temizliği</td><td>3 Aylık</td><td>30 min</td><td>Finler toz tıkalı mı?</td></tr>
+   <tr><td>Yağ Örneği Alma</td><td>6 Aylık</td><td>15 min</td><td>Lab analiz gerekli</td></tr>
+   <tr><td>Yağ Filtresi Değişimi</td><td>12 Aylık</td><td>1 saat</td><td>Aşınma partikülü kontrolü</td></tr>
+   <tr><td>Seal Muayenesi</td><td>12 Aylık</td><td>30 min</td><td>Çatlak, sızıntı izi</td></tr>
+   <tr><td>Redüktör Kapağı Açma (Servis)</td><td>24-36 Aylık</td><td>4-6 saat</td><td>Dişli pitting, yatak durumu</td></tr>
+  </table></div>
+
+  <h2>Saha Teşhis Rehberi</h2>
+  <ul>
+   <li><strong>İlk Kontrol (5 dakika):</strong> Yağ seviyesi, renk, koku, sızıntı izi, soğutucunun temizliği</li>
+   <li><strong>İkinci Seviye (10 dakika):</strong> Sıcaklık ölçümü (SCADA + IR termometre), gürültü (steteskop)</li>
+   <li><strong>Üçüncü Seviye (1 saat):</strong> Yağ örneği, SCADA trend verisi, geçmiş onarım kayıtları</li>
+   <li><strong>Derin Teşhis (Servis):</strong> Dişli kutusu açılması, dişli muayenesi, yatak kontrolü</li>
+  </ul>
+
+  <h2>İlgili Kaynaklar</h2>
+  <ul>
+   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
+   <li><a href="/saha-notlari/disli-kutusu-sicaklik/">Sahadan #2: Dişli kutusu Sıcaklığı Kontrolü</a></li>
+   <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Sahadan #1: Pitch Motor Yüksek Akım</a></li>
+   <li><a href="/araclar/">Torque Hesaplayıcı</a></li>
+  </ul>
+
+ </article>
+</main>
+</body>
+</html>

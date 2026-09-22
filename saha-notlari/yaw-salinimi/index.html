@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yaw Hunting — Dönerken Titreşim ve Anlamsız Kanat Oynaşması</title>
+<meta name="description" content="Rüzgar türbininde kanat grubu rüzgara yöneliş sırasında tutarsız hareket yapıyor. Yaw motor, sensor, mekanik blokaj teşhisi.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yaw Hunting — Rüzgar Yöneliş Sorunu">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/yaw-salinimi/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sahadan #3: Yaw Hunting — Dönerken Titreşim",
+  "description": "Türbin kanat grubu (nacelle) rüzgara yöneliş sırasında geriye geri ileri oynaşması (hunting). Teşhis ve düzeltme.",
+  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
+  "datePublished": "2024-10-22T00:00:00Z",
+  "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Sahadan #3: Yaw Hunting — "Türbin Dönerken Titreyip Oynaşıyor"</span></nav>
+  <p class="kb-kicker">Sahadan</p>
+  <h1>Sahadan #3: Yaw Hunting — "Türbin Dönerken Titreyip Oynaşıyor"</h1>
+  <p class="kb-lead"><strong>Arıza Bildirimi:</strong> "Enercon E92 sürekli rüzgarla yöneliş yapıyor ama komik bir şekilde titreşiyor. Sanki kafası karışık, ileri geri gidiyor ama elektrik üretiyor."</p>
+
+  <section id="olay">
+   <h2>Bergama RES, Enercon E92 — Sabahın Raporları</h2>
+   <p>Söz: Yönetici "Kanatlarının hızı normal ama SCADA'da yaw açı hızlı değişiyor. Hareket var ama tuhaf."</p>
+   <p><strong>Teknikyen gözlemi (İlk bakış):</strong></p>
+   <ul>
+    <li>Türbin açık, 14 m/s rüzgar (nominal power bölgesi)</li>
+    <li>Nacellle'ın rotor kapağında göğüs rüzgarı gelip gidiyor (yaw sensörü rüzgar yönünü yanlış tanıyabilir)</li>
+    <li>SCADA yaw açı: +45° → -10° → +30° → -15° → +25° ... (2-3 saniye döngüler, sabit değil)</li>
+    <li>Ses: Normal elektrik sesi, ama "tak tak" ritim var (mekanik vurma?)</li>
+    <li>Vibration meter: Nacelle'da 3-4 Hz oscillation (anormal, yaw bearing at this frequency)</li>
+   </ul>
+  </section>
+
+  <section id="teori">
+   <h2>Yaw Hunting Nedir?</h2>
+   <p>Yaw hunting: Yaw kontrol sistemi hedef yönü bulup durduramazken, sabit bir amortismanla tutarsız hareket yapması. Sonuç: Rotor ekseni rüzgar vektörüne dikine doğru ince titreşimler, enerji kaybı, mekanik stres.</p>
+   <p><strong>Matematiksel Modeli:</strong></p>
+   <p>Yaw sistem PID (Orantılı-İntegral-Türevsel) kontrolcü ile çalışır. Hata (Hedef açı - Mevcut açı) azaldıkça motor yavaşlatılır. Fakat:</p>
+   <ul>
+    <li><strong>Hysteresis (Gecikme):</strong> Yaw bearing sürüklenmesi, sürtünme kuvveti</li>
+    <li><strong>Sensor Gürültüsü:</strong> Rüzgar vane sensor ölçümünde ±5-10° dalgalanma normal</li>
+    <li><strong>Over-Damping (Aşırı Sönümleme):</strong> P parametresi yüksekse → Motor fazla hızlı → Hedef geçme → Geri dönme → Tekrar</li>
+   </ul>
+   <p><strong>Sonuç:</strong> Stabil durum yerine ±15-20° osilasyon kalıcı hale gelir.</p>
+  </section>
+
+  <section id="tanı">
+   <h2>Saha Teşhisi Adım Adım</h2>
+
+   <h3>Adım 1: SCADA Trend Verisi (5 dakika)</h3>
+   <p><strong>Veri Toplama:</strong> Son 1 saat yaw açı grafı (1 saniye çözünürlükte)</p>
+   <p><strong>Analiz:</strong></p>
+   <ul>
+    <li>Düz yaw: Açı ±2-3° sabit → Normal</li>
+    <li>Yavaş drift: Açı dakikada 1-2° değişim → Wind direction shift, normal</li>
+    <li>Hızlı sallanış: ±10°+ 2-5 Hz frekans → Hunting (Bu vaka!)</li>
+   </ul>
+   <p><strong>Bulgu:</strong> Yaw açı ±18° arasında 0.5-1.0 Hz osilasyon (yaklaşık 1-2 saniye periyod), enerji üretiyor olmasına rağmen.</p>
+
+   <h3>Adım 2: Yaw Motor Kontrolü (3 dakika)</h3>
+   <p><strong>Test:</strong> Yaw motoru manuel kontrol komutu ver (SCADA test modu)</p>
+   <ul>
+    <li>Şu an yaw motor çalışıyor mu? (Akım ölçümü, gürültü)</li>
+    <li>Geri bildirim (yaw açı sensörü) canlı mı? (Komut 45° → Açı 45° olacak mı?)</li>
+   </ul>
+   <p><strong>Protokol:</strong> Kontrol sistemi testine gir, yaw motoru 30° saat yönüne 10 saniye hareket ettir</p>
+   <p><strong>Bulgu:</strong> Motor çalışıyor, ama sürükleniyor. Hedef 45°, gerçek 38° durmuş. Elektrik akımı yüksek (12A, normal 8A).</p>
+
+   <h3>Adım 3: Yaw Bearing Sürüklenmesi (5 dakika)</h3>
+   <p><strong>Test Yöntemi:</strong> Manuel yaw komut, hızlı durdurma (motor stop command)</p>
+   <ul>
+    <li>Motor durdurulduktan sonra nacelle 2-3 saniye içinde kendi kendine hareket etmeye mi devam ediyor?</li>
+    <li>Eğer evet → Mekanik sürüklenmesi var (yatak yağlama eksik, ring gear pitting, mil misalignment)</li>
+   </ul>
+   <p><strong>Sahada Bulgu:</strong> Motor komutu verildikten 2 saniye sonra nacelle hala +5° hareket ediyor sonra durmuş.</p>
+
+   <h3>Adım 4: Yaw Vane Sensor Kontrolü (3 dakika)</h3>
+   <p><strong>Amaç:</strong> Rüzgar yönü sensörü doğru ölçüyor mu?</p>
+   <p><strong>Test:</strong></p>
+   <ul>
+    <li>Türbini STOP et</li>
+    <li>Nacelleyi manuel döndür (rüzgar yönünün tersi, 0° → 180°)</li>
+    <li>Vane sensörü outputu (0-10V analog) multimetre ile ölç</li>
+    <li>Her 45° dönüşte: Analog voltaj değişmeli (0V → 2.5V → 5V → 7.5V → 10V)</li>
+   </ul>
+   <p><strong>Bulgu:</strong> Vane sensor çıkışı hızlı dalgalanıyor (±0.5V ripple). Sensor başı biraz gevşek olabilir (rüzgardan vibrasyona uğruyor).</p>
+
+   <h3>Adım 5: Yaw Motor Gücü ve Elektronikleri (3 dakika)</h3>
+   <p><strong>Kontroller:</strong></p>
+   <ul>
+    <li>Yaw motor bobini direnç: Faz A-B: ~10Ω, B-C: ~10Ω, C-A: ~10Ω (normal)</li>
+    <li>Kontaktor ve releler: Akustik işaret + mekanik tıkırtı var mı? (Arızalı kontaktor yapışkan)</li>
+    <li>PLC kontrol sinyali: Frekans ve duty cycle (osilasyon modeli)</li>
+   </ul>
+   <p><strong>Bulgu:</strong> Motor normal, kontaktörler normal. PLC output: Türünde ~0.5 Hz kare dalga (ON 1s, OFF 1s pattern) → Kontrol algoritması hunting moduna girmiş.</p>
+
+   <h3>Adım 6: Yaw Ring Gear Muayenesi (Opsiyonel, sadece servis zamanı)</h3>
+   <p><strong>Detaylı Kontrol (Kapak açılması gerekir):</strong></p>
+   <ul>
+    <li>Ring gear (nacelle altındaki büyük, sabit dişli):</li>
+    <li>Pitting var mı? (yüzey çöküşü, ıska sesleri kaynak)</li>
+    <li>Yüzey pürüzü? (Oyulmuş görünüş = aşınma)</li>
+    <li>Yaw pinion (motor tarafından dönen küçük dişli): Diş eksikliği var mı?</li>
+   </ul>
+  </section>
+
+  <section id="kök-neden">
+   <h2>Kök Neden: Kombinasyon Arızası</h2>
+   <p>Yaw hunting çoğu zaman tek bir sebep değil, üç faktörün kombinasyonu:</p>
+   <ol>
+    <li><strong>Yaw Bearing Yağlama Azalması</strong> — Yaşlılık ve periyodik bakım eksikliği (2-3 yıldan sonra)</li>
+    <li><strong>Yaw Sensor Sürütme ve Gürültü Amplifikasyonu</strong> — Vane sensor gevşekliği → PLC gürültü sinyali alıyor → Aşırı tepki</li>
+    <li><strong>PLC Parametre Kayması</strong> — Yaw PID controller P (orantı) değeri yüksek ayarlanmış → Motor çok agresif tepki</li>
+   </ol>
+   <p><strong>Bu Vakada:</strong> Bearing suyu (grit), sensor jitter amplified, ve P parametresi 1.5x normal değer → Hunting devresi kilitli.</p>
+  </section>
+
+  <section id="çözüm">
+   <h2>Düzeltme Yolları</h2>
+
+   <h3>Hızlı Çözüm (Yazılım, 10 dakika)</h3>
+   <ol>
+    <li><strong>PLC Parametre İncelemesi</strong>
+     <ul>
+      <li>Yaw PID P (proportional gain) → İçeriği: ~0.5-0.8 normal, bu türbinde 1.5 bulunmuş</li>
+      <li>Değiştir: P = 0.6 (standart değer)</li>
+      <li>Yaw sensor deadzone (Dead band) → Artır: ±3° → ±5° (kuru kontol kapıyı genişlet)</li>
+     </ul>
+    </li>
+    <li><strong>Türbini Resetle ve Gözle</strong>
+     <ul>
+      <li>Yazılım parametresini yüklüyse → Soft reset (kontrolcü restart)</li>
+      <li>SCADA yaw açı gra haftası ~ 5 dakika İzle (stabil mi osilasyon devam mı?)</li>
+     </ul>
+    </li>
+   </ol>
+
+   <h3>Orta Vadeli (Mekanik + Sensör, 2-3 saat)</h3>
+   <ol>
+    <li><strong>Yaw Vane Sensor Sıkması ve Kalibrasyonu</strong>
+     <ul>
+      <li>Sensör başını çalışırken vibrasyondan kurtarması için kelepçeyi sıkıştır (ama aşırı sıkma → kırılır)</li>
+      <li>Sensor kalibrasyonu: Yaw açı 0° → sensor output 5V (nominal 2.5V + 0° offset)</li>
+     </ul>
+    </li>
+    <li><strong>Yaw Bearing Yağ Seviyesi Kontrol ve Ek Yağlama</strong>
+     <ul>
+      <li>Yaw bearing yağ haznesine erişim (nacelle kenarında, genellikle 5-10 L kapakla tutulur)</li>
+      <li>Seviye kontrolü dipstick ile: MIN ve MAX arasında olmalı</li>
+      <li>Eğer MIN'e yakınsa: 2-3 L aynı grade yağ (ISO 32-46, açık ticari adı "spindle oil") ekle</li>
+     </ul>
+    </li>
+   </ol>
+
+   <h3>Uzun Vadeli (Bakım Takvim Düzeltmesi)</h3>
+   <ul>
+    <li><strong>Yaw Vane Sensor:</strong> Aylık kalibrasyonu, 6 aylık değişimi (elektrik versiyonu, mekanik ise sorun daha az)</li>
+    <li><strong>Yaw Bearing Yağlama:</strong> 3 aylık kontrol, 12 aylık filtre değişimi</li>
+    <li><strong>PLC Parametre Revizyonu:</strong> Yazılım update veya yeni modelle her 2 yıl kontrol et</li>
+   </ul>
+  </section>
+
+  <section id="sonuç">
+   <h2>Sonuç</h2>
+   <p>Yaw hunting, elektrik üretimine doğrudan engel değildir ama uzun vadede mekanik strese ve aşınmaya yol açar. Tipik telafi enerji kaybı: %1-3 (nominal üretim). Ama en önemli nokta: Titreşim zamanla yaw bearing'i tahta eder ve halka dişlerini öğütür. Erken teşhis + yazılım tuning + periyodik yağ bakımı = uzun ömür.</p>
+   <p>Bu vakada: PLC P parametresi sıfırlandı (0.6 olarak) + vane sensor sıkıldı + bearing'e 2L yağ eklendi. 2 hafta sonra: Yaw osilasyon ±2-3° daralımı yok, trending stabil.</p>
+  </section>
+
+  <section id="kolay-teşhis">
+   <h2>Hızlı Kontrol Listesi: Yaw Hunting Mı?</h2>
+   <ul>
+    <li>☐ SCADA yaw açı değeri ±10° osilasyon gösteriyor mu? (Evet → Next step)</li>
+    <li>☐ Osilasyon sıklığı düşük (0.5-1.5 Hz) mı yoksa yüksek (>3 Hz) mi? (Düşük → Bearing/Motor, Yüksek → Sensor jitter)</li>
+    <li>☐ Motor akımı normal mi (8-10A) yoksa yüksek mi (12-15A)? (Yüksek → Bearing sürüklenmesi)</li>
+    <li>☐ Vane sensor voltajı stabil mi yoksa ripple var mı? (Ripple → Sensor gevşek)</li>
+    <li>☐ Türbini manuel döndürmüş sonrasında nacelle kendi kendine hareket ediyor mu? (Evet → Bearing sürüklenmesi)</li>
+   </ul>
+  </section>
+
+  <section id="ilişkili">
+   <h2>İlgili Kaynaklar</h2>
+   <ul>
+    <li><a href="/sistemler/yaw/">Yaw Sistemi — Teknik Rehberi</a></li>
+    <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
+    <li><a href="/turbinler/">← Türbin Modelleri</a></li>
+   </ul>
+  </section>
+
+  <footer class="field-note-footer">
+   <p><strong>⚠️ Saha Notu</strong></p>
+   <p>Yaw hunting, sürtünme ve sensor jitter kombinasyonundan kaynaklanır. Yazılım (PLC parametre) ve mekanik (bearing yağlama) çözümleri birlikte uygulanmalıdır. Sadece birini yapmak geçici rahatlatma sağlar ama kök neden çözülmez. Enercon ve Vestas'ın parametreleri farklıdır; servise gitmeden önce OEM dokümanlarını kontrol edin.</p>
+  </footer>
+
+ </article>
+</main>
+</body>
+</html>

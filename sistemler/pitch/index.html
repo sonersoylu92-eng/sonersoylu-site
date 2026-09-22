@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pitch Sistemi — Kanat Açı Kontrolü, Motor ve Arızalar | Soner Soylu</title>
+<meta name="description" content="Rüzgar türbinlerinde pitch sistemi: Kanat açısı kontrolü, motor, redüktör, sensor. Ortak arızalar ve saha teşhisi.">
+<link rel="canonical" href="https://sonersoylu.com/sistemler/pitch/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pitch Sistemi — Kanat Ayar Mekanizması">
+<meta property="og:description" content="Rüzgar türbinleri pitch sistemi: Motor, redüktör, kontrol, sensör, arıza teşhisi.">
+<meta property="og:url" content="https://sonersoylu.com/sistemler/pitch/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Pitch Sistemi — Kanat Ayar, Kontrol ve Arıza Giderme",
+  "description": "Rüzgar türbinlerinde pitch sistemi detaylı rehberi. Motor, redüktör, kontrol elektronikleri, ortak arızalar ve saha teşhisi.",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-09-21T00:00:00Z",
+  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
+  "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Pitch Sistemi</span></nav>
+  <p class="kb-kicker">Teknik Referans</p>
+  <h1>Pitch Sistemi</h1>
+  <p class="kb-lead">Rüzgar hızını algılayarak kanatların rüzgara yaklaşma açısını otomatik olarak ayarlayan sistem. Bu kontrol, türbinin güvenli ve verimli çalışmasının anahtarıdır.</p>
+
+  <h2>Pitch Sistemi Nedir?</h2>
+  <p>Pitch (kanat ayar) sistemi, üç kanatın simetrik bir şekilde dönüşünü sağlar. Rüzgar hızı arttıkça kanatlar "feather" konumuna (rüzgara paralel) geçerek aerodinamik kuvveti azaltır ve üretilen gücü sınırlar.</p>
+
+  <h2>Temel Bileşenler</h2>
+
+  <h3>1. Pitch Motor (Aktuatör)</h3>
+  <ul>
+   <li><strong>Tipi:</strong> AC elektrik motor (Asenkron) veya Hidroliktir</li>
+   <li><strong>Gücü:</strong> N90'da ~11-15 kW, N117'de ~18-22 kW</li>
+   <li><strong>Voltaj:</strong> 400V, 3-faz</li>
+   <li><strong>Maksimum Hız:</strong> Genellikle redüktörle sınırlanır</li>
+  </ul>
+
+  <h3>2. Pitch Redüktörü (Dişli kutusu)</h3>
+  <ul>
+   <li><strong>Tipi:</strong> Spur gear veya spiral gear</li>
+   <li><strong>Oran:</strong> 1:500 (Tipik), çok yavaş ama güçlü</li>
+   <li><strong>Çıkış Hızı:</strong> 3-4 derece/saniye</li>
+   <li><strong>Torque:</strong> 1500+ Nm</li>
+  </ul>
+
+  <h3>3. Pitch Sensörü</h3>
+  <ul>
+   <li><strong>Tipi:</strong> Potansiyometrik veya Hall sensör</li>
+   <li><strong>Çıkış:</strong> 0-10V analog sinyal veya digitalsignal</li>
+   <li><strong>Doğruluk:</strong> ±0,5°</li>
+  </ul>
+
+  <h3>4. Kontrol Elektronikleri (PLC/SCADA)</h3>
+  <ul>
+   <li>Rüzgar hızı ölçümü</li>
+   <li>Pitch açısı hedef hesaplaması</li>
+   <li>Servo kontrol (motor yönü + hız)</li>
+   <li>Alarm ve güvenlik mantığı</li>
+  </ul>
+
+  <h2>Pitch Kontrol Algoritması</h2>
+  <p>Moderno türbin kontrol sistemleri şu mantıkla çalışır:</p>
+  <ol>
+   <li><strong>Rüzgar hızını ölç</strong> (Anemometre)</li>
+   <li><strong>Hedef pitch açısını hesapla</strong> (Kontrol algoritması, genellikle PI-kontrolör)</li>
+   <li><strong>Mevcut pitch açısı ile karşılaştır</strong></li>
+   <li><strong>Motor hareketi emret</strong> (Saat yönü veya ters yön)</li>
+   <li><strong>Sensör geri bildirimini bekle</strong></li>
+   <li><strong>Hedef açısına ulaştığında motoru kapat</strong></li>
+  </ol>
+
+  <h2>Ortak Pitch Arızaları</h2>
+
+  <h3>1. Pitch Motor Yüksek Akım (High Current)</h3>
+  <p><strong>Belirti:</strong> Kontrol sisteminde "Pitch motor phase current high" aları</p>
+  <p><strong>Olası Nedenler:</strong></p>
+  <ul>
+   <li>Redüktörde mekanik tutuşma (Yağ eksikliği, mil kilitlenmesi)</li>
+   <li>Motor arızası (Sarım kısası, mekanik blokaj)</li>
+   <li>Kanat mekanik blokkajı (Buz, yabancı cisim)</li>
+  </ul>
+  <p><strong>Saha Teşhisi:</strong></p>
+  <ol>
+   <li>Motor kapatıp kanatları elle döndürmeyi dene (Hafif mi, sıkı mı?)</li>
+   <li>Redüktör yağını kontrol et (Seviye, renk, koku)</li>
+   <li>Motor bobinlerini ölç (Direnç, izolasyon direnci)</li>
+   <li>Kanat yüzeyini görsel kontrol (Buzlanma, çatılma)</li>
+  </ol>
+
+  <h3>2. Asimetrik Pitch (Asymmetric Pitch)</h3>
+  <p><strong>Belirti:</strong> Üç kanatın açıları farklı</p>
+  <p><strong>Sebep:</strong> Bir kanatın sensörü veya motoru arızalı</p>
+  <p><strong>Etki:</strong> Rotor dengesizliği, titreşim, yapısal stres</p>
+
+  <h3>3. Pitch Sensor Arızası</h3>
+  <p><strong>Belirti:</strong> Pitch açı sensör signal error</p>
+  <p><strong>Test:</strong> Sensörün 0-10V çıkış sinyalini multimetre ile ölç</p>
+
+  <h3>4. Pitch Motor Hareketsiz Kalma</h3>
+  <p><strong>Sebep:</strong> Kontrol sinyali yoksa, motor kontaktörü bozuksa</p>
+  <p><strong>Test:</strong> Motor uçlarına direkt 400V uygulanırsa dönmeli</p>
+
+  <h2>Pitch Sisteminin İşletim Noktaları</h2>
+  <div class="kb-table-scroll"><table class="operating-points">
+   <tr><th>Rüzgar Hızı</th><th>Pitch Açısı</th><th>Güç Çıkışı</th></tr>
+   <tr><td>0-3 m/s</td><td>Kütüphaneleri (Stow)</td><td>0 kW</td></tr>
+   <tr><td>3-6 m/s</td><td>Kısmi pitch</td><td>%0-30</td></tr>
+   <tr><td>6-12 m/s</td><td>Feather'a doğru</td><td>%30-95</td></tr>
+   <tr><td>12+ m/s</td><td>Tam pitch (feather)</td><td>Sabit 2500 kW</td></tr>
+   <tr><td>25 m/s</td><td>Durdurma (Safety pitch)</td><td>0 kW</td></tr>
+  </table></div>
+
+  <h2>Periyodik Bakım</h2>
+  <ul>
+   <li><strong>Aylık:</strong> Pitch açı sensor kontrolü</li>
+   <li><strong>3 Aylık:</strong> Redüktör yağı kontrolü, renk ve viscosity</li>
+   <li><strong>6 Aylık:</strong> Motor elektrik ölçümleri (Ohm, megohm)</li>
+   <li><strong>12 Aylık:</strong> Filtre değişimi, kanat mekanik kontrolü</li>
+  </ul>
+
+  <h2>İlgili Kaynaklar</h2>
+  <ul>
+   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
+   <li><a href="/n90/">Nordex N90 Pitch Sistemi</a></li>
+   <li><a href="/ariza/">Arıza Teşhis Ağacı</a></li>
+   <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Pitch Motor Yüksek Akım — Saha Çözüm</a></li>
+  </ul>
+
+ </article>
+</main>
+</body>
+</html>

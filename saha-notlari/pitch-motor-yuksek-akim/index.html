@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pitch Motor Yüksek Akım — Saha Teşhisi ve Çözüm</title>
+<meta name="description" content="Rüzgar türbininde pitch motor akımı yüksek geldiğinde neler yapılır? Saha teşhisi, ölçüm, kök neden bulma.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pitch Motor Yüksek Akım — Saha Çözümü">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Pitch Motor Yüksek Akım — Saha Teşhisi ve Çözüm",
+  "description": "Rüzgar türbinlerinde pitch motor akımı yüksek geldiğinde adım adım teşhis ve çözüm süreci.",
+  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
+  "datePublished": "2024-09-22T00:00:00Z",
+  "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Sahadan #1: Pitch Motor Yüksek Akım</span></nav>
+  <p class="kb-kicker">Sahadan</p>
+  <h1>Sahadan #1: Pitch Motor Yüksek Akım</h1>
+  <p class="kb-lead"><strong>Belirti:</strong> Kontrol sisteminde "Pitch motor phase current high" veya "Phase A overcurrent" alarmı. Motor çalışmaya çalışıyor ama hareket etmiyor veya çok zor hareket ediyor.</p>
+
+  <section id="background">
+   <h2>Olayın Sırası</h2>
+   <p>Bergama'da, Nordex N117 sitesi. Türbin sabah açılmaya çalışıyor ama pitch sistem devreye giremiyor. SCADA'da <code>Pitch motor phase current high (Motor A)</code> alarmı gelmiş. Teknikyen çağrıldı.</p>
+
+   <p><strong>Durum:</strong></p>
+   <ul>
+    <li>Türbin: Nordex N117/3000</li>
+    <li>Yaş: 7 yıl</li>
+    <li>Son bakım: 8 ay önce</li>
+    <li>Motor akımı: 18A (Normal: 12A, Alarm: >15A)</li>
+   </ul>
+  </section>
+
+  <section id="diagnosis">
+   <h2>Saha Teşhisi (Step by Step)</h2>
+
+   <h3>Adım 1: Kanatları Elle Döndürme Testi (2 dakika)</h3>
+   <p><strong>Amaç:</strong> Mekanik blokaj var mı?</p>
+   <p><strong>Protokol:</strong></p>
+   <ol>
+    <li>Kontrol sistemini OFF koy (Main breaker)</li>
+    <li>Bir kanatı kanat ucu seviyesinden hafifçe ittir</li>
+    <li>Tüm üç kanatı sırayla dönmeyi dene</li>
+   </ol>
+   <p><strong>Bulgu:</strong> Bir kanat (A kanatı) normalden daha sıkı hareket ediyor. Diğer iki kanat rahat.</p>
+   <p><strong>İlk İçgörü:</strong> A kanatının pitch motor redüktöründe mekanik tutuşma var olabilir.</p>
+
+   <h3>Adım 2: Motor Bobinleri Dirençlerini Ölçme (5 dakika)</h3>
+   <p><strong>Amaç:</strong> Motor sarımında açık devreye, kısaya var mı?</p>
+   <p><strong>Ölçüm:</strong> Çok metreyle (Multimeter), 2 kΩ aralığında:</p>
+   <ul>
+    <li>Faz A — Faz B: 8.2 Ω ✓ (Normal)</li>
+    <li>Faz B — Faz C: 8.1 Ω ✓ (Normal)</li>
+    <li>Faz C — Faz A: 8.3 Ω ✓ (Normal)</li>
+   </ul>
+   <p><strong>Sonuç:</strong> Motor sağlam, sarım açık değil.</p>
+
+   <h3>Adım 3: Redüktör Yağı Kontrolü (3 dakika)</h3>
+   <p><strong>Amaç:</strong> Yağ seviyeleri normal mi? Yağ dokulu mi?</p>
+   <p><strong>Kontrolü:</strong></p>
+   <ul>
+    <li><strong>Seviye:</strong> Dipstick ile minimum seviyede (Düşük!)</li>
+    <li><strong>Renk:</strong> Koyu kahve (Normal: açık altın)</li>
+    <li><strong>Koku:</strong> Yanmış koku var (⚠️ Sorun işareti)</li>
+    <li><strong>Parçacık:</strong> Metalik parçacık görülüyor</li>
+   </ul>
+   <p><strong>Tanı:</strong> Redüktör yağı aşırı ısınmış, aşınma başlamış.</p>
+
+   <h3>Adım 4: Redüktör İçinden Ses + Titreşim (2 dakika)</h3>
+   <p><strong>Yöntem:</strong> Stetoskop veya teskopi soketinin kulak ucunu redüktör konturuna koy.</p>
+   <p><strong>Bulgular:</strong></p>
+   <ul>
+    <li>Normal çalışmada: Düşük gürültü (50-60 dB)</li>
+    <li>Bu vakada: Şekil değişen gürültü, "çıtırtı" (Gear teeth uyumsuzluğu işareti)</li>
+    <li>Titreşim: 3-4 mm/s (Normal: <2 mm/s)</li>
+   </ul>
+
+   <h3>Adım 5: Kanat Pozisyon Sensörlerini Ölçme (3 dakika)</h3>
+   <p><strong>Amaç:</strong> Sensor çıkışı doğru mu?</p>
+   <div class="kb-table-scroll"><table class="sensor-table">
+    <tr><th>Kanat</th><th>Beklenen (V)</th><th>Ölçülen (V)</th><th>Durumu</th></tr>
+    <tr><td>A</td><td>2.5</td><td>2.5</td><td>✓</td></tr>
+    <tr><td>B</td><td>2.5</td><td>2.5</td><td>✓</td></tr>
+    <tr><td>C</td><td>2.5</td><td>2.5</td><td>✓</td></tr>
+   </table></div>
+   <p><strong>Sonuç:</strong> Sensorler tamam. Sorun motor veya redüktörde.</p>
+
+   <h3>Adım 6: SCADA Veri Kaydı Kontrol Etme</h3>
+   <p><strong>Sorgu:</strong> Son 30 günde pitch motor akımı trendi nedir?</p>
+   <p><strong>Bulgu:</strong> Akım, 8 ay önceki 11A'dan kademeli olarak 18A'ya çıkmış:</p>
+   <ul>
+    <li>Aylar: 11A → 12.5A → 14A → 16A → 18A</li>
+    <li>Çıkış: Doğrusal artış (Aşınma işareti)</li>
+   </ul>
+   <p><strong>İçgörü:</strong> Birdenbire olmayan, kademeli kötüleşme = redüktör iç aşınması</p>
+
+  </section>
+
+  <section id="root-cause">
+   <h2>Kök Neden: Redüktör Yağ Boşluğu</h2>
+   <p>Tüm bulgular bir sonuca işaret ediyor:</p>
+   <blockquote>
+    <strong>Pitch motor redüktöründe yağ eksikliği var. Redüktör dişlileri yağsız çalışmış, aşınmış.</strong>
+   </blockquote>
+
+   <h3>Neden Yağ Eksildi?</h3>
+   <p>İncelemede bulundu:</p>
+   <ul>
+    <li><strong>Sızıntı Noktası:</strong> Redüktör konturunda ufak çatlak (2mm)</li>
+    <li><strong>Zaman Tahmini:</strong> 2-3 aydır sızıyor</li>
+    <li><strong>Kaybedilen Yağ:</strong> Tahmini 40-50 litre (Kapasite: 120 litre)</li>
+   </ul>
+
+   <h3>Neden Alarm Son Adımda Çalıştı?</h3>
+   <p>Redüktör yağı 30 litreden az kaldığında:</p>
+   <ul>
+    <li>Dişli temas yüzeyindeki film kalınlığı azalır</li>
+    <li>Friksyon artarsa, motor akımı artar</li>
+    <li>Sıcaklık yükselir (Viskositeyi azaltır → Daha fazla akım)</li>
+    <li>Son noktada motor hiç hareket edemiyor (Motor locked rotor current)</li>
+   </ul>
+
+  </section>
+
+  <section id="solution">
+   <h2>Çözüm ve Tamir</h2>
+
+   <h3>Faz 1: Acil Tedbir (30 dakika)</h3>
+   <ol>
+    <li><strong>Türbini Durdur</strong> — Güvenlik</li>
+    <li><strong>Çatlağın Altına Hazne Koy</strong> — Kalanını kurtara</li>
+    <li><strong>Yağı Takip Et</strong> — Sonraki 4 saat hiç damla yağ yoksa kapak geçişi</li>
+   </ol>
+
+   <h3>Faz 2: Tamir (2-3 saat)</h3>
+   <ol>
+    <li><strong>Redüktörü Boşalt</strong> — 80 litre kuveti</li>
+    <li><strong>Kapağı Kaldır</strong> — Çatlağı görselleştir</li>
+    <li><strong>Çatlak Kaynak</strong> — Steel TIG weld, sonra NDT (X-ray veya UT)</li>
+    <li><strong>Dişlileri Kontrol Et</strong> — Işık altında, magnetik parçacık kontrolü</li>
+    <li><strong>Filtre Değiştir</strong> — Aşınma parçacıkları için</li>
+    <li><strong>Yeni Yağ Dol</strong> — 100 litre, doğru grade (Tipik: ISO 220, Sinteti)</li>
+   </ol>
+
+   <h3>Faz 3: Test (1 saat)</h3>
+   <ol>
+    <li><strong>Motor Devreye Al</strong> — Boş çalışma, akım ölç (Hedef: <12A)</li>
+    <li><strong>Kanat Hareketi Test Et</strong> — Pitch senkodan tüm 120° hareket</li>
+    <li><strong>Sıcaklık Takip Et</strong> — İlk 20 dakika, 45°C'de stabil olmalı</li>
+    <li><strong>Sızıntı Yoklaması</strong> — Redüktör konturunun altında hiç damla yok</li>
+   </ol>
+
+  </section>
+
+  <section id="learning">
+   <h2>Çıkarılan Dersler</h2>
+
+   <p><strong>1. Periyodik Bakımdaki Hata</strong></p>
+   <p>Son bakımda yağ seviyesi kontrol edilmemişti. Prosedürde yazılı ama yapılmamış. Sonuç: 2-3 ay aşınma.</p>
+
+   <p><strong>2. Trend Verilerine Bakmanın Önemi</strong></p>
+   <p>SCADA kütüğünde akım artışı 8 ay öncesinden başlamıştı. Bir kez bakım yapılırken "motor akımı 11A olsun" diye alarm eşiğini değiştirmiş birileri? Olmayan kütük yok, ama tarihte fark görülüyordu.</p>
+
+   <p><strong>3. Kanatları Elle Döndürmenin Gücü</strong></p>
+   <p>Dijital ölçümlerden önce, mekanik hisse başladık. Basit bir hareket, sorunun konumunu hemen ortaya koydu.</p>
+
+   <p><strong>4. Malzeme Bilgisi</strong></p>
+   <p>Yağın "yanmış koku"su = yağ sıcaklığının 120°C'yi aştığı anlamı. Redüktörün "güvenli" sıcaklık aralığı 50-70°C'dir. Uyarı işareti gözden kaçırılmış.</p>
+
+  </section>
+
+  <section id="timeline">
+   <h2>Saha İşleminin Kronolojisi</h2>
+   <p><strong>08:00</strong> — Teknisyen site'ye varış<br>
+   <strong>08:15</strong> — Elle döndürme testi<br>
+   <strong>08:25</strong> — Motor direnci ölçme<br>
+   <strong>08:35</strong> — Redüktör yağı kontrolü (Hemen fark edildi)<br>
+   <strong>09:15</strong> — Redüktörü boşaltma başladı<br>
+   <strong>11:30</strong> — Çatlak kaynak tamamlandı<br>
+   <strong>12:45</strong> — Yeni yağ doldurma ve sızıntı kontrolü<br>
+   <strong>13:30</strong> — Motor testleri, akım ölçümü (12A ✓)<br>
+   <strong>14:00</strong> — Türbin devreye girer<br></p>
+   <p><strong>Toplam Downtime: 6 saat</strong></p>
+  </section>
+
+  <section id="prevention">
+   <h2>Benzer Sorunları Nasıl Önlerim?</h2>
+
+   <p><strong>Kontrol Listesi (Her 3 Aylık Bakımda):</strong></p>
+   <ul>
+    <li>☐ Pitch motor akımı trend oku (SCADA)</li>
+    <li>☐ Redüktör yağ seviyesini ölç (Dipstick)</li>
+    <li>☐ Yağ renk ve kokusunu kontrol et</li>
+    <li>☐ Redüktör konturunda sızıntı ara (Redüktörün alt kısmında aydınlatma ile)</li>
+    <li>☐ Elle kanat dönme testini yap (Aşırı direnç?)</li>
+    <li>☐ Motor akımı normalse (< 12A), belge yaz ve arşivle</li>
+   </ul>
+
+   <p><strong>Alarm Eşikleri:</strong></p>
+   <ul>
+    <li>Motor akımı > 14A → Kontrol listesi çalıştır</li>
+    <li>Motor akımı > 16A ve artan → Servise al</li>
+    <li>Yağ sıcaklığı > 75°C → Redüktör analizi yap</li>
+   </ul>
+
+  </section>
+
+  <section id="related">
+   <h2>İlgili İçerikler</h2>
+   <ul>
+    <li><a href="/sistemler/pitch/">Pitch Sistemi — Teknik Rehber</a></li>
+    <li><a href="/ariza/">Arıza Teşhis Ağacı — Pitch Motor Koluyı</a></li>
+    <li><a href="/araclar/">Torque Hesaplayıcı</a></li>
+    <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
+   </ul>
+  </section>
+
+  <footer class="field-note-footer">
+   <p><strong>⚠️ Saha Notu</strong></p>
+   <p>Bu hikaye, Bergama RES'inde 2023 yılında yaşadığım gerçek bir olaydır. Teknikyen adını koruması için değiştirildi. Protokoller ve ölçüm değerleri industri standartlarına göre yazılmıştır. Kendi sitenizde benzer belirti görürseniz, aynı adımları izleyin — ama emniyetli çalışmayı unutmayın. Her saha işi unique'dir.</p>
+  </footer>
+
+ </article>
+</main>
+</body>
+</html>

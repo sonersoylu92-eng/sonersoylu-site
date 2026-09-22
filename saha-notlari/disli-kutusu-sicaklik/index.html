@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dişli Kutusu Sıcaklığı Yükseliyor — Sahadan Teşhis Notu | Soner Soylu</title>
+<meta name="description" content="Rüzgar türbininde redüktör (gearbox) sıcaklığı arttıkça artıyor. Normal mi? Saha teşhisi, ısı yönetimi, yağ sorunları.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dişli kutusu Sıcaklığı — Rüzgar Hızıyla Artış">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sahadan #2: Dişli kutusu Sıcaklığı Rüzgar Hızıyla Artıyor",
+  "description": "Türbin rüzgar gücü arttıkça redüktör sıcaklığı da artıyor. Kontrol listesi ve saha teşhis protokolü.",
+  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
+  "datePublished": "2024-10-15T00:00:00Z",
+  "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Sahadan #2: Dişli kutusu Sıcaklığı Rüzgar Hızıyla Artıyor</span></nav>
+  <p class="kb-kicker">Sahadan</p>
+  <h1>Sahadan #2: Dişli kutusu Sıcaklığı Rüzgar Hızıyla Artıyor</h1>
+  <p class="kb-lead"><strong>Durum:</strong> "Dişli kutusu sıcaklığı rüzgar hızı 10 m/s'den sonra 75°C'yi aşıyor. Alarm eşiği 85°C. SCADA'da uyarı geliyor ama türbin hiç durmuyor. Arıza mı?"</p>
+
+  <section id="senaryo">
+   <h2>Olay: Aliağa RES, Vestas V126</h2>
+   <p>Sabah raporu: V126 türbininde 3 gün boyunca gearbox sıcaklığı trend anormali. Güneşlü, boşluk rüzgarı (11-15 m/s). Diğer türbinler 60-65°C, bu türbin 78-82°C.</p>
+   <p><strong>Teknikyen bulguları (İlk 10 dakika):</strong></p>
+   <ul>
+    <li>Dişli kutusu dış yüzeyi dokunulabilir (Norm: 50°C dokunulabilir)</li>
+    <li>Yağ seviyesi: Dipstick minimum seviyede (Düşük!)</li>
+    <li>Yağ rengi: Hafif koyu (Normal: açık altın)</li>
+    <li>Kapasite tahmini: 2-3 litre kaybı (700 litre kapasitesinden)</li>
+   </ul>
+  </section>
+
+  <section id="teori">
+   <h2>Neden Sıcaklık Artıyor?</h2>
+   <p>Dişli kutusu içinde enerji dönüşümü iki kaynaktan gelir:</p>
+   <ol>
+    <li><strong>Mekanik Güç (Dominant):</strong> Rotor → mil → dişli → motor hızlanması. Rüzgar güçlü = daha çok torque = daha çok mekanik ısı.</li>
+    <li><strong>Mekanik Kayıp (Frictional Heat):</strong> Dişli temas, yatak aşınması, sıkışmış yüzeyler.</li>
+   </ol>
+   <p><strong>İdeal Durum:</strong> Yağ filmi dişlileri ayırır, hiç metalik temas yok. İsı soğutucuya aktarılır (radyatör veya natural cooling).</p>
+   <p><strong>Sorun Durumu:</strong> Yağ seviyesi düşük veya yağ kalitesi kötü → dişliler daha sıkı temas → frictional heat artar → sıcaklık kontrol altına alınamaz.</p>
+  </section>
+
+  <section id="tanı">
+   <h2>Saha Teşhisi (Adım Adım)</h2>
+
+   <h3>Adım 1: Yağ Seviyesi Ölçme (2 dakika)</h3>
+   <p><strong>Protokol:</strong></p>
+   <ul>
+    <li>Türbini STOP konumuna koy (pitch safe)</li>
+    <li>Türbin 30 dakika bekle (yağ sakinleşsin)</li>
+    <li>Dipstick ile yağ seviyesini ölç</li>
+    <li>Seviye işaretleri: MIN — NORMAL — MAX</li>
+   </ul>
+   <p><strong>Beklenen Sonuç:</strong> NORMAL veya MAX arasında</p>
+   <p><strong>Sahada Bulgu:</strong> Minimum seviyenin 5cm altında → 50+ litre kayıp tahmini</p>
+
+   <h3>Adım 2: Sızıntı Kontrolü (5 dakika)</h3>
+   <p><strong>Yöntem:</strong> Dişli kutusu dış yüzeyini ve konturun altını aydınlatıp kontrol et.</p>
+   <ul>
+    <li>Dip seviyesinde: Yağ damlacığı var mı? Kuru mu ıslak mı?</li>
+    <li>Hava filtresi etrafı: Toz + yağ karışımı = sızıntı kanıtı</li>
+    <li>Esnetici bölge: Üretici çoğunlukla cam veya kütük koyar, üzerinde yağ izi var mı?</li>
+   </ul>
+   <p><strong>Sahada Bulgu:</strong> Hava filtresi etrafında ıslak, yağlı toz birikmesi → sızıntı aktif ve uzun süredir devam ediyor</p>
+
+   <h3>Adım 3: Yağ Örneği Alma (2 dakika)</h3>
+   <p><strong>Neden?</strong> Yağın oksidasyon seviyesini kontrol et (termal bozunma göstergesi).</p>
+   <p><strong>Nasıl?</strong></p>
+   <ul>
+    <li>Kullan: Yağ örnek şişesi (steril, etiketli)</li>
+    <li>Dişli kutusu dipstick üzerinden 50-100 ml yağ al</li>
+    <li>Şişeyi etiketle (tarih, seri, sıcaklık)</li>
+    <li>Lab'a gönder: Acid Number (TAN), Viscosity Index (VI), ısıl stabilitesi</li>
+   </ul>
+   <p><strong>İlk Görünüş:</strong> Yağ koyu, yapışkan görüntü → oksidasyon ileri seviye</p>
+
+   <h3>Adım 4: SCADA Trend Verisi İnceleme (3 dakika)</h3>
+   <p><strong>Sorgu:</strong> Son 30 gün gearbox sıcaklığı + rüzgar hızı + güç çıkışı</p>
+   <div class="kb-table-scroll"><table class="trend-table">
+    <tr><th>Gün</th><th>Avg Rüzgar (m/s)</th><th>Avg Dişli kutusu T (°C)</th><th>Δ vs Normal</th></tr>
+    <tr><td>Gün -20</td><td>8</td><td>55</td><td>— (Baseline)</td></tr>
+    <tr><td>Gün -10</td><td>9</td><td>62</td><td>+7°C</td></tr>
+    <tr><td>Gün -3</td><td>11</td><td>76</td><td>+21°C</td></tr>
+    <tr><td>Bugün</td><td>12</td><td>79</td><td>+24°C (!)</td></tr>
+   </table></div>
+   <p><strong>İçgörü:</strong> Sıcaklık artışı düzensiz (rüzgar artışına orant olamayan jump) → mekanik sorun, sadece yüksek güç değil</p>
+
+   <h3>Adım 5: Dişli kutusu Sıcaklık Sensörü Kontrolü (3 dakika)</h3>
+   <p><strong>Şüphe:</strong> "Sensör hatalı olabilir mi?"</p>
+   <p><strong>Test:</strong></p>
+   <ul>
+    <li>Türbini kapalı durumda bırak (şaft dönmesin)</li>
+    <li>Dişli kutusu çelik gövdesine Infrared (IR) termometre tut</li>
+    <li>Ölçülen IR sıcaklığı vs SCADA sıcaklığı karşılaştır</li>
+   </ul>
+   <p><strong>Normal Fark:</strong> ±3°C (sensör lokasyonu vs yüzey, thermal lag)</p>
+   <p><strong>Sahada Bulgu:</strong> IR: 72°C, SCADA: 78°C → Sensör calibration drift veya RTD hatalı (ama dikkat: bu fark tolerable)</p>
+
+   <h3>Adım 6: Redüktör İçi Göz Muayenesi (Sadece Stop Süresi)</h3>
+   <p><strong>Protokol:</strong> Sadece servise gidilecekse yapılır (zaman + risk).</p>
+   <p><strong>Kontrol Noktaları:</strong></p>
+   <ul>
+    <li>Dişli yüzeylerinde: Renklenme (temper color = aşırı ısı kanıtı)</li>
+    <li>Yatak topları: Pitting (lokal hasara) var mı?</li>
+    <li>Yağ filtresinde: Metal şavı var mı (kaynak: dişli aşınması)</li>
+   </ul>
+  </section>
+
+  <section id="kök-neden">
+   <h2>Kök Neden Analizi</h2>
+   <p>Yağ seviyesi düşüşü + aşırı sıcaklık → Sızıntı.</p>
+   <p><strong>Neden sızıntı?</strong></p>
+   <ol>
+    <li><strong>Seal Bozulması:</strong> Mil geçişindeki o-ring elastomeri sertleşmiş (ısıdan veya yaştan)</li>
+    <li><strong>Dişli kutusu Krak:</strong> Önceki Sahadan #1'de olduğu gibi, çatlak yığın yüzeyinde</li>
+    <li><strong>Dipstick Kapağı Gevşek:</strong> Montaj sırası eksik sıkma, zamanla çıkma</li>
+   </ol>
+   <p><strong>Bu Vakada:</strong> Hava filtresi etrafındaki nemli toz → mil seal'i arızalı, yağ dış yüzeyden sızıyor ve havanın draftı ile taşınıyor.</p>
+  </section>
+
+  <section id="çözüm">
+   <h2>Alan Çözümü (Sıralı)</h2>
+
+   <h3>Derhal (Emniyetli Operasyon)</h3>
+   <ol>
+    <li><strong>Sıcaklık Limiti Kontrol Et</strong> — SCADA'da alarm eşiği 85°C mi? Normal mi?</li>
+    <li><strong>Güç Sınırlaması</strong> — Kontrol sistemine "gearbox yüksek sıcaklık → güç %80'e kapat" komutu var mı?</li>
+    <li><strong>Devam Et, Takip Et</strong> — Sıcaklık <80°C'de kalırsa operasyonel risk düşük (ama uzun vadede hasar kümülatif)</li>
+   </ol>
+
+   <h3>Kısa Vadeli (48 saat içinde)</h3>
+   <ol>
+    <li><strong>Yağ Seviyesini Doldir</strong>
+     <ul>
+      <li>Türbini STOP et, 30 dakika bekle</li>
+      <li>Aynı grade yağ 50 litre hazırla (Dipstick MAX'a gelene kadar)</li>
+      <li>Yavaşça doldir, degazifikasyon bekleme süresi 1 saat</li>
+      <li>30 dakika çalıştırma (boş yük, pitch move), sıcaklık ve sızıntı kontrol</li>
+     </ul>
+    </li>
+    <li><strong>Sızıntı Kaynağını Bulup Belge</strong>
+     <ul>
+      <li>Hava filtresi altında hazne koy, 24 saat monitör</li>
+      <li>Damla sayısı × damla hacmi = saat başına kayıp tahmini</li>
+      <li>Eğer >50 mL/saat → Üretici servisine bildir (önemli durum)</li>
+     </ul>
+    </li>
+   </ol>
+
+   <h3>Orta Vadeli (1-2 hafta, Planlı Servis)</h3>
+   <ol>
+    <li><strong>Mil Seal Değişimi</strong>
+     <ul>
+      <li>Dişli kutusu boşaltıl (700 litre tank)</li>
+      <li>Mil ile çıkmazı araştır, o-ring/seal assembly yenile</li>
+      <li>Yeni yağ doldur, eski yağ uygun şekilde imha et</li>
+     </ul>
+    </li>
+    <li><strong>Yağ Analiz Sonuçları Bekle ve Değerlendir</strong>
+     <ul>
+      <li>TAN (Acid Number) > 2.0 → Yağ oksitlenmiş, periyodik değişim şu ay yapılmalı</li>
+      <li>Metal konsantrasyonu (Fe, Cu): Dişli aşınması hızı göstergesi</li>
+      <li>Viscosity shift >±15%: Termal bozunma (operasyon sıcaklığı kontrol altında tutulmalı)</li>
+     </ul>
+    </li>
+   </ol>
+  </section>
+
+  <section id="eğri">
+   <h2>Dişli kutusu Sıcaklığı vs Rüzgar Hızı: Normallik Kontrol Listesi</h2>
+   <p>Her türbinin kendi "sıcaklık eğrisi" vardır. Rüzgar hızına göre beklenen sıcaklıklar:</p>
+   <div class="kb-table-scroll"><table class="normal-curve">
+    <tr><th>Rüzgar (m/s)</th><th>N90 Normal (°C)</th><th>N117 Normal (°C)</th><th>V126 Normal (°C)</th><th>Alarm (Tümü)</th></tr>
+    <tr><td>3-5 (Low wind)</td><td>45-50</td><td>48-52</td><td>50-55</td><td>—</td></tr>
+    <tr><td>6-8 (Partial)</td><td>55-60</td><td>58-63</td><td>60-65</td><td>—</td></tr>
+    <tr><td>9-12 (Rated)</td><td>62-68</td><td>65-72</td><td>68-75</td><td>—</td></tr>
+    <tr><td>13-15 (High)</td><td>68-72</td><td>72-78</td><td>75-82</td><td>>85°C</td></tr>
+    <tr><td>15+ (Extreme)</td><td>Pitch down</td><td>Pitch down</td><td>Pitch down</td><td>STOP</td></tr>
+   </table></div>
+   <p><strong>Şüphe Kriteri:</strong> Aynı rüzgarı 3 gün farkında 15°C sıcaklık fark → Sorun var.</p>
+  </section>
+
+  <section id="önleme">
+   <h2>Benzer Sorunları Önlemek İçin</h2>
+   <p><strong>Aylık Kontrol Listesi:</strong></p>
+   <ul>
+    <li>☐ Dişli kutusu yağ seviyesini visual ve dipstick ile kontrol et</li>
+    <li>☐ Dış yüzey temiz mi, sızıntı izi var mı?</li>
+    <li>☐ Hava filtresi ve kontur altı kuru mı?</li>
+    <li>☐ Son 24 saat sıcaklık peak nedir? Trend nedir?</li>
+   </ul>
+   <p><strong>Her 6 Aylık Bakım:</strong></p>
+   <ul>
+    <li>☐ Yağ örneği al, labda analiz yaptır (TAN, Fe, Viscosity)</li>
+    <li>☐ Seal'leri görsel kontrol (çatlak, renk değişimi?)</li>
+    <li>☐ Soğutma radyatörü temiz mi? Toz tıkamış mı?</li>
+   </ul>
+   <p><strong>Alarm Eşikleri:</strong></p>
+   <ul>
+    <li>70°C (rüzgarın 12+ m/s olmadığında) → Kontrol listesi çalıştır</li>
+    <li>78°C (herhangi bir rüzgar) → Sızıntı test et</li>
+    <li>85°C → Kontrol sistemi otomatik güç limit yapmış olmalı</li>
+    <li>90°C → STOP komut (Risk yüksek)</li>
+   </ul>
+  </section>
+
+  <section id="ilişkili">
+   <h2>İlgili Konular</h2>
+   <ul>
+    <li><a href="/sistemler/disli-kutusu/">Dişli kutusu Sistemi — Teknik Derinlik</a></li>
+    <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Pitch Motor Yüksek Akım (Sahadan #1)</a></li>
+    <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
+    <li><a href="/n117/">Nordex N117 Dişli kutusu Sistemi</a></li>
+   </ul>
+  </section>
+
+  <footer class="field-note-footer">
+   <p><strong>⚠️ Saha Notu</strong></p>
+   <p>Bu vaka, Aliağa RES'inde 2023 yazında gerçekten yaşandı. Yağ sızıntısı sonucunda redüktör seal değiştirildi; operasyon sırasında sıcaklık 65°C nominal değerine düştü. Dişli kutusu sıcaklığını sadece bir "sayı" olarak okumayın — rüzgar hızı, üretilen güç, dış sıcaklık ve geçmiş trend ile değerlendirin. Termal anomali (aşırı sıcaklık) her zaman bir şey söylüyor; dinleyin.</p>
+  </footer>
+
+ </article>
+</main>
+</body>
+</html>

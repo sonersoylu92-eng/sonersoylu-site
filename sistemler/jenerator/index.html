@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jeneratör ve Converter Sistemi — DFIG, Direct-Drive, Soğutma | Soner Soylu</title>
+<meta name="description" content="Rüzgar türbini jeneratör sistemi: Asenkron jeneratör, DFIG, converter, soğutma, arıza teşhisi.">
+<link rel="canonical" href="https://sonersoylu.com/sistemler/jenerator/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jeneratör Sistemi — Elektrik Üretim Mekanizması">
+<meta property="og:url" content="https://sonersoylu.com/sistemler/jenerator/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Jeneratör Sistemi — Rüzgar Türbini Elektrik Üretimi",
+  "description": "Rüzgar türbini jeneratör sistemi teknik rehberi. Asenkron motor, DFIG, converter, soğutma, kontrol.",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2026-09-22T00:00:00Z",
+  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
+  "inLanguage": "tr-TR"
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <article>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Jeneratör ve Converter Sistemi</span></nav>
+  <p class="kb-kicker">Teknik Referans</p>
+  <h1>Jeneratör ve Converter Sistemi</h1>
+  <p class="kb-lead">Rüzgar enerjisini mekanik torque → elektrik akımı dönüştüren sistem. Türbinin "kalbi"dir. Asenkron jeneratör, DFIG (Doubly-Fed Induction Jeneratör), converter, soğutma ve kontrol elektronikleri türün tasarımına göre değişir.</p>
+
+  <h2>Jeneratör Tipleri</h2>
+
+  <h3>1. Squirrel-Cage Asenkron (Sabit Hız, Eski Tasarım)</h3>
+  <p><strong>Kullanım:</strong> 1980-2000'ler, eski Nordex N80, Vestas V47</p>
+  <p><strong>Özellikleri:</strong></p>
+  <ul>
+   <li>Sabit hızda çalışır (şebeke frekansı ile sinkron, ±3% slip)</li>
+   <li>Basit, dayanıklı, ucuz</li>
+   <li>Dişli kutusu gerekli (düşük rpm → yüksek rpm)</li>
+   <li>Yüksek başlangıç akımı (inrush), şebeke stres</li>
+   <li>Verim: ~92-94%</li>
+  </ul>
+
+  <h3>2. Doubly-Fed Induction Jeneratör (DFIG) — Modern Standard</h3>
+  <p><strong>Kullanım:</strong> 2000-2020, Vestas V110-V136, Nordex N90-N117, Siemens</p>
+  <p><strong>Özellikleri:</strong></p>
+  <ul>
+   <li><strong>Yapısı:</strong> Stator → şebeke bağlı (direk), Rotor → converter bağlı (electronic control)</li>
+   <li><strong>İşletim:</strong> Değişken hız (±30% slip), maksimum güç noktası takip (MPPT)</li>
+   <li><strong>Converter:</strong> AC-DC-AC, şebeke sinkronizasyonunu kontrol eder</li>
+   <li><strong>Avantajlar:</strong> Tam hız denetimi, verim %98+, soft-start (inrush kontrol)</li>
+   <li><strong>Dezavantajlar:</strong> Converter kompleks, hata teşhisi zor, EMI/harmonik sensibilitesi</li>
+  </ul>
+
+  <h3>3. Direct-Drive (Dişli kutusu Yok) — Enercon Tasarımı</h3>
+  <p><strong>Kullanım:</strong> Enercon E70, E82, E92</p>
+  <p><strong>Özellikleri:</strong></p>
+  <ul>
+   <li><strong>Yapısı:</strong> Rotor hub motor, rotor → şaftı doğrudan → stator</li>
+   <li><strong>Hava Aralığı:</strong> Çok geniş (5-6 metre), çok düşük rpm (6-16 rpm)</li>
+   <li><strong>Avantajlar:</strong> Dişli kutusu yok (arıza/bakım minimum), aktarma kaybı yok, bakım kalemi az</li>
+   <li><strong>Dezavantajlar:</strong> Halka jeneratör çok ağır ve büyük çaplı; nakliye ile montaj özel planlama ister, ilk yatırım maliyeti yüksektir</li>
+  </ul>
+
+  <h2>Temel Bileşenler (DFIG Örneği)</h2>
+
+  <h3>Stator (Sabit Çekirdeği)</h3>
+  <ul>
+   <li><strong>Yapısı:</strong> Demir nüve laminasyonları, sarılı bakır sargılar</li>
+   <li><strong>Voltaj:</strong> 690V (3-faz)</li>
+   <li><strong>Soğutma:</strong> Hava veya likid (fan/radiator ile)</li>
+   <li><strong>Koruma:</strong> Termik RTD sensör (sıcaklık kontrol), overcurrent (SCADA aktarma)</li>
+  </ul>
+
+  <h3>Rotor (Dönen Çekirdek)</h3>
+  <ul>
+   <li><strong>Yapısı:</strong> Squirrel-cage (aluminum bar rods) veya wound rotor (bakır sarılı, DFIG'de)</li>
+   <li><strong>DFIG'de:</strong> Bakır sargılar, bilezik (slip ring) ile converter'e bağlı</li>
+   <li><strong>Hız:</strong> 1000-1200 rpm nominal şebeke frekansında</li>
+  </ul>
+
+  <h3>Converter (DFIG'de Rotor Devresi)</h3>
+  <ul>
+   <li><strong>Tür:</strong> AC-DC-AC iki yönlü (bidirectional)</li>
+   <li><strong>Güç Elektronikleri:</strong> IGBT (Insulated Gate Bipolar Transistor) transistörler</li>
+   <li><strong>Fonksiyon:</strong> Rotor akım voltaj'ını kontrol → stator güç çıkış optimize</li>
+   <li><strong>Soğutma:</strong> Likid (glycol-water), 5-10 kW fan motor</li>
+   <li><strong>Güvenlik:</strong> Over-current protection, grid fault detection, soft-start</li>
+  </ul>
+
+  <h3>Trafo (Jeneratör Transformer)</h3>
+  <ul>
+   <li><strong>Tipi:</strong> Yükseltme trafosu</li>
+   <li><strong>Giriş:</strong> 690V (jeneratör)</li>
+   <li><strong>Çıkış:</strong> 30kV veya 110kV (şebeke)</li>
+   <li><strong>Soğutma:</strong> Yağ soğutması, fan motor ile</li>
+  </ul>
+
+  <h2>Jeneratör Soğutma Sistemi</h2>
+
+  <h3>Pasif Soğutma (Enercon, eski tasarımlar)</h3>
+  <ul>
+   <li><strong>Yöntem:</strong> Natural convection, aluminum finli radyatör</li>
+   <li><strong>Kapasite:</strong> Nominal işletim için yeterli, ama sınırlı</li>
+   <li><strong>Periyodik Bakım:</strong> Toz temizliği (finler tıkalı mı?)</li>
+  </ul>
+
+  <h3>Aktif Soğutma (Modern DFIG, Vestas, Nordex)</h3>
+  <ul>
+   <li><strong>Tipi:</strong> Likid soğutma (jeneratör + converter)</li>
+   <li><strong>Fan Motor:</strong> 5-10 kW elektrik motor, termostat kontrol</li>
+   <li><strong>Radyatör:</strong> Alüminyum plaka (plate-fin), high surface area</li>
+   <li><strong>Pompa:</strong> Elektrik pompa, debi kontrol (variable flow)</li>
+   <li><strong>Sıcaklık Hedefi:</strong> 50-65°C nominal, alarm >80°C, shutdown >95°C</li>
+  </ul>
+
+  <h2>Ortak Jeneratör Arızaları</h2>
+
+  <h3>1. Yüksek Sıcaklık (Temperature High)</h3>
+  <p><strong>Belirti:</strong> Jeneratör sıcaklık alarmı, power kısıtlı</p>
+  <p><strong>Olası Nedenler:</strong></p>
+  <ul>
+   <li>Soğutma radyatörü tuz ve kirle tıkalı (tuz kristalleri, kir)</li>
+   <li>Fan motor arızası (hava akışı yok)</li>
+   <li>Sensor RTD arızalı (yanlış okuma, jeneratör sıcaklık vakasına bakın)</li>
+  </ul>
+  <p><strong>Teşhis:</strong> <a href="/saha-notlari/jenerator-sicaklik/">Jeneratör sıcaklık alarmı vakası</a></p>
+
+  <h3>2. Overcurrent / Fault Codes</h3>
+  <p><strong>Belirti:</strong> "Grid Fault", "Rotor Over-current", "Converter Fault"</p>
+  <p><strong>Sebep:</strong> Şebeke kısa devre, harmonik yüksek, converter IGBT arızası</p>
+  <p><strong>Ön Kontrol:</strong> OEM fault code log ve şebeke voltaj/frekans ölçümü</p>
+
+  <h3>3. Yağlama Sorunu (Yaşlılık)</h3>
+  <p><strong>Belirti:</strong> Motor sesi değişti (hışıltı, tıslama), vibration artan</p>
+  <p><strong>Sebep:</strong> Yatak grease eski, viskozitesini kaybetmiş</p>
+  <p><strong>Periyodik Kontrol:</strong> 5-7 yıl sonra yatak grease değişimi (jeneratör seviyelendirme alanında)</p>
+
+  <h3>4. Elektriksel Yalıtım Bozulması</h3>
+  <p><strong>Belirti:</strong> Megohm ölçümü düşük (&lt;10 MΩ), sızıntı akımı artmış.</p>
+  <ul>
+   <li><strong>Sebep:</strong> Nem, yaşlanma, sargı yalıtımının zayıflaması</li>
+   <li><strong>Risk:</strong> Faz-toprak kaçağı, hatalı sinyaller, ilerleyen aşamada sargı arızası</li>
+   <li><strong>Kontrol:</strong> Megohm (izolasyon direnci) testi; hedef &gt;10 MΩ. Ölçüm öncesi sargının nemden arındırılmış olması gerekir.</li>
+  </ul>
+
+  <h2>Periyodik Bakım</h2>
+
+  <div class="kb-table-scroll"><table>
+   <tr><th>Bakım Tipi</th><th>Aralık</th><th>Süresi</th><th>Not</th></tr>
+   <tr><td>Soğutma Radyatörü Temizliği</td><td>6 Aylık</td><td>1 saat</td><td>Tuz temizliği (deniz yakını), toz filtesi kontrol</td></tr>
+   <tr><td>Fan Motor Kontrol</td><td>3 Aylık</td><td>5 min</td><td>Ses, akım normal mi?</td></tr>
+   <tr><td>Jeneratör Sıcaklık Trend</td><td>Aylık</td><td>2 min</td><td>SCADA log, anomali işareti?</td></tr>
+   <tr><td>Jeneratör Vibration Check</td><td>6 Aylık</td><td>2 min</td><td>Yaşlı jeneratörlerde (<2 Hz)</td></tr>
+   <tr><td>Megohm Yalıtım Testi</td><td>24 Aylık</td><td>30 min</td><td>Stator sargı, >10 MΩ hedef</td></tr>
+   <tr><td>Yatak Grease Değişimi</td><td>60 Aylık</td><td>2-3 saat</td><td>5-7 yıl ömür sonrası</td></tr>
+   <tr><td>Converter IGBT Health Check</td><td>24 Aylık</td><td>1 saat</td><td>OEM diagnostic tool gerektir</td></tr>
+  </table></div>
+
+  <h2>Saha Teşhis Hızlı Yönerge</h2>
+
+  <h3>İlk 2 Dakika (Görsel)</h3>
+  <ul>
+   <li>Jeneratör ve converter soğutma radyatörü: Toz/tuz birikmiş mi?</li>
+   <li>Fan motor: Çalışıyor mu? (Akustik check)</li>
+   <li>Kanat kırıkları var mı? (jeneratör birliği stres göstergesi)</li>
+  </ul>
+
+  <h3>5 Dakika (Elektriksel)</h3>
+  <ul>
+   <li>Jeneratör akımı: SCADA'dan oku (nominal rüzgarında nominal akım beklenir)</li>
+   <li>Jeneratör sıcaklık: SCADA trend (rüzgar ve sıcaklık correlation)</li>
+   <li>Converter output: Voltaj/frekans stabil mi? (harmonik kontrol)</li>
+  </ul>
+
+  <h3>10+ Dakika (Detaylı)</h3>
+  <ul>
+   <li>IR termometre: Gerçek jeneratör sıcaklığı (SCADA karşılaştırması)</li>
+   <li>Multimetre: Megohm yalıtım test (10 MΩ+ normal)</li>
+   <li>OEM Fault Log: Kontrol sistemi error codes kontrol</li>
+  </ul>
+
+  <h2>İlgili Kaynaklar</h2>
+  <ul>
+   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
+   <li><a href="/saha-notlari/jenerator-sicaklik/">Jeneratör sıcaklık alarmı vakası</a></li>
+   <li><a href="/turbinler/">← Türbin Modelleri (DFIG vs Direct-Drive)</a></li>
+   <li><a href="/araclar/">Saha Hesaplayıcıları</a></li>
+  </ul>
+
+ </article>
+</main>
+</body>
+</html>

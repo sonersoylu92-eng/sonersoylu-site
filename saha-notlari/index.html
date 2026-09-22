@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sahadan Arıza Vakaları — Adım Adım Teşhis Notları | Soner Soylu</title>
+<meta name="description" content="Gerçek rüzgâr türbini arızalarının adım adım teşhis notları: pitch motor yüksek akım, dişli kutusu sıcaklığı, yaw salınımı, jeneratör sıcaklık alarmı. Belirti, ölçüm, kök neden ve çözüm.">
+<link rel="canonical" href="https://sonersoylu.com/saha-notlari/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Saha Notları">
+<meta property="og:description" content="Gerçek rüzgâr türbini arızalarının adım adım teşhis notları: pitch motor yüksek akım, dişli kutusu sıcaklığı, yaw salınımı, jeneratör sıcaklık alarmı. Belirti, ölçüm, kök neden ve çözüm.">
+<meta property="og:url" content="https://sonersoylu.com/saha-notlari/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Saha Notları",
+ "description": "Gerçek rüzgâr türbini arızalarının adım adım teşhis notları: pitch motor yüksek akım, dişli kutusu sıcaklığı, yaw salınımı, jeneratör sıcaklık alarmı. Belirti, ölçüm, kök neden ve çözüm.",
+ "url": "https://sonersoylu.com/saha-notlari/",
+ "inLanguage": "tr-TR",
+ "author": {
+  "@type": "Person",
+  "name": "Soner Soylu",
+  "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"
+ },
+ "breadcrumb": {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Anasayfa",
+    "item": "/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Saha Notları",
+    "item": "/saha-notlari/"
+   }
+  ]
+ },
+ "mainEntity": {
+  "@type": "ItemList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Pitch Motor Yüksek Akım",
+    "url": "https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Dişli Kutusu Sıcaklık Artışı",
+    "url": "https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Yaw Salınımı (Hunting)",
+    "url": "https://sonersoylu.com/saha-notlari/yaw-salinimi/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 4,
+    "name": "Jeneratör Sıcaklık Alarmı",
+    "url": "https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"
+   }
+  ]
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Türbin arızasında ilk ne yapmalı?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Alarmı okumadan önce güvenliği kurun: türbini durdurun, LOTO uygulayın, ilgili sistemin enerjisini kesin. Sonra OEM hata kodu kaydını ve SCADA trendini alın. Trend, tek bir anlık ölçümden daha çok şey anlatır: arıza bugün mü başladı, yoksa haftalardır mı büyüyordu?"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "SCADA değeri ile sahadaki ölçüm neden farklı çıkar?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "En sık nedeni sensör kalibrasyon kaymasıdır. Özellikle RTD sıcaklık sensörleri yıllar içinde direncini değiştirir ve SCADA gerçekte olmayan bir değeri gösterir. Bu yüzden sıcaklık alarmında ilk iş IR termometreyle fiziksel ölçüm alıp SCADA ile karşılaştırmaktır; aradaki büyük fark arızanın sensörde olduğunu söyler."
+   }
+  }
+ ]
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/kb.css">
+</head><body>
+<main class="kb">
+ <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <span aria-current="page">Saha Notları</span></nav>
+ <p class="kb-kicker">Sahadan</p>
+ <h1>Saha Notları</h1>
+ <p class="kb-lead">Bunlar kitaptan değil, kuleden çıkan notlar. Her biri tek bir arızayı baştan sona takip ediyor: alarm ne dedi, ben ne düşündüm, hangi ölçümü yaptım, hangi ihtimali elediler, kök neden neydi ve nasıl kapattık. Amaç sonucu değil, teşhis sırasını aktarmak.</p>
+ <p>Arıza teşhis ağacı belirtiden nedene hızlı bir bakış verir; bu sayfalar ise bir vakanın içinde ne olduğunu gösterir. İkisi birbirini tamamlıyor: önce <a href="/ariza/">ağaçtan</a> daralt, sonra benzer vakayı buradan oku.</p>
+ <div class="kb-callout"><p><strong>Uyarı:</strong> Bu notlar saha deneyimidir, üretici servis dokümanının yerine geçmez. Her müdahalede kendi türbininizin OEM talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir.</p></div>
+ <div class="kb-grid">
+  <a class="kb-card" href="/saha-notlari/pitch-motor-yuksek-akim/"><span class="n">Vaka 01</span><span class="t">Pitch Motor Yüksek Akım</span><span class="d">Nordex N117'de pitch motor akımı 12 A yerine 18 A. Altı adımlık teşhis, kök neden redüktör yağ kaçağı.</span></a>
+  <a class="kb-card" href="/saha-notlari/disli-kutusu-sicaklik/"><span class="n">Vaka 02</span><span class="t">Dişli Kutusu Sıcaklık Artışı</span><span class="d">Vestas V126'da yağ sıcaklığı 78–82 °C. Sekiz aylık trend analizi, mil keçesi kaynaklı yağ kaybı.</span></a>
+  <a class="kb-card" href="/saha-notlari/yaw-salinimi/"><span class="n">Vaka 03</span><span class="t">Yaw Salınımı (Hunting)</span><span class="d">Enercon E92'de nasel ±18° salınıyor. Yatak sürüklenmesi, sensör titremesi ve PLC parametre kayması.</span></a>
+  <a class="kb-card" href="/saha-notlari/jenerator-sicaklik/"><span class="n">Vaka 04</span><span class="t">Jeneratör Sıcaklık Alarmı</span><span class="d">Vestas V126'da 116 °C alarmı. IR termometre ile SCADA arasında 41 °C fark — sensör kalibrasyon kayması.</span></a>
+ </div>
+
+  <h2>Sık Sorulanlar</h2>
+  <h3>Türbin arızasında ilk ne yapmalı?</h3>
+  <p>Alarmı okumadan önce güvenliği kurun: türbini durdurun, LOTO uygulayın, ilgili sistemin enerjisini kesin. Sonra OEM hata kodu kaydını ve SCADA trendini alın. Trend, tek bir anlık ölçümden daha çok şey anlatır: arıza bugün mü başladı, yoksa haftalardır mı büyüyordu?</p>
+  <h3>SCADA değeri ile sahadaki ölçüm neden farklı çıkar?</h3>
+  <p>En sık nedeni sensör kalibrasyon kaymasıdır. Özellikle RTD sıcaklık sensörleri yıllar içinde direncini değiştirir ve SCADA gerçekte olmayan bir değeri gösterir. Bu yüzden sıcaklık alarmında ilk iş IR termometreyle fiziksel ölçüm alıp SCADA ile karşılaştırmaktır; aradaki büyük fark arızanın sensörde olduğunu söyler.</p>
+ <div class="kb-rel">
+  <p class="k">Bunlara da bakın</p>
+  <ul>
+   <li><a href="/rehber/">Sahadan Rehber — teknisyenlik nasıl yürür</a></li>
+   <li><a href="/ariza/">Arıza Teşhis Ağacı — belirtiden nedene</a></li>
+   <li><a href="/araclar/">Hesaplama Araçları</a></li>
+   <li><a href="/sozluk/">Terimler Sözlüğü (TR / EN)</a></li>
+   <li><a href="/egitim/">Ücretsiz 8 Bölümlük Eğitim</a></li>
+  </ul>
+ </div>
+</main>
+</body>
+</html>
