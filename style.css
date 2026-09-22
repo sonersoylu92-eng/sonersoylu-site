@@ -1145,38 +1145,7 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
 .ozellik .not span:not(:first-child){position:relative;padding-left:1.2rem}
 .ozellik .not span:not(:first-child)::before{content:"·";position:absolute;left:0}
 
-/* ---- 1. Alan Günlüğü (Notes) ---- */
-
-.notes-app{margin:2rem 0}
-.note-editor{background:var(--surface);border:1px solid var(--line);
- border-radius:.5rem;padding:1.25rem;margin-bottom:1.5rem;box-shadow:var(--shade)}
-.note-editor textarea{width:100%;font-family:var(--sans);font-size:.95rem;
- border:1px solid var(--line);border-radius:.25rem;padding:.75rem;
- resize:vertical;background:var(--ground);color:var(--ink);
- transition:border-color .2s}
-.note-editor textarea:focus{outline:none;border-color:var(--beacon)}
-.note-controls{display:flex;justify-content:space-between;align-items:center;
- margin-top:.75rem;gap:1rem}
-.note-count{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
-.note-count.warning{color:var(--beacon)}
-.notes-timeline{display:grid;gap:1rem}
-.note-card{background:var(--surface);border-left:3px solid var(--beacon);
- padding:1.25rem;border-radius:.25rem;box-shadow:var(--shade);
- animation:slideIn .3s ease-out}
-@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-.note-header{display:flex;justify-content:space-between;align-items:flex-start;
- margin-bottom:.75rem}
-.note-time{font-family:var(--mono);font-size:.75rem;color:var(--muted);
- text-transform:uppercase;letter-spacing:.1em}
-.note-conditions{font-size:.8rem;color:var(--muted);margin-bottom:.5rem;
- display:flex;gap:1rem}
-.note-text{color:var(--ink);line-height:1.6;word-break:break-word}
-.note-delete{background:none;border:none;color:var(--beacon);cursor:pointer;
- font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;
- padding:.5rem;transition:color .2s}
-.note-delete:hover{color:#a0291b}
-
-/* ---- 2. Rüzgâr Uyarı Sistemi ---- */
+/* ---- Rüzgâr Uyarı Sistemi ---- */
 .alerts-widget{margin:2rem 0}
 .alert-status{background:var(--surface);border:1px solid var(--line);
  border-radius:.5rem;padding:1.5rem;margin-bottom:1.5rem;

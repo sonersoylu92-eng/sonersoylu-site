@@ -207,99 +207,10 @@
   setInterval(function () { ruzgariGetir(true); }, 10 * 60 * 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) ruzgariGetir(false); });
 
-  // ===================================================================
-  // SAYFA ÖZELLİKLERİ
-  // Rüzgâr verisi gelmese de çalışmaları gerekiyor: eskiden hepsi rüzgâr
-  // isteğinin başarılı dönmesine bağlıydı, istek düşünce not defteri, ayarlar
-  // ve havacılık raporu da ölüyordu.
-  // ===================================================================
-  initFieldNotes();
+  // Rüzgâr verisi gelmese de kurulur; veri geldiğinde kendi kendine tazelenir.
   initWindAlerts();
 
-  // ---- 1. Alan Günlüğü ----
-  function initFieldNotes() {
-    var noteInput = document.getElementById('noteInput');
-    var addBtn = document.getElementById('addNoteBtn');
-    var notesList = document.getElementById('notesList');
-    var noteCount = document.getElementById('noteCount');
-
-    if (!noteInput || !addBtn) return;
-
-    // Var olan notları yükle
-    loadAndDisplayNotes();
-
-    noteInput.addEventListener('input', function() {
-      var len = noteInput.value.length;
-      noteCount.textContent = len + '/280';
-      if (len > 250) noteCount.classList.add('warning');
-      else noteCount.classList.remove('warning');
-    });
-
-    addBtn.addEventListener('click', function() {
-      var text = noteInput.value.trim();
-      if (!text) return;
-
-      var note = {
-        id: Date.now(),
-        text: text,
-        time: new Date().toLocaleString('tr-TR'),
-        wind: sonVeri.hiz.toFixed(1) + ' m/s',
-        direction: Math.round(sonVeri.yon) + '°'
-      };
-
-      // localStorage'a kaydet
-      var notes = JSON.parse(localStorage.getItem('fieldNotes') || '[]');
-      notes.unshift(note);
-      if (notes.length > 100) notes = notes.slice(0, 100); // son 100 not tut
-      localStorage.setItem('fieldNotes', JSON.stringify(notes));
-
-      noteInput.value = '';
-      noteCount.textContent = '0/280';
-      loadAndDisplayNotes();
-    });
-
-    function loadAndDisplayNotes() {
-      var notes = JSON.parse(localStorage.getItem('fieldNotes') || '[]');
-      notesList.innerHTML = '';
-      notes.forEach(function(note) {
-        // Not metni kullanıcıdan geliyor: HTML olarak değil, metin olarak basılır.
-        function kutu(sinif, metin) {
-          var e = document.createElement('div');
-          e.className = sinif;
-          e.textContent = metin;
-          return e;
-        }
-        var card = document.createElement('div');
-        card.className = 'note-card';
-
-        var bas = document.createElement('div');
-        bas.className = 'note-header';
-        var zaman = document.createElement('span');
-        zaman.className = 'note-time';
-        zaman.textContent = note.time;
-        var sil = document.createElement('button');
-        sil.className = 'note-delete';
-        sil.type = 'button';
-        sil.textContent = 'Sil';
-        bas.appendChild(zaman);
-        bas.appendChild(sil);
-
-        card.appendChild(bas);
-        card.appendChild(kutu('note-conditions', note.wind + ' · ' + note.direction));
-        card.appendChild(kutu('note-text', note.text));
-        notesList.appendChild(card);
-
-        sil.addEventListener('click', function() {
-          var allNotes = JSON.parse(localStorage.getItem('fieldNotes') || '[]');
-          allNotes = allNotes.filter(function(n) { return n.id !== note.id; });
-          localStorage.setItem('fieldNotes', JSON.stringify(allNotes));
-          loadAndDisplayNotes();
-        });
-      });
-    }
-  }
-
-  // ---- 2. Rüzgâr Uyarı Sistemi ----
+  // ---- Rüzgâr Uyarı Sistemi ----
   function initWindAlerts() {
     var uyariKutusu = document.getElementById('currentAlertState');
     if (!uyariKutusu) return;
