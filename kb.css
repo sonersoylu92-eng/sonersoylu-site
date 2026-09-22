@@ -5,9 +5,9 @@
    --sans --mono --serif --shade
    ============================================================ */
 
-/* Sabit site basligi 72px; .kb bir <main> oldugu icin main{padding-top:72px}
+/* Sabit site basligi 72px + 1px alt cizgi = 73px; .kb bir <main> oldugu icin main{padding-top:72px}
    kuralini eziyor - ust boslugu burada acikca vermek zorundayiz. */
-.kb{max-width:50rem;margin:0 auto;padding:72px 1.5rem 5rem}
+.kb{max-width:50rem;margin:0 auto;padding:73px 1.5rem 5rem}
 
 /* ---- üst gezinme ---- */
 .kb-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
