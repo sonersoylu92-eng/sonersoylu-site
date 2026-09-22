@@ -188,118 +188,23 @@
   // 7 YENİ ÖZELLIK BAŞLATMA FONKSİYONU
   // ===================================================================
   function initOzellikleri(wind, direction, density) {
-    // 1. POWER OUTPUT CHART
-    initPowerChart();
-
-    // 2. WIND ROSE
-    initWindRose();
-
-    // 3. METAR/TAF
+    // Metar/Taf
     initMetarTaf();
 
-    // 4. FIELD NOTES
+    // Field Notes
     initFieldNotes();
 
-    // 5. WIND ALERTS
+    // Wind Alerts
     initWindAlerts(wind);
 
-    // 6. AMBIENT SOUND
+    // Ambient Sound
     initAmbientSound(wind);
 
-    // 7. NIGHT MODE
+    // Night Mode
     initNightMode();
   }
 
-  // ---- 1. Power Output Chart ----
-  function initPowerChart(deneme) {
-    var canvas = document.getElementById('powerChart');
-    if (!canvas) return;
-    if (!window.Chart) {
-      // Chart.js CDN henüz yüklenmemiş olabilir — kısa süre bekleyip tekrar dene
-      if ((deneme || 0) < 40) setTimeout(function () { initPowerChart((deneme || 0) + 1); }, 150);
-      return;
-    }
-
-    var ctx = canvas.getContext('2d');
-    var now = new Date();
-    var labels = [];
-    var data = [];
-
-    for (var i = 6; i >= 0; i--) {
-      var d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-      labels.push((d.getMonth() + 1) + '/' + d.getDate());
-      // Simüle edilmiş güç: 100 - 3000 kW arası random
-      data.push(Math.random() * 2900 + 100);
-    }
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Saatlik Ortalama Güç (N117)',
-          data: data,
-          borderColor: '#c0392f',
-          backgroundColor: 'rgba(192, 57, 47, 0.1)',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4,
-          pointRadius: 4,
-          pointBackgroundColor: '#c0392f',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: { beginAtZero: true, max: 3000, ticks: { callback: function(v) { return v + ' kW'; } } }
-        }
-      }
-    });
-  }
-
-  // ---- 2. Wind Rose Chart ----
-  function initWindRose(deneme) {
-    var canvas = document.getElementById('windRoseChart');
-    if (!canvas) return;
-    if (!window.Chart) {
-      if ((deneme || 0) < 40) setTimeout(function () { initWindRose((deneme || 0) + 1); }, 150);
-      return;
-    }
-
-    var ctx = canvas.getContext('2d');
-    // 16 yön için veri (K, KKD, KD, ... B, KB)
-    var directions = ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD', 'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'];
-    var speeds = [45, 52, 38, 41, 55, 48, 42, 39, 60, 58, 50, 35, 40, 38, 48, 42];
-
-    new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: directions,
-        datasets: [{
-          label: 'Rüzgâr Hızı (m/s)',
-          data: speeds,
-          borderColor: '#c0392f',
-          backgroundColor: 'rgba(192, 57, 47, 0.15)',
-          borderWidth: 2,
-          pointRadius: 3,
-          pointBackgroundColor: '#c0392f'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: true, position: 'bottom' } },
-        scales: { r: { beginAtZero: true, max: 60 } }
-      }
-    });
-  }
-
-  // ---- 3. METAR/TAF Entegrasyonu ----
+  // ---- 1. METAR/TAF Entegrasyonu ----
   function initMetarTaf() {
     var metarDiv = document.getElementById('metarData');
     var tafDiv = document.getElementById('tafData');
@@ -310,7 +215,7 @@
     tafDiv.textContent = 'LTAC 151720Z 151818 35012G22KT CAVOK 23/17 BECMG 1820 35010KT';
   }
 
-  // ---- 4. Field Notes ----
+  // ---- 2. Field Notes ----
   function initFieldNotes() {
     var noteInput = document.getElementById('noteInput');
     var addBtn = document.getElementById('addNoteBtn');
@@ -376,7 +281,7 @@
     }
   }
 
-  // ---- 5. Wind Speed Alerts ----
+  // ---- 3. Wind Speed Alerts ----
   function initWindAlerts(initialWind) {
     var alertDiv = document.getElementById('currentAlertState');
     if (!alertDiv) return;
@@ -410,7 +315,7 @@
     }, 10000);
   }
 
-  // ---- 6. Ambient Sound ----
+  // ---- 4. Ambient Sound ----
   function initAmbientSound(initialWind) {
     var soundToggle = document.getElementById('soundToggle');
     var soundVol = document.getElementById('soundVol');
@@ -443,7 +348,7 @@
     });
   }
 
-  // ---- 7. Night Mode Optimization ----
+  // ---- 5. Night Mode Optimization ----
   function initNightMode() {
     var autoNight = document.getElementById('autoNightMode');
     var forcedNight = document.getElementById('forcedNightMode');

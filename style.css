@@ -1145,17 +1145,7 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
 .ozellik .not span:not(:first-child){position:relative;padding-left:1.2rem}
 .ozellik .not span:not(:first-child)::before{content:"·";position:absolute;left:0}
 
-/* ---- 1. Grafik Container ---- */
-.chart-wrapper{background:var(--surface);border:1px solid var(--line);
- border-radius:.5rem;padding:1.5rem;box-shadow:var(--shade);
- margin:2rem 0;position:relative;min-height:300px}
-.chart-wrapper canvas{max-width:100%;display:block;margin:0 auto}
-@media (max-width:768px){
- .chart-wrapper{padding:1rem}
- .chart-wrapper canvas{min-height:280px}
-}
-
-/* ---- 2. METAR/TAF Grid ---- */
+/* ---- 1. METAR/TAF Grid ---- */
 .meteo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
  gap:1.5rem;margin:2rem 0}
 .meteo-box{background:var(--surface);border:1px solid var(--line);

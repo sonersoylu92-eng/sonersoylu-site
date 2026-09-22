@@ -22,9 +22,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
 
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
-<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/style.css?v=70cadb67">
 <link rel="stylesheet" href="/style-editorial.css?v=5fbf4cd3">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni","email":"sonersoylu@yandex.com","url":"https://sonersoylu.com","address":{"@type":"PostalAddress","addressCountry":"TR","addressLocality":"İzmir"},"knowsAbout":["Rüzgâr enerjisi","Enercon","Nordex","Vestas","Arıza giderme","Periyodik bakım","Devreye alma"],"sameAs":["https://www.linkedin.com/in/soner-soylu","https://www.youtube.com/@TheTurbineTech","https://www.instagram.com/soyluubey"],"worksFor":{"@type":"Organization","name":"Bilgin Enerji"},"alumniOf":[{"@type":"EducationalOrganization","name":"Anadolu Üniversitesi"},{"@type":"EducationalOrganization","name":"Ege Üniversitesi"}]}</script>
 <style>
 /* --- ana sayfa dikey ritim ---------------------------------------------
@@ -167,29 +166,9 @@ main > section .head{margin-bottom:1.9rem}
 </div>
 </section>
 
-<!-- ▓ 1. Güç Üretim Zaman Serisi ▓ -->
-<section id="guc-zamani" class="ozellik">
- <div class="wrap">
-  <div class="head"><h2>Güç Çıkış Zaman Serisi</h2><p class="mono">Son 7 günün N117 üretimi</p></div>
-  <div id="powerChartContainer" class="chart-wrapper">
-   <canvas id="powerChart" role="img" aria-label="Son 7 günün saatlik güç üretim grafiği"></canvas>
-  </div>
-  <p class="not"><span>Rüzgâr hızından hesaplanan saatlik ortalama</span><span>Teorik model, gerçek üretime göre ±10–15% sapma beklenir</span></p>
- </div>
-</section>
 
-<!-- ▓ 2. Rüzgâr Gülü ▓ -->
-<section id="ruzgar-gulu" class="ozellik">
- <div class="wrap">
-  <div class="head"><h2>Rüzgâr Gülü</h2><p class="mono">30 günlük yön-hız dağılımı</p></div>
-  <div id="windRoseContainer" class="chart-wrapper">
-   <canvas id="windRoseChart" role="img" aria-label="30 günlük rüzgâr yönü ve hız dağılımı polar grafiği"></canvas>
-  </div>
-  <p class="not"><span>Kuzey ve Kuzeydoğu rüzgârlar en sık ve güçlü</span><span>Kaynak: Open-Meteo sayısal hava tahmini</span></p>
- </div>
-</section>
 
-<!-- ▓ 3. METAR/TAF Entegrasyonu ▓ -->
+<!-- ▓ 1. METAR/TAF Entegrasyonu ▓ -->
 <section id="metar-taf" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Bergama Havalimanı METAR/TAF</h2><p class="mono">Resmî aviyasyon hava raporu</p></div>
@@ -209,7 +188,7 @@ main > section .head{margin-bottom:1.9rem}
  </div>
 </section>
 
-<!-- ▓ 4. Alan Günlüğü ▓ -->
+<!-- ▓ 2. Alan Günlüğü ▓ -->
 <section id="alan-notlari" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Alan Günlüğü</h2><p class="mono">Sahadan notlar ve arşiv</p></div>
@@ -227,7 +206,7 @@ main > section .head{margin-bottom:1.9rem}
  </div>
 </section>
 
-<!-- ▓ 5. Rüzgâr Uyarı Sistemi ▓ -->
+<!-- ▓ 3. Rüzgâr Uyarı Sistemi ▓ -->
 <section id="ruzgar-uyarisi" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Rüzgâr Uyarı Sistemi</h2><p class="mono">Kritik hız bildirimleri</p></div>
@@ -254,7 +233,7 @@ main > section .head{margin-bottom:1.9rem}
  </div>
 </section>
 
-<!-- ▓ 6. Ses ve Ambiyans ▓ -->
+<!-- ▓ 4. Ses ve Ambiyans ▓ -->
 <section id="ses-ambiyans" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Rüzgâr Ambiyansı</h2><p class="mono">Hıza göre değişen ortam sesi</p></div>
@@ -273,7 +252,7 @@ main > section .head{margin-bottom:1.9rem}
  </div>
 </section>
 
-<!-- ▓ 7. Gece Modu Optimizasyonu ▓ -->
+<!-- ▓ 5. Gece Modu Optimizasyonu ▓ -->
 <section id="gece-modu-ayar" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Gece Modu Ayarları</h2><p class="mono">Göz konforlu ışıklandırma</p></div>
@@ -716,7 +695,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
 <script src="/assets/ara.js?v=e178dc21" defer></script>
 <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
 <div class="doku" aria-hidden="true"></div>
-<script src="/assets/canli.js?v=001299a9" defer></script><script src="/assets/hava.js?v=cd8f91a8" defer></script><script src="/assets/giris.js?v=107c4a80" defer></script>
+<script src="/assets/canli.js?v=b7825f0e" defer></script><script src="/assets/hava.js?v=cd8f91a8" defer></script><script src="/assets/giris.js?v=107c4a80" defer></script>
 <script src="/assets/olcum.js?v=37c7cfab" defer></script>
 <script>
 (function () {
