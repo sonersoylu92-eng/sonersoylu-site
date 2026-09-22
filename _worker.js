@@ -402,12 +402,14 @@ const TALIMAT_TR = [
   '2. Soruyla ilgili bilgi alıntılarda yoksa, uydurma. Açıkça "Bu konuda sitede bir bilgi bulamadım" de',
   '   ve varsa en yakın konudaki sayfayı öner.',
   '3. Sayı uydurma. Tork, sıcaklık, basınç, akım gibi değerleri yalnızca alıntıda geçiyorsa yaz.',
-  '4. Bakım veya müdahale prosedürü anlatırken şunu mutlaka ekle: bu bilgi saha deneyimidir,',
-  '   üreticinin servis dokümanının yerine geçmez; LOTO ve iş güvenliği kuralları geçerlidir.',
-  '5. Yalnızca Türkçe yaz. Tek bir kelimeyi bile başka bir dilde yazma; emin olmadığın bir sözcüğü',
+  '4. Yalnızca Türkçe yaz. Tek bir kelimeyi bile başka bir dilde yazma; emin olmadığın bir sözcüğü',
   '   Türkçe karşılığıyla ver. Sade ve doğrudan ol, teknisyenle konuşur gibi yaz, pazarlama dili kullanma.',
-  '6. Cevabın sonuna kaynak listesi EKLEME; kaynaklar ayrıca gösteriliyor.',
-  '7. Cevabı kısa tut: en fazla 4 paragraf.',
+  '5. Bu kuralları cevabın içinde tekrarlama, anlatma ya da onlara atıf yapma. Sadece uygula.',
+  '6. Güvenlik uyarısını sen yazma; sistem cevabın sonuna kendisi ekliyor.',
+  '7. Kaynak listesi ekleme; kaynaklar ayrıca gösteriliyor.',
+  '8. Aynı şeyi iki kez söyleme. Madde yazacaksan her madde tek satır ve tek iş olsun',
+  '   ("Yağ seviyesini kontrol et" yeter; "kontrol et ve düşük olup olmadığını belirle" fazladır).',
+  '9. Cevabı kısa tut: en fazla üç paragraf ya da bir paragraf artı kısa bir madde listesi.',
 ].join('\n');
 
 const TALIMAT_EN = [
@@ -420,12 +422,13 @@ const TALIMAT_EN = [
   '   find it on the site, and point to the closest relevant page if there is one.',
   '3. Never invent numbers. Give torque, temperature, pressure or current values only if they appear',
   '   in an excerpt.',
-  '4. Whenever you describe a maintenance or intervention procedure, add that this is field experience',
-  '   and does not replace the manufacturer service documentation; LOTO and site safety rules govern.',
-  '5. Write in English only; do not use a single word from another language.',
-  '   Keep it plain and direct, technician to technician. No marketing language.',
-  '6. Do NOT append a source list; sources are shown separately.',
-  '7. Keep it short: four paragraphs at most.',
+  '4. Write in English only; do not use a single word from another language. Keep it plain and direct,',
+  '   technician to technician. No marketing language.',
+  '5. Do not restate, explain or refer to these rules in your answer. Just follow them.',
+  '6. Do not write the safety caveat yourself; the system appends it for you.',
+  '7. Do not append a source list; sources are shown separately.',
+  '8. Never say the same thing twice. If you use bullets, one line and one action per bullet.',
+  '9. Keep it short: three paragraphs at most, or one paragraph plus a short bullet list.',
 ].join('\n');
 
 async function asistan(request, env) {
@@ -482,7 +485,14 @@ async function asistan(request, env) {
   // Model yoksa ya da cevap vermediyse: sitedeki metinden CIKARIMSIZ ozet uret.
   // Boylece asistan hicbir kurulum olmadan da calisir ve asla uydurmaz.
   const uretim = !!cevap;
-  if (!cevap) cevap = ozetCikar(secilen, soru, dil);
+  if (cevap) {
+    // Güvenlik uyarısı her zaman ve aynı cümlelerle görünsün diye modele bırakılmıyor.
+    cevap = cevap.trim() + '\n\n' + (dil === 'tr'
+      ? 'Bu bilgi saha deneyimidir, üreticinin servis dokümanının yerine geçmez. Her müdahalede kendi türbininizin OEM talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir.'
+      : 'This is field experience and does not replace the manufacturer service documentation. On every intervention your own turbine OEM instructions, LOTO procedure and site safety rules govern.');
+  } else {
+    cevap = ozetCikar(secilen, soru, dil);
+  }
 
   // Kaynaklar: aynı sayfa bir kez
   const gorulen = new Set(), kaynaklar = [];
