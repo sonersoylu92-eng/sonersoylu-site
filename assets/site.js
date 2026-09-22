@@ -6,8 +6,27 @@
   'use strict';
 
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    // Sitede bir güncelleme yayınlandığında açık duran sekmenin eski sayfayı
+    // göstermeye devam etmemesi için: yeni servis çalışanı devri aldığı anda
+    // sayfayı bir kez tazeliyoruz. Ziyaretçinin elle yenilemesi gerekmiyor.
+    var oncedenKontrolVardi = !!navigator.serviceWorker.controller;
+    var tazelendi = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!oncedenKontrolVardi || tazelendi) return;
+      tazelendi = true;
+      location.reload();
+    });
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('/sw.js').catch(function () {});
+      navigator.serviceWorker.register('/sw.js').then(function (kayit) {
+        if (!kayit) return;
+        kayit.update();
+        // sekme günlerce açık kalabiliyor; saatte bir yeni sürüm var mı diye bak
+        setInterval(function () { kayit.update(); }, 60 * 60 * 1000);
+        // sekmeye geri dönüldüğünde de bak
+        document.addEventListener('visibilitychange', function () {
+          if (!document.hidden) kayit.update();
+        });
+      }).catch(function () {});
     });
   }
 
