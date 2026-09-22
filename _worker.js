@@ -486,6 +486,8 @@ async function asistan(request, env) {
   // Boylece asistan hicbir kurulum olmadan da calisir ve asla uydurmaz.
   const uretim = !!cevap;
   if (cevap) {
+    // Model kimi zaman "*", kimi zaman "-" ile madde yazıyor; tek bir işarete indiriyoruz.
+    cevap = cevap.replace(/^[ \t]*[*\u2022\-\u2013]\s+/gm, '• ').replace(/\*\*/g, '');
     // Güvenlik uyarısı her zaman ve aynı cümlelerle görünsün diye modele bırakılmıyor.
     cevap = cevap.trim() + '\n\n' + (dil === 'tr'
       ? 'Bu bilgi saha deneyimidir, üreticinin servis dokümanının yerine geçmez. Her müdahalede kendi türbininizin OEM talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir.'
