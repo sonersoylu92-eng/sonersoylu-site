@@ -474,14 +474,19 @@ async function asistan(request, env) {
 }
 
 // ---------------------------------------------------------------------------
-// Model olmadan cevap: secilen bolumlerden soruya en cok denk gelen cumleleri
-// oldugu gibi cikarir. Hicbir sey uretilmez, dolayisiyla hicbir sey uydurulmaz.
+// Model olmadan cevap: seçilen bölümlerden soruya en çok denk gelen cümleleri
+// olduğu gibi çıkarır. Hiçbir şey üretilmez, dolayısıyla hiçbir şey uydurulmaz.
 // ---------------------------------------------------------------------------
-function cumleler(t) {
-  return String(t || '')
-    .split(/(?<=[.!?:])\s+/)
-    .map((c) => c.trim())
-    .filter((c) => c.length > 30);
+function parcala(t) {
+  const ham = [];
+  for (const blok of String(t || '').split('¶')) {
+    for (const c of blok.split(/(?<=[.!?])\s+/)) {
+      // tablo satirlarini okunur hale getir: "a | b | c |" -> "a — b — c"
+      const s = c.replace(/\s+/g, ' ').replace(/\s*\|\s*$/, '').replace(/\s*\|\s*/g, ' — ').trim();
+      if (s.length > 25) ham.push(s);
+    }
+  }
+  return ham;
 }
 
 function ozetCikar(secilen, soru, dil) {
@@ -494,40 +499,47 @@ function ozetCikar(secilen, soru, dil) {
     if (gorulen.has(p.u)) continue;
     gorulen.add(p.u);
 
-    const cs = cumleler(p.t);
+    const bas = p.h ? p.b + ' — ' + p.h : p.b;
+    const basS = sade(bas);
+    const cs = parcala(p.t).filter((c) => {
+      const cS = sade(c);
+      // başlığın kendisinin tekrarı olan parçaları ele
+      return cS.length > 25 && basS.indexOf(cS) < 0 && cS.indexOf(basS) < 0;
+    });
     if (!cs.length) continue;
 
     const puanli = cs.map((c, i) => {
       const kk = new Set(kelimeler(c));
       let n = 0;
       for (const k of ks) if (kk.has(k)) n++;
-      return { c, i, n };
+      // tam cümleler yarım kalmışlara tercih edilir
+      const tam = /[.!?]$/.test(c) ? 0.5 : 0;
+      return { c, i, n: n + tam };
     });
     puanli.sort((a, b) => (b.n - a.n) || (a.i - b.i));
 
-    const alinan = puanli.slice(0, 3).filter((x) => x.n > 0);
-    const secim = (alinan.length ? alinan : puanli.slice(0, 2))
+    const iyi = puanli.filter((x) => x.n >= 1);
+    const secim = (iyi.length ? iyi : puanli).slice(0, 3)
       .sort((a, b) => a.i - b.i)
       .map((x) => x.c);
 
-    const bas = p.h ? p.b + ' — ' + p.h : p.b;
-    bloklar.push(bas + '\n' + secim.join(' '));
+    bloklar.push(bas + '\n' + secim.map((c) => '• ' + c).join('\n'));
   }
 
   if (!bloklar.length) {
     return dil === 'tr'
-      ? 'Bu konuda sitede bir bilgi bulamadim.'
+      ? 'Bu konuda sitede bir bilgi bulamadım.'
       : 'I could not find anything about this on the site.';
   }
 
-  const bas = dil === 'tr'
-    ? 'Sorunuzla en cok ortusen bolumler asagida, sitedeki yazilardan oldugu gibi alindi:'
-    : 'The passages that match your question most closely, quoted from the site as they stand:';
-  const son = dil === 'tr'
-    ? 'Bunlar saha deneyimidir, ureticinin servis dokumaninin yerine gecmez. Her mudahalede kendi turbininizin OEM talimati, LOTO proseduru ve is guvenligi kurallari gecerlidir. Tam baglam icin asagidaki kaynak sayfalari acin.'
+  const ust = dil === 'tr'
+    ? 'Sorunuzla en çok örtüşen bölümler aşağıda — sitedeki yazılardan olduğu gibi alındı, tek kelimesi değiştirilmedi:'
+    : 'The passages that match your question most closely, quoted from the site exactly as they stand:';
+  const alt = dil === 'tr'
+    ? 'Bunlar saha deneyimidir, üreticinin servis dokümanının yerine geçmez. Her müdahalede kendi türbininizin OEM talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir. Tam bağlam için aşağıdaki kaynak sayfaları açın.'
     : 'This is field experience and does not replace the manufacturer service documentation. On every intervention your own turbine OEM instructions, LOTO procedure and site safety rules govern. Open the source pages below for the full context.';
 
-  return bas + '\n\n' + bloklar.join('\n\n') + '\n\n' + son;
+  return ust + '\n\n' + bloklar.join('\n\n') + '\n\n' + alt;
 }
 
 // Anahtar tanımlıysa Claude kullanılır (daha iyi Türkçe)
