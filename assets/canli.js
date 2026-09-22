@@ -60,14 +60,19 @@
 
   // ---- güneş: hemen uygula, sonra periyodik tazele --------------------------
   // Sekme uzun süre açık kalırsa (biri gece yarısını geçerse) vardiya/etiket
-  // bayatlamasın diye 10 dakikada bir yeniden hesaplanıyor. Zorlama gece modu
-  // açıksa (bkz. initNightMode) dokunmuyoruz, kullanıcı tercihini ezmesin.
+  // bayatlamasın diye 10 dakikada bir yeniden hesaplanıyor.
+  // Eskiden buraya bir "sürekli gece modu" tercihi de bakıyordu; o ayar
+  // kaldırıldığı için artık sayfa her zaman gerçek güneş konumunu izliyor.
+  try {
+    ['forcedNightMode', 'autoNightMode', 'reducedMotion'].forEach(function (k) {
+      localStorage.removeItem(k);
+    });
+  } catch (e) {}
   var ISIK = { gece: 'gece', safak: 'şafak', aksam: 'akşam',
                altin: 'altın saat', gunduz: 'gündüz' };
   var eIsik = document.getElementById('cIsik');
   var h0 = 0, v0 = 'gunduz';
   function gunuGuncelle() {
-    try { if (localStorage.getItem('forcedNightMode') === 'true') return; } catch (e) {}
     var simdi = new Date();
     var g0 = gunesYuksekligi(39.12, 27.30, simdi);
     h0 = g0.h;
@@ -208,61 +213,10 @@
   // isteğinin başarılı dönmesine bağlıydı, istek düşünce not defteri, ayarlar
   // ve havacılık raporu da ölüyordu.
   // ===================================================================
-  initMetarTaf();
   initFieldNotes();
   initWindAlerts();
-  initAmbientSound();
-  initNightMode();
 
-  // ---- 1. METAR/TAF — LTBJ resmî gözlemi (worker üzerinden, 10 dk önbellekli) ----
-  function initMetarTaf() {
-    var ozetEl = document.getElementById('metarOzet');
-    var metarEl = document.getElementById('metarData');
-    var tafEl = document.getElementById('tafData');
-    var metarZaman = document.getElementById('metarTime');
-    var tafZaman = document.getElementById('tafTime');
-    if (!metarEl || !tafEl) return;
-
-    function yaz(el, metin) { if (el) el.textContent = metin; }
-
-    function getir() {
-      fetch('/api/metar', { headers: { accept: 'application/json' } })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          if (!d || !d.ok) throw new Error('kaynak');
-
-          if (ozetEl) {
-            ozetEl.classList.remove('bekliyor');
-            yaz(ozetEl, (d.coz && d.coz.ozet) || 'Gözlem çözümlenemedi.');
-          }
-          yaz(metarEl, d.metar || 'Gözlem alınamadı');
-          yaz(tafEl, d.taf || 'Tahmin alınamadı');
-
-          if (d.coz && d.coz.gun && d.coz.saat) {
-            yaz(metarZaman, 'Ayın ' + d.coz.gun + '. günü ' + d.coz.saat + ' UTC gözlemi');
-          } else {
-            yaz(metarZaman, '');
-          }
-          if (d.taf) {
-            var g = d.taf.match(/\b(\d{2})(\d{2})(\d{2})Z\b/);
-            yaz(tafZaman, g ? 'Ayın ' + (+g[1]) + '. günü ' + g[2] + ':' + g[3] + ' UTC yayını' : '');
-          }
-        })
-        .catch(function () {
-          if (ozetEl) { ozetEl.classList.add('bekliyor'); yaz(ozetEl, 'Havacılık raporuna şu an ulaşılamıyor.'); }
-          yaz(metarEl, 'Ulaşılamadı');
-          yaz(tafEl, 'Ulaşılamadı');
-          yaz(metarZaman, ''); yaz(tafZaman, '');
-        });
-    }
-
-    getir();
-    // METAR yarım saatte bir yayınlanır; on dakikada bir bakmak fazlasıyla yeterli
-    setInterval(getir, 10 * 60 * 1000);
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) getir(); });
-  }
-
-  // ---- 2. Field Notes ----
+  // ---- 1. Alan Günlüğü ----
   function initFieldNotes() {
     var noteInput = document.getElementById('noteInput');
     var addBtn = document.getElementById('addNoteBtn');
@@ -345,7 +299,7 @@
     }
   }
 
-  // ---- 3. Rüzgâr Uyarı Sistemi ----
+  // ---- 2. Rüzgâr Uyarı Sistemi ----
   function initWindAlerts() {
     var uyariKutusu = document.getElementById('currentAlertState');
     if (!uyariKutusu) return;
@@ -386,170 +340,4 @@
     setInterval(uyariYenile, 60000);
   }
 
-  // ---- 4. Rüzgâr Ambiyansı ----
-  // Kayıt çalmıyoruz; sesi tarayıcıda üretiyoruz. Rüzgâr uğultusu aslında geniş
-  // bantlı gürültünün alçak frekanslara bastırılmış hâli: beyaz gürültüyü bir
-  // alçak geçiren süzgeçten geçirip kesim frekansını ve kazancı o anki gerçek
-  // rüzgâr hızına bağlıyoruz. Hız arttıkça ses hem yükseliyor hem tizleşiyor.
-  function initAmbientSound() {
-    var dugme = document.getElementById('soundToggle');
-    var kaydirac = document.getElementById('soundVol');
-    var yuzde = document.getElementById('volDisplay');
-    var bilgi = document.getElementById('soundInfo');
-    if (!dugme || !kaydirac) return;
-
-    var ctx = null, kaynak = null, suzgec = null, kazanc = null, lfo = null, lfoKazanc = null;
-    var caliyor = false, zamanlayici = null;
-
-    function gurultuTamponu(ctx) {
-      var n = ctx.sampleRate * 3;                 // 3 saniyelik döngü
-      var b = ctx.createBuffer(1, n, ctx.sampleRate);
-      var d = b.getChannelData(0);
-      // kahverengi gürültü: beyaz gürültünün entegrali — rüzgâra beyazdan çok daha yakın
-      var son = 0;
-      for (var i = 0; i < n; i++) {
-        var beyaz = Math.random() * 2 - 1;
-        son = (son + 0.02 * beyaz) / 1.02;
-        d[i] = son * 3.5;
-      }
-      return b;
-    }
-
-    function hizaGore() {
-      if (!ctx || !caliyor) return;
-      var v = Math.max(0, Math.min(30, sonVeri.hiz || 0));
-      var t = ctx.currentTime;
-      // 0 m/s'de boğuk ve kısık, 25 m/s'de parlak ve yüksek
-      var kesim = 180 + v * 95;                            // Hz
-      var seviye = (0.05 + Math.min(1, v / 22) * 0.95) * (kaydirac.value / 100);
-      suzgec.frequency.setTargetAtTime(kesim, t, 1.5);
-      kazanc.gain.setTargetAtTime(seviye * 0.9, t, 1.5);
-      // hamleler: hız arttıkça dalgalanma da artar
-      lfoKazanc.gain.setTargetAtTime(seviye * Math.min(0.45, v / 45), t, 1.5);
-      lfo.frequency.setTargetAtTime(0.06 + v / 160, t, 1.5);
-      if (bilgi) {
-        bilgi.textContent = 'Açık — ' + v.toFixed(1) + ' m/s rüzgâra göre üretiliyor';
-      }
-    }
-
-    function baslat() {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) { if (bilgi) bilgi.textContent = 'Tarayıcınız ses üretimini desteklemiyor'; return false; }
-      ctx = new AC();
-      kaynak = ctx.createBufferSource();
-      kaynak.buffer = gurultuTamponu(ctx);
-      kaynak.loop = true;
-
-      suzgec = ctx.createBiquadFilter();
-      suzgec.type = 'lowpass';
-      suzgec.frequency.value = 400;
-      suzgec.Q.value = 0.7;
-
-      kazanc = ctx.createGain();
-      kazanc.gain.value = 0;
-
-      // yavaş bir salınım: sabit uğultu yerine gelip giden rüzgâr hissi
-      lfo = ctx.createOscillator();
-      lfo.frequency.value = 0.1;
-      lfoKazanc = ctx.createGain();
-      lfoKazanc.gain.value = 0;
-      lfo.connect(lfoKazanc).connect(kazanc.gain);
-
-      kaynak.connect(suzgec).connect(kazanc).connect(ctx.destination);
-      kaynak.start();
-      lfo.start();
-      return true;
-    }
-
-    function durdur() {
-      caliyor = false;
-      if (zamanlayici) { clearInterval(zamanlayici); zamanlayici = null; }
-      if (ctx) {
-        try {
-          kazanc.gain.setTargetAtTime(0, ctx.currentTime, 0.15);
-          var k = ctx;
-          setTimeout(function () { try { k.close(); } catch (e) {} }, 600);
-        } catch (e) { try { ctx.close(); } catch (e2) {} }
-      }
-      ctx = null; kaynak = null; suzgec = null; kazanc = null; lfo = null; lfoKazanc = null;
-      dugme.textContent = 'Sesi Aç';
-      dugme.setAttribute('aria-pressed', 'false');
-      if (bilgi) { bilgi.classList.remove('active'); bilgi.textContent = 'Kapalı'; }
-    }
-
-    dugme.setAttribute('aria-pressed', 'false');
-
-    dugme.addEventListener('click', function () {
-      if (caliyor) { durdur(); return; }
-      if (!baslat()) return;
-      caliyor = true;
-      // bazı tarayıcılar sesi ilk dokunuşa kadar askıya alır
-      if (ctx.state === 'suspended') ctx.resume();
-      dugme.textContent = 'Sesi Kapat';
-      dugme.setAttribute('aria-pressed', 'true');
-      if (bilgi) bilgi.classList.add('active');
-      hizaGore();
-      zamanlayici = setInterval(hizaGore, 5000);
-    });
-
-    kaydirac.addEventListener('input', function () {
-      if (yuzde) yuzde.textContent = this.value + '%';
-      hizaGore();
-    });
-
-    // sekme arkaya atılırsa sesi kapat — kimse fonda uğultu istemez
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden && caliyor) durdur();
-    });
-  }
-
-  // ---- 5. Night Mode Optimization ----
-  function initNightMode() {
-    var autoNight = document.getElementById('autoNightMode');
-    var forcedNight = document.getElementById('forcedNightMode');
-    var reducedMotion = document.getElementById('reducedMotion');
-    var resetBtn = document.getElementById('resetSettings');
-
-    if (!autoNight) return;
-
-    // Kayıtlı ayarları yükle
-    autoNight.checked = localStorage.getItem('autoNightMode') !== 'false';
-    forcedNight.checked = localStorage.getItem('forcedNightMode') === 'true';
-    reducedMotion.checked = localStorage.getItem('reducedMotion') === 'true';
-
-    // Değişiklikleri kaydet
-    [autoNight, forcedNight, reducedMotion].forEach(function(el) {
-      el.addEventListener('change', function() {
-        localStorage.setItem(el.id, el.checked);
-        applyNightModeSettings();
-      });
-    });
-
-    resetBtn.addEventListener('click', function() {
-      localStorage.removeItem('autoNightMode');
-      localStorage.removeItem('forcedNightMode');
-      localStorage.removeItem('reducedMotion');
-      location.reload();
-    });
-
-    function applyNightModeSettings() {
-      if (forcedNight.checked) {
-        kok.setAttribute('data-vardiya', 'gece');
-        kok.style.setProperty('--gunes', '0');
-        if (eIsik) eIsik.textContent = ISIK.gece;
-      } else {
-        // zorlama kapatıldıysa gerçek güneş konumuna geri dön
-        kok.setAttribute('data-vardiya', v0);
-        kok.style.setProperty('--gunes', Math.max(0, Math.min(1, (h0 + 6) / 30)).toFixed(3));
-        if (eIsik) eIsik.textContent = ISIK[v0] || '';
-      }
-      if (reducedMotion.checked) {
-        kok.style.setProperty('--animation-duration', '0s');
-      } else {
-        kok.style.removeProperty('--animation-duration');
-      }
-    }
-
-    applyNightModeSettings();
-  }
 })();

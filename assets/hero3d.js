@@ -12,8 +12,8 @@
  * WebGL yoksa, prefers-reduced-motion açıksa veya sahne kurulamazsa
  * fotoğraf olduğu gibi kalıyor; sayfa hiçbir şey kaybetmiyor.
  */
-import * as THREE from '/assets/vendor/three.module.min.js';
-import { createScene } from '/n117/n117.js?v=2';
+import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+import { createScene } from '/n117/n117.js?v=2a90e4df';
 
 export function kapak3BBaslat(canvas) {
   let S;

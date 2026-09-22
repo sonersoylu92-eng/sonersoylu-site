@@ -1,7 +1,7 @@
 // Nordex N90/2500 — parametrik montaj sahnesi
 // Ölçüler gerçek türbin verilerinden türetildi (1 birim = 1 metre).
-import * as THREE from '/assets/vendor/three.module.min.js';
-import { OrbitControls } from '/assets/vendor/OrbitControls.js';
+import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+import { OrbitControls } from '/assets/vendor/OrbitControls.js?v=d09a8a17';
 
 /* ---------------------------------------------------------------- veriler */
 

@@ -22,7 +22,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
 
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
-<link rel="stylesheet" href="/style.css?v=e785c3ab">
+<link rel="stylesheet" href="/style.css?v=56c11287">
 <link rel="stylesheet" href="/style-editorial.css?v=5fbf4cd3">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknisyeni","email":"sonersoylu@yandex.com","url":"https://sonersoylu.com","address":{"@type":"PostalAddress","addressCountry":"TR","addressLocality":"İzmir"},"knowsAbout":["Rüzgâr enerjisi","Enercon","Nordex","Vestas","Arıza giderme","Periyodik bakım","Devreye alma"],"sameAs":["https://www.linkedin.com/in/soner-soylu","https://www.youtube.com/@TheTurbineTech","https://www.instagram.com/soyluubey"],"worksFor":{"@type":"Organization","name":"Bilgin Enerji"},"alumniOf":[{"@type":"EducationalOrganization","name":"Anadolu Üniversitesi"},{"@type":"EducationalOrganization","name":"Ege Üniversitesi"}]}</script>
 <style>
@@ -168,28 +168,8 @@ main > section .head{margin-bottom:1.9rem}
 
 
 
-<!-- ▓ 1. METAR/TAF Entegrasyonu ▓ -->
-<section id="metar-taf" class="ozellik">
- <div class="wrap">
-  <div class="head"><h2>İzmir Adnan Menderes METAR/TAF</h2><p class="mono">LTBJ · resmî havacılık hava raporu</p></div>
-  <p id="metarOzet" class="meteo-ozet">Yükleniyor…</p>
-  <div id="meteoroContainer" class="meteo-grid">
-   <div class="meteo-box">
-    <p class="meteo-head">METAR — son gözlem</p>
-    <p id="metarData" class="meteo-data">Yükleniyor…</p>
-    <p class="meteo-time" id="metarTime"></p>
-   </div>
-   <div class="meteo-box">
-    <p class="meteo-head">TAF — tahmin</p>
-    <p id="tafData" class="meteo-data">Yükleniyor…</p>
-    <p class="meteo-time" id="tafTime"></p>
-   </div>
-  </div>
-  <p class="not"><span>Sahaya en yakın resmî gözlem istasyonu · 10 dakikada bir tazelenir</span><span>Kaynak: NOAA / Aviation Weather Center</span></p>
- </div>
-</section>
 
-<!-- ▓ 2. Alan Günlüğü ▓ -->
+<!-- ▓ 1. Alan Günlüğü ▓ -->
 <section id="alan-notlari" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Alan Günlüğü</h2><p class="mono">Sahadan notlar ve arşiv</p></div>
@@ -207,7 +187,7 @@ main > section .head{margin-bottom:1.9rem}
  </div>
 </section>
 
-<!-- ▓ 3. Rüzgâr Uyarı Sistemi ▓ -->
+<!-- ▓ 2. Rüzgâr Uyarı Sistemi ▓ -->
 <section id="ruzgar-uyarisi" class="ozellik">
  <div class="wrap">
   <div class="head"><h2>Rüzgâr Uyarı Sistemi</h2><p class="mono">Kritik hız bildirimleri</p></div>
@@ -234,53 +214,7 @@ main > section .head{margin-bottom:1.9rem}
  </div>
 </section>
 
-<!-- ▓ 4. Ses ve Ambiyans ▓ -->
-<section id="ses-ambiyans" class="ozellik">
- <div class="wrap">
-  <div class="head"><h2>Rüzgâr Ambiyansı</h2><p class="mono">Hıza göre değişen ortam sesi</p></div>
-  <div id="soundApp" class="sound-widget">
-   <div class="sound-controls">
-    <button id="soundToggle" class="plate" type="button">Sesi Aç</button>
-    <div class="sound-slider">
-     <label for="soundVol">Sesle: </label>
-     <input id="soundVol" type="range" min="0" max="100" value="30" />
-     <span id="volDisplay">30%</span>
-    </div>
-   </div>
-   <p id="soundInfo" class="sound-info">Kapalı</p>
-  </div>
-  <p class="not"><span>Bergama'daki rüzgâr hızına göre parametrik ses üretilir</span><span>Gece modu veya fonda çalışsa da kapanıyor</span></p>
- </div>
-</section>
 
-<!-- ▓ 5. Gece Modu Optimizasyonu ▓ -->
-<section id="gece-modu-ayar" class="ozellik">
- <div class="wrap">
-  <div class="head"><h2>Gece Modu Ayarları</h2><p class="mono">Göz konforlu ışıklandırma</p></div>
-  <div id="darkModeSettings" class="settings-panel">
-   <div class="setting-item">
-    <label for="autoNightMode">
-     <input id="autoNightMode" type="checkbox" checked /> Otomatik gece modu
-    </label>
-    <p class="setting-hint">Yerel güneşe göre otomatik açılıp kapanır</p>
-   </div>
-   <div class="setting-item">
-    <label for="forcedNightMode">
-     <input id="forcedNightMode" type="checkbox" /> Sürekli gece modu
-    </label>
-    <p class="setting-hint">Sabit olarak gece temasını kullan</p>
-   </div>
-   <div class="setting-item">
-    <label for="reducedMotion">
-     <input id="reducedMotion" type="checkbox" /> Hareketleri azalt
-    </label>
-    <p class="setting-hint">Animasyon ve geçişleri yavaşlat</p>
-   </div>
-   <button id="resetSettings" class="plate" type="button">Varsayılana dön</button>
-  </div>
-  <p class="not"><span>Ayarlar browser'a kaydedilir</span><span>Sistem tercihine uyar, manuel geçersiz kılma seçeneğiyle</span></p>
- </div>
-</section>
 
 <div class="serit" id="serit" aria-hidden="true"><ul id="seritIc"><li>Pitch</li><li>Yaw</li><li>Konvertör</li><li>Ana yatak</li><li>Gear box</li><li>Nasel</li><li>Slip ring</li><li>Tork</li><li>LOTO</li><li>GWO</li><li>SCADA</li><li>Kanat</li><li>Göbek</li><li>Titreşim</li><li>Devreye alma</li><li>Periyodik bakım</li><li>Arıza kodu</li><li>Yüksekte çalışma</li><li>Pitch</li><li>Yaw</li><li>Konvertör</li><li>Ana yatak</li><li>Gear box</li><li>Nasel</li><li>Slip ring</li><li>Tork</li><li>LOTO</li><li>GWO</li><li>SCADA</li><li>Kanat</li><li>Göbek</li><li>Titreşim</li><li>Devreye alma</li><li>Periyodik bakım</li><li>Arıza kodu</li><li>Yüksekte çalışma</li></ul></div>
 
@@ -696,7 +630,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
 <script src="/assets/ara.js?v=e178dc21" defer></script>
 <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
 <div class="doku" aria-hidden="true"></div>
-<script src="/assets/canli.js?v=89f6031f" defer></script><script src="/assets/hava.js?v=cd8f91a8" defer></script><script src="/assets/giris.js?v=107c4a80" defer></script>
+<script src="/assets/canli.js?v=61af2b4e" defer></script><script src="/assets/hava.js?v=cd8f91a8" defer></script><script src="/assets/giris.js?v=107c4a80" defer></script>
 <script src="/assets/olcum.js?v=37c7cfab" defer></script>
 <script>
 (function () {
@@ -712,7 +646,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
   }
   if (!destek()) return;
   function baslat() {
-    import('/assets/hero3d.js?v=1').then(function (m) { m.kapak3BBaslat(canvas); })
+    import('/assets/hero3d.js?v=c5074566').then(function (m) { m.kapak3BBaslat(canvas); })
       .catch(function (e) { console.error('kapak3b yüklenemedi:', e); });
   }
   function boslaBekle() {

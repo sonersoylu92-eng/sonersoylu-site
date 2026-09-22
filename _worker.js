@@ -5,7 +5,6 @@
 // /api/ruzgar → Open-Meteo tahmin verisi (uçta 15 dk önbellekli)
 // /api/soru   → sahadan gelen soruların kaydı (KV)
 // /api/asistan → saha asistanı: soruyu sitenin kendi içeriğinden yanıtlar (RAG)
-// /api/metar  → LTBJ resmî METAR/TAF raporu, Türkçe çözümüyle
 // /api/olcum  → sayfa içi davranış sayaçları (KV, anonim ve toplu)
 // /api/olcum/rapor → sayaçların özeti (anahtarla korumalı)
 // www.sonersoylu.com → sonersoylu.com kalıcı yönlendirme (SEO: tek kanonik alan adı)
@@ -46,11 +45,6 @@ export default {
 
     if (url.pathname === '/api/ruzgar') {
       if (request.method === 'GET') return ruzgar(url);
-      return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
-    }
-
-    if (url.pathname === '/api/metar') {
-      if (request.method === 'GET') return metar(url);
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
     }
 
@@ -646,132 +640,4 @@ async function workersAiSor(env, talimat, istem, tani) {
     }
   }
   return null;
-}
-
-// ---------------------------------------------------------------- METAR/TAF
-// İzmir Adnan Menderes (LTBJ) sahaya en yakın resmî gözlem istasyonu.
-// Ham metni olduğu gibi veriyoruz (teknisyen ham METAR okur) ama yanında
-// Türkçe çözümünü de üretiyoruz ki sayfa sadece şifreli bir satır olmasın.
-const METAR_ISTASYON = 'LTBJ';
-const METAR_AD = 'İzmir Adnan Menderes';
-
-const BULUT = { FEW: 'az bulutlu', SCT: 'parçalı bulutlu', BKN: 'çok bulutlu', OVC: 'kapalı' };
-const HAVA_OLAY = {
-  RA: 'yağmur', SN: 'kar', DZ: 'çisenti', GR: 'dolu', GS: 'küçük dolu',
-  BR: 'pus', FG: 'sis', HZ: 'is/pus', FU: 'duman', DU: 'toz', SA: 'kum',
-  SQ: 'ani fırtına', TS: 'gök gürültülü', SH: 'sağanak', FZ: 'donan',
-  MI: 'sığ', BC: 'parça parça', DR: 'sürüklenen', BL: 'savrulan', VC: 'çevrede',
-};
-
-function yonAdi(d) {
-  const a = ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD',
-             'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'];
-  return a[Math.round(((d % 360) + 360) % 360 / 22.5) % 16];
-}
-
-function olayCoz(t) {
-  const siddet = t[0] === '-' ? 'hafif ' : t[0] === '+' ? 'kuvvetli ' : '';
-  const g = t.replace(/^[-+]/, '');
-  const par = [];
-  for (let i = 0; i + 1 < g.length + 1; i += 2) {
-    const p = g.slice(i, i + 2);
-    if (HAVA_OLAY[p]) par.push(HAVA_OLAY[p]);
-  }
-  return par.length ? siddet + par.join(' ') : '';
-}
-
-function metarCoz(ham) {
-  if (!ham) return null;
-  const p = ham.trim().replace(/^METAR\s+/, '').split(/\s+/);
-  const c = { istasyon: p[0] || METAR_ISTASYON };
-  const satir = [];
-
-  for (const t of p.slice(1)) {
-    let m;
-    if (!c.zaman && (m = t.match(/^(\d{2})(\d{2})(\d{2})Z$/))) {
-      c.gun = +m[1]; c.saat = m[2] + ':' + m[3]; c.zaman = t;
-      continue;
-    }
-    if ((m = t.match(/^(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT$/))) {
-      const kt = +m[2], ms = kt * 0.514444;
-      c.ruzgarKt = kt; c.ruzgarMs = +ms.toFixed(1);
-      if (kt === 0) { c.yon = null; c.sakin = true; satir.push('Rüzgâr sakin'); }
-      else if (m[1] === 'VRB') { c.yon = null; satir.push('Rüzgâr değişken yönlü, ' + ms.toFixed(1) + ' m/s'); }
-      else {
-        c.yon = +m[1];
-        satir.push('Rüzgâr ' + m[1] + '° (' + yonAdi(+m[1]) + ') ' + ms.toFixed(1) + ' m/s');
-      }
-      if (m[3]) { c.hamleMs = +(+m[3] * 0.514444).toFixed(1); satir.push('hamle ' + c.hamleMs + ' m/s'); }
-      continue;
-    }
-    if (t === 'CAVOK') { c.cavok = true; satir.push('Görüş 10 km+, kayda değer bulut yok'); continue; }
-    if ((m = t.match(/^(\d{4})$/))) {
-      const g = +m[1];
-      c.gorus = g;
-      satir.push('Görüş ' + (g >= 9999 ? '10 km+' : g >= 1000 ? (g / 1000) + ' km' : g + ' m'));
-      continue;
-    }
-    if ((m = t.match(/^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?$/))) {
-      const ft = +m[2] * 100;
-      (c.bulutlar = c.bulutlar || []).push({ tur: m[1], ft: ft, ek: m[3] || '' });
-      satir.push(BULUT[m[1]] + ' ' + ft.toLocaleString('tr-TR') + ' ft' +
-        (m[3] === 'CB' ? ' (kümülonimbus)' : m[3] === 'TCU' ? ' (gelişen kümülüs)' : ''));
-      continue;
-    }
-    if (t === 'NSC' || t === 'NCD' || t === 'SKC' || t === 'CLR') { satir.push('Kayda değer bulut yok'); continue; }
-    if ((m = t.match(/^VV(\d{3})$/))) { satir.push('Dikey görüş ' + (+m[1] * 100) + ' ft'); continue; }
-    if ((m = t.match(/^(M?\d{2})\/(M?\d{2})$/))) {
-      const s = (x) => (x[0] === 'M' ? -(+x.slice(1)) : +x);
-      c.sicaklik = s(m[1]); c.ciy = s(m[2]);
-      satir.push('Sıcaklık ' + c.sicaklik + ' °C, çiy noktası ' + c.ciy + ' °C');
-      continue;
-    }
-    if ((m = t.match(/^Q(\d{4})$/))) { c.qnh = +m[1]; satir.push('QNH ' + c.qnh + ' hPa'); continue; }
-    if (/^(NOSIG|TEMPO|BECMG|RMK|AUTO|R\d{2})/.test(t)) continue;
-    const o = olayCoz(t);
-    if (o) satir.push(o.charAt(0).toUpperCase() + o.slice(1));
-  }
-
-  c.ozet = satir.map((x) => x.charAt(0).toLocaleUpperCase('tr') + x.slice(1)).join(' · ');
-  return c;
-}
-
-async function havaRaporu(tur, ist) {
-  const u = 'https://aviationweather.gov/api/data/' + tur +
-            '?ids=' + ist + '&format=raw' + (tur === 'metar' ? '&hours=1' : '');
-  const r = await fetch(u, {
-    cf: { cacheTtl: 600, cacheEverything: true },
-    headers: { accept: 'text/plain', 'user-agent': 'sonersoylu.com' },
-  });
-  if (!r.ok) return null;
-  const t = (await r.text()).trim();
-  if (!t) return null;
-  // METAR birden çok satır dönebilir; en yenisi ilk satırdır
-  return tur === 'metar' ? t.split('\n')[0].trim() : t.replace(/\n\s+/g, '\n').trim();
-}
-
-async function metar(url) {
-  const ist = (url.searchParams.get('i') || METAR_ISTASYON).toUpperCase().slice(0, 4);
-  if (!/^[A-Z]{4}$/.test(ist)) return json({ ok: false, hata: 'gecersiz-istasyon' }, 400);
-  try {
-    const [m, t] = await Promise.all([havaRaporu('metar', ist), havaRaporu('taf', ist)]);
-    if (!m && !t) return json({ ok: false, hata: 'kaynak-hatasi' }, 502);
-    return new Response(JSON.stringify({
-      ok: true,
-      istasyon: ist,
-      istasyonAdi: ist === METAR_ISTASYON ? METAR_AD : ist,
-      metar: m,
-      coz: metarCoz(m),
-      taf: t,
-      alindi: new Date().toISOString(),
-    }), {
-      headers: {
-        'content-type': 'application/json; charset=utf-8',
-        'cache-control': 'public, max-age=600',
-        'x-veri-kaynagi': 'aviationweather.gov (NOAA/NWS)',
-      },
-    });
-  } catch {
-    return json({ ok: false, hata: 'ulasilamadi' }, 502);
-  }
 }

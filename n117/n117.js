@@ -2,8 +2,8 @@
 // Ana ölçüler (rotor çapı, kanat uzunluğu, göbek yüksekliği, kule çapları)
 // üretici verilerinden; nasel oranları ve kanat profil dağılımı yaklaşıktır.
 // 1 birim = 1 metre.
-import * as THREE from '/assets/vendor/three.module.min.js';
-import { OrbitControls } from '/assets/vendor/OrbitControls.js';
+import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+import { OrbitControls } from '/assets/vendor/OrbitControls.js?v=d09a8a17';
 
 /* ---------------------------------------------------------------- veriler */
 
