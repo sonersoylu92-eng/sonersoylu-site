@@ -404,7 +404,8 @@ const TALIMAT_TR = [
   '3. Sayı uydurma. Tork, sıcaklık, basınç, akım gibi değerleri yalnızca alıntıda geçiyorsa yaz.',
   '4. Bakım veya müdahale prosedürü anlatırken şunu mutlaka ekle: bu bilgi saha deneyimidir,',
   '   üreticinin servis dokümanının yerine geçmez; LOTO ve iş güvenliği kuralları geçerlidir.',
-  '5. Türkçe, sade ve doğrudan yaz. Teknisyenle konuşur gibi ol, pazarlama dili kullanma.',
+  '5. Yalnızca Türkçe yaz. Tek bir kelimeyi bile başka bir dilde yazma; emin olmadığın bir sözcüğü',
+  '   Türkçe karşılığıyla ver. Sade ve doğrudan ol, teknisyenle konuşur gibi yaz, pazarlama dili kullanma.',
   '6. Cevabın sonuna kaynak listesi EKLEME; kaynaklar ayrıca gösteriliyor.',
   '7. Cevabı kısa tut: en fazla 4 paragraf.',
 ].join('\n');
@@ -421,7 +422,8 @@ const TALIMAT_EN = [
   '   in an excerpt.',
   '4. Whenever you describe a maintenance or intervention procedure, add that this is field experience',
   '   and does not replace the manufacturer service documentation; LOTO and site safety rules govern.',
-  '5. Write in plain, direct English, technician to technician. No marketing language.',
+  '5. Write in English only; do not use a single word from another language.',
+  '   Keep it plain and direct, technician to technician. No marketing language.',
   '6. Do NOT append a source list; sources are shown separately.',
   '7. Keep it short: four paragraphs at most.',
 ].join('\n');
@@ -594,6 +596,11 @@ const AI_MODELLER = [
   '@cf/mistral/mistral-7b-instruct-v0.2',
 ];
 
+// Modeller ara sıra başka bir dilden karakter sızdırabiliyor ("ổn định" gibi).
+// Türkçe/İngilizce dışına çıkan bir yanıtı kabul etmiyoruz; bir sonraki model denenir.
+const IZINLI = /^[\t\n\r\u0020-\u007E\u00A0-\u017F\u2000-\u206F\u20A0-\u20CF\u2190-\u22FF]*$/;
+function dilTemiz(t) { return IZINLI.test(String(t)); }
+
 async function workersAiSor(env, talimat, istem, tani) {
   if (!env.AI) { if (tani) tani.push('AI baglantisi yok'); return null; }
   for (const model of AI_MODELLER) {
@@ -607,11 +614,15 @@ async function workersAiSor(env, talimat, istem, tani) {
       });
       const t = d && (d.response || d.result || (d.choices && d.choices[0] &&
                 d.choices[0].message && d.choices[0].message.content));
-      if (t && String(t).trim()) {
+      const m = t ? String(t).trim() : '';
+      if (m && !dilTemiz(m)) {
+        if (tani) tani.push(model + ' → yabancı karakter sızdı, atlandı');
+      } else if (m) {
         if (tani) tani.push(model + ' → tamam');
-        return String(t).trim();
+        return m;
+      } else if (tani) {
+        tani.push(model + ' → boş yanıt ' + JSON.stringify(d).slice(0, 160));
       }
-      if (tani) tani.push(model + ' → bos yanit ' + JSON.stringify(d).slice(0, 160));
     } catch (e) {
       if (tani) tani.push(model + ' → ' + String(e && e.message || e).slice(0, 200));
     }
