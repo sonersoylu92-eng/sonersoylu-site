@@ -457,9 +457,10 @@ async function asistan(request, env) {
       : await workersAiSor(env, talimat, istem);
   } catch { cevap = null; }
 
-  if (!cevap) {
-    return json({ ok: false, hata: 'model-yanit-vermedi' }, 502);
-  }
+  // Model yoksa ya da cevap vermediyse: sitedeki metinden CIKARIMSIZ ozet uret.
+  // Boylece asistan hicbir kurulum olmadan da calisir ve asla uydurmaz.
+  const uretim = !!cevap;
+  if (!cevap) cevap = ozetCikar(secilen, soru, dil);
 
   // Kaynaklar: aynı sayfa bir kez
   const gorulen = new Set(), kaynaklar = [];
@@ -469,7 +470,64 @@ async function asistan(request, env) {
     kaynaklar.push({ u: p.u, b: p.b });
   }
 
-  return json({ ok: true, bulundu: true, cevap, kaynaklar, dil });
+  return json({ ok: true, bulundu: true, uretim, cevap, kaynaklar, dil });
+}
+
+// ---------------------------------------------------------------------------
+// Model olmadan cevap: secilen bolumlerden soruya en cok denk gelen cumleleri
+// oldugu gibi cikarir. Hicbir sey uretilmez, dolayisiyla hicbir sey uydurulmaz.
+// ---------------------------------------------------------------------------
+function cumleler(t) {
+  return String(t || '')
+    .split(/(?<=[.!?:])\s+/)
+    .map((c) => c.trim())
+    .filter((c) => c.length > 30);
+}
+
+function ozetCikar(secilen, soru, dil) {
+  const ks = new Set(kelimeler(soru));
+  const gorulen = new Set();
+  const bloklar = [];
+
+  for (const p of secilen) {
+    if (bloklar.length >= 3) break;
+    if (gorulen.has(p.u)) continue;
+    gorulen.add(p.u);
+
+    const cs = cumleler(p.t);
+    if (!cs.length) continue;
+
+    const puanli = cs.map((c, i) => {
+      const kk = new Set(kelimeler(c));
+      let n = 0;
+      for (const k of ks) if (kk.has(k)) n++;
+      return { c, i, n };
+    });
+    puanli.sort((a, b) => (b.n - a.n) || (a.i - b.i));
+
+    const alinan = puanli.slice(0, 3).filter((x) => x.n > 0);
+    const secim = (alinan.length ? alinan : puanli.slice(0, 2))
+      .sort((a, b) => a.i - b.i)
+      .map((x) => x.c);
+
+    const bas = p.h ? p.b + ' — ' + p.h : p.b;
+    bloklar.push(bas + '\n' + secim.join(' '));
+  }
+
+  if (!bloklar.length) {
+    return dil === 'tr'
+      ? 'Bu konuda sitede bir bilgi bulamadim.'
+      : 'I could not find anything about this on the site.';
+  }
+
+  const bas = dil === 'tr'
+    ? 'Sorunuzla en cok ortusen bolumler asagida, sitedeki yazilardan oldugu gibi alindi:'
+    : 'The passages that match your question most closely, quoted from the site as they stand:';
+  const son = dil === 'tr'
+    ? 'Bunlar saha deneyimidir, ureticinin servis dokumaninin yerine gecmez. Her mudahalede kendi turbininizin OEM talimati, LOTO proseduru ve is guvenligi kurallari gecerlidir. Tam baglam icin asagidaki kaynak sayfalari acin.'
+    : 'This is field experience and does not replace the manufacturer service documentation. On every intervention your own turbine OEM instructions, LOTO procedure and site safety rules govern. Open the source pages below for the full context.';
+
+  return bas + '\n\n' + bloklar.join('\n\n') + '\n\n' + son;
 }
 
 // Anahtar tanımlıysa Claude kullanılır (daha iyi Türkçe)

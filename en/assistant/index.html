@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Field Assistant — Ask a Wind Turbine Question | Soner Soylu</title>
+<meta name="description" content="Ask a wind turbine question and get an answer drawn only from this site's own field content, with the source pages shown. When the site does not cover it, the assistant says so instead of guessing.">
+<link rel="canonical" href="https://sonersoylu.com/en/assistant/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/assistant/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/asistan/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/asistan/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Field Assistant — Ask a Wind Turbine Question">
+<meta property="og:description" content="Answers drawn only from this site's own field content, with sources shown. Says so when it does not know.">
+<meta property="og:url" content="https://sonersoylu.com/en/assistant/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "Field Assistant",
+ "url": "https://sonersoylu.com/en/assistant/",
+ "applicationCategory": "ReferenceApplication",
+ "operatingSystem": "Web",
+ "inLanguage": "en",
+ "isAccessibleForFree": true,
+ "offers": {"@type":"Offer","price":"0","priceCurrency":"EUR"},
+ "description": "Answers wind turbine questions from the field content published on sonersoylu.com, and cites the source pages.",
+ "author": {"@type":"Person","name":"Soner Soylu","jobTitle":"Wind Turbine Field Service Technician"}
+}
+</script>
+<meta name="theme-color" content="#f6f4f0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<style>
+.as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+.as-form{display:grid;gap:.8rem}
+.as-form textarea{width:100%;min-height:5.5rem;padding:.85rem .9rem;font-family:var(--sans);
+  font-size:1rem;line-height:1.6;color:var(--ink);background:var(--ground);
+  border:1px solid var(--line);border-radius:3px;resize:vertical}
+.as-form textarea:focus{outline:2px solid var(--beacon);outline-offset:1px}
+.as-alt{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between}
+.as-gonder{font-family:var(--sans);font-size:.9375rem;padding:.7rem 1.4rem;cursor:pointer;
+  color:var(--kagit);background:var(--ink);border:1px solid var(--ink);border-radius:3px;
+  transition:background .18s,border-color .18s}
+.as-gonder:hover:not(:disabled){background:var(--beacon);border-color:var(--beacon)}
+.as-gonder:disabled{opacity:.5;cursor:not-allowed}
+.as-sayac{font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+.as-ornekler{margin:1.25rem 0 0;display:flex;flex-wrap:wrap;gap:.5rem}
+.as-ornekler button{font-family:var(--mono);font-size:.6875rem;letter-spacing:.06em;
+  padding:.45rem .75rem;cursor:pointer;color:var(--muted);background:var(--raise);
+  border:1px solid var(--line);border-radius:999px;transition:color .18s,border-color .18s}
+.as-ornekler button:hover{color:var(--ink);border-color:var(--beacon)}
+.as-cevap{margin:1.5rem 0 0;padding:1.3rem 1.4rem;background:var(--raise);border:1px solid var(--line);display:none}
+.as-cevap.acik{display:block}
+.as-cevap .k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0}
+.as-cevap .metin{margin:.75rem 0 0;line-height:1.75;white-space:pre-wrap}
+.as-kaynak{margin:1.4rem 0 0;padding-top:1rem;border-top:1px solid var(--line)}
+.as-kaynak p.k{margin:0 0 .5rem}
+.as-kaynak a{display:block;padding:.45rem 0;font-size:.9375rem;color:var(--ink);
+  text-decoration:none;border-bottom:1px solid var(--line);transition:padding-left .18s,color .18s}
+.as-kaynak a:last-child{border-bottom:0}
+.as-kaynak a:hover{padding-left:.4rem;color:var(--beacon)}
+.as-bekle{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;
+  background:var(--beacon);animation:asnb 1s ease-in-out infinite}
+@keyframes asnb{0%,100%{opacity:.25}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.as-bekle{animation:none;opacity:.6}}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/">Field notes<span>Real fault cases, step by step</span></a><a href="/en/assistant/">Assistant<span>Answers from this site’s own field content</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/asistan/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><a href="/en/assistant/">Assistant</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/asistan/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="kb" id="top">
+ <article>
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <span aria-current="page">Field Assistant</span></nav>
+
+  <p class="kb-kicker">Field tool</p>
+  <h1>Field Assistant</h1>
+  <p class="kb-lead">Type a wind turbine question. The assistant pulls the answer out of this site's own content and shows which page it came from. If the site does not cover it, it does not invent an answer — it tells you it could not find one.</p>
+
+  <div class="as-kutu">
+   <form class="as-form" id="asForm">
+    <label for="asSoru" class="as-sayac">Your question</label>
+    <textarea id="asSoru" maxlength="500" placeholder="Example: gearbox temperature climbs with wind speed — what should I check first?" required></textarea>
+    <input type="text" id="asWeb" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <div class="as-alt">
+     <button class="as-gonder" id="asGonder" type="submit">Ask</button>
+     <span class="as-sayac" id="asDurum">12 questions per hour</span>
+    </div>
+   </form>
+
+   <div class="as-ornekler" id="asOrnek">
+    <button type="button">Why does pitch motor current rise?</button>
+    <button type="button">What causes yaw hunting?</button>
+    <button type="button">How do I tell a real generator overheat from a faulty sensor?</button>
+    <button type="button">What is the difference between direct-drive and geared turbines?</button>
+    <button type="button">I found metal in the grease purge — what now?</button>
+   </div>
+
+   <div class="as-cevap" id="asCevap" aria-live="polite">
+    <p class="k" id="asCevapBaslik">Answer</p>
+    <div class="metin" id="asMetin"></div>
+    <div class="as-kaynak" id="asKaynak" hidden>
+     <p class="k">This answer was drawn from</p>
+     <div id="asKaynakListe"></div>
+    </div>
+   </div>
+  </div>
+
+  <h2>What this assistant does, and what it does not</h2>
+  <p>It is not a search engine and not a chatbot. It finds the sections of this site that bear on your question and answers from those alone. Underneath the answer you get the pages it came from, so you can open the original article and read the full context.</p>
+  <p>That limit is deliberate. In turbine work an invented torque figure or temperature threshold turns into a real risk on the tower. So the assistant is not allowed to speak from general knowledge: it would rather say it could not find something than say something the site does not actually state.</p>
+
+  <div class="kb-callout">
+   <p><strong>Warning:</strong> what you read here is field experience and does not replace the manufacturer's service documentation. On every intervention your own turbine's OEM instructions, LOTO procedure and site safety rules govern. If in doubt, do not start it.</p>
+  </div>
+
+  <h2>If it cannot find an answer</h2>
+  <p>The assistant cannot answer on a subject the site does not cover. When that happens, send the question to me directly from the <a href="/en/#contact">contact section</a>. Questions that keep coming back get written up and added to the site permanently — which means what you asked becomes something the assistant will know next time.</p>
+
+  <div class="kb-rel">
+   <p class="k">Go straight to the sources</p>
+   <ul>
+    <li><a href="/en/field-notes/">Field notes — real fault cases, step by step</a></li>
+    <li><a href="/en/systems/">Turbine systems — pitch, yaw, gearbox, generator</a></li>
+    <li><a href="/en/turbines/">Turbine model guide</a></li>
+    <li><a href="/en/tools/">Field calculators</a></li>
+    <li><a href="/en/glossary/">Glossary of terms</a></li>
+    <li><a href="/en/guide/">Guide to the job</a></li>
+   </ul>
+  </div>
+
+ </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Soner Soylu · Wind turbine field service technician</p>
+    <p class="mono">Aliağa, İzmir · Türkiye</p>
+<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-mail</a></p>
+<p class="mono"><a href="/en/ad-policy/">Advertising and revenue policy</a></p>
+<p class="mono"><a href="/en/privacy/">Privacy policy</a></p></div>
+</footer>
+
+<script src="/assets/site.js?v=2a418dca" defer></script>
+<script src="/assets/ara.js?v=e178dc21" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+
+<script>
+(function () {
+  var form   = document.getElementById('asForm');
+  var soru   = document.getElementById('asSoru');
+  var web    = document.getElementById('asWeb');
+  var gonder = document.getElementById('asGonder');
+  var durum  = document.getElementById('asDurum');
+  var kutu   = document.getElementById('asCevap');
+  var baslik = document.getElementById('asCevapBaslik');
+  var metin  = document.getElementById('asMetin');
+  var kSar   = document.getElementById('asKaynak');
+  var kList  = document.getElementById('asKaynakListe');
+
+  document.getElementById('asOrnek').addEventListener('click', function (e) {
+    if (e.target.tagName !== 'BUTTON') return;
+    soru.value = e.target.textContent;
+    soru.focus();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var s = soru.value.trim();
+    if (s.length < 6) { durum.textContent = 'Question is too short'; return; }
+
+    gonder.disabled = true;
+    durum.innerHTML = '<span class="as-bekle"></span> Searching the site…';
+    kutu.classList.add('acik');
+    baslik.textContent = 'Answer';
+    metin.textContent = '';
+    kSar.hidden = true;
+    kList.innerHTML = '';
+
+    fetch('/api/asistan', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ soru: s, dil: 'en', website: web.value })
+    })
+    .then(function (r) { return r.json().then(function (d) { return { s: r.status, d: d }; }); })
+    .then(function (x) {
+      gonder.disabled = false;
+      durum.textContent = '12 questions per hour';
+
+      if (x.s === 429) {
+        baslik.textContent = 'Limit reached';
+        metin.textContent = 'You have used this hour\u2019s questions. Try again shortly, or send the question straight to Soner from the contact page.';
+        return;
+      }
+      if (!x.d || !x.d.ok) {
+        baslik.textContent = 'I cannot answer right now';
+        metin.textContent = 'The assistant could not answer just now. Try again in a moment; if you are in a hurry, the field notes and systems pages carry the same material in browsable form.';
+        return;
+      }
+
+      baslik.textContent = (x.d.uretim === false) ? 'Relevant passages from the site' : 'Answer';
+      metin.textContent = x.d.cevap || '';
+      var k = x.d.kaynaklar || [];
+      if (k.length) {
+        kSar.hidden = false;
+        k.forEach(function (it) {
+          var a = document.createElement('a');
+          a.href = it.u; a.textContent = it.b;
+          kList.appendChild(a);
+        });
+      }
+    })
+    .catch(function () {
+      gonder.disabled = false;
+      durum.textContent = '12 questions per hour';
+      baslik.textContent = 'Connection failed';
+      metin.textContent = 'Check your internet connection and try again.';
+    });
+  });
+})();
+</script>
+</body>
+</html>
