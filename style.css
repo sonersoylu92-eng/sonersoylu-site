@@ -615,8 +615,8 @@ section.koyu>*{position:relative;z-index:1}
 /* kapağın hemen altındaki koyu "gösterge güvertesi": ölçüm + terim şeridi
    tek blok gibi okunsun diye üstten/alttan boşluk yok */
 .canli{background:#ece7de;color:#16191c;padding:0;border-top:0;
- --ink:#f4f1ec;--muted:#a9b1b8;--line:#2f373d;--beacon:#ef6a52}
-.canli+.serit{border-top:1px solid #2f373d}
+ --ink:#16191c;--muted:#5d636a;--line:#d3ccc0;--beacon:#a8322a}
+.canli+.serit{border-top:1px solid #d3ccc0}
 .canli .wrap{display:grid;gap:1px;background:var(--line);
  grid-template-columns:1fr;padding:0;max-width:none;margin:0}
 .canli .h{background:#e4ddd1;padding:1.1rem 1.5rem;display:grid;gap:.45rem;align-content:start}
