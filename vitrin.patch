@@ -1,0 +1,2926 @@
+diff --git a/404.html b/404.html
+index 0e54816..9f20d33 100644
+--- a/404.html
++++ b/404.html
+@@ -8,7 +8,7 @@
+ <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
+ .mid .in{max-width:36rem}
+diff --git a/ana.css b/ana.css
+index f348a87..57dabdd 100644
+--- a/ana.css
++++ b/ana.css
+@@ -297,12 +297,5 @@ body.ana-body #lb .lb-alt{margin:0;font-family:var(--mono);font-size:.75rem;lett
+ body.ana-body #lbx{background:#12171b;color:#e9edf0;border-color:#2a3238}
+ .ana .kanal .kopya{align-self:flex-start;margin-top:.35rem;min-height:2.25rem;padding:.35rem .8rem;border:1px solid var(--a-line);background:transparent;color:var(--a-accent);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+ .ana .kanal .kopya:hover{border-color:var(--a-accent)}
+-/* içerik her zaman görünür; destekleyen tarayıcıda kaydırınca hafifçe yükselir */
+-@supports (animation-timeline: view()) {
+-  @media (prefers-reduced-motion:no-preference){
+-    .ana .parca article,.ana .zaman li,.ana .yazi,.ana .kartlar a,.ana .vaka li,.ana .gal figure,.ana .soz{animation:yuksel linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+-    @keyframes yuksel{from{opacity:.25;transform:translateY(24px)}to{opacity:1;transform:none}}
+-  }
+-}
+ /* ekran dışı bölümler çizilmeden bekler: ilk açılış daha hızlı */
+ .ana section:not(.kule):not(.dny-bolum){content-visibility:auto;contain-intrinsic-size:auto 900px}
+diff --git a/ara/index.html b/ara/index.html
+index 08afd14..8233c5b 100644
+--- a/ara/index.html
++++ b/ara/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -94,7 +94,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/araclar/civata-germe/index.html b/araclar/civata-germe/index.html
+index 6dbcc7f..d2006cb 100644
+--- a/araclar/civata-germe/index.html
++++ b/araclar/civata-germe/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -187,7 +187,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/araclar/index.html b/araclar/index.html
+index 00b00bc..0e5579b 100644
+--- a/araclar/index.html
++++ b/araclar/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -881,7 +881,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/ariza/index.html b/ariza/index.html
+index fdbb168..89a1e9f 100644
+--- a/ariza/index.html
++++ b/ariza/index.html
+@@ -19,7 +19,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/ariza/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/ariza/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+@@ -349,7 +349,7 @@ const AGAC = {"D":{"durdu":{"s":"Kule dibi panosunda ya da SCADA'da aktif bir al
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/asistan/index.html b/asistan/index.html
+index 440d227..d780145 100644
+--- a/asistan/index.html
++++ b/asistan/index.html
+@@ -38,7 +38,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ <style>
+ .as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+@@ -166,7 +166,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/assets/ara.js b/assets/ara.js
+index a617a9d..94aaed1 100644
+--- a/assets/ara.js
++++ b/assets/ara.js
+@@ -17,6 +17,24 @@
+     });
+   }
+ 
++  /* İngilizce ya da günlük adla aranınca Türkçe karşılığını da bul (gearbox → dişli kutusu) */
++  var ES = {
++    gearbox: ['disli kutusu', 'redüktör'], 'gear box': ['disli kutusu'], generator: ['jenerator'], converter: ['konvertor', 'converter'],
++    inverter: ['konvertor'], 'main bearing': ['ana yatak'], bearing: ['yatak', 'rulman'], blade: ['kanat'], blades: ['kanat'],
++    hub: ['gobek'], nacelle: ['nasel'], tower: ['kule'], brake: ['fren'], coupling: ['kaplin'], shaft: ['mil', 'saft'],
++    'main shaft': ['ana mil'], cable: ['kablo'], transformer: ['trafo', 'transformator'], oil: ['yag'], grease: ['gres'],
++    temperature: ['sicaklik'], vibration: ['titresim'], sensor: ['sensor'], bolt: ['civata'], torque: ['tork'], tension: ['germe', 'gerdirme'],
++    wind: ['ruzgar'], salary: ['maas'], pay: ['maas'], fault: ['ariza'], alarm: ['alarm', 'kod'], encoder: ['enkoder'],
++    reduktor: ['disli kutusu'], sanziman: ['disli kutusu'], dinamo: ['jenerator']
++  };
++  function esler(k) {
++    var l = ES[k] || []; var d = [k];
++    for (var i = 0; i < l.length; i++) d.push(nrm(l[i]));
++    return d;
++  }
++  var KAT_SIRA = ['Saha notu', 'Sistemler', 'N117 turu', 'Türbin modeli', 'Arıza ağacı', 'Araçlar', 'Kod kütüphanesi', 'Sözlük', 'Eğitim', 'Rehber', 'Sayfa', 'N90 montajı', 'Soru-cevap', 'Asistan'];
++  var KAT_AD = { 'Saha notu': 'Saha notları', 'N117 turu': 'N117', 'Türbin modeli': 'Türbin modelleri', 'Araçlar': 'Hesaplayıcılar', 'Sayfa': 'Sayfalar', 'Soru-cevap': 'Soru-cevap' };
++
+   var dizin = null, yukleniyor = null;
+   function dizinAl() {
+     if (dizin) return Promise.resolve(dizin);
+@@ -37,10 +55,13 @@
+     var t = nrm(q).trim();
+     if (t.length < 2) return [];
+     var kel = t.split(/\s+/), sonuc = [];
++    if (ES[t]) kel = [t];            // çok kelimelik eş anlamlı (main bearing) tek terim sayılır
++    var alt = kel.map(esler);
+     for (var i = 0; i < dizin.e.length; i++) {
+       var e = dizin.e[i], puan = 0, hepsi = true;
+       for (var j = 0; j < kel.length; j++) {
+-        var k = kel[j], bi = e[4].indexOf(k), oi = e[5].indexOf(k);
++        var al = alt[j], k = kel[j], bi = -1, oi = -1;
++        for (var q = 0; q < al.length && bi < 0 && oi < 0; q++) { k = al[q]; bi = e[4].indexOf(k); oi = e[5].indexOf(k); }
+         if (bi < 0 && oi < 0) { hepsi = false; break; }
+         if (bi === 0) puan += 100;
+         else if (bi > 0) puan += (/[^a-z0-9]/.test(e[4].charAt(bi - 1)) ? 60 : 30);
+@@ -53,29 +74,42 @@
+       sonuc.push([puan, e]);
+     }
+     sonuc.sort(function (a, b) { return b[0] - a[0]; });
+-    return sonuc.slice(0, 40).map(function (x) { return x[1]; });
++    return sonuc.slice(0, 80).map(function (x) { return x[1]; });
+   }
+ 
+   function isaretle(metin, q) {
+-    var t = nrm(q).trim().split(/\s+/)[0];
++    var t = nrm(q).trim(); if (!ES[t]) t = t.split(/\s+/)[0];
+     if (!t) return kac(metin);
+-    var n = nrm(metin), i = n.indexOf(t);
++    var n = nrm(metin), l = esler(t), i = -1;
++    for (var z = 0; z < l.length && i < 0; z++) { i = n.indexOf(l[z]); if (i >= 0) t = l[z]; }
+     if (i < 0) return kac(metin);
+     return kac(metin.slice(0, i)) + '<mark>' + kac(metin.slice(i, i + t.length)) + '</mark>' + kac(metin.slice(i + t.length));
+   }
+ 
+   function ciz(hedef, liste, q) {
+-    if (!liste.length) {
+-      hedef.innerHTML = '';
+-      return;
+-    }
+-    hedef.innerHTML = liste.map(function (e) {
+-      return '<a role="option" aria-selected="false" href="' + kac(e[3]) + '"><span class="k">' + kac(dizin.k[e[0]]) + '</span>' +
+-             '<span class="b">' + isaretle(e[1], q) + '</span>' +
+-             (e[2] ? '<span class="o">' + kac(e[2]) + '</span>' : '') + '</a>';
++    if (!liste.length) { hedef.innerHTML = ''; return; }
++    var katman = hedef.id === 'araSonuc', sinir = katman ? 4 : 12, gruplar = {};
++    liste.forEach(function (e) { var k = dizin.k[e[0]]; (gruplar[k] = gruplar[k] || []).push(e); });
++    var sira = KAT_SIRA.filter(function (k) { return gruplar[k]; });
++    Object.keys(gruplar).forEach(function (k) { if (sira.indexOf(k) < 0) sira.push(k); });
++    // en iyi eşleşmenin grubu en üstte
++    var ilk = dizin.k[liste[0][0]]; sira.splice(sira.indexOf(ilk), 1); sira.unshift(ilk);
++    var html = sira.map(function (k) {
++      var g = gruplar[k], ad = KAT_AD[k] || k;
++      return '<div class="ara-grup" role="group" aria-label="' + kac(ad) + '"><p class="ara-gb" aria-hidden="true"><span>' + kac(ad) + '</span><span>' + g.length + '</span></p>' +
++        g.slice(0, sinir).map(function (e) {
++          return '<a role="option" aria-selected="false" href="' + kac(e[3]) + '"><span class="b">' + isaretle(e[1], q) + '</span>' +
++                 (e[2] ? '<span class="o">' + kac(e[2]) + '</span>' : '') + '</a>';
++        }).join('') + '</div>';
+     }).join('');
++    if (katman) {
++      var gizli = 0; sira.forEach(function (k) { gizli += Math.max(0, gruplar[k].length - sinir); });
++      if (gizli > 0) html += '<a class="ara-tumu" role="option" aria-selected="false" href="/ara/?q=' + encodeURIComponent(q.trim()) + '"><span class="b">Tüm sonuçları gör · ' + liste.length + '</span></a>';
++    }
++    hedef.innerHTML = html;
+   }
+ 
++
+   // ---- üstteki arama katmanı
+   var kat = document.getElementById('araKat');
+   var giris = document.getElementById('araGiris');
+@@ -84,6 +118,23 @@
+   var kapat = document.getElementById('araKapat');
+   var sec = -1, sonSonuc = [];
+ 
++  // boş aramada hızlı erişim: sık aranan konular (tıklayınca aranır)
++  var ONERI = ['Dişli kutusu', 'Pitch', 'Yaw', 'Jeneratör', 'GWO', 'Tork', 'Titreşim', 'Converter'];
++  var oneri = null;
++  if (kat && cikti) {
++    oneri = document.createElement('div');
++    oneri.className = 'ara-oneri';
++    oneri.innerHTML = '<p class="ara-gb"><span>Hızlı erişim</span></p><div class="ara-cip">' +
++      ONERI.map(function (o) { return '<button type="button">' + kac(o) + '</button>'; }).join('') +
++      '</div><div class="ara-kisa"><a href="/deneyim/">Türbinin içine</a><a href="/saha-notlari/">Saha notları</a><a href="/ariza/">Arıza ağacı</a><a href="/araclar/">Hesaplayıcılar</a><a href="/sozluk/">Sözlük</a></div>';
++    cikti.parentNode.insertBefore(oneri, cikti);
++    oneri.addEventListener('click', function (e) {
++      if (e.target.tagName !== 'BUTTON') return;
++      giris.value = e.target.textContent; giris.focus(); yenileGec();
++    });
++  }
++  function yenileGec() { yenile(); }
++
+   function bosluk(el) {
+     var t = (el && el.tagName) || '';
+     return t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || (el && el.isContentEditable);
+@@ -103,6 +154,7 @@
+     if (dug) dug.focus();
+   }
+   function yenile() {
++    if (oneri) oneri.hidden = giris.value.trim().length >= 2;
+     sonSonuc = ara(giris.value);
+     sec = -1;
+     ciz(cikti, sonSonuc, giris.value);
+diff --git a/assets/deneyim/arayuz.js b/assets/deneyim/arayuz.js
+index 9d7c41f..657dd4e 100644
+--- a/assets/deneyim/arayuz.js
++++ b/assets/deneyim/arayuz.js
+@@ -104,6 +104,65 @@
+     if (ri !== sonRay) { rayLi.forEach(function (li, i) { li.classList.toggle('etkin', i === ri); li.classList.toggle('gecildi', i < ri); }); sonRay = ri; }
+   }
+ 
++  /* ---- teknik işaret noktaları: sahnede parçanın üstünde küçük halka, üstüne gelince bilgi ---- */
++  var NOKTA = {
++    anaYatak:  { no: 'MAIN BEARING', ad: 'Ana yatak', t: 'Rotorun ağırlığını ve rüzgâr itkisini taşır; torku ana mile bırakır.', u: '/n117/', ul: 'N117 turu' },
++    disli:     { no: 'GEARBOX', ad: 'Dişli kutusu', t: 'Üç kademe: iki planet, bir helisel. Rotor devrini jeneratörün istediği hıza çıkarır.', u: '/sistemler/disli-kutusu/', ul: 'Dişli kutusu sistemi' },
++    jenerator: { no: 'GENERATOR', ad: 'Jeneratör', t: '3.000 kW, çift beslemeli asenkron, 660 V.', u: '/sistemler/jenerator/', ul: 'Jeneratör sistemi' },
++    konvertor: { no: 'CONVERTER', ad: 'Konvertör', t: 'Jeneratörün rotor devresini besler; değişen rüzgârda şebekeye sabit frekans verir.', u: '/sistemler/jenerator/', ul: 'Jeneratör ve konvertör' },
++    yaw:       { no: 'YAW', ad: 'Yaw sistemi', t: 'Naseli rüzgâra döndüren halka yatak ve motorlar. Güç kabloları bu açıklıktan kuleye iner.', u: '/sistemler/yaw/', ul: 'Yaw sistemi' },
++    pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.', u: '/sistemler/pitch/', ul: 'Pitch sistemi' }
++  };
++  var sahne = bolum.querySelector('.dny-sahne');
++  var katman = document.createElement('div'); katman.className = 'v-noktalar'; sahne.appendChild(katman);
++  var pencere = document.createElement('div'); pencere.className = 'v-nokta-bilgi'; pencere.setAttribute('role', 'tooltip'); pencere.id = 'vNoktaBilgi'; sahne.appendChild(pencere);
++  var noktaEl = {}, acikNokta = null, sonListe = [];
++  Object.keys(NOKTA).forEach(function (id) {
++    var b = document.createElement('button'); b.type = 'button'; b.className = 'v-nokta';
++    b.setAttribute('aria-label', NOKTA[id].ad + ': teknik bilgi'); b.setAttribute('aria-describedby', 'vNoktaBilgi');
++    b.innerHTML = '<i aria-hidden="true"></i><span>' + NOKTA[id].ad + '</span>';
++    var ac = function () { noktaAc(id); }, kapa = function () { if (!pencere.matches(':hover')) noktaKapa(id); };
++    b.addEventListener('mouseenter', ac); b.addEventListener('focus', ac);
++    b.addEventListener('mouseleave', function () { setTimeout(kapa, 120); }); b.addEventListener('blur', function () { setTimeout(kapa, 120); });
++    b.addEventListener('click', function (e) { e.preventDefault(); acikNokta === id ? noktaKapa(id, true) : noktaAc(id); });
++    katman.appendChild(b); noktaEl[id] = b;
++  });
++  pencere.addEventListener('mouseleave', function () { if (acikNokta) noktaKapa(acikNokta); });
++  function noktaAc(id) {
++    var n = NOKTA[id]; acikNokta = id;
++    pencere.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p><a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a>';
++    pencere.classList.add('gor'); konumla();
++  }
++  function noktaKapa(id, zorla) { if (acikNokta === id || zorla) { acikNokta = null; pencere.classList.remove('gor'); } }
++  function konumla() {
++    if (!acikNokta) return;
++    var n = null; sonListe.forEach(function (o) { if (o.id === acikNokta) n = o; });
++    if (!n || !n.gor) { noktaKapa(acikNokta, true); return; }
++    var w = sahne.clientWidth, h = sahne.clientHeight, sag = n.x > w - 300, ust = n.y > h - 220;
++    pencere.style.transform = 'translate3d(' + Math.round(sag ? n.x + 14 : n.x - 14) + 'px,' + Math.round(ust ? n.y - 22 : n.y + 22) + 'px,0)' +
++      (sag ? ' translateX(-100%)' : '') + (ust ? ' translateY(-100%)' : '');
++  }
++  function noktalar(liste) {
++    sonListe = liste;
++    liste.forEach(function (n) {
++      var b = noktaEl[n.id]; if (!b) return;
++      b.classList.toggle('gor', n.gor);
++      b.tabIndex = n.gor ? 0 : -1;
++      if (n.gor) b.style.transform = 'translate3d(' + Math.round(n.x) + 'px,' + Math.round(n.y) + 'px,0)';
++    });
++    konumla();
++  }
++
++  /* ---- irtifa cetveli: dış bölümde 0–120 m ---- */
++  var irtifa = document.createElement('div'); irtifa.className = 'v-irtifa'; irtifa.setAttribute('aria-hidden', 'true');
++  irtifa.innerHTML = '<div class="v-ir-cetvel">' + [120, 90, 60, 30, 0].map(function (m) { return '<i style="--y:' + (m / 120) + '"><b>' + m + '</b></i>'; }).join('') + '<span class="v-ir-ok"></span></div><p class="v-ir-b">İRTİFA · m</p>';
++  sahne.appendChild(irtifa);
++  var irOk = irtifa.querySelector('.v-ir-ok');
++  function irtifaGuncelle(p, y) {
++    irtifa.classList.toggle('gor', p > 0.02 && p < 0.47);
++    irOk.style.setProperty('--y', Math.max(0, Math.min(1, y / 120)).toFixed(3));
++  }
++
+   var basla = $('dnyBasla');
+   function statik(dugme) {
+     bolum.classList.remove('uc-boyut', 'hazir');
+@@ -114,10 +173,11 @@
+     bolum.classList.remove('statik');
+     bolum.classList.add('uc-boyut', 'dny-akis');
+     if (basla) basla.hidden = true;
+-    import('/assets/deneyim/deneyim.js?v=b748bc74').then(function (mod) {
++    import('/assets/deneyim/deneyim.js?v=cdc4c247').then(function (mod) {
+       DURAKLAR = mod.DURAKLAR; rayKur();
+       var S = mod.deneyimBaslat(tuval, bolum, {
+-        ilerleme: ilerleme,
++        ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
++        noktalar: noktalar,
+         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
+         hazir: function () { bolum.classList.add('hazir'); },
+         hata: function () { statik(false); }
+diff --git a/assets/deneyim/deneyim.css b/assets/deneyim/deneyim.css
+index aa43282..e1d2981 100644
+--- a/assets/deneyim/deneyim.css
++++ b/assets/deneyim/deneyim.css
+@@ -167,3 +167,39 @@ html:has(body.dny-body){background:#07090b}
+   .dny-ana .hud-alt{margin-top:.4rem}
+   .dny-ana .dny-kapak-alt .rakam{margin-top:1rem}
+ }
++
++/* ===================== teknik işaret noktaları ve irtifa cetveli ===================== */
++.v-noktalar{position:absolute;inset:0;pointer-events:none;z-index:2}
++.v-nokta{all:unset;position:absolute;left:0;top:0;display:flex;align-items:center;gap:.55rem;margin:-.6rem 0 0 -.6rem;padding:.2rem;cursor:pointer;pointer-events:auto;
++  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s;will-change:transform}
++.v-nokta.gor{opacity:1;visibility:visible;transition:opacity .35s ease}
++.v-nokta i{position:relative;display:block;width:.8rem;height:.8rem;border-radius:50%;border:1px solid rgba(238,242,245,.85);background:rgba(7,9,11,.35);box-shadow:0 0 0 3px rgba(7,9,11,.25)}
++.v-nokta i::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#6fdcec}
++.v-nokta i::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(111,220,236,.45);animation:vNabiz 2.4s ease-out infinite}
++@keyframes vNabiz{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.6);opacity:0}}
++.v-nokta span{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#eef2f5;text-shadow:0 1px 8px rgba(0,0,0,.8);
++  opacity:.75;transition:opacity .2s}
++.v-nokta:hover span,.v-nokta:focus-visible span{opacity:1}
++.v-nokta:focus-visible i{outline:2px solid #6fdcec;outline-offset:3px}
++.v-nokta-bilgi{position:absolute;left:0;top:0;z-index:3;width:min(17.5rem,calc(100vw - 2rem));padding:.9rem 1rem 1rem;pointer-events:auto;
++  background:rgba(9,12,14,.9);border:1px solid rgba(238,242,245,.14);border-top:1px solid #6fdcec;backdrop-filter:blur(8px);
++  opacity:0;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
++.v-nokta-bilgi.gor{opacity:1;visibility:visible;transition:opacity .2s ease}
++.v-nb-no{margin:0;font-family:var(--mono);font-size:.625rem;letter-spacing:.2em;color:#6fdcec}
++.v-nb-ad{margin:.35rem 0 0;font-family:var(--sans);font-size:1.0625rem;font-weight:600;letter-spacing:-.02em;color:#eef2f5}
++.v-nb-t{margin:.4rem 0 0;font-size:.8125rem;line-height:1.55;color:#a3adb5}
++.v-nb-git{display:inline-block;margin-top:.6rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#eef2f5;border-bottom:1px solid rgba(238,242,245,.3)}
++.v-nb-git::after{content:" →"}
++.v-nb-git:hover{color:#6fdcec;border-color:#6fdcec}
++.v-irtifa{position:absolute;left:var(--d-gut,1.5rem);top:26%;height:36%;width:3.4rem;pointer-events:none;opacity:0;transition:opacity .6s ease}
++.v-irtifa.gor{opacity:1}
++.v-ir-cetvel{position:relative;height:100%;border-left:1px solid rgba(238,242,245,.3);
++  background:repeating-linear-gradient(to top,rgba(238,242,245,.22) 0 1px,transparent 1px 12.5%) left/5px 100% no-repeat}
++.v-ir-cetvel i{position:absolute;left:0;bottom:calc(var(--y)*100%);transform:translateY(50%);font-style:normal;display:flex;align-items:center;gap:.4rem}
++.v-ir-cetvel i::before{content:"";width:.6rem;height:1px;background:rgba(238,242,245,.6)}
++.v-ir-cetvel b{font-family:var(--mono);font-size:.625rem;font-weight:400;color:#a3adb5;font-variant-numeric:tabular-nums}
++.v-ir-ok{position:absolute;left:-4px;bottom:calc(var(--y,0)*100%);width:7px;height:7px;transform:translateY(50%) rotate(45deg);background:#6fdcec;box-shadow:0 0 10px rgba(111,220,236,.6)}
++.v-ir-b{position:absolute;left:0;bottom:-1.8rem;margin:0;font-family:var(--mono);font-size:.5625rem;letter-spacing:.2em;color:#76818a;white-space:nowrap}
++.dny-bolum.statik .v-noktalar,.dny-bolum.statik .v-irtifa,.dny-bolum.statik .v-nokta-bilgi{display:none}
++@media (max-width:820px){ .v-irtifa{display:none} .v-nokta span{display:none} }
++@media (prefers-reduced-motion:reduce){ .v-nokta i::before{animation:none;opacity:0} }
+diff --git a/assets/deneyim/deneyim.js b/assets/deneyim/deneyim.js
+index 3153957..85b820d 100644
+--- a/assets/deneyim/deneyim.js
++++ b/assets/deneyim/deneyim.js
+@@ -214,6 +214,43 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+   const yumusak = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+ 
+   /* ---------------- döngü ---------------- */
++  /* ---------------- teknik işaret noktaları (hotspot) ----------------
++   * Parça yüzeyine yakın noktalar nasel yerelinde; ekrana izdüşürülüp sayfaya bildirilir.
++   * Önündeki parça tarafından kapanan nokta gösterilmez (seyrek ışın testi). */
++  const NOKTALAR = [
++    { id: 'anaYatak',  v: v(0.75, 0.75, -5.1),  ic: true },
++    { id: 'disli',     v: v(0.7, 1.0, -2.0),    ic: true },
++    { id: 'jenerator', v: v(0.65, 1.2, 3.3),    ic: true },
++    { id: 'konvertor', v: v(1.40, -0.3, 2.7),   ic: true },
++    { id: 'yaw',       v: v(-0.2, -1.55, 0.55), ic: true },
++    { id: 'pitch',     v: v(0, 2.3, -7.95),     ic: false },
++  ];
++  const nDunya = new THREE.Vector3(), nEkran = new THREE.Vector3(), nYon = new THREE.Vector3();
++  const isin = new THREE.Raycaster();
++  const kapanan = {}; let sonIsin = 0;
++  function noktalariGuncelle(t, icerde) {
++    if (!cb.noktalar) return;
++    const w = canvas.clientWidth, h = canvas.clientHeight, liste = [];
++    const isinZamani = t - sonIsin > 220; if (isinZamani) sonIsin = t;
++    for (const n of NOKTALAR) {
++      nDunya.copy(n.v); tilt.localToWorld(nDunya);
++      const d = camera.position.distanceTo(nDunya);
++      let aday = n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.43 && p < 0.478 && d < 26);
++      if (aday) {
++        nEkran.copy(nDunya).project(camera);
++        aday = nEkran.z < 1 && Math.abs(nEkran.x) < 0.92 && Math.abs(nEkran.y) < 0.86;
++      }
++      if (aday && isinZamani) {
++        nYon.subVectors(nDunya, camera.position).normalize();
++        isin.set(camera.position, nYon); isin.far = d - 0.22;
++        const hedefler = n.ic ? ic.grup.children : (parts.spin ? [parts.spin] : []);
++        kapanan[n.id] = isin.intersectObjects(hedefler, true).some(o => o.object.visible !== false);
++      }
++      liste.push({ id: n.id, gor: !!aday && !kapanan[n.id], x: (nEkran.x * 0.5 + 0.5) * w, y: (-nEkran.y * 0.5 + 0.5) * h, d });
++    }
++    cb.noktalar(liste);
++  }
++
+   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0;
+   const kKonum = new THREE.Vector3(), kHedef = new THREE.Vector3(), yumHedef = new THREE.Vector3();
+   let hedefIlk = true, icAyar = null;
+@@ -287,6 +324,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+     olcek();
+     if (composer) composer.render(dt); else renderer.render(scene, camera);
+     if (cb.ilerleme) cb.ilerleme(p, Math.max(0, camera.position.y), icerde);
++    noktalariGuncelle(t, icerde);
+     if (ilk) { ilk = false; canvas.classList.add('hazir'); if (cb.hazir) cb.hazir(); }
+     rafId = requestAnimationFrame(kare);
+   }
+diff --git a/assets/vitrin.css b/assets/vitrin.css
+new file mode 100644
+index 0000000..520c347
+--- /dev/null
++++ b/assets/vitrin.css
+@@ -0,0 +1,232 @@
++/* vitrin.css — ana sayfanın premium görsel katmanı.
++ * Mevcut yapıya dokunmadan üstüne biner: kapak kimliği ve ölçüm şeridi, teknik çizimler,
++ * vaka akışları, kariyer çizgisi, galeri, bölüm geçişleri ve son sahne (altbilgi).
++ * Palet ana.css'ten: grafit zemin, soğuk beyaz, limon vurgu; teknik ayrıntılarda ince camgöbeği.
++ * Hareket azaltılmışsa hiçbir şey gizlenmez, hiçbir şey kaymaz. */
++.ana{--v-cyan:#6fdcec;--v-grid:rgba(233,237,240,.045);--v-ease:cubic-bezier(.16,1,.3,1)}
++
++/* ===================== 1. kapak ===================== */
++.dny-sahne .dny-poster{z-index:-5}
++.dny-sahne canvas{z-index:-4}
++.dny-sahne canvas.v-ruzgar{z-index:-3;opacity:0;transition:opacity 1.2s ease;pointer-events:none}
++.dny-sahne canvas.v-ruzgar.hazir{opacity:1}
++.v-izgara{position:absolute;inset:-4%;z-index:-3;pointer-events:none;
++  background-image:linear-gradient(var(--v-grid) 1px,transparent 1px),linear-gradient(90deg,var(--v-grid) 1px,transparent 1px);
++  background-size:72px 72px;
++  -webkit-mask-image:radial-gradient(120% 90% at 30% 85%,#000 0,rgba(0,0,0,.55) 45%,transparent 78%);
++  mask-image:radial-gradient(120% 90% at 30% 85%,#000 0,rgba(0,0,0,.55) 45%,transparent 78%);
++  transform:translate3d(calc(var(--v-mx,0)*-10px),calc(var(--v-my,0)*-8px),0);transition:opacity .8s ease,transform .6s var(--v-ease)}
++.v-isik{position:absolute;inset:0;z-index:-3;pointer-events:none;mix-blend-mode:screen;opacity:.55;
++  background:radial-gradient(60% 45% at 78% 12%,rgba(255,226,190,.16),transparent 70%),radial-gradient(40% 30% at 20% 100%,rgba(111,220,236,.05),transparent 70%);
++  transform:translate3d(calc(var(--v-mx,0)*6px),calc(var(--v-my,0)*4px),0);transition:opacity .8s ease,transform .8s var(--v-ease)}
++.dny-bolum.gecti .v-izgara,.dny-bolum.gecti .v-isik{opacity:0}
++.dny-bolum.gecti canvas.v-ruzgar{opacity:0}
++
++/* kimlik: isim ve unvan */
++.v-kimlik{margin-bottom:clamp(1.25rem,3.2vh,2rem)}
++.v-koord{margin:0;display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#e3e8eb;text-shadow:0 1px 10px rgba(0,0,0,.55)}
++.v-koord span{display:inline-flex;align-items:center;gap:.5rem}
++.v-koord span+span::before{content:"";width:.9rem;height:1px;background:rgba(233,237,240,.5)}
++.ana .v-ad{margin:.9rem 0 0;display:flex;flex-direction:column;gap:clamp(.7rem,1.6vh,1rem);font-family:var(--sans);font-weight:600;color:#fff}
++.v-ad-isim{display:block;font-size:clamp(3.1rem,8.2vw,7.4rem);line-height:.9;letter-spacing:-.058em;
++  background:linear-gradient(180deg,#fff 40%,#c9d0d5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-wrap:balance}
++.v-ad-unvan{display:flex;align-items:center;gap:.9rem;font-family:var(--mono);font-weight:400;font-size:clamp(.6875rem,1.05vw,.8125rem);letter-spacing:.26em;text-transform:uppercase;color:#dfe5e9}
++.v-ad-unvan::before{content:"";flex:none;width:clamp(1.75rem,4vw,3.25rem);height:1px;background:#c7ff32}
++
++/* teknik ölçüm şeridi */
++.ana .rakam.v-olcu{border-top:0;gap:0;position:relative;margin-top:clamp(1.5rem,3.5vh,2.25rem)}
++.ana .rakam.v-olcu::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;
++  background:linear-gradient(90deg,rgba(233,237,240,.28),rgba(233,237,240,.28)) top/100% 1px no-repeat,
++    repeating-linear-gradient(90deg,rgba(233,237,240,.28) 0 1px,transparent 1px 24px) top/100% 6px no-repeat}
++.ana .rakam.v-olcu > div{position:relative;padding:1rem 1.25rem 0 0}
++.ana .rakam.v-olcu > div::before{content:"";position:absolute;left:0;top:-2px;width:1px;height:12px;background:#c7ff32}
++.ana .rakam.v-olcu dt{display:flex;align-items:center;gap:.6rem}
++.v-no{font-size:.5625rem;color:#c7ff32;letter-spacing:.14em}
++.ana .rakam.v-olcu dd{font-size:clamp(2rem,4vw,3rem);line-height:1}
++.ana .rakam.v-olcu dd.v-alt{margin-top:.5rem;font-family:var(--mono);font-size:.625rem;font-weight:400;letter-spacing:.1em;color:#8f989f;line-height:1.4}
++
++/* ===================== 2. bölüm geçişleri ===================== */
++.ana > section:not(.dny-bolum){transition:background-color .8s ease}
++.ana #makine,.ana #sahadan,.ana #ariza,.ana #kariyer{background:#090c0e}
++.ana section:not(.dny-bolum) .etiket[data-sira]{display:inline-flex;align-items:center;gap:.7rem}
++.ana section:not(.dny-bolum) .etiket[data-sira]::before{content:attr(data-sira);font-size:.625rem;color:#8f989f;letter-spacing:.14em}
++@media (prefers-reduced-motion:no-preference){
++  .v-js .ana [data-v]{opacity:0;transform:translate3d(0,22px,0) scale(.995);transition:opacity .6s ease,transform .75s var(--v-ease),filter .6s ease;transition-delay:calc(var(--vi,0)*70ms)}
++  .v-js .ana [data-v="b"]{filter:blur(8px)}
++  .v-js .ana [data-v].v-gor{opacity:1;transform:none;filter:none}
++}
++@media (max-width:820px){ .v-js .ana [data-v="b"]{filter:none} }
++
++/* ===================== mikro etkileşimler ===================== */
++.ana .dg{transition:background .2s,color .2s,border-color .2s,transform .2s var(--v-ease)}
++.ana .dg:hover{transform:translateY(-1px)}
++.ana .dg:active{transform:translateY(0) scale(.98)}
++.ana .dg:focus-visible{outline:2px solid #c7ff32;outline-offset:3px}
++.ana .kartlar a,.ana .yazi{transition:border-color .25s,transform .3s var(--v-ease),background .25s}
++.ana .kartlar a:hover,.ana .yazi:hover{transform:translateY(-2px);background:#141a1f}
++.ana .kartlar a:active,.ana .yazi:active{transform:translateY(0)}
++.ana .ok::after{transition:transform .25s var(--v-ease)}
++.ana .ok:hover::after{transform:translateX(3px)}
++
++/* ===================== 4. N117: teknik çizimler ===================== */
++.ana .v-parca{position:relative;transition:background .3s,transform .3s var(--v-ease)}
++.ana .v-parca:hover{background:#0e1316;transform:translateY(-1px)}
++.v-cizim{margin:-1.75rem -1.5rem .25rem;padding:1rem 1rem .6rem;border-bottom:1px solid var(--a-line);position:relative;
++  background-color:#0a0f12;
++  background-image:linear-gradient(rgba(111,220,236,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(111,220,236,.07) 1px,transparent 1px),
++    linear-gradient(rgba(111,220,236,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(111,220,236,.035) 1px,transparent 1px);
++  background-size:40px 40px,40px 40px,8px 8px,8px 8px}
++.v-cizim svg{display:block;width:100%;height:auto;overflow:visible}
++.v-cizim .k{fill:none;stroke:rgba(233,237,240,.72);stroke-width:1.1;vector-effect:non-scaling-stroke;transition:stroke .3s}
++.v-cizim .o{fill:none;stroke:rgba(111,220,236,.5);stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
++.v-cizim .m{fill:rgba(111,220,236,.8);stroke:rgba(111,220,236,.8);stroke-width:1;vector-effect:non-scaling-stroke}
++.v-cizim .v{fill:#c7ff32;stroke:#c7ff32;stroke-width:1.2;vector-effect:non-scaling-stroke}
++.v-cizim text{font-family:var(--mono);font-size:7px;letter-spacing:.08em;fill:#8f989f}
++.ana .v-parca:hover .v-cizim .k{stroke:#fff}
++.ana .v-parca:hover .v-cizim text{fill:#c9d0d5}
++
++/* ===================== 5. saha vakaları: teşhis akışı ===================== */
++.v-vaka{list-style:none;margin:3rem 0 0;padding:0;border-top:1px solid var(--a-line);counter-reset:vk}
++.v-vk{border-bottom:1px solid var(--a-line)}
++.ana .v-vk-bas{margin:0;font:inherit}
++.v-vk-bas button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:5.5rem minmax(0,1fr) minmax(0,15rem) 7rem 1.5rem;gap:.5rem 1.5rem;align-items:center;
++  padding:1.35rem 0;cursor:pointer;transition:background .2s}
++.v-vk-bas button:hover{background:linear-gradient(90deg,rgba(199,255,50,.035),transparent 70%)}
++.v-vk-bas button:focus-visible{outline:2px solid #c7ff32;outline-offset:2px}
++.v-vk-no{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;color:#c7ff32}
++.v-vk-ad{font-size:1.1875rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
++.v-vk-deger{display:flex;flex-direction:column;gap:.2rem}
++.v-vk-deger b{font-family:var(--mono);font-size:1rem;font-weight:500;color:#fff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
++.v-vk-deger small{font-family:var(--mono);font-size:.625rem;letter-spacing:.08em;color:#8f989f}
++.v-vk-mdl{font-family:var(--mono);font-size:.75rem;color:var(--a-faint);white-space:nowrap;text-align:right}
++.v-vk-arti{position:relative;width:1rem;height:1rem;justify-self:end}
++.v-vk-arti::before,.v-vk-arti::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#e9edf0;transition:transform .3s var(--v-ease)}
++.v-vk-arti::after{transform:rotate(90deg)}
++.v-vk.acik .v-vk-arti::after{transform:rotate(0)}
++.v-vk-panel{padding:0 0 2rem 7rem}
++.v-vk-panel[hidden]{display:none}
++.v-akis{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:0}
++.v-akis::before{content:"";position:absolute;left:.3rem;top:.6rem;bottom:.6rem;width:1px;background:linear-gradient(#c7ff32,rgba(199,255,50,.15))}
++.v-akis li{position:relative;display:grid;grid-template-columns:10rem minmax(0,1fr);gap:.25rem 1.5rem;padding:.85rem 0 .85rem 1.6rem}
++.v-akis li::before{content:"";position:absolute;left:0;top:1.15rem;width:.6rem;height:.6rem;border-radius:50%;background:#0b0e10;border:1px solid #c7ff32}
++.v-akis li:nth-child(3)::before{background:#ff6b5e;border-color:#ff6b5e}
++.v-akis li:nth-child(4)::before{background:#c7ff32}
++.v-akis li + li{border-top:1px dashed rgba(233,237,240,.08)}
++.v-ak-e{display:flex;flex-direction:column;gap:.2rem}
++.v-ak-e b{font-size:.9375rem;font-weight:600;color:var(--a-ink)}
++.v-ak-e small{font-family:var(--mono);font-size:.5625rem;letter-spacing:.2em;color:#6fdcec}
++.v-akis p{margin:0;max-width:66ch;font-size:.9375rem;line-height:1.6;color:var(--a-muted)}
++.v-vk-panel .ok{margin-top:1.25rem}
++@media (prefers-reduced-motion:no-preference){
++  .v-vk.acik .v-akis li{animation:vAdim .5s var(--v-ease) both;animation-delay:calc(var(--i)*90ms)}
++  @keyframes vAdim{from{opacity:0;transform:translate3d(-8px,0,0)}to{opacity:1;transform:none}}
++}
++
++/* ===================== 6. galeri ===================== */
++.ana .gal{counter-reset:g;grid-auto-rows:clamp(8.5rem,15vw,13rem);gap:.6rem}
++.ana .gal figure{counter-increment:g;isolation:isolate}
++.ana .gal img{transition:transform .9s var(--v-ease),filter .5s}
++.ana .gal figure:hover img,.ana .gal figure:focus-within img{transform:scale(1.03)}
++.ana .gal figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,9,11,0) 45%,rgba(7,9,11,.75));opacity:.55;transition:opacity .4s;pointer-events:none}
++.ana .gal figure:hover::after,.ana .gal figure:focus-within::after{opacity:1}
++.ana .gal figcaption{z-index:1;background:none;padding:1rem;display:flex;flex-direction:column;gap:.35rem}
++.ana .gal figcaption::before{content:counter(g,decimal-leading-zero) " / 08";font-size:.5625rem;letter-spacing:.2em;color:#c7ff32}
++.ana .gal figcaption::after{content:attr(data-aciklama);font-family:var(--sans);font-size:.8125rem;line-height:1.45;letter-spacing:0;text-transform:none;color:#d6dce0;
++  max-height:0;opacity:0;overflow:hidden;transition:max-height .45s var(--v-ease),opacity .35s}
++.ana .gal figure:hover figcaption::after,.ana .gal figure:focus-within figcaption::after{max-height:5rem;opacity:1}
++@media (min-width:861px){
++  .ana .gal .g1{grid-column:span 7;grid-row:span 3}
++  .ana .gal .g2{grid-column:span 5;grid-row:span 2}
++  .ana .gal .g3{grid-column:span 5}
++  .ana .gal .g4{grid-column:span 4;grid-row:span 2}
++  .ana .gal .g5{grid-column:span 3;grid-row:span 2}
++  .ana .gal .g6{grid-column:span 5;grid-row:span 2}
++  .ana .gal .g7{grid-column:span 7}
++  .ana .gal .g8{grid-column:span 5}
++}
++@media (hover:none){ .ana .gal figcaption::after{max-height:5rem;opacity:.9} .ana .gal figure::after{opacity:.9} }
++
++/* ===================== 7. kariyer çizgisi ===================== */
++.v-zaman{position:relative;margin-top:3rem}
++.v-z-hat{position:absolute;left:8.5rem;top:.5rem;bottom:.5rem;width:1px;background:var(--a-line)}
++.v-z-hat i{position:absolute;inset:0 0 auto 0;height:100%;background:linear-gradient(#c7ff32,#6fdcec);transform-origin:top;transform:scaleY(var(--z,0))}
++.ana .zaman.v-z{margin:0}
++.ana .zaman.v-z::before{display:none}
++.ana .zaman.v-z li{grid-template-columns:8.5rem minmax(0,1fr);gap:0 2.5rem;padding:0 0 2.25rem}
++.ana .zaman.v-z li::before{left:calc(8.5rem - .3rem);top:.55rem;background:#0b0e10;border-color:#4a535a;box-shadow:none;transition:background .4s,border-color .4s,box-shadow .4s}
++.ana .zaman.v-z li.ulasti::before{background:#c7ff32;border-color:#c7ff32}
++.ana .zaman.v-z li.v-z-simdi::before{box-shadow:0 0 0 4px rgba(199,255,50,.15),0 0 14px rgba(199,255,50,.6)}
++.v-z-yil{display:flex;flex-direction:column;gap:.35rem;padding-right:1rem}
++.v-z-yil b{font-family:var(--mono);font-size:1.5rem;font-weight:500;letter-spacing:-.02em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
++.v-z-yil span{font-family:var(--mono);font-size:.625rem;letter-spacing:.06em;color:#8f989f;line-height:1.4}
++.v-z-simdi .v-z-yil b{color:#c7ff32}
++.v-z-kart h3{margin:0;font-size:1.25rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
++.ana .v-z-kart .rol{margin:.25rem 0 0;font-size:.9375rem;color:#c9d0d5}
++.v-z-dl{margin:.9rem 0 0;display:grid;gap:.45rem;padding-top:.8rem;border-top:1px solid var(--a-line);max-width:72ch}
++.v-z-dl div{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:1rem}
++.v-z-dl dt{font-family:var(--mono);font-size:.5625rem;letter-spacing:.2em;text-transform:uppercase;color:#8f989f;padding-top:.2rem}
++.v-z-dl dd{margin:0;font-size:.9rem;line-height:1.55;color:var(--a-muted)}
++.v-z-dl div:first-child dd{font-family:var(--mono);font-size:.8125rem;color:#6fdcec}
++
++/* ===================== 11. son sahne ===================== */
++body.ana-body footer.v-son{position:relative;overflow:hidden;border-top:1px solid #1b2127;background:#050708;color:#9aa3ab;isolation:isolate}
++footer.v-son::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
++  background-image:linear-gradient(rgba(233,237,240,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(233,237,240,.035) 1px,transparent 1px);background-size:72px 72px;
++  -webkit-mask-image:linear-gradient(180deg,transparent,#000 40%);mask-image:linear-gradient(180deg,transparent,#000 40%)}
++.v-son-ic{max-width:76rem;margin:0 auto;padding:clamp(4rem,10vw,7.5rem) clamp(1rem,4vw,2rem) 2rem}
++.v-son-ust{margin:0;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:#8f989f}
++.v-son-ad{margin:1.25rem 0 0;font-family:var(--sans);font-weight:600;font-size:clamp(3.2rem,13vw,11.5rem);line-height:.82;letter-spacing:-.065em;text-transform:uppercase;
++  background:linear-gradient(180deg,#e9edf0 30%,#5d666d 120%);-webkit-background-clip:text;background-clip:text;color:transparent}
++.v-son-alan{margin:1.25rem 0 0;font-family:var(--mono);font-size:clamp(.75rem,1.4vw,.9375rem);letter-spacing:.32em;text-transform:uppercase;color:#e9edf0}
++.v-son-yer{margin:.5rem 0 0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#8f989f}
++.v-son-imza{margin:clamp(2.5rem,6vw,4.5rem) 0 0;font-size:clamp(1.9rem,5vw,3.75rem);font-weight:600;letter-spacing:-.05em;line-height:1;color:#e9edf0}
++.v-son-imza em{font-style:normal;color:#c7ff32}
++.v-son-alt{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.25rem;border-top:1px solid #1b2127;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem}
++.v-son-alt p{margin:0;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
++.v-son-alt a{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:#9aa3ab;padding:.35rem 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
++.v-son-sosyal a{color:#e9edf0}
++.v-son-alt a:hover{color:#c7ff32;border-color:rgba(199,255,50,.5)}
++
++/* ===================== 8. üst menü: sahnede şeffaf ===================== */
++:root body.ana-body.v-sahnede header,:root[data-vardiya] body.ana-body.v-sahnede header{
++  background:linear-gradient(180deg,rgba(7,9,11,.62),rgba(7,9,11,0));border-bottom-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
++body.ana-body header{transition:background .4s ease,border-color .4s ease}
++
++/* ===================== 13. mobil yeniden kurgu ===================== */
++@media (max-width:860px){
++  .v-vk-bas button{grid-template-columns:4.25rem minmax(0,1fr) 1.25rem;gap:.35rem 1rem;padding:1.15rem 0}
++  .v-vk-deger{grid-column:2;flex-direction:row;align-items:baseline;gap:.6rem;flex-wrap:wrap}
++  .v-vk-mdl{grid-column:2;grid-row:3;text-align:left}
++  .v-vk-arti{grid-column:3;grid-row:1}
++  .v-vk-panel{padding:0 0 1.5rem 0}
++  .v-akis li{grid-template-columns:1fr;padding-left:1.5rem}
++  .v-z-hat{left:.3rem}
++  .ana .zaman.v-z li{grid-template-columns:1fr;gap:.6rem;padding:0 0 2rem 1.75rem}
++  .ana .zaman.v-z li::before{left:0}
++  .v-z-yil{flex-direction:row;align-items:baseline;gap:.8rem}
++  .v-z-dl div{grid-template-columns:1fr;gap:.15rem}
++  .ana .rakam.v-olcu > div{padding-right:.75rem}
++  .ana .rakam.v-olcu dd.v-alt{letter-spacing:.04em}
++}
++@media (max-width:560px){
++  .v-koord{display:none}
++  .ana .rakam.v-olcu dd.v-alt{display:none}
++  .ana .v-ad{margin-top:.6rem}
++  .v-ad-unvan{letter-spacing:.18em;align-items:flex-start;line-height:1.5}
++  .v-ad-unvan::before{margin-top:.55em;width:1.25rem}
++  .ana .rakam.v-olcu{grid-template-columns:repeat(2,minmax(0,1fr))}
++  .ana .rakam.v-olcu > div:nth-child(n+3){margin-top:.9rem;border-top:0}
++  .ana .rakam.v-olcu dd{font-size:2rem}
++  .v-cizim{margin:-1.75rem -1.5rem .25rem}
++}
++/* alçak masaüstü ekranlar: kimlik küçülür, düğmelerle çakışmaz */
++@media (min-width:861px) and (max-height:780px){
++  .v-ad-isim{font-size:clamp(2.8rem,6.2vw,5.2rem)}
++  .v-kimlik{margin-bottom:1rem}
++  .ana .rakam.v-olcu dd{font-size:clamp(1.6rem,3vw,2.2rem)}
++  .ana .rakam.v-olcu dd.v-alt{display:none}
++}
++@media (prefers-reduced-motion:reduce){
++  .v-izgara,.v-isik{transform:none!important}
++  .ana .v-parca:hover,.ana .dg:hover,.ana .kartlar a:hover,.ana .yazi:hover{transform:none}
++}
+diff --git a/assets/vitrin.js b/assets/vitrin.js
+new file mode 100644
+index 0000000..5818a7e
+--- /dev/null
++++ b/assets/vitrin.js
+@@ -0,0 +1,121 @@
++/* vitrin.js — ana sayfanın etkileşim katmanı (vitrin.css ile birlikte).
++ * Bölüm geçişleri, kapakta rüzgâr akışı ve hafif paralaks, vaka akordeonu,
++ * kariyer çizgisinin kaydırmayla dolması ve sahnedeyken şeffaf üst menü.
++ * Hiçbir içerik bu betiğe bağımlı değil: betik çalışmazsa her şey görünür kalır. */
++(function () {
++  'use strict';
++  var kok = document.documentElement;
++  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
++  var ince = matchMedia('(pointer: fine)').matches && innerWidth > 820;
++  kok.classList.add('v-js');
++
++  /* ---- bölüm numaraları ve belirme ---- */
++  var bolumler = [].slice.call(document.querySelectorAll('main.ana > section:not(.dny-bolum)'));
++  bolumler.forEach(function (b, i) {
++    var e = b.querySelector('.etiket'); if (e) e.setAttribute('data-sira', String(i + 1).padStart(2, '0'));
++  });
++  if (!az && 'IntersectionObserver' in window) {
++    var gozcu = new IntersectionObserver(function (es) {
++      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('v-gor'); gozcu.unobserve(en.target); } });
++    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
++    var isaretle = function (el, tur, sira) {
++      if (!el || el.hasAttribute('data-v')) return;
++      el.setAttribute('data-v', tur || ''); el.style.setProperty('--vi', sira || 0); gozcu.observe(el);
++    };
++    bolumler.forEach(function (b) {
++      [].slice.call(b.querySelectorAll('.etiket, .giris, .bas > .ok, .kaynak-not')).forEach(function (el) { isaretle(el); });
++      [].slice.call(b.querySelectorAll('h2:not(.gizli)')).forEach(function (el) { isaretle(el, 'b', 1); });
++      [].slice.call(b.querySelectorAll('.soz, .platform li, .parca, .v-vaka > li, .gal > figure, .yazilar > .yazi, .kartlar > a, .belirti li, .yetki > div, .kanal, .zaman > li, .an-video, .uyari'))
++        .forEach(function (el, i) { isaretle(el, '', i % 6); });
++    });
++  }
++
++  /* ---- vaka akordeonu ---- */
++  [].slice.call(document.querySelectorAll('.v-vk')).forEach(function (li) {
++    var d = li.querySelector('.v-vk-bas button'), p = li.querySelector('.v-vk-panel');
++    if (!d || !p) return;
++    if (!li.classList.contains('acik')) p.hidden = true;
++    d.addEventListener('click', function () {
++      var acik = d.getAttribute('aria-expanded') === 'true';
++      d.setAttribute('aria-expanded', String(!acik)); p.hidden = acik; li.classList.toggle('acik', !acik);
++    });
++  });
++
++  /* ---- kaydırmaya bağlı: şeffaf menü ve kariyer çizgisi ---- */
++  var sahne = document.getElementById('deneyim');
++  var zaman = document.querySelector('.v-zaman'), dolu = document.getElementById('vZamanDolu');
++  var zli = zaman ? [].slice.call(zaman.querySelectorAll('.zaman > li')) : [];
++  var bekliyor = false;
++  function kaydirma() {
++    bekliyor = false;
++    var vh = innerHeight;
++    if (sahne) document.body.classList.toggle('v-sahnede', sahne.getBoundingClientRect().bottom > 80);
++    if (zaman && dolu) {
++      var r = zaman.getBoundingClientRect();
++      if (r.top < vh && r.bottom > 0) {
++        var z = Math.max(0, Math.min(1, (vh * 0.62 - r.top) / r.height));
++        dolu.style.setProperty('--z', z.toFixed(4));
++        zli.forEach(function (li) { li.classList.toggle('ulasti', li.getBoundingClientRect().top < vh * 0.62); });
++      }
++    }
++  }
++  addEventListener('scroll', function () { if (!bekliyor) { bekliyor = true; requestAnimationFrame(kaydirma); } }, { passive: true });
++  addEventListener('resize', kaydirma);
++  kaydirma();
++
++  /* ---- kapak: fareyle çok hafif paralaks ---- */
++  if (sahne && ince && !az) {
++    var mx = 0, my = 0, mBekle = false;
++    sahne.addEventListener('pointermove', function (e) {
++      mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5;
++      if (mBekle || sahne.classList.contains('gecti')) return;
++      mBekle = true;
++      requestAnimationFrame(function () { mBekle = false; sahne.style.setProperty('--v-mx', mx.toFixed(3)); sahne.style.setProperty('--v-my', my.toFixed(3)); });
++    }, { passive: true });
++  }
++
++  /* ---- kapak: rüzgâr akış çizgileri ve toz (yalnız masaüstü, yalnız ilk sahnede) ---- */
++  var tuval = document.getElementById('vRuzgar');
++  if (!tuval || az || !ince) return;
++  var ctx = tuval.getContext('2d'); if (!ctx) return;
++  var dpr = Math.min(devicePixelRatio || 1, 1.5), W = 0, H = 0, cizgiler = [], toz = [], raf = 0, sonT = 0;
++  function olcek() {
++    W = tuval.clientWidth; H = tuval.clientHeight; if (!W || !H) return;
++    tuval.width = Math.round(W * dpr); tuval.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
++    cizgiler = []; toz = [];
++    for (var i = 0; i < 30; i++) cizgiler.push({ y: H * (0.18 + Math.random() * 0.74), a: 6 + Math.random() * 16, k: 0.0022 + Math.random() * 0.003, f: Math.random() * 6.28,
++      x: Math.random() * W, h: 18 + Math.random() * 34, L: 120 + Math.random() * 260, al: 0.05 + Math.random() * 0.09 });
++    for (var j = 0; j < 55; j++) toz.push({ x: Math.random() * W, y: Math.random() * H, r: 0.4 + Math.random() * 0.9, v: 4 + Math.random() * 10, f: Math.random() * 6.28 });
++  }
++  function yol(c, x) { return c.y + Math.sin(x * c.k + c.f) * c.a; }
++  function kare(t) {
++    raf = 0;
++    if (document.hidden || sahne.classList.contains('gecti') || !sahne.classList.contains('hazir')) { sonT = 0; return; }
++    var dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
++    ctx.clearRect(0, 0, W, H);
++    ctx.lineWidth = 1;
++    for (var i = 0; i < cizgiler.length; i++) {
++      var c = cizgiler[i]; c.x += c.h * dt; c.f += dt * 0.08;
++      if (c.x - c.L > W) { c.x = -Math.random() * 200; c.y = H * (0.18 + Math.random() * 0.74); }
++      var bas = c.x - c.L, g = ctx.createLinearGradient(bas, 0, c.x, 0);
++      g.addColorStop(0, 'rgba(220,235,240,0)'); g.addColorStop(0.7, 'rgba(220,235,240,' + c.al + ')'); g.addColorStop(1, 'rgba(220,235,240,0)');
++      ctx.strokeStyle = g; ctx.beginPath();
++      for (var x = bas, n = 0; x <= c.x; x += 14, n++) { var y = yol(c, x); n ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
++      ctx.stroke();
++    }
++    for (var j = 0; j < toz.length; j++) {
++      var d = toz[j]; d.x += d.v * dt; d.f += dt; if (d.x > W + 4) { d.x = -4; d.y = Math.random() * H; }
++      ctx.fillStyle = 'rgba(255,244,226,' + (0.12 + 0.12 * Math.sin(d.f)).toFixed(3) + ')';
++      ctx.beginPath(); ctx.arc(d.x, d.y + Math.sin(d.f * 0.7) * 3, d.r, 0, 6.283); ctx.fill();
++    }
++    raf = requestAnimationFrame(kare);
++  }
++  function baslat() { if (!raf) raf = requestAnimationFrame(kare); }
++  olcek(); addEventListener('resize', olcek);
++  new MutationObserver(function () {
++    var calis = sahne.classList.contains('hazir') && !sahne.classList.contains('gecti');
++    tuval.classList.toggle('hazir', calis);
++    if (calis) baslat();
++  }).observe(sahne, { attributes: true, attributeFilter: ['class'] });
++  document.addEventListener('visibilitychange', function () { if (!document.hidden) baslat(); });
++})();
+diff --git a/cevrimdisi.html b/cevrimdisi.html
+index 28706ab..eb77529 100644
+--- a/cevrimdisi.html
++++ b/cevrimdisi.html
+@@ -8,7 +8,7 @@
+ <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
+ .mid .in{max-width:34rem}
+diff --git a/deneyim/index.html b/deneyim/index.html
+index 54aee81..3708377 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -22,8 +22,8 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=243ddb21">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e9f6cc25">
+ </head>
+ 
+ <body class="dny-body">
+@@ -130,7 +130,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ 
+ <script>
+ (function () {
+@@ -169,6 +169,6 @@
+ 
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=f99ea7e1" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
+ </body>
+ </html>
+diff --git a/deniz-ustu/index.html b/deniz-ustu/index.html
+index fab6d30..e450392 100644
+--- a/deniz-ustu/index.html
++++ b/deniz-ustu/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -431,7 +431,7 @@ deniz üstü notlarımı ekledikçe burası genişleyecek.</p></div>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/arizaya-yaklasim/index.html b/egitim/arizaya-yaklasim/index.html
+index 45946b5..baab184 100644
+--- a/egitim/arizaya-yaklasim/index.html
++++ b/egitim/arizaya-yaklasim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/belge/index.html b/egitim/belge/index.html
+index 1c22929..c075d03 100644
+--- a/egitim/belge/index.html
++++ b/egitim/belge/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -150,7 +150,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/bu-is-ne-is/index.html b/egitim/bu-is-ne-is/index.html
+index 0afb066..00ee893 100644
+--- a/egitim/bu-is-ne-is/index.html
++++ b/egitim/bu-is-ne-is/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/elektrik-ve-kontrol/index.html b/egitim/elektrik-ve-kontrol/index.html
+index e6030e1..dce87bd 100644
+--- a/egitim/elektrik-ve-kontrol/index.html
++++ b/egitim/elektrik-ve-kontrol/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/guvenlik/index.html b/egitim/guvenlik/index.html
+index 46fc4cf..161b3ba 100644
+--- a/egitim/guvenlik/index.html
++++ b/egitim/guvenlik/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/index.html b/egitim/index.html
+index f153d9d..1181b8e 100644
+--- a/egitim/index.html
++++ b/egitim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -271,7 +271,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/kariyer/index.html b/egitim/kariyer/index.html
+index 0fb6bc7..aa21d60 100644
+--- a/egitim/kariyer/index.html
++++ b/egitim/kariyer/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/mekanik-is/index.html b/egitim/mekanik-is/index.html
+index 5b78b44..75ef865 100644
+--- a/egitim/mekanik-is/index.html
++++ b/egitim/mekanik-is/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/periyodik-bakim/index.html b/egitim/periyodik-bakim/index.html
+index 1a22cb1..0739a31 100644
+--- a/egitim/periyodik-bakim/index.html
++++ b/egitim/periyodik-bakim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/turbin-nasil-calisir/index.html b/egitim/turbin-nasil-calisir/index.html
+index 672c1e1..6d9c347 100644
+--- a/egitim/turbin-nasil-calisir/index.html
++++ b/egitim/turbin-nasil-calisir/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/en/ad-policy/index.html b/en/ad-policy/index.html
+index 77033c2..e3fab3c 100644
+--- a/en/ad-policy/index.html
++++ b/en/ad-policy/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/assistant/index.html b/en/assistant/index.html
+index 8f38e4a..da11dd6 100644
+--- a/en/assistant/index.html
++++ b/en/assistant/index.html
+@@ -38,7 +38,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ <style>
+ .as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+@@ -165,7 +165,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/blade-vibration/index.html b/en/field-notes/blade-vibration/index.html
+index a6f35d6..502ee05 100644
+--- a/en/field-notes/blade-vibration/index.html
++++ b/en/field-notes/blade-vibration/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -183,7 +183,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/converter-overcurrent/index.html b/en/field-notes/converter-overcurrent/index.html
+index b098a40..3920380 100644
+--- a/en/field-notes/converter-overcurrent/index.html
++++ b/en/field-notes/converter-overcurrent/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -180,7 +180,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/gearbox-temperature/index.html b/en/field-notes/gearbox-temperature/index.html
+index f161a58..748238d 100644
+--- a/en/field-notes/gearbox-temperature/index.html
++++ b/en/field-notes/gearbox-temperature/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -174,7 +174,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/generator-temperature/index.html b/en/field-notes/generator-temperature/index.html
+index 39fa73d..19130e3 100644
+--- a/en/field-notes/generator-temperature/index.html
++++ b/en/field-notes/generator-temperature/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -175,7 +175,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/index.html b/en/field-notes/index.html
+index 6bf1548..e3070f9 100644
+--- a/en/field-notes/index.html
++++ b/en/field-notes/index.html
+@@ -126,7 +126,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -181,7 +181,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/pitch-motor-high-current/index.html b/en/field-notes/pitch-motor-high-current/index.html
+index 61b43ea..1843002 100644
+--- a/en/field-notes/pitch-motor-high-current/index.html
++++ b/en/field-notes/pitch-motor-high-current/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -163,7 +163,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/yaw-bearing-wear/index.html b/en/field-notes/yaw-bearing-wear/index.html
+index e73950c..10b752b 100644
+--- a/en/field-notes/yaw-bearing-wear/index.html
++++ b/en/field-notes/yaw-bearing-wear/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -178,7 +178,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/yaw-hunting/index.html b/en/field-notes/yaw-hunting/index.html
+index c73a007..b9b3ac5 100644
+--- a/en/field-notes/yaw-hunting/index.html
++++ b/en/field-notes/yaw-hunting/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -165,7 +165,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/glossary/index.html b/en/glossary/index.html
+index b2e1a8c..3546f2d 100644
+--- a/en/glossary/index.html
++++ b/en/glossary/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sozluk/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sozluk/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+diff --git a/en/guide/index.html b/en/guide/index.html
+index 100e029..be1d406 100644
+--- a/en/guide/index.html
++++ b/en/guide/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/rehber/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/en/gwo/index.html b/en/gwo/index.html
+index a31928f..86f1700 100644
+--- a/en/gwo/index.html
++++ b/en/gwo/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/how-to-become/index.html b/en/how-to-become/index.html
+index a359e80..79ae7e9 100644
+--- a/en/how-to-become/index.html
++++ b/en/how-to-become/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/index.html b/en/index.html
+index 409c5e8..e8abf9a 100644
+--- a/en/index.html
++++ b/en/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .h-hero{padding:4.5rem 0 3rem}
+ .h-hero h1{font-size:2.5rem;line-height:1.05;letter-spacing:-.04em;margin-top:1.75rem;max-width:16ch}
+diff --git a/en/pay/index.html b/en/pay/index.html
+index bce24d2..8925807 100644
+--- a/en/pay/index.html
++++ b/en/pay/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/privacy/index.html b/en/privacy/index.html
+index 196122b..174ee40 100644
+--- a/en/privacy/index.html
++++ b/en/privacy/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/systems/gearbox/index.html b/en/systems/gearbox/index.html
+index 31787ed..3b7d309 100644
+--- a/en/systems/gearbox/index.html
++++ b/en/systems/gearbox/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -166,7 +166,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/generator/index.html b/en/systems/generator/index.html
+index 53965d2..c4c8682 100644
+--- a/en/systems/generator/index.html
++++ b/en/systems/generator/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -158,7 +158,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/index.html b/en/systems/index.html
+index 5cdd99a..cd60354 100644
+--- a/en/systems/index.html
++++ b/en/systems/index.html
+@@ -116,7 +116,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -169,7 +169,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/pitch/index.html b/en/systems/pitch/index.html
+index ce98861..cfec548 100644
+--- a/en/systems/pitch/index.html
++++ b/en/systems/pitch/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -161,7 +161,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/yaw/index.html b/en/systems/yaw/index.html
+index 214ad02..d4c81cc 100644
+--- a/en/systems/yaw/index.html
++++ b/en/systems/yaw/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -159,7 +159,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/tools/bolt-tension/index.html b/en/tools/bolt-tension/index.html
+index 464eb11..e3a6c1d 100644
+--- a/en/tools/bolt-tension/index.html
++++ b/en/tools/bolt-tension/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -213,7 +213,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/tools/index.html b/en/tools/index.html
+index b124b6c..6dd8c97 100644
+--- a/en/tools/index.html
++++ b/en/tools/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+diff --git a/en/turbines/enercon/e70/index.html b/en/turbines/enercon/e70/index.html
+index b923828..f6fae05 100644
+--- a/en/turbines/enercon/e70/index.html
++++ b/en/turbines/enercon/e70/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -198,7 +198,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/e82/index.html b/en/turbines/enercon/e82/index.html
+index 140196b..249b423 100644
+--- a/en/turbines/enercon/e82/index.html
++++ b/en/turbines/enercon/e82/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -214,7 +214,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/e92/index.html b/en/turbines/enercon/e92/index.html
+index c42a4d9..5555afe 100644
+--- a/en/turbines/enercon/e92/index.html
++++ b/en/turbines/enercon/e92/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -220,7 +220,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/index.html b/en/turbines/enercon/index.html
+index 65e0588..9458183 100644
+--- a/en/turbines/enercon/index.html
++++ b/en/turbines/enercon/index.html
+@@ -84,7 +84,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -129,7 +129,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/index.html b/en/turbines/index.html
+index 0914430..8cf33ab 100644
+--- a/en/turbines/index.html
++++ b/en/turbines/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -160,7 +160,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/index.html b/en/turbines/vestas/index.html
+index d310e95..d064fd0 100644
+--- a/en/turbines/vestas/index.html
++++ b/en/turbines/vestas/index.html
+@@ -84,7 +84,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -129,7 +129,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/v110/index.html b/en/turbines/vestas/v110/index.html
+index bafd89e..25252df 100644
+--- a/en/turbines/vestas/v110/index.html
++++ b/en/turbines/vestas/v110/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -200,7 +200,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/v126/index.html b/en/turbines/vestas/v126/index.html
+index e6d8d3d..e57d85c 100644
+--- a/en/turbines/vestas/v126/index.html
++++ b/en/turbines/vestas/v126/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -209,7 +209,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/v136/index.html b/en/turbines/vestas/v136/index.html
+index 3517cef..421fda6 100644
+--- a/en/turbines/vestas/v136/index.html
++++ b/en/turbines/vestas/v136/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+@@ -216,7 +216,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/gelir/index.html b/gelir/index.html
+index 51d6996..1767fcd 100644
+--- a/gelir/index.html
++++ b/gelir/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/ad-policy/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gelir/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+@@ -206,7 +206,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/gizlilik/index.html b/gizlilik/index.html
+index 832bf1c..64028f0 100644
+--- a/gizlilik/index.html
++++ b/gizlilik/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/privacy/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gizlilik/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+@@ -220,7 +220,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/gwo/index.html b/gwo/index.html
+index 5ee9df2..e2e621e 100644
+--- a/gwo/index.html
++++ b/gwo/index.html
+@@ -20,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -681,7 +681,7 @@ ekipmanı belli bir yük aralığına göre sertifikalıdır.</b></p>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/index.html b/index.html
+index 444399f..a64d62a 100644
+--- a/index.html
++++ b/index.html
+@@ -27,9 +27,10 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
+-<link rel="stylesheet" href="/ana.css?v=2ed761a3">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=243ddb21">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/ana.css?v=5948980a">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e9f6cc25">
++<link rel="stylesheet" href="/assets/vitrin.css?v=145dd3c9">
+ 
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@graph":[
+@@ -74,8 +75,10 @@
+   <div class="dny-sahne">
+     <div class="dny-poster" aria-hidden="true"></div>
+     <canvas id="dnyTuval" aria-hidden="true"></canvas>
++    <div class="v-izgara" aria-hidden="true"></div>
++    <canvas class="v-ruzgar" id="vRuzgar" aria-hidden="true"></canvas>
++    <div class="v-isik" aria-hidden="true"></div>
+     <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
+-    <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</h1>
+ 
+     <div class="hud" id="hud" hidden>
+       <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
+@@ -90,16 +93,20 @@
+     </div>
+ 
+     <div class="kule-alt dny-kapak-alt">
++      <div class="v-kimlik">
++        <p class="v-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir</span><span>Göbek 120 m</span></p>
++        <h1 id="kapak-b" class="v-ad"><span class="v-ad-isim">Soner Soylu</span><span class="gizli">, </span><span class="v-ad-unvan">Rüzgâr Türbini Saha Servis Teknisyeni</span></h1>
++      </div>
+       <div class="dugmeler">
+         <a class="dg birincil" href="#iletisim">İletişime geç</a>
+         <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+         <span class="dny-basla" id="dnyBasla" hidden><button type="button" class="dg" id="dnyBaslaBtn">Türbinin içine gir</button></span>
+       </div>
+-      <dl class="rakam">
+-        <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
+-        <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
+-        <div><dt>Üretici</dt><dd>4</dd></div>
+-        <div><dt>Model</dt><dd>9</dd></div>
++      <dl class="rakam v-olcu">
++        <div><dt><span class="v-no">01</span>Saha deneyimi</dt><dd>13<small>yıl</small></dd><dd class="v-alt">2013 → bugün</dd></div>
++        <div><dt><span class="v-no">02</span>Dokunulan türbin</dt><dd>300<small>+</small></dd><dd class="v-alt">Kurulum · bakım · arıza</dd></div>
++        <div><dt><span class="v-no">03</span>Üretici</dt><dd>4</dd><dd class="v-alt">Enercon · Nordex · Vestas · Acciona</dd></div>
++        <div><dt><span class="v-no">04</span>Model</dt><dd>9</dd><dd class="v-alt">E70 → V136</dd></div>
+       </dl>
+       <p class="kaydir" aria-hidden="true">Kaydır, içeri gir</p>
+     </div>
+@@ -162,28 +169,32 @@
+       <a class="ok" href="/n117/">15 duraklık N117 turu</a>
+     </div>
+     <div class="parca">
+-      <article class="bel">
++      <article class="bel v-parca">
++        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><circle class="o" cx="120" cy="62" r="48"/><path class="k" d="M115.8,55.0 L118.8,16.0 L121.2,16.0 L124.2,55.0 Z"/><path class="k" d="M116.0,69.1 L80.8,86.0 L79.6,84.0 L111.8,61.9 Z"/><path class="k" d="M128.2,61.9 L160.4,84.0 L159.2,86.0 L124.0,69.1 Z"/><circle class="k" cx="120" cy="62" r="7"/><circle class="v" cx="120" cy="62" r="2"/><path class="m" d="M72 122V112M168 122V112M72 117H168"/><path class="m" d="M72 117l5-2.5v5zM168 117l-5-2.5v5z"/><text x="176" y="119">Ø 116,8 m</text><text x="8" y="12">A · ROTOR</text><text x="232" y="12" text-anchor="end">7,9–14,1 d/dk</text></svg></figure>
+         <h3>Rotor</h3>
+         <p>Rüzgârın enerjisini yakalayan üç kanat ve göbek. Devir, rüzgâr hızına göre değişir; anma hızına gelince pitch sistemi gücü sınırlar.</p>
+         <dl><div><dt>Çap</dt><dd>116,8 m</dd></div><div><dt>Süpürme alanı</dt><dd>10.715 m²</dd></div><div><dt>Devir</dt><dd>7,9–14,1 d/dk</dd></div></dl>
+       </article>
+-      <article class="bel">
++      <article class="bel v-parca">
++        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><path class="k" d="M24 52 C70 42 140 50 222 60 L222 62 C140 66 70 76 24 70 Z"/><path class="k" d="M24 48V74"/><path class="o" d="M60 59.5H210"/><path class="k" d="M150 88c10-5 30-6 44-1c-12 5-32 6-44 1z"/><path class="o" d="M172 66V84"/><text x="172" y="98" text-anchor="middle">NR58.5 kesit</text><path class="m" d="M24 116V108M222 116V108M24 112H222"/><path class="m" d="M24 112l5-2.5v5zM222 112l-5-2.5v5z"/><text x="100" y="124" text-anchor="middle">57,3 m</text><text x="8" y="12">B · KANAT</text><text x="232" y="12" text-anchor="end">≈ 10,5 t</text></svg></figure>
+         <h3>Kanat</h3>
+         <p>Cam elyaf gövde, karbon kiriş. Kök cıvataları ve kanat içi kontroller periyodik bakımın en uzun işlerinden.</p>
+         <dl><div><dt>Tip</dt><dd>NR58.5</dd></div><div><dt>Uzunluk</dt><dd>57,3 m</dd></div><div><dt>Ağırlık</dt><dd>≈ 10,5 t</dd></div></dl>
+       </article>
+-      <article class="bel">
++      <article class="bel v-parca">
++        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><path class="o" d="M8 64H36"/><circle class="k" cx="64" cy="64" r="28"/><circle class="o" cx="64" cy="64" r="11"/><circle class="k" cx="64" cy="46" r="7"/><circle class="k" cx="80" cy="73" r="7"/><circle class="k" cx="48" cy="73" r="7"/><circle class="k" cx="128" cy="64" r="21"/><circle class="o" cx="128" cy="64" r="8"/><circle class="k" cx="128" cy="51" r="5"/><circle class="k" cx="139" cy="70" r="5"/><circle class="k" cx="117" cy="70" r="5"/><path class="o" d="M92 64H107M149 64H166"/><rect class="k" x="166" y="30" width="44" height="54"/><circle class="k" cx="182" cy="64" r="11"/><circle class="k" cx="198" cy="42" r="6"/><path class="v" d="M204 42H232"/><text x="64" y="112" text-anchor="middle">1 · planet</text><text x="128" y="112" text-anchor="middle">2 · planet</text><text x="188" y="104" text-anchor="middle">3 · helisel</text><text x="8" y="12">C · DİŞLİ KUTUSU</text><text x="232" y="12" text-anchor="end">hızlı mil →</text></svg></figure>
+         <h3>Dişli kutusu</h3>
+         <p>Rotorun yavaş devrini jeneratörün istediği hıza çıkarır. Yağ sıcaklığı ve titreşim trendi, arızayı haftalar önce haber verir.</p>
+         <dl><div><dt>Kademe</dt><dd>3</dd></div><div><dt>Yapı</dt><dd>planet-planet-helisel</dd></div><div><dt>Yataklama</dt><dd>üç nokta</dd></div></dl>
+       </article>
+-      <article class="bel">
++      <article class="bel v-parca">
++        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><rect class="k" x="16" y="34" width="70" height="56"/><rect class="o" x="30" y="46" width="42" height="32"/><path class="o" d="M4 62H30"/><text x="51" y="66" text-anchor="middle">rotor</text><text x="51" y="102" text-anchor="middle">stator</text><path class="k" d="M86 42H200"/><path class="k" d="M72 78H96V104H122"/><rect class="k" x="122" y="92" width="52" height="24"/><text x="148" y="107" text-anchor="middle">AC/DC/AC</text><path class="k" d="M174 104H188V42"/><path class="v" d="M200 30V54M206 34V50M212 38V46"/><text x="206" y="68" text-anchor="middle">şebeke</text><text x="8" y="12">D · JENERATÖR</text><text x="232" y="12" text-anchor="end">DFIG · 660 V</text><text x="150" y="36" text-anchor="middle">3.000 kW</text></svg></figure>
+         <h3>Jeneratör</h3>
+         <p>Mekanik gücü elektriğe çevirir. Kısmi konvertör, değişken devirde şebekeye sabit frekans verir.</p>
+         <dl><div><dt>Tip</dt><dd>çift beslemeli asenkron</dd></div><div><dt>Gerilim</dt><dd>660 V</dd></div><div><dt>Anma gücü</dt><dd>3.000 kW</dd></div></dl>
+       </article>
+     </div>
+-    <p class="kaynak-not">Değerler Nordex N117/3000 Delta için üreticinin yayımladığı verilerdir. Kaynaklar N117 sayfasında listelenmiştir.</p>
++    <p class="kaynak-not">Değerler Nordex N117/3000 Delta için üreticinin yayımladığı verilerdir. Kaynaklar N117 sayfasında listelenmiştir. Çizimler ölçeksiz şemadır.</p>
+   </div>
+ </section>
+ 
+@@ -197,17 +208,20 @@
+       </div>
+       <a class="ok" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn profili</a>
+     </div>
+-    <ol class="zaman">
+-      <li><span class="yil">2021</span><div><h3>Bilgin Enerji</h3><p class="rol">Saha Servis Teknisyeni · <span>Mart 2021, devam ediyor</span> · <span>Aliağa ve Bergama RES, İzmir</span></p><p class="oz">Periyodik ve mekanik bakım, elektrik arıza tespiti. Gear box, konvertör, yaw ve pitch sistemlerinde arıza giderme; kanat kontrolleri ve büyük bileşen değişimlerinde saha ekibinde görev. Bakım sonrası devreye alma ve raporlama.</p></div></li>
+-      <li><span class="yil">2021</span><div><h3>Fu Enerji</h3><p class="rol">Kurulum Uzmanı · <span>Ocak 2021, Mart 2021</span> · <span>İzmir</span></p><p class="oz">Rüzgâr türbini kurulum çalışmalarında mekanik montaj ve elektrik işleri. Kule, nacelle ve rotor montajında saha ekibiyle koordineli çalışma, bağlantı kontrolleri.</p></div></li>
+-      <li><span class="yil">2020</span><div><h3>Lacivert Vinç</h3><p class="rol">Montaj Teknisyeni · <span>Eylül 2020, Kasım 2020</span> · <span>İstanbul</span></p><p class="oz">Vestas V136 3.45 MW türbinlerinde yer ve nacelle montaj çalışmaları. Mekanik montaj, tork ve gerdirme uygulamaları, elektrik arıza tespiti.</p></div></li>
+-      <li><span class="yil">2019</span><div><h3>Genba Energy</h3><p class="rol">Servis Teknisyeni · <span>Eylül 2019, Aralık 2019</span> · <span>Balıkesir</span></p><p class="oz">Acciona Çerçikaya RES sahasında 18 adet 3 MW türbinin mekanik ve elektrik bakımı. Mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
+-      <li><span class="yil">2018</span><div><h3>Siemens</h3><p class="rol">Depo Sorumlusu · <span>Kasım 2018, Ağustos 2019</span> · <span>Türkiye</span></p><p class="oz">Rüzgâr santrali saha deposunda malzeme ve yedek parça yönetimi. Bakım ekiplerine parça tedariki, stok takibi, giriş çıkış kayıtları ve sevkiyat koordinasyonu.</p></div></li>
+-      <li><span class="yil">2018</span><div><h3>Monsson</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Nisan 2018, Ekim 2018</span> · <span>Balıkesir</span></p><p class="oz">Rüzgâr türbini montaj ve servis çalışmaları. Mekanik bakım, elektrik arıza tespiti, kurulum ve devreye alma süreçleri.</p></div></li>
+-      <li><span class="yil">2017</span><div><h3>Hareket Proje Taşımacılığı</h3><p class="rol">Kurulum ve Elektrik Teknisyeni · <span>Haziran 2017, Nisan 2018</span> · <span>İstanbul</span></p><p class="oz">Türbin kurulum projelerinde mekanik montaj ve elektrik işleri. Kule ve nacelle montajı, kablolama ve bağlantı kontrolleri.</p></div></li>
+-      <li><span class="yil">2016</span><div><h3>EU Montage Danmark ApS</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Ekim 2016, Nisan 2017</span> · <span>Avrupa sahaları</span></p><p class="oz">Avrupa&#x27;da rüzgâr türbini montaj ve servis projeleri. Uluslararası saha ekipleriyle mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
+-      <li><span class="yil">2013</span><div><h3>Enercon GmbH</h3><p class="rol">Çelik Beton Kule Montaj Teknisyeni · <span>Şubat 2013, Ağustos 2016</span> · <span>Türkiye</span></p><p class="oz">Enercon türbinlerinde çelik beton hibrit kule montajı. Segment birleştirme, gerdirme ve mekanik montaj işleri. Sektördeki ilk pozisyonum.</p></div></li>
+-    </ol>
++    <div class="v-zaman">
++  <div class="v-z-hat" aria-hidden="true"><i id="vZamanDolu"></i></div>
++  <ol class="zaman v-z">
++    <li><div class="v-z-yil"><b>2013</b><span>Şubat 2013 – Ağustos 2016</span></div><div class="v-z-kart"><h3>Enercon GmbH</h3><p class="rol">Çelik Beton Kule Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Enercon · çelik-beton hibrit kule</dd></div><div><dt>Sorumluluk</dt><dd>Enercon türbinlerinde çelik beton hibrit kule montajı. Segment birleştirme, gerdirme ve mekanik montaj işleri. Sektördeki ilk pozisyonum.</dd></div><div><dt>Konum</dt><dd>Türkiye</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2016</b><span>Ekim 2016 – Nisan 2017</span></div><div class="v-z-kart"><h3>EU Montage Danmark ApS</h3><p class="rol">Servis ve Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Mekanik montaj · elektrik arıza</dd></div><div><dt>Sorumluluk</dt><dd>Avrupa&#x27;da rüzgâr türbini montaj ve servis projeleri. Uluslararası saha ekipleriyle mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</dd></div><div><dt>Konum</dt><dd>Avrupa sahaları</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2017</b><span>Haziran 2017 – Nisan 2018</span></div><div class="v-z-kart"><h3>Hareket Proje Taşımacılığı</h3><p class="rol">Kurulum ve Elektrik Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Kule ve nasel montajı · kablolama</dd></div><div><dt>Sorumluluk</dt><dd>Türbin kurulum projelerinde mekanik montaj ve elektrik işleri. Kule ve nacelle montajı, kablolama ve bağlantı kontrolleri.</dd></div><div><dt>Konum</dt><dd>İstanbul</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2018</b><span>Nisan 2018 – Ekim 2018</span></div><div class="v-z-kart"><h3>Monsson</h3><p class="rol">Servis ve Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Montaj · servis · devreye alma</dd></div><div><dt>Sorumluluk</dt><dd>Rüzgâr türbini montaj ve servis çalışmaları. Mekanik bakım, elektrik arıza tespiti, kurulum ve devreye alma süreçleri.</dd></div><div><dt>Konum</dt><dd>Balıkesir</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2018</b><span>Kasım 2018 – Ağustos 2019</span></div><div class="v-z-kart"><h3>Siemens</h3><p class="rol">Depo Sorumlusu</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Saha deposu · yedek parça</dd></div><div><dt>Sorumluluk</dt><dd>Rüzgâr santrali saha deposunda malzeme ve yedek parça yönetimi. Bakım ekiplerine parça tedariki, stok takibi, giriş çıkış kayıtları ve sevkiyat koordinasyonu.</dd></div><div><dt>Konum</dt><dd>Türkiye</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2019</b><span>Eylül 2019 – Aralık 2019</span></div><div class="v-z-kart"><h3>Genba Energy</h3><p class="rol">Servis Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Acciona 3 MW · 18 türbin</dd></div><div><dt>Sorumluluk</dt><dd>Acciona Çerçikaya RES sahasında 18 adet 3 MW türbinin mekanik ve elektrik bakımı. Mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</dd></div><div><dt>Konum</dt><dd>Balıkesir</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2020</b><span>Eylül 2020 – Kasım 2020</span></div><div class="v-z-kart"><h3>Lacivert Vinç</h3><p class="rol">Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Vestas V136 3.45 MW</dd></div><div><dt>Sorumluluk</dt><dd>Vestas V136 3.45 MW türbinlerinde yer ve nacelle montaj çalışmaları. Mekanik montaj, tork ve gerdirme uygulamaları, elektrik arıza tespiti.</dd></div><div><dt>Konum</dt><dd>İstanbul</dd></div></dl></div></li>
++    <li><div class="v-z-yil"><b>2021</b><span>Ocak 2021 – Mart 2021</span></div><div class="v-z-kart"><h3>Fu Enerji</h3><p class="rol">Kurulum Uzmanı</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Kule, nasel ve rotor montajı</dd></div><div><dt>Sorumluluk</dt><dd>Rüzgâr türbini kurulum çalışmalarında mekanik montaj ve elektrik işleri. Kule, nacelle ve rotor montajında saha ekibiyle koordineli çalışma, bağlantı kontrolleri.</dd></div><div><dt>Konum</dt><dd>İzmir</dd></div></dl></div></li>
++    <li class="v-z-simdi"><div class="v-z-yil"><b>2021</b><span>Mart 2021 – devam ediyor</span></div><div class="v-z-kart"><h3>Bilgin Enerji</h3><p class="rol">Saha Servis Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Dişli kutusu · konvertör · yaw · pitch</dd></div><div><dt>Sorumluluk</dt><dd>Periyodik ve mekanik bakım, elektrik arıza tespiti. Gear box, konvertör, yaw ve pitch sistemlerinde arıza giderme; kanat kontrolleri ve büyük bileşen değişimlerinde saha ekibinde görev. Bakım sonrası devreye alma ve raporlama.</dd></div><div><dt>Konum</dt><dd>Aliağa ve Bergama RES, İzmir</dd></div></dl></div></li>
++  </ol>
++</div>
+   </div>
+ </section>
+ 
+@@ -221,14 +235,14 @@
+       </div>
+     </div>
+     <div class="gal">
+-      <figure class="g1 bel" data-full="/assets/saha/ege-makilik.webp"><img src="/assets/saha/ege-makilik.webp" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption>Ege makiliği</figcaption></figure>
+-      <figure class="g2 bel" data-full="/assets/saha/yildizlar.webp"><img src="/assets/saha/yildizlar.webp" alt="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini" loading="lazy" decoding="async"><figcaption>Gece vardiyası</figcaption></figure>
+-      <figure class="g3 bel" data-full="/assets/saha/deniz-hatti.webp"><img src="/assets/saha/deniz-hatti.webp" alt="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri" loading="lazy" decoding="async"><figcaption>Deniz hattı</figcaption></figure>
+-      <figure class="g4 bel" data-full="/assets/saha/alacakaranlik.webp"><img src="/assets/saha/alacakaranlik.webp" alt="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler" loading="lazy" decoding="async"><figcaption>Alacakaranlık</figcaption></figure>
+-      <figure class="g5 bel" data-full="/assets/saha/bahar.webp"><img src="/assets/saha/bahar.webp" alt="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin" loading="lazy" decoding="async"><figcaption>Bahar</figcaption></figure>
+-      <figure class="g6 bel" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption>Sahada</figcaption></figure>
+-      <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption>Sırt hattı</figcaption></figure>
+-      <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption>Saha yolu</figcaption></figure>
++      <figure class="g1 bel" data-full="/assets/saha/ege-makilik.webp"><img src="/assets/saha/ege-makilik.webp" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption data-aciklama="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha">Ege makiliği</figcaption></figure>
++      <figure class="g2 bel" data-full="/assets/saha/yildizlar.webp"><img src="/assets/saha/yildizlar.webp" alt="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini" loading="lazy" decoding="async"><figcaption data-aciklama="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini">Gece vardiyası</figcaption></figure>
++      <figure class="g3 bel" data-full="/assets/saha/deniz-hatti.webp"><img src="/assets/saha/deniz-hatti.webp" alt="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri" loading="lazy" decoding="async"><figcaption data-aciklama="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri">Deniz hattı</figcaption></figure>
++      <figure class="g4 bel" data-full="/assets/saha/alacakaranlik.webp"><img src="/assets/saha/alacakaranlik.webp" alt="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler" loading="lazy" decoding="async"><figcaption data-aciklama="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler">Alacakaranlık</figcaption></figure>
++      <figure class="g5 bel" data-full="/assets/saha/bahar.webp"><img src="/assets/saha/bahar.webp" alt="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin" loading="lazy" decoding="async"><figcaption data-aciklama="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin">Bahar</figcaption></figure>
++      <figure class="g6 bel" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption data-aciklama="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen">Sahada</figcaption></figure>
++      <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption data-aciklama="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi">Sırt hattı</figcaption></figure>
++      <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption data-aciklama="Araç camından görünen saha yolu ve ufuktaki iki türbin">Saha yolu</figcaption></figure>
+     </div>
+ 
+     <div class="an-video">
+@@ -248,19 +262,103 @@
+       <div>
+         <p class="etiket">Saha notları</p>
+         <h2 id="vakalar-b">Gerçek arızalar, adım adım</h2>
+-        <p class="giris">Her vakada belirti, yapılan ölçümler, kök neden ve bir dahaki sefere ne yapılacağı.</p>
++        <p class="giris">Her vakada belirti, yapılan ölçümler, kök neden, çözüm ve çıkarılan ders. Bir vakayı açın; teşhis adım adım ilerler.</p>
+       </div>
+       <a class="ok" href="/saha-notlari/">Tüm saha notları</a>
+     </div>
+-    <ul class="vaka">
+-      <li><a href="/saha-notlari/pitch-motor-yuksek-akim/"><span class="no">VAKA 01</span><span><b>Pitch motor yüksek akım</b><span class="oz">Pitch motor akımı 12 A yerine 18 A. Altı adımlık teşhis, kök neden redüktör yağ kaçağı.</span></span><span class="mdl">Nordex N117</span></a></li>
+-      <li><a href="/saha-notlari/disli-kutusu-sicaklik/"><span class="no">VAKA 02</span><span><b>Dişli kutusu sıcaklık artışı</b><span class="oz">Yağ sıcaklığı 78–82 °C. Sekiz aylık trend analizi, mil keçesi kaynaklı yağ kaybı.</span></span><span class="mdl">Vestas V126</span></a></li>
+-      <li><a href="/saha-notlari/yaw-salinimi/"><span class="no">VAKA 03</span><span><b>Yaw salınımı (hunting)</b><span class="oz">Nasel ±18° salınıyor. Yatak sürüklenmesi, sensör titremesi ve PLC parametre kayması.</span></span><span class="mdl">Enercon E92</span></a></li>
+-      <li><a href="/saha-notlari/jenerator-sicaklik/"><span class="no">VAKA 04</span><span><b>Jeneratör sıcaklık alarmı</b><span class="oz">116 °C alarmı. IR termometre ile SCADA arasında 41 °C fark: sensör kalibrasyon kayması.</span></span><span class="mdl">Vestas V126</span></a></li>
+-      <li><a href="/saha-notlari/converter-asiri-akim/"><span class="no">VAKA 05</span><span><b>Converter aşırı akım</b><span class="oz">Yalnızca 2,3 MW üzerinde atan aralıklı arıza. Gevşemiş DC bara bağlantısı ve güç eşiği yöntemi.</span></span><span class="mdl">Vestas V110</span></a></li>
+-      <li><a href="/saha-notlari/yaw-yatak-asinmasi/"><span class="no">VAKA 06</span><span><b>Yaw yatağı aşınması</b><span class="oz">Alarmsız yakalanan hasar. Tıkalı yağlama hattı, tek sektörde aşınma, gres sektör haritası.</span></span><span class="mdl">Enercon E92</span></a></li>
+-      <li><a href="/saha-notlari/kanat-titresimi/"><span class="no">VAKA 07</span><span><b>Kanat titreşimi</b><span class="oz">7–9 m/s bandında titreşim. 1P harmoniği, 2,5° pitch asimetrisi: kanat değil kalibrasyon.</span></span><span class="mdl">Vestas V126</span></a></li>
+-    </ul>
++    <ol class="v-vaka">
++  <li class="v-vk acik">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="true" aria-controls="vk1"><span class="v-vk-no">VAKA 01</span><span class="v-vk-ad">Pitch motor yüksek akım</span><span class="v-vk-deger"><b>12 A → 18 A</b><small>Motor akımı · alarm eşiği 15 A</small></span><span class="v-vk-mdl">Nordex N117</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk1">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>“Pitch motor phase current high” alarmı. Türbin sabah açılamıyor, pitch sistemi devreye giremiyor.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Kanatlar elle döndürüldü: bir kanat diğerlerinden sıkı. Motor faz dirençleri 8,1–8,3 Ω, motor sağlam.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Redüktör gövdesinde 2 mm çatlak. Aylardır süren yağ kaybıyla dişliler yağsız çalışmış.</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Redüktör boşaltıldı, çatlak kaynatılıp NDT ile kontrol edildi, dişliler incelendi; filtre ve yağ yenilendi.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Son bakımda yağ seviyesi kontrol edilmemişti. Akım artışı SCADA trendinde 8 ay önceden görünüyordu.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/pitch-motor-yuksek-akim/">Vakanın tamamı</a>
++    </div>
++  </li>
++  <li class="v-vk">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk2"><span class="v-vk-no">VAKA 02</span><span class="v-vk-ad">Dişli kutusu sıcaklık artışı</span><span class="v-vk-deger"><b>60–65 → 78–82 °C</b><small>Komşu türbinler → bu türbin · alarm 85 °C</small></span><span class="v-vk-mdl">Vestas V126</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk2">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>11–15 m/s rüzgârda üç gün boyunca sıcaklık trendi anormal. SCADA uyarı veriyor, türbin durmuyor.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Yağ seviyesi dipstick minimumunun altında. Hava filtresi çevresinde yağlı toz.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Mil geçişindeki keçe arızalı; yağ dış yüzeyden sızıyor.</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Yağ tamamlandı, sızıntı 24 saat izlenip ölçüldü. Keçe değişimi ve yağ analizi planlı servise alındı.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Aylık listede yağ seviyesi, sızıntı izi ve son 24 saatin sıcaklık tepe değeri olmalı.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/disli-kutusu-sicaklik/">Vakanın tamamı</a>
++    </div>
++  </li>
++  <li class="v-vk">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk3"><span class="v-vk-no">VAKA 03</span><span class="v-vk-ad">Yaw salınımı (hunting)</span><span class="v-vk-deger"><b>±18°</b><small>Yaw açısı · 0,5–1 Hz osilasyon</small></span><span class="v-vk-mdl">Enercon E92</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk3">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>14 m/s rüzgârda nasel ileri geri salınıyor; SCADA’da yaw açısı sürekli değişiyor, ritmik vuruntu sesi.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Bir saatlik yaw açı trendi: ±18°, 0,5–1 Hz. Yaw motoru ve açı geri bildirimi test modunda denendi.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Üç etken birlikte: azalmış yatak yağlaması, gevşek rüzgâr yönü sensörü, normalin üstündeki PLC P kazancı (1,5).</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>P kazancı 0,6’ya alındı, sensör sıkılıp kalibre edildi, yatağa gres eklendi. İki hafta sonra salınım ±2–3°.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Hunting çoğu zaman tek bir sebep değildir: yazılım, sensör ve yağlama birlikte kontrol edilir.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/yaw-salinimi/">Vakanın tamamı</a>
++    </div>
++  </li>
++  <li class="v-vk">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk4"><span class="v-vk-no">VAKA 04</span><span class="v-vk-ad">Jeneratör sıcaklık alarmı</span><span class="v-vk-deger"><b>Δ 41 °C</b><small>IR 62 °C · SCADA 103 °C</small></span><span class="v-vk-mdl">Vestas V126</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk4">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>116 °C alarmı (eşik 115 °C). Türbin duruyor, resetten sonra normale dönüyor; alarm tekrar ediyor.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Durdurulan jeneratörde IR termometre 62 °C, SCADA 103 °C gösteriyor. Soğutma fanı çalışıyor.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>RTD sensörde kalibrasyon kayması. Jeneratör gerçekte aşırı ısınmıyor.</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>SCADA tarafında geçici düzeltme; sensörün kalibrasyonu veya değişimi planlandı.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Kontrol sistemi okumasıyla fiziksel ölçüm tutmuyorsa önce sensörü doğrulayın.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/jenerator-sicaklik/">Vakanın tamamı</a>
++    </div>
++  </li>
++  <li class="v-vk">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk5"><span class="v-vk-no">VAKA 05</span><span class="v-vk-ad">Converter aşırı akım</span><span class="v-vk-deger"><b>17 / 19 olay</b><small>Arızaların 2,4 MW üstündeki payı</small></span><span class="v-vk-mdl">Vestas V110</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk5">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>Aralıklı converter aşırı akım hatası. Reset sonrası normal; duran türbinde bütün ölçümler normal.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Fault log güç verisiyle eşleşti. Yük altında termal taramada DC barada komşularından ~30 °C sıcak nokta; cıvata torku OEM değerinin altında.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Gevşemiş DC bara bağlantısı. Yüksek akımda ısınıp komşu IGBT modülünü de zorluyor.</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Bağlantı temizlenip OEM torkuyla sıkıldı, kabindeki tüm bağlantılar kontrol edildi, zorlanan IGBT değiştirildi. Arada 2,2 MW sınırla üretim sürdü.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Aralıklı arızada hatayı değil, çıktığı koşulu arayın. Termal taramayı türbin üretirken yapın.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/converter-asiri-akim/">Vakanın tamamı</a>
++    </div>
++  </li>
++  <li class="v-vk">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk6"><span class="v-vk-no">VAKA 06</span><span class="v-vk-ad">Yaw yatağı aşınması</span><span class="v-vk-deger"><b>Alarm yok</b><small>Rutin greslemede yakalandı</small></span><span class="v-vk-mdl">Enercon E92</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk6">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>Türbin normal üretimde. Greslemede bazı noktalardan koyu gri, metalik gres; belirli bir konumda sürtünme sesi.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Her noktanın gresi ayrı toplandı. Metal üç komşu noktada yoğun (sektör haritası); mıknatıs testi çelik parçacığı doğruladı.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Otomatik yağlama hattı tıkalı; yatağın bir sektörü gressiz kalıp aşınmış.</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Hat açıldı, sektör temiz gres çıkana kadar greslendi, üç ay kısa aralıklı takip. Yatak değişimi gerekmedi.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Tahliye gresini nokta nokta toplayın. Pompanın çalışması gresin her noktaya ulaştığı anlamına gelmez.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/yaw-yatak-asinmasi/">Vakanın tamamı</a>
++    </div>
++  </li>
++  <li class="v-vk">
++    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk7"><span class="v-vk-no">VAKA 07</span><span class="v-vk-ad">Kanat titreşimi</span><span class="v-vk-deger"><b>1P · 2,5°</b><small>7–9 m/s bandında</small></span><span class="v-vk-mdl">Vestas V126</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
++    <div class="v-vk-panel" id="vk7">
++      <ol class="v-akis">
++        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>Yalnız 7–9 m/s bandında hissedilir nasel titreşimi. Kanatlarda görünür hasar yok.</p></li>
++        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Titreşim rotor deviriyle birlikte kaydedildi: baskın bileşen 1P, 3P normal. Rotor dengesizliği.</p></li>
++        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Bir kanadın pitch enkoderinde kalibrasyon kayması; kanat yaklaşık 2,5° farklı açıda çalışıyor.</p></li>
++        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Üç kanadın enkoder sıfırları fiziksel referansla yeniden ayarlandı. 1P düştü, üretim o bantta normale döndü.</p></li>
++        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Kanat incelemesine karar vermeden önce spektruma bakın; pitch açısını fiziksel olarak ölçün.</p></li>
++      </ol>
++      <a class="ok" href="/saha-notlari/kanat-titresimi/">Vakanın tamamı</a>
++    </div>
++  </li>
++</ol>
+   </div>
+ </section>
+ 
+@@ -365,15 +463,23 @@
+       <a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener"><span class="k-ust">YouTube</span><span class="d">The Turbine Tech</span></a>
+       <div><span class="k-ust">Saha</span><span class="d">Aliağa ve Bergama RES, İzmir</span></div>
+     </div>
+-    <p class="kapanis">Makineyi <em>çalışır</em> tutun.</p>
+   </div>
+ </section>
+ 
+ </main>
+-<footer><div class="wrap mono"><p>Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</p><p>Aliağa, İzmir</p>
+-<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+-<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
+-<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
++<footer class="v-son">
++ <div class="v-son-ic">
++  <p class="v-son-ust" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Göbek 120 m</span><span>2013 → bugün</span></p>
++  <p class="v-son-ad">Soner Soylu</p>
++  <p class="v-son-alan">Wind Turbine Field Service</p>
++  <p class="v-son-yer">Aliağa · İzmir · Türkiye</p>
++  <p class="v-son-imza">Makineyi <em>çalışır</em> tutun.</p>
++  <div class="v-son-alt">
++   <p class="v-son-sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
++   <p class="v-son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" hreflang="en" lang="en">English</a></p>
++  </div>
++ </div>
++</footer>
+ <div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><button type="button" class="lb-ok" id="lbOnce" aria-label="Önceki fotoğraf">←</button><img alt="" src=""><button type="button" class="lb-ok" id="lbSonra" aria-label="Sonraki fotoğraf">→</button><p class="lb-alt" id="lbAlt"></p></div>
+ <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
+  <div class="ara-ic">
+@@ -388,7 +494,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function () {
+   /* mobil menü */
+@@ -408,7 +514,7 @@
+   function ac(i) { onceki = document.activeElement; goster(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('lbx').focus(); }
+   function kapat() { lb.classList.remove('open'); li.src = ''; document.body.style.overflow = ''; if (onceki) onceki.focus(); }
+   kareler.forEach(function (f, i) {
+-    f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', 'Büyüt: ' + f.querySelector('img').alt);
++    var fi = f.querySelector('img'); fi.tabIndex = 0; fi.setAttribute('role', 'button'); fi.setAttribute('aria-label', 'Büyüt: ' + fi.alt);
+     f.addEventListener('click', function () { ac(i); });
+     f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ac(i); } });
+   });
+@@ -442,7 +548,7 @@
+         (function adim(t) { var k = Math.min(1, (t - t0) / sure); dugum.nodeValue = String(Math.round(hedef * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(adim); })(t0);
+       });
+     }, { threshold: 0.6 });
+-    document.querySelectorAll('.ana .rakam dd').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
++    document.querySelectorAll('.ana .rakam dd:not(.v-alt)').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
+   }
+ 
+   /* ---- kapak: türbinin içine (canlı güneş ve rüzgâr; sahne: assets/deneyim/arayuz.js) ---- */
+@@ -516,6 +622,7 @@
+ 
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=f99ea7e1" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
++<script src="/assets/vitrin.js?v=7b455e73" defer></script>
+ </body>
+ </html>
+diff --git a/kodlar/index.html b/kodlar/index.html
+index e9ba27e..8282b29 100644
+--- a/kodlar/index.html
++++ b/kodlar/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -304,7 +304,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/maas/index.html b/maas/index.html
+index 0680621..a267e94 100644
+--- a/maas/index.html
++++ b/maas/index.html
+@@ -20,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -670,7 +670,7 @@ romantikleştirmeden anlatayım.</p>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/n117/index.html b/n117/index.html
+index a802d11..d09893b 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:16ch}
+@@ -921,7 +921,7 @@ if (S) {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/n90/index.html b/n90/index.html
+index 335bf51..dd5bd9a 100644
+--- a/n90/index.html
++++ b/n90/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ /* ---- N90 sayfasına özel ---- */
+ .n-hero{padding:4rem 0 3rem}
+@@ -834,7 +834,7 @@ setTimeout(() => document.getElementById('loading').classList.add('gone'), 260);
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/nasil-olunur/index.html b/nasil-olunur/index.html
+index 21f54b0..8a3acdd 100644
+--- a/nasil-olunur/index.html
++++ b/nasil-olunur/index.html
+@@ -20,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -746,7 +746,7 @@ de bırakmadım.</p></div>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/rehber/index.html b/rehber/index.html
+index ea3adb5..d1ba315 100644
+--- a/rehber/index.html
++++ b/rehber/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/guide/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+@@ -519,7 +519,7 @@ document.getElementById('subForm').addEventListener('submit', async function (e)
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/ruzgar/index.html b/ruzgar/index.html
+index e8b5f1c..becfc70 100644
+--- a/ruzgar/index.html
++++ b/ruzgar/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -347,7 +347,7 @@ table.egri thead th{font-size:.625rem;letter-spacing:.12em;text-transform:upperc
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/saha-notlari/converter-asiri-akim/index.html b/saha-notlari/converter-asiri-akim/index.html
+index 44e85bd..5a399bf 100644
+--- a/saha-notlari/converter-asiri-akim/index.html
++++ b/saha-notlari/converter-asiri-akim/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -156,7 +156,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/disli-kutusu-sicaklik/index.html b/saha-notlari/disli-kutusu-sicaklik/index.html
+index 9a1569b..54354a9 100644
+--- a/saha-notlari/disli-kutusu-sicaklik/index.html
++++ b/saha-notlari/disli-kutusu-sicaklik/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -274,7 +274,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/index.html b/saha-notlari/index.html
+index b6383f8..ba86590 100644
+--- a/saha-notlari/index.html
++++ b/saha-notlari/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -170,7 +170,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/jenerator-sicaklik/index.html b/saha-notlari/jenerator-sicaklik/index.html
+index 4e777d0..9935958 100644
+--- a/saha-notlari/jenerator-sicaklik/index.html
++++ b/saha-notlari/jenerator-sicaklik/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -278,7 +278,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/kanat-titresimi/index.html b/saha-notlari/kanat-titresimi/index.html
+index 8d04c3a..726ce51 100644
+--- a/saha-notlari/kanat-titresimi/index.html
++++ b/saha-notlari/kanat-titresimi/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -158,7 +158,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/pitch-motor-yuksek-akim/index.html b/saha-notlari/pitch-motor-yuksek-akim/index.html
+index 5e9df4e..6c2ed28 100644
+--- a/saha-notlari/pitch-motor-yuksek-akim/index.html
++++ b/saha-notlari/pitch-motor-yuksek-akim/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -274,7 +274,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/yaw-salinimi/index.html b/saha-notlari/yaw-salinimi/index.html
+index 17541a8..311e6e8 100644
+--- a/saha-notlari/yaw-salinimi/index.html
++++ b/saha-notlari/yaw-salinimi/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -245,7 +245,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/yaw-yatak-asinmasi/index.html b/saha-notlari/yaw-yatak-asinmasi/index.html
+index a097e5f..94f7dcc 100644
+--- a/saha-notlari/yaw-yatak-asinmasi/index.html
++++ b/saha-notlari/yaw-yatak-asinmasi/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -153,7 +153,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/disli-kutusu/index.html b/sistemler/disli-kutusu/index.html
+index 446e081..2cfefa2 100644
+--- a/sistemler/disli-kutusu/index.html
++++ b/sistemler/disli-kutusu/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -238,7 +238,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/index.html b/sistemler/index.html
+index bc77815..63e999c 100644
+--- a/sistemler/index.html
++++ b/sistemler/index.html
+@@ -116,7 +116,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -176,7 +176,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/jenerator/index.html b/sistemler/jenerator/index.html
+index 4de3777..24655ac 100644
+--- a/sistemler/jenerator/index.html
++++ b/sistemler/jenerator/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -233,7 +233,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/pitch/index.html b/sistemler/pitch/index.html
+index 80711fb..175f60b 100644
+--- a/sistemler/pitch/index.html
++++ b/sistemler/pitch/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -177,7 +177,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/yaw/index.html b/sistemler/yaw/index.html
+index 1a18344..e08cfbe 100644
+--- a/sistemler/yaw/index.html
++++ b/sistemler/yaw/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -218,7 +218,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sor/index.html b/sor/index.html
+index 61fd0ea..abe174e 100644
+--- a/sor/index.html
++++ b/sor/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -341,7 +341,7 @@ button.plate[disabled]{opacity:.5;cursor:default}
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/sozluk/index.html b/sozluk/index.html
+index ec9eb23..3369f2c 100644
+--- a/sozluk/index.html
++++ b/sozluk/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/glossary/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sozluk/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -1737,7 +1737,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/style.css b/style.css
+index 5fc7ee4..1ace075 100644
+--- a/style.css
++++ b/style.css
+@@ -1129,3 +1129,47 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
+  font-variation-settings:"opsz" 40;font-size:1.25rem;letter-spacing:-.01em}
+ 
+ .komsu-ana span:last-child{font-size:.875rem;line-height:1.65;color:var(--muted)}
++
++/* ===================== vitrin: menü katmanları (tüm sayfalar) ===================== */
++/* açılır menü açıkken sayfa hafifçe bulanıklaşır; tıklamalar sayfaya geçer */
++@media (min-width:768px){
++  body:has(.dd.acik)::after{content:"";position:fixed;inset:0;z-index:45;pointer-events:none;background:rgba(6,8,10,.22);
++    -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:vPerde .25s ease both}
++  @keyframes vPerde{from{opacity:0}to{opacity:1}}
++}
++nav.desk .ddm{box-shadow:0 18px 50px -20px rgba(0,0,0,.45)}
++/* mobil: tam ekran menü, arka plan bulanık, kaydırma kilitli */
++@media (max-width:767px){
++  #mobmenu.open{position:absolute;left:0;right:0;top:100%;height:calc(100dvh - 100%);overflow-y:auto;overscroll-behavior:contain;
++    background:var(--ground);
++    padding-bottom:calc(2rem + env(safe-area-inset-bottom));animation:vMenu .28s cubic-bezier(.16,1,.3,1) both}
++  #mobmenu.open nav{display:grid;grid-template-columns:1fr;column-gap:2rem}
++  #mobmenu.open a{padding:.95rem 0;font-size:.8125rem;transition:color .2s,padding-left .25s cubic-bezier(.16,1,.3,1)}
++  #mobmenu.open a:active{padding-left:.4rem;color:var(--ink)}
++  #mobmenu.open .mgrup{padding-top:1.6rem}
++  html:has(#mobmenu.open){overflow:hidden}
++  @keyframes vMenu{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
++}
++@media (max-width:767px) and (min-width:560px){ #mobmenu.open nav{grid-template-columns:1fr 1fr} }
++@media (prefers-reduced-motion:reduce){ #mobmenu.open,body:has(.dd.acik)::after{animation:none} }
++/* ---- vitrin: arama komut paleti ---- */
++#araKat{background:rgba(10,12,14,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:clamp(.75rem,6vh,4.5rem) 1rem 1rem}
++.ara-ic{padding:1rem;background:var(--ground);border:1px solid var(--line);box-shadow:0 30px 80px -30px rgba(0,0,0,.55);animation:vPalet .22s cubic-bezier(.16,1,.3,1) both}
++@keyframes vPalet{from{opacity:0;transform:translateY(-6px) scale(.985)}to{opacity:1;transform:none}}
++.ara-sonuc{background:none;border:0;gap:.75rem;max-height:min(62vh,38rem);overflow-y:auto;overscroll-behavior:contain}
++.ara-grup{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
++.ara-gb{margin:0;display:flex;justify-content:space-between;gap:1rem;padding:.5rem 1rem;background:var(--ground);font-family:var(--mono);font-size:.5625rem;letter-spacing:.2em;text-transform:uppercase;color:var(--beacon)}
++.ara-gb span+span{color:var(--muted)}
++.ara-sonuc a.ara-tumu{border:1px dashed var(--line);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase}
++.ara-sonuc a.ara-tumu .b{font-size:.6875rem;color:var(--ink)}
++.ara-oneri{margin-top:1rem}
++.ara-oneri[hidden]{display:none}
++.ara-oneri .ara-gb{padding:0 0 .6rem;background:none}
++.ara-cip{display:flex;flex-wrap:wrap;gap:.4rem}
++.ara-cip button{border:1px solid var(--line);background:var(--surface);padding:.45rem .75rem;font-family:var(--sans);font-size:.875rem;color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s}
++.ara-cip button:hover,.ara-cip button:focus-visible{border-color:var(--beacon);background:var(--raise)}
++.ara-kisa{margin-top:.9rem;display:flex;flex-wrap:wrap;gap:.3rem 1.2rem}
++.ara-kisa a{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem 0;border-bottom:1px solid var(--line)}
++.ara-kisa a:hover{color:var(--ink);border-color:var(--ink)}
++#araSayfaSonuc{max-height:none;overflow:visible}
++@media (prefers-reduced-motion:reduce){.ara-ic{animation:none}}
+diff --git a/sw.js b/sw.js
+index 46968c5..40b87d1 100644
+--- a/sw.js
++++ b/sw.js
+@@ -2,7 +2,7 @@
+    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
+    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
+ 
+-const SURUM = 'deneyim-f99ea7e1243ddb21';
++const SURUM = 'vitrin-145dd3c97b455e73';
+ const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
+ const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
+ 
+@@ -19,9 +19,9 @@ const ONBELLEGE = [
+   '/sor/',
+   '/ara/',
+   '/assets/arama.json?v=726ee1c8',
+-  '/assets/ara.js?v=0e7eee0c',
++  '/assets/ara.js?v=10ccf569',
+   '/assets/kaydirma.js?v=23cd28e6',
+-  '/style.css?v=ade96bc2',
++  '/style.css?v=aef6de0e',
+   '/assets/site.js?v=2083a619',
+   '/favicon.svg',
+   '/cevrimdisi.html',
+diff --git a/turbinler/enercon/e70/index.html b/turbinler/enercon/e70/index.html
+index bb3cdd2..c9ab6c2 100644
+--- a/turbinler/enercon/e70/index.html
++++ b/turbinler/enercon/e70/index.html
+@@ -39,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -240,7 +240,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/enercon/e82/index.html b/turbinler/enercon/e82/index.html
+index 60daa23..606f4b0 100644
+--- a/turbinler/enercon/e82/index.html
++++ b/turbinler/enercon/e82/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -197,7 +197,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/enercon/e92/index.html b/turbinler/enercon/e92/index.html
+index 431b163..6d3d4e4 100644
+--- a/turbinler/enercon/e92/index.html
++++ b/turbinler/enercon/e92/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -195,7 +195,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/enercon/index.html b/turbinler/enercon/index.html
+index fa802b3..e08cc95 100644
+--- a/turbinler/enercon/index.html
++++ b/turbinler/enercon/index.html
+@@ -72,7 +72,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -124,7 +124,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/index.html b/turbinler/index.html
+index 4326116..55ffc53 100644
+--- a/turbinler/index.html
++++ b/turbinler/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -167,7 +167,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/index.html b/turbinler/vestas/index.html
+index 5e2c7a8..9df3025 100644
+--- a/turbinler/vestas/index.html
++++ b/turbinler/vestas/index.html
+@@ -78,7 +78,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -130,7 +130,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/v110/index.html b/turbinler/vestas/v110/index.html
+index 7eace0a..8d93fb9 100644
+--- a/turbinler/vestas/v110/index.html
++++ b/turbinler/vestas/v110/index.html
+@@ -39,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -256,7 +256,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/v126/index.html b/turbinler/vestas/v126/index.html
+index 8b544bd..344f047 100644
+--- a/turbinler/vestas/v126/index.html
++++ b/turbinler/vestas/v126/index.html
+@@ -39,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -237,7 +237,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/v136/index.html b/turbinler/vestas/v136/index.html
+index 5d1610e..ec577f4 100644
+--- a/turbinler/vestas/v136/index.html
++++ b/turbinler/vestas/v136/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+@@ -189,7 +189,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/veri/index.html b/veri/index.html
+index 6379286..8d471c5 100644
+--- a/veri/index.html
++++ b/veri/index.html
+@@ -18,7 +18,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/style.css?v=aef6de0e">
+ <style>
+ 
+ .veri-kilit{max-width:26rem}
+@@ -127,7 +127,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
++<script src="/assets/ara.js?v=10ccf569" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
