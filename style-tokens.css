@@ -197,21 +197,9 @@
    LIGHT MODE (Fallback — Not Primary, but Included for Accessibility)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-@media (prefers-color-scheme: light) {
-  :root {
-    /* Fallback to original light theme if user requests it */
-    --color-bg-primary: #f6f4f0;
-    --color-bg-secondary: #ffffff;
-    --color-bg-tertiary: #fafafa;
-    --color-text-primary: #16191c;
-    --color-text-secondary: #5C6570;
-    --color-accent: #c0392f;
-    --color-accent-hover: #d44a45;
-    --color-accent-active: #a82f2a;
-    --color-border: rgba(0, 0, 0, 0.08);
-    --color-border-light: rgba(0, 0, 0, 0.04);
-  }
-}
+/* Sinematik sahneler koyu tasarlandı; açık modda da koyu kalır.
+   (Açık mod geçersiz kılması, koyu zemin üzerinde koyu yazıya yol açıyordu.) */
+
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    REDUCED MOTION — ACCESSIBILITY
