@@ -127,4 +127,6 @@ class BackgroundParallax {
   }
 }
 
-export { Parallax, SimpleParallax, BackgroundParallax };
+window.Parallax = Parallax;
+window.SimpleParallax = SimpleParallax;
+window.BackgroundParallax = BackgroundParallax;

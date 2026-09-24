@@ -112,7 +112,7 @@ class Scene03Knowledge extends ScrollScene {
 
     counterElements.forEach((el) => {
       const target = parseInt(el.dataset.counter, 10);
-      const counter = new Counter(el, target, {
+      const counter = new KnowledgeCounter(el, target, {
         duration: 1.5,
         ease: 'power2.out',
         delimiter: ',',
@@ -139,7 +139,7 @@ class Scene03Knowledge extends ScrollScene {
 /**
  * Counter class for animating numbers
  */
-class Counter {
+class KnowledgeCounter {
   constructor(element, target, options = {}) {
     this.element = element;
     this.target = target;

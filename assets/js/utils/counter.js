@@ -178,4 +178,5 @@ function animateCounters(selector, options = {}) {
   return counters;
 }
 
-export { Counter, animateCounters };
+window.Counter = Counter;
+window.animateCounters = animateCounters;

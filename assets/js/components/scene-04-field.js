@@ -88,7 +88,7 @@ class Scene04Field extends ScrollScene {
     statNumbers.forEach((el) => {
       const target = parseInt(el.dataset.target || el.textContent, 10);
 
-      const counter = new Counter(el, target, {
+      const counter = new FieldCounter(el, target, {
         duration: 2,
         ease: 'power2.out',
         scrollTrigger: true,
@@ -208,7 +208,7 @@ class Scene04Field extends ScrollScene {
 /**
  * Counter helper class
  */
-class Counter {
+class FieldCounter {
   constructor(element, target, options = {}) {
     this.element = element;
     this.target = target;
