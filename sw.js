@@ -2,7 +2,7 @@
    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
 
-const SURUM = 'deneyim-f99ea7e1243ddb21';
+const SURUM = 'vitrin-145dd3c97b455e73';
 const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
 const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
 
@@ -19,9 +19,9 @@ const ONBELLEGE = [
   '/sor/',
   '/ara/',
   '/assets/arama.json?v=726ee1c8',
-  '/assets/ara.js?v=0e7eee0c',
+  '/assets/ara.js?v=10ccf569',
   '/assets/kaydirma.js?v=23cd28e6',
-  '/style.css?v=ade96bc2',
+  '/style.css?v=aef6de0e',
   '/assets/site.js?v=2083a619',
   '/favicon.svg',
   '/cevrimdisi.html',

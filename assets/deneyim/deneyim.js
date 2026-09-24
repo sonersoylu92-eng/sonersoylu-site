@@ -214,6 +214,43 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const yumusak = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
   /* ---------------- döngü ---------------- */
+  /* ---------------- teknik işaret noktaları (hotspot) ----------------
+   * Parça yüzeyine yakın noktalar nasel yerelinde; ekrana izdüşürülüp sayfaya bildirilir.
+   * Önündeki parça tarafından kapanan nokta gösterilmez (seyrek ışın testi). */
+  const NOKTALAR = [
+    { id: 'anaYatak',  v: v(0.75, 0.75, -5.1),  ic: true },
+    { id: 'disli',     v: v(0.7, 1.0, -2.0),    ic: true },
+    { id: 'jenerator', v: v(0.65, 1.2, 3.3),    ic: true },
+    { id: 'konvertor', v: v(1.40, -0.3, 2.7),   ic: true },
+    { id: 'yaw',       v: v(-0.2, -1.55, 0.55), ic: true },
+    { id: 'pitch',     v: v(0, 2.3, -7.95),     ic: false },
+  ];
+  const nDunya = new THREE.Vector3(), nEkran = new THREE.Vector3(), nYon = new THREE.Vector3();
+  const isin = new THREE.Raycaster();
+  const kapanan = {}; let sonIsin = 0;
+  function noktalariGuncelle(t, icerde) {
+    if (!cb.noktalar) return;
+    const w = canvas.clientWidth, h = canvas.clientHeight, liste = [];
+    const isinZamani = t - sonIsin > 220; if (isinZamani) sonIsin = t;
+    for (const n of NOKTALAR) {
+      nDunya.copy(n.v); tilt.localToWorld(nDunya);
+      const d = camera.position.distanceTo(nDunya);
+      let aday = n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.43 && p < 0.478 && d < 26);
+      if (aday) {
+        nEkran.copy(nDunya).project(camera);
+        aday = nEkran.z < 1 && Math.abs(nEkran.x) < 0.92 && Math.abs(nEkran.y) < 0.86;
+      }
+      if (aday && isinZamani) {
+        nYon.subVectors(nDunya, camera.position).normalize();
+        isin.set(camera.position, nYon); isin.far = d - 0.22;
+        const hedefler = n.ic ? ic.grup.children : (parts.spin ? [parts.spin] : []);
+        kapanan[n.id] = isin.intersectObjects(hedefler, true).some(o => o.object.visible !== false);
+      }
+      liste.push({ id: n.id, gor: !!aday && !kapanan[n.id], x: (nEkran.x * 0.5 + 0.5) * w, y: (-nEkran.y * 0.5 + 0.5) * h, d });
+    }
+    cb.noktalar(liste);
+  }
+
   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0;
   const kKonum = new THREE.Vector3(), kHedef = new THREE.Vector3(), yumHedef = new THREE.Vector3();
   let hedefIlk = true, icAyar = null;
@@ -287,6 +324,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     olcek();
     if (composer) composer.render(dt); else renderer.render(scene, camera);
     if (cb.ilerleme) cb.ilerleme(p, Math.max(0, camera.position.y), icerde);
+    noktalariGuncelle(t, icerde);
     if (ilk) { ilk = false; canvas.classList.add('hazir'); if (cb.hazir) cb.hazir(); }
     rafId = requestAnimationFrame(kare);
   }

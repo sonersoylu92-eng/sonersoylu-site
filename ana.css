@@ -297,12 +297,5 @@ body.ana-body #lb .lb-alt{margin:0;font-family:var(--mono);font-size:.75rem;lett
 body.ana-body #lbx{background:#12171b;color:#e9edf0;border-color:#2a3238}
 .ana .kanal .kopya{align-self:flex-start;margin-top:.35rem;min-height:2.25rem;padding:.35rem .8rem;border:1px solid var(--a-line);background:transparent;color:var(--a-accent);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 .ana .kanal .kopya:hover{border-color:var(--a-accent)}
-/* içerik her zaman görünür; destekleyen tarayıcıda kaydırınca hafifçe yükselir */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion:no-preference){
-    .ana .parca article,.ana .zaman li,.ana .yazi,.ana .kartlar a,.ana .vaka li,.ana .gal figure,.ana .soz{animation:yuksel linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
-    @keyframes yuksel{from{opacity:.25;transform:translateY(24px)}to{opacity:1;transform:none}}
-  }
-}
 /* ekran dışı bölümler çizilmeden bekler: ilk açılış daha hızlı */
 .ana section:not(.kule):not(.dny-bolum){content-visibility:auto;contain-intrinsic-size:auto 900px}

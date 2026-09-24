@@ -27,9 +27,10 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
-<link rel="stylesheet" href="/style.css?v=ade96bc2">
-<link rel="stylesheet" href="/ana.css?v=2ed761a3">
-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=243ddb21">
+<link rel="stylesheet" href="/style.css?v=aef6de0e">
+<link rel="stylesheet" href="/ana.css?v=5948980a">
+<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e9f6cc25">
+<link rel="stylesheet" href="/assets/vitrin.css?v=145dd3c9">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -74,8 +75,10 @@
   <div class="dny-sahne">
     <div class="dny-poster" aria-hidden="true"></div>
     <canvas id="dnyTuval" aria-hidden="true"></canvas>
+    <div class="v-izgara" aria-hidden="true"></div>
+    <canvas class="v-ruzgar" id="vRuzgar" aria-hidden="true"></canvas>
+    <div class="v-isik" aria-hidden="true"></div>
     <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
-    <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</h1>
 
     <div class="hud" id="hud" hidden>
       <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
@@ -90,16 +93,20 @@
     </div>
 
     <div class="kule-alt dny-kapak-alt">
+      <div class="v-kimlik">
+        <p class="v-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir</span><span>Göbek 120 m</span></p>
+        <h1 id="kapak-b" class="v-ad"><span class="v-ad-isim">Soner Soylu</span><span class="gizli">, </span><span class="v-ad-unvan">Rüzgâr Türbini Saha Servis Teknisyeni</span></h1>
+      </div>
       <div class="dugmeler">
         <a class="dg birincil" href="#iletisim">İletişime geç</a>
         <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
         <span class="dny-basla" id="dnyBasla" hidden><button type="button" class="dg" id="dnyBaslaBtn">Türbinin içine gir</button></span>
       </div>
-      <dl class="rakam">
-        <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
-        <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
-        <div><dt>Üretici</dt><dd>4</dd></div>
-        <div><dt>Model</dt><dd>9</dd></div>
+      <dl class="rakam v-olcu">
+        <div><dt><span class="v-no">01</span>Saha deneyimi</dt><dd>13<small>yıl</small></dd><dd class="v-alt">2013 → bugün</dd></div>
+        <div><dt><span class="v-no">02</span>Dokunulan türbin</dt><dd>300<small>+</small></dd><dd class="v-alt">Kurulum · bakım · arıza</dd></div>
+        <div><dt><span class="v-no">03</span>Üretici</dt><dd>4</dd><dd class="v-alt">Enercon · Nordex · Vestas · Acciona</dd></div>
+        <div><dt><span class="v-no">04</span>Model</dt><dd>9</dd><dd class="v-alt">E70 → V136</dd></div>
       </dl>
       <p class="kaydir" aria-hidden="true">Kaydır, içeri gir</p>
     </div>
@@ -162,28 +169,32 @@
       <a class="ok" href="/n117/">15 duraklık N117 turu</a>
     </div>
     <div class="parca">
-      <article class="bel">
+      <article class="bel v-parca">
+        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><circle class="o" cx="120" cy="62" r="48"/><path class="k" d="M115.8,55.0 L118.8,16.0 L121.2,16.0 L124.2,55.0 Z"/><path class="k" d="M116.0,69.1 L80.8,86.0 L79.6,84.0 L111.8,61.9 Z"/><path class="k" d="M128.2,61.9 L160.4,84.0 L159.2,86.0 L124.0,69.1 Z"/><circle class="k" cx="120" cy="62" r="7"/><circle class="v" cx="120" cy="62" r="2"/><path class="m" d="M72 122V112M168 122V112M72 117H168"/><path class="m" d="M72 117l5-2.5v5zM168 117l-5-2.5v5z"/><text x="176" y="119">Ø 116,8 m</text><text x="8" y="12">A · ROTOR</text><text x="232" y="12" text-anchor="end">7,9–14,1 d/dk</text></svg></figure>
         <h3>Rotor</h3>
         <p>Rüzgârın enerjisini yakalayan üç kanat ve göbek. Devir, rüzgâr hızına göre değişir; anma hızına gelince pitch sistemi gücü sınırlar.</p>
         <dl><div><dt>Çap</dt><dd>116,8 m</dd></div><div><dt>Süpürme alanı</dt><dd>10.715 m²</dd></div><div><dt>Devir</dt><dd>7,9–14,1 d/dk</dd></div></dl>
       </article>
-      <article class="bel">
+      <article class="bel v-parca">
+        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><path class="k" d="M24 52 C70 42 140 50 222 60 L222 62 C140 66 70 76 24 70 Z"/><path class="k" d="M24 48V74"/><path class="o" d="M60 59.5H210"/><path class="k" d="M150 88c10-5 30-6 44-1c-12 5-32 6-44 1z"/><path class="o" d="M172 66V84"/><text x="172" y="98" text-anchor="middle">NR58.5 kesit</text><path class="m" d="M24 116V108M222 116V108M24 112H222"/><path class="m" d="M24 112l5-2.5v5zM222 112l-5-2.5v5z"/><text x="100" y="124" text-anchor="middle">57,3 m</text><text x="8" y="12">B · KANAT</text><text x="232" y="12" text-anchor="end">≈ 10,5 t</text></svg></figure>
         <h3>Kanat</h3>
         <p>Cam elyaf gövde, karbon kiriş. Kök cıvataları ve kanat içi kontroller periyodik bakımın en uzun işlerinden.</p>
         <dl><div><dt>Tip</dt><dd>NR58.5</dd></div><div><dt>Uzunluk</dt><dd>57,3 m</dd></div><div><dt>Ağırlık</dt><dd>≈ 10,5 t</dd></div></dl>
       </article>
-      <article class="bel">
+      <article class="bel v-parca">
+        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><path class="o" d="M8 64H36"/><circle class="k" cx="64" cy="64" r="28"/><circle class="o" cx="64" cy="64" r="11"/><circle class="k" cx="64" cy="46" r="7"/><circle class="k" cx="80" cy="73" r="7"/><circle class="k" cx="48" cy="73" r="7"/><circle class="k" cx="128" cy="64" r="21"/><circle class="o" cx="128" cy="64" r="8"/><circle class="k" cx="128" cy="51" r="5"/><circle class="k" cx="139" cy="70" r="5"/><circle class="k" cx="117" cy="70" r="5"/><path class="o" d="M92 64H107M149 64H166"/><rect class="k" x="166" y="30" width="44" height="54"/><circle class="k" cx="182" cy="64" r="11"/><circle class="k" cx="198" cy="42" r="6"/><path class="v" d="M204 42H232"/><text x="64" y="112" text-anchor="middle">1 · planet</text><text x="128" y="112" text-anchor="middle">2 · planet</text><text x="188" y="104" text-anchor="middle">3 · helisel</text><text x="8" y="12">C · DİŞLİ KUTUSU</text><text x="232" y="12" text-anchor="end">hızlı mil →</text></svg></figure>
         <h3>Dişli kutusu</h3>
         <p>Rotorun yavaş devrini jeneratörün istediği hıza çıkarır. Yağ sıcaklığı ve titreşim trendi, arızayı haftalar önce haber verir.</p>
         <dl><div><dt>Kademe</dt><dd>3</dd></div><div><dt>Yapı</dt><dd>planet-planet-helisel</dd></div><div><dt>Yataklama</dt><dd>üç nokta</dd></div></dl>
       </article>
-      <article class="bel">
+      <article class="bel v-parca">
+        <figure class="v-cizim" aria-hidden="true"><svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"><rect class="k" x="16" y="34" width="70" height="56"/><rect class="o" x="30" y="46" width="42" height="32"/><path class="o" d="M4 62H30"/><text x="51" y="66" text-anchor="middle">rotor</text><text x="51" y="102" text-anchor="middle">stator</text><path class="k" d="M86 42H200"/><path class="k" d="M72 78H96V104H122"/><rect class="k" x="122" y="92" width="52" height="24"/><text x="148" y="107" text-anchor="middle">AC/DC/AC</text><path class="k" d="M174 104H188V42"/><path class="v" d="M200 30V54M206 34V50M212 38V46"/><text x="206" y="68" text-anchor="middle">şebeke</text><text x="8" y="12">D · JENERATÖR</text><text x="232" y="12" text-anchor="end">DFIG · 660 V</text><text x="150" y="36" text-anchor="middle">3.000 kW</text></svg></figure>
         <h3>Jeneratör</h3>
         <p>Mekanik gücü elektriğe çevirir. Kısmi konvertör, değişken devirde şebekeye sabit frekans verir.</p>
         <dl><div><dt>Tip</dt><dd>çift beslemeli asenkron</dd></div><div><dt>Gerilim</dt><dd>660 V</dd></div><div><dt>Anma gücü</dt><dd>3.000 kW</dd></div></dl>
       </article>
     </div>
-    <p class="kaynak-not">Değerler Nordex N117/3000 Delta için üreticinin yayımladığı verilerdir. Kaynaklar N117 sayfasında listelenmiştir.</p>
+    <p class="kaynak-not">Değerler Nordex N117/3000 Delta için üreticinin yayımladığı verilerdir. Kaynaklar N117 sayfasında listelenmiştir. Çizimler ölçeksiz şemadır.</p>
   </div>
 </section>
 
@@ -197,17 +208,20 @@
       </div>
       <a class="ok" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn profili</a>
     </div>
-    <ol class="zaman">
-      <li><span class="yil">2021</span><div><h3>Bilgin Enerji</h3><p class="rol">Saha Servis Teknisyeni · <span>Mart 2021, devam ediyor</span> · <span>Aliağa ve Bergama RES, İzmir</span></p><p class="oz">Periyodik ve mekanik bakım, elektrik arıza tespiti. Gear box, konvertör, yaw ve pitch sistemlerinde arıza giderme; kanat kontrolleri ve büyük bileşen değişimlerinde saha ekibinde görev. Bakım sonrası devreye alma ve raporlama.</p></div></li>
-      <li><span class="yil">2021</span><div><h3>Fu Enerji</h3><p class="rol">Kurulum Uzmanı · <span>Ocak 2021, Mart 2021</span> · <span>İzmir</span></p><p class="oz">Rüzgâr türbini kurulum çalışmalarında mekanik montaj ve elektrik işleri. Kule, nacelle ve rotor montajında saha ekibiyle koordineli çalışma, bağlantı kontrolleri.</p></div></li>
-      <li><span class="yil">2020</span><div><h3>Lacivert Vinç</h3><p class="rol">Montaj Teknisyeni · <span>Eylül 2020, Kasım 2020</span> · <span>İstanbul</span></p><p class="oz">Vestas V136 3.45 MW türbinlerinde yer ve nacelle montaj çalışmaları. Mekanik montaj, tork ve gerdirme uygulamaları, elektrik arıza tespiti.</p></div></li>
-      <li><span class="yil">2019</span><div><h3>Genba Energy</h3><p class="rol">Servis Teknisyeni · <span>Eylül 2019, Aralık 2019</span> · <span>Balıkesir</span></p><p class="oz">Acciona Çerçikaya RES sahasında 18 adet 3 MW türbinin mekanik ve elektrik bakımı. Mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
-      <li><span class="yil">2018</span><div><h3>Siemens</h3><p class="rol">Depo Sorumlusu · <span>Kasım 2018, Ağustos 2019</span> · <span>Türkiye</span></p><p class="oz">Rüzgâr santrali saha deposunda malzeme ve yedek parça yönetimi. Bakım ekiplerine parça tedariki, stok takibi, giriş çıkış kayıtları ve sevkiyat koordinasyonu.</p></div></li>
-      <li><span class="yil">2018</span><div><h3>Monsson</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Nisan 2018, Ekim 2018</span> · <span>Balıkesir</span></p><p class="oz">Rüzgâr türbini montaj ve servis çalışmaları. Mekanik bakım, elektrik arıza tespiti, kurulum ve devreye alma süreçleri.</p></div></li>
-      <li><span class="yil">2017</span><div><h3>Hareket Proje Taşımacılığı</h3><p class="rol">Kurulum ve Elektrik Teknisyeni · <span>Haziran 2017, Nisan 2018</span> · <span>İstanbul</span></p><p class="oz">Türbin kurulum projelerinde mekanik montaj ve elektrik işleri. Kule ve nacelle montajı, kablolama ve bağlantı kontrolleri.</p></div></li>
-      <li><span class="yil">2016</span><div><h3>EU Montage Danmark ApS</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Ekim 2016, Nisan 2017</span> · <span>Avrupa sahaları</span></p><p class="oz">Avrupa&#x27;da rüzgâr türbini montaj ve servis projeleri. Uluslararası saha ekipleriyle mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
-      <li><span class="yil">2013</span><div><h3>Enercon GmbH</h3><p class="rol">Çelik Beton Kule Montaj Teknisyeni · <span>Şubat 2013, Ağustos 2016</span> · <span>Türkiye</span></p><p class="oz">Enercon türbinlerinde çelik beton hibrit kule montajı. Segment birleştirme, gerdirme ve mekanik montaj işleri. Sektördeki ilk pozisyonum.</p></div></li>
-    </ol>
+    <div class="v-zaman">
+  <div class="v-z-hat" aria-hidden="true"><i id="vZamanDolu"></i></div>
+  <ol class="zaman v-z">
+    <li><div class="v-z-yil"><b>2013</b><span>Şubat 2013 – Ağustos 2016</span></div><div class="v-z-kart"><h3>Enercon GmbH</h3><p class="rol">Çelik Beton Kule Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Enercon · çelik-beton hibrit kule</dd></div><div><dt>Sorumluluk</dt><dd>Enercon türbinlerinde çelik beton hibrit kule montajı. Segment birleştirme, gerdirme ve mekanik montaj işleri. Sektördeki ilk pozisyonum.</dd></div><div><dt>Konum</dt><dd>Türkiye</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2016</b><span>Ekim 2016 – Nisan 2017</span></div><div class="v-z-kart"><h3>EU Montage Danmark ApS</h3><p class="rol">Servis ve Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Mekanik montaj · elektrik arıza</dd></div><div><dt>Sorumluluk</dt><dd>Avrupa&#x27;da rüzgâr türbini montaj ve servis projeleri. Uluslararası saha ekipleriyle mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</dd></div><div><dt>Konum</dt><dd>Avrupa sahaları</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2017</b><span>Haziran 2017 – Nisan 2018</span></div><div class="v-z-kart"><h3>Hareket Proje Taşımacılığı</h3><p class="rol">Kurulum ve Elektrik Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Kule ve nasel montajı · kablolama</dd></div><div><dt>Sorumluluk</dt><dd>Türbin kurulum projelerinde mekanik montaj ve elektrik işleri. Kule ve nacelle montajı, kablolama ve bağlantı kontrolleri.</dd></div><div><dt>Konum</dt><dd>İstanbul</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2018</b><span>Nisan 2018 – Ekim 2018</span></div><div class="v-z-kart"><h3>Monsson</h3><p class="rol">Servis ve Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Montaj · servis · devreye alma</dd></div><div><dt>Sorumluluk</dt><dd>Rüzgâr türbini montaj ve servis çalışmaları. Mekanik bakım, elektrik arıza tespiti, kurulum ve devreye alma süreçleri.</dd></div><div><dt>Konum</dt><dd>Balıkesir</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2018</b><span>Kasım 2018 – Ağustos 2019</span></div><div class="v-z-kart"><h3>Siemens</h3><p class="rol">Depo Sorumlusu</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Saha deposu · yedek parça</dd></div><div><dt>Sorumluluk</dt><dd>Rüzgâr santrali saha deposunda malzeme ve yedek parça yönetimi. Bakım ekiplerine parça tedariki, stok takibi, giriş çıkış kayıtları ve sevkiyat koordinasyonu.</dd></div><div><dt>Konum</dt><dd>Türkiye</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2019</b><span>Eylül 2019 – Aralık 2019</span></div><div class="v-z-kart"><h3>Genba Energy</h3><p class="rol">Servis Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Acciona 3 MW · 18 türbin</dd></div><div><dt>Sorumluluk</dt><dd>Acciona Çerçikaya RES sahasında 18 adet 3 MW türbinin mekanik ve elektrik bakımı. Mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</dd></div><div><dt>Konum</dt><dd>Balıkesir</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2020</b><span>Eylül 2020 – Kasım 2020</span></div><div class="v-z-kart"><h3>Lacivert Vinç</h3><p class="rol">Montaj Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Vestas V136 3.45 MW</dd></div><div><dt>Sorumluluk</dt><dd>Vestas V136 3.45 MW türbinlerinde yer ve nacelle montaj çalışmaları. Mekanik montaj, tork ve gerdirme uygulamaları, elektrik arıza tespiti.</dd></div><div><dt>Konum</dt><dd>İstanbul</dd></div></dl></div></li>
+    <li><div class="v-z-yil"><b>2021</b><span>Ocak 2021 – Mart 2021</span></div><div class="v-z-kart"><h3>Fu Enerji</h3><p class="rol">Kurulum Uzmanı</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Kule, nasel ve rotor montajı</dd></div><div><dt>Sorumluluk</dt><dd>Rüzgâr türbini kurulum çalışmalarında mekanik montaj ve elektrik işleri. Kule, nacelle ve rotor montajında saha ekibiyle koordineli çalışma, bağlantı kontrolleri.</dd></div><div><dt>Konum</dt><dd>İzmir</dd></div></dl></div></li>
+    <li class="v-z-simdi"><div class="v-z-yil"><b>2021</b><span>Mart 2021 – devam ediyor</span></div><div class="v-z-kart"><h3>Bilgin Enerji</h3><p class="rol">Saha Servis Teknisyeni</p><dl class="v-z-dl"><div><dt>Teknoloji</dt><dd>Dişli kutusu · konvertör · yaw · pitch</dd></div><div><dt>Sorumluluk</dt><dd>Periyodik ve mekanik bakım, elektrik arıza tespiti. Gear box, konvertör, yaw ve pitch sistemlerinde arıza giderme; kanat kontrolleri ve büyük bileşen değişimlerinde saha ekibinde görev. Bakım sonrası devreye alma ve raporlama.</dd></div><div><dt>Konum</dt><dd>Aliağa ve Bergama RES, İzmir</dd></div></dl></div></li>
+  </ol>
+</div>
   </div>
 </section>
 
@@ -221,14 +235,14 @@
       </div>
     </div>
     <div class="gal">
-      <figure class="g1 bel" data-full="/assets/saha/ege-makilik.webp"><img src="/assets/saha/ege-makilik.webp" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption>Ege makiliği</figcaption></figure>
-      <figure class="g2 bel" data-full="/assets/saha/yildizlar.webp"><img src="/assets/saha/yildizlar.webp" alt="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini" loading="lazy" decoding="async"><figcaption>Gece vardiyası</figcaption></figure>
-      <figure class="g3 bel" data-full="/assets/saha/deniz-hatti.webp"><img src="/assets/saha/deniz-hatti.webp" alt="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri" loading="lazy" decoding="async"><figcaption>Deniz hattı</figcaption></figure>
-      <figure class="g4 bel" data-full="/assets/saha/alacakaranlik.webp"><img src="/assets/saha/alacakaranlik.webp" alt="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler" loading="lazy" decoding="async"><figcaption>Alacakaranlık</figcaption></figure>
-      <figure class="g5 bel" data-full="/assets/saha/bahar.webp"><img src="/assets/saha/bahar.webp" alt="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin" loading="lazy" decoding="async"><figcaption>Bahar</figcaption></figure>
-      <figure class="g6 bel" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption>Sahada</figcaption></figure>
-      <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption>Sırt hattı</figcaption></figure>
-      <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption>Saha yolu</figcaption></figure>
+      <figure class="g1 bel" data-full="/assets/saha/ege-makilik.webp"><img src="/assets/saha/ege-makilik.webp" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption data-aciklama="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha">Ege makiliği</figcaption></figure>
+      <figure class="g2 bel" data-full="/assets/saha/yildizlar.webp"><img src="/assets/saha/yildizlar.webp" alt="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini" loading="lazy" decoding="async"><figcaption data-aciklama="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini">Gece vardiyası</figcaption></figure>
+      <figure class="g3 bel" data-full="/assets/saha/deniz-hatti.webp"><img src="/assets/saha/deniz-hatti.webp" alt="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri" loading="lazy" decoding="async"><figcaption data-aciklama="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri">Deniz hattı</figcaption></figure>
+      <figure class="g4 bel" data-full="/assets/saha/alacakaranlik.webp"><img src="/assets/saha/alacakaranlik.webp" alt="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler" loading="lazy" decoding="async"><figcaption data-aciklama="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler">Alacakaranlık</figcaption></figure>
+      <figure class="g5 bel" data-full="/assets/saha/bahar.webp"><img src="/assets/saha/bahar.webp" alt="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin" loading="lazy" decoding="async"><figcaption data-aciklama="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin">Bahar</figcaption></figure>
+      <figure class="g6 bel" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption data-aciklama="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen">Sahada</figcaption></figure>
+      <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption data-aciklama="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi">Sırt hattı</figcaption></figure>
+      <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption data-aciklama="Araç camından görünen saha yolu ve ufuktaki iki türbin">Saha yolu</figcaption></figure>
     </div>
 
     <div class="an-video">
@@ -248,19 +262,103 @@
       <div>
         <p class="etiket">Saha notları</p>
         <h2 id="vakalar-b">Gerçek arızalar, adım adım</h2>
-        <p class="giris">Her vakada belirti, yapılan ölçümler, kök neden ve bir dahaki sefere ne yapılacağı.</p>
+        <p class="giris">Her vakada belirti, yapılan ölçümler, kök neden, çözüm ve çıkarılan ders. Bir vakayı açın; teşhis adım adım ilerler.</p>
       </div>
       <a class="ok" href="/saha-notlari/">Tüm saha notları</a>
     </div>
-    <ul class="vaka">
-      <li><a href="/saha-notlari/pitch-motor-yuksek-akim/"><span class="no">VAKA 01</span><span><b>Pitch motor yüksek akım</b><span class="oz">Pitch motor akımı 12 A yerine 18 A. Altı adımlık teşhis, kök neden redüktör yağ kaçağı.</span></span><span class="mdl">Nordex N117</span></a></li>
-      <li><a href="/saha-notlari/disli-kutusu-sicaklik/"><span class="no">VAKA 02</span><span><b>Dişli kutusu sıcaklık artışı</b><span class="oz">Yağ sıcaklığı 78–82 °C. Sekiz aylık trend analizi, mil keçesi kaynaklı yağ kaybı.</span></span><span class="mdl">Vestas V126</span></a></li>
-      <li><a href="/saha-notlari/yaw-salinimi/"><span class="no">VAKA 03</span><span><b>Yaw salınımı (hunting)</b><span class="oz">Nasel ±18° salınıyor. Yatak sürüklenmesi, sensör titremesi ve PLC parametre kayması.</span></span><span class="mdl">Enercon E92</span></a></li>
-      <li><a href="/saha-notlari/jenerator-sicaklik/"><span class="no">VAKA 04</span><span><b>Jeneratör sıcaklık alarmı</b><span class="oz">116 °C alarmı. IR termometre ile SCADA arasında 41 °C fark: sensör kalibrasyon kayması.</span></span><span class="mdl">Vestas V126</span></a></li>
-      <li><a href="/saha-notlari/converter-asiri-akim/"><span class="no">VAKA 05</span><span><b>Converter aşırı akım</b><span class="oz">Yalnızca 2,3 MW üzerinde atan aralıklı arıza. Gevşemiş DC bara bağlantısı ve güç eşiği yöntemi.</span></span><span class="mdl">Vestas V110</span></a></li>
-      <li><a href="/saha-notlari/yaw-yatak-asinmasi/"><span class="no">VAKA 06</span><span><b>Yaw yatağı aşınması</b><span class="oz">Alarmsız yakalanan hasar. Tıkalı yağlama hattı, tek sektörde aşınma, gres sektör haritası.</span></span><span class="mdl">Enercon E92</span></a></li>
-      <li><a href="/saha-notlari/kanat-titresimi/"><span class="no">VAKA 07</span><span><b>Kanat titreşimi</b><span class="oz">7–9 m/s bandında titreşim. 1P harmoniği, 2,5° pitch asimetrisi: kanat değil kalibrasyon.</span></span><span class="mdl">Vestas V126</span></a></li>
-    </ul>
+    <ol class="v-vaka">
+  <li class="v-vk acik">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="true" aria-controls="vk1"><span class="v-vk-no">VAKA 01</span><span class="v-vk-ad">Pitch motor yüksek akım</span><span class="v-vk-deger"><b>12 A → 18 A</b><small>Motor akımı · alarm eşiği 15 A</small></span><span class="v-vk-mdl">Nordex N117</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk1">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>“Pitch motor phase current high” alarmı. Türbin sabah açılamıyor, pitch sistemi devreye giremiyor.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Kanatlar elle döndürüldü: bir kanat diğerlerinden sıkı. Motor faz dirençleri 8,1–8,3 Ω, motor sağlam.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Redüktör gövdesinde 2 mm çatlak. Aylardır süren yağ kaybıyla dişliler yağsız çalışmış.</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Redüktör boşaltıldı, çatlak kaynatılıp NDT ile kontrol edildi, dişliler incelendi; filtre ve yağ yenilendi.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Son bakımda yağ seviyesi kontrol edilmemişti. Akım artışı SCADA trendinde 8 ay önceden görünüyordu.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/pitch-motor-yuksek-akim/">Vakanın tamamı</a>
+    </div>
+  </li>
+  <li class="v-vk">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk2"><span class="v-vk-no">VAKA 02</span><span class="v-vk-ad">Dişli kutusu sıcaklık artışı</span><span class="v-vk-deger"><b>60–65 → 78–82 °C</b><small>Komşu türbinler → bu türbin · alarm 85 °C</small></span><span class="v-vk-mdl">Vestas V126</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk2">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>11–15 m/s rüzgârda üç gün boyunca sıcaklık trendi anormal. SCADA uyarı veriyor, türbin durmuyor.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Yağ seviyesi dipstick minimumunun altında. Hava filtresi çevresinde yağlı toz.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Mil geçişindeki keçe arızalı; yağ dış yüzeyden sızıyor.</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Yağ tamamlandı, sızıntı 24 saat izlenip ölçüldü. Keçe değişimi ve yağ analizi planlı servise alındı.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Aylık listede yağ seviyesi, sızıntı izi ve son 24 saatin sıcaklık tepe değeri olmalı.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/disli-kutusu-sicaklik/">Vakanın tamamı</a>
+    </div>
+  </li>
+  <li class="v-vk">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk3"><span class="v-vk-no">VAKA 03</span><span class="v-vk-ad">Yaw salınımı (hunting)</span><span class="v-vk-deger"><b>±18°</b><small>Yaw açısı · 0,5–1 Hz osilasyon</small></span><span class="v-vk-mdl">Enercon E92</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk3">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>14 m/s rüzgârda nasel ileri geri salınıyor; SCADA’da yaw açısı sürekli değişiyor, ritmik vuruntu sesi.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Bir saatlik yaw açı trendi: ±18°, 0,5–1 Hz. Yaw motoru ve açı geri bildirimi test modunda denendi.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Üç etken birlikte: azalmış yatak yağlaması, gevşek rüzgâr yönü sensörü, normalin üstündeki PLC P kazancı (1,5).</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>P kazancı 0,6’ya alındı, sensör sıkılıp kalibre edildi, yatağa gres eklendi. İki hafta sonra salınım ±2–3°.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Hunting çoğu zaman tek bir sebep değildir: yazılım, sensör ve yağlama birlikte kontrol edilir.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/yaw-salinimi/">Vakanın tamamı</a>
+    </div>
+  </li>
+  <li class="v-vk">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk4"><span class="v-vk-no">VAKA 04</span><span class="v-vk-ad">Jeneratör sıcaklık alarmı</span><span class="v-vk-deger"><b>Δ 41 °C</b><small>IR 62 °C · SCADA 103 °C</small></span><span class="v-vk-mdl">Vestas V126</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk4">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>116 °C alarmı (eşik 115 °C). Türbin duruyor, resetten sonra normale dönüyor; alarm tekrar ediyor.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Durdurulan jeneratörde IR termometre 62 °C, SCADA 103 °C gösteriyor. Soğutma fanı çalışıyor.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>RTD sensörde kalibrasyon kayması. Jeneratör gerçekte aşırı ısınmıyor.</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>SCADA tarafında geçici düzeltme; sensörün kalibrasyonu veya değişimi planlandı.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Kontrol sistemi okumasıyla fiziksel ölçüm tutmuyorsa önce sensörü doğrulayın.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/jenerator-sicaklik/">Vakanın tamamı</a>
+    </div>
+  </li>
+  <li class="v-vk">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk5"><span class="v-vk-no">VAKA 05</span><span class="v-vk-ad">Converter aşırı akım</span><span class="v-vk-deger"><b>17 / 19 olay</b><small>Arızaların 2,4 MW üstündeki payı</small></span><span class="v-vk-mdl">Vestas V110</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk5">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>Aralıklı converter aşırı akım hatası. Reset sonrası normal; duran türbinde bütün ölçümler normal.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Fault log güç verisiyle eşleşti. Yük altında termal taramada DC barada komşularından ~30 °C sıcak nokta; cıvata torku OEM değerinin altında.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Gevşemiş DC bara bağlantısı. Yüksek akımda ısınıp komşu IGBT modülünü de zorluyor.</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Bağlantı temizlenip OEM torkuyla sıkıldı, kabindeki tüm bağlantılar kontrol edildi, zorlanan IGBT değiştirildi. Arada 2,2 MW sınırla üretim sürdü.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Aralıklı arızada hatayı değil, çıktığı koşulu arayın. Termal taramayı türbin üretirken yapın.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/converter-asiri-akim/">Vakanın tamamı</a>
+    </div>
+  </li>
+  <li class="v-vk">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk6"><span class="v-vk-no">VAKA 06</span><span class="v-vk-ad">Yaw yatağı aşınması</span><span class="v-vk-deger"><b>Alarm yok</b><small>Rutin greslemede yakalandı</small></span><span class="v-vk-mdl">Enercon E92</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk6">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>Türbin normal üretimde. Greslemede bazı noktalardan koyu gri, metalik gres; belirli bir konumda sürtünme sesi.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Her noktanın gresi ayrı toplandı. Metal üç komşu noktada yoğun (sektör haritası); mıknatıs testi çelik parçacığı doğruladı.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Otomatik yağlama hattı tıkalı; yatağın bir sektörü gressiz kalıp aşınmış.</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Hat açıldı, sektör temiz gres çıkana kadar greslendi, üç ay kısa aralıklı takip. Yatak değişimi gerekmedi.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Tahliye gresini nokta nokta toplayın. Pompanın çalışması gresin her noktaya ulaştığı anlamına gelmez.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/yaw-yatak-asinmasi/">Vakanın tamamı</a>
+    </div>
+  </li>
+  <li class="v-vk">
+    <h3 class="v-vk-bas"><button type="button" aria-expanded="false" aria-controls="vk7"><span class="v-vk-no">VAKA 07</span><span class="v-vk-ad">Kanat titreşimi</span><span class="v-vk-deger"><b>1P · 2,5°</b><small>7–9 m/s bandında</small></span><span class="v-vk-mdl">Vestas V126</span><i class="v-vk-arti" aria-hidden="true"></i></button></h3>
+    <div class="v-vk-panel" id="vk7">
+      <ol class="v-akis">
+        <li style="--i:0"><span class="v-ak-e"><b>Belirti</b><small>SYMPTOM</small></span><p>Yalnız 7–9 m/s bandında hissedilir nasel titreşimi. Kanatlarda görünür hasar yok.</p></li>
+        <li style="--i:1"><span class="v-ak-e"><b>Ölçüm</b><small>MEASUREMENT</small></span><p>Titreşim rotor deviriyle birlikte kaydedildi: baskın bileşen 1P, 3P normal. Rotor dengesizliği.</p></li>
+        <li style="--i:2"><span class="v-ak-e"><b>Kök neden</b><small>ROOT CAUSE</small></span><p>Bir kanadın pitch enkoderinde kalibrasyon kayması; kanat yaklaşık 2,5° farklı açıda çalışıyor.</p></li>
+        <li style="--i:3"><span class="v-ak-e"><b>Çözüm</b><small>SOLUTION</small></span><p>Üç kanadın enkoder sıfırları fiziksel referansla yeniden ayarlandı. 1P düştü, üretim o bantta normale döndü.</p></li>
+        <li style="--i:4"><span class="v-ak-e"><b>Ders</b><small>LESSON</small></span><p>Kanat incelemesine karar vermeden önce spektruma bakın; pitch açısını fiziksel olarak ölçün.</p></li>
+      </ol>
+      <a class="ok" href="/saha-notlari/kanat-titresimi/">Vakanın tamamı</a>
+    </div>
+  </li>
+</ol>
   </div>
 </section>
 
@@ -365,15 +463,23 @@
       <a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener"><span class="k-ust">YouTube</span><span class="d">The Turbine Tech</span></a>
       <div><span class="k-ust">Saha</span><span class="d">Aliağa ve Bergama RES, İzmir</span></div>
     </div>
-    <p class="kapanis">Makineyi <em>çalışır</em> tutun.</p>
   </div>
 </section>
 
 </main>
-<footer><div class="wrap mono"><p>Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</p><p>Aliağa, İzmir</p>
-<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
-<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
-<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
+<footer class="v-son">
+ <div class="v-son-ic">
+  <p class="v-son-ust" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Göbek 120 m</span><span>2013 → bugün</span></p>
+  <p class="v-son-ad">Soner Soylu</p>
+  <p class="v-son-alan">Wind Turbine Field Service</p>
+  <p class="v-son-yer">Aliağa · İzmir · Türkiye</p>
+  <p class="v-son-imza">Makineyi <em>çalışır</em> tutun.</p>
+  <div class="v-son-alt">
+   <p class="v-son-sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
+   <p class="v-son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" hreflang="en" lang="en">English</a></p>
+  </div>
+ </div>
+</footer>
 <div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><button type="button" class="lb-ok" id="lbOnce" aria-label="Önceki fotoğraf">←</button><img alt="" src=""><button type="button" class="lb-ok" id="lbSonra" aria-label="Sonraki fotoğraf">→</button><p class="lb-alt" id="lbAlt"></p></div>
 <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
  <div class="ara-ic">
@@ -388,7 +494,7 @@
  </div>
 </div>
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+<script src="/assets/ara.js?v=10ccf569" defer></script>
 <script>
 (function () {
   /* mobil menü */
@@ -408,7 +514,7 @@
   function ac(i) { onceki = document.activeElement; goster(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('lbx').focus(); }
   function kapat() { lb.classList.remove('open'); li.src = ''; document.body.style.overflow = ''; if (onceki) onceki.focus(); }
   kareler.forEach(function (f, i) {
-    f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', 'Büyüt: ' + f.querySelector('img').alt);
+    var fi = f.querySelector('img'); fi.tabIndex = 0; fi.setAttribute('role', 'button'); fi.setAttribute('aria-label', 'Büyüt: ' + fi.alt);
     f.addEventListener('click', function () { ac(i); });
     f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ac(i); } });
   });
@@ -442,7 +548,7 @@
         (function adim(t) { var k = Math.min(1, (t - t0) / sure); dugum.nodeValue = String(Math.round(hedef * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(adim); })(t0);
       });
     }, { threshold: 0.6 });
-    document.querySelectorAll('.ana .rakam dd').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
+    document.querySelectorAll('.ana .rakam dd:not(.v-alt)').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
   }
 
   /* ---- kapak: türbinin içine (canlı güneş ve rüzgâr; sahne: assets/deneyim/arayuz.js) ---- */
@@ -516,6 +622,7 @@
 
 })();
 </script>
-<script src="/assets/deneyim/arayuz.js?v=f99ea7e1" defer></script>
+<script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
+<script src="/assets/vitrin.js?v=7b455e73" defer></script>
 </body>
 </html>

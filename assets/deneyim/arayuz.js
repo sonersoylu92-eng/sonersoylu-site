@@ -104,6 +104,65 @@
     if (ri !== sonRay) { rayLi.forEach(function (li, i) { li.classList.toggle('etkin', i === ri); li.classList.toggle('gecildi', i < ri); }); sonRay = ri; }
   }
 
+  /* ---- teknik işaret noktaları: sahnede parçanın üstünde küçük halka, üstüne gelince bilgi ---- */
+  var NOKTA = {
+    anaYatak:  { no: 'MAIN BEARING', ad: 'Ana yatak', t: 'Rotorun ağırlığını ve rüzgâr itkisini taşır; torku ana mile bırakır.', u: '/n117/', ul: 'N117 turu' },
+    disli:     { no: 'GEARBOX', ad: 'Dişli kutusu', t: 'Üç kademe: iki planet, bir helisel. Rotor devrini jeneratörün istediği hıza çıkarır.', u: '/sistemler/disli-kutusu/', ul: 'Dişli kutusu sistemi' },
+    jenerator: { no: 'GENERATOR', ad: 'Jeneratör', t: '3.000 kW, çift beslemeli asenkron, 660 V.', u: '/sistemler/jenerator/', ul: 'Jeneratör sistemi' },
+    konvertor: { no: 'CONVERTER', ad: 'Konvertör', t: 'Jeneratörün rotor devresini besler; değişen rüzgârda şebekeye sabit frekans verir.', u: '/sistemler/jenerator/', ul: 'Jeneratör ve konvertör' },
+    yaw:       { no: 'YAW', ad: 'Yaw sistemi', t: 'Naseli rüzgâra döndüren halka yatak ve motorlar. Güç kabloları bu açıklıktan kuleye iner.', u: '/sistemler/yaw/', ul: 'Yaw sistemi' },
+    pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.', u: '/sistemler/pitch/', ul: 'Pitch sistemi' }
+  };
+  var sahne = bolum.querySelector('.dny-sahne');
+  var katman = document.createElement('div'); katman.className = 'v-noktalar'; sahne.appendChild(katman);
+  var pencere = document.createElement('div'); pencere.className = 'v-nokta-bilgi'; pencere.setAttribute('role', 'tooltip'); pencere.id = 'vNoktaBilgi'; sahne.appendChild(pencere);
+  var noktaEl = {}, acikNokta = null, sonListe = [];
+  Object.keys(NOKTA).forEach(function (id) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'v-nokta';
+    b.setAttribute('aria-label', NOKTA[id].ad + ': teknik bilgi'); b.setAttribute('aria-describedby', 'vNoktaBilgi');
+    b.innerHTML = '<i aria-hidden="true"></i><span>' + NOKTA[id].ad + '</span>';
+    var ac = function () { noktaAc(id); }, kapa = function () { if (!pencere.matches(':hover')) noktaKapa(id); };
+    b.addEventListener('mouseenter', ac); b.addEventListener('focus', ac);
+    b.addEventListener('mouseleave', function () { setTimeout(kapa, 120); }); b.addEventListener('blur', function () { setTimeout(kapa, 120); });
+    b.addEventListener('click', function (e) { e.preventDefault(); acikNokta === id ? noktaKapa(id, true) : noktaAc(id); });
+    katman.appendChild(b); noktaEl[id] = b;
+  });
+  pencere.addEventListener('mouseleave', function () { if (acikNokta) noktaKapa(acikNokta); });
+  function noktaAc(id) {
+    var n = NOKTA[id]; acikNokta = id;
+    pencere.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p><a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a>';
+    pencere.classList.add('gor'); konumla();
+  }
+  function noktaKapa(id, zorla) { if (acikNokta === id || zorla) { acikNokta = null; pencere.classList.remove('gor'); } }
+  function konumla() {
+    if (!acikNokta) return;
+    var n = null; sonListe.forEach(function (o) { if (o.id === acikNokta) n = o; });
+    if (!n || !n.gor) { noktaKapa(acikNokta, true); return; }
+    var w = sahne.clientWidth, h = sahne.clientHeight, sag = n.x > w - 300, ust = n.y > h - 220;
+    pencere.style.transform = 'translate3d(' + Math.round(sag ? n.x + 14 : n.x - 14) + 'px,' + Math.round(ust ? n.y - 22 : n.y + 22) + 'px,0)' +
+      (sag ? ' translateX(-100%)' : '') + (ust ? ' translateY(-100%)' : '');
+  }
+  function noktalar(liste) {
+    sonListe = liste;
+    liste.forEach(function (n) {
+      var b = noktaEl[n.id]; if (!b) return;
+      b.classList.toggle('gor', n.gor);
+      b.tabIndex = n.gor ? 0 : -1;
+      if (n.gor) b.style.transform = 'translate3d(' + Math.round(n.x) + 'px,' + Math.round(n.y) + 'px,0)';
+    });
+    konumla();
+  }
+
+  /* ---- irtifa cetveli: dış bölümde 0–120 m ---- */
+  var irtifa = document.createElement('div'); irtifa.className = 'v-irtifa'; irtifa.setAttribute('aria-hidden', 'true');
+  irtifa.innerHTML = '<div class="v-ir-cetvel">' + [120, 90, 60, 30, 0].map(function (m) { return '<i style="--y:' + (m / 120) + '"><b>' + m + '</b></i>'; }).join('') + '<span class="v-ir-ok"></span></div><p class="v-ir-b">İRTİFA · m</p>';
+  sahne.appendChild(irtifa);
+  var irOk = irtifa.querySelector('.v-ir-ok');
+  function irtifaGuncelle(p, y) {
+    irtifa.classList.toggle('gor', p > 0.02 && p < 0.47);
+    irOk.style.setProperty('--y', Math.max(0, Math.min(1, y / 120)).toFixed(3));
+  }
+
   var basla = $('dnyBasla');
   function statik(dugme) {
     bolum.classList.remove('uc-boyut', 'hazir');
@@ -114,10 +173,11 @@
     bolum.classList.remove('statik');
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
-    import('/assets/deneyim/deneyim.js?v=b748bc74').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=cdc4c247').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
-        ilerleme: ilerleme,
+        ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
+        noktalar: noktalar,
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
         hazir: function () { bolum.classList.add('hazir'); },
         hata: function () { statik(false); }

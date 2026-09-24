@@ -1129,3 +1129,47 @@ a.sz:focus-visible{outline:2px solid var(--beacon);outline-offset:3px}
  font-variation-settings:"opsz" 40;font-size:1.25rem;letter-spacing:-.01em}
 
 .komsu-ana span:last-child{font-size:.875rem;line-height:1.65;color:var(--muted)}
+
+/* ===================== vitrin: menü katmanları (tüm sayfalar) ===================== */
+/* açılır menü açıkken sayfa hafifçe bulanıklaşır; tıklamalar sayfaya geçer */
+@media (min-width:768px){
+  body:has(.dd.acik)::after{content:"";position:fixed;inset:0;z-index:45;pointer-events:none;background:rgba(6,8,10,.22);
+    -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:vPerde .25s ease both}
+  @keyframes vPerde{from{opacity:0}to{opacity:1}}
+}
+nav.desk .ddm{box-shadow:0 18px 50px -20px rgba(0,0,0,.45)}
+/* mobil: tam ekran menü, arka plan bulanık, kaydırma kilitli */
+@media (max-width:767px){
+  #mobmenu.open{position:absolute;left:0;right:0;top:100%;height:calc(100dvh - 100%);overflow-y:auto;overscroll-behavior:contain;
+    background:var(--ground);
+    padding-bottom:calc(2rem + env(safe-area-inset-bottom));animation:vMenu .28s cubic-bezier(.16,1,.3,1) both}
+  #mobmenu.open nav{display:grid;grid-template-columns:1fr;column-gap:2rem}
+  #mobmenu.open a{padding:.95rem 0;font-size:.8125rem;transition:color .2s,padding-left .25s cubic-bezier(.16,1,.3,1)}
+  #mobmenu.open a:active{padding-left:.4rem;color:var(--ink)}
+  #mobmenu.open .mgrup{padding-top:1.6rem}
+  html:has(#mobmenu.open){overflow:hidden}
+  @keyframes vMenu{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+}
+@media (max-width:767px) and (min-width:560px){ #mobmenu.open nav{grid-template-columns:1fr 1fr} }
+@media (prefers-reduced-motion:reduce){ #mobmenu.open,body:has(.dd.acik)::after{animation:none} }
+/* ---- vitrin: arama komut paleti ---- */
+#araKat{background:rgba(10,12,14,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:clamp(.75rem,6vh,4.5rem) 1rem 1rem}
+.ara-ic{padding:1rem;background:var(--ground);border:1px solid var(--line);box-shadow:0 30px 80px -30px rgba(0,0,0,.55);animation:vPalet .22s cubic-bezier(.16,1,.3,1) both}
+@keyframes vPalet{from{opacity:0;transform:translateY(-6px) scale(.985)}to{opacity:1;transform:none}}
+.ara-sonuc{background:none;border:0;gap:.75rem;max-height:min(62vh,38rem);overflow-y:auto;overscroll-behavior:contain}
+.ara-grup{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.ara-gb{margin:0;display:flex;justify-content:space-between;gap:1rem;padding:.5rem 1rem;background:var(--ground);font-family:var(--mono);font-size:.5625rem;letter-spacing:.2em;text-transform:uppercase;color:var(--beacon)}
+.ara-gb span+span{color:var(--muted)}
+.ara-sonuc a.ara-tumu{border:1px dashed var(--line);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase}
+.ara-sonuc a.ara-tumu .b{font-size:.6875rem;color:var(--ink)}
+.ara-oneri{margin-top:1rem}
+.ara-oneri[hidden]{display:none}
+.ara-oneri .ara-gb{padding:0 0 .6rem;background:none}
+.ara-cip{display:flex;flex-wrap:wrap;gap:.4rem}
+.ara-cip button{border:1px solid var(--line);background:var(--surface);padding:.45rem .75rem;font-family:var(--sans);font-size:.875rem;color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s}
+.ara-cip button:hover,.ara-cip button:focus-visible{border-color:var(--beacon);background:var(--raise)}
+.ara-kisa{margin-top:.9rem;display:flex;flex-wrap:wrap;gap:.3rem 1.2rem}
+.ara-kisa a{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem 0;border-bottom:1px solid var(--line)}
+.ara-kisa a:hover{color:var(--ink);border-color:var(--ink)}
+#araSayfaSonuc{max-height:none;overflow:visible}
+@media (prefers-reduced-motion:reduce){.ara-ic{animation:none}}
