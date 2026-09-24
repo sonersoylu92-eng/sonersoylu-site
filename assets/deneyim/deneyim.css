@@ -158,3 +158,12 @@ html:has(body.dny-body){background:#07090b}
 .dny-bolum.statik .dny-atla{display:none}
 @media (max-width:820px){.dny-ana.uc-boyut{height:1050vh}}
 @media (max-width:820px){.dny-ana:not(.gecti) .dny-atla{top:auto;bottom:clamp(1.3rem,4vh,2.6rem)}}
+/* alçak ekranlar (dizüstü, tarayıcı çubukları açık): canlı rüzgâr kutusu tek satır, düğmelerle çakışmasın */
+@media (min-width:821px) and (max-height:780px){
+  .dny-ana .hud{width:auto;max-width:36rem;padding:.6rem .8rem .55rem}
+  .dny-ana .hud .egri{display:none!important}
+  .dny-ana .hud dl{grid-template-columns:repeat(4,auto);gap:.2rem 1.2rem;margin-top:.45rem}
+  .dny-ana .hud dd b{font-size:1.05rem}
+  .dny-ana .hud-alt{margin-top:.4rem}
+  .dny-ana .dny-kapak-alt .rakam{margin-top:1rem}
+}
