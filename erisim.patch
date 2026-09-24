@@ -1,0 +1,1240 @@
+diff --git a/ara/index.html b/ara/index.html
+index 31eb905..b676ac7 100644
+--- a/ara/index.html
++++ b/ara/index.html
+@@ -94,7 +94,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/araclar/civata-germe/index.html b/araclar/civata-germe/index.html
+index 0cf9c57..ae708aa 100644
+--- a/araclar/civata-germe/index.html
++++ b/araclar/civata-germe/index.html
+@@ -187,7 +187,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/araclar/index.html b/araclar/index.html
+index 4224f2b..a8a1e6f 100644
+--- a/araclar/index.html
++++ b/araclar/index.html
+@@ -69,6 +69,8 @@
+ .out .hero dd{font-size:2rem;color:var(--beacon)}
+ .verdict{background:var(--surface)!important;font-size:.875rem;line-height:1.65;color:var(--ink)}
+ .verdict b{font-weight:500}
++.out .verdict dd{margin:0;font:inherit;letter-spacing:normal;color:inherit;line-height:inherit}
++
+ 
+ .formula{margin-top:1.5rem;border-left:2px solid var(--line);padding:.15rem 0 .15rem 1.1rem}
+ .formula p{font-family:var(--mono);font-size:.8125rem;line-height:1.9;color:var(--ink)}
+@@ -209,7 +211,7 @@
+      <div><dt>Saatte</dt><dd id="a1o2">—<small>km/s</small></dd></div>
+      <div><dt>TSR (λ)</dt><dd id="a1o3">—</dd></div>
+      <div><dt>Açısal hız</dt><dd id="a1o4">—<small>rad/s</small></dd></div>
+-     <div class="wide verdict" id="a1v1">—</div>
++     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a1v1">—</dd></div>
+     </dl>
+    </div>
+   </div>
+@@ -260,7 +262,7 @@
+      <div><dt>Süpürme alanı</dt><dd id="a2o4">—<small>m²</small></dd></div>
+      <div><dt>Güç yoğunluğu</dt><dd id="a2o5">—<small>W/m²</small></dd></div>
+      <div><dt>Hava yoğunluğu</dt><dd id="a2o6">—<small>kg/m³</small></dd></div>
+-     <div class="wide verdict" id="a2v1">—</div>
++     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a2v1">—</dd></div>
+     </dl>
+    </div>
+   </div>
+@@ -311,7 +313,7 @@
+      <div><dt>Logaritmik yasa ile</dt><dd id="a3o2">—<small>m/s</small></dd></div>
+      <div><dt>Hız artışı</dt><dd id="a3o3">—<small>%</small></dd></div>
+      <div><dt>Güçteki artış</dt><dd id="a3o4">—<small>%</small></dd></div>
+-     <div class="wide verdict" id="a3vd">—</div>
++     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a3vd">—</dd></div>
+     </dl>
+    </div>
+   </div>
+@@ -358,7 +360,7 @@
+      <div><dt>Eşdeğer tam yük saati</dt><dd id="a4o2">—<small>saat</small></dd></div>
+      <div><dt>Ortalama çıkış gücü</dt><dd id="a4o3">—<small>kW</small></dd></div>
+      <div><dt>Teorik üst sınır üretim</dt><dd id="a4o4">—<small>MWh</small></dd></div>
+-     <div class="wide verdict" id="a4v1">—</div>
++     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a4v1">—</dd></div>
+     </dl>
+    </div>
+   </div>
+@@ -418,7 +420,7 @@
+      <div><dt>Eşdeğer tam yük saati</dt><dd id="a5o4">—<small>saat</small></dd></div>
+      <div><dt>Weibull ölçek param. c</dt><dd id="a5o5">—<small>m/s</small></dd></div>
+      <div><dt>Yaklaşık hane sayısı</dt><dd id="a5o6">—<small>hane</small></dd></div>
+-     <div class="wide verdict" id="a5v1">—</div>
++     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a5v1">—</dd></div>
+     </dl>
+    </div>
+   </div>
+@@ -497,7 +499,7 @@
+      <div><dt>Akma sınırı</dt><dd id="a6o4">—<small>MPa</small></dd></div>
+      <div><dt>Kopma yükü (yaklaşık)</dt><dd id="a6o5">—<small>kN</small></dd></div>
+      <div><dt>Kuru sıkılsaydı tork</dt><dd id="a6o6">—<small>Nm</small></dd></div>
+-     <div class="wide verdict" id="a6v1">—</div>
++     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a6v1">—</dd></div>
+     </dl>
+    </div>
+   </div>
+@@ -879,7 +881,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/ariza/index.html b/ariza/index.html
+index 60166e7..fdbb168 100644
+--- a/ariza/index.html
++++ b/ariza/index.html
+@@ -349,7 +349,7 @@ const AGAC = {"D":{"durdu":{"s":"Kule dibi panosunda ya da SCADA'da aktif bir al
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/asistan/index.html b/asistan/index.html
+index b78188f..440d227 100644
+--- a/asistan/index.html
++++ b/asistan/index.html
+@@ -166,7 +166,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/assets/ara.js b/assets/ara.js
+index 829b97c..a617a9d 100644
+--- a/assets/ara.js
++++ b/assets/ara.js
+@@ -70,7 +70,7 @@
+       return;
+     }
+     hedef.innerHTML = liste.map(function (e) {
+-      return '<a href="' + kac(e[3]) + '"><span class="k">' + kac(dizin.k[e[0]]) + '</span>' +
++      return '<a role="option" aria-selected="false" href="' + kac(e[3]) + '"><span class="k">' + kac(dizin.k[e[0]]) + '</span>' +
+              '<span class="b">' + isaretle(e[1], q) + '</span>' +
+              (e[2] ? '<span class="o">' + kac(e[2]) + '</span>' : '') + '</a>';
+     }).join('');
+@@ -135,11 +135,11 @@
+   function gez(yon) {
+     var a = cikti.querySelectorAll('a');
+     if (!a.length) return;
+-    if (sec >= 0 && a[sec]) a[sec].classList.remove('sec');
++    if (sec >= 0 && a[sec]) { a[sec].classList.remove('sec'); a[sec].setAttribute('aria-selected', 'false'); }
+     sec = (sec + yon + a.length + 1) % (a.length + 1) - 1;
+     if (sec < 0) sec = yon > 0 ? 0 : a.length - 1;
+     if (sec >= a.length) sec = 0;
+-    a[sec].classList.add('sec');
++    a[sec].classList.add('sec'); a[sec].setAttribute('aria-selected', 'true');
+     a[sec].scrollIntoView({ block: 'nearest' });
+   }
+ 
+diff --git a/deneyim/index.html b/deneyim/index.html
+index 59360fc..54aee81 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -130,7 +130,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ 
+ <script>
+ (function () {
+diff --git a/deniz-ustu/index.html b/deniz-ustu/index.html
+index 8b2c041..bf7a01f 100644
+--- a/deniz-ustu/index.html
++++ b/deniz-ustu/index.html
+@@ -431,7 +431,7 @@ deniz üstü notlarımı ekledikçe burası genişleyecek.</p></div>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/arizaya-yaklasim/index.html b/egitim/arizaya-yaklasim/index.html
+index 8031b95..d9a074c 100644
+--- a/egitim/arizaya-yaklasim/index.html
++++ b/egitim/arizaya-yaklasim/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/belge/index.html b/egitim/belge/index.html
+index 5b1ca27..1238e5c 100644
+--- a/egitim/belge/index.html
++++ b/egitim/belge/index.html
+@@ -150,7 +150,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/bu-is-ne-is/index.html b/egitim/bu-is-ne-is/index.html
+index 8590861..6a8ece0 100644
+--- a/egitim/bu-is-ne-is/index.html
++++ b/egitim/bu-is-ne-is/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/elektrik-ve-kontrol/index.html b/egitim/elektrik-ve-kontrol/index.html
+index cf2b65e..cbe6dd8 100644
+--- a/egitim/elektrik-ve-kontrol/index.html
++++ b/egitim/elektrik-ve-kontrol/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/guvenlik/index.html b/egitim/guvenlik/index.html
+index 702bcad..4498856 100644
+--- a/egitim/guvenlik/index.html
++++ b/egitim/guvenlik/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/index.html b/egitim/index.html
+index e311230..f1696be 100644
+--- a/egitim/index.html
++++ b/egitim/index.html
+@@ -271,7 +271,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/kariyer/index.html b/egitim/kariyer/index.html
+index 58cb787..a4030dd 100644
+--- a/egitim/kariyer/index.html
++++ b/egitim/kariyer/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/mekanik-is/index.html b/egitim/mekanik-is/index.html
+index 378471c..a1024de 100644
+--- a/egitim/mekanik-is/index.html
++++ b/egitim/mekanik-is/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/periyodik-bakim/index.html b/egitim/periyodik-bakim/index.html
+index 5a11e1a..5339117 100644
+--- a/egitim/periyodik-bakim/index.html
++++ b/egitim/periyodik-bakim/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/egitim/turbin-nasil-calisir/index.html b/egitim/turbin-nasil-calisir/index.html
+index ff5d59e..399f0a0 100644
+--- a/egitim/turbin-nasil-calisir/index.html
++++ b/egitim/turbin-nasil-calisir/index.html
+@@ -214,7 +214,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/en/assistant/index.html b/en/assistant/index.html
+index 1948db9..45f2630 100644
+--- a/en/assistant/index.html
++++ b/en/assistant/index.html
+@@ -165,7 +165,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/blade-vibration/index.html b/en/field-notes/blade-vibration/index.html
+index e649c3a..a6f35d6 100644
+--- a/en/field-notes/blade-vibration/index.html
++++ b/en/field-notes/blade-vibration/index.html
+@@ -183,7 +183,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/converter-overcurrent/index.html b/en/field-notes/converter-overcurrent/index.html
+index ecfdfec..b098a40 100644
+--- a/en/field-notes/converter-overcurrent/index.html
++++ b/en/field-notes/converter-overcurrent/index.html
+@@ -180,7 +180,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/gearbox-temperature/index.html b/en/field-notes/gearbox-temperature/index.html
+index 5e3cc2f..f161a58 100644
+--- a/en/field-notes/gearbox-temperature/index.html
++++ b/en/field-notes/gearbox-temperature/index.html
+@@ -174,7 +174,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/generator-temperature/index.html b/en/field-notes/generator-temperature/index.html
+index 517a857..39fa73d 100644
+--- a/en/field-notes/generator-temperature/index.html
++++ b/en/field-notes/generator-temperature/index.html
+@@ -175,7 +175,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/index.html b/en/field-notes/index.html
+index 17e1f48..7790e7a 100644
+--- a/en/field-notes/index.html
++++ b/en/field-notes/index.html
+@@ -181,7 +181,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/pitch-motor-high-current/index.html b/en/field-notes/pitch-motor-high-current/index.html
+index 463b0f6..61b43ea 100644
+--- a/en/field-notes/pitch-motor-high-current/index.html
++++ b/en/field-notes/pitch-motor-high-current/index.html
+@@ -163,7 +163,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/yaw-bearing-wear/index.html b/en/field-notes/yaw-bearing-wear/index.html
+index ee791fc..e73950c 100644
+--- a/en/field-notes/yaw-bearing-wear/index.html
++++ b/en/field-notes/yaw-bearing-wear/index.html
+@@ -178,7 +178,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/field-notes/yaw-hunting/index.html b/en/field-notes/yaw-hunting/index.html
+index d242d29..c73a007 100644
+--- a/en/field-notes/yaw-hunting/index.html
++++ b/en/field-notes/yaw-hunting/index.html
+@@ -165,7 +165,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/gearbox/index.html b/en/systems/gearbox/index.html
+index 7c4c06b..38bd0d0 100644
+--- a/en/systems/gearbox/index.html
++++ b/en/systems/gearbox/index.html
+@@ -166,7 +166,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/generator/index.html b/en/systems/generator/index.html
+index 2c7aa93..d51eb39 100644
+--- a/en/systems/generator/index.html
++++ b/en/systems/generator/index.html
+@@ -158,7 +158,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/index.html b/en/systems/index.html
+index f2415a6..6a47cd8 100644
+--- a/en/systems/index.html
++++ b/en/systems/index.html
+@@ -169,7 +169,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/pitch/index.html b/en/systems/pitch/index.html
+index ea70056..ce98861 100644
+--- a/en/systems/pitch/index.html
++++ b/en/systems/pitch/index.html
+@@ -161,7 +161,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/systems/yaw/index.html b/en/systems/yaw/index.html
+index 5317866..b306a44 100644
+--- a/en/systems/yaw/index.html
++++ b/en/systems/yaw/index.html
+@@ -159,7 +159,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/tools/bolt-tension/index.html b/en/tools/bolt-tension/index.html
+index 5fc7934..b90c65e 100644
+--- a/en/tools/bolt-tension/index.html
++++ b/en/tools/bolt-tension/index.html
+@@ -213,7 +213,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/e70/index.html b/en/turbines/enercon/e70/index.html
+index bfb6a28..b923828 100644
+--- a/en/turbines/enercon/e70/index.html
++++ b/en/turbines/enercon/e70/index.html
+@@ -198,7 +198,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/e82/index.html b/en/turbines/enercon/e82/index.html
+index 995b1fb..c14ee37 100644
+--- a/en/turbines/enercon/e82/index.html
++++ b/en/turbines/enercon/e82/index.html
+@@ -214,7 +214,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/e92/index.html b/en/turbines/enercon/e92/index.html
+index 6f3d769..c42a4d9 100644
+--- a/en/turbines/enercon/e92/index.html
++++ b/en/turbines/enercon/e92/index.html
+@@ -220,7 +220,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/enercon/index.html b/en/turbines/enercon/index.html
+index 94c4883..8b85566 100644
+--- a/en/turbines/enercon/index.html
++++ b/en/turbines/enercon/index.html
+@@ -129,7 +129,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/index.html b/en/turbines/index.html
+index f1ece75..882a869 100644
+--- a/en/turbines/index.html
++++ b/en/turbines/index.html
+@@ -160,7 +160,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/index.html b/en/turbines/vestas/index.html
+index b4971ba..975779d 100644
+--- a/en/turbines/vestas/index.html
++++ b/en/turbines/vestas/index.html
+@@ -129,7 +129,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/v110/index.html b/en/turbines/vestas/v110/index.html
+index 564a80b..94bc5b4 100644
+--- a/en/turbines/vestas/v110/index.html
++++ b/en/turbines/vestas/v110/index.html
+@@ -200,7 +200,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/v126/index.html b/en/turbines/vestas/v126/index.html
+index a1bda1f..11f3b4f 100644
+--- a/en/turbines/vestas/v126/index.html
++++ b/en/turbines/vestas/v126/index.html
+@@ -209,7 +209,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/en/turbines/vestas/v136/index.html b/en/turbines/vestas/v136/index.html
+index 8439857..07dee2e 100644
+--- a/en/turbines/vestas/v136/index.html
++++ b/en/turbines/vestas/v136/index.html
+@@ -216,7 +216,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/gelir/index.html b/gelir/index.html
+index 8bcb8a9..51d6996 100644
+--- a/gelir/index.html
++++ b/gelir/index.html
+@@ -206,7 +206,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/gizlilik/index.html b/gizlilik/index.html
+index 30599ae..832bf1c 100644
+--- a/gizlilik/index.html
++++ b/gizlilik/index.html
+@@ -220,7 +220,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/gwo/index.html b/gwo/index.html
+index 5558576..7b1cf8e 100644
+--- a/gwo/index.html
++++ b/gwo/index.html
+@@ -681,7 +681,7 @@ ekipmanı belli bir yük aralığına göre sertifikalıdır.</b></p>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/index.html b/index.html
+index f120ea1..444399f 100644
+--- a/index.html
++++ b/index.html
+@@ -388,7 +388,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function () {
+   /* mobil menü */
+diff --git a/kodlar/index.html b/kodlar/index.html
+index 07a948c..800ed6b 100644
+--- a/kodlar/index.html
++++ b/kodlar/index.html
+@@ -304,7 +304,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/maas/index.html b/maas/index.html
+index 0c8f5ec..0680621 100644
+--- a/maas/index.html
++++ b/maas/index.html
+@@ -200,6 +200,8 @@
+ .verdict p{font-size:.875rem;line-height:1.7;color:var(--ink)}
+ .verdict p+p{margin-top:.6rem}
+ .verdict b{font-weight:500;color:var(--beacon)}
++.out .verdict dd{margin:0;font:inherit;letter-spacing:normal;color:inherit;line-height:inherit}
++.out dd.pay-dd{margin:0;font:inherit;font-size:inherit}
+ .warn{margin-top:1.75rem;border-left:2px solid var(--beacon);background:var(--surface);
+  padding:1.15rem 1.35rem}
+ .warn p{font-size:.875rem;line-height:1.7;color:var(--muted)}
+@@ -473,10 +475,9 @@ ne kadarının koşullu</b> olduğunu görmek.</p>
+    <div><dt>Yıllık toplam</dt><dd id="oYil">—</dd></div>
+    <div><dt>Sabit / koşullu dağılım</dt>
+     <dd id="oPayYazi" style="font-size:.9375rem">—</dd>
+-    <div class="pay"><i class="s" id="oBarS" style="width:50%"></i><i class="d" id="oBarD" style="width:50%"></i></div>
+-    <div class="paylbl"><span>Sabit</span><span>Koşullu</span></div></div>
+-   <div class="verdict" id="oYorum"><p>Rakamları girin; teklifin nesi sağlam,
+-    nesi kırılgan söyleyeyim.</p></div>
++    <dd class="pay-dd"><div class="pay"><i class="s" id="oBarS" style="width:50%"></i><i class="d" id="oBarD" style="width:50%"></i></div><div class="paylbl"><span>Sabit</span><span>Koşullu</span></div></dd></div>
++   <div class="verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="oYorum"><p>Rakamları girin; teklifin nesi sağlam,
++    nesi kırılgan söyleyeyim.</p></dd></div>
+   </dl>
+  </div>
+ </div>
+@@ -669,7 +670,7 @@ romantikleştirmeden anlatayım.</p>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/n117/index.html b/n117/index.html
+index 031e576..e45958d 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -921,7 +921,7 @@ if (S) {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/n90/index.html b/n90/index.html
+index b72511c..335bf51 100644
+--- a/n90/index.html
++++ b/n90/index.html
+@@ -66,7 +66,7 @@
+ .factgrid dd{margin-top:.5rem;font-size:1rem;color:var(--ink)}
+ 
+ .spec{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+-.spec .row{display:grid;grid-template-columns:minmax(0,1fr);gap:.35rem;background:var(--surface);padding:1rem 1.1rem}
++.spec .row{margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.35rem;background:var(--surface);padding:1rem 1.1rem}
+ .spec .row dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+ .spec .row dd{font-size:.9375rem;color:var(--ink)}
+ .spec h3{grid-column:1/-1;background:var(--raise);padding:.85rem 1.1rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400}
+@@ -247,53 +247,53 @@
+     <h2>Teknik künye</h2>
+     <p class="mono">Nordex N90/2500 · LS ve HS varyantları</p>
+   </div>
+-  <dl class="spec">
++  <div class="spec">
+     <h3>Rotor</h3>
+-    <div class="row"><dt>Çap</dt><dd>90,0 m</dd></div>
+-    <div class="row"><dt>Süpürme alanı</dt><dd>6.362 m²</dd></div>
+-    <div class="row"><dt>Kanat sayısı</dt><dd>3</dd></div>
+-    <div class="row"><dt>Kanat uzunluğu</dt><dd>43,8 m</dd></div>
+-    <div class="row"><dt>Kanat malzemesi</dt><dd>Cam elyaf takviyeli plastik, ≈ 10,2 t</dd></div>
+-    <div class="row"><dt>Rotor devri</dt><dd>maks. 18,1 d/dk</dd></div>
+-    <div class="row"><dt>Kanat ucu hızı</dt><dd>≈ 85 m/s</dd></div>
+-    <div class="row"><dt>Rotor ağırlığı</dt><dd>≈ 55 t</dd></div>
++    <dl class="row"><dt>Çap</dt><dd>90,0 m</dd></dl>
++    <dl class="row"><dt>Süpürme alanı</dt><dd>6.362 m²</dd></dl>
++    <dl class="row"><dt>Kanat sayısı</dt><dd>3</dd></dl>
++    <dl class="row"><dt>Kanat uzunluğu</dt><dd>43,8 m</dd></dl>
++    <dl class="row"><dt>Kanat malzemesi</dt><dd>Cam elyaf takviyeli plastik, ≈ 10,2 t</dd></dl>
++    <dl class="row"><dt>Rotor devri</dt><dd>maks. 18,1 d/dk</dd></dl>
++    <dl class="row"><dt>Kanat ucu hızı</dt><dd>≈ 85 m/s</dd></dl>
++    <dl class="row"><dt>Rotor ağırlığı</dt><dd>≈ 55 t</dd></dl>
+ 
+     <h3>Göbek ve pitch</h3>
+-    <div class="row"><dt>Göbek malzemesi</dt><dd>EN-GJS-400-18U-LT küresel grafitli dökme demir</dd></div>
+-    <div class="row"><dt>Göbek + pitch ağırlığı</dt><dd>≈ 25 t</dd></div>
+-    <div class="row"><dt>Pitch sistemi</dt><dd>Elektrikli, kanat başına bağımsız</dd></div>
+-    <div class="row"><dt>Acil durum</dt><dd>Enerji depolama ile bayrak konumuna alma</dd></div>
++    <dl class="row"><dt>Göbek malzemesi</dt><dd>EN-GJS-400-18U-LT küresel grafitli dökme demir</dd></dl>
++    <dl class="row"><dt>Göbek + pitch ağırlığı</dt><dd>≈ 25 t</dd></dl>
++    <dl class="row"><dt>Pitch sistemi</dt><dd>Elektrikli, kanat başına bağımsız</dd></dl>
++    <dl class="row"><dt>Acil durum</dt><dd>Enerji depolama ile bayrak konumuna alma</dd></dl>
+ 
+     <h3>Güç aktarma</h3>
+-    <div class="row"><dt>Ana şaft</dt><dd>42CrMo4 / 34CrNiMo6, ≈ 11,8 t</dd></div>
+-    <div class="row"><dt>Ana yatak</dt><dd>Kendinden hizalamalı makaralı rulman</dd></div>
+-    <div class="row"><dt>Dişli kutusu</dt><dd>Çok kademeli planet + 1 alın kademesi, ≈ 18,5 t</dd></div>
+-    <div class="row"><dt>Çevrim oranı</dt><dd>1:77,44 (LS) · 1:71,88 (HS)</dd></div>
+-    <div class="row"><dt>Mekanik fren</dt><dd>Yüksek devir milinde disk, Ø 1.030 mm</dd></div>
++    <dl class="row"><dt>Ana şaft</dt><dd>42CrMo4 / 34CrNiMo6, ≈ 11,8 t</dd></dl>
++    <dl class="row"><dt>Ana yatak</dt><dd>Kendinden hizalamalı makaralı rulman</dd></dl>
++    <dl class="row"><dt>Dişli kutusu</dt><dd>Çok kademeli planet + 1 alın kademesi, ≈ 18,5 t</dd></dl>
++    <dl class="row"><dt>Çevrim oranı</dt><dd>1:77,44 (LS) · 1:71,88 (HS)</dd></dl>
++    <dl class="row"><dt>Mekanik fren</dt><dd>Yüksek devir milinde disk, Ø 1.030 mm</dd></dl>
+ 
+     <h3>Jeneratör ve elektrik</h3>
+-    <div class="row"><dt>Tip</dt><dd>Çift beslemeli asenkron, ≈ 12 t</dd></div>
+-    <div class="row"><dt>Güç / gerilim</dt><dd>2.500 kW · 660 V</dd></div>
+-    <div class="row"><dt>Devir aralığı</dt><dd>740 – 1.310 d/dk</dd></div>
+-    <div class="row"><dt>Şebeke bağlantısı</dt><dd>IGBT dönüştürücü, 50 Hz</dd></div>
+-    <div class="row"><dt>Kontrol</dt><dd>Nordex Control 2, çift anemometre, SCADA, UPS</dd></div>
++    <dl class="row"><dt>Tip</dt><dd>Çift beslemeli asenkron, ≈ 12 t</dd></dl>
++    <dl class="row"><dt>Güç / gerilim</dt><dd>2.500 kW · 660 V</dd></dl>
++    <dl class="row"><dt>Devir aralığı</dt><dd>740 – 1.310 d/dk</dd></dl>
++    <dl class="row"><dt>Şebeke bağlantısı</dt><dd>IGBT dönüştürücü, 50 Hz</dd></dl>
++    <dl class="row"><dt>Kontrol</dt><dd>Nordex Control 2, çift anemometre, SCADA, UPS</dd></dl>
+ 
+     <h3>Kule ve yaw</h3>
+-    <div class="row"><dt>Kule tipi</dt><dd>Boru kesitli çelik (S355) / hibrit</dd></div>
+-    <div class="row"><dt>Göbek yükseklikleri</dt><dd>70 · 75 · 80 · 100 · 120 m</dd></div>
+-    <div class="row"><dt>Segment sayısı</dt><dd>4 – 6 (yüksekliğe göre)</dd></div>
+-    <div class="row"><dt>Kule ağırlığı</dt><dd>maks. 319 t</dd></div>
+-    <div class="row"><dt>Yaw tahriki</dt><dd>2 asenkron motor, 4 kademeli planet redüktör</dd></div>
+-    <div class="row"><dt>Yaw hızı</dt><dd>≈ 0,5°/s</dd></div>
++    <dl class="row"><dt>Kule tipi</dt><dd>Boru kesitli çelik (S355) / hibrit</dd></dl>
++    <dl class="row"><dt>Göbek yükseklikleri</dt><dd>70 · 75 · 80 · 100 · 120 m</dd></dl>
++    <dl class="row"><dt>Segment sayısı</dt><dd>4 – 6 (yüksekliğe göre)</dd></dl>
++    <dl class="row"><dt>Kule ağırlığı</dt><dd>maks. 319 t</dd></dl>
++    <dl class="row"><dt>Yaw tahriki</dt><dd>2 asenkron motor, 4 kademeli planet redüktör</dd></dl>
++    <dl class="row"><dt>Yaw hızı</dt><dd>≈ 0,5°/s</dd></dl>
+ 
+     <h3>İşletme</h3>
+-    <div class="row"><dt>Nominal güç</dt><dd>2.500 kW</dd></div>
+-    <div class="row"><dt>Devreye giriş</dt><dd>3,0 m/s</dd></div>
+-    <div class="row"><dt>Nominal rüzgâr</dt><dd>13,5 m/s</dd></div>
+-    <div class="row"><dt>Kesme rüzgârı</dt><dd>25,0 m/s</dd></div>
+-    <div class="row"><dt>Rüzgâr sınıfı</dt><dd>IEC 2a / DIBt 3 (LS) · IEC 1b (HS)</dd></div>
+-    <div class="row"><dt>Toplam ağırlık</dt><dd>≈ 465 t</dd></div>
+-  </dl>
++    <dl class="row"><dt>Nominal güç</dt><dd>2.500 kW</dd></dl>
++    <dl class="row"><dt>Devreye giriş</dt><dd>3,0 m/s</dd></dl>
++    <dl class="row"><dt>Nominal rüzgâr</dt><dd>13,5 m/s</dd></dl>
++    <dl class="row"><dt>Kesme rüzgârı</dt><dd>25,0 m/s</dd></dl>
++    <dl class="row"><dt>Rüzgâr sınıfı</dt><dd>IEC 2a / DIBt 3 (LS) · IEC 1b (HS)</dd></dl>
++    <dl class="row"><dt>Toplam ağırlık</dt><dd>≈ 465 t</dd></dl>
++  </div>
+ 
+   <p class="srcs">
+     Model, üreticinin teknik tanımı ve kamuya açık türbin veritabanındaki değerlerden ölçeklendi. Bir CAD kopyası değil; ölçüleri doğru, ayrıntıları anlatım için sadeleştirilmiş bir gösterimdir.
+@@ -834,7 +834,7 @@ setTimeout(() => document.getElementById('loading').classList.add('gone'), 260);
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/nasil-olunur/index.html b/nasil-olunur/index.html
+index 876ec58..74ee694 100644
+--- a/nasil-olunur/index.html
++++ b/nasil-olunur/index.html
+@@ -746,7 +746,7 @@ de bırakmadım.</p></div>
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/rehber/index.html b/rehber/index.html
+index 4ff8080..a9c85d7 100644
+--- a/rehber/index.html
++++ b/rehber/index.html
+@@ -455,11 +455,11 @@
+     <span class="k">Devam&#305;</span>
+     <h2>Bu sayfay&#305; okuduktan sonra</h2>
+   </div>
+-  <div class="cards" style="margin-top:0">
++  <dl class="cards" style="margin:0">
+     <div><dt>S&#246;zl&#252;k</dt><dd>Yukar&#305;da ge&#231;en b&#252;t&#252;n terimlerin T&#252;rk&#231;e&#8211;&#304;ngilizce kar&#351;&#305;l&#305;&#287;&#305; ve k&#305;sa a&#231;&#305;klamas&#305;. 148 terim, aranabilir. <a class="arrow" style="margin-top:.8rem" href="/sozluk/">S&#246;zl&#252;&#287;&#252; a&#231; <i>&#8594;</i></a></dd></div>
+     <div><dt>Hesaplama ara&#231;lar&#305;</dt><dd>Kanat ucu h&#305;z&#305;, kapasite fakt&#246;r&#252;, y&#305;ll&#305;k &#252;retim ve c&#305;vata torku hesab&#305; &mdash; form&#252;lleriyle birlikte. <a class="arrow" style="margin-top:.8rem" href="/araclar/">Ara&#231;lar&#305; a&#231; <i>&#8594;</i></a></dd></div>
+     <div><dt>3B t&#252;rbin modeli</dt><dd>Anlat&#305;lan makinenin temelden kanada a&#351;ama a&#351;ama kurulumu, d&#246;nd&#252;r&#252;lebilir bir modelde. <a class="arrow" style="margin-top:.8rem" href="/n90/">Modeli a&#231; <i>&#8594;</i></a></dd></div>
+-  </div>
++  </dl>
+ </section>
+ <section class="wrap gsec" id="iletisim">
+   <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>İletişim</p>
+@@ -519,7 +519,7 @@ document.getElementById('subForm').addEventListener('submit', async function (e)
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/ruzgar/index.html b/ruzgar/index.html
+index aeb621b..e8b5f1c 100644
+--- a/ruzgar/index.html
++++ b/ruzgar/index.html
+@@ -347,7 +347,7 @@ table.egri thead th{font-size:.625rem;letter-spacing:.12em;text-transform:upperc
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/saha-notlari/converter-asiri-akim/index.html b/saha-notlari/converter-asiri-akim/index.html
+index 8d932ff..44e85bd 100644
+--- a/saha-notlari/converter-asiri-akim/index.html
++++ b/saha-notlari/converter-asiri-akim/index.html
+@@ -156,7 +156,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/disli-kutusu-sicaklik/index.html b/saha-notlari/disli-kutusu-sicaklik/index.html
+index c25b79d..9a1569b 100644
+--- a/saha-notlari/disli-kutusu-sicaklik/index.html
++++ b/saha-notlari/disli-kutusu-sicaklik/index.html
+@@ -274,7 +274,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/index.html b/saha-notlari/index.html
+index 3782e16..b6383f8 100644
+--- a/saha-notlari/index.html
++++ b/saha-notlari/index.html
+@@ -170,7 +170,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/jenerator-sicaklik/index.html b/saha-notlari/jenerator-sicaklik/index.html
+index 26eddfd..4e777d0 100644
+--- a/saha-notlari/jenerator-sicaklik/index.html
++++ b/saha-notlari/jenerator-sicaklik/index.html
+@@ -278,7 +278,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/kanat-titresimi/index.html b/saha-notlari/kanat-titresimi/index.html
+index 29862ff..8d04c3a 100644
+--- a/saha-notlari/kanat-titresimi/index.html
++++ b/saha-notlari/kanat-titresimi/index.html
+@@ -158,7 +158,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/pitch-motor-yuksek-akim/index.html b/saha-notlari/pitch-motor-yuksek-akim/index.html
+index dedd2fa..5e9df4e 100644
+--- a/saha-notlari/pitch-motor-yuksek-akim/index.html
++++ b/saha-notlari/pitch-motor-yuksek-akim/index.html
+@@ -274,7 +274,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/yaw-salinimi/index.html b/saha-notlari/yaw-salinimi/index.html
+index dba797d..17541a8 100644
+--- a/saha-notlari/yaw-salinimi/index.html
++++ b/saha-notlari/yaw-salinimi/index.html
+@@ -245,7 +245,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/saha-notlari/yaw-yatak-asinmasi/index.html b/saha-notlari/yaw-yatak-asinmasi/index.html
+index 3eb3330..a097e5f 100644
+--- a/saha-notlari/yaw-yatak-asinmasi/index.html
++++ b/saha-notlari/yaw-yatak-asinmasi/index.html
+@@ -153,7 +153,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/disli-kutusu/index.html b/sistemler/disli-kutusu/index.html
+index 6f40a61..9e4eeb5 100644
+--- a/sistemler/disli-kutusu/index.html
++++ b/sistemler/disli-kutusu/index.html
+@@ -238,7 +238,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/index.html b/sistemler/index.html
+index 811bc58..4a6abc5 100644
+--- a/sistemler/index.html
++++ b/sistemler/index.html
+@@ -176,7 +176,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/jenerator/index.html b/sistemler/jenerator/index.html
+index a3ef3e1..5cb773d 100644
+--- a/sistemler/jenerator/index.html
++++ b/sistemler/jenerator/index.html
+@@ -233,7 +233,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/pitch/index.html b/sistemler/pitch/index.html
+index 1ac6206..80711fb 100644
+--- a/sistemler/pitch/index.html
++++ b/sistemler/pitch/index.html
+@@ -177,7 +177,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sistemler/yaw/index.html b/sistemler/yaw/index.html
+index 8ce18a6..0af73cc 100644
+--- a/sistemler/yaw/index.html
++++ b/sistemler/yaw/index.html
+@@ -218,7 +218,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/sor/index.html b/sor/index.html
+index 3dd8365..61fd0ea 100644
+--- a/sor/index.html
++++ b/sor/index.html
+@@ -341,7 +341,7 @@ button.plate[disabled]{opacity:.5;cursor:default}
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
+diff --git a/sozluk/index.html b/sozluk/index.html
+index 0a01823..ec9eb23 100644
+--- a/sozluk/index.html
++++ b/sozluk/index.html
+@@ -1737,7 +1737,7 @@ document.getElementById('burger').addEventListener('click', function () {
+   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  </div>
+ </div>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+ <script src="/assets/canli.js?v=8be3b4e9" defer></script>
+diff --git a/sw.js b/sw.js
+index c1555b7..46968c5 100644
+--- a/sw.js
++++ b/sw.js
+@@ -19,7 +19,7 @@ const ONBELLEGE = [
+   '/sor/',
+   '/ara/',
+   '/assets/arama.json?v=726ee1c8',
+-  '/assets/ara.js?v=e75b84b7',
++  '/assets/ara.js?v=0e7eee0c',
+   '/assets/kaydirma.js?v=23cd28e6',
+   '/style.css?v=ade96bc2',
+   '/assets/site.js?v=2083a619',
+diff --git a/turbinler/enercon/e70/index.html b/turbinler/enercon/e70/index.html
+index 239f820..bb3cdd2 100644
+--- a/turbinler/enercon/e70/index.html
++++ b/turbinler/enercon/e70/index.html
+@@ -240,7 +240,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/enercon/e82/index.html b/turbinler/enercon/e82/index.html
+index b6999b9..ab753dd 100644
+--- a/turbinler/enercon/e82/index.html
++++ b/turbinler/enercon/e82/index.html
+@@ -197,7 +197,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/enercon/e92/index.html b/turbinler/enercon/e92/index.html
+index 7a07a27..431b163 100644
+--- a/turbinler/enercon/e92/index.html
++++ b/turbinler/enercon/e92/index.html
+@@ -195,7 +195,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/enercon/index.html b/turbinler/enercon/index.html
+index b6cb6bc..79cec18 100644
+--- a/turbinler/enercon/index.html
++++ b/turbinler/enercon/index.html
+@@ -124,7 +124,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/index.html b/turbinler/index.html
+index 9a807f0..b63ef27 100644
+--- a/turbinler/index.html
++++ b/turbinler/index.html
+@@ -167,7 +167,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/index.html b/turbinler/vestas/index.html
+index 1f7693b..5e2c7a8 100644
+--- a/turbinler/vestas/index.html
++++ b/turbinler/vestas/index.html
+@@ -130,7 +130,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/v110/index.html b/turbinler/vestas/v110/index.html
+index bc4b53f..7eace0a 100644
+--- a/turbinler/vestas/v110/index.html
++++ b/turbinler/vestas/v110/index.html
+@@ -256,7 +256,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/v126/index.html b/turbinler/vestas/v126/index.html
+index 4a433f8..8b544bd 100644
+--- a/turbinler/vestas/v126/index.html
++++ b/turbinler/vestas/v126/index.html
+@@ -237,7 +237,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/turbinler/vestas/v136/index.html b/turbinler/vestas/v136/index.html
+index 4823a9c..5d1610e 100644
+--- a/turbinler/vestas/v136/index.html
++++ b/turbinler/vestas/v136/index.html
+@@ -189,7 +189,7 @@
+ </footer>
+ 
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ document.getElementById('burger').addEventListener('click', function () {
+   var open = this.getAttribute('aria-expanded') === 'true';
+diff --git a/veri/index.html b/veri/index.html
+index c7749d1..6379286 100644
+--- a/veri/index.html
++++ b/veri/index.html
+@@ -127,7 +127,7 @@
+  </div>
+ </div>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+-<script src="/assets/ara.js?v=e75b84b7" defer></script>
++<script src="/assets/ara.js?v=0e7eee0c" defer></script>
+ <script>
+ (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
+ if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";
