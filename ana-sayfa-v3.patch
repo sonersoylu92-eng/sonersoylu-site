@@ -1,0 +1,1989 @@
+diff --git a/404.html b/404.html
+index 3e9f4f2..0e54816 100644
+--- a/404.html
++++ b/404.html
+@@ -8,7 +8,7 @@
+ <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
+ .mid .in{max-width:36rem}
+diff --git a/ana.css b/ana.css
+index c28f71c..bee4576 100644
+--- a/ana.css
++++ b/ana.css
+@@ -4,13 +4,13 @@
+  */
+ .ana{
+   --a-bg:#0b0e10;--a-surface:#12171b;--a-raise:#182026;--a-line:#232a31;
+-  --a-ink:#e9edf0;--a-muted:#9aa3ab;--a-faint:#6f7880;
++  --a-ink:#e9edf0;--a-muted:#9aa3ab;--a-faint:#8a939b;
+   --a-accent:#c7ff32;--a-warn:#f2b233;--a-err:#ff6b5e;
+   --a-max:76rem;--a-gut:clamp(1rem,4vw,2rem);
+   background:var(--a-bg);color:var(--a-ink);color-scheme:dark;
+   font-family:var(--sans);
+ }
+-body.ana-body{background:#0b0e10}
++body.ana-body,:root[data-vardiya] body.ana-body{background:#0b0e10}
+ .ana *,.ana *::before,.ana *::after{box-sizing:border-box}
+ .ana a{color:inherit}
+ .ana :focus-visible{outline:2px solid var(--a-accent);outline-offset:3px}
+@@ -116,6 +116,8 @@ body.ana-body{background:#0b0e10}
+ 
+ /* ---- koyu sayfa için altbilgi ve ışık kutusu ---- */
+ body.ana-body footer{background:#070909;border-top:1px solid #1b2127;color:#9aa3ab}
++body.ana-body footer .mono,body.ana-body footer .mono a{color:#9aa3ab}
++:root body.ana-body header,:root[data-vardiya] body.ana-body header{background:#f6f4f0;backdrop-filter:none}
+ body.ana-body footer a:hover{color:#e9edf0}
+ body.ana-body #lb{background:rgba(7,9,9,.96)}
+ 
+@@ -137,3 +139,136 @@ body.ana-body #lb{background:rgba(7,9,9,.96)}
+ @media (prefers-reduced-motion:reduce){
+   .ana *{transition:none!important}
+ }
++
++/* ===================== v3: kuleye tırmanış kapağı ===================== */
++/* üst menü: ana sayfada koyu (aynı bileşenler, koyu değişkenlerle) */
++body.ana-body header{--ink:#e9edf0;--muted:#aab3ba;--line:#262e35;--surface:#141a1f;--raise:#1b2328;--ground:#0b0e10;
++  background:rgba(11,14,16,.82);border-bottom-color:#1d252b;backdrop-filter:blur(12px)}
++:root[data-vardiya] body.ana-body header,:root body.ana-body header{background:rgba(11,14,16,.82);backdrop-filter:blur(12px)}
++body.ana-body header .plate{background:#c7ff32;border-color:#c7ff32;color:#0b0e10}
++body.ana-body header .plate:hover{background:#d8ff6a}
++
++.ana .kule{position:relative;border-top:0;padding:0;height:min(86svh,54rem);background:#0b0e10}
++.ana .kule.uc-boyut{height:380vh}
++.ana .kule-sahne{position:sticky;top:0;height:100svh;max-height:100vh;overflow:hidden;isolation:isolate;
++  background:#0b0e10 url(/assets/saha/ege-levha.webp) center/cover no-repeat}
++.ana .kule.statik .kule-sahne{position:relative;height:100%}
++.ana .kule-sahne canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-2;opacity:0;transition:opacity 1.2s ease}
++.ana .kule-sahne canvas.hazir{opacity:1}
++.ana .kule-sahne::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
++  background:linear-gradient(180deg,rgba(11,14,16,.55) 0,rgba(11,14,16,0) 26%,rgba(11,14,16,0) 52%,rgba(11,14,16,.72) 84%,#0b0e10 100%)}
++
++/* canlı gösterge */
++.ana .hud{position:absolute;top:calc(72px + 1.25rem);left:var(--a-gut);width:min(19rem,calc(100% - 2*var(--a-gut)));
++  padding:.9rem 1rem .8rem;background:rgba(11,14,16,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);
++  font-family:var(--mono);color:#e9edf0}
++.ana .hud[hidden]{display:none}
++.ana .hud-ust{margin:0;display:flex;align-items:center;gap:.5rem;font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:#c7ff32}
++.ana .nabiz{width:.45rem;height:.45rem;border-radius:50%;background:#c7ff32;box-shadow:0 0 0 0 rgba(199,255,50,.6);animation:nabiz 2s infinite}
++@keyframes nabiz{70%{box-shadow:0 0 0 .5rem rgba(199,255,50,0)}100%{box-shadow:0 0 0 0 rgba(199,255,50,0)}}
++.ana .hud dl{margin:.75rem 0 0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem 1rem}
++.ana .hud dt{font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:#aab3ba}
++.ana .hud dd{margin:.15rem 0 0;font-size:.8125rem;color:#e9edf0;font-variant-numeric:tabular-nums}
++.ana .hud dd b{font-family:var(--sans);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin-right:.15rem}
++.ana .hud-alt{margin:.7rem 0 0;font-size:.625rem;line-height:1.5;color:#aab3ba}
++.ana .hud-alt a{color:#e9edf0;border-bottom:1px solid rgba(255,255,255,.3)}
++
++/* kot göstergesi (kameranın gerçek yüksekliği) */
++.ana .kot{position:absolute;right:var(--a-gut);top:calc(72px + 2rem);bottom:clamp(12rem,30vh,16rem);width:4.5rem;
++  display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;font-family:var(--mono);color:#e9edf0;pointer-events:none}
++.ana .kule.statik .kot{display:none}
++.ana .kot-deger{font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:#aab3ba}
++.ana .kot-deger b{font-family:var(--sans);font-size:1.6rem;font-weight:600;letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums}
++.ana .kot-cetvel{position:relative;flex:1;width:100%;border-right:1px solid rgba(255,255,255,.35)}
++.ana .kot-cetvel i{position:absolute;right:.6rem;bottom:calc(var(--y)*100%);transform:translateY(50%);font-style:normal;font-size:.625rem;color:#aab3ba}
++.ana .kot-cetvel i::after{content:"";position:absolute;right:-.6rem;top:50%;width:.4rem;height:1px;background:rgba(255,255,255,.5)}
++.ana .kot-ok{position:absolute;right:-.35rem;bottom:calc(var(--y,0)*100%);width:.7rem;height:.7rem;transform:translateY(50%) rotate(45deg);background:#c7ff32;box-shadow:0 0 12px rgba(199,255,50,.7);transition:bottom .15s linear}
++
++/* alt bant: duraklar üst üste, etkin olan görünür */
++.ana .kule-alt{position:absolute;left:0;right:0;bottom:0;padding:0 var(--a-gut) clamp(1.5rem,4vh,2.75rem);max-width:var(--a-max);margin:0 auto;display:grid}
++.ana .durak{grid-area:1/1;align-self:end;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
++.ana .durak.etkin{opacity:1;transform:none;pointer-events:auto}
++.ana .kule.statik .durak[data-d="1"],.ana .kule.statik .durak[data-d="2"],.ana .kule.statik .durak[data-d="3"]{display:none}
++.ana .durak .etiket{color:#c7ff32}
++.ana .durak-m{margin:.6rem 0 0;max-width:36ch;font-size:clamp(1.15rem,2.1vw,1.6rem);line-height:1.35;letter-spacing:-.015em;color:#fff;text-wrap:balance}
++.ana .durak-m a{color:#c7ff32;border-bottom:1px solid rgba(199,255,50,.4);white-space:nowrap}
++.ana .kaydir{margin:1.25rem 0 0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba;display:flex;align-items:center;gap:.6rem}
++.ana .kaydir::before{content:"";width:1px;height:1.6rem;background:linear-gradient(#c7ff32,transparent);animation:inis 1.8s ease-in-out infinite}
++@keyframes inis{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
++.ana .kule.statik .kaydir{display:none}
++.ana .kule .rakam{margin-top:clamp(1.5rem,4vh,2.5rem)}
++
++/* ===================== kısaca ===================== */
++.ana .giris-izgara{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:end}
++.ana .soz{margin:1.25rem 0 0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(1.6rem,3.3vw,2.7rem);line-height:1.22;letter-spacing:-.02em;color:#f2f4f5;text-wrap:pretty;position:relative;padding-left:clamp(1.25rem,3vw,2rem);border-left:2px solid #c7ff32}
++.ana .giris-yan .giris{margin-top:0}
++.ana .platform{list-style:none;margin:1.75rem 0 0;padding:0;border-top:1px solid var(--a-line)}
++.ana .platform li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--a-line)}
++.ana .platform b{font-weight:600;color:var(--a-ink)}
++.ana .platform span{font-family:var(--mono);font-size:.8125rem;color:var(--a-muted);text-align:right}
++
++/* ===================== saha geçmişi ===================== */
++.ana .zaman{list-style:none;margin:3rem 0 0;padding:0;position:relative}
++.ana .zaman::before{content:"";position:absolute;left:4.25rem;top:.4rem;bottom:.4rem;width:1px;background:var(--a-line)}
++.ana .zaman li{display:grid;grid-template-columns:4.25rem minmax(0,1fr);gap:0 2rem;padding:0 0 2rem;position:relative}
++.ana .zaman li::before{content:"";position:absolute;left:calc(4.25rem - .3rem);top:.45rem;width:.6rem;height:.6rem;border-radius:50%;background:#0b0e10;border:1px solid var(--a-faint)}
++.ana .zaman li:first-child::before{background:#c7ff32;border-color:#c7ff32;box-shadow:0 0 12px rgba(199,255,50,.6)}
++.ana .zaman .yil{font-family:var(--mono);font-size:.8125rem;color:var(--a-accent);padding-top:.1rem}
++.ana .zaman h3{margin:0;font-size:1.1875rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
++.ana .zaman .rol{margin:.3rem 0 0;font-size:.875rem;color:var(--a-muted)}
++.ana .zaman .rol span{color:var(--a-faint)}
++.ana .zaman .oz{margin:.55rem 0 0;max-width:72ch;font-size:.9375rem;line-height:1.6;color:var(--a-muted)}
++
++/* ===================== video ===================== */
++.ana .an-video{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:center;margin-top:3rem;padding-top:3rem;border-top:1px solid var(--a-line)}
++.ana .an-video-kutu{width:min(18rem,70vw);aspect-ratio:9/16;max-width:100%;background:#000;border:1px solid var(--a-line)}
++.ana .an-video-kutu iframe{width:100%;height:100%;border:0;display:block}
++.ana .an-video-b{margin:.75rem 0 1.5rem;font-size:clamp(1.4rem,2.6vw,2rem);font-weight:600;letter-spacing:-.03em;line-height:1.15;color:var(--a-ink);max-width:18ch}
++
++/* ===================== yazılar ===================== */
++.ana .yazilar{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,15.5rem),1fr));gap:1rem;margin-top:3rem}
++.ana .yazi{display:flex;flex-direction:column;gap:.6rem;padding:1.4rem;border:1px solid var(--a-line);background:var(--a-surface);transition:border-color .2s,transform .3s cubic-bezier(.16,1,.3,1)}
++.ana .yazi:hover{border-color:var(--a-accent);transform:translateY(-2px)}
++.ana .yazi .k-ust{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--a-faint)}
++.ana .yazi b{font-size:1.125rem;line-height:1.3;font-weight:600;letter-spacing:-.02em;color:var(--a-ink);text-wrap:balance}
++.ana .yazi .a{font-size:.9rem;line-height:1.55;color:var(--a-muted)}
++.ana .yazi .git{margin-top:auto;padding-top:.4rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--a-accent)}
++.ana .yazi .git::after{content:" ↗"}
++
++/* ===================== yetkinlik ===================== */
++.ana .yetki{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,4vw,3rem);margin-top:3rem}
++.ana .yetki h3{margin:0 0 .75rem;font-family:var(--mono);font-size:.75rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--a-faint)}
++.ana .yetki .ara-bas{margin-top:2rem}
++.ana .yetki ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--a-line)}
++.ana .yetki li{padding:.7rem 0;border-bottom:1px solid var(--a-line);font-size:.9375rem;color:var(--a-ink)}
++.ana .yetki li b{display:block;font-weight:600}
++.ana .yetki li span{display:block;margin-top:.2rem;font-size:.8125rem;color:var(--a-muted)}
++
++@media (max-width:860px){
++  .ana .giris-izgara{grid-template-columns:1fr}
++  .ana .an-video{grid-template-columns:1fr}
++  .ana .yetki{grid-template-columns:1fr}
++  .ana .kule.uc-boyut{height:320vh}
++  .ana .kot{width:3.5rem;bottom:auto;top:auto;height:11rem;top:calc(72px + 13.5rem)}
++}
++@media (max-width:560px){
++  .ana .zaman::before{left:3.2rem}
++  .ana .zaman li{grid-template-columns:3.2rem minmax(0,1fr);gap:0 1.25rem}
++  .ana .zaman li::before{left:calc(3.2rem - .3rem)}
++  .ana .hud{top:calc(64px + .75rem)}
++  .ana .hud dd b{font-size:1.15rem}
++  .ana .kot{display:none}
++}
++@media (prefers-reduced-motion:reduce){ .ana .nabiz,.ana .kaydir::before{animation:none} }
++main.ana{padding-top:0}
++
++@media (min-width:861px){.ana .kartlar.uclu{grid-template-columns:repeat(3,minmax(0,1fr))}}
++.ana .an-video{background:transparent}
++@media (max-width:560px){
++  .ana .hud{padding:.6rem .75rem .55rem}
++  .ana .hud dl{grid-template-columns:repeat(4,auto);gap:.2rem .9rem;margin-top:.45rem}
++  .ana .hud dt{font-size:.5625rem}
++  .ana .hud dd{font-size:.6875rem}
++  .ana .hud dd b{font-size:1rem}
++  .ana .hud-alt{margin-top:.4rem;font-size:.5625rem}
++}
+diff --git a/ara/index.html b/ara/index.html
+index d75f26d..0553cf7 100644
+--- a/ara/index.html
++++ b/ara/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/araclar/civata-germe/index.html b/araclar/civata-germe/index.html
+index 25a4314..21b6604 100644
+--- a/araclar/civata-germe/index.html
++++ b/araclar/civata-germe/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/araclar/index.html b/araclar/index.html
+index 4fb515f..7e94b5c 100644
+--- a/araclar/index.html
++++ b/araclar/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -44,6 +44,10 @@
+ .tool .intro{margin-top:1rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+ 
+ .calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);box-shadow:var(--shade)}
++.calc>*{min-width:0}
++.f{grid-template-columns:minmax(0,1fr)}
++.fi{min-width:0;grid-template-columns:minmax(0,1fr)}
++.fi select{max-width:100%;width:100%}
+ .pane{background:var(--surface);padding:1.5rem}
+ .f{display:grid;gap:1.25rem}
+ .fi{display:grid;gap:.5rem}
+diff --git a/ariza/index.html b/ariza/index.html
+index 7290012..189c3a8 100644
+--- a/ariza/index.html
++++ b/ariza/index.html
+@@ -17,8 +17,9 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/ariza/">
++<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/ariza/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/asistan/index.html b/asistan/index.html
+index aaf3bb1..989fa06 100644
+--- a/asistan/index.html
++++ b/asistan/index.html
+@@ -38,7 +38,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ <style>
+ .as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+diff --git a/assets/kule3d.js b/assets/kule3d.js
+new file mode 100644
+index 0000000..082c8e0
+--- /dev/null
++++ b/assets/kule3d.js
+@@ -0,0 +1,143 @@
++/* kule3d.js — ana sayfa kapağı: kaydırdıkça N117 kulesine tırmanan 3B kamera.
++ *
++ * Aynı parametrik N117 modeli (n117.js) kullanılıyor. Sayfa kaydırıldıkça kamera
++ * zeminden kule gövdesine, oradan nasele çıkıyor, en sonda rotorun önüne açılıyor.
++ * Sağdaki kot göstergesi kameranın o anki gerçek yüksekliğini (metre) gösterir.
++ * Rotor, Aliağa için göbek yüksekliğindeki tahmini rüzgârdan hesaplanan devirde
++ * döner (--devir-sure; ana sayfadaki canlı veri betiği yazar).
++ *
++ * Çağıran taraf WebGL, reduced-motion ve saveData kontrolünü yapar. Sahne
++ * kurulamazsa hiçbir şey kaybolmaz: kapak fotoğrafı ve metinler yerinde kalır.
++ */
++import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
++import { createScene } from '/n117/n117.js?v=2a90e4df';
++
++export function kuleBaslat(canvas, bolum, geri) {
++  let S;
++  try { S = createScene(canvas); } catch (err) { console.error('kule3d sahne:', err); return null; }
++  const { renderer, camera, controls, parts, towerTopY, setLight } = S;
++  const kok = document.documentElement;
++  geri = geri || function () {};
++
++  if (parts.crane) parts.crane.visible = false;
++  if (parts.groundBlade) parts.groundBlade.visible = false;
++  controls.enabled = false;
++
++  const kucuk = innerWidth < 820;
++  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, kucuk ? 1.4 : 1.75));
++  camera.fov = kucuk ? 52 : 42;
++  camera.near = 0.4;
++  camera.updateProjectionMatrix();
++
++  const hubY = towerTopY + 2.3;
++
++  // Havacılık engel ışığı: naselin üstünde, kırmızı, yanıp söner (gerçek türbinlerde olduğu gibi).
++  const isikGrubu = new THREE.Group();
++  isikGrubu.position.set(0, S.SPEC.nacelleHei / 2 + 0.45, S.SPEC.nacelleLen / 2 - 1.2);
++  const lamba = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2a1a }));
++  const hale = (() => {
++    const c = document.createElement('canvas'); c.width = c.height = 64;
++    const g = c.getContext('2d'); const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
++    r.addColorStop(0, 'rgba(255,60,40,1)'); r.addColorStop(0.25, 'rgba(255,40,30,.55)'); r.addColorStop(1, 'rgba(255,30,20,0)');
++    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
++    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
++    sp.scale.set(7, 7, 1); return sp;
++  })();
++  isikGrubu.add(lamba, hale);
++  if (parts.yaw) parts.yaw.add(isikGrubu);
++  const v = (x, y, z) => new THREE.Vector3(x, y, z);
++
++  // Kamera yolu: [konum, bakış noktası]. Rotor -z yönüne bakıyor.
++  const YOL = [
++    [v(70, 6, 100),    v(0, 84, -8)],           // zemin: aşağıdan tüm türbin
++    [v(38, 30, 56),    v(0, 62, 0)],            // kule gövdesi
++    [v(42, 88, 60),    v(0, 110, -2)],          // tırmanış
++    [v(22, 127, 30),   v(0, hubY - 0.4, -2)],   // nasel
++    [v(70, 146, -96),  v(0, hubY, -6)],         // rotorun önüne dönüş
++    [v(150, 106, -212), v(0, 82, -4)],          // geniş kadraj
++  ];
++  const konumEgri = new THREE.CatmullRomCurve3(YOL.map(k => k[0]), false, 'centripetal');
++  const hedefEgri = new THREE.CatmullRomCurve3(YOL.map(k => k[1]), false, 'centripetal');
++
++  const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
++
++  function isikModu() {
++    const m = kok.getAttribute('data-vardiya');
++    // Gece ışığında model neredeyse görünmüyor; kapak için gece ve alacakaranlık
++    // aynı gün batımı ışığını kullanıyor. Gece olduğunu engel ışığı söylüyor.
++    if (m === 'gece' || m === 'safak' || m === 'aksam' || m === 'altin') return 'sunset';
++    return 'day';
++  }
++  let sonMod = null;
++  function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; } }
++  isik();
++
++  function devirRad() {
++    const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure'));
++    return s > 0 ? (2 * Math.PI) / s : 0;
++  }
++
++  function ilerleme() {
++    const r = bolum.getBoundingClientRect();
++    const yol = r.height - innerHeight;
++    if (yol <= 0) return 0;
++    return Math.min(1, Math.max(0, -r.top / yol));
++  }
++
++  function olcek() {
++    const w = canvas.clientWidth, h = canvas.clientHeight;
++    if (!w || !h) return;
++    const pr = renderer.getPixelRatio();
++    if (Math.round(w * pr) !== canvas.width || Math.round(h * pr) !== canvas.height) {
++      renderer.setSize(w, h, false);
++      camera.aspect = w / h;
++      camera.updateProjectionMatrix();
++    }
++  }
++
++  let p = ilerleme(), pHedef = p;
++  const konum = new THREE.Vector3(), hedef = new THREE.Vector3();
++  let gorunur = true, calisiyor = true, sonT = 0, ilk = true, sonIsik = 0, rafId = 0;
++
++  new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '100px' }).observe(bolum);
++  document.addEventListener('visibilitychange', () => { calisiyor = !document.hidden; if (calisiyor) baslat(); });
++
++  function baslat() { if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
++
++  function kare(t) {
++    rafId = 0;
++    if (!calisiyor || !gorunur) return;
++    const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0;
++    sonT = t;
++    if (t - sonIsik > 4000) { isik(); sonIsik = t; }
++
++    pHedef = ilerleme();
++    p += (pHedef - p) * (az ? 1 : Math.min(1, dt * 5 || 1));
++    const e = p * p * (3 - 2 * p) * 0.35 + p * 0.65;       // uçlarda yumuşak
++    konumEgri.getPoint(e, konum);
++    hedefEgri.getPoint(e, hedef);
++    // hafif nefes: sahne donuk durmasın
++    if (!az) konum.x += Math.sin(t / 5200) * 1.2;
++    camera.position.copy(konum);
++    camera.lookAt(hedef);
++
++    if (parts.spin) parts.spin.rotation.z -= devirRad() * dt;
++    isikGrubu.visible = (t % 2000) < 1000;
++    if (parts.farm) parts.farm.children.forEach(f => { const r = f.getObjectByName && f.getObjectByName('rotor'); if (r) r.rotation.z -= (f.userData.speed || 0.2) * dt; });
++
++    olcek();
++    renderer.render(S.scene, camera);
++    geri(p, Math.max(0, camera.position.y));
++    if (ilk) { ilk = false; canvas.classList.add('hazir'); }
++    rafId = requestAnimationFrame(kare);
++  }
++  baslat();
++
++  canvas.addEventListener('webglcontextlost', e => {
++    e.preventDefault(); calisiyor = false;
++    if (rafId) cancelAnimationFrame(rafId);
++    canvas.classList.remove('hazir');
++  }, false);
++
++  return S;
++}
+diff --git a/cevrimdisi.html b/cevrimdisi.html
+index d0f29ee..28706ab 100644
+--- a/cevrimdisi.html
++++ b/cevrimdisi.html
+@@ -8,7 +8,7 @@
+ <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
+ .mid .in{max-width:34rem}
+diff --git a/deniz-ustu/index.html b/deniz-ustu/index.html
+index 205feb4..017779d 100644
+--- a/deniz-ustu/index.html
++++ b/deniz-ustu/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/arizaya-yaklasim/index.html b/egitim/arizaya-yaklasim/index.html
+index e84ca0e..925649a 100644
+--- a/egitim/arizaya-yaklasim/index.html
++++ b/egitim/arizaya-yaklasim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/belge/index.html b/egitim/belge/index.html
+index fd2effe..7ea9943 100644
+--- a/egitim/belge/index.html
++++ b/egitim/belge/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/bu-is-ne-is/index.html b/egitim/bu-is-ne-is/index.html
+index 77be26c..c3bbca0 100644
+--- a/egitim/bu-is-ne-is/index.html
++++ b/egitim/bu-is-ne-is/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/elektrik-ve-kontrol/index.html b/egitim/elektrik-ve-kontrol/index.html
+index 433ebc3..cca8f51 100644
+--- a/egitim/elektrik-ve-kontrol/index.html
++++ b/egitim/elektrik-ve-kontrol/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/guvenlik/index.html b/egitim/guvenlik/index.html
+index 07d5029..992c635 100644
+--- a/egitim/guvenlik/index.html
++++ b/egitim/guvenlik/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/index.html b/egitim/index.html
+index 7336e52..755d1e6 100644
+--- a/egitim/index.html
++++ b/egitim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/kariyer/index.html b/egitim/kariyer/index.html
+index c6bd3a0..ed78a5b 100644
+--- a/egitim/kariyer/index.html
++++ b/egitim/kariyer/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/mekanik-is/index.html b/egitim/mekanik-is/index.html
+index edf7d88..fecc559 100644
+--- a/egitim/mekanik-is/index.html
++++ b/egitim/mekanik-is/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/periyodik-bakim/index.html b/egitim/periyodik-bakim/index.html
+index 7255498..774c9ba 100644
+--- a/egitim/periyodik-bakim/index.html
++++ b/egitim/periyodik-bakim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/turbin-nasil-calisir/index.html b/egitim/turbin-nasil-calisir/index.html
+index 777195a..80a62a5 100644
+--- a/egitim/turbin-nasil-calisir/index.html
++++ b/egitim/turbin-nasil-calisir/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/en/ad-policy/index.html b/en/ad-policy/index.html
+index 1602ec5..77033c2 100644
+--- a/en/ad-policy/index.html
++++ b/en/ad-policy/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/assistant/index.html b/en/assistant/index.html
+index f3eaf40..979cd2f 100644
+--- a/en/assistant/index.html
++++ b/en/assistant/index.html
+@@ -38,7 +38,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ <style>
+ .as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+diff --git a/en/field-notes/blade-vibration/index.html b/en/field-notes/blade-vibration/index.html
+index 43ba97f..39f4aaa 100644
+--- a/en/field-notes/blade-vibration/index.html
++++ b/en/field-notes/blade-vibration/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/converter-overcurrent/index.html b/en/field-notes/converter-overcurrent/index.html
+index 8a6db95..80f0bb6 100644
+--- a/en/field-notes/converter-overcurrent/index.html
++++ b/en/field-notes/converter-overcurrent/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/gearbox-temperature/index.html b/en/field-notes/gearbox-temperature/index.html
+index 9322d90..bfd88bf 100644
+--- a/en/field-notes/gearbox-temperature/index.html
++++ b/en/field-notes/gearbox-temperature/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/generator-temperature/index.html b/en/field-notes/generator-temperature/index.html
+index 367e3f6..4902428 100644
+--- a/en/field-notes/generator-temperature/index.html
++++ b/en/field-notes/generator-temperature/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/index.html b/en/field-notes/index.html
+index 9c05f1e..dfd53ad 100644
+--- a/en/field-notes/index.html
++++ b/en/field-notes/index.html
+@@ -126,7 +126,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/pitch-motor-high-current/index.html b/en/field-notes/pitch-motor-high-current/index.html
+index d7c8d3c..6e4b427 100644
+--- a/en/field-notes/pitch-motor-high-current/index.html
++++ b/en/field-notes/pitch-motor-high-current/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/yaw-bearing-wear/index.html b/en/field-notes/yaw-bearing-wear/index.html
+index 7dcc96c..02a0252 100644
+--- a/en/field-notes/yaw-bearing-wear/index.html
++++ b/en/field-notes/yaw-bearing-wear/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/yaw-hunting/index.html b/en/field-notes/yaw-hunting/index.html
+index 50516f2..fbc47ba 100644
+--- a/en/field-notes/yaw-hunting/index.html
++++ b/en/field-notes/yaw-hunting/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/glossary/index.html b/en/glossary/index.html
+index ca34135..b2e1a8c 100644
+--- a/en/glossary/index.html
++++ b/en/glossary/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sozluk/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sozluk/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -39,10 +39,10 @@
+ .sbox button:hover{color:var(--beacon)}
+ .chips{margin-top:.75rem;display:flex;flex-wrap:wrap;gap:.4rem}
+ .chip{border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:.42rem .7rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:.18s}
+-.chip b{font-weight:400;opacity:.55;margin-left:.2rem}
++.chip b{font-weight:400;opacity:1;margin-left:.2rem}
+ .chip:hover{color:var(--ink)}
+ .chip.on{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+-.chip.on b{opacity:.6}
++.chip.on b{opacity:1}
+ .cnt{margin-top:.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+ 
+ .list{padding:1.5rem 0 4rem}
+diff --git a/en/guide/index.html b/en/guide/index.html
+index a16fa1c..45ad7ab 100644
+--- a/en/guide/index.html
++++ b/en/guide/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/rehber/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/en/gwo/index.html b/en/gwo/index.html
+index 71a48f5..a31928f 100644
+--- a/en/gwo/index.html
++++ b/en/gwo/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/how-to-become/index.html b/en/how-to-become/index.html
+index 88d23b8..a359e80 100644
+--- a/en/how-to-become/index.html
++++ b/en/how-to-become/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+@@ -219,6 +219,10 @@
+ 
+ .calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);
+  border:1px solid var(--line);box-shadow:var(--shade)}
++.calc>*{min-width:0}
++.f{grid-template-columns:minmax(0,1fr)}
++.fi{min-width:0;grid-template-columns:minmax(0,1fr)}
++.fi select{max-width:100%;width:100%}
+ @media (min-width:860px){.calc{grid-template-columns:1.15fr 1fr}}
+ .pane{background:var(--surface);padding:1.6rem}
+ .f{display:grid;gap:1.45rem}
+diff --git a/en/index.html b/en/index.html
+index 62f7eae..c4a1cd8 100644
+--- a/en/index.html
++++ b/en/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .h-hero{padding:4.5rem 0 3rem}
+ .h-hero h1{font-size:2.5rem;line-height:1.05;letter-spacing:-.04em;margin-top:1.75rem;max-width:16ch}
+diff --git a/en/pay/index.html b/en/pay/index.html
+index aeef06c..bce24d2 100644
+--- a/en/pay/index.html
++++ b/en/pay/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+@@ -219,6 +219,10 @@
+ 
+ .calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);
+  border:1px solid var(--line);box-shadow:var(--shade)}
++.calc>*{min-width:0}
++.f{grid-template-columns:minmax(0,1fr)}
++.fi{min-width:0;grid-template-columns:minmax(0,1fr)}
++.fi select{max-width:100%;width:100%}
+ @media (min-width:860px){.calc{grid-template-columns:1.15fr 1fr}}
+ .pane{background:var(--surface);padding:1.6rem}
+ .f{display:grid;gap:1.45rem}
+diff --git a/en/privacy/index.html b/en/privacy/index.html
+index 3a7fc03..196122b 100644
+--- a/en/privacy/index.html
++++ b/en/privacy/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/systems/gearbox/index.html b/en/systems/gearbox/index.html
+index eade021..7467436 100644
+--- a/en/systems/gearbox/index.html
++++ b/en/systems/gearbox/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/generator/index.html b/en/systems/generator/index.html
+index da2c2e7..c08a223 100644
+--- a/en/systems/generator/index.html
++++ b/en/systems/generator/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/index.html b/en/systems/index.html
+index 2cac17e..5441d70 100644
+--- a/en/systems/index.html
++++ b/en/systems/index.html
+@@ -116,7 +116,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/pitch/index.html b/en/systems/pitch/index.html
+index cffb044..dd098b2 100644
+--- a/en/systems/pitch/index.html
++++ b/en/systems/pitch/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/yaw/index.html b/en/systems/yaw/index.html
+index 3ee69a6..858ef3b 100644
+--- a/en/systems/yaw/index.html
++++ b/en/systems/yaw/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/tools/bolt-tension/index.html b/en/tools/bolt-tension/index.html
+index ff8f23f..47f8363 100644
+--- a/en/tools/bolt-tension/index.html
++++ b/en/tools/bolt-tension/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/tools/index.html b/en/tools/index.html
+index 5b6ffbc..871b29f 100644
+--- a/en/tools/index.html
++++ b/en/tools/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -44,6 +44,10 @@
+ .tool .intro{margin-top:1rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
+ 
+ .calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);box-shadow:var(--shade)}
++.calc>*{min-width:0}
++.f{grid-template-columns:minmax(0,1fr)}
++.fi{min-width:0;grid-template-columns:minmax(0,1fr)}
++.fi select{max-width:100%;width:100%}
+ .pane{background:var(--surface);padding:1.5rem}
+ .f{display:grid;gap:1.25rem}
+ .fi{display:grid;gap:.5rem}
+diff --git a/en/turbines/enercon/e70/index.html b/en/turbines/enercon/e70/index.html
+index cbdb75f..5832df7 100644
+--- a/en/turbines/enercon/e70/index.html
++++ b/en/turbines/enercon/e70/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/enercon/e82/index.html b/en/turbines/enercon/e82/index.html
+index 5e06cee..edbdd06 100644
+--- a/en/turbines/enercon/e82/index.html
++++ b/en/turbines/enercon/e82/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/enercon/e92/index.html b/en/turbines/enercon/e92/index.html
+index d6c2e3c..482e894 100644
+--- a/en/turbines/enercon/e92/index.html
++++ b/en/turbines/enercon/e92/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/enercon/index.html b/en/turbines/enercon/index.html
+index 7873b4c..f684ba6 100644
+--- a/en/turbines/enercon/index.html
++++ b/en/turbines/enercon/index.html
+@@ -84,7 +84,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/index.html b/en/turbines/index.html
+index 4af06e7..d3b70b7 100644
+--- a/en/turbines/index.html
++++ b/en/turbines/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/index.html b/en/turbines/vestas/index.html
+index 0540cce..5df2d2b 100644
+--- a/en/turbines/vestas/index.html
++++ b/en/turbines/vestas/index.html
+@@ -84,7 +84,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/v110/index.html b/en/turbines/vestas/v110/index.html
+index ba12d0b..1a0c7bb 100644
+--- a/en/turbines/vestas/v110/index.html
++++ b/en/turbines/vestas/v110/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/v126/index.html b/en/turbines/vestas/v126/index.html
+index 0c55044..b3f8ac9 100644
+--- a/en/turbines/vestas/v126/index.html
++++ b/en/turbines/vestas/v126/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/v136/index.html b/en/turbines/vestas/v136/index.html
+index eae6560..5ea78f6 100644
+--- a/en/turbines/vestas/v136/index.html
++++ b/en/turbines/vestas/v136/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/gelir/index.html b/gelir/index.html
+index 730e2bb..776d122 100644
+--- a/gelir/index.html
++++ b/gelir/index.html
+@@ -16,11 +16,11 @@
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+-<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/rehber/">
+-<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/guide/">
+-<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
++<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/gelir/">
++<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/ad-policy/">
++<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gelir/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+@@ -132,7 +132,7 @@
+   <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+   <div class="hd-right">
+    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+-   <a class="lang" href="/en/guide/" hreflang="en" lang="en" title="English">EN</a>
++   <a class="lang" href="/en/ad-policy/" hreflang="en" lang="en" title="English">EN</a>
+    <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+   </div>
+diff --git a/gizlilik/index.html b/gizlilik/index.html
+index 6c19333..fe66452 100644
+--- a/gizlilik/index.html
++++ b/gizlilik/index.html
+@@ -16,11 +16,11 @@
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+-<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/rehber/">
+-<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/guide/">
+-<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
++<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/gizlilik/">
++<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/privacy/">
++<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gizlilik/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+@@ -137,7 +137,7 @@
+   <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+   <div class="hd-right">
+    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+-   <a class="lang" href="/en/guide/" hreflang="en" lang="en" title="English">EN</a>
++   <a class="lang" href="/en/privacy/" hreflang="en" lang="en" title="English">EN</a>
+    <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+   </div>
+diff --git a/gwo/index.html b/gwo/index.html
+index aa4cf98..87b2bb7 100644
+--- a/gwo/index.html
++++ b/gwo/index.html
+@@ -4,6 +4,9 @@
+ <title>GWO Sertifikası Nedir, Nasıl Alınır — BST, BTT ve Tazeleme | Soner Soylu</title>
+ <meta name="description" content="GWO nedir, BST hangi modüllerden oluşur, kaç gün sürer, kaç yıl geçerlidir? Tazeleme, BTT, WINDA doğrulaması ve eğitimi kimin ödediği — sahadan, sertifika satan bir siteden değil.">
+ <link rel="canonical" href="https://sonersoylu.com/gwo/">
++<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/gwo/">
++<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/gwo/">
++<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gwo/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="GWO sertifikası nedir, nasıl alınır">
+ <meta property="og:description" content="GWO nedir, BST hangi modüllerden oluşur, kaç gün sürer, kaç yıl geçerlidir? Tazeleme, BTT, WINDA doğrulaması ve eğitimi kimin ödediği — sahadan, sertifika satan bir siteden değil.">
+@@ -17,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/index.html b/index.html
+index 4ae148f..43f1f09 100644
+--- a/index.html
++++ b/index.html
+@@ -4,7 +4,7 @@
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+ <title>Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</title>
+-<meta name="description" content="Rüzgâr türbini saha servis teknisyeni Soner Soylu. 13+ yıl saha deneyimi, 300+ türbine dokunuldu. Sahadan meslek rehberi, 148 terimlik sözlük, hesaplama araçları.">
++<meta name="description" content="Rüzgâr türbini saha servis teknisyeni Soner Soylu: 13 yıllık saha deneyimi, gerçek arıza vakaları, 148 terimlik sözlük, arıza ağacı ve hesaplama araçları.">
+ <link rel="canonical" href="https://sonersoylu.com/">
+ <meta property="og:type" content="profile">
+ <meta property="og:locale" content="tr_TR">
+@@ -26,8 +26,9 @@
+ 
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
+-<link rel="stylesheet" href="/ana.css?v=c30492ac">
++<link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
++<link rel="stylesheet" href="/ana.css?v=d72f4222">
+ 
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@graph":[
+@@ -68,20 +69,67 @@
+ 
+ <main id="icerik" class="ana">
+ 
+-<section class="kapak" aria-labelledby="kapak-b">
+-  <canvas id="kapak3d" aria-hidden="true"></canvas>
+-  <div class="ic">
++<section id="kule" class="kule" aria-labelledby="kapak-b">
++  <div class="kule-sahne">
++    <canvas id="kapak3d" aria-hidden="true"></canvas>
+     <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</h1>
+-    <div class="dugmeler">
+-      <a class="dg birincil" href="#iletisim">İletişime geç</a>
+-      <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
++
++    <div class="hud" id="hud" hidden>
++      <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
++      <dl>
++        <div><dt>Rüzgâr</dt><dd><b id="hHiz">–</b> m/s</dd></div>
++        <div><dt>Yön</dt><dd id="hYon">–</dd></div>
++        <div><dt>Rotor</dt><dd><b id="hDevir">–</b> d/dk</dd></div>
++        <div><dt>Bir N117</dt><dd><b id="hGuc">–</b> kW</dd></div>
++      </dl>
++      <p class="hud-alt">Open-Meteo sayısal tahmini, saha ölçümü değildir. <a href="/ruzgar/">Canlı rüzgâr</a></p>
++    </div>
++
++    <div class="kot" id="kot3" aria-hidden="true">
++      <span class="kot-deger"><b id="kotM">0</b> m</span>
++      <div class="kot-cetvel">
++        <i style="--y:1">178</i><i style="--y:.674">120</i><i style="--y:.449">80</i><i style="--y:.225">40</i><i style="--y:0">0</i>
++        <span class="kot-ok" id="kotOk"></span>
++      </div>
++    </div>
++
++    <div class="kule-alt">
++      <div class="durak etkin" data-d="0">
++        <div class="dugmeler">
++          <a class="dg birincil" href="#iletisim">İletişime geç</a>
++          <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
++        </div>
++        <dl class="rakam">
++          <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
++          <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
++          <div><dt>Üretici</dt><dd>4</dd></div>
++          <div><dt>Model</dt><dd>9</dd></div>
++        </dl>
++        <p class="kaydir" aria-hidden="true">Kaydır, kuleye tırman</p>
++      </div>
++      <div class="durak" data-d="1"><p class="etiket">Kule · 0–118 m</p><p class="durak-m">Beş çelik segment, flanş flanş cıvatalı. Tepeye servis asansörü ve merdivenle çıkılır; her çıkış LOTO ve ekipman kontrolüyle başlar.</p></div>
++      <div class="durak" data-d="2"><p class="etiket">Nasel · 120 m</p><p class="durak-m">Ana yatak, dişli kutusu ve jeneratör burada. Kırmızı ışık havacılık engel ışığı; gece de sahayı işaretler.</p></div>
++      <div class="durak" data-d="3"><p class="etiket">Rotor · 116,8 m çap</p><p class="durak-m">Üç kanat, her biri 57,3 m. Kanat ucu yerden 178 metreye kadar çıkar. <a href="/n117/">15 duraklık N117 turu</a></p></div>
++    </div>
++  </div>
++</section>
++
++<section id="giris" aria-labelledby="giris-b">
++  <div class="ic giris-izgara">
++    <div>
++      <p class="etiket">Kısaca</p>
++      <h2 id="giris-b" class="gizli">Kısaca</h2>
++      <blockquote class="soz">Toplamda 300'ü aşkın türbine dokunarak çeliğin ruhunu analiz edebilen bir teknisyen olarak; bir arızayı alarm kodundan önce sesinden, titreşiminden ve ısısından tanır, sorunu üretimi durdurmadan çözmeye çalışırım.</blockquote>
++    </div>
++    <div class="giris-yan">
++      <p class="giris">Rüzgâr enerjisi sektöründe 2013'ten beri sahadayım. Enercon, Nordex, Nordex Acciona ve Vestas türbinlerinde mekanik ve elektrik sistemleri üzerine çalışıyorum. Şu an Aliağa ve Bergama rüzgâr santrallerinde saha servis teknisyeniyim.</p>
++      <ul class="platform" aria-label="Çalıştığım türbinler">
++        <li><b>Enercon</b><span>E70 · E82 · E92</span></li>
++        <li><b>Nordex</b><span>Beta · Delta 111 · Delta 131</span></li>
++        <li><b>Vestas</b><span>V126 · V136</span></li>
++        <li><b>Nordex Acciona</b><span>3 MW sınıfı</span></li>
++      </ul>
+     </div>
+-    <dl class="rakam">
+-      <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
+-      <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
+-      <div><dt>Üretici</dt><dd>4</dd></div>
+-      <div><dt>Model</dt><dd>9</dd></div>
+-    </dl>
+   </div>
+ </section>
+ 
+@@ -121,6 +169,30 @@
+   </div>
+ </section>
+ 
++<section id="gecmis" aria-labelledby="gecmis-b">
++  <div class="ic">
++    <div class="bas">
++      <div>
++        <p class="etiket">Saha geçmişi</p>
++        <h2 id="gecmis-b">Dokuz pozisyon, 2013'ten bugüne</h2>
++        <p class="giris">Kurulum, devreye alma, periyodik bakım ve arıza gidermenin yanında ana yatak ve kanat değişimi gibi büyük bileşen operasyonları. Kara ve deniz üstü projelerde, farklı iklim ve çalışma koşullarında.</p>
++      </div>
++      <a class="ok" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn profili</a>
++    </div>
++    <ol class="zaman">
++      <li><span class="yil">2021</span><div><h3>Bilgin Enerji</h3><p class="rol">Saha Servis Teknisyeni · <span>Mart 2021, devam ediyor</span> · <span>Aliağa ve Bergama RES, İzmir</span></p><p class="oz">Periyodik ve mekanik bakım, elektrik arıza tespiti. Gear box, konvertör, yaw ve pitch sistemlerinde arıza giderme; kanat kontrolleri ve büyük bileşen değişimlerinde saha ekibinde görev. Bakım sonrası devreye alma ve raporlama.</p></div></li>
++      <li><span class="yil">2021</span><div><h3>Fu Enerji</h3><p class="rol">Kurulum Uzmanı · <span>Ocak 2021, Mart 2021</span> · <span>İzmir</span></p><p class="oz">Rüzgâr türbini kurulum çalışmalarında mekanik montaj ve elektrik işleri. Kule, nacelle ve rotor montajında saha ekibiyle koordineli çalışma, bağlantı kontrolleri.</p></div></li>
++      <li><span class="yil">2020</span><div><h3>Lacivert Vinç</h3><p class="rol">Montaj Teknisyeni · <span>Eylül 2020, Kasım 2020</span> · <span>İstanbul</span></p><p class="oz">Vestas V136 3.45 MW türbinlerinde yer ve nacelle montaj çalışmaları. Mekanik montaj, tork ve gerdirme uygulamaları, elektrik arıza tespiti.</p></div></li>
++      <li><span class="yil">2019</span><div><h3>Genba Energy</h3><p class="rol">Servis Teknisyeni · <span>Eylül 2019, Aralık 2019</span> · <span>Balıkesir</span></p><p class="oz">Acciona Çerçikaya RES sahasında 18 adet 3 MW türbinin mekanik ve elektrik bakımı. Mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
++      <li><span class="yil">2018</span><div><h3>Siemens</h3><p class="rol">Depo Sorumlusu · <span>Kasım 2018, Ağustos 2019</span> · <span>Türkiye</span></p><p class="oz">Rüzgâr santrali saha deposunda malzeme ve yedek parça yönetimi. Bakım ekiplerine parça tedariki, stok takibi, giriş çıkış kayıtları ve sevkiyat koordinasyonu.</p></div></li>
++      <li><span class="yil">2018</span><div><h3>Monsson</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Nisan 2018, Ekim 2018</span> · <span>Balıkesir</span></p><p class="oz">Rüzgâr türbini montaj ve servis çalışmaları. Mekanik bakım, elektrik arıza tespiti, kurulum ve devreye alma süreçleri.</p></div></li>
++      <li><span class="yil">2017</span><div><h3>Hareket Proje Taşımacılığı</h3><p class="rol">Kurulum ve Elektrik Teknisyeni · <span>Haziran 2017, Nisan 2018</span> · <span>İstanbul</span></p><p class="oz">Türbin kurulum projelerinde mekanik montaj ve elektrik işleri. Kule ve nacelle montajı, kablolama ve bağlantı kontrolleri.</p></div></li>
++      <li><span class="yil">2016</span><div><h3>EU Montage Danmark ApS</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Ekim 2016, Nisan 2017</span> · <span>Avrupa sahaları</span></p><p class="oz">Avrupa&#x27;da rüzgâr türbini montaj ve servis projeleri. Uluslararası saha ekipleriyle mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
++      <li><span class="yil">2013</span><div><h3>Enercon GmbH</h3><p class="rol">Çelik Beton Kule Montaj Teknisyeni · <span>Şubat 2013, Ağustos 2016</span> · <span>Türkiye</span></p><p class="oz">Enercon türbinlerinde çelik beton hibrit kule montajı. Segment birleştirme, gerdirme ve mekanik montaj işleri. Sektördeki ilk pozisyonum.</p></div></li>
++    </ol>
++  </div>
++</section>
++
+ <section id="sahadan" aria-labelledby="sahadan-b">
+   <div class="ic">
+     <div class="bas">
+@@ -140,6 +212,15 @@
+       <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption>Sırt hattı</figcaption></figure>
+       <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption>Saha yolu</figcaption></figure>
+     </div>
++
++    <div class="an-video">
++      <div class="an-video-kutu"><iframe src="https://www.youtube-nocookie.com/embed/8U_lQpNbrOc" title="The Turbine Tech videosu" loading="lazy" allowfullscreen allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
++      <div class="an-video-yazi">
++        <p class="etiket">The Turbine Tech</p>
++        <p class="an-video-b">Türbin işini anlattığım YouTube kanalı</p>
++        <a class="ok" href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">Kanalı aç</a>
++      </div>
++    </div>
+   </div>
+ </section>
+ 
+@@ -165,6 +246,29 @@
+   </div>
+ </section>
+ 
++<section id="yazilar" aria-labelledby="yazilar-b">
++  <div class="ic">
++    <div class="bas">
++      <div>
++        <p class="etiket">Yazılar</p>
++        <h2 id="yazilar-b">Sahadan LinkedIn'e</h2>
++        <p class="giris">Bakım disiplini, iş güvenliği ve türbin davranışı üzerine. Sektöre yeni girenlere faydası olsun diye başladım, sonra devam etti.</p>
++      </div>
++      <a class="ok" href="https://www.linkedin.com/in/soner-soylu/recent-activity/all/" target="_blank" rel="noreferrer noopener">Tüm yazılar</a>
++    </div>
++    <div class="yazilar">
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7500658918495449088/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Sektör · Eylül 2026</span><b>Rüzgâr hedeflerini sahada kim gerçekleştirecek?</b><span class="a">Her yeni türbin beraberinde yeni bir teknik problem getiriyor. Elektronik sistemler gelişiyor, SCADA karmaşıklaşıyor; geçmiş saha tecrübesi tek başına yetmiyor. Türkiye&#x27;nin rüzgâr hedefini…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7498094085245669376/" target="_blank" rel="noreferrer noopener"><span class="k-ust">İş güvenliği · Ağustos 2026</span><b>Türbin yangını: kimsenin konuşmak istemediği risk</b><span class="a">Nadirdir, ama olduğunda geri dönüşü yoktur. Gevşek bir güç bağlantısı, yıpranmış bir fren balatası, sıcak yüzeye damlayan yağ. 90 metrede başlayan bir yangına müdahale imkânı son derece…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7496198260433547264/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Bakım · Ağustos 2026</span><b>Rüzgâr var, peki türbin neden tam güçte değil?</b><span class="a">Dış sıcaklık yükseldiğinde converter ve kabin tarafındaki termal yük artıyor. Kirli bir filtre, debisi düşmüş bir fan, tıkalı bir kondenser; normalde sorun çıkarmayan bu ekipmanlar zirve…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7495409166149353472/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Sektör · Ağustos 2026</span><b>Megavat tabelada kalmasın</b><span class="a">Kurulu güç kadar önemli olan bir başka konu bakım kalitesi ve operasyonel verimlilik. Enercon, Nordex ve Vestas&#x27;ta çalışmış biri olarak net söyleyebilirim: her türbinin anatomisi farklı.…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7494844300825104385/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Bakım · Ağustos 2026</span><b>Yaz duruşlarının kökü mayısta atılır</b><span class="a">Ağustosta yaşanan bir duruşun nedeni, bazen mayısta yapılmayan basit bir bakımdır. Bottom box ve top box klima filtreleri, kondenser petekleri, fan performansı; sezon öncesi yapılan küçük…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7494131824885972992/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Saha · Ağustos 2026</span><b>13 yıl sonra tek tavsiyem</b><span class="a">Türbine ilk çıktığım gün 2013&#x27;tü, Enercon&#x27;da çelik-beton hibrit kule montajı yapıyorduk. O gün öğrendiğim şey teknik değildi: yukarıda acele eden adam, aşağıda hata yapan adamdan daha…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7410580809524629504/" target="_blank" rel="noreferrer noopener"><span class="k-ust">İş güvenliği · Ocak 2026</span><b>Soğuk hava ve buzlanma yönetimi</b><span class="a">Buzlanma sahada hem görünmeyen hem ani sonuçlar doğuran bir risk: dengesiz yük dağılımı, buz atma, yaw ve pitch sistemlerinde sertleşme, sensör sapmaları. Sadece sıcaklık değil; nem, rüzgâr…</span><span class="git">LinkedIn'de oku</span></a>
++      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7409546660566970368/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Saha · Ocak 2026</span><b>Gece çalışmaları disiplin ister</b><span class="a">Zorlu hava, sınırlı görüş, yüksekte çalışma ve anlık karar verme zorunluluğu. Bu sektör gece operasyonlarında hatayı tolere etmez. Prosedürler kâğıt üzerinde kalmamalı, sahada refleks…</span><span class="git">LinkedIn'de oku</span></a>
++    </div>
++  </div>
++</section>
++
+ <section id="ariza" aria-labelledby="ariza-b">
+   <div class="ic ariza-izgara">
+     <div>
+@@ -192,7 +296,7 @@
+   <div class="ic">
+     <p class="etiket">Kaynaklar</p>
+     <h2 id="kaynaklar-b">Sahada işe yarayanlar</h2>
+-    <div class="kartlar">
++    <div class="kartlar uclu">
+       <a class="bel" href="/araclar/"><span class="k-ust">Araçlar</span><b>Saha hesaplayıcıları</b><span class="a">Uç hızı, rüzgârdaki güç, yükseklik düzeltmesi, kapasite faktörü, yıllık üretim ve cıvata torku.</span><span class="git">Hesapla</span></a>
+       <a class="bel" href="/kodlar/"><span class="k-ust">IEC 61400-26-1</span><b>Kod kütüphanesi</b><span class="a">Durum ve alarm kodlarını okumak: 12 aile, 50 koşul, her birinde saha kontrol listesi.</span><span class="git">Kodlara bak</span></a>
+       <a class="bel" href="/sozluk/"><span class="k-ust">148 terim</span><b>Sözlük</b><span class="a">Türkçe–İngilizce teknik terimler; sahada ve dokümanda karşılaştıklarınız.</span><span class="git">Sözlüğü aç</span></a>
+@@ -221,6 +325,18 @@
+   </div>
+ </section>
+ 
++<section id="yetkinlik" aria-labelledby="yetkinlik-b">
++  <div class="ic">
++    <p class="etiket">Yetkinlik</p>
++    <h2 id="yetkinlik-b">İş, belge, eğitim</h2>
++    <div class="yetki">
++      <div><h3>Yaptığım işler</h3><ul><li>Arıza giderme</li><li>Önleyici bakım</li><li>Devreye alma</li><li>Mekanik montaj</li><li>Elektrik arıza tespiti</li><li>Büyük bileşen değişimi</li><li>Tork ve gerdirme</li><li>Raporlama</li></ul></div>
++      <div><h3>Sertifikalar</h3><ul><li>GWO Basic Safety Training</li><li>Vestas SIT Training</li><li>Yüksekte güvenli çalışma</li><li>Yüksekte elektrikli işlerde çalışma</li><li>İş güvenliği sertifikası</li></ul></div>
++      <div><h3>Eğitim</h3><ul><li><b>Anadolu Üniversitesi</b><span>İşletme ve Yönetim, lisans · 2012–2018</span></li><li><b>Ege Üniversitesi</b><span>Otomotiv Mekanik Teknolojisi, önlisans · 2010–2012</span></li></ul><h3 class="ara-bas">Diller</h3><ul><li>Türkçe, anadil</li><li>İngilizce, ileri seviye</li></ul></div>
++    </div>
++  </div>
++</section>
++
+ <section id="iletisim" class="iletisim" aria-labelledby="iletisim-b">
+   <div class="ic">
+     <p class="etiket">İletişim</p>
+@@ -275,21 +391,65 @@
+   lb.addEventListener('click', kapat);
+   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) kapat(); });
+ 
+-  /* kapak 3B: N117 modeli. Işık günün saatine göre, dönüş anma devrinde */
++  /* ---- kapak: kuleye tırmanış ---- */
+   var kok = document.documentElement;
+-  var s = new Date().getHours();
+-  kok.setAttribute('data-vardiya', (s < 6 || s >= 20) ? 'gece' : (s < 8 || s >= 17) ? 'altin' : 'gunduz');
+-  if (!getComputedStyle(kok).getPropertyValue('--devir-sure').trim()) kok.style.setProperty('--devir-sure', '4.76s');
+-  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+-  if (az || (navigator.connection && navigator.connection.saveData)) return;
++  var saat = new Date().getHours();
++  kok.setAttribute('data-vardiya', (saat < 6 || saat >= 20) ? 'gece' : (saat < 8 || saat >= 17) ? 'altin' : 'gunduz');
++  kok.style.setProperty('--devir-sure', '4.76s');   // veri gelene kadar anma devri (12,6 d/dk)
++  var kule = document.getElementById('kule');
+   var canvas = document.getElementById('kapak3d');
+-  if (!canvas) return;
+-  try { var t = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (t.getContext('webgl2') || t.getContext('webgl')))) return; } catch (e) { return; }
++  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
++
++  /* canlı rüzgâr: Aliağa, göbek yüksekliği (Open-Meteo tahmini, /ruzgar/ ile aynı formüller) */
++  var ALAN = Math.PI * 116.8 * 116.8 / 4, YARICAP = 58.4;
++  var YONLER = ['K','KKD','KD','DKD','D','DGD','GD','GGD','G','GGB','GB','BGB','B','BKB','KB','KKB'];
++  function guc(v, rho) {
++    if (v < 3 || v > 25) return 0;
++    var cp = v >= 6.5 ? 0.452 : (function (x) { return 0.10 + (0.452 - 0.10) * (3 * x * x - 2 * x * x * x); })((v - 3) / 3.5);
++    var ham = 0.5 * rho * ALAN * v * v * v * cp / 1000;
++    return ham / Math.pow(1 + Math.pow(ham / 3000, 6), 1 / 6);
++  }
++  function devir(v) { if (v < 3 || v > 25) return 0; return Math.max(7.9, Math.min(14.1, (8 * v / YARICAP) * 60 / (2 * Math.PI))); }
++  function virgul(x, n) { return x.toFixed(n).replace('.', ','); }
++  fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
++    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
++    .then(function (d) {
++      var c = d && d.current; if (!c) throw 0;
++      var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
++      if (!isFinite(v)) throw 0;
++      var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
++      var rho = p120 / (287.05 * (sic - 0.78 + 273.15));
++      var dv = devir(v), kw = guc(v, rho);
++      kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
++      document.getElementById('hHiz').textContent = virgul(v, 1);
++      document.getElementById('hYon').textContent = isFinite(yon) ? YONLER[Math.round(yon / 22.5) % 16] + ' ' + Math.round(yon) + '°' : '–';
++      document.getElementById('hDevir').textContent = dv > 0 ? virgul(dv, 1) : '0';
++      document.getElementById('hGuc').textContent = kw > 0 ? Math.round(kw).toLocaleString('tr-TR') : '0';
++      document.getElementById('hud').hidden = false;
++    })
++    .catch(function () { /* veri yoksa gösterge hiç görünmez */ });
++
++  /* tırmanış durakları ve kot göstergesi */
++  var duraklar = [].slice.call(document.querySelectorAll('.durak'));
++  var kotM = document.getElementById('kotM'), kotOk = document.getElementById('kotOk');
++  var sonDurak = 0;
++  function guncelle(p, y) {
++    var dd = p < 0.14 ? 0 : p < 0.45 ? 1 : p < 0.72 ? 2 : 3;
++    if (dd !== sonDurak) { duraklar[sonDurak].classList.remove('etkin'); duraklar[dd].classList.add('etkin'); sonDurak = dd; }
++    kotM.textContent = Math.round(y);
++    kotOk.style.setProperty('--y', Math.min(1, y / 178).toFixed(3));
++  }
++
++  function statik() { kule.classList.add('statik'); }
++  if (az || (navigator.connection && navigator.connection.saveData)) return statik();
++  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(); } catch (e) { return statik(); }
++  kule.classList.add('uc-boyut');
+   function baslat() {
+-    import('/assets/hero3d.js?v=c5074566').then(function (mod) { mod.kapak3BBaslat(canvas); })
+-      .catch(function (e) { console.error('kapak3b yüklenemedi:', e); });
++    import('/assets/kule3d.js?v=0b2357a6').then(function (mod) {
++      if (!mod.kuleBaslat(canvas, kule, guncelle)) statik();
++    }).catch(function (e) { console.error('kule3d yüklenemedi:', e); statik(); });
+   }
+-  if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 2000 }); else setTimeout(baslat, 600);
++  if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 1500 }); else setTimeout(baslat, 400);
+ })();
+ </script>
+ </body>
+diff --git a/kodlar/index.html b/kodlar/index.html
+index 6d30d62..83757d2 100644
+--- a/kodlar/index.html
++++ b/kodlar/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/maas/index.html b/maas/index.html
+index 70641c2..f6ede0d 100644
+--- a/maas/index.html
++++ b/maas/index.html
+@@ -4,6 +4,9 @@
+ <title>Rüzgâr Türbini Teknisyeni Maaşı — Teklifi Doğru Okumak | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbini teknisyeni ne kadar kazanır? Burada uydurma rakam yok: maaşı belirleyen altı kaldıraç, teklifi okuyan bir hesaplayıcı ve mülakatta sorulacak beş cümle. 13 yıl sahadan.">
+ <link rel="canonical" href="https://sonersoylu.com/maas/">
++<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/maas/">
++<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/pay/">
++<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/maas/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Rüzgâr türbini teknisyeni maaşı">
+ <meta property="og:description" content="Rüzgâr türbini teknisyeni ne kadar kazanır? Burada uydurma rakam yok: maaşı belirleyen altı kaldıraç, teklifi okuyan bir hesaplayıcı ve mülakatta sorulacak beş cümle. 13 yıl sahadan.">
+@@ -17,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+@@ -155,6 +158,10 @@
+ 
+ .calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);
+  border:1px solid var(--line);box-shadow:var(--shade)}
++.calc>*{min-width:0}
++.f{grid-template-columns:minmax(0,1fr)}
++.fi{min-width:0;grid-template-columns:minmax(0,1fr)}
++.fi select{max-width:100%;width:100%}
+ @media (min-width:860px){.calc{grid-template-columns:1.15fr 1fr}}
+ .pane{background:var(--surface);padding:1.6rem}
+ .f{display:grid;gap:1.45rem}
+diff --git a/n117/index.html b/n117/index.html
+index b0d8312..52d65ec 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:16ch}
+diff --git a/n90/index.html b/n90/index.html
+index 5d1d771..0c9c3cf 100644
+--- a/n90/index.html
++++ b/n90/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ /* ---- N90 sayfasına özel ---- */
+ .n-hero{padding:4rem 0 3rem}
+@@ -47,7 +47,7 @@
+ .timeline button .t{display:block;margin-top:.4rem;font-size:.875rem;color:var(--ink)}
+ .timeline button[aria-current=true]{background:var(--raise)}
+ .timeline button[aria-current=true]::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--beacon)}
+-.timeline button[aria-current=true] .k{color:var(--beacon)}
++.timeline button[aria-current=true] .k{color:#a8322a}
+ 
+ .transport{display:flex;align-items:center;gap:1rem;border-top:1px solid var(--line);padding:1rem 1.25rem;flex-wrap:wrap}
+ .transport .bar{flex:1;min-width:8rem;height:2px;background:var(--line);position:relative}
+diff --git a/nasil-olunur/index.html b/nasil-olunur/index.html
+index ae9a702..266ea63 100644
+--- a/nasil-olunur/index.html
++++ b/nasil-olunur/index.html
+@@ -4,6 +4,9 @@
+ <title>Rüzgâr Türbini Teknisyeni Nasıl Olunur — 12 Aylık Yol Haritası | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbini teknisyeni olmak için hangi bölüm, hangi sertifika, hangi sıra? 2013'ten beri sahadayım: okul, GWO, sağlık raporu, ilk başvuru ve ilk yıl — süslemeden, sahadan.">
+ <link rel="canonical" href="https://sonersoylu.com/nasil-olunur/">
++<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/nasil-olunur/">
++<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/how-to-become/">
++<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/nasil-olunur/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Rüzgâr türbini teknisyeni nasıl olunur">
+ <meta property="og:description" content="Rüzgâr türbini teknisyeni olmak için hangi bölüm, hangi sertifika, hangi sıra? 2013'ten beri sahadayım: okul, GWO, sağlık raporu, ilk başvuru ve ilk yıl — süslemeden, sahadan.">
+@@ -17,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/rehber/index.html b/rehber/index.html
+index d47de3a..95c88d6 100644
+--- a/rehber/index.html
++++ b/rehber/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/guide/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/ruzgar/index.html b/ruzgar/index.html
+index 5cf9597..ab84b70 100644
+--- a/ruzgar/index.html
++++ b/ruzgar/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/saha-notlari/converter-asiri-akim/index.html b/saha-notlari/converter-asiri-akim/index.html
+index 571d093..96c7d8b 100644
+--- a/saha-notlari/converter-asiri-akim/index.html
++++ b/saha-notlari/converter-asiri-akim/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/disli-kutusu-sicaklik/index.html b/saha-notlari/disli-kutusu-sicaklik/index.html
+index b54db60..33348c7 100644
+--- a/saha-notlari/disli-kutusu-sicaklik/index.html
++++ b/saha-notlari/disli-kutusu-sicaklik/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Dişli Kutusu Sıcaklığı Rüzgâr Hızıyla Artıyor">
++<meta property="og:description" content="Vestas V126'da yağ sıcaklığı 78–82 °C. Sıcaklığı rüzgâr hızına karşı okuma yöntemi, mil keçesi kaynaklı yağ kaybı ve çözümü.">
+ <meta property="og:url" content="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -33,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/index.html b/saha-notlari/index.html
+index 71aadca..0594c88 100644
+--- a/saha-notlari/index.html
++++ b/saha-notlari/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/jenerator-sicaklik/index.html b/saha-notlari/jenerator-sicaklik/index.html
+index 0e0259d..b9bb608 100644
+--- a/saha-notlari/jenerator-sicaklik/index.html
++++ b/saha-notlari/jenerator-sicaklik/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?">
++<meta property="og:description" content="116 °C alarm, sağlıklı makine. IR termometre ile SCADA arasında 41 °C fark: RTD sensör kalibrasyon kayması nasıl ayırt edilir.">
+ <meta property="og:url" content="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -33,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/kanat-titresimi/index.html b/saha-notlari/kanat-titresimi/index.html
+index 315ce71..e3148c0 100644
+--- a/saha-notlari/kanat-titresimi/index.html
++++ b/saha-notlari/kanat-titresimi/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/pitch-motor-yuksek-akim/index.html b/saha-notlari/pitch-motor-yuksek-akim/index.html
+index 7a2dda8..7f995af 100644
+--- a/saha-notlari/pitch-motor-yuksek-akim/index.html
++++ b/saha-notlari/pitch-motor-yuksek-akim/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Pitch Motor Yüksek Akım — Saha Teşhisi ve Çözüm">
++<meta property="og:description" content="Pitch motor akımı 12 A yerine 18 A. Altı adımlık saha teşhisi, kök neden redüktör yağ kaçağı, altı saatte kalıcı çözüm.">
+ <meta property="og:url" content="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -33,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/yaw-salinimi/index.html b/saha-notlari/yaw-salinimi/index.html
+index 9d71c32..f7c8720 100644
+--- a/saha-notlari/yaw-salinimi/index.html
++++ b/saha-notlari/yaw-salinimi/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Yaw Salınımı (Hunting) — Nasel Dönerken Titriyor">
++<meta property="og:description" content="Enercon E92'de nasel ±18° salınıyor. Yatak sürüklenmesi, sensör titremesi ve PLC kazanç kayması: üçü birlikte nasıl kararsızlık yaratıyor.">
+ <meta property="og:url" content="https://sonersoylu.com/saha-notlari/yaw-salinimi/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -33,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/yaw-yatak-asinmasi/index.html b/saha-notlari/yaw-yatak-asinmasi/index.html
+index 6ad803b..53a0790 100644
+--- a/saha-notlari/yaw-yatak-asinmasi/index.html
++++ b/saha-notlari/yaw-yatak-asinmasi/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/disli-kutusu/index.html b/sistemler/disli-kutusu/index.html
+index 0c47546..6594f7c 100644
+--- a/sistemler/disli-kutusu/index.html
++++ b/sistemler/disli-kutusu/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Dişli kutusu Sistemi — Redüktör Teknik Rehberi">
++<meta property="og:description" content="Rüzgâr türbinlerinde dişli kutusu (redüktör): Tasarım, yağlama, sıcaklık yönetimi, ortak arızalar ve saha teşhisi.">
+ <meta property="og:url" content="https://sonersoylu.com/sistemler/disli-kutusu/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -34,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/index.html b/sistemler/index.html
+index e002942..38441b9 100644
+--- a/sistemler/index.html
++++ b/sistemler/index.html
+@@ -116,7 +116,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/jenerator/index.html b/sistemler/jenerator/index.html
+index ba138aa..41d12c4 100644
+--- a/sistemler/jenerator/index.html
++++ b/sistemler/jenerator/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Jeneratör Sistemi — Elektrik Üretim Mekanizması">
++<meta property="og:description" content="Rüzgâr türbini jeneratör sistemi: Asenkron jeneratör, DFIG, converter, soğutma, arıza teşhisi.">
+ <meta property="og:url" content="https://sonersoylu.com/sistemler/jenerator/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -34,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/pitch/index.html b/sistemler/pitch/index.html
+index 7219c24..27e9edc 100644
+--- a/sistemler/pitch/index.html
++++ b/sistemler/pitch/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/yaw/index.html b/sistemler/yaw/index.html
+index 494b234..28c4d2b 100644
+--- a/sistemler/yaw/index.html
++++ b/sistemler/yaw/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Yaw Sistemi — Rotor Rüzgâr Yöneliş">
++<meta property="og:description" content="Rüzgâr türbininde yaw sistemi: Motor, yatak, sensör, kontrol. Yaw hunting, asimetri, sensor arızası teşhisi.">
+ <meta property="og:url" content="https://sonersoylu.com/sistemler/yaw/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -34,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sor/index.html b/sor/index.html
+index 2c6cbcc..2cbe81b 100644
+--- a/sor/index.html
++++ b/sor/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/sozluk/index.html b/sozluk/index.html
+index dff3864..fa7fc58 100644
+--- a/sozluk/index.html
++++ b/sozluk/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/glossary/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sozluk/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -38,10 +38,10 @@
+ .sbox button:hover{color:var(--beacon)}
+ .chips{margin-top:.75rem;display:flex;flex-wrap:wrap;gap:.4rem}
+ .chip{border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:.42rem .7rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:.18s}
+-.chip b{font-weight:400;opacity:.55;margin-left:.2rem}
++.chip b{font-weight:400;opacity:1;margin-left:.2rem}
+ .chip:hover{color:var(--ink)}
+ .chip.on{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+-.chip.on b{opacity:.6}
++.chip.on b{opacity:1}
+ .cnt{margin-top:.75rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+ 
+ .list{padding:1.5rem 0 4rem}
+diff --git a/style.css b/style.css
+index e3dffa5..5fc7ee4 100644
+--- a/style.css
++++ b/style.css
+@@ -679,7 +679,7 @@ section.koyu>*{position:relative;z-index:1}
+ @media (min-width:1100px) and (prefers-reduced-motion:no-preference){
+  #kot{display:block;position:absolute;right:1.5rem;bottom:-1.35rem;
+   font-family:var(--mono);font-size:.5625rem;letter-spacing:.18em;color:var(--muted);
+-  font-feature-settings:"tnum";pointer-events:none;opacity:.75}
++  font-feature-settings:"tnum";pointer-events:none}
+ }
+ 
+ /* ---- giriş katmanı: sayfa açıldığındaki ilk on saniye --------------------
+diff --git a/sw.js b/sw.js
+index fb3018e..769732a 100644
+--- a/sw.js
++++ b/sw.js
+@@ -2,7 +2,7 @@
+    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
+    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
+ 
+-const SURUM = 'ana-c30492ac';
++const SURUM = 'kule-d72f4222';
+ const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
+ const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
+ 
+@@ -21,7 +21,7 @@ const ONBELLEGE = [
+   '/assets/arama.json?v=9096f654',
+   '/assets/ara.js?v=e178dc21',
+   '/assets/kaydirma.js?v=23cd28e6',
+-  '/style.css?v=e7153113',
++  '/style.css?v=ade96bc2',
+   '/assets/site.js?v=2083a619',
+   '/favicon.svg',
+   '/cevrimdisi.html',
+diff --git a/turbinler/enercon/e70/index.html b/turbinler/enercon/e70/index.html
+index 4118777..5ad56c6 100644
+--- a/turbinler/enercon/e70/index.html
++++ b/turbinler/enercon/e70/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Enercon E70 — 2.3 MW Direct-Drive Teknik Rehberi">
++<meta property="og:description" content="Enercon E70 rüzgâr türbini: 2.3 MW, doğrudan tahrik sistemi, sensörsüz tasarım. Montaj, bakım, arıza giderme.">
+ <meta property="og:url" content="https://sonersoylu.com/turbinler/enercon/e70/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-n117.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -38,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/enercon/e82/index.html b/turbinler/enercon/e82/index.html
+index a2d0966..63985b5 100644
+--- a/turbinler/enercon/e82/index.html
++++ b/turbinler/enercon/e82/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/enercon/e92/index.html b/turbinler/enercon/e92/index.html
+index 4134d1f..307e2cd 100644
+--- a/turbinler/enercon/e92/index.html
++++ b/turbinler/enercon/e92/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/enercon/index.html b/turbinler/enercon/index.html
+index 5878d99..56b198f 100644
+--- a/turbinler/enercon/index.html
++++ b/turbinler/enercon/index.html
+@@ -72,7 +72,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/index.html b/turbinler/index.html
+index b5146e5..5343b07 100644
+--- a/turbinler/index.html
++++ b/turbinler/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/index.html b/turbinler/vestas/index.html
+index 05745be..3b362c5 100644
+--- a/turbinler/vestas/index.html
++++ b/turbinler/vestas/index.html
+@@ -78,7 +78,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/v110/index.html b/turbinler/vestas/v110/index.html
+index 4900359..1effab0 100644
+--- a/turbinler/vestas/v110/index.html
++++ b/turbinler/vestas/v110/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Vestas V110 — 3.0 MW Teknik Rehberi">
++<meta property="og:description" content="Vestas V110 rüzgâr türbini: 3.0 MW, 110m rotor. Teknik rehberi, sistem özellikleri, montaj, bakım ve arıza giderme.">
+ <meta property="og:url" content="https://sonersoylu.com/turbinler/vestas/v110/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-n117.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -38,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/v126/index.html b/turbinler/vestas/v126/index.html
+index 0abbcdd..927be1f 100644
+--- a/turbinler/vestas/v126/index.html
++++ b/turbinler/vestas/v126/index.html
+@@ -10,6 +10,7 @@
+ <meta property="og:locale" content="tr_TR">
+ <meta property="og:type" content="article">
+ <meta property="og:title" content="Vestas V126 — 3.3 MW Teknik Rehberi">
++<meta property="og:description" content="Vestas V126 rüzgâr türbini: 3.3 MW, 126m rotor. Teknik rehberi, sistem özellikleri, montaj, bakım ve arıza giderme.">
+ <meta property="og:url" content="https://sonersoylu.com/turbinler/vestas/v126/">
+ <meta property="og:image" content="https://sonersoylu.com/assets/og/og-n117.jpg">
+ <meta property="og:image:width" content="1200">
+@@ -38,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/v136/index.html b/turbinler/vestas/v136/index.html
+index 5107dff..bee4766 100644
+--- a/turbinler/vestas/v136/index.html
++++ b/turbinler/vestas/v136/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/veri/index.html b/veri/index.html
+index e95fd4c..94a56d7 100644
+--- a/veri/index.html
++++ b/veri/index.html
+@@ -18,7 +18,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/style.css?v=ade96bc2">
+ <style>
+ 
+ .veri-kilit{max-width:26rem}
