@@ -1,0 +1,28 @@
+# Soner Soylu — Rüzgâr Türbini Saha Servis Teknisyeni
+
+> sonersoylu.com, 2013'ten beri Enercon, Nordex ve Vestas türbinlerinde mekanik ve elektrik saha servisi yapan Soner Soylu'nun (İzmir; Aliağa ve Bergama RES) Türkçe teknik bilgi sitesidir. İçerik sahadan yazılır; mesleğe yeni başlayan teknisyenler ve rüzgâr enerjisiyle ilgilenenler içindir. İngilizce sürüm /en/ altındadır.
+
+Sitedeki bilgiler servis dokümanının yerine geçmez; türbin üzerinde çalışmadan önce üreticinin prosedürleri ve LOTO kuralları uygulanmalıdır.
+
+## Mesleğe giriş
+- [Rüzgâr türbini teknisyeni nasıl olunur](https://sonersoylu.com/nasil-olunur/): Okul, GWO, sağlık raporu, ilk başvuru ve ilk yıl — 12 aylık yol haritası.
+- [GWO sertifikası](https://sonersoylu.com/gwo/): BST modülleri, süre, geçerlilik, tazeleme, BTT ve WINDA doğrulaması.
+- [Teknisyen maaşı](https://sonersoylu.com/maas/): Maaşı belirleyen etkenler ve bir iş teklifini değerlendirme yöntemi (uydurma rakam içermez).
+- [Sahadan rehber](https://sonersoylu.com/rehber/): Sahada bir gün, türbinin çalışma prensibi, yaygın arızalar.
+- [Ücretsiz eğitim](https://sonersoylu.com/egitim/): 8 bölümlük giriş eğitimi, her bölümde kısa sınav.
+
+## Teknik referans
+- [Arıza teşhis ağacı](https://sonersoylu.com/ariza/): 10 belirtiden olası nedene giden, marka bağımsız teşhis ağacı.
+- [Saha notları](https://sonersoylu.com/saha-notlari/): Gerçek arıza vakaları — belirti, ölçüm, kök neden, çözüm.
+- [Kod kütüphanesi](https://sonersoylu.com/kodlar/): IEC 61400-26 durum modeli, 12 kod ailesi, 50 yaygın koşul (üretici kod listesi içermez).
+- [Türbin sistemleri](https://sonersoylu.com/sistemler/): Pitch, yaw, dişli kutusu ve jeneratör.
+- [Model rehberi](https://sonersoylu.com/turbinler/): Vestas V110/V126/V136, Enercon E70/E82/E92.
+- [Nordex N117 Delta turu](https://sonersoylu.com/n117/): Temelden kanat ucuna 15 durak, kaynaklı teknik veriler.
+- [Nordex N90/2500 montajı](https://sonersoylu.com/n90/): 7 aşamalı 3B montaj.
+- [Sözlük](https://sonersoylu.com/sozluk/): 148 teknik terimin Türkçe–İngilizce karşılığı.
+- [Hesaplama araçları](https://sonersoylu.com/araclar/): Kanat ucu hızı, rüzgârdaki güç, kapasite faktörü, yıllık üretim, cıvata torku.
+
+## İletişim
+- E-posta: sonersoylu@yandex.com
+- LinkedIn: https://www.linkedin.com/in/soner-soylu
+- YouTube: https://www.youtube.com/@TheTurbineTech
