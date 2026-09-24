@@ -1,0 +1,723 @@
+diff --git a/ana.css b/ana.css
+new file mode 100644
+index 0000000..c28f71c
+--- /dev/null
++++ b/ana.css
+@@ -0,0 +1,139 @@
++/* ana.css — sinematik ana sayfa (yalnızca index.html)
++ * Koyu tek tema: sayfa bilinçli olarak koyu tasarlandı, açık modda da koyu kalır.
++ * Tüm kurallar .ana altında; style.css'in genel section/h2/p kurallarıyla çakışmasın.
++ */
++.ana{
++  --a-bg:#0b0e10;--a-surface:#12171b;--a-raise:#182026;--a-line:#232a31;
++  --a-ink:#e9edf0;--a-muted:#9aa3ab;--a-faint:#6f7880;
++  --a-accent:#c7ff32;--a-warn:#f2b233;--a-err:#ff6b5e;
++  --a-max:76rem;--a-gut:clamp(1rem,4vw,2rem);
++  background:var(--a-bg);color:var(--a-ink);color-scheme:dark;
++  font-family:var(--sans);
++}
++body.ana-body{background:#0b0e10}
++.ana *,.ana *::before,.ana *::after{box-sizing:border-box}
++.ana a{color:inherit}
++.ana :focus-visible{outline:2px solid var(--a-accent);outline-offset:3px}
++.ana section{border-top:1px solid var(--a-line);padding:clamp(4rem,9vw,7rem) 0}
++.ana .ic{max-width:var(--a-max);margin:0 auto;padding-inline:var(--a-gut)}
++.ana .etiket{font-family:var(--mono);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a-accent)}
++.ana h2{margin:.9rem 0 0;font-family:var(--sans);font-size:clamp(2rem,4.2vw,3.25rem);line-height:1.05;letter-spacing:-.04em;font-weight:600;color:var(--a-ink);text-wrap:balance;max-width:22ch}
++.ana .giris{margin:1.25rem 0 0;max-width:62ch;font-size:1.0625rem;line-height:1.7;color:var(--a-muted)}
++.ana .bas{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem 3rem}
++.ana .ok{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--a-ink);border-bottom:1px solid var(--a-line);padding-bottom:.35rem;transition:color .2s,border-color .2s}
++.ana .ok:hover{color:var(--a-accent);border-color:var(--a-accent)}
++.ana .ok::after{content:"→"}
++
++/* ---- kapak ---- */
++.ana .kapak{position:relative;border-top:0;padding:0;min-height:min(84svh,54rem);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;
++  background:#0b0e10 url(/assets/saha/ege-levha.webp) center/cover no-repeat}
++.ana .kapak canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-2;opacity:0;transition:opacity 1.4s ease}
++.ana .kapak canvas.hazir{opacity:1}
++.ana .kapak::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
++  background:linear-gradient(180deg,rgba(11,14,16,.35) 0%,rgba(11,14,16,0) 30%,rgba(11,14,16,.55) 62%,#0b0e10 100%),
++             linear-gradient(90deg,rgba(11,14,16,.7) 0%,rgba(11,14,16,0) 60%)}
++.ana .kapak .ic{width:100%;padding-block:clamp(10rem,40vh,26rem) clamp(2rem,5vw,3.5rem)}
++.ana .gizli{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
++.ana .kapak h1{margin:1rem 0 0;font-family:var(--sans);font-weight:600;font-size:clamp(2.75rem,8.5vw,6.5rem);line-height:.95;letter-spacing:-.055em;color:#fff;text-wrap:balance;max-width:12ch}
++.ana .kapak .alt{margin:1.25rem 0 0;max-width:46ch;font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.55;color:#d6dce0}
++.ana .dugmeler{display:flex;flex-wrap:wrap;gap:.75rem}
++.ana .dg{display:inline-flex;align-items:center;justify-content:center;min-height:2.9rem;padding:.75rem 1.35rem;font-size:.9375rem;font-weight:500;border:1px solid rgba(255,255,255,.28);color:#fff;transition:background .2s,color .2s,border-color .2s}
++.ana .dg:hover{border-color:#fff;background:rgba(255,255,255,.08)}
++.ana .dg.birincil{background:var(--a-accent);border-color:var(--a-accent);color:#0b0e10}
++.ana .dg.birincil:hover{background:#d8ff6a}
++.ana .rakam{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:clamp(2.5rem,6vw,4rem) 0 0;border-top:1px solid rgba(255,255,255,.18)}
++.ana .rakam div{padding:1.1rem 1rem 0 0}
++.ana .rakam dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:#aeb6bc}
++.ana .rakam dd{margin:.35rem 0 0;font-size:clamp(1.75rem,3.6vw,2.5rem);font-weight:600;letter-spacing:-.04em;color:#fff;font-variant-numeric:tabular-nums}
++.ana .rakam dd small{font-size:.5em;color:var(--a-accent);margin-left:.1em;letter-spacing:0}
++
++/* ---- makine ---- */
++.ana .parca{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15.5rem),1fr));gap:1px;margin-top:3rem;background:var(--a-line);border:1px solid var(--a-line)}
++.ana .parca article{background:var(--a-bg);padding:1.75rem 1.5rem 1.6rem;display:flex;flex-direction:column;gap:1rem}
++.ana .parca h3{margin:0;font-size:1.25rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
++.ana .parca p{margin:0;font-size:.9375rem;line-height:1.6;color:var(--a-muted)}
++.ana .parca dl{margin:auto 0 0;display:grid;gap:.5rem;padding-top:1rem;border-top:1px solid var(--a-line)}
++.ana .parca dl div{display:flex;justify-content:space-between;gap:1rem;font-size:.875rem}
++.ana .parca dt{color:var(--a-faint)}
++.ana .parca dd{margin:0;font-family:var(--mono);font-size:.8125rem;color:var(--a-ink);text-align:right;font-variant-numeric:tabular-nums}
++.ana .kaynak-not{margin:1.25rem 0 0;font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;color:var(--a-faint)}
++
++/* ---- sahadan (galeri) ---- */
++.ana .gal{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(9rem,17vw,14rem);gap:.75rem;margin-top:3rem}
++.ana .gal figure{margin:0;position:relative;overflow:hidden;background:var(--a-surface);cursor:zoom-in}
++.ana .gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s}
++.ana .gal figure:hover img{transform:scale(1.035)}
++.ana .gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.5rem .9rem .7rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:#e9edf0;background:linear-gradient(transparent,rgba(0,0,0,.65))}
++.ana .gal .g1{grid-column:span 7;grid-row:span 2}
++.ana .gal .g2{grid-column:span 5}
++.ana .gal .g3{grid-column:span 5}
++.ana .gal .g4{grid-column:span 4}
++.ana .gal .g5{grid-column:span 4}
++.ana .gal .g6{grid-column:span 4}
++.ana .gal .g7{grid-column:span 6}
++.ana .gal .g8{grid-column:span 6}
++
++/* ---- saha notları ---- */
++.ana .vaka{list-style:none;margin:3rem 0 0;padding:0;border-top:1px solid var(--a-line)}
++.ana .vaka a{display:grid;grid-template-columns:5.5rem minmax(0,1fr) auto;gap:.5rem 1.5rem;align-items:baseline;padding:1.4rem 0;border-bottom:1px solid var(--a-line);transition:background .2s}
++.ana .vaka a:hover{background:var(--a-surface)}
++.ana .vaka .no{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;color:var(--a-accent)}
++.ana .vaka b{display:block;font-size:1.1875rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
++.ana .vaka span.oz{display:block;margin-top:.35rem;font-size:.9375rem;line-height:1.55;color:var(--a-muted);max-width:70ch}
++.ana .vaka .mdl{font-family:var(--mono);font-size:.75rem;color:var(--a-faint);white-space:nowrap}
++
++/* ---- arıza ---- */
++.ana .ariza-izgara{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,4rem);align-items:start}
++.ana .belirti{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.6rem}
++.ana .belirti a{display:inline-flex;align-items:center;gap:.55rem;min-height:2.75rem;padding:.6rem 1rem;border:1px solid var(--a-line);background:var(--a-surface);font-size:.9375rem;color:var(--a-ink);transition:border-color .2s,background .2s}
++.ana .belirti a::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--a-warn);flex:none}
++.ana .belirti a.kritik::before{background:var(--a-err)}
++.ana .belirti a:hover{border-color:var(--a-accent);background:var(--a-raise)}
++.ana .uyari{margin:1.75rem 0 0;padding:1rem 1.1rem;border-left:2px solid var(--a-err);background:rgba(255,107,94,.06);font-size:.9375rem;line-height:1.6;color:#e3c9c6}
++
++/* ---- kaynaklar / kariyer kartları ---- */
++.ana .kartlar{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin-top:3rem}
++.ana .kartlar a{display:flex;flex-direction:column;gap:.6rem;min-height:9.5rem;padding:1.5rem;border:1px solid var(--a-line);background:var(--a-surface);transition:border-color .2s,transform .3s cubic-bezier(.16,1,.3,1)}
++.ana .kartlar a:hover{border-color:var(--a-accent);transform:translateY(-2px)}
++.ana .kartlar .k-ust{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--a-faint)}
++.ana .kartlar b{font-size:1.25rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
++.ana .kartlar span.a{font-size:.9375rem;line-height:1.55;color:var(--a-muted)}
++.ana .kartlar .git{margin-top:auto;font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--a-accent)}
++
++/* ---- iletişim ---- */
++.ana .iletisim{background:linear-gradient(180deg,var(--a-bg),#070909)}
++.ana .iletisim h2{max-width:18ch}
++.ana .kanal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:1px;margin-top:3rem;background:var(--a-line);border:1px solid var(--a-line)}
++.ana .kanal > *{background:var(--a-bg);padding:1.5rem;display:flex;flex-direction:column;gap:.5rem}
++.ana .kanal .k-ust{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--a-faint)}
++.ana .kanal .d{font-size:1.0625rem;color:var(--a-ink);word-break:break-word;user-select:all}
++.ana .kanal a{transition:background .2s}
++.ana .kanal a:hover{background:var(--a-surface)}
++.ana .kanal a .d::after{content:" ↗";color:var(--a-accent)}
++.ana .kapanis{margin:clamp(3.5rem,8vw,6rem) 0 0;font-size:clamp(1.9rem,5vw,3.75rem);font-weight:600;letter-spacing:-.05em;line-height:1;color:var(--a-ink)}
++.ana .kapanis em{font-style:normal;color:var(--a-accent)}
++
++
++/* ---- koyu sayfa için altbilgi ve ışık kutusu ---- */
++body.ana-body footer{background:#070909;border-top:1px solid #1b2127;color:#9aa3ab}
++body.ana-body footer a:hover{color:#e9edf0}
++body.ana-body #lb{background:rgba(7,9,9,.96)}
++
++@media (max-width:860px){
++  .ana .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(8rem,38vw,13rem)}
++  .ana .gal figure{grid-column:span 1!important;grid-row:span 1!important}
++  .ana .gal .g1{grid-column:span 2!important;grid-row:span 2!important}
++  .ana .gal .g8{grid-column:span 2!important}
++  .ana .ariza-izgara{grid-template-columns:1fr}
++  .ana .vaka a{grid-template-columns:4rem minmax(0,1fr)}
++  .ana .vaka .mdl{grid-column:2}
++}
++@media (max-width:560px){
++  .ana .rakam{grid-template-columns:repeat(2,minmax(0,1fr))}
++  .ana .rakam div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12);margin-top:1rem}
++  .ana .kapak{min-height:auto}
++  .ana .kapak .ic{padding-top:clamp(16rem,70vw,22rem)}
++}
++@media (prefers-reduced-motion:reduce){
++  .ana *{transition:none!important}
++}
+diff --git a/assets/js/cinematic-init.js b/assets/js/cinematic-init.js
+index 2306795..f7100ad 100644
+--- a/assets/js/cinematic-init.js
++++ b/assets/js/cinematic-init.js
+@@ -30,7 +30,8 @@ class CinematicHomepage {
+     const missing = [];
+ 
+     if (!window.gsap) missing.push('GSAP');
+-    if (!window.gsap?.plugins?.ScrollTrigger) missing.push('GSAP ScrollTrigger');
++    if (!window.ScrollTrigger) missing.push('GSAP ScrollTrigger');
++    else if (window.gsap) window.gsap.registerPlugin(window.ScrollTrigger);
+ 
+     if (missing.length > 0) {
+       console.error(
+diff --git a/assets/js/scroll-engine.js b/assets/js/scroll-engine.js
+index d3eabf7..0b4b132 100644
+--- a/assets/js/scroll-engine.js
++++ b/assets/js/scroll-engine.js
+@@ -66,13 +66,14 @@ class ScrollEngine {
+    * Register ScrollTrigger with GSAP
+    */
+   registerScrollTrigger() {
+-    if (!window.gsap || !window.gsap.plugins.ScrollTrigger) {
++    if (window.gsap && window.ScrollTrigger) window.gsap.registerPlugin(window.ScrollTrigger);
++    if (!window.gsap || !window.ScrollTrigger) {
+       console.error('ScrollEngine: GSAP or ScrollTrigger plugin not loaded');
+       return;
+     }
+ 
+     // Register ScrollTrigger
+-    gsap.registerPlugin(gsap.plugins.ScrollTrigger);
++    gsap.registerPlugin(window.ScrollTrigger);
+ 
+     // Update on scroll
+     if (this.lenis) {
+diff --git a/index.html b/index.html
+index d7dd9b8..8327406 100644
+--- a/index.html
++++ b/index.html
+@@ -23,9 +23,10 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/">
+ 
+-<link rel="stylesheet" href="/style-tokens.css?v=2">
+-<link rel="stylesheet" href="/style-cinematic.css?v=2">
++<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
++<link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="stylesheet" href="/style.css?v=e7153113">
++<link rel="stylesheet" href="/ana.css?v=c30492ac">
+ 
+ <script type="application/ld+json">
+ {
+@@ -44,8 +45,8 @@
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424" crossorigin="anonymous"></script>
+ </head>
+ 
+-<body class="cinematic-mode">
+-<a class="skip" href="#top">İçeriğe geç</a>
++<body class="ana-body">
++<a class="skip" href="#icerik">İçeriğe geç</a>
+ 
+ <header>
+   <div class="wrap bar">
+@@ -63,314 +64,231 @@
+   <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ </header>
+ 
+-<main id="top">
++<main id="icerik" class="ana">
+ 
+-<!-- SCENE 01: HERO -->
+-<section class="scene scene-01" data-scene="scene-01">
+-  <div class="turbin-hero-container"><canvas id="kapak3d" aria-hidden="true"></canvas></div>
+-  <div class="scene-01-content">
+-    <h1 class="scene-01-title">SONER SOYLU</h1>
+-    <p class="scene-01-subtitle">Rüzgâr Türbini Saha Servis Teknisyeni</p>
+-    <div class="scene-01-stats">
+-      <div class="scene-01-stat"><strong>13+</strong>Yıl Deneyim</div>
+-      <div class="scene-01-stat"><strong>300+</strong>Türbine Dokunuldu</div>
+-      <div class="scene-01-stat"><strong>4</strong>Üretici</div>
+-      <div class="scene-01-stat"><strong>9</strong>Model</div>
++<section class="kapak" aria-labelledby="kapak-b">
++  <canvas id="kapak3d" aria-hidden="true"></canvas>
++  <div class="ic">
++    <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</h1>
++    <div class="dugmeler">
++      <a class="dg birincil" href="#iletisim">İletişime geç</a>
++      <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+     </div>
++    <dl class="rakam">
++      <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
++      <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
++      <div><dt>Üretici</dt><dd>4</dd></div>
++      <div><dt>Model</dt><dd>9</dd></div>
++    </dl>
+   </div>
+ </section>
+ 
+-<!-- SCENE 02: MACHINE -->
+-<section class="scene scene-02" data-scene="scene-02">
+-  <div class="scene-02-turbin"><canvas id="scene02-canvas" aria-hidden="true"></canvas></div>
+-  <div class="scene-02-components">
+-    <div class="component-card">
+-      <h3 class="component-name">ROTOR</h3>
+-      <div class="component-specs">
+-        <div class="component-spec-row"><span class="component-label">Devir:</span><span class="component-value">12 rpm</span></div>
+-        <div class="component-spec-row"><span class="component-label">Güç:</span><span class="component-value">2,400 kW</span></div>
+-        <div class="component-spec-row"><span class="component-label">Yük:</span><span class="component-value">87%</span></div>
+-      </div>
+-    </div>
+-    <div class="component-card">
+-      <h3 class="component-name">ANA BERGER</h3>
+-      <div class="component-specs">
+-        <div class="component-spec-row"><span class="component-label">Yük:</span><span class="component-value">45 ton</span></div>
+-        <div class="component-spec-row"><span class="component-label">Devir:</span><span class="component-value">12 rpm</span></div>
+-        <div class="component-spec-row"><span class="component-label">Sıcaklık:</span><span class="component-value">62°C</span></div>
+-      </div>
++<section id="makine" aria-labelledby="makine-b">
++  <div class="ic">
++    <div class="bas">
++      <div>
++        <p class="etiket">Makinenin içi</p>
++        <h2 id="makine-b">Bir N117'yi dört parçada tanıyın</h2>
++        <p class="giris">Kapaktaki model Nordex N117/3000 Delta. Ana parçaları, ne işe yaradıkları ve üreticinin yayımladığı temel değerler.</p>
++      </div>
++      <a class="ok" href="/n117/">15 duraklık N117 turu</a>
+     </div>
+-    <div class="component-card">
+-      <h3 class="component-name">DİŞLİ KUTUSU</h3>
+-      <div class="component-specs">
+-        <div class="component-spec-row"><span class="component-label">Oran:</span><span class="component-value">1:99</span></div>
+-        <div class="component-spec-row"><span class="component-label">Çıkış:</span><span class="component-value">1500 rpm</span></div>
+-        <div class="component-spec-row"><span class="component-label">Ses:</span><span class="component-value">79 dB</span></div>
+-      </div>
+-    </div>
+-    <div class="component-card">
+-      <h3 class="component-name">JENERATÖR</h3>
+-      <div class="component-specs">
+-        <div class="component-spec-row"><span class="component-label">Tip:</span><span class="component-value">Uyarımlı</span></div>
+-        <div class="component-spec-row"><span class="component-label">Güç:</span><span class="component-value">2,500 kVA</span></div>
+-        <div class="component-spec-row"><span class="component-label">Frekans:</span><span class="component-value">50 Hz</span></div>
+-      </div>
++    <div class="parca">
++      <article class="bel">
++        <h3>Rotor</h3>
++        <p>Rüzgârın enerjisini yakalayan üç kanat ve göbek. Devir, rüzgâr hızına göre değişir; anma hızına gelince pitch sistemi gücü sınırlar.</p>
++        <dl><div><dt>Çap</dt><dd>116,8 m</dd></div><div><dt>Süpürme alanı</dt><dd>10.715 m²</dd></div><div><dt>Devir</dt><dd>7,9–14,1 d/dk</dd></div></dl>
++      </article>
++      <article class="bel">
++        <h3>Kanat</h3>
++        <p>Cam elyaf gövde, karbon kiriş. Kök cıvataları ve kanat içi kontroller periyodik bakımın en uzun işlerinden.</p>
++        <dl><div><dt>Tip</dt><dd>NR58.5</dd></div><div><dt>Uzunluk</dt><dd>57,3 m</dd></div><div><dt>Ağırlık</dt><dd>≈ 10,5 t</dd></div></dl>
++      </article>
++      <article class="bel">
++        <h3>Dişli kutusu</h3>
++        <p>Rotorun yavaş devrini jeneratörün istediği hıza çıkarır. Yağ sıcaklığı ve titreşim trendi, arızayı haftalar önce haber verir.</p>
++        <dl><div><dt>Kademe</dt><dd>3</dd></div><div><dt>Yapı</dt><dd>planet-planet-helisel</dd></div><div><dt>Yataklama</dt><dd>üç nokta</dd></div></dl>
++      </article>
++      <article class="bel">
++        <h3>Jeneratör</h3>
++        <p>Mekanik gücü elektriğe çevirir. Kısmi konvertör, değişken devirde şebekeye sabit frekans verir.</p>
++        <dl><div><dt>Tip</dt><dd>çift beslemeli asenkron</dd></div><div><dt>Gerilim</dt><dd>660 V</dd></div><div><dt>Anma gücü</dt><dd>3.000 kW</dd></div></dl>
++      </article>
+     </div>
++    <p class="kaynak-not">Değerler Nordex N117/3000 Delta için üreticinin yayımladığı verilerdir. Kaynaklar N117 sayfasında listelenmiştir.</p>
+   </div>
+ </section>
+ 
+-<!-- SCENE 03: KNOWLEDGE -->
+-<section class="scene scene-03" data-scene="scene-03">
+-  <div class="scene-03-content">
+-    <div class="blueprint-section">
+-      <h2 class="blueprint-title">Teknik Bilgiler</h2>
+-      <div class="blueprint-drawing">
+-        <svg class="blueprint-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+-          <style>.blueprint-line { stroke: #C7FF32; stroke-width: 1.5; fill: none; } .blueprint-text { fill: #8D969E; font-size: 12px; font-family: monospace; }</style>
+-          <rect class="blueprint-line" x="50" y="50" width="300" height="200" rx="10"/><circle class="blueprint-line" cx="200" cy="150" r="40"/><line class="blueprint-line" x1="50" y1="150" x2="160" y2="150"/><line class="blueprint-line" x1="240" y1="150" x2="350" y2="150"/><text class="blueprint-text" x="180" y="280">SKF 22338 CC/W33 · Ø 400mm × 180mm</text>
+-        </svg>
+-      </div>
+-      <div class="blueprint-specs">
+-        <div class="spec-item"><div class="spec-label">Model</div><div class="spec-value">SKF 22338 CC/W33</div></div>
+-        <div class="spec-item"><div class="spec-label">Boyutlar</div><div class="spec-value">400 × 180 mm</div></div>
+-        <div class="spec-item"><div class="spec-label">Kapasite</div><div class="spec-value">85 ton</div></div>
+-        <div class="spec-item"><div class="spec-label">Ömür</div><div class="spec-value">40,000 sa.</div></div>
++<section id="sahadan" aria-labelledby="sahadan-b">
++  <div class="ic">
++    <div class="bas">
++      <div>
++        <p class="etiket">Sahadan</p>
++        <h2 id="sahadan-b">Kendi çektiğim kareler</h2>
++        <p class="giris">Ege'nin sırtlarında, sabahın ilk ışığından gece vardiyasına kadar. Büyütmek için bir fotoğrafa dokunun.</p>
+       </div>
+     </div>
+-    <div class="blueprint-section">
+-      <h2 class="blueprint-title">Saha Tecrübesi</h2>
+-      <div class="blueprint-specs" style="grid-template-columns: 1fr;">
+-        <div class="spec-item"><div class="spec-label">Toplam Deneyim</div><div class="spec-value" data-counter="13">13</div><span style="font-size: 0.875rem; color: var(--color-text-secondary);"> Yıl</span></div>
+-        <div class="spec-item"><div class="spec-label">Türbin Sayısı</div><div class="spec-value" data-counter="300">300</div><span style="font-size: 0.875rem; color: var(--color-text-secondary);">+</span></div>
+-        <div class="spec-item"><div class="spec-label">Üreticiler</div><div class="spec-value">Enercon, Nordex, Vestas</div></div>
+-        <div class="spec-item"><div class="spec-label">Model Çeşidi</div><div class="spec-value">N90, N117, V136, E70+</div></div>
+-      </div>
++    <div class="gal">
++      <figure class="g1 bel" data-full="/assets/saha/ege-makilik.webp"><img src="/assets/saha/ege-makilik.webp" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption>Ege makiliği</figcaption></figure>
++      <figure class="g2 bel" data-full="/assets/saha/yildizlar.webp"><img src="/assets/saha/yildizlar.webp" alt="Gece, yıldızlı gökyüzünün altında aşağıdan yukarı doğru görünen rüzgâr türbini" loading="lazy" decoding="async"><figcaption>Gece vardiyası</figcaption></figure>
++      <figure class="g3 bel" data-full="/assets/saha/deniz-hatti.webp"><img src="/assets/saha/deniz-hatti.webp" alt="Deniz ve dağ manzarasına bakan sırtta sıralanmış rüzgâr türbinleri" loading="lazy" decoding="async"><figcaption>Deniz hattı</figcaption></figure>
++      <figure class="g4 bel" data-full="/assets/saha/alacakaranlik.webp"><img src="/assets/saha/alacakaranlik.webp" alt="Alacakaranlıkta sisli tepelerin üzerinde duran türbinler" loading="lazy" decoding="async"><figcaption>Alacakaranlık</figcaption></figure>
++      <figure class="g5 bel" data-full="/assets/saha/bahar.webp"><img src="/assets/saha/bahar.webp" alt="Saha çitinin yanında tutulan sarı kır çiçeği, arkada bir türbin" loading="lazy" decoding="async"><figcaption>Bahar</figcaption></figure>
++      <figure class="g6 bel" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption>Sahada</figcaption></figure>
++      <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption>Sırt hattı</figcaption></figure>
++      <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption>Saha yolu</figcaption></figure>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- SCENE 04: FIELD EXPERIENCE -->
+-<section class="scene scene-04" data-scene="scene-04">
+-  <div class="scene-04-content">
+-    <h2 class="scene-title">Saha Tecrübesi</h2>
+-    <div class="experience-stats">
+-      <div class="stat-card">
+-        <div class="stat-number" data-target="13">13</div>
+-        <div class="stat-label">Yıl Deneyim</div>
+-      </div>
+-      <div class="stat-card">
+-        <div class="stat-number" data-target="300">300</div>
+-        <div class="stat-label">Türbine Dokunuldu</div>
+-      </div>
+-      <div class="stat-card">
+-        <div class="stat-number" data-target="4">4</div>
+-        <div class="stat-label">Üretici</div>
+-      </div>
+-      <div class="stat-card">
+-        <div class="stat-number" data-target="9">9</div>
+-        <div class="stat-label">Model</div>
+-      </div>
+-    </div>
+-    <div class="field-gallery">
+-      <div class="gallery-image"><img src="/assets/saha/ege-levha.webp" alt="Ege makiliğine kurulu rüzgâr santrali" loading="lazy"></div>
+-      <div class="gallery-image"><img src="/assets/saha/ege-levha.webp" alt="Yıldızların altında teknisyen çalışması" loading="lazy"></div>
+-      <div class="gallery-image"><img src="/assets/saha/ege-levha.webp" alt="Denize bakan türbin sırası" loading="lazy"></div>
+-      <div class="gallery-image"><img src="/assets/saha/ege-levha.webp" alt="Alacakaranlıkta saha çalışması" loading="lazy"></div>
+-      <div class="gallery-image"><img src="/assets/saha/ege-levha.webp" alt="Bahar çiçekleri arasında türbin" loading="lazy"></div>
+-      <div class="gallery-image"><img src="/assets/saha/ege-levha.webp" alt="Saha yolu ve türbin kulesi" loading="lazy"></div>
++<section id="vakalar" aria-labelledby="vakalar-b">
++  <div class="ic">
++    <div class="bas">
++      <div>
++        <p class="etiket">Saha notları</p>
++        <h2 id="vakalar-b">Gerçek arızalar, adım adım</h2>
++        <p class="giris">Her vakada belirti, yapılan ölçümler, kök neden ve bir dahaki sefere ne yapılacağı.</p>
++      </div>
++      <a class="ok" href="/saha-notlari/">Tüm saha notları</a>
+     </div>
++    <ul class="vaka">
++      <li><a href="/saha-notlari/pitch-motor-yuksek-akim/"><span class="no">VAKA 01</span><span><b>Pitch motor yüksek akım</b><span class="oz">Pitch motor akımı 12 A yerine 18 A. Altı adımlık teşhis, kök neden redüktör yağ kaçağı.</span></span><span class="mdl">Nordex N117</span></a></li>
++      <li><a href="/saha-notlari/disli-kutusu-sicaklik/"><span class="no">VAKA 02</span><span><b>Dişli kutusu sıcaklık artışı</b><span class="oz">Yağ sıcaklığı 78–82 °C. Sekiz aylık trend analizi, mil keçesi kaynaklı yağ kaybı.</span></span><span class="mdl">Vestas V126</span></a></li>
++      <li><a href="/saha-notlari/yaw-salinimi/"><span class="no">VAKA 03</span><span><b>Yaw salınımı (hunting)</b><span class="oz">Nasel ±18° salınıyor. Yatak sürüklenmesi, sensör titremesi ve PLC parametre kayması.</span></span><span class="mdl">Enercon E92</span></a></li>
++      <li><a href="/saha-notlari/jenerator-sicaklik/"><span class="no">VAKA 04</span><span><b>Jeneratör sıcaklık alarmı</b><span class="oz">116 °C alarmı. IR termometre ile SCADA arasında 41 °C fark: sensör kalibrasyon kayması.</span></span><span class="mdl">Vestas V126</span></a></li>
++      <li><a href="/saha-notlari/converter-asiri-akim/"><span class="no">VAKA 05</span><span><b>Converter aşırı akım</b><span class="oz">Yalnızca 2,3 MW üzerinde atan aralıklı arıza. Gevşemiş DC bara bağlantısı ve güç eşiği yöntemi.</span></span><span class="mdl">Vestas V110</span></a></li>
++      <li><a href="/saha-notlari/yaw-yatak-asinmasi/"><span class="no">VAKA 06</span><span><b>Yaw yatağı aşınması</b><span class="oz">Alarmsız yakalanan hasar. Tıkalı yağlama hattı, tek sektörde aşınma, gres sektör haritası.</span></span><span class="mdl">Enercon E92</span></a></li>
++      <li><a href="/saha-notlari/kanat-titresimi/"><span class="no">VAKA 07</span><span><b>Kanat titreşimi</b><span class="oz">7–9 m/s bandında titreşim. 1P harmoniği, 2,5° pitch asimetrisi: kanat değil kalibrasyon.</span></span><span class="mdl">Vestas V126</span></a></li>
++    </ul>
+   </div>
+ </section>
+ 
+-<!-- SCENE 05: FAULT DIAGNOSIS -->
+-<section class="scene scene-05" data-scene="scene-05">
+-  <div class="scene-05-content">
+-    <h2 class="diagnosis-title">Arıza Teşhisi</h2>
+-    <div class="diagnostic-tree">
+-      <div class="tree-node success">
+-        <div class="tree-node-title">✓ Sistem Sağlıklı</div>
+-        <div class="tree-node-detail">Tüm parametreler normal sınırlar içinde</div>
+-      </div>
+-      <div class="tree-node warning">
+-        <div class="tree-node-title">⚠ Bakım Gerekli</div>
+-        <div class="tree-node-detail">Periyodik kontrol ve yağlama zamanı</div>
+-      </div>
+-      <div class="tree-node warning">
+-        <div class="tree-node-title">⚠ Sıcaklık Yüksek</div>
+-        <div class="tree-node-detail">Ana berger sıcaklığı normal limitin üstünde</div>
+-      </div>
+-      <div class="tree-node error">
+-        <div class="tree-node-title">✗ Acil Müdahale</div>
+-        <div class="tree-node-detail">Türbin durdurulmalı, teknisyen çağrılmalı</div>
+-      </div>
+-      <div class="tree-node success">
+-        <div class="tree-node-title">✓ Problem Çözüldü</div>
+-        <div class="tree-node-detail">Kalibrasyondan sonra sistem normal çalışıyor</div>
+-      </div>
++<section id="ariza" aria-labelledby="ariza-b">
++  <div class="ic ariza-izgara">
++    <div>
++      <p class="etiket">Arıza teşhis ağacı</p>
++      <h2 id="ariza-b">Belirtiden olası nedene</h2>
++      <p class="giris">On belirti, 63 düğüm. Her soru sizi bir sonraki ölçüme götürür; marka bağımsız mantık, sahada sırayla uygulanacak biçimde.</p>
++      <p class="uyari">Bu ağaç servis dokümanının yerine geçmez. Türbine girmeden önce LOTO, rotor kilidi ve kapalı alan kurallarını uygulayın; şüphe varsa çalıştırmayın.</p>
+     </div>
++    <ul class="belirti" aria-label="Belirtiler">
++      <li><a class="kritik" href="/ariza/">Türbin durdu, üretim yok</a></li>
++      <li><a class="kritik" href="/ariza/">Aşırı sıcaklık alarmı</a></li>
++      <li><a href="/ariza/">Titreşim veya anormal ses</a></li>
++      <li><a href="/ariza/">Pitch sistemi arızası</a></li>
++      <li><a href="/ariza/">Yaw sistemi arızası</a></li>
++      <li><a href="/ariza/">Çalışıyor ama üretim düşük</a></li>
++      <li><a href="/ariza/">Yağ veya gres kaçağı</a></li>
++      <li><a class="kritik" href="/ariza/">Şebeke veya konvertör arızası</a></li>
++      <li><a class="kritik" href="/ariza/">Fren arızası</a></li>
++      <li><a class="kritik" href="/ariza/">Kanat hasarı şüphesi</a></li>
++    </ul>
+   </div>
+ </section>
+ 
+-<!-- SCENE 06: FIELD NOTES -->
+-<section class="scene scene-06" data-scene="scene-06">
+-  <div class="scene-content">
+-    <h2 class="scene-title">Saha Notları</h2>
+-    <div style="display: grid; gap: 2rem; margin-top: 2rem;">
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <div style="font-weight: 600; margin-bottom: var(--space-sm); color: var(--color-accent);">SAHA NOTU / 017</div>
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md);">Nordex N90 — Pitch Motor Arızası</h3>
+-        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-md);">Motor yaw komutlarına yanıt vermiyor. Konnektör üzerinde korozyon tespit edildi. Terminal temizliğinden sonra normal çalışmaya başladı.</p>
+-        <div style="font-size: var(--font-small); color: var(--color-text-tertiary);">15 Eylül 2024 • Aliağa RES</div>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <div style="font-weight: 600; margin-bottom: var(--space-sm); color: var(--color-accent);">SAHA NOTU / 016</div>
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md);">Vestas V136 — Generator Fırçası Değişimi</h3>
+-        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-md);">1250 saat sonra jeneratör fırçası değiştirildi. Yeni fırça tip: EGB800. İnstalasyon 4 saat sürdü.</p>
+-        <div style="font-size: var(--font-small); color: var(--color-text-tertiary);">10 Eylül 2024 • Bergama RES</div>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <div style="font-weight: 600; margin-bottom: var(--space-sm); color: var(--color-accent);">SAHA NOTU / 015</div>
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md);">Enercon E70+ — Kanat Kontrolü</h3>
+-        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-md);">Periyodik kanat yapısal kontrolü tamamlandı. Mikro çatlak tespit edildi, polimer dolgu uygulandı. Güvenlik sınıfı korunmuş.</p>
+-        <div style="font-size: var(--font-small); color: var(--color-text-tertiary);">05 Eylül 2024 • Deniz Üstü</div>
+-      </div>
++<section id="kaynaklar" aria-labelledby="kaynaklar-b">
++  <div class="ic">
++    <p class="etiket">Kaynaklar</p>
++    <h2 id="kaynaklar-b">Sahada işe yarayanlar</h2>
++    <div class="kartlar">
++      <a class="bel" href="/araclar/"><span class="k-ust">Araçlar</span><b>Saha hesaplayıcıları</b><span class="a">Uç hızı, rüzgârdaki güç, yükseklik düzeltmesi, kapasite faktörü, yıllık üretim ve cıvata torku.</span><span class="git">Hesapla</span></a>
++      <a class="bel" href="/kodlar/"><span class="k-ust">IEC 61400-26-1</span><b>Kod kütüphanesi</b><span class="a">Durum ve alarm kodlarını okumak: 12 aile, 50 koşul, her birinde saha kontrol listesi.</span><span class="git">Kodlara bak</span></a>
++      <a class="bel" href="/sozluk/"><span class="k-ust">148 terim</span><b>Sözlük</b><span class="a">Türkçe–İngilizce teknik terimler; sahada ve dokümanda karşılaştıklarınız.</span><span class="git">Sözlüğü aç</span></a>
++      <a class="bel" href="/sistemler/"><span class="k-ust">Sistemler</span><b>Türbin sistemleri</b><span class="a">Pitch, yaw, dişli kutusu ve jeneratör: nasıl çalışır, nerede bozulur.</span><span class="git">Oku</span></a>
++      <a class="bel" href="/n90/"><span class="k-ust">3B montaj</span><b>Nordex N90/2500</b><span class="a">Temelden devreye almaya yedi aşamalı 3B montaj.</span><span class="git">Modeli aç</span></a>
++      <a class="bel" href="/turbinler/"><span class="k-ust">Model rehberi</span><b>Vestas ve Enercon</b><span class="a">Teknik özellik, bakım ve arıza notları, model model.</span><span class="git">Rehbere git</span></a>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- SCENE 07: TOOLS -->
+-<section class="scene scene-07" data-scene="scene-07">
+-  <div class="scene-content">
+-    <h2 class="scene-title">Saha Araçları</h2>
+-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md); color: var(--color-accent);">Rüzgâr Gücü Hesaplayıcı</h3>
+-        <p style="font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-md); color: var(--color-text-secondary);">P = 0.5 × ρ × A × v³ × Cp</p>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Rüzgâr hızı, havanın yoğunluğu ve rotor alanından türbin güç çıkışını hesapla.</p>
+-        <a href="/araclar/" style="display: inline-block; margin-top: var(--space-md); color: var(--color-accent); text-decoration: none; font-weight: 600;">Hesapla →</a>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md); color: var(--color-accent);">Tork Hesaplayıcı</h3>
+-        <p style="font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-md); color: var(--color-text-secondary);">τ = F × r</p>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Rotor moment kolunu ve yükü kullanarak tork değerini hesapla.</p>
+-        <a href="/araclar/" style="display: inline-block; margin-top: var(--space-md); color: var(--color-accent); text-decoration: none; font-weight: 600;">Hesapla →</a>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md); color: var(--color-accent);">Kod Kütüphanesi</h3>
+-        <p style="font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-md); color: var(--color-text-secondary);">IEC 61400-26</p>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Durum ve alarm kodlarını okuyarak hata tanısını yap.</p>
+-        <a href="/kodlar/" style="display: inline-block; margin-top: var(--space-md); color: var(--color-accent); text-decoration: none; font-weight: 600;">Kodları Gör →</a>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md); color: var(--color-accent);">Sözlük</h3>
+-        <p style="font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-md); color: var(--color-text-secondary);">148 Terim</p>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Türkçe-İngilizce teknik terimleri bulun ve anlamlarını öğrenin.</p>
+-        <a href="/sozluk/" style="display: inline-block; margin-top: var(--space-md); color: var(--color-accent); text-decoration: none; font-weight: 600;">Sözlüğü Aç →</a>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md); color: var(--color-accent);">Arıza Ağacı</h3>
+-        <p style="font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-md); color: var(--color-text-secondary);">45 Kategori</p>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Belirtiden başlayarak olası nedenleri sistematik olarak bul.</p>
+-        <a href="/ariza/" style="display: inline-block; margin-top: var(--space-md); color: var(--color-accent); text-decoration: none; font-weight: 600;">Başla →</a>
+-      </div>
+-
+-      <div style="background: var(--color-bg-tertiary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl);">
+-        <h3 style="font-size: var(--font-h4); margin-bottom: var(--space-md); color: var(--color-accent);">Türbin Rehberi</h3>
+-        <p style="font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-md); color: var(--color-text-secondary);">N90, N117, V136</p>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Enercon ve Vestas türbinlerinin teknik özelliklerini keşfet.</p>
+-        <a href="/turbinler/" style="display: inline-block; margin-top: var(--space-md); color: var(--color-accent); text-decoration: none; font-weight: 600;">Modelleri Gör →</a>
+-      </div>
++<section id="kariyer" aria-labelledby="kariyer-b">
++  <div class="ic">
++    <div class="bas">
++      <div>
++        <p class="etiket">Mesleğe giriş</p>
++        <h2 id="kariyer-b">Rüzgâr teknisyeni olmak isteyenlere</h2>
++      </div>
++      <a class="ok" href="/sor/">Sorunuzu sorun</a>
+     </div>
+-  </div>
+-</section>
+-
+-<!-- SCENE 08: CAREER -->
+-<section class="scene scene-08" data-scene="scene-08">
+-  <div class="scene-content">
+-    <h2 class="scene-title">Kariyer Yolu</h2>
+-    <div style="margin-top: 3rem; max-width: 50rem; margin-left: auto; margin-right: auto;">
+-      <div style="position: relative; padding-left: 3rem; margin-bottom: 2rem; border-left: 2px solid var(--color-accent);">
+-        <div style="position: absolute; left: -0.85rem; width: 1.5rem; height: 1.5rem; background: var(--color-accent); border-radius: 50%; top: 0;"></div>
+-        <h3 style="font-weight: 600; margin-bottom: var(--space-sm);">GWO Sertifikası</h3>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Uluslararası güvenlik sertifikası. BST (Temel), BTT (Teknik), WINDA (İleri).</p>
+-        <a href="/gwo/" style="font-size: var(--font-small); color: var(--color-accent); text-decoration: none;">Detaylar →</a>
+-      </div>
+-
+-      <div style="position: relative; padding-left: 3rem; margin-bottom: 2rem; border-left: 2px solid var(--color-accent);">
+-        <div style="position: absolute; left: -0.85rem; width: 1.5rem; height: 1.5rem; background: var(--color-accent); border-radius: 50%; top: 0;"></div>
+-        <h3 style="font-weight: 600; margin-bottom: var(--space-sm);">Teknik Bilgi</h3>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Sistem bilgisi, arıza teşhisi, periyodik bakım ve devreye alma prosedürleri.</p>
+-        <a href="/rehber/" style="font-size: var(--font-small); color: var(--color-accent); text-decoration: none;">Rehberi Oku →</a>
+-      </div>
+-
+-      <div style="position: relative; padding-left: 3rem; margin-bottom: 2rem; border-left: 2px solid var(--color-accent);">
+-        <div style="position: absolute; left: -0.85rem; width: 1.5rem; height: 1.5rem; background: var(--color-accent); border-radius: 50%; top: 0;"></div>
+-        <h3 style="font-weight: 600; margin-bottom: var(--space-sm);">İlk Pozisyon</h3>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Saha teknisyeni olarak başlama, şef desteği altında bağımsız çalışma.</p>
+-        <a href="/nasil-olunur/" style="font-size: var(--font-small); color: var(--color-accent); text-decoration: none;">12 Aylık Plan →</a>
+-      </div>
+-
+-      <div style="position: relative; padding-left: 3rem; border-left: 2px solid var(--color-accent);">
+-        <div style="position: absolute; left: -0.85rem; width: 1.5rem; height: 1.5rem; background: var(--color-accent); border-radius: 50%; top: 0;"></div>
+-        <h3 style="font-weight: 600; margin-bottom: var(--space-sm);">Uzman Seviye</h3>
+-        <p style="color: var(--color-text-secondary); font-size: var(--font-small);">Liderlik, mentorluk, şirket içi eğitim ve iş geliştirme.</p>
+-        <a href="/egitim/" style="font-size: var(--font-small); color: var(--color-accent); text-decoration: none;">Eğitim Programı →</a>
+-      </div>
++    <div class="kartlar">
++      <a class="bel" href="/nasil-olunur/"><span class="k-ust">Yol haritası</span><b>Nasıl olunur</b><span class="a">Okul, belge, ilk iş: 12 aylık plan.</span><span class="git">Planı gör</span></a>
++      <a class="bel" href="/gwo/"><span class="k-ust">Sertifika</span><b>GWO eğitimleri</b><span class="a">BST, BTT, tazeleme ve WINDA kaydı.</span><span class="git">Oku</span></a>
++      <a class="bel" href="/maas/"><span class="k-ust">Maaş</span><b>Teklifini oku</b><span class="a">Rakam yerine formül: bir iş teklifini neye göre değerlendirirsiniz.</span><span class="git">Oku</span></a>
++      <a class="bel" href="/egitim/"><span class="k-ust">Ücretsiz</span><b>8 bölümlük eğitim</b><span class="a">Her bölümde kısa sınav, sonunda katılım belgesi.</span><span class="git">Başla</span></a>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- SCENE 09: CONTACT -->
+-<section class="scene scene-09" data-scene="scene-09">
+-  <div class="scene-content" id="iletisim">
+-    <h2 class="scene-title">İletişim</h2>
+-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; max-width: 60rem; margin-left: auto; margin-right: auto;">
+-      <div style="text-align: center;">
+-        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📧</div>
+-        <h3 style="margin-bottom: var(--space-sm);">E-posta</h3>
+-        <a href="mailto:sonersoylu@yandex.com" style="color: var(--color-accent); text-decoration: none;">sonersoylu@yandex.com</a>
+-      </div>
+-      <div style="text-align: center;">
+-        <div style="font-size: 2rem; margin-bottom: var(--space-md);">💼</div>
+-        <h3 style="margin-bottom: var(--space-sm);">LinkedIn</h3>
+-        <a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer" style="color: var(--color-accent); text-decoration: none;">Profili Görüntüle</a>
+-      </div>
+-      <div style="text-align: center;">
+-        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📍</div>
+-        <h3 style="margin-bottom: var(--space-sm);">Konum</h3>
+-        <p style="color: var(--color-text-secondary);">Aliağa & Bergama RES, İzmir</p>
+-      </div>
++<section id="iletisim" class="iletisim" aria-labelledby="iletisim-b">
++  <div class="ic">
++    <p class="etiket">İletişim</p>
++    <h2 id="iletisim-b">Saha projeleri, servis ve danışmanlık için ulaşın</h2>
++    <div class="kanal">
++      <div><span class="k-ust">E-posta</span><span class="d">sonersoylu@yandex.com</span></div>
++      <a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener"><span class="k-ust">LinkedIn</span><span class="d">soner-soylu</span></a>
++      <a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener"><span class="k-ust">YouTube</span><span class="d">The Turbine Tech</span></a>
++      <div><span class="k-ust">Saha</span><span class="d">Aliağa ve Bergama RES, İzmir</span></div>
+     </div>
++    <p class="kapanis">Makineyi <em>çalışır</em> tutun.</p>
+   </div>
+ </section>
+ 
+-<!-- SCENE 10: CLOSURE -->
+-<section class="scene scene-10" data-scene="scene-10">
+-  <div class="scene-10-message">MAKİNEYİ ÇALIŞIR TUTUN.</div>
+-  <div class="scene-10-subtitle">Soner Soylu — Rüzgâr Türbini Saha Servis Teknisyeni</div>
+-  <a href="/rehber/" class="scene-10-cta">SAHA REHBERİNİ OKUYUN →</a>
+-</section>
+-
+ </main>
++<footer><div class="wrap mono"><p>Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</p><p>Aliağa, İzmir</p>
++<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
++<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
++<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
++<div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><img alt="" src=""></div>
++<div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
++ <div class="ara-ic">
++  <div class="ara-ust">
++   <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
++   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
++          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
++   <button id="araKapat" type="button" aria-label="Kapat">esc</button>
++  </div>
++  <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
++  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
++ </div>
++</div>
++<script src="/assets/site.js?v=2083a619" defer></script>
++<script src="/assets/ara.js?v=e178dc21" defer></script>
++<script>
++(function () {
++  /* mobil menü */
++  var b = document.getElementById('burger'), m = document.getElementById('mobmenu');
++  if (b && m) {
++    b.addEventListener('click', function () { var o = b.getAttribute('aria-expanded') === 'true'; b.setAttribute('aria-expanded', String(!o)); m.classList.toggle('open', !o); });
++    m.addEventListener('click', function (e) { if (e.target.tagName === 'A') { m.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
++  }
++  /* ışık kutusu */
++  var lb = document.getElementById('lb'), li = lb.querySelector('img');
++  function ac(f) { li.src = f.dataset.full; li.alt = f.querySelector('img').alt; lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
++  function kapat() { lb.classList.remove('open'); li.src = ''; document.body.style.overflow = ''; }
++  document.querySelectorAll('.gal figure').forEach(function (f) {
++    f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', 'Büyüt: ' + f.querySelector('img').alt);
++    f.addEventListener('click', function () { ac(f); });
++    f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ac(f); } });
++  });
++  lb.addEventListener('click', kapat);
++  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) kapat(); });
+ 
+-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1/dist/lenis.min.js"></script>
+-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+-<script src="/assets/js/scroll-engine.js"></script>
+-<script src="/assets/js/utils/parallax.js"></script>
+-<script src="/assets/js/utils/counter.js"></script>
+-<script src="/assets/js/components/scene-01-hero.js"></script>
+-<script src="/assets/js/components/scene-02-machine.js"></script>
+-<script src="/assets/js/components/scene-03-knowledge.js"></script>
+-<script src="/assets/js/components/scene-04-field.js"></script>
+-<script src="/assets/js/components/scene-05-diagnosis.js"></script>
+-<script src="/assets/js/cinematic-init.js"></script>
++  /* kapak 3B: N117 modeli. Işık günün saatine göre, dönüş anma devrinde */
++  var kok = document.documentElement;
++  var s = new Date().getHours();
++  kok.setAttribute('data-vardiya', (s < 6 || s >= 20) ? 'gece' : (s < 8 || s >= 17) ? 'altin' : 'gunduz');
++  if (!getComputedStyle(kok).getPropertyValue('--devir-sure').trim()) kok.style.setProperty('--devir-sure', '4.76s');
++  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
++  if (az || (navigator.connection && navigator.connection.saveData)) return;
++  var canvas = document.getElementById('kapak3d');
++  if (!canvas) return;
++  try { var t = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (t.getContext('webgl2') || t.getContext('webgl')))) return; } catch (e) { return; }
++  function baslat() {
++    import('/assets/hero3d.js?v=c5074566').then(function (mod) { mod.kapak3BBaslat(canvas); })
++      .catch(function (e) { console.error('kapak3b yüklenemedi:', e); });
++  }
++  if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 2000 }); else setTimeout(baslat, 600);
++})();
++</script>
+ </body>
+ </html>
+diff --git a/sw.js b/sw.js
+index efbd652..fb3018e 100644
+--- a/sw.js
++++ b/sw.js
+@@ -2,7 +2,7 @@
+    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
+    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
+ 
+-const SURUM = '682964c0';
++const SURUM = 'ana-c30492ac';
+ const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
+ const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
+ 
