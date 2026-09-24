@@ -1,0 +1,747 @@
+diff --git a/ara/index.html b/ara/index.html
+index b676ac7..08afd14 100644
+--- a/ara/index.html
++++ b/ara/index.html
+@@ -71,7 +71,7 @@
+ </div></section>
+ <section class="gsec"><div class="wrap">
+  <p class="mono">Doğrudan git</p>
+- <div class="nrd"><a href="/sozluk/"><b>Sözlük</b><span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/"><b>Araçlar</b><span>Altı saha hesaplayıcısı</span></a><a href="/ariza/"><b>Arıza ağacı</b><span>Belirtiden olası nedene</span></a><a href="/kodlar/"><b>Kod kütüphanesi</b><span>50 koşul, 12 aile</span></a><a href="/egitim/"><b>Eğitim</b><span>Sekiz bölümlük ücretsiz seri</span></a><a href="/ruzgar/"><b>Canlı rüzgâr</b><span>Yedi bölge, tahmini türbin çıkışı</span></a></div>
++ <div class="nrd"><a href="/sozluk/"><b>Sözlük</b><span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/"><b>Araçlar</b><span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/"><b>Arıza ağacı</b><span>Belirtiden olası nedene</span></a><a href="/kodlar/"><b>Kod kütüphanesi</b><span>50 koşul, 12 aile</span></a><a href="/egitim/"><b>Eğitim</b><span>Sekiz bölümlük ücretsiz seri</span></a><a href="/ruzgar/"><b>Canlı rüzgâr</b><span>Yedi bölge, tahmini türbin çıkışı</span></a></div>
+ </div></section>
+ 
+ </main>
+diff --git a/araclar/civata-germe/index.html b/araclar/civata-germe/index.html
+index ae708aa..6dbcc7f 100644
+--- a/araclar/civata-germe/index.html
++++ b/araclar/civata-germe/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Cıvata Germe Hesaplayıcısı — Germe Kuvveti, Piston Pres, Load Cell | Soner Soylu</title>
++<title>Cıvata Germe Hesaplayıcısı: Kuvvet ve Pres Basıncı | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbini saha servisi için bolt tension hesaplayıcı. Montaj kuvveti, strain gauge, piston presle sıkma tabloları.">
+ <link rel="canonical" href="https://sonersoylu.com/araclar/civata-germe/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/civata-germe/">
+diff --git a/araclar/index.html b/araclar/index.html
+index a8a1e6f..00b00bc 100644
+--- a/araclar/index.html
++++ b/araclar/index.html
+@@ -1,8 +1,8 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Rüzgâr Türbini Hesaplama Araçları — Kanat Ucu Hızı, Kapasite Faktörü, Cıvata Torku | Soner Soylu</title>
+-<meta name="description" content="Rüzgâr türbini için ücretsiz hesaplama araçları: kanat ucu hızı ve TSR, rüzgârdaki güç, yükseklik düzeltmesi, kapasite faktörü, Weibull ile yıllık üretim tahmini ve cıvata sıkma torku. Formülleriyle birlikte.">
++<title>Rüzgâr Türbini Hesaplama Araçları — 7 Saha Hesabı | Soner Soylu</title>
++<meta name="description" content="Rüzgâr türbini için ücretsiz hesaplama araçları: kanat ucu hızı, rüzgârdaki güç, kapasite faktörü, yıllık üretim ve cıvata torku — formülleriyle.">
+ <link rel="canonical" href="https://sonersoylu.com/araclar/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Rüzgâr Türbini Hesaplama Araçları">
+@@ -161,7 +161,7 @@
+   <a class="g-back" href="/"><span aria-hidden="true">←</span> Ana sayfa</a>
+   <p class="mono" style="display:flex;align-items:center;gap:.75rem;margin-top:2rem"><span class="beacon"></span>Hesaplama araçları</p>
+   <h1>Rüzgâr türbini hesaplayıcıları</h1>
+-  <p class="lede">Sahada ve masa başında en sık ihtiyaç duyduğum altı hesap. Hepsi tarayıcınızda çalışıyor — hiçbir veri sunucuya gitmiyor, kayıt istemiyor. Her aracın altına kullandığı formülü ve varsayımlarını da yazdım; çünkü sayının kendisi kadar nereden geldiği de önemli.</p>
++  <p class="lede">Sahada ve masa başında en sık ihtiyaç duyduğum altı hesap; yedincisi, cıvata germe hesaplayıcısı, kendi sayfasında. Hepsi tarayıcınızda çalışıyor — hiçbir veri sunucuya gitmiyor, kayıt istemiyor. Her aracın altına kullandığı formülü ve varsayımlarını da yazdım; çünkü sayının kendisi kadar nereden geldiği de önemli.</p>
+   <p class="g-meta"><span>6 araç</span><span>Kayıt yok</span><span>Formüller açık</span><span>Son güncelleme: 22 Eylül 2026</span></p>
+ 
+   <nav class="toc" aria-label="Araçlar">
+diff --git a/assets/kule3d.js b/assets/kule3d.js
+deleted file mode 100644
+index 987d884..0000000
+--- a/assets/kule3d.js
++++ /dev/null
+@@ -1,161 +0,0 @@
+-/* kule3d.js — ana sayfa kapağı: kaydırdıkça N117 kulesine tırmanan 3B kamera.
+- *
+- * Aynı parametrik N117 modeli (n117.js) kullanılıyor. Sayfa kaydırıldıkça kamera
+- * zeminden kule gövdesine, oradan nasele çıkıyor, en sonda rotorun önüne açılıyor.
+- * Sağdaki kot göstergesi kameranın o anki gerçek yüksekliğini (metre) gösterir.
+- * Rotor, Aliağa için göbek yüksekliğindeki tahmini rüzgârdan hesaplanan devirde
+- * döner (--devir-sure; ana sayfadaki canlı veri betiği yazar).
+- *
+- * Çağıran taraf WebGL, reduced-motion ve saveData kontrolünü yapar. Sahne
+- * kurulamazsa hiçbir şey kaybolmaz: kapak fotoğrafı ve metinler yerinde kalır.
+- */
+-import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene } from '/n117/n117.js?v=2a90e4df';
+-
+-export function kuleBaslat(canvas, bolum, geri) {
+-  let S;
+-  try { S = createScene(canvas); } catch (err) { console.error('kule3d sahne:', err); return null; }
+-  const { renderer, camera, controls, parts, towerTopY, setLight } = S;
+-  const kok = document.documentElement;
+-  geri = geri || function () {};
+-
+-  if (parts.crane) parts.crane.visible = false;
+-  if (parts.groundBlade) parts.groundBlade.visible = false;
+-  controls.enabled = false;
+-
+-  const kucuk = innerWidth < 820;
+-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, kucuk ? 1.4 : 1.75));
+-  camera.fov = kucuk ? 52 : 42;
+-  camera.near = 0.4;
+-  camera.updateProjectionMatrix();
+-
+-  const hubY = towerTopY + 2.3;
+-
+-  // Havacılık engel ışığı: naselin üstünde, kırmızı, yanıp söner (gerçek türbinlerde olduğu gibi).
+-  const isikGrubu = new THREE.Group();
+-  isikGrubu.position.set(0, S.SPEC.nacelleHei / 2 + 0.45, S.SPEC.nacelleLen / 2 - 1.2);
+-  const lamba = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2a1a }));
+-  const hale = (() => {
+-    const c = document.createElement('canvas'); c.width = c.height = 64;
+-    const g = c.getContext('2d'); const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+-    r.addColorStop(0, 'rgba(255,60,40,1)'); r.addColorStop(0.25, 'rgba(255,40,30,.55)'); r.addColorStop(1, 'rgba(255,30,20,0)');
+-    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+-    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+-    sp.scale.set(7, 7, 1); return sp;
+-  })();
+-  isikGrubu.add(lamba, hale);
+-  if (parts.yaw) parts.yaw.add(isikGrubu);
+-  const v = (x, y, z) => new THREE.Vector3(x, y, z);
+-
+-  // Kamera yolu: [konum, bakış noktası]. Rotor -z yönüne bakıyor.
+-  const YOL = [
+-    [v(70, 6, 100),    v(0, 84, -8)],           // zemin: aşağıdan tüm türbin
+-    [v(38, 30, 56),    v(0, 62, 0)],            // kule gövdesi
+-    [v(42, 88, 60),    v(0, 110, -2)],          // tırmanış
+-    [v(22, 127, 30),   v(0, hubY - 0.4, -2)],   // nasel
+-    [v(70, 146, -96),  v(0, hubY, -6)],         // rotorun önüne dönüş
+-    [v(150, 106, -212), v(0, 82, -4)],          // geniş kadraj
+-  ];
+-  const konumEgri = new THREE.CatmullRomCurve3(YOL.map(k => k[0]), false, 'centripetal');
+-  const hedefEgri = new THREE.CatmullRomCurve3(YOL.map(k => k[1]), false, 'centripetal');
+-
+-  const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+-
+-  function isikModu() {
+-    const m = kok.getAttribute('data-vardiya');
+-    // Gece ışığında model neredeyse görünmüyor; kapak için gece ve alacakaranlık
+-    // aynı gün batımı ışığını kullanıyor. Gece olduğunu engel ışığı söylüyor.
+-    if (m === 'gece' || m === 'safak' || m === 'aksam' || m === 'altin') return 'sunset';
+-    return 'day';
+-  }
+-  let sonMod = null;
+-  function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; } }
+-  isik();
+-
+-  // Nasel gerçek rüzgâra döner: --yon-derece (meteorolojik, rüzgârın geldiği yön).
+-  // Sahnede -z kuzey kabul ediliyor; rotor -z'ye bakıyor, yani 0° kuzey rüzgârında yüzü kuzeye.
+-  function yonHedef() {
+-    const d = parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece'));
+-    return isFinite(d) ? -d * Math.PI / 180 : null;
+-  }
+-  let yawIlk = true;
+-  function yawGuncelle(dt) {
+-    const h = yonHedef();
+-    if (h === null || !parts.yaw) return;
+-    if (yawIlk) { parts.yaw.rotation.y = h; yawIlk = false; return; }
+-    let fark = h - parts.yaw.rotation.y;
+-    fark = Math.atan2(Math.sin(fark), Math.cos(fark));
+-    const adim = 0.35 * Math.PI / 180 * dt * 60;          // gerçek yaw gibi yavaş
+-    parts.yaw.rotation.y += Math.max(-adim, Math.min(adim, fark));
+-  }
+-
+-  function devirRad() {
+-    const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure'));
+-    return s > 0 ? (2 * Math.PI) / s : 0;
+-  }
+-
+-  function ilerleme() {
+-    const r = bolum.getBoundingClientRect();
+-    const yol = r.height - innerHeight;
+-    if (yol <= 0) return 0;
+-    return Math.min(1, Math.max(0, -r.top / yol));
+-  }
+-
+-  function olcek() {
+-    const w = canvas.clientWidth, h = canvas.clientHeight;
+-    if (!w || !h) return;
+-    const pr = renderer.getPixelRatio();
+-    if (Math.round(w * pr) !== canvas.width || Math.round(h * pr) !== canvas.height) {
+-      renderer.setSize(w, h, false);
+-      camera.aspect = w / h;
+-      camera.updateProjectionMatrix();
+-    }
+-  }
+-
+-  let p = ilerleme(), pHedef = p;
+-  const konum = new THREE.Vector3(), hedef = new THREE.Vector3();
+-  let gorunur = true, calisiyor = true, sonT = 0, ilk = true, sonIsik = 0, rafId = 0;
+-
+-  new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '100px' }).observe(bolum);
+-  document.addEventListener('visibilitychange', () => { calisiyor = !document.hidden; if (calisiyor) baslat(); });
+-
+-  function baslat() { if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
+-
+-  function kare(t) {
+-    rafId = 0;
+-    if (!calisiyor || !gorunur) return;
+-    const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0;
+-    sonT = t;
+-    if (t - sonIsik > 4000) { isik(); sonIsik = t; }
+-
+-    pHedef = ilerleme();
+-    p += (pHedef - p) * (az ? 1 : Math.min(1, dt * 5 || 1));
+-    const e = p * p * (3 - 2 * p) * 0.35 + p * 0.65;       // uçlarda yumuşak
+-    konumEgri.getPoint(e, konum);
+-    hedefEgri.getPoint(e, hedef);
+-    // hafif nefes: sahne donuk durmasın
+-    if (!az) konum.x += Math.sin(t / 5200) * 1.2;
+-    camera.position.copy(konum);
+-    camera.lookAt(hedef);
+-
+-    if (parts.spin) parts.spin.rotation.z -= devirRad() * dt;
+-    yawGuncelle(dt);
+-    isikGrubu.visible = (t % 2000) < 1000;
+-    if (parts.farm) parts.farm.children.forEach(f => { const r = f.getObjectByName && f.getObjectByName('rotor'); if (r) r.rotation.z -= (f.userData.speed || 0.2) * dt; });
+-
+-    olcek();
+-    renderer.render(S.scene, camera);
+-    geri(p, Math.max(0, camera.position.y));
+-    if (ilk) { ilk = false; canvas.classList.add('hazir'); }
+-    rafId = requestAnimationFrame(kare);
+-  }
+-  baslat();
+-
+-  canvas.addEventListener('webglcontextlost', e => {
+-    e.preventDefault(); calisiyor = false;
+-    if (rafId) cancelAnimationFrame(rafId);
+-    canvas.classList.remove('hazir');
+-  }, false);
+-
+-  return S;
+-}
+diff --git a/deniz-ustu/index.html b/deniz-ustu/index.html
+index bf7a01f..fab6d30 100644
+--- a/deniz-ustu/index.html
++++ b/deniz-ustu/index.html
+@@ -2,7 +2,7 @@
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Deniz Üstü Rüzgâr Türbini — Karada Neyin Değiştiği | Soner Soylu</title>
+-<meta name="description" content="Deniz üstü rüzgâr türbini karadakinden nasıl ayrılır: monopile, jacket ve yüzer temeller derinliğe göre ölçekli, teknisyen için GWO Sea Survival ve erişim farkı, Türkiye’nin 2027 deniz üstü YEKA ihalesi.">
++<meta name="description" content="Deniz üstü rüzgâr türbini karadakinden nasıl ayrılır: monopile, jacket ve yüzer temeller, GWO Sea Survival ve Türkiye’nin 2027 deniz üstü YEKA ihalesi.">
+ <link rel="canonical" href="https://sonersoylu.com/deniz-ustu/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Deniz üstü rüzgâr türbini: karada neyin değiştiği">
+diff --git a/egitim/arizaya-yaklasim/index.html b/egitim/arizaya-yaklasim/index.html
+index d9a074c..45946b5 100644
+--- a/egitim/arizaya-yaklasim/index.html
++++ b/egitim/arizaya-yaklasim/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>07. Arızaya yaklaşım — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>07. Arızaya yaklaşım | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Kod okumaktan kök nedene: sahada teşhis nasıl kurulur, hangi sırayla ilerlenir ve parça değiştirmeden önce hangi sorular sorulur.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/arizaya-yaklasim/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/belge/index.html b/egitim/belge/index.html
+index 1238e5c..1c22929 100644
+--- a/egitim/belge/index.html
++++ b/egitim/belge/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Katılım Belgesi — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>Katılım Belgesi | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Sekiz bölümlük ücretsiz eğitim serisini tamamlayanlar için katılım belgesi. Resmî bir yeterlilik belgesi değildir.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/belge/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/bu-is-ne-is/index.html b/egitim/bu-is-ne-is/index.html
+index 6a8ece0..0afb066 100644
+--- a/egitim/bu-is-ne-is/index.html
++++ b/egitim/bu-is-ne-is/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>01. Bu iş ne iş — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>01. Bu iş ne iş | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Rüzgâr türbini servis teknisyeni ne yapar, kim olur, günü nasıl geçer ve bu meslek kime uyar. Seriye başlamadan önce beklentiyi doğru kurmak için.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/bu-is-ne-is/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/elektrik-ve-kontrol/index.html b/egitim/elektrik-ve-kontrol/index.html
+index cbe6dd8..e6030e1 100644
+--- a/egitim/elektrik-ve-kontrol/index.html
++++ b/egitim/elektrik-ve-kontrol/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>05. Elektrik ve kontrol — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>05. Elektrik ve kontrol | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Kule dibi panosundan konvertöre, sensörden SCADA’ya. Elektrik tarafının sahada gerçekten neye benzediği ve bir teknisyenin nereye kadar müdahale ettiği.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/elektrik-ve-kontrol/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/guvenlik/index.html b/egitim/guvenlik/index.html
+index 4498856..46fc4cf 100644
+--- a/egitim/guvenlik/index.html
++++ b/egitim/guvenlik/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>02. Güvenlik: pazarlığı olmayan kısım — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>02. Güvenlik | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="GWO, düşme durdurma, LOTO, rotor kilidi, kapalı alan ve kurtarma. Bu bölüm ezber değil, neden öyle olduğunu anlatıyor — çünkü sebebini bilen kişi kestirmeden gitmez.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/guvenlik/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/index.html b/egitim/index.html
+index f1696be..f153d9d 100644
+--- a/egitim/index.html
++++ b/egitim/index.html
+@@ -1,8 +1,8 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Sıfırdan Rüzgâr Türbini Teknisyeni — Ücretsiz 8 Bölümlük Eğitim | Soner Soylu</title>
+-<meta name="description" content="Rüzgâr türbini saha servis teknisyenliğine giriş: sekiz bölüm, her bölümde kısa sınav. Güvenlik, türbin çalışma prensibi, mekanik ve elektrik iş, bakım, arıza ve kariyer. Ücretsiz ve kayıt gerektirmez.">
++<title>Sıfırdan Rüzgâr Türbini Teknisyeni — Ücretsiz 8 Bölüm | Soner Soylu</title>
++<meta name="description" content="Rüzgâr türbini teknisyenliğine ücretsiz giriş: sekiz bölüm, her bölümde kısa sınav. Güvenlik, mekanik, elektrik, bakım, arıza ve kariyer. Kayıt gerekmez.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Sıfırdan rüzgâr türbini teknisyeni">
+diff --git a/egitim/kariyer/index.html b/egitim/kariyer/index.html
+index a4030dd..0fb6bc7 100644
+--- a/egitim/kariyer/index.html
++++ b/egitim/kariyer/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>08. Kariyer ve sonraki adım — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>08. Kariyer ve sonraki adım | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="İlk işi bulmak, ilk yılı doğru geçirmek, uzmanlaşmak ve sahadan sonra nereye gidilebileceği. Serinin kapanışı ve sonrası için bir yol haritası.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/kariyer/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/mekanik-is/index.html b/egitim/mekanik-is/index.html
+index a1024de..5b78b44 100644
+--- a/egitim/mekanik-is/index.html
++++ b/egitim/mekanik-is/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>04. Kule ve mekanik iş — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>04. Kule ve mekanik iş | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Cıvata, tork, ön yük, yağlama, hizalama ve titreşim. Sahadaki mekanik işin gerçekte neye dayandığı ve neden tork anahtarının ayarı bir güvenlik konusudur.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/mekanik-is/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/periyodik-bakim/index.html b/egitim/periyodik-bakim/index.html
+index 5339117..1a22cb1 100644
+--- a/egitim/periyodik-bakim/index.html
++++ b/egitim/periyodik-bakim/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>06. Periyodik bakım: sıkıcı olan, arızayı önleyen — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>06. Periyodik bakım | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Altı aylık ve yıllık bakımda ne yapılır, hangi madde neyi önler ve bir bakım listesi neden “işaretlenecek kutucuk” değildir.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/periyodik-bakim/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/egitim/turbin-nasil-calisir/index.html b/egitim/turbin-nasil-calisir/index.html
+index 399f0a0..672c1e1 100644
+--- a/egitim/turbin-nasil-calisir/index.html
++++ b/egitim/turbin-nasil-calisir/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>03. Rüzgârdan şebekeye — Rüzgâr Türbini Teknisyenliği Eğitimi | Soner Soylu</title>
++<title>03. Rüzgârdan şebekeye | Türbin Teknisyenliği Eğitimi</title>
+ <meta name="description" content="Kanattaki kaldırma kuvvetinden şebekeye verilen akıma kadar zincirin tamamı. Pitch, yaw, güç eğrisi, Betz sınırı ve türbinin neden bazen dönmediği.">
+ <link rel="canonical" href="https://sonersoylu.com/egitim/turbin-nasil-calisir/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+diff --git a/en/assistant/index.html b/en/assistant/index.html
+index 45f2630..8f38e4a 100644
+--- a/en/assistant/index.html
++++ b/en/assistant/index.html
+@@ -2,7 +2,7 @@
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Field Assistant — Ask a Wind Turbine Question | Soner Soylu</title>
+-<meta name="description" content="Ask a wind turbine question and get an answer drawn only from this site's own field content, with the source pages shown. When the site does not cover it, the assistant says so instead of guessing.">
++<meta name="description" content="Ask a wind turbine question and get an answer drawn only from this site's field content, with sources shown. If it isn't covered, it says so.">
+ <link rel="canonical" href="https://sonersoylu.com/en/assistant/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/assistant/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/asistan/">
+diff --git a/en/field-notes/index.html b/en/field-notes/index.html
+index 7790e7a..6bf1548 100644
+--- a/en/field-notes/index.html
++++ b/en/field-notes/index.html
+@@ -2,7 +2,7 @@
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Field Fault Cases — Step-by-Step Diagnosis Notes | Soner Soylu</title>
+-<meta name="description" content="Step-by-step diagnosis notes from real wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.">
++<meta name="description" content="Step-by-step notes from real wind turbine faults: pitch motor current, gearbox temperature, yaw hunting, converter overcurrent, blade vibration and more.">
+ <link rel="canonical" href="https://sonersoylu.com/en/field-notes/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/">
+diff --git a/en/guide/index.html b/en/guide/index.html
+index 45ad7ab..100e029 100644
+--- a/en/guide/index.html
++++ b/en/guide/index.html
+@@ -2,7 +2,7 @@
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Becoming a Wind Turbine Technician — A Field Guide | Soner Soylu</title>
+-<meta name="description" content="How to get into wind turbine service work: GWO certificates, what a day on site is really like, how a turbine works, the faults you meet first, and what the job costs you. Written by a technician on site since 2013.">
++<meta name="description" content="How to get into wind turbine service: GWO certificates, a real day on site, how a turbine works and the first faults you meet. From a technician since 2013.">
+ <link rel="canonical" href="https://sonersoylu.com/en/guide/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="en_GB">
+ <meta property="og:locale:alternate" content="tr_TR">
+diff --git a/en/index.html b/en/index.html
+index c4a1cd8..409c5e8 100644
+--- a/en/index.html
++++ b/en/index.html
+@@ -1,8 +1,8 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Soner Soylu — Wind Turbine Field Service Technician | Enercon, Nordex, Vestas</title>
+-<meta name="description" content="Wind turbine field service technician since 2013 — mechanical and electrical work on Enercon, Nordex and Vestas machines in Turkiye and Europe. Field guide, bilingual glossary, calculators and a 3D turbine model.">
++<title>Soner Soylu — Wind Turbine Field Service Technician</title>
++<meta name="description" content="Wind turbine field service technician since 2013: mechanical and electrical work on Enercon, Nordex and Vestas. Field guide, glossary, calculators, 3D models.">
+ <link rel="canonical" href="https://sonersoylu.com/en/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="en_GB">
+ <meta property="og:locale:alternate" content="tr_TR">
+diff --git a/en/systems/gearbox/index.html b/en/systems/gearbox/index.html
+index 38bd0d0..31787ed 100644
+--- a/en/systems/gearbox/index.html
++++ b/en/systems/gearbox/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Gearbox System — Reduction Stages, Oil Management and Diagnosis | Soner Soylu</title>
++<title>Gearbox System — Stages, Oil and Diagnosis | Soner Soylu</title>
+ <meta name="description" content="Wind turbine gearbox technical reference: parallel-axis and planetary designs, oil management, temperature control, typical faults and maintenance intervals.">
+ <link rel="canonical" href="https://sonersoylu.com/en/systems/gearbox/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/">
+diff --git a/en/systems/generator/index.html b/en/systems/generator/index.html
+index d51eb39..53965d2 100644
+--- a/en/systems/generator/index.html
++++ b/en/systems/generator/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Generator and Converter — DFIG, Direct-Drive and Cooling | Soner Soylu</title>
++<title>Generator and Converter — DFIG, Direct-Drive | Soner Soylu</title>
+ <meta name="description" content="Wind turbine generator technical reference: induction, DFIG and direct-drive designs, converter and power electronics, cooling, insulation and typical faults.">
+ <link rel="canonical" href="https://sonersoylu.com/en/systems/generator/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/">
+diff --git a/en/systems/index.html b/en/systems/index.html
+index 6a47cd8..5cdd99a 100644
+--- a/en/systems/index.html
++++ b/en/systems/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Wind Turbine Systems — Pitch, Yaw, Gearbox, Generator | Soner Soylu</title>
++<title>Turbine Systems: Pitch, Yaw, Gearbox, Generator | Soner Soylu</title>
+ <meta name="description" content="Field-oriented technical reference for the main wind turbine systems: pitch, yaw, gearbox and generator. How they work, normal operating values, typical faults and maintenance intervals.">
+ <link rel="canonical" href="https://sonersoylu.com/en/systems/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/">
+diff --git a/en/systems/yaw/index.html b/en/systems/yaw/index.html
+index b306a44..214ad02 100644
+--- a/en/systems/yaw/index.html
++++ b/en/systems/yaw/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Yaw System — Nacelle Orientation, Slewing Bearing and Faults | Soner Soylu</title>
++<title>Yaw System — Slewing Bearing, Control, Faults | Soner Soylu</title>
+ <meta name="description" content="Wind turbine yaw system technical reference: motors, slewing bearing, ring gear, vane sensor, control loop, typical faults and maintenance.">
+ <link rel="canonical" href="https://sonersoylu.com/en/systems/yaw/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/">
+diff --git a/en/tools/bolt-tension/index.html b/en/tools/bolt-tension/index.html
+index b90c65e..464eb11 100644
+--- a/en/tools/bolt-tension/index.html
++++ b/en/tools/bolt-tension/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Bolt Tension Calculator — Preload, Tensioner Pressure, Load Cell | Soner Soylu</title>
++<title>Bolt Tension Calculator: Preload, Pressure | Soner Soylu</title>
+ <meta name="description" content="Bolt tension calculator for wind turbine field service: target preload, hydraulic tensioner pressure tables for M20/M24/M30, load cell verification protocol and formulae.">
+ <link rel="canonical" href="https://sonersoylu.com/en/tools/bolt-tension/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/bolt-tension/">
+diff --git a/en/tools/index.html b/en/tools/index.html
+index 871b29f..b124b6c 100644
+--- a/en/tools/index.html
++++ b/en/tools/index.html
+@@ -1,8 +1,8 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Wind Turbine Calculators — Tip Speed, Capacity Factor, Bolt Torque | Soner Soylu</title>
+-<meta name="description" content="Free wind turbine calculators: tip speed and TSR, power in the wind, wind shear correction, capacity factor, Weibull annual energy production and bolt tightening torque. Every formula shown.">
++<title>Wind Turbine Calculators — Tip Speed to Bolt Torque | Soner Soylu</title>
++<meta name="description" content="Free wind turbine calculators: tip speed and TSR, power in the wind, wind shear, capacity factor, Weibull AEP and bolt torque. Every formula shown.">
+ <link rel="canonical" href="https://sonersoylu.com/en/tools/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="en_GB"><meta property="og:locale:alternate" content="tr_TR">
+ <meta property="og:title" content="Wind Turbine Calculators">
+diff --git a/en/turbines/enercon/e82/index.html b/en/turbines/enercon/e82/index.html
+index c14ee37..140196b 100644
+--- a/en/turbines/enercon/e82/index.html
++++ b/en/turbines/enercon/e82/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Enercon E82 — Direct-Drive Technical Guide, Assembly and Maintenance | Soner Soylu</title>
++<title>Enercon E82 — Direct-Drive Technical Guide | Soner Soylu</title>
+ <meta name="description" content="Enercon E82 technical guide: 82 m rotor, gearless annular generator, E2 and E4 variants, storm control, assembly stages, maintenance and typical faults.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/enercon/e82/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e82/">
+diff --git a/en/turbines/enercon/index.html b/en/turbines/enercon/index.html
+index 8b85566..65e0588 100644
+--- a/en/turbines/enercon/index.html
++++ b/en/turbines/enercon/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Enercon Wind Turbines — E70, E82 and E92 Direct-Drive Guide | Soner Soylu</title>
++<title>Enercon E70, E82, E92 — Direct-Drive Guide | Soner Soylu</title>
+ <meta name="description" content="Field-oriented technical guides to the Enercon E70, E82 and E92: gearless direct-drive design, annular generator, storm control, assembly, maintenance and typical faults.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/enercon/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/">
+diff --git a/en/turbines/index.html b/en/turbines/index.html
+index 882a869..0914430 100644
+--- a/en/turbines/index.html
++++ b/en/turbines/index.html
+@@ -1,8 +1,8 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Wind Turbine Models — Vestas, Enercon, Nordex Technical Guide | Soner Soylu</title>
+-<meta name="description" content="Technical guides to the wind turbine models I work on: Vestas V110/V126/V136, Enercon E70/E82/E92, Nordex N90/N117. Specifications, assembly timelines, maintenance schedules and typical faults.">
++<title>Wind Turbine Models — Vestas, Enercon, Nordex | Soner Soylu</title>
++<meta name="description" content="Technical guides to Vestas V110/V126/V136, Enercon E70/E82/E92 and Nordex N90/N117: specs, assembly, maintenance schedules and typical faults.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/">
+diff --git a/en/turbines/vestas/index.html b/en/turbines/vestas/index.html
+index 975779d..d310e95 100644
+--- a/en/turbines/vestas/index.html
++++ b/en/turbines/vestas/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Vestas Wind Turbines — V110, V126 and V136 Technical Guide | Soner Soylu</title>
++<title>Vestas V110, V126, V136 — Technical Guide | Soner Soylu</title>
+ <meta name="description" content="Field-oriented technical guides to the Vestas V110, V126 and V136: specifications, gearbox differences, DFIG generator, assembly, maintenance and typical faults.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/vestas/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/">
+diff --git a/en/turbines/vestas/v110/index.html b/en/turbines/vestas/v110/index.html
+index 94bc5b4..bafd89e 100644
+--- a/en/turbines/vestas/v110/index.html
++++ b/en/turbines/vestas/v110/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Vestas V110 — 3.0 MW Technical Guide, Assembly and Maintenance | Soner Soylu</title>
++<title>Vestas V110 3.0 MW — Technical Guide | Soner Soylu</title>
+ <meta name="description" content="Vestas V110-3.0 MW technical guide: 110 m rotor, parallel-axis gearbox, DFIG generator, assembly stages, maintenance schedule and the faults seen most in the field.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/vestas/v110/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v110/">
+diff --git a/en/turbines/vestas/v126/index.html b/en/turbines/vestas/v126/index.html
+index 11f3b4f..e6d8d3d 100644
+--- a/en/turbines/vestas/v126/index.html
++++ b/en/turbines/vestas/v126/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Vestas V126 — 3.3 MW Technical Guide, Assembly and Maintenance | Soner Soylu</title>
++<title>Vestas V126 3.3 MW — Technical Guide | Soner Soylu</title>
+ <meta name="description" content="Vestas V126-3.3 MW technical guide: 126 m rotor, planetary gearbox, DFIG generator, assembly stages, maintenance schedule and typical field faults.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/vestas/v126/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v126/">
+diff --git a/en/turbines/vestas/v136/index.html b/en/turbines/vestas/v136/index.html
+index 07dee2e..3517cef 100644
+--- a/en/turbines/vestas/v136/index.html
++++ b/en/turbines/vestas/v136/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="en"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Vestas V136 — 4.2 MW Technical Guide, Assembly and Maintenance | Soner Soylu</title>
++<title>Vestas V136 4.2 MW — Technical Guide | Soner Soylu</title>
+ <meta name="description" content="Vestas V136-4.2 MW technical guide: 136 m rotor, hybrid gearbox, low-wind design, assembly stages, maintenance schedule and typical field concerns.">
+ <link rel="canonical" href="https://sonersoylu.com/en/turbines/vestas/v136/">
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v136/">
+diff --git a/gwo/index.html b/gwo/index.html
+index 7b1cf8e..5ee9df2 100644
+--- a/gwo/index.html
++++ b/gwo/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>GWO Sertifikası Nedir, Nasıl Alınır — BST, BTT ve Tazeleme | Soner Soylu</title>
++<title>GWO Sertifikası Nedir, Nasıl Alınır? | Soner Soylu</title>
+ <meta name="description" content="GWO nedir, BST hangi modüllerden oluşur, kaç gün sürer, kaç yıl geçerlidir? Tazeleme, BTT, WINDA doğrulaması ve eğitimi kimin ödediği — sahadan, sertifika satan bir siteden değil.">
+ <link rel="canonical" href="https://sonersoylu.com/gwo/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/gwo/">
+diff --git a/kodlar/index.html b/kodlar/index.html
+index 800ed6b..e9ba27e 100644
+--- a/kodlar/index.html
++++ b/kodlar/index.html
+@@ -1,8 +1,8 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Türbin Durum ve Alarm Kodları — Marka Bağımsız Kütüphane | Soner Soylu</title>
+-<meta name="description" content="Rüzgâr türbini alarm kodlarını ailelerine göre okumak: IEC 61400-26 durum modeli, 12 kod ailesi ve 50 yaygın koşul — her biri için tipik tetikleyici, saha kontrol listesi ve reset kuralı. Üretici kod listesi içermez.">
++<title>Türbin Durum ve Alarm Kodları Kütüphanesi | Soner Soylu</title>
++<meta name="description" content="Rüzgâr türbini alarm kodlarını ailesine göre okumak: IEC 61400-26 durum modeli, 12 kod ailesi, 50 yaygın koşul, saha kontrol listesi ve reset kuralı.">
+ <link rel="canonical" href="https://sonersoylu.com/kodlar/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Kodu okumak, kodu ezberlemek değildir">
+diff --git a/n117/index.html b/n117/index.html
+index e45958d..a802d11 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -2,7 +2,7 @@
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Nordex N117 Delta — Kule Kapısından Kanat Ucuna | Soner Soylu</title>
+-<meta name="description" content="Nordex N117/3000 Delta rüzgâr türbini: temelden kanat ucuna 15 duraklık saha turu. Şalt, asansör, kule flanşları, yaw güvertesi, dişli kutusu, jeneratör, göbek, pitch ve kanat — her durakta ne görülür, ne yapılır, ne ters gider.">
++<meta name="description" content="Nordex N117/3000 Delta: temelden kanat ucuna 15 duraklık saha turu. Kule, yaw, dişli kutusu, jeneratör, göbek ve pitch — her durakta ne yapılır, ne ters gider.">
+ <link rel="canonical" href="https://sonersoylu.com/n117/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Nordex N117 Delta — Kule Kapısından Kanat Ucuna">
+diff --git a/nasil-olunur/index.html b/nasil-olunur/index.html
+index 74ee694..21f54b0 100644
+--- a/nasil-olunur/index.html
++++ b/nasil-olunur/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Rüzgâr Türbini Teknisyeni Nasıl Olunur — 12 Aylık Yol Haritası | Soner Soylu</title>
++<title>Rüzgâr Türbini Teknisyeni Nasıl Olunur? | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbini teknisyeni olmak için hangi bölüm, hangi sertifika, hangi sıra? 2013'ten beri sahadayım: okul, GWO, sağlık raporu, ilk başvuru ve ilk yıl — süslemeden, sahadan.">
+ <link rel="canonical" href="https://sonersoylu.com/nasil-olunur/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/nasil-olunur/">
+diff --git a/rehber/index.html b/rehber/index.html
+index a9c85d7..ea3adb5 100644
+--- a/rehber/index.html
++++ b/rehber/index.html
+@@ -2,7 +2,7 @@
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Rüzgâr Türbini Teknisyenliği — Sahadan Rehber | Soner Soylu</title>
+-<meta name="description" content="Rüzgâr türbini servis teknisyeni nasıl olunur? GWO sertifikaları, sahada bir günün gerçeği, türbinin çalışma prensibi ve yaygın arızalar. 2013'ten beri sahada çalışan bir teknisyenin kaleminden.">
++<meta name="description" content="Rüzgâr türbini teknisyeni nasıl olunur? GWO sertifikaları, sahada bir günün gerçeği, türbinin çalışma prensibi ve yaygın arızalar — 2013’ten beri sahadan.">
+ <link rel="canonical" href="https://sonersoylu.com/rehber/">
+ <meta property="og:type" content="article"><meta property="og:locale" content="tr_TR">
+ <meta property="og:title" content="Rüzgâr Türbini Teknisyenliği — Sahadan Rehber">
+diff --git a/sistemler/disli-kutusu/index.html b/sistemler/disli-kutusu/index.html
+index 9e4eeb5..446e081 100644
+--- a/sistemler/disli-kutusu/index.html
++++ b/sistemler/disli-kutusu/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Dişli Kutusu Sistemi — Redüktör, Yağ Yönetimi ve Arıza Teşhisi | Soner Soylu</title>
++<title>Dişli Kutusu — Redüktör, Yağ ve Arıza Teşhisi | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbinlerinde dişli kutusu (redüktör): Tasarım, yağlama, sıcaklık yönetimi, ortak arızalar ve saha teşhisi.">
+ <link rel="canonical" href="https://sonersoylu.com/sistemler/disli-kutusu/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/">
+diff --git a/sistemler/index.html b/sistemler/index.html
+index 4a6abc5..bc77815 100644
+--- a/sistemler/index.html
++++ b/sistemler/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Rüzgâr Türbini Sistemleri — Pitch, Yaw, Dişli Kutusu, Jeneratör | Soner Soylu</title>
++<title>Türbin Sistemleri: Pitch, Yaw, Dişli, Jeneratör | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbinindeki ana sistemlerin saha odaklı teknik referansı: pitch, yaw, dişli kutusu ve jeneratör. Çalışma mantığı, ölçüm değerleri, tipik arızalar ve periyodik bakım.">
+ <link rel="canonical" href="https://sonersoylu.com/sistemler/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/">
+diff --git a/sistemler/jenerator/index.html b/sistemler/jenerator/index.html
+index 5cb773d..4de3777 100644
+--- a/sistemler/jenerator/index.html
++++ b/sistemler/jenerator/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Jeneratör ve Converter Sistemi — DFIG, Direct-Drive, Soğutma | Soner Soylu</title>
++<title>Jeneratör ve Converter — DFIG, Direct-Drive | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbini jeneratör sistemi: Asenkron jeneratör, DFIG, converter, soğutma, arıza teşhisi.">
+ <link rel="canonical" href="https://sonersoylu.com/sistemler/jenerator/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/">
+diff --git a/sistemler/yaw/index.html b/sistemler/yaw/index.html
+index 0af73cc..1a18344 100644
+--- a/sistemler/yaw/index.html
++++ b/sistemler/yaw/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Yaw Sistemi — Nasel Yönlendirme, Halka Yatak ve Arızalar | Soner Soylu</title>
++<title>Yaw Sistemi — Halka Yatak, Kontrol, Arızalar | Soner Soylu</title>
+ <meta name="description" content="Rüzgâr türbininde yaw sistemi: Motor, yatak, sensör, kontrol. Yaw hunting, asimetri, sensor arızası teşhisi.">
+ <link rel="canonical" href="https://sonersoylu.com/sistemler/yaw/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/">
+diff --git a/turbinler/enercon/e82/index.html b/turbinler/enercon/e82/index.html
+index ab753dd..60daa23 100644
+--- a/turbinler/enercon/e82/index.html
++++ b/turbinler/enercon/e82/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Enercon E82 — Direct-Drive Teknik Rehberi, Montaj ve Bakım | Soner Soylu</title>
++<title>Enercon E82 — Direct-Drive Teknik Rehberi | Soner Soylu</title>
+ <meta name="description" content="Enercon E82 rüzgâr türbini teknik rehberi: 82 m rotor, dişli kutusuz halka jeneratör, fırtına kontrolü, montaj aşamaları, periyodik bakım ve tipik arızalar.">
+ <link rel="canonical" href="https://sonersoylu.com/turbinler/enercon/e82/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e82/">
+diff --git a/turbinler/enercon/index.html b/turbinler/enercon/index.html
+index 79cec18..fa802b3 100644
+--- a/turbinler/enercon/index.html
++++ b/turbinler/enercon/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Enercon Rüzgâr Türbinleri — E70 Direct-Drive Teknik Rehberi | Soner Soylu</title>
++<title>Enercon E70 — Direct-Drive Teknik Rehberi | Soner Soylu</title>
+ <meta name="description" content="Enercon E70 rüzgâr türbininin saha odaklı teknik rehberi: dişli kutusuz direct-drive tasarım, halka jeneratör, fırtına kontrolü, montaj, bakım ve tipik arızalar.">
+ <link rel="canonical" href="https://sonersoylu.com/turbinler/enercon/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/">
+diff --git a/turbinler/index.html b/turbinler/index.html
+index b63ef27..4326116 100644
+--- a/turbinler/index.html
++++ b/turbinler/index.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="tr"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+-<title>Rüzgâr Türbini Modelleri — Vestas, Enercon, Nordex Teknik Rehberi | Soner Soylu</title>
++<title>Rüzgâr Türbini Modelleri — Vestas, Enercon, Nordex | Soner Soylu</title>
+ <meta name="description" content="Sahada çalıştığım rüzgâr türbini modellerinin teknik rehberi: Vestas V110/V126, Enercon E70, Nordex N90/N117. Teknik özellikler, montaj süreleri, bakım programı ve tipik arızalar.">
+ <link rel="canonical" href="https://sonersoylu.com/turbinler/">
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/">
