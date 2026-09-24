@@ -72,6 +72,23 @@ export function kuleBaslat(canvas, bolum, geri) {
   function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; } }
   isik();
 
+  // Nasel gerçek rüzgâra döner: --yon-derece (meteorolojik, rüzgârın geldiği yön).
+  // Sahnede -z kuzey kabul ediliyor; rotor -z'ye bakıyor, yani 0° kuzey rüzgârında yüzü kuzeye.
+  function yonHedef() {
+    const d = parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece'));
+    return isFinite(d) ? -d * Math.PI / 180 : null;
+  }
+  let yawIlk = true;
+  function yawGuncelle(dt) {
+    const h = yonHedef();
+    if (h === null || !parts.yaw) return;
+    if (yawIlk) { parts.yaw.rotation.y = h; yawIlk = false; return; }
+    let fark = h - parts.yaw.rotation.y;
+    fark = Math.atan2(Math.sin(fark), Math.cos(fark));
+    const adim = 0.35 * Math.PI / 180 * dt * 60;          // gerçek yaw gibi yavaş
+    parts.yaw.rotation.y += Math.max(-adim, Math.min(adim, fark));
+  }
+
   function devirRad() {
     const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure'));
     return s > 0 ? (2 * Math.PI) / s : 0;
@@ -122,6 +139,7 @@ export function kuleBaslat(canvas, bolum, geri) {
     camera.lookAt(hedef);
 
     if (parts.spin) parts.spin.rotation.z -= devirRad() * dt;
+    yawGuncelle(dt);
     isikGrubu.visible = (t % 2000) < 1000;
     if (parts.farm) parts.farm.children.forEach(f => { const r = f.getObjectByName && f.getObjectByName('rotor'); if (r) r.rotation.z -= (f.userData.speed || 0.2) * dt; });
 

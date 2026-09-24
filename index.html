@@ -11,7 +11,7 @@
 <meta property="og:title" content="Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni">
 <meta property="og:description" content="Rüzgâr türbini saha servis teknisyeni. 2013'ten beri Enercon, Nordex ve Vestas türbinlerinde mekanik ve elektrik saha servisi.">
 <meta property="og:url" content="https://sonersoylu.com/">
-<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ana.jpg">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ana-v3.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,7 +28,7 @@
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
 <link rel="stylesheet" href="/style.css?v=ade96bc2">
-<link rel="stylesheet" href="/ana.css?v=d72f4222">
+<link rel="stylesheet" href="/ana.css?v=803bdf4e">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -78,10 +78,11 @@
       <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
       <dl>
         <div><dt>Rüzgâr</dt><dd><b id="hHiz">–</b> m/s</dd></div>
-        <div><dt>Yön</dt><dd id="hYon">–</dd></div>
+        <div><dt>Yön</dt><dd><svg class="pusula" id="hOk" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.5 11.5 13 8 10.6 4.5 13Z" fill="currentColor"/></svg><span id="hYon">–</span></dd></div>
         <div><dt>Rotor</dt><dd><b id="hDevir">–</b> d/dk</dd></div>
         <div><dt>Bir N117</dt><dd><b id="hGuc">–</b> kW</dd></div>
       </dl>
+      <div class="egri" id="egri" hidden><p class="egri-b"><span>Önümüzdeki 24 saat</span><span id="egriAralik"></span></p><svg viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true"><path id="egriAlan" class="alan"/><path id="egriCizgi" class="cizgi"/><circle id="egriNokta" r="2.6"/></svg></div>
       <p class="hud-alt">Open-Meteo sayısal tahmini, saha ölçümü değildir. <a href="/ruzgar/">Canlı rüzgâr</a></p>
     </div>
 
@@ -342,7 +343,7 @@
     <p class="etiket">İletişim</p>
     <h2 id="iletisim-b">Saha projeleri, servis ve danışmanlık için ulaşın</h2>
     <div class="kanal">
-      <div><span class="k-ust">E-posta</span><span class="d">sonersoylu@yandex.com</span></div>
+      <div><span class="k-ust">E-posta</span><span class="d">sonersoylu@yandex.com</span><button type="button" class="kopya" id="epostaKopya">Kopyala</button></div>
       <a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener"><span class="k-ust">LinkedIn</span><span class="d">soner-soylu</span></a>
       <a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener"><span class="k-ust">YouTube</span><span class="d">The Turbine Tech</span></a>
       <div><span class="k-ust">Saha</span><span class="d">Aliağa ve Bergama RES, İzmir</span></div>
@@ -356,7 +357,7 @@
 <p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
 <p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
 <p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div></footer>
-<div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><img alt="" src=""></div>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><button type="button" class="lb-ok" id="lbOnce" aria-label="Önceki fotoğraf">←</button><img alt="" src=""><button type="button" class="lb-ok" id="lbSonra" aria-label="Sonraki fotoğraf">→</button><p class="lb-alt" id="lbAlt"></p></div>
 <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
  <div class="ara-ic">
   <div class="ara-ust">
@@ -379,22 +380,72 @@
     b.addEventListener('click', function () { var o = b.getAttribute('aria-expanded') === 'true'; b.setAttribute('aria-expanded', String(!o)); m.classList.toggle('open', !o); });
     m.addEventListener('click', function (e) { if (e.target.tagName === 'A') { m.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
   }
-  /* ışık kutusu */
-  var lb = document.getElementById('lb'), li = lb.querySelector('img');
-  function ac(f) { li.src = f.dataset.full; li.alt = f.querySelector('img').alt; lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function kapat() { lb.classList.remove('open'); li.src = ''; document.body.style.overflow = ''; }
-  document.querySelectorAll('.gal figure').forEach(function (f) {
+  /* ışık kutusu: ileri/geri, klavye ve kaydırma */
+  var lb = document.getElementById('lb'), li = lb.querySelector('img'), lbAlt = document.getElementById('lbAlt');
+  var kareler = [].slice.call(document.querySelectorAll('.gal figure')), sira = 0, onceki = null;
+  function goster(i) {
+    sira = (i + kareler.length) % kareler.length; var f = kareler[sira];
+    li.src = f.dataset.full; li.alt = f.querySelector('img').alt;
+    lbAlt.textContent = (sira + 1) + ' / ' + kareler.length + ' · ' + f.querySelector('figcaption').textContent;
+  }
+  function ac(i) { onceki = document.activeElement; goster(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('lbx').focus(); }
+  function kapat() { lb.classList.remove('open'); li.src = ''; document.body.style.overflow = ''; if (onceki) onceki.focus(); }
+  kareler.forEach(function (f, i) {
     f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', 'Büyüt: ' + f.querySelector('img').alt);
-    f.addEventListener('click', function () { ac(f); });
-    f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ac(f); } });
+    f.addEventListener('click', function () { ac(i); });
+    f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ac(i); } });
   });
+  document.getElementById('lbOnce').addEventListener('click', function (e) { e.stopPropagation(); goster(sira - 1); });
+  document.getElementById('lbSonra').addEventListener('click', function (e) { e.stopPropagation(); goster(sira + 1); });
+  li.addEventListener('click', function (e) { e.stopPropagation(); goster(sira + 1); });
   lb.addEventListener('click', kapat);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) kapat(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') kapat(); else if (e.key === 'ArrowRight') goster(sira + 1); else if (e.key === 'ArrowLeft') goster(sira - 1);
+  });
+  var dx0 = null;
+  lb.addEventListener('touchstart', function (e) { dx0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (e) { if (dx0 === null) return; var d = e.changedTouches[0].clientX - dx0; if (Math.abs(d) > 45) goster(sira + (d < 0 ? 1 : -1)); dx0 = null; }, { passive: true });
+
+  /* e-posta kopyala */
+  var kop = document.getElementById('epostaKopya');
+  if (kop) kop.addEventListener('click', function () {
+    var adr = 'sonersoylu@yandex.com';
+    var bitti = function () { kop.textContent = 'Kopyalandı'; setTimeout(function () { kop.textContent = 'Kopyala'; }, 1800); };
+    if (navigator.clipboard) navigator.clipboard.writeText(adr).then(bitti, function () {});
+  });
+
+  /* rakamlar: görünür olunca sıfırdan say (hareket azaltılmışsa dokunma) */
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    var sayac = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return; sayac.unobserve(en.target);
+        var dd = en.target, dugum = dd.firstChild, hedef = parseInt(dugum.nodeValue, 10); if (!(hedef > 0)) return;
+        var t0 = performance.now(), sure = 1100;
+        (function adim(t) { var k = Math.min(1, (t - t0) / sure); dugum.nodeValue = String(Math.round(hedef * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(adim); })(t0);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.ana .rakam dd').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
+  }
 
   /* ---- kapak: kuleye tırmanış ---- */
   var kok = document.documentElement;
-  var saat = new Date().getHours();
-  kok.setAttribute('data-vardiya', (saat < 6 || saat >= 20) ? 'gece' : (saat < 8 || saat >= 17) ? 'altin' : 'gunduz');
+  /* ışık: Aliağa'da güneşin o anki yüksekliği (NOAA yaklaşımı) */
+  function gunesYuksekligi(enlem, boylam, t) {
+    var rad = Math.PI / 180, gun = (t - Date.UTC(t.getUTCFullYear(), 0, 0)) / 86400000;
+    var y = 2 * Math.PI / 365 * (gun - 1 + (t.getUTCHours() - 12) / 24);
+    var es = 229.18 * (0.000075 + 0.001868 * Math.cos(y) - 0.032077 * Math.sin(y) - 0.014615 * Math.cos(2 * y) - 0.040849 * Math.sin(2 * y));
+    var eg = 0.006918 - 0.399912 * Math.cos(y) + 0.070257 * Math.sin(y) - 0.006758 * Math.cos(2 * y) + 0.000907 * Math.sin(2 * y) - 0.002697 * Math.cos(3 * y) + 0.00148 * Math.sin(3 * y);
+    var dk = t.getUTCHours() * 60 + t.getUTCMinutes();
+    var sa = ((dk + es + 4 * boylam) / 4 - 180) * rad;
+    var cz = Math.sin(enlem * rad) * Math.sin(eg) + Math.cos(enlem * rad) * Math.cos(eg) * Math.cos(sa);
+    return 90 - Math.acos(Math.max(-1, Math.min(1, cz))) / rad;
+  }
+  function vardiya() {
+    var h = gunesYuksekligi(38.85, 27.0, new Date());
+    kok.setAttribute('data-vardiya', h < -6 ? 'gece' : h < 0 ? 'aksam' : h < 8 ? 'altin' : 'gunduz');
+  }
+  vardiya(); setInterval(vardiya, 10 * 60 * 1000);
   kok.style.setProperty('--devir-sure', '4.76s');   // veri gelene kadar anma devri (12,6 d/dk)
   var kule = document.getElementById('kule');
   var canvas = document.getElementById('kapak3d');
@@ -425,9 +476,30 @@
       document.getElementById('hYon').textContent = isFinite(yon) ? YONLER[Math.round(yon / 22.5) % 16] + ' ' + Math.round(yon) + '°' : '–';
       document.getElementById('hDevir').textContent = dv > 0 ? virgul(dv, 1) : '0';
       document.getElementById('hGuc').textContent = kw > 0 ? Math.round(kw).toLocaleString('tr-TR') : '0';
+      if (isFinite(yon)) { kok.style.setProperty('--yon-derece', String(yon)); document.getElementById('hOk').style.transform = 'rotate(' + (yon + 180) + 'deg)'; }
+      egriCiz(d.hourly);
       document.getElementById('hud').hidden = false;
     })
     .catch(function () { /* veri yoksa gösterge hiç görünmez */ });
+
+  function egriCiz(h) {
+    try {
+      if (!h || !h.time || !h.wind_speed_120m) return;
+      var simdi = Date.now(), i0 = 0;
+      for (var i = 0; i < h.time.length; i++) { if (new Date(h.time[i] + ':00+03:00').getTime() <= simdi) i0 = i; }
+      var v = h.wind_speed_120m.slice(i0, i0 + 25).map(Number).filter(isFinite);
+      if (v.length < 6) return;
+      var en = Math.max.apply(null, v), ek = Math.min.apply(null, v), ust = Math.max(en * 1.1, 4);
+      var X = function (k) { return (k / (v.length - 1) * 236 + 2).toFixed(1); };
+      var Y = function (x) { return (42 - x / ust * 38).toFixed(1); };
+      var d = v.map(function (x, k) { return (k ? 'L' : 'M') + X(k) + ' ' + Y(x); }).join(' ');
+      document.getElementById('egriCizgi').setAttribute('d', d);
+      document.getElementById('egriAlan').setAttribute('d', d + ' L' + X(v.length - 1) + ' 44 L' + X(0) + ' 44 Z');
+      var n = document.getElementById('egriNokta'); n.setAttribute('cx', X(0)); n.setAttribute('cy', Y(v[0]));
+      document.getElementById('egriAralik').textContent = virgul(ek, 1) + '–' + virgul(en, 1) + ' m/s';
+      document.getElementById('egri').hidden = false;
+    } catch (e) {}
+  }
 
   /* tırmanış durakları ve kot göstergesi */
   var duraklar = [].slice.call(document.querySelectorAll('.durak'));
@@ -445,7 +517,7 @@
   try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(); } catch (e) { return statik(); }
   kule.classList.add('uc-boyut');
   function baslat() {
-    import('/assets/kule3d.js?v=0b2357a6').then(function (mod) {
+    import('/assets/kule3d.js?v=eab40f9b').then(function (mod) {
       if (!mod.kuleBaslat(canvas, kule, guncelle)) statik();
     }).catch(function (e) { console.error('kule3d yüklenemedi:', e); statik(); });
   }
