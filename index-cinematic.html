@@ -377,6 +377,35 @@
   </div>
 </section>
 
+<!-- SCENE 05: FAULT DIAGNOSIS -->
+<section class="scene scene-05" data-scene="scene-05">
+  <div class="scene-05-content">
+    <h2 class="diagnosis-title">Arıza Teşhis Ağacı</h2>
+    <div class="diagnostic-tree">
+      <div class="tree-node">
+        <div class="tree-node-title">Güç Çıkışı Düşük</div>
+        <div class="tree-node-detail">Türbin nominal gücünün %80'inin altında çıkış yapıyor</div>
+      </div>
+      <div class="tree-node">
+        <div class="tree-node-title">Rüzgar Hızı Kontrol Et</div>
+        <div class="tree-node-detail">Rüzgar ölçüm cihazından saatlik verileri gözden geçir</div>
+      </div>
+      <div class="tree-node success">
+        <div class="tree-node-title">Rüzgar Yeterli</div>
+        <div class="tree-node-detail">Hava koşulları normal → Türbine bakım gerekli</div>
+      </div>
+      <div class="tree-node warning">
+        <div class="tree-node-title">Sistem Sıcaklığı Yüksek</div>
+        <div class="tree-node-detail">Inverter veya motor sıcaklığı limit değere yakın</div>
+      </div>
+      <div class="tree-node error">
+        <div class="tree-node-title">Acil İntervansyon Gerekli</div>
+        <div class="tree-node-detail">Türbini durdur, arıza kodunu kaydet, teknisyeni çağır</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- SCENE 10: FINAL CLOSURE -->
 <section class="scene scene-10" data-scene="scene-10">
   <div class="scene-10-message">
@@ -412,6 +441,7 @@
 <script src="/assets/js/components/scene-02-machine.js"></script>
 <script src="/assets/js/components/scene-03-knowledge.js"></script>
 <script src="/assets/js/components/scene-04-field.js"></script>
+<script src="/assets/js/components/scene-05-diagnosis.js"></script>
 
 <!-- Master Initialization -->
 <script src="/assets/js/cinematic-init.js"></script>
