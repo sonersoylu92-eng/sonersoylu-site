@@ -185,6 +185,12 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
   opacity: 0.5;
   transition: all var(--duration-normal) var(--ease-in-out);
   cursor: pointer;
+  min-height: 44px;
+}
+
+.component-card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .component-card:hover {
@@ -272,7 +278,8 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
   width: 100%;
   height: auto;
   max-height: 400px;
-  opacity: 0;
+  opacity: 1;
+  animation: fadeIn 1s var(--ease-out) 0.3s forwards;
 }
 
 .blueprint-specs {
@@ -332,6 +339,13 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
   background: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.stat-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--glow-accent);
+  transform: translateY(-2px);
 }
 
 .stat-number {
@@ -364,6 +378,12 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
   background: var(--color-bg-secondary);
   cursor: pointer;
   transition: transform var(--duration-normal) var(--ease-in-out);
+  min-height: 44px;
+}
+
+.gallery-image:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .gallery-image img {
@@ -521,11 +541,22 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
   opacity: 0;
   animation: fadeIn 1s var(--ease-out) 0.6s forwards;
   animation: pulseGlow 2s ease-in-out 0.6s infinite;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .scene-10-cta:hover {
   transform: scale(1.05);
   box-shadow: var(--glow-accent-intense);
+}
+
+.scene-10-cta:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -606,6 +637,28 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   REDUCED MOTION — ACCESSIBILITY ENHANCEMENT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .component-card,
+  .gallery-image,
+  .stat-card,
+  .scene-10-cta {
+    transition-duration: 0.01ms !important;
+  }
+
+  .blueprint-svg {
+    animation: none !important;
+  }
+
+  .scene-01-stat,
+  .tree-node {
+    animation: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
    RESPONSIVE
    ───────────────────────────────────────────────────────────────────────────── */
 
@@ -656,6 +709,32 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
   }
 
   .scene-10-message {
-    font-size: 1.75rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  .component-card,
+  .gallery-image,
+  .stat-card {
+    min-height: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .scene-01-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+  }
+
+  .scene-01-stats {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .scene-02-components {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-image {
+    height: 200px;
   }
 }

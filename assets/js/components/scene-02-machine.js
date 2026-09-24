@@ -129,6 +129,9 @@ class Scene02Machine extends ScrollScene {
     const canvas = this.element.querySelector('canvas');
     if (!canvas || typeof THREE === 'undefined') return;
 
+    // Skip Three.js on very small screens (< 480px)
+    if (window.innerWidth < 480) return;
+
     try {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
@@ -141,9 +144,15 @@ class Scene02Machine extends ScrollScene {
         canvas,
         antialias: true,
         alpha: true,
+        powerPreference: 'low-power', // Prefer GPU efficiency on mobile
       });
 
+      // Optimize pixel ratio on mobile
+      const pixelRatio = window.devicePixelRatio || 1;
+      const mobilePixelRatio = window.innerWidth < 768 ? Math.min(pixelRatio, 1) : pixelRatio;
+
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.setPixelRatio(mobilePixelRatio);
       renderer.setClearColor(0x000000, 0);
       camera.position.z = 2.5;
 

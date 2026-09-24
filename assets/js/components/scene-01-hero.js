@@ -125,6 +125,9 @@ class Scene01Hero extends ScrollScene {
     const canvas = this.element.querySelector('canvas');
     if (!canvas || typeof THREE === 'undefined') return;
 
+    // Skip Three.js on very small screens (< 480px)
+    if (window.innerWidth < 480) return;
+
     try {
       // Scene setup
       const scene = new THREE.Scene();
@@ -136,7 +139,12 @@ class Scene01Hero extends ScrollScene {
       );
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 
+      // Optimize pixel ratio on mobile
+      const pixelRatio = window.devicePixelRatio || 1;
+      const mobilePixelRatio = window.innerWidth < 768 ? Math.min(pixelRatio, 1) : pixelRatio;
+
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.setPixelRatio(mobilePixelRatio);
       renderer.setClearColor(0x000000, 0);
       camera.position.z = 3;
 
