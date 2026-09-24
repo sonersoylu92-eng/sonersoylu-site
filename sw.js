@@ -19,7 +19,7 @@ const ONBELLEGE = [
   '/sor/',
   '/ara/',
   '/assets/arama.json?v=726ee1c8',
-  '/assets/ara.js?v=e75b84b7',
+  '/assets/ara.js?v=0e7eee0c',
   '/assets/kaydirma.js?v=23cd28e6',
   '/style.css?v=ade96bc2',
   '/assets/site.js?v=2083a619',

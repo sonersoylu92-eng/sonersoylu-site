@@ -69,6 +69,8 @@
 .out .hero dd{font-size:2rem;color:var(--beacon)}
 .verdict{background:var(--surface)!important;font-size:.875rem;line-height:1.65;color:var(--ink)}
 .verdict b{font-weight:500}
+.out .verdict dd{margin:0;font:inherit;letter-spacing:normal;color:inherit;line-height:inherit}
+
 
 .formula{margin-top:1.5rem;border-left:2px solid var(--line);padding:.15rem 0 .15rem 1.1rem}
 .formula p{font-family:var(--mono);font-size:.8125rem;line-height:1.9;color:var(--ink)}
@@ -209,7 +211,7 @@
      <div><dt>Saatte</dt><dd id="a1o2">—<small>km/s</small></dd></div>
      <div><dt>TSR (λ)</dt><dd id="a1o3">—</dd></div>
      <div><dt>Açısal hız</dt><dd id="a1o4">—<small>rad/s</small></dd></div>
-     <div class="wide verdict" id="a1v1">—</div>
+     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a1v1">—</dd></div>
     </dl>
    </div>
   </div>
@@ -260,7 +262,7 @@
      <div><dt>Süpürme alanı</dt><dd id="a2o4">—<small>m²</small></dd></div>
      <div><dt>Güç yoğunluğu</dt><dd id="a2o5">—<small>W/m²</small></dd></div>
      <div><dt>Hava yoğunluğu</dt><dd id="a2o6">—<small>kg/m³</small></dd></div>
-     <div class="wide verdict" id="a2v1">—</div>
+     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a2v1">—</dd></div>
     </dl>
    </div>
   </div>
@@ -311,7 +313,7 @@
      <div><dt>Logaritmik yasa ile</dt><dd id="a3o2">—<small>m/s</small></dd></div>
      <div><dt>Hız artışı</dt><dd id="a3o3">—<small>%</small></dd></div>
      <div><dt>Güçteki artış</dt><dd id="a3o4">—<small>%</small></dd></div>
-     <div class="wide verdict" id="a3vd">—</div>
+     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a3vd">—</dd></div>
     </dl>
    </div>
   </div>
@@ -358,7 +360,7 @@
      <div><dt>Eşdeğer tam yük saati</dt><dd id="a4o2">—<small>saat</small></dd></div>
      <div><dt>Ortalama çıkış gücü</dt><dd id="a4o3">—<small>kW</small></dd></div>
      <div><dt>Teorik üst sınır üretim</dt><dd id="a4o4">—<small>MWh</small></dd></div>
-     <div class="wide verdict" id="a4v1">—</div>
+     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a4v1">—</dd></div>
     </dl>
    </div>
   </div>
@@ -418,7 +420,7 @@
      <div><dt>Eşdeğer tam yük saati</dt><dd id="a5o4">—<small>saat</small></dd></div>
      <div><dt>Weibull ölçek param. c</dt><dd id="a5o5">—<small>m/s</small></dd></div>
      <div><dt>Yaklaşık hane sayısı</dt><dd id="a5o6">—<small>hane</small></dd></div>
-     <div class="wide verdict" id="a5v1">—</div>
+     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a5v1">—</dd></div>
     </dl>
    </div>
   </div>
@@ -497,7 +499,7 @@
      <div><dt>Akma sınırı</dt><dd id="a6o4">—<small>MPa</small></dd></div>
      <div><dt>Kopma yükü (yaklaşık)</dt><dd id="a6o5">—<small>kN</small></dd></div>
      <div><dt>Kuru sıkılsaydı tork</dt><dd id="a6o6">—<small>Nm</small></dd></div>
-     <div class="wide verdict" id="a6v1">—</div>
+     <div class="wide verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="a6v1">—</dd></div>
     </dl>
    </div>
   </div>
@@ -879,7 +881,7 @@ document.getElementById('burger').addEventListener('click', function () {
   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
  </div>
 </div>
-<script src="/assets/ara.js?v=e75b84b7" defer></script>
+<script src="/assets/ara.js?v=0e7eee0c" defer></script>
 <script src="/assets/kaydirma.js?v=23cd28e6" defer></script>
 <div class="doku" aria-hidden="true"></div>
 <script src="/assets/canli.js?v=8be3b4e9" defer></script>

@@ -200,6 +200,8 @@
 .verdict p{font-size:.875rem;line-height:1.7;color:var(--ink)}
 .verdict p+p{margin-top:.6rem}
 .verdict b{font-weight:500;color:var(--beacon)}
+.out .verdict dd{margin:0;font:inherit;letter-spacing:normal;color:inherit;line-height:inherit}
+.out dd.pay-dd{margin:0;font:inherit;font-size:inherit}
 .warn{margin-top:1.75rem;border-left:2px solid var(--beacon);background:var(--surface);
  padding:1.15rem 1.35rem}
 .warn p{font-size:.875rem;line-height:1.7;color:var(--muted)}
@@ -473,10 +475,9 @@ ne kadarının koşullu</b> olduğunu görmek.</p>
    <div><dt>Yıllık toplam</dt><dd id="oYil">—</dd></div>
    <div><dt>Sabit / koşullu dağılım</dt>
     <dd id="oPayYazi" style="font-size:.9375rem">—</dd>
-    <div class="pay"><i class="s" id="oBarS" style="width:50%"></i><i class="d" id="oBarD" style="width:50%"></i></div>
-    <div class="paylbl"><span>Sabit</span><span>Koşullu</span></div></div>
-   <div class="verdict" id="oYorum"><p>Rakamları girin; teklifin nesi sağlam,
-    nesi kırılgan söyleyeyim.</p></div>
+    <dd class="pay-dd"><div class="pay"><i class="s" id="oBarS" style="width:50%"></i><i class="d" id="oBarD" style="width:50%"></i></div><div class="paylbl"><span>Sabit</span><span>Koşullu</span></div></dd></div>
+   <div class="verdict"><dt class="gorsel-gizli">Değerlendirme</dt><dd id="oYorum"><p>Rakamları girin; teklifin nesi sağlam,
+    nesi kırılgan söyleyeyim.</p></dd></div>
   </dl>
  </div>
 </div>
@@ -669,7 +670,7 @@ romantikleştirmeden anlatayım.</p>
  </div>
 </div>
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=e75b84b7" defer></script>
+<script src="/assets/ara.js?v=0e7eee0c" defer></script>
 <script>
 (function(){var b=document.getElementById("burger"),m=document.getElementById("mobmenu");
 if(b&&m)b.addEventListener("click",function(){var a=b.getAttribute("aria-expanded")==="true";

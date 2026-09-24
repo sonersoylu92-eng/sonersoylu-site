@@ -70,7 +70,7 @@
       return;
     }
     hedef.innerHTML = liste.map(function (e) {
-      return '<a href="' + kac(e[3]) + '"><span class="k">' + kac(dizin.k[e[0]]) + '</span>' +
+      return '<a role="option" aria-selected="false" href="' + kac(e[3]) + '"><span class="k">' + kac(dizin.k[e[0]]) + '</span>' +
              '<span class="b">' + isaretle(e[1], q) + '</span>' +
              (e[2] ? '<span class="o">' + kac(e[2]) + '</span>' : '') + '</a>';
     }).join('');
@@ -135,11 +135,11 @@
   function gez(yon) {
     var a = cikti.querySelectorAll('a');
     if (!a.length) return;
-    if (sec >= 0 && a[sec]) a[sec].classList.remove('sec');
+    if (sec >= 0 && a[sec]) { a[sec].classList.remove('sec'); a[sec].setAttribute('aria-selected', 'false'); }
     sec = (sec + yon + a.length + 1) % (a.length + 1) - 1;
     if (sec < 0) sec = yon > 0 ? 0 : a.length - 1;
     if (sec >= a.length) sec = 0;
-    a[sec].classList.add('sec');
+    a[sec].classList.add('sec'); a[sec].setAttribute('aria-selected', 'true');
     a[sec].scrollIntoView({ block: 'nearest' });
   }
 
