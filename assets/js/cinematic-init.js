@@ -30,7 +30,8 @@ class CinematicHomepage {
     const missing = [];
 
     if (!window.gsap) missing.push('GSAP');
-    if (!window.gsap?.plugins?.ScrollTrigger) missing.push('GSAP ScrollTrigger');
+    if (!window.ScrollTrigger) missing.push('GSAP ScrollTrigger');
+    else if (window.gsap) window.gsap.registerPlugin(window.ScrollTrigger);
 
     if (missing.length > 0) {
       console.error(

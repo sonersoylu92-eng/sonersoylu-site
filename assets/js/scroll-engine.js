@@ -66,13 +66,14 @@ class ScrollEngine {
    * Register ScrollTrigger with GSAP
    */
   registerScrollTrigger() {
-    if (!window.gsap || !window.gsap.plugins.ScrollTrigger) {
+    if (window.gsap && window.ScrollTrigger) window.gsap.registerPlugin(window.ScrollTrigger);
+    if (!window.gsap || !window.ScrollTrigger) {
       console.error('ScrollEngine: GSAP or ScrollTrigger plugin not loaded');
       return;
     }
 
     // Register ScrollTrigger
-    gsap.registerPlugin(gsap.plugins.ScrollTrigger);
+    gsap.registerPlugin(window.ScrollTrigger);
 
     // Update on scroll
     if (this.lenis) {
