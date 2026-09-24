@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index a64d62a..0025719 100644
+--- a/index.html
++++ b/index.html
+@@ -456,7 +456,7 @@
+ <section id="iletisim" class="iletisim" aria-labelledby="iletisim-b">
+   <div class="ic">
+     <p class="etiket">İletişim</p>
+-    <h2 id="iletisim-b">Saha projeleri, servis ve danışmanlık için ulaşın</h2>
++    <h2 id="iletisim-b">Saha projeleri ve servis için ulaşın</h2>
+     <div class="kanal">
+       <div><span class="k-ust">E-posta</span><span class="d">sonersoylu@yandex.com</span><button type="button" class="kopya" id="epostaKopya">Kopyala</button></div>
+       <a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener"><span class="k-ust">LinkedIn</span><span class="d">soner-soylu</span></a>
