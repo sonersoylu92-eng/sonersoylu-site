@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</title>
-<meta name="description" content="Rüzgâr türbini saha servis teknisyeni Soner Soylu. 13+ yıl saha deneyimi, 300+ türbine dokunuldu. Sahadan meslek rehberi, 148 terimlik sözlük, hesaplama araçları.">
+<meta name="description" content="Rüzgâr türbini saha servis teknisyeni Soner Soylu: 13 yıllık saha deneyimi, gerçek arıza vakaları, 148 terimlik sözlük, arıza ağacı ve hesaplama araçları.">
 <link rel="canonical" href="https://sonersoylu.com/">
 <meta property="og:type" content="profile">
 <meta property="og:locale" content="tr_TR">
@@ -26,8 +26,9 @@
 
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
-<link rel="stylesheet" href="/style.css?v=e7153113">
-<link rel="stylesheet" href="/ana.css?v=c30492ac">
+<link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+<link rel="stylesheet" href="/style.css?v=ade96bc2">
+<link rel="stylesheet" href="/ana.css?v=d72f4222">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -68,20 +69,67 @@
 
 <main id="icerik" class="ana">
 
-<section class="kapak" aria-labelledby="kapak-b">
-  <canvas id="kapak3d" aria-hidden="true"></canvas>
-  <div class="ic">
+<section id="kule" class="kule" aria-labelledby="kapak-b">
+  <div class="kule-sahne">
+    <canvas id="kapak3d" aria-hidden="true"></canvas>
     <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</h1>
-    <div class="dugmeler">
-      <a class="dg birincil" href="#iletisim">İletişime geç</a>
-      <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+
+    <div class="hud" id="hud" hidden>
+      <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
+      <dl>
+        <div><dt>Rüzgâr</dt><dd><b id="hHiz">–</b> m/s</dd></div>
+        <div><dt>Yön</dt><dd id="hYon">–</dd></div>
+        <div><dt>Rotor</dt><dd><b id="hDevir">–</b> d/dk</dd></div>
+        <div><dt>Bir N117</dt><dd><b id="hGuc">–</b> kW</dd></div>
+      </dl>
+      <p class="hud-alt">Open-Meteo sayısal tahmini, saha ölçümü değildir. <a href="/ruzgar/">Canlı rüzgâr</a></p>
     </div>
-    <dl class="rakam">
-      <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
-      <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
-      <div><dt>Üretici</dt><dd>4</dd></div>
-      <div><dt>Model</dt><dd>9</dd></div>
-    </dl>
+
+    <div class="kot" id="kot3" aria-hidden="true">
+      <span class="kot-deger"><b id="kotM">0</b> m</span>
+      <div class="kot-cetvel">
+        <i style="--y:1">178</i><i style="--y:.674">120</i><i style="--y:.449">80</i><i style="--y:.225">40</i><i style="--y:0">0</i>
+        <span class="kot-ok" id="kotOk"></span>
+      </div>
+    </div>
+
+    <div class="kule-alt">
+      <div class="durak etkin" data-d="0">
+        <div class="dugmeler">
+          <a class="dg birincil" href="#iletisim">İletişime geç</a>
+          <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+        </div>
+        <dl class="rakam">
+          <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
+          <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
+          <div><dt>Üretici</dt><dd>4</dd></div>
+          <div><dt>Model</dt><dd>9</dd></div>
+        </dl>
+        <p class="kaydir" aria-hidden="true">Kaydır, kuleye tırman</p>
+      </div>
+      <div class="durak" data-d="1"><p class="etiket">Kule · 0–118 m</p><p class="durak-m">Beş çelik segment, flanş flanş cıvatalı. Tepeye servis asansörü ve merdivenle çıkılır; her çıkış LOTO ve ekipman kontrolüyle başlar.</p></div>
+      <div class="durak" data-d="2"><p class="etiket">Nasel · 120 m</p><p class="durak-m">Ana yatak, dişli kutusu ve jeneratör burada. Kırmızı ışık havacılık engel ışığı; gece de sahayı işaretler.</p></div>
+      <div class="durak" data-d="3"><p class="etiket">Rotor · 116,8 m çap</p><p class="durak-m">Üç kanat, her biri 57,3 m. Kanat ucu yerden 178 metreye kadar çıkar. <a href="/n117/">15 duraklık N117 turu</a></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="giris" aria-labelledby="giris-b">
+  <div class="ic giris-izgara">
+    <div>
+      <p class="etiket">Kısaca</p>
+      <h2 id="giris-b" class="gizli">Kısaca</h2>
+      <blockquote class="soz">Toplamda 300'ü aşkın türbine dokunarak çeliğin ruhunu analiz edebilen bir teknisyen olarak; bir arızayı alarm kodundan önce sesinden, titreşiminden ve ısısından tanır, sorunu üretimi durdurmadan çözmeye çalışırım.</blockquote>
+    </div>
+    <div class="giris-yan">
+      <p class="giris">Rüzgâr enerjisi sektöründe 2013'ten beri sahadayım. Enercon, Nordex, Nordex Acciona ve Vestas türbinlerinde mekanik ve elektrik sistemleri üzerine çalışıyorum. Şu an Aliağa ve Bergama rüzgâr santrallerinde saha servis teknisyeniyim.</p>
+      <ul class="platform" aria-label="Çalıştığım türbinler">
+        <li><b>Enercon</b><span>E70 · E82 · E92</span></li>
+        <li><b>Nordex</b><span>Beta · Delta 111 · Delta 131</span></li>
+        <li><b>Vestas</b><span>V126 · V136</span></li>
+        <li><b>Nordex Acciona</b><span>3 MW sınıfı</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -121,6 +169,30 @@
   </div>
 </section>
 
+<section id="gecmis" aria-labelledby="gecmis-b">
+  <div class="ic">
+    <div class="bas">
+      <div>
+        <p class="etiket">Saha geçmişi</p>
+        <h2 id="gecmis-b">Dokuz pozisyon, 2013'ten bugüne</h2>
+        <p class="giris">Kurulum, devreye alma, periyodik bakım ve arıza gidermenin yanında ana yatak ve kanat değişimi gibi büyük bileşen operasyonları. Kara ve deniz üstü projelerde, farklı iklim ve çalışma koşullarında.</p>
+      </div>
+      <a class="ok" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn profili</a>
+    </div>
+    <ol class="zaman">
+      <li><span class="yil">2021</span><div><h3>Bilgin Enerji</h3><p class="rol">Saha Servis Teknisyeni · <span>Mart 2021, devam ediyor</span> · <span>Aliağa ve Bergama RES, İzmir</span></p><p class="oz">Periyodik ve mekanik bakım, elektrik arıza tespiti. Gear box, konvertör, yaw ve pitch sistemlerinde arıza giderme; kanat kontrolleri ve büyük bileşen değişimlerinde saha ekibinde görev. Bakım sonrası devreye alma ve raporlama.</p></div></li>
+      <li><span class="yil">2021</span><div><h3>Fu Enerji</h3><p class="rol">Kurulum Uzmanı · <span>Ocak 2021, Mart 2021</span> · <span>İzmir</span></p><p class="oz">Rüzgâr türbini kurulum çalışmalarında mekanik montaj ve elektrik işleri. Kule, nacelle ve rotor montajında saha ekibiyle koordineli çalışma, bağlantı kontrolleri.</p></div></li>
+      <li><span class="yil">2020</span><div><h3>Lacivert Vinç</h3><p class="rol">Montaj Teknisyeni · <span>Eylül 2020, Kasım 2020</span> · <span>İstanbul</span></p><p class="oz">Vestas V136 3.45 MW türbinlerinde yer ve nacelle montaj çalışmaları. Mekanik montaj, tork ve gerdirme uygulamaları, elektrik arıza tespiti.</p></div></li>
+      <li><span class="yil">2019</span><div><h3>Genba Energy</h3><p class="rol">Servis Teknisyeni · <span>Eylül 2019, Aralık 2019</span> · <span>Balıkesir</span></p><p class="oz">Acciona Çerçikaya RES sahasında 18 adet 3 MW türbinin mekanik ve elektrik bakımı. Mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
+      <li><span class="yil">2018</span><div><h3>Siemens</h3><p class="rol">Depo Sorumlusu · <span>Kasım 2018, Ağustos 2019</span> · <span>Türkiye</span></p><p class="oz">Rüzgâr santrali saha deposunda malzeme ve yedek parça yönetimi. Bakım ekiplerine parça tedariki, stok takibi, giriş çıkış kayıtları ve sevkiyat koordinasyonu.</p></div></li>
+      <li><span class="yil">2018</span><div><h3>Monsson</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Nisan 2018, Ekim 2018</span> · <span>Balıkesir</span></p><p class="oz">Rüzgâr türbini montaj ve servis çalışmaları. Mekanik bakım, elektrik arıza tespiti, kurulum ve devreye alma süreçleri.</p></div></li>
+      <li><span class="yil">2017</span><div><h3>Hareket Proje Taşımacılığı</h3><p class="rol">Kurulum ve Elektrik Teknisyeni · <span>Haziran 2017, Nisan 2018</span> · <span>İstanbul</span></p><p class="oz">Türbin kurulum projelerinde mekanik montaj ve elektrik işleri. Kule ve nacelle montajı, kablolama ve bağlantı kontrolleri.</p></div></li>
+      <li><span class="yil">2016</span><div><h3>EU Montage Danmark ApS</h3><p class="rol">Servis ve Montaj Teknisyeni · <span>Ekim 2016, Nisan 2017</span> · <span>Avrupa sahaları</span></p><p class="oz">Avrupa&#x27;da rüzgâr türbini montaj ve servis projeleri. Uluslararası saha ekipleriyle mekanik montaj, periyodik bakım ve elektrik arıza tespiti.</p></div></li>
+      <li><span class="yil">2013</span><div><h3>Enercon GmbH</h3><p class="rol">Çelik Beton Kule Montaj Teknisyeni · <span>Şubat 2013, Ağustos 2016</span> · <span>Türkiye</span></p><p class="oz">Enercon türbinlerinde çelik beton hibrit kule montajı. Segment birleştirme, gerdirme ve mekanik montaj işleri. Sektördeki ilk pozisyonum.</p></div></li>
+    </ol>
+  </div>
+</section>
+
 <section id="sahadan" aria-labelledby="sahadan-b">
   <div class="ic">
     <div class="bas">
@@ -139,6 +211,15 @@
       <figure class="g6 bel" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption>Sahada</figcaption></figure>
       <figure class="g7 bel" data-full="/assets/saha/bulut-ve-sira.webp"><img src="/assets/saha/bulut-ve-sira.webp" alt="Öğle bulutlarının altında sırt hattı boyunca uzanan türbin dizisi" loading="lazy" decoding="async"><figcaption>Sırt hattı</figcaption></figure>
       <figure class="g8 bel" data-full="/assets/saha/saha-yolu.webp"><img src="/assets/saha/saha-yolu.webp" alt="Araç camından görünen saha yolu ve ufuktaki iki türbin" loading="lazy" decoding="async"><figcaption>Saha yolu</figcaption></figure>
+    </div>
+
+    <div class="an-video">
+      <div class="an-video-kutu"><iframe src="https://www.youtube-nocookie.com/embed/8U_lQpNbrOc" title="The Turbine Tech videosu" loading="lazy" allowfullscreen allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+      <div class="an-video-yazi">
+        <p class="etiket">The Turbine Tech</p>
+        <p class="an-video-b">Türbin işini anlattığım YouTube kanalı</p>
+        <a class="ok" href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">Kanalı aç</a>
+      </div>
     </div>
   </div>
 </section>
@@ -162,6 +243,29 @@
       <li><a href="/saha-notlari/yaw-yatak-asinmasi/"><span class="no">VAKA 06</span><span><b>Yaw yatağı aşınması</b><span class="oz">Alarmsız yakalanan hasar. Tıkalı yağlama hattı, tek sektörde aşınma, gres sektör haritası.</span></span><span class="mdl">Enercon E92</span></a></li>
       <li><a href="/saha-notlari/kanat-titresimi/"><span class="no">VAKA 07</span><span><b>Kanat titreşimi</b><span class="oz">7–9 m/s bandında titreşim. 1P harmoniği, 2,5° pitch asimetrisi: kanat değil kalibrasyon.</span></span><span class="mdl">Vestas V126</span></a></li>
     </ul>
+  </div>
+</section>
+
+<section id="yazilar" aria-labelledby="yazilar-b">
+  <div class="ic">
+    <div class="bas">
+      <div>
+        <p class="etiket">Yazılar</p>
+        <h2 id="yazilar-b">Sahadan LinkedIn'e</h2>
+        <p class="giris">Bakım disiplini, iş güvenliği ve türbin davranışı üzerine. Sektöre yeni girenlere faydası olsun diye başladım, sonra devam etti.</p>
+      </div>
+      <a class="ok" href="https://www.linkedin.com/in/soner-soylu/recent-activity/all/" target="_blank" rel="noreferrer noopener">Tüm yazılar</a>
+    </div>
+    <div class="yazilar">
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7500658918495449088/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Sektör · Eylül 2026</span><b>Rüzgâr hedeflerini sahada kim gerçekleştirecek?</b><span class="a">Her yeni türbin beraberinde yeni bir teknik problem getiriyor. Elektronik sistemler gelişiyor, SCADA karmaşıklaşıyor; geçmiş saha tecrübesi tek başına yetmiyor. Türkiye&#x27;nin rüzgâr hedefini…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7498094085245669376/" target="_blank" rel="noreferrer noopener"><span class="k-ust">İş güvenliği · Ağustos 2026</span><b>Türbin yangını: kimsenin konuşmak istemediği risk</b><span class="a">Nadirdir, ama olduğunda geri dönüşü yoktur. Gevşek bir güç bağlantısı, yıpranmış bir fren balatası, sıcak yüzeye damlayan yağ. 90 metrede başlayan bir yangına müdahale imkânı son derece…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7496198260433547264/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Bakım · Ağustos 2026</span><b>Rüzgâr var, peki türbin neden tam güçte değil?</b><span class="a">Dış sıcaklık yükseldiğinde converter ve kabin tarafındaki termal yük artıyor. Kirli bir filtre, debisi düşmüş bir fan, tıkalı bir kondenser; normalde sorun çıkarmayan bu ekipmanlar zirve…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7495409166149353472/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Sektör · Ağustos 2026</span><b>Megavat tabelada kalmasın</b><span class="a">Kurulu güç kadar önemli olan bir başka konu bakım kalitesi ve operasyonel verimlilik. Enercon, Nordex ve Vestas&#x27;ta çalışmış biri olarak net söyleyebilirim: her türbinin anatomisi farklı.…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7494844300825104385/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Bakım · Ağustos 2026</span><b>Yaz duruşlarının kökü mayısta atılır</b><span class="a">Ağustosta yaşanan bir duruşun nedeni, bazen mayısta yapılmayan basit bir bakımdır. Bottom box ve top box klima filtreleri, kondenser petekleri, fan performansı; sezon öncesi yapılan küçük…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7494131824885972992/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Saha · Ağustos 2026</span><b>13 yıl sonra tek tavsiyem</b><span class="a">Türbine ilk çıktığım gün 2013&#x27;tü, Enercon&#x27;da çelik-beton hibrit kule montajı yapıyorduk. O gün öğrendiğim şey teknik değildi: yukarıda acele eden adam, aşağıda hata yapan adamdan daha…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7410580809524629504/" target="_blank" rel="noreferrer noopener"><span class="k-ust">İş güvenliği · Ocak 2026</span><b>Soğuk hava ve buzlanma yönetimi</b><span class="a">Buzlanma sahada hem görünmeyen hem ani sonuçlar doğuran bir risk: dengesiz yük dağılımı, buz atma, yaw ve pitch sistemlerinde sertleşme, sensör sapmaları. Sadece sıcaklık değil; nem, rüzgâr…</span><span class="git">LinkedIn'de oku</span></a>
+      <a class="yazi" href="https://www.linkedin.com/feed/update/urn:li:activity:7409546660566970368/" target="_blank" rel="noreferrer noopener"><span class="k-ust">Saha · Ocak 2026</span><b>Gece çalışmaları disiplin ister</b><span class="a">Zorlu hava, sınırlı görüş, yüksekte çalışma ve anlık karar verme zorunluluğu. Bu sektör gece operasyonlarında hatayı tolere etmez. Prosedürler kâğıt üzerinde kalmamalı, sahada refleks…</span><span class="git">LinkedIn'de oku</span></a>
+    </div>
   </div>
 </section>
 
@@ -192,7 +296,7 @@
   <div class="ic">
     <p class="etiket">Kaynaklar</p>
     <h2 id="kaynaklar-b">Sahada işe yarayanlar</h2>
-    <div class="kartlar">
+    <div class="kartlar uclu">
       <a class="bel" href="/araclar/"><span class="k-ust">Araçlar</span><b>Saha hesaplayıcıları</b><span class="a">Uç hızı, rüzgârdaki güç, yükseklik düzeltmesi, kapasite faktörü, yıllık üretim ve cıvata torku.</span><span class="git">Hesapla</span></a>
       <a class="bel" href="/kodlar/"><span class="k-ust">IEC 61400-26-1</span><b>Kod kütüphanesi</b><span class="a">Durum ve alarm kodlarını okumak: 12 aile, 50 koşul, her birinde saha kontrol listesi.</span><span class="git">Kodlara bak</span></a>
       <a class="bel" href="/sozluk/"><span class="k-ust">148 terim</span><b>Sözlük</b><span class="a">Türkçe–İngilizce teknik terimler; sahada ve dokümanda karşılaştıklarınız.</span><span class="git">Sözlüğü aç</span></a>
@@ -217,6 +321,18 @@
       <a class="bel" href="/gwo/"><span class="k-ust">Sertifika</span><b>GWO eğitimleri</b><span class="a">BST, BTT, tazeleme ve WINDA kaydı.</span><span class="git">Oku</span></a>
       <a class="bel" href="/maas/"><span class="k-ust">Maaş</span><b>Teklifini oku</b><span class="a">Rakam yerine formül: bir iş teklifini neye göre değerlendirirsiniz.</span><span class="git">Oku</span></a>
       <a class="bel" href="/egitim/"><span class="k-ust">Ücretsiz</span><b>8 bölümlük eğitim</b><span class="a">Her bölümde kısa sınav, sonunda katılım belgesi.</span><span class="git">Başla</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="yetkinlik" aria-labelledby="yetkinlik-b">
+  <div class="ic">
+    <p class="etiket">Yetkinlik</p>
+    <h2 id="yetkinlik-b">İş, belge, eğitim</h2>
+    <div class="yetki">
+      <div><h3>Yaptığım işler</h3><ul><li>Arıza giderme</li><li>Önleyici bakım</li><li>Devreye alma</li><li>Mekanik montaj</li><li>Elektrik arıza tespiti</li><li>Büyük bileşen değişimi</li><li>Tork ve gerdirme</li><li>Raporlama</li></ul></div>
+      <div><h3>Sertifikalar</h3><ul><li>GWO Basic Safety Training</li><li>Vestas SIT Training</li><li>Yüksekte güvenli çalışma</li><li>Yüksekte elektrikli işlerde çalışma</li><li>İş güvenliği sertifikası</li></ul></div>
+      <div><h3>Eğitim</h3><ul><li><b>Anadolu Üniversitesi</b><span>İşletme ve Yönetim, lisans · 2012–2018</span></li><li><b>Ege Üniversitesi</b><span>Otomotiv Mekanik Teknolojisi, önlisans · 2010–2012</span></li></ul><h3 class="ara-bas">Diller</h3><ul><li>Türkçe, anadil</li><li>İngilizce, ileri seviye</li></ul></div>
     </div>
   </div>
 </section>
@@ -275,21 +391,65 @@
   lb.addEventListener('click', kapat);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) kapat(); });
 
-  /* kapak 3B: N117 modeli. Işık günün saatine göre, dönüş anma devrinde */
+  /* ---- kapak: kuleye tırmanış ---- */
   var kok = document.documentElement;
-  var s = new Date().getHours();
-  kok.setAttribute('data-vardiya', (s < 6 || s >= 20) ? 'gece' : (s < 8 || s >= 17) ? 'altin' : 'gunduz');
-  if (!getComputedStyle(kok).getPropertyValue('--devir-sure').trim()) kok.style.setProperty('--devir-sure', '4.76s');
-  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (az || (navigator.connection && navigator.connection.saveData)) return;
+  var saat = new Date().getHours();
+  kok.setAttribute('data-vardiya', (saat < 6 || saat >= 20) ? 'gece' : (saat < 8 || saat >= 17) ? 'altin' : 'gunduz');
+  kok.style.setProperty('--devir-sure', '4.76s');   // veri gelene kadar anma devri (12,6 d/dk)
+  var kule = document.getElementById('kule');
   var canvas = document.getElementById('kapak3d');
-  if (!canvas) return;
-  try { var t = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (t.getContext('webgl2') || t.getContext('webgl')))) return; } catch (e) { return; }
-  function baslat() {
-    import('/assets/hero3d.js?v=c5074566').then(function (mod) { mod.kapak3BBaslat(canvas); })
-      .catch(function (e) { console.error('kapak3b yüklenemedi:', e); });
+  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* canlı rüzgâr: Aliağa, göbek yüksekliği (Open-Meteo tahmini, /ruzgar/ ile aynı formüller) */
+  var ALAN = Math.PI * 116.8 * 116.8 / 4, YARICAP = 58.4;
+  var YONLER = ['K','KKD','KD','DKD','D','DGD','GD','GGD','G','GGB','GB','BGB','B','BKB','KB','KKB'];
+  function guc(v, rho) {
+    if (v < 3 || v > 25) return 0;
+    var cp = v >= 6.5 ? 0.452 : (function (x) { return 0.10 + (0.452 - 0.10) * (3 * x * x - 2 * x * x * x); })((v - 3) / 3.5);
+    var ham = 0.5 * rho * ALAN * v * v * v * cp / 1000;
+    return ham / Math.pow(1 + Math.pow(ham / 3000, 6), 1 / 6);
   }
-  if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 2000 }); else setTimeout(baslat, 600);
+  function devir(v) { if (v < 3 || v > 25) return 0; return Math.max(7.9, Math.min(14.1, (8 * v / YARICAP) * 60 / (2 * Math.PI))); }
+  function virgul(x, n) { return x.toFixed(n).replace('.', ','); }
+  fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) {
+      var c = d && d.current; if (!c) throw 0;
+      var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
+      if (!isFinite(v)) throw 0;
+      var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
+      var rho = p120 / (287.05 * (sic - 0.78 + 273.15));
+      var dv = devir(v), kw = guc(v, rho);
+      kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
+      document.getElementById('hHiz').textContent = virgul(v, 1);
+      document.getElementById('hYon').textContent = isFinite(yon) ? YONLER[Math.round(yon / 22.5) % 16] + ' ' + Math.round(yon) + '°' : '–';
+      document.getElementById('hDevir').textContent = dv > 0 ? virgul(dv, 1) : '0';
+      document.getElementById('hGuc').textContent = kw > 0 ? Math.round(kw).toLocaleString('tr-TR') : '0';
+      document.getElementById('hud').hidden = false;
+    })
+    .catch(function () { /* veri yoksa gösterge hiç görünmez */ });
+
+  /* tırmanış durakları ve kot göstergesi */
+  var duraklar = [].slice.call(document.querySelectorAll('.durak'));
+  var kotM = document.getElementById('kotM'), kotOk = document.getElementById('kotOk');
+  var sonDurak = 0;
+  function guncelle(p, y) {
+    var dd = p < 0.14 ? 0 : p < 0.45 ? 1 : p < 0.72 ? 2 : 3;
+    if (dd !== sonDurak) { duraklar[sonDurak].classList.remove('etkin'); duraklar[dd].classList.add('etkin'); sonDurak = dd; }
+    kotM.textContent = Math.round(y);
+    kotOk.style.setProperty('--y', Math.min(1, y / 178).toFixed(3));
+  }
+
+  function statik() { kule.classList.add('statik'); }
+  if (az || (navigator.connection && navigator.connection.saveData)) return statik();
+  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(); } catch (e) { return statik(); }
+  kule.classList.add('uc-boyut');
+  function baslat() {
+    import('/assets/kule3d.js?v=0b2357a6').then(function (mod) {
+      if (!mod.kuleBaslat(canvas, kule, guncelle)) statik();
+    }).catch(function (e) { console.error('kule3d yüklenemedi:', e); statik(); });
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 1500 }); else setTimeout(baslat, 400);
 })();
 </script>
 </body>

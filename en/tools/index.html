@@ -20,7 +20,7 @@
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
-<link rel="stylesheet" href="/style.css?v=e7153113">
+<link rel="stylesheet" href="/style.css?v=ade96bc2">
 <style>
 .g-hero{padding:4rem 0 2rem}
 .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
@@ -44,6 +44,10 @@
 .tool .intro{margin-top:1rem;max-width:64ch;font-size:.9375rem;line-height:1.75;color:var(--muted)}
 
 .calc{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);box-shadow:var(--shade)}
+.calc>*{min-width:0}
+.f{grid-template-columns:minmax(0,1fr)}
+.fi{min-width:0;grid-template-columns:minmax(0,1fr)}
+.fi select{max-width:100%;width:100%}
 .pane{background:var(--surface);padding:1.5rem}
 .f{display:grid;gap:1.25rem}
 .fi{display:grid;gap:.5rem}
