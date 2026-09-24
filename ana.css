@@ -305,4 +305,4 @@ body.ana-body #lbx{background:#12171b;color:#e9edf0;border-color:#2a3238}
   }
 }
 /* ekran dışı bölümler çizilmeden bekler: ilk açılış daha hızlı */
-.ana section:not(.kule){content-visibility:auto;contain-intrinsic-size:auto 900px}
+.ana section:not(.kule):not(.dny-bolum){content-visibility:auto;contain-intrinsic-size:auto 900px}

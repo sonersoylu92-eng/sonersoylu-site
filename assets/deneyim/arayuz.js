@@ -1,0 +1,134 @@
+/* arayuz.js — "Türbinin içine" deneyiminin sayfa tarafı: etiketler, bölüm rayı,
+ * dış altyazılar, kararma, kapanış ve WebGL yoksa durağan kapak.
+ * Hem ana sayfada hem /deneyim/ sayfasında aynı işaretlemeyle çalışır.
+ * Canlı rüzgâr (--devir-sure, --yon-derece) ve güneş (data-vardiya) sayfanın kendi betiğinden gelir. */
+(function () {
+  var bolum = document.getElementById('deneyim');
+  if (!bolum) return;
+  var $ = function (id) { return document.getElementById(id); };
+  var kok = document.documentElement;
+  var tuval = $('dnyTuval'), hud = $('dnyHud'), alt = $('dnyAlt'), son = $('dnySon');
+  var eNo = $('dnyNo'), eEn = $('dnyEn'), eAd = $('dnyAd'), eBilgi = $('dnyBilgi');
+  var eBolum = $('dnyBolum'), eKot = $('dnyKot');
+  var kararti = $('dnyKararti'), cizgi = $('dnyIlerleme'), ray = $('dnyRay');
+  var DURAKLAR = [];
+
+  var DIS = [
+    { p: 0.0, a: 0.035, b: 0.14, k: 'Uzaktan', t: 'Ege, rüzgâr çiftliği. Göbek yerden 120 metrede; rotorun çapı 116,8 metre.' },
+    { p: 0.22, a: 0.165, b: 0.325, k: 'Kule', t: 'Her bakım günü bu tırmanışla başlar. Kule içinden, 120 metre yukarı.' },
+    { p: 0.355, a: 0.34, b: 0.39, k: 'Nasel', t: '' }
+  ];
+  function bolumAdi(p) {
+    if (p < 0.15) return 'Dışarıda'; if (p < 0.31) return 'Kule'; if (p < 0.48) return 'Nasel · rotor';
+    if (p < 0.72) return 'Güç aktarma'; if (p < 0.80) return 'Jeneratör'; if (p < 0.945) return 'Elektrik'; return 'Çıkış';
+  }
+  function canliYon() { return isFinite(parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece'))); }
+
+  /* bölüm rayı: duraklar modül yüklenince kurulur */
+  var rayOgeleri = [], rayLi = [];
+  function rayKur() {
+    rayOgeleri = [];
+    DIS.forEach(function (d) { rayOgeleri.push({ p: d.p, ad: d.k, dis: true }); });
+    DURAKLAR.forEach(function (d) { rayOgeleri.push({ p: d.p, ad: d.ad, dis: false }); });
+    rayOgeleri.push({ p: 1, ad: 'Çıkış', dis: true });
+    ray.textContent = '';
+    rayLi = rayOgeleri.map(function (o) {
+      var li = document.createElement('li'); if (o.dis) li.className = 'dis';
+      var bt = document.createElement('button'); bt.type = 'button'; bt.textContent = o.ad; bt.setAttribute('aria-label', o.ad + ' bölümüne git');
+      bt.addEventListener('click', function () { git(o.p); });
+      li.appendChild(bt); ray.appendChild(li); return li;
+    });
+  }
+
+  var kesiyor = false, sonP = 0;
+  function git(p) {
+    var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - innerHeight;
+    var hedef = Math.round(scrollY + r.top + yol * p);
+    if (Math.abs(p - sonP) < 0.1 || kesiyor) { window.scrollTo({ top: hedef, behavior: 'instant' }); return; }   // yakın: kamera ataletle süzülür
+    // uzak bölüm: kısa kararma, kesme, açılma (film kurgusu gibi)
+    kesiyor = true; kararti.style.transition = 'opacity .3s ease'; kararti.style.opacity = '1';
+    setTimeout(function () {
+      window.scrollTo({ top: hedef, behavior: 'instant' }); window.__deneyimKes = true;
+      setTimeout(function () {
+        kararti.style.transition = 'opacity .6s ease'; kesiyor = false;
+        setTimeout(function () { kararti.style.transition = ''; }, 650);
+      }, 180);
+    }, 320);
+  }
+  // "Deneyimi geç": uzun kaydırmayı canlandırmadan doğrudan içeriğe
+  var atla = bolum.querySelector('.dny-atla');
+  if (atla) atla.addEventListener('click', function (e) {
+    var h = document.querySelector(atla.getAttribute('href')); if (!h) return;
+    e.preventDefault();
+    window.scrollTo({ top: Math.round(scrollY + h.getBoundingClientRect().top - 72), behavior: 'instant' });
+    h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
+  });
+  var basaDon = $('dnyBasaDon');
+  if (basaDon) basaDon.addEventListener('click', function () { git(0); });
+
+  var sonDurak = -2, sonRay = -1, sonAlt = -1;
+  function ilerleme(p, y, icerde) {
+    sonP = p;
+    bolum.classList.toggle('gecti', p > 0.02);
+    bolum.classList.toggle('sonda', p > 0.95);
+    cizgi.style.setProperty('--p', p.toFixed(4));
+    eBolum.textContent = bolumAdi(p);
+    eKot.innerHTML = icerde ? '<span class="dny-ic">Nasel içi</span> · <b>120</b> m' : 'Kot <b>' + Math.round(y) + '</b> m';
+
+    // parça etiketi: durağa yaklaşınca belirir, uzaklaşınca söner
+    var en = -1, fark = 1;
+    DURAKLAR.forEach(function (d, i) { var f = Math.abs(p - d.p); if (f < fark) { fark = f; en = i; } });
+    var goster = en >= 0 && fark < 0.019;
+    if (goster && en !== sonDurak) {
+      var d = DURAKLAR[en];
+      eNo.textContent = String(en + 1).padStart(2, '0'); eEn.textContent = d.en; eAd.textContent = d.ad; eBilgi.textContent = d.bilgi;
+      sonDurak = en;
+    }
+    hud.classList.toggle('gor', goster);
+
+    // dış altyazılar
+    var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b) ai = i; });
+    if (ai !== sonAlt) {
+      if (ai >= 0) {
+        var d2 = DIS[ai], metin = d2.t;
+        if (ai === 2) metin = canliYon() ? 'Makine dairesi. Nasel rüzgâra döner; şu an Aliağa\'daki gerçek rüzgâr yönüne bakıyor.' : 'Makine dairesi. Nasel rüzgârı takip ederek kulenin üstünde döner.';
+        alt.innerHTML = '<b>' + String(ai + 1).padStart(2, '0') + ' · ' + d2.k + '</b>' + metin;
+      }
+      sonAlt = ai;
+    }
+    alt.classList.toggle('gor', ai >= 0);
+    son.classList.toggle('gor', p > 0.968);
+
+    // ray: geçilen ve etkin bölüm
+    var ri = 0; rayOgeleri.forEach(function (o, i) { if (p >= o.p - 0.012) ri = i; });
+    if (ri !== sonRay) { rayLi.forEach(function (li, i) { li.classList.toggle('etkin', i === ri); li.classList.toggle('gecildi', i < ri); }); sonRay = ri; }
+  }
+
+  var basla = $('dnyBasla');
+  function statik(dugme) {
+    bolum.classList.remove('uc-boyut', 'hazir');
+    bolum.classList.add('statik');
+    if (dugme && basla) basla.hidden = false;
+  }
+  function kur() {
+    bolum.classList.remove('statik');
+    bolum.classList.add('uc-boyut', 'dny-akis');
+    if (basla) basla.hidden = true;
+    import('/assets/deneyim/deneyim.js?v=b748bc74').then(function (mod) {
+      DURAKLAR = mod.DURAKLAR; rayKur();
+      var S = mod.deneyimBaslat(tuval, bolum, {
+        ilerleme: ilerleme,
+        karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
+        hazir: function () { bolum.classList.add('hazir'); },
+        hata: function () { statik(false); }
+      });
+      if (!S) statik(false);
+    }).catch(function (e) { console.error('deneyim yüklenemedi:', e); statik(false); });
+  }
+  var baslaBtn = $('dnyBaslaBtn');
+  if (baslaBtn) baslaBtn.addEventListener('click', kur);
+
+  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
+  if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);
+})();

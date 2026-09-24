@@ -28,7 +28,8 @@
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
 <link rel="stylesheet" href="/style.css?v=ade96bc2">
-<link rel="stylesheet" href="/ana.css?v=803bdf4e">
+<link rel="stylesheet" href="/ana.css?v=2ed761a3">
+<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=3da13791">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -69,9 +70,11 @@
 
 <main id="icerik" class="ana">
 
-<section id="kule" class="kule" aria-labelledby="kapak-b">
-  <div class="kule-sahne">
-    <canvas id="kapak3d" aria-hidden="true"></canvas>
+<section id="deneyim" class="dny dny-bolum dny-ana" aria-labelledby="kapak-b">
+  <div class="dny-sahne">
+    <div class="dny-poster" aria-hidden="true"></div>
+    <canvas id="dnyTuval" aria-hidden="true"></canvas>
+    <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
     <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknisyeni</h1>
 
     <div class="hud" id="hud" hidden>
@@ -86,32 +89,46 @@
       <p class="hud-alt">Open-Meteo sayısal tahmini, saha ölçümü değildir. <a href="/ruzgar/">Canlı rüzgâr</a></p>
     </div>
 
-    <div class="kot" id="kot3" aria-hidden="true">
-      <span class="kot-deger"><b id="kotM">0</b> m</span>
-      <div class="kot-cetvel">
-        <i style="--y:1">178</i><i style="--y:.674">120</i><i style="--y:.449">80</i><i style="--y:.225">40</i><i style="--y:0">0</i>
-        <span class="kot-ok" id="kotOk"></span>
+    <div class="kule-alt dny-kapak-alt">
+      <div class="dugmeler">
+        <a class="dg birincil" href="#iletisim">İletişime geç</a>
+        <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+        <span class="dny-basla" id="dnyBasla" hidden><button type="button" class="dg" id="dnyBaslaBtn">Türbinin içine gir</button></span>
       </div>
+      <dl class="rakam">
+        <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
+        <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
+        <div><dt>Üretici</dt><dd>4</dd></div>
+        <div><dt>Model</dt><dd>9</dd></div>
+      </dl>
+      <p class="kaydir" aria-hidden="true">Kaydır, içeri gir</p>
     </div>
 
-    <div class="kule-alt">
-      <div class="durak etkin" data-d="0">
-        <div class="dugmeler">
-          <a class="dg birincil" href="#iletisim">İletişime geç</a>
-          <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
-        </div>
-        <dl class="rakam">
-          <div><dt>Saha deneyimi</dt><dd>13<small>yıl</small></dd></div>
-          <div><dt>Dokunulan türbin</dt><dd>300<small>+</small></dd></div>
-          <div><dt>Üretici</dt><dd>4</dd></div>
-          <div><dt>Model</dt><dd>9</dd></div>
-        </dl>
-        <p class="kaydir" aria-hidden="true">Kaydır, kuleye tırman</p>
-      </div>
-      <div class="durak" data-d="1"><p class="etiket">Kule · 0–118 m</p><p class="durak-m">Beş çelik segment, flanş flanş cıvatalı. Tepeye servis asansörü ve merdivenle çıkılır; her çıkış LOTO ve ekipman kontrolüyle başlar.</p></div>
-      <div class="durak" data-d="2"><p class="etiket">Nasel · 120 m</p><p class="durak-m">Ana yatak, dişli kutusu ve jeneratör burada. Kırmızı ışık havacılık engel ışığı; gece de sahayı işaretler.</p></div>
-      <div class="durak" data-d="3"><p class="etiket">Rotor · 116,8 m çap</p><p class="durak-m">Üç kanat, her biri 57,3 m. Kanat ucu yerden 178 metreye kadar çıkar. <a href="/n117/">15 duraklık N117 turu</a></p></div>
+    <div class="dny-serit" aria-hidden="true">
+      <span class="bolum-ad"><b id="dnyBolum">Dışarıda</b></span>
+      <span class="dny-kot" id="dnyKot">Kot <b>0</b> m</span>
     </div>
+    <a class="dny-atla" href="#giris">Deneyimi geç ↓</a>
+
+    <p class="dny-alt" id="dnyAlt" aria-hidden="true"></p>
+
+    <div class="dny-hud" id="dnyHud" aria-live="polite">
+      <p class="no"><span><span id="dnyNo">01</span> / 12 · <span id="dnyEn">ROTOR</span></span></p>
+      <h2 id="dnyAd">Rotor</h2>
+      <p class="bilgi" id="dnyBilgi"></p>
+    </div>
+
+    <nav aria-label="Deneyim bölümleri"><ol class="dny-ray" id="dnyRay"></ol></nav>
+
+    <div class="dny-son" id="dnySon">
+      <p class="ust">Yerden 120 metre · Ege</p>
+      <p class="dny-imza">Soner Soylu</p>
+      <p class="alt">Rüzgâr türbini saha servis teknisyeni. 2013'ten beri bu naselin içinde: mekanik, elektrik, arıza.</p>
+      <p class="dny-dg"><a class="birincil" href="#iletisim">İletişime geç</a><a href="#giris">Hakkımda ↓</a><a href="/deneyim/#parcalar">12 durak</a><button type="button" id="dnyBasaDon">Başa dön</button></p>
+    </div>
+
+    <div class="dny-ilerleme" aria-hidden="true"><i id="dnyIlerleme"></i></div>
+    <p class="dny-yuk" aria-hidden="true">Sahne yükleniyor</p>
   </div>
 </section>
 
@@ -371,7 +388,7 @@
  </div>
 </div>
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=e178dc21" defer></script>
+<script src="/assets/ara.js?v=e75b84b7" defer></script>
 <script>
 (function () {
   /* mobil menü */
@@ -428,7 +445,7 @@
     document.querySelectorAll('.ana .rakam dd').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
   }
 
-  /* ---- kapak: kuleye tırmanış ---- */
+  /* ---- kapak: türbinin içine (canlı güneş ve rüzgâr; sahne: assets/deneyim/arayuz.js) ---- */
   var kok = document.documentElement;
   /* ışık: Aliağa'da güneşin o anki yüksekliği (NOAA yaklaşımı) */
   function gunesYuksekligi(enlem, boylam, t) {
@@ -447,10 +464,6 @@
   }
   vardiya(); setInterval(vardiya, 10 * 60 * 1000);
   kok.style.setProperty('--devir-sure', '4.76s');   // veri gelene kadar anma devri (12,6 d/dk)
-  var kule = document.getElementById('kule');
-  var canvas = document.getElementById('kapak3d');
-  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   /* canlı rüzgâr: Aliağa, göbek yüksekliği (Open-Meteo tahmini, /ruzgar/ ile aynı formüller) */
   var ALAN = Math.PI * 116.8 * 116.8 / 4, YARICAP = 58.4;
   var YONLER = ['K','KKD','KD','DKD','D','DGD','GD','GGD','G','GGB','GB','BGB','B','BKB','KB','KKB'];
@@ -501,28 +514,8 @@
     } catch (e) {}
   }
 
-  /* tırmanış durakları ve kot göstergesi */
-  var duraklar = [].slice.call(document.querySelectorAll('.durak'));
-  var kotM = document.getElementById('kotM'), kotOk = document.getElementById('kotOk');
-  var sonDurak = 0;
-  function guncelle(p, y) {
-    var dd = p < 0.14 ? 0 : p < 0.45 ? 1 : p < 0.72 ? 2 : 3;
-    if (dd !== sonDurak) { duraklar[sonDurak].classList.remove('etkin'); duraklar[dd].classList.add('etkin'); sonDurak = dd; }
-    kotM.textContent = Math.round(y);
-    kotOk.style.setProperty('--y', Math.min(1, y / 178).toFixed(3));
-  }
-
-  function statik() { kule.classList.add('statik'); }
-  if (az || (navigator.connection && navigator.connection.saveData)) return statik();
-  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(); } catch (e) { return statik(); }
-  kule.classList.add('uc-boyut');
-  function baslat() {
-    import('/assets/kule3d.js?v=eab40f9b').then(function (mod) {
-      if (!mod.kuleBaslat(canvas, kule, guncelle)) statik();
-    }).catch(function (e) { console.error('kule3d yüklenemedi:', e); statik(); });
-  }
-  if ('requestIdleCallback' in window) requestIdleCallback(baslat, { timeout: 1500 }); else setTimeout(baslat, 400);
 })();
 </script>
+<script src="/assets/deneyim/arayuz.js?v=f99ea7e1" defer></script>
 </body>
 </html>

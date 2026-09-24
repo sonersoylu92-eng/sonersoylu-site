@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Türbinin İçine: N117 Naseline Sinematik Yolculuk · Soner Soylu</title>
 <meta name="description" content="Kaydırarak bir Nordex N117 rüzgâr türbinine tırmanın ve naselin içini gezin: rotor, göbek, ana yatak, ana mil, dişli kutusu, kaplin, jeneratör, konvertör, üst kutu ve kablolar.">
-<meta name="robots" content="noindex, follow">
 <link rel="canonical" href="https://sonersoylu.com/deneyim/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
@@ -24,7 +23,7 @@
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
 <link rel="stylesheet" href="/style.css?v=ade96bc2">
-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=4609bbe4">
+<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=3da13791">
 </head>
 
 <body class="dny-body">
@@ -64,7 +63,7 @@
 
     <div class="dny-serit" aria-hidden="true">
       <span class="bolum-ad"><b id="dnyBolum">Dışarıda</b></span>
-      <span class="kot" id="dnyKot">Kot <b id="dnyKotM">0</b> m</span>
+      <span class="dny-kot" id="dnyKot">Kot <b id="dnyKotM">0</b> m</span>
     </div>
 
     <p class="dny-alt" id="dnyAlt" aria-hidden="true"></p>
@@ -131,11 +130,10 @@
  </div>
 </div>
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=e178dc21" defer></script>
+<script src="/assets/ara.js?v=e75b84b7" defer></script>
 
 <script>
 (function () {
-  var DURAKLAR = [];
   var kok = document.documentElement;
   var b = document.getElementById('burger'), m = document.getElementById('mobmenu');
   if (b && m) {
@@ -159,7 +157,6 @@
 
   /* canlı rüzgâr: rotor devri ve nasel yönü (Open-Meteo tahmini, /ruzgar/ ile aynı formül) */
   kok.style.setProperty('--devir-sure', '4.76s');     // veri gelene kadar anma devri (12,6 d/dk)
-  var canliYon = false;
   function devir(v) { if (v < 3 || v > 25) return 0; return Math.max(7.9, Math.min(14.1, (8 * v / 58.4) * 60 / (2 * Math.PI))); }
   fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
@@ -167,109 +164,11 @@
       var c = d && d.current; if (!c) return;
       var v = +c.wind_speed_120m, yon = +c.wind_direction_120m;
       if (isFinite(v)) { var dv = devir(v); kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s'); }
-      if (isFinite(yon)) { kok.style.setProperty('--yon-derece', String(yon)); canliYon = true; }
+      if (isFinite(yon)) kok.style.setProperty('--yon-derece', String(yon));
     }).catch(function () {});
 
-  var bolum = document.getElementById('deneyim'), tuval = document.getElementById('dnyTuval');
-  var hud = document.getElementById('dnyHud'), alt = document.getElementById('dnyAlt'), son = document.getElementById('dnySon');
-  var eNo = document.getElementById('dnyNo'), eEn = document.getElementById('dnyEn'), eAd = document.getElementById('dnyAd'), eBilgi = document.getElementById('dnyBilgi');
-  var eBolum = document.getElementById('dnyBolum'), eKot = document.getElementById('dnyKot'), eKotM = document.getElementById('dnyKotM');
-  var kararti = document.getElementById('dnyKararti'), cizgi = document.getElementById('dnyIlerleme'), ray = document.getElementById('dnyRay');
-
-  /* dış bölümler: altyazı; iç duraklar: parça etiketi */
-  var DIS = [
-    { p: 0.0, a: 0.035, b: 0.14, ad: 'Dışarıda', k: 'Uzaktan', t: 'Ege, rüzgâr çiftliği. Göbek yerden 120 metrede; rotorun çapı 116,8 metre.' },
-    { p: 0.22, a: 0.165, b: 0.325, ad: 'Kule', k: 'Kule', t: 'Her bakım günü bu tırmanışla başlar. Kule içinden, 120 metre yukarı.' },
-    { p: 0.355, a: 0.34, b: 0.39, ad: 'Nasel', k: 'Nasel', t: '' }
-  ];
-  function bolumAdi(p) {
-    if (p < 0.15) return 'Dışarıda'; if (p < 0.31) return 'Kule'; if (p < 0.48) return 'Nasel · rotor';
-    if (p < 0.72) return 'Güç aktarma'; if (p < 0.80) return 'Jeneratör'; if (p < 0.945) return 'Elektrik'; return 'Çıkış';
-  }
-
-  /* bölüm rayı: duraklar modül yüklenince kurulur */
-  var rayOgeleri = [], rayLi = [];
-  function rayKur() {
-    rayOgeleri = [];
-    DIS.forEach(function (d) { rayOgeleri.push({ p: d.p, ad: d.k, dis: true }); });
-    DURAKLAR.forEach(function (d) { rayOgeleri.push({ p: d.p, ad: d.ad, dis: false }); });
-    rayOgeleri.push({ p: 1, ad: 'Çıkış', dis: true });
-    ray.textContent = '';
-    rayLi = rayOgeleri.map(function (o) {
-      var li = document.createElement('li'); if (o.dis) li.className = 'dis';
-      var bt = document.createElement('button'); bt.type = 'button'; bt.textContent = o.ad; bt.setAttribute('aria-label', o.ad + ' bölümüne git');
-      bt.addEventListener('click', function () { git(o.p); });
-      li.appendChild(bt); ray.appendChild(li); return li;
-    });
-  }
-  function git(p) {
-    var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - innerHeight;
-    window.scrollTo({ top: Math.round(scrollY + r.top + yol * p), behavior: 'auto' });   // kamera ataletle süzülür
-  }
-  document.getElementById('dnyBasaDon').addEventListener('click', function () { git(0); });
-
-  var sonDurak = -2, sonRay = -1, sonAlt = -1;
-  function ilerleme(p, y, icerde) {
-    bolum.classList.toggle('gecti', p > 0.02);
-    cizgi.style.setProperty('--p', p.toFixed(4));
-    eBolum.textContent = bolumAdi(p);
-    if (icerde) { eKot.innerHTML = '<span class="ic">Nasel içi</span> · <b>120</b> m'; }
-    else { eKot.innerHTML = 'Kot <b>' + Math.round(y) + '</b> m'; }
-
-    // parça etiketi: durağa yaklaşınca belirir, uzaklaşınca söner
-    var en = -1, fark = 1;
-    DURAKLAR.forEach(function (d, i) { var f = Math.abs(p - d.p); if (f < fark) { fark = f; en = i; } });
-    var goster = en >= 0 && fark < 0.019;
-    if (goster && en !== sonDurak) {
-      var d = DURAKLAR[en];
-      eNo.textContent = String(en + 1).padStart(2, '0'); eEn.textContent = d.en; eAd.textContent = d.ad; eBilgi.textContent = d.bilgi;
-      sonDurak = en;
-    }
-    hud.classList.toggle('gor', goster);
-
-    // dış altyazılar
-    var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b) ai = i; });
-    if (ai !== sonAlt) {
-      if (ai >= 0) {
-        var d2 = DIS[ai], metin = d2.t;
-        if (ai === 2) metin = canliYon ? 'Makine dairesi. Nasel rüzgâra döner; şu an Aliağa\'daki gerçek rüzgâr yönüne bakıyor.' : 'Makine dairesi. Nasel rüzgârı takip ederek kulenin üstünde döner.';
-        alt.innerHTML = '<b>' + String(ai + 1).padStart(2, '0') + ' · ' + d2.k + '</b>' + metin;
-      }
-      sonAlt = ai;
-    }
-    alt.classList.toggle('gor', ai >= 0);
-    son.classList.toggle('gor', p > 0.968);
-
-    // ray: geçilen ve etkin bölüm
-    var ri = 0; rayOgeleri.forEach(function (o, i) { if (p >= o.p - 0.012) ri = i; });
-    if (ri !== sonRay) { rayLi.forEach(function (li, i) { li.classList.toggle('etkin', i === ri); li.classList.toggle('gecildi', i < ri); }); sonRay = ri; }
-  }
-
-  function statik(dugme) {
-    bolum.classList.add('statik');
-    if (dugme) document.getElementById('dnyBasla').hidden = false;
-  }
-  function kur() {
-    bolum.classList.add('uc-boyut', 'dny-akis');
-    document.getElementById('dnyBasla').hidden = true;
-    bolum.classList.remove('statik');
-    import('/assets/deneyim/deneyim.js?v=b8fd169c').then(function (mod) {
-      DURAKLAR = mod.DURAKLAR; rayKur();
-      var S = mod.deneyimBaslat(tuval, bolum, {
-        ilerleme: ilerleme,
-        karartma: function (k) { kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { bolum.classList.add('hazir'); },
-        hata: function () { bolum.classList.remove('uc-boyut', 'hazir'); statik(false); }
-      });
-      if (!S) { bolum.classList.remove('uc-boyut'); statik(false); }
-    }).catch(function (e) { console.error('deneyim yüklenemedi:', e); bolum.classList.remove('uc-boyut'); statik(false); });
-  }
-  document.getElementById('dnyBaslaBtn').addEventListener('click', kur);
-
-  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
-  kur();
 })();
 </script>
+<script src="/assets/deneyim/arayuz.js?v=f99ea7e1" defer></script>
 </body>
 </html>

@@ -228,7 +228,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
     // kaydırma → ilerleme; ataletli (sinema kamerası dolly'si gibi)
     const hedefP = ilerleme();
-    const anlik = az || window.__deneyimAnlik;            // test/erişilebilirlik: ataletsiz
+    const anlik = az || window.__deneyimAnlik || window.__deneyimKes;   // test/erişilebilirlik/bölüm atlama: ataletsiz
+    window.__deneyimKes = false;
     p += (hedefP - p) * (anlik ? 1 : 1 - Math.exp(-dt * 2.6));
     const u = egriU(p);
     kEgri.getPoint(u, kKonum); hEgri.getPoint(u, kHedef);
