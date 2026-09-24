@@ -1,0 +1,341 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SONER SOYLU — CINEMATIC REDESIGN
+   Design Tokens & CSS Variables
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─────────────────────────────────────────────────────────────────────────────
+     1. COLOR PALETTE — Dark Theme
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  /* Backgrounds */
+  --color-bg-primary: #080A0C;      /* Main background — deepest dark */
+  --color-bg-secondary: #111417;    /* Secondary bg — slightly lighter */
+  --color-bg-tertiary: #181C20;     /* Card/surface background */
+  --color-bg-overlay: rgba(8, 10, 12, 0.75);
+
+  /* Text */
+  --color-text-primary: #F2F4F5;    /* Main text — lightest */
+  --color-text-secondary: #8D969E;  /* Secondary/muted text */
+  --color-text-tertiary: #5C6570;   /* Tertiary/faded text */
+
+  /* Accent — Green (Controlled Use) */
+  --color-accent: #C7FF32;          /* Primary accent — bright green */
+  --color-accent-hover: #D4FF4D;    /* Hover state — lighter */
+  --color-accent-active: #A8D914;   /* Active/focus state — darker */
+  --color-accent-subtle: rgba(199, 255, 50, 0.15);  /* Subtle background */
+
+  /* Status Colors */
+  --color-success: #10B981;         /* Green success indicator */
+  --color-warning: #F59E0B;         /* Amber warning indicator */
+  --color-error: #EF4444;           /* Red error indicator */
+  --color-info: #3B82F6;            /* Blue info indicator */
+
+  /* Borders & Dividers */
+  --color-border: rgba(141, 150, 158, 0.2);
+  --color-border-light: rgba(141, 150, 158, 0.1);
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     2. TYPOGRAPHY
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  /* Font Families */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;   /* Headlines */
+  --font-body: 'Geist', system-ui, sans-serif;              /* Body text */
+  --font-mono: 'JetBrains Mono', monospace;                 /* Technical/code */
+
+  /* Font Sizes — Fluid Scaling */
+  --font-h1: clamp(2.5rem, 8vw, 4rem);
+  --font-h2: clamp(1.875rem, 5vw, 3rem);
+  --font-h3: clamp(1.5rem, 3vw, 2rem);
+  --font-h4: clamp(1.25rem, 2.5vw, 1.75rem);
+  --font-body: 1rem;
+  --font-body-sm: 0.9375rem;
+  --font-small: 0.875rem;
+  --font-tiny: 0.75rem;
+
+  /* Font Weights */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  /* Line Heights */
+  --line-height-tight: 1.1;
+  --line-height-heading: 1.25;
+  --line-height-body: 1.6;
+  --line-height-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     3. SPACING SCALE
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  --space-0: 0;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 3rem;
+  --space-4xl: 4rem;
+  --space-5xl: 6rem;
+  --space-6xl: 8rem;
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     4. TIMING & EASING FUNCTIONS
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  /* Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 750ms;
+
+  /* Easing Functions */
+  --ease-linear: linear;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out-quad: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     5. Z-INDEX SCALE
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-overlay: 50;
+  --z-modal: 100;
+  --z-tooltip: 150;
+  --z-notification: 200;
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     6. SHADOWS & DEPTH
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.7);
+
+  /* Glow Effects */
+  --glow-accent: 0 0 20px rgba(199, 255, 50, 0.4);
+  --glow-accent-intense: 0 0 40px rgba(199, 255, 50, 0.6);
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     7. BORDER RADIUS
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     8. BREAKPOINTS (Mobile First)
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1536px;
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     9. CONTAINER QUERIES
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     10. SPECIAL VALUES
+     ───────────────────────────────────────────────────────────────────────────── */
+
+  /* Viewport Heights for Scenes */
+  --viewport-height: 100vh;
+  --viewport-height-extended: 120vh;
+
+  /* Scene Stagger Delays */
+  --stagger-delay: 50ms;
+
+  /* Scroll Trigger Scrub Values */
+  --scroll-scrub-smooth: 1.2;
+  --scroll-scrub-crisp: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   DARK MODE (Explicit)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Already dark — no additional changes needed */
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LIGHT MODE (Fallback — Not Primary, but Included for Accessibility)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Fallback to original light theme if user requests it */
+    --color-bg-primary: #f6f4f0;
+    --color-bg-secondary: #ffffff;
+    --color-bg-tertiary: #fafafa;
+    --color-text-primary: #16191c;
+    --color-text-secondary: #5C6570;
+    --color-accent: #c0392f;
+    --color-accent-hover: #d44a45;
+    --color-accent-active: #a82f2a;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-light: rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION — ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ROOT APPLICATION
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-body);
+  font-weight: var(--weight-normal);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-primary {
+  background-color: var(--color-bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-bg-tertiary);
+}
+
+/* Glowing Text Effect */
+.text-glow {
+  text-shadow: 0 0 20px var(--glow-accent);
+}
+
+.text-glow-intense {
+  text-shadow: 0 0 40px var(--glow-accent-intense);
+}
+
+/* Shadow Utilities */
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Transition Utilities */
+.transition-fast {
+  transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.transition-normal {
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.transition-slow {
+  transition: all var(--duration-slow) var(--ease-in-out);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SCROLLBAR STYLING (WebKit Browsers)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-color: var(--color-accent) var(--color-bg-secondary);
+  scrollbar-width: thin;
+}
