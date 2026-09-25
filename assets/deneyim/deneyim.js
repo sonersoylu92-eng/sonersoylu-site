@@ -9,7 +9,7 @@
  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, SPEC } from '/n117/n117.js?v=cfd3cd65';
+import { createScene, SPEC } from '/n117/n117.js?v=4c390909';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=7c5ea850';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 

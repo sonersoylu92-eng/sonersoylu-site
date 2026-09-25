@@ -188,7 +188,7 @@
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=4e2cf316').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=53c5f586').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },

@@ -670,6 +670,35 @@ export function createScene(canvas) {
 
   const towerTopY = 3.55 + TOWER_SEGMENTS.reduce((a, s) => a + s.h, 0);
 
+  // kule gövdesi ikaz lambaları: kanat ucu 150 m'yi aşan yeni türbinlerde nasel
+  // lambalarına ek olarak kule yarı yüksekliğinde bir ara seviye bulunur. Dört lamba
+  // 90° arayla dizilir ki her yönden en az biri görünsün; nasel lambalarıyla eşzamanlı çakar.
+  parts.kuleIkaz = (() => {
+    const g = new THREE.Group();
+    const yL = Math.round(towerTopY / 2);
+    const r = THREE.MathUtils.lerp(SPEC.towerBase, SPEC.towerTop, (yL - 3.55) / (towerTopY - 3.55)) / 2;
+    g.userData.yukseklik = yL;
+    for (let i = 0; i < 4; i++) {
+      const a = Math.PI / 4 + i * Math.PI / 2;
+      const k = new THREE.Group();
+      k.position.set(Math.cos(a) * r, yL, Math.sin(a) * r);
+      k.rotation.y = -a;                                   // yerel +x kuleden dışarı bakar
+      const kol = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.07, 0.1), MAT.dark);
+      kol.position.x = 0.17; k.add(kol);
+      const govde = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.16, 14), MAT.dark);
+      govde.position.set(0.36, 0.06, 0); k.add(govde);
+      const kubbe = new THREE.Mesh(new THREE.SphereGeometry(0.12, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), IKAZ_MAT);
+      kubbe.position.set(0.36, 0.14, 0); k.add(kubbe);
+      const hale = new THREE.Sprite(IKAZ_HALE);
+      hale.position.set(0.42, 0.2, 0); hale.scale.set(2.6, 2.6, 1); hale.renderOrder = 5; k.add(hale);
+      const uzak = new THREE.Sprite(IKAZ_HALE_UZAK);
+      uzak.position.set(0.42, 0.2, 0); uzak.scale.set(0.024, 0.024, 1); uzak.renderOrder = 5; k.add(uzak);
+      g.add(k);
+    }
+    scene.add(g);
+    return g;
+  })();
+
   // nacelle grubu
   const yaw = new THREE.Group();
   yaw.position.y = towerTopY + SPEC.nacelleHei / 2 + 0.25;
