@@ -27,10 +27,10 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
-<link rel="stylesheet" href="/style.css?v=aef6de0e">
-<link rel="stylesheet" href="/ana.css?v=c5a622e8">
-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=96f4a9b6">
-<link rel="stylesheet" href="/assets/vitrin.css?v=ff6e5716">
+<link rel="stylesheet" href="/style.css?v=1811ddb7">
+<link rel="stylesheet" href="/ana.css?v=0a32572b">
+<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=b1efc250">
+<link rel="stylesheet" href="/assets/vitrin.css?v=e62bb630">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -79,9 +79,10 @@
     <canvas class="v-ruzgar" id="vRuzgar" aria-hidden="true"></canvas>
     <div class="v-isik" aria-hidden="true"></div>
     <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
+    <p class="v-soz" id="vSoz" aria-hidden="true"><span>Mühendislik</span> <span>yalnızca ne bildiğin</span> <span>değildir.</span> <em><span>Türbin durduğunda</span> <span>nasıl karşılık</span> <span>verdiğindir.</span></em></p>
 
     <div class="ralan" id="ralan" role="group" aria-label="Aliağa canlı rüzgâr alanı" hidden>
-      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı</p>
+      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı<span class="ralan-rozet">Tahmin·model</span></p>
       <p class="ralan-yer">Aliağa<span>göbek 120 m</span></p>
       <dl class="ralan-dl">
         <div><dt>Rüzgâr</dt><dd><b id="rHiz">–</b><small>m/s</small></dd></div>
@@ -104,10 +105,11 @@
       <div class="v-kimlik">
         <p class="v-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir</span><span>Göbek 120 m</span></p>
         <h1 id="kapak-b" class="v-ad"><span class="v-ad-isim">Soner Soylu</span><span class="gizli">, </span><span class="v-ad-unvan">Rüzgâr Türbini Saha Servis Teknisyeni</span></h1>
+        <p class="v-disiplin"><span>Mekanik</span><span>Elektrik</span><span>Devreye alma</span><span>Servis</span></p>
       </div>
       <div class="dugmeler">
-        <a class="dg birincil" href="#iletisim">İletişime geç</a>
-        <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+        <a class="dg birincil v-miknatis" href="/deneyim/" id="dnySahaya">Sahaya gir<span class="dg-ok" aria-hidden="true">&#8595;</span></a>
+        <a class="dg v-miknatis" href="#makine">Mühendisliğimi keşfet</a>
         <span class="dny-basla" id="dnyBasla" hidden><button type="button" class="dg" id="dnyBaslaBtn">Türbinin içine gir</button></span>
       </div>
       <dl class="rakam v-olcu">
@@ -143,7 +145,7 @@
     </div>
 
     <div class="dny-ilerleme" aria-hidden="true"><i id="dnyIlerleme"></i></div>
-    <p class="dny-yuk" aria-hidden="true">Sahne yükleniyor</p>
+    <p class="dny-yuk" aria-hidden="true"><b>Soner Soylu</b><span>Saha sistemi</span><span class="dny-yuk-s">Başlatılıyor<i></i></span></p>
   </div>
 </section>
 
@@ -670,7 +672,7 @@
   }, 10 * 60 * 1000);
 })();
 </script>
-<script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
-<script src="/assets/vitrin.js?v=7b455e73" defer></script>
+<script src="/assets/deneyim/arayuz.js?v=2a059055" defer></script>
+<script src="/assets/vitrin.js?v=e8d36a80" defer></script>
 </body>
 </html>

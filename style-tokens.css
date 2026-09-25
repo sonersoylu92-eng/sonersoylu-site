@@ -20,10 +20,10 @@
   --color-text-tertiary: #5C6570;   /* Tertiary/faded text */
 
   /* Accent — Green (Controlled Use) */
-  --color-accent: #C7FF32;          /* Primary accent — bright green */
+  --color-accent: #7cc4ff;          /* Primary accent — bright green */
   --color-accent-hover: #D4FF4D;    /* Hover state — lighter */
   --color-accent-active: #A8D914;   /* Active/focus state — darker */
-  --color-accent-subtle: rgba(199, 255, 50, 0.15);  /* Subtle background */
+  --color-accent-subtle: rgba(124,196,255, 0.15);  /* Subtle background */
 
   /* Status Colors */
   --color-success: #10B981;         /* Green success indicator */
@@ -131,8 +131,8 @@
   --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.7);
 
   /* Glow Effects */
-  --glow-accent: 0 0 20px rgba(199, 255, 50, 0.4);
-  --glow-accent-intense: 0 0 40px rgba(199, 255, 50, 0.6);
+  --glow-accent: 0 0 20px rgba(124,196,255, 0.4);
+  --glow-accent-intense: 0 0 40px rgba(124,196,255, 0.6);
 
   /* ─────────────────────────────────────────────────────────────────────────────
      7. BORDER RADIUS

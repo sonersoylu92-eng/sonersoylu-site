@@ -63,9 +63,16 @@
     window.scrollTo({ top: Math.round(scrollY + h.getBoundingClientRect().top - 72), behavior: 'instant' });
     h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
   });
+  var sahaya = $('dnySahaya');
+  if (sahaya) sahaya.addEventListener('click', function (e) {
+    if (bolum.classList.contains('uc-boyut')) { e.preventDefault(); git(0.2); return; }
+    if (acilabilir) { e.preventDefault(); kur(); }          // hareket azaltılmışsa: yalnız tıklayınca 3B açılır
+    // WebGL hiç yoksa bağlantı /deneyim/ sayfasına gider
+  });
   var basaDon = $('dnyBasaDon');
   if (basaDon) basaDon.addEventListener('click', function () { git(0); });
 
+  var soz = $('vSoz'), sozSatir = soz ? [].slice.call(soz.querySelectorAll('span')) : [];
   var sonDurak = -2, sonRay = -1, sonAlt = -1;
   function ilerleme(p, y, icerde) {
     sonP = p;
@@ -87,7 +94,7 @@
     hud.classList.toggle('gor', goster);
 
     // dış altyazılar
-    var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b) ai = i; });
+    var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b && !(i === 0 && soz)) ai = i; });
     if (ai !== sonAlt) {
       if (ai >= 0) {
         var d2 = DIS[ai], metin = d2.t;
@@ -97,6 +104,12 @@
       sonAlt = ai;
     }
     alt.classList.toggle('gor', ai >= 0);
+    // kapak cümlesi: kamera türbine yaklaşırken satır satır belirir
+    if (soz) {
+      var sp = (p - 0.012) / 0.13;
+      sozSatir.forEach(function (s, i) { s.classList.toggle('gor', sp > i * 0.13 && p < 0.158); });
+      soz.classList.toggle('gor', p > 0.012 && p < 0.158);
+    }
     son.classList.toggle('gor', p > 0.968);
 
     // ray: geçilen ve etkin bölüm
@@ -163,16 +176,18 @@
     irOk.style.setProperty('--y', Math.max(0, Math.min(1, y / 120)).toFixed(3));
   }
 
-  var basla = $('dnyBasla');
+  var basla = $('dnyBasla'), acilabilir = false;
   function statik(dugme) {
     bolum.classList.remove('uc-boyut', 'hazir');
     bolum.classList.add('statik');
-    if (dugme && basla) basla.hidden = false;
+    acilabilir = !!dugme;
+    if (dugme && basla && !sahaya) basla.hidden = false;   // ana sayfada bu işi "Sahaya gir" yapıyor
   }
   function kur() {
     bolum.classList.remove('statik');
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
+    acilabilir = false;
     import('/assets/deneyim/deneyim.js?v=cdc4c247').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {

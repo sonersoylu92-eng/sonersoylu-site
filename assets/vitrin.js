@@ -74,6 +74,15 @@
     }, { passive: true });
   }
 
+  /* ---- düğmeler: fareye çok hafif mıknatıs (en çok 5 px) ---- */
+  if (ince && !az) [].slice.call(document.querySelectorAll('.v-miknatis')).forEach(function (d) {
+    d.addEventListener('pointermove', function (e) {
+      var r = d.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      d.style.transform = 'translate(' + (x * 10).toFixed(1) + 'px,' + (y * 6).toFixed(1) + 'px)';
+    });
+    d.addEventListener('pointerleave', function () { d.style.transform = ''; });
+  });
+
   /* ---- kapak: rüzgâr akış çizgileri ve toz (yalnız masaüstü, yalnız ilk sahnede) ---- */
   var tuval = document.getElementById('vRuzgar');
   if (!tuval || az || !ince) return;

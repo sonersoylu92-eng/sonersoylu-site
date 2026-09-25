@@ -3,45 +3,86 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sayfa bulunamadı — Soner Soylu</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#f6f4f0">
+<meta name="theme-color" content="#0b0e10">
 <meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
 <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
-<link rel="stylesheet" href="/style.css?v=aef6de0e">
+<link rel="stylesheet" href="/style.css?v=1811ddb7">
 <style>
-.mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
-.mid .in{max-width:36rem}
-.mid h1{font-size:2.25rem;line-height:1.1;margin-top:1.5rem}
-.mid p{margin-top:1.5rem;font-size:1rem;line-height:1.75;color:var(--muted)}
-.mid ul{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
-.mid ul li{background:var(--surface)}
-.mid ul a{display:grid;gap:.35rem;padding:1.1rem 1.2rem;transition:background .2s}
-.mid ul a:hover{background:var(--raise)}
-.mid ul b{font-weight:500;font-size:.9375rem}
-.mid ul span{font-size:.8125rem;color:var(--muted);line-height:1.55}
-@media (min-width:768px){.mid h1{font-size:3rem}}
+html,:root[data-vardiya]{--ground:#0b0e10 !important;--ink:#e9edf0 !important}
+html,body{background:#0b0e10;color:#e9edf0}
+main{padding-top:0}
+section.h404{position:relative;border:0;min-height:100vh;min-height:100dvh;display:grid;align-items:center;overflow:hidden;padding:clamp(3.5rem,10vh,6rem) 0 3rem;
+  background:radial-gradient(120% 80% at 70% 100%,#1a2530 0,#0b0e10 60%)}
+.h404::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(124,196,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,196,255,.05) 1px,transparent 1px);background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(80% 70% at 50% 60%,#000,transparent);mask-image:radial-gradient(80% 70% at 50% 60%,#000,transparent)}
+.h404 .wrap{position:relative;display:grid;gap:3rem;align-items:center}
+@media (min-width:900px){.h404 .wrap:not(.w2){grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}}
+.h404 .ust{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#aab3ba}
+.h404 .ust b{font-weight:400;color:#f2b233}
+.h404 .kod{margin-top:1.25rem;font-family:var(--mono);font-size:clamp(4rem,14vw,9rem);line-height:.9;letter-spacing:-.06em;color:#7cc4ff}
+.h404 h1{font-family:var(--sans);margin-top:.75rem;font-size:clamp(2.25rem,6vw,4.5rem);line-height:.98;letter-spacing:-.045em;font-weight:600;color:#fff}
+.h404 .ac{margin-top:1.5rem;max-width:34rem;font-size:1rem;line-height:1.7;color:#c3cbd1}
+.h404 .dg{display:inline-flex;align-items:center;gap:.6rem;margin-top:2rem;min-height:2.9rem;padding:.75rem 1.4rem;font-weight:500;color:#0b0e10;
+  background:linear-gradient(180deg,#a3d6ff 0%,#7cc4ff 55%,#6ab4f2 100%);border:1px solid #8ccbff;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px -12px rgba(124,196,255,.6);transition:transform .2s}
+.h404 .dg:hover{transform:translateY(-1px)}
+.h404 .dg:focus-visible,.h404 a:focus-visible{outline:2px solid #7cc4ff;outline-offset:3px}
+.h404 svg{width:100%;max-width:26rem;justify-self:center;color:#7cc4ff}
+.h404 svg .k{fill:none;stroke:rgba(233,237,240,.55);stroke-width:1.2}
+.h404 svg .o{fill:none;stroke:rgba(124,196,255,.35);stroke-width:1;stroke-dasharray:3 5}
+.h404 svg text{font-family:var(--mono);font-size:9px;letter-spacing:.14em;fill:#aab3ba}
+.h404 svg .r{transform-origin:200px 120px;animation:r404 14s linear infinite}
+@keyframes r404{to{transform:rotate(360deg)}}
+.yol{margin-top:3rem;display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+@media (min-width:640px){.yol{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.yol{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.yol li{display:grid}
+.h404 .w2{display:block}
+.yol a{display:grid;align-content:start;gap:.35rem;padding:1.1rem 1.2rem;background:#0f1418;transition:background .2s}
+.yol a:hover{background:#141b21}
+.yol b{font-weight:500;font-size:.9375rem;color:#fff}
+.yol span{font-size:.8125rem;line-height:1.55;color:#aab3ba}
+.yol-b{margin-top:4rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#aab3ba}
+@media (prefers-reduced-motion:reduce){.h404 svg .r{animation:none}.h404 .dg{transition:none}}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
      crossorigin="anonymous"></script>
 </head><body>
-<main class="wrap mid">
- <div class="in">
-  <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>Hata 404</p>
-  <h1>Bu sayfa yok</h1>
-  <p>Aradığınız adres taşınmış ya da hiç var olmamış olabilir. Sitede en çok kullanılan sayfalar aşağıda.</p>
-  <ul>
+<main>
+<section class="h404" aria-labelledby="h404b">
+ <div class="wrap">
+  <div>
+   <p class="ust"><span><b>&#9679;</b> Durum: bulunamadı</span><span>Hata kodu 404</span></p>
+   <p class="kod" aria-hidden="true">404</p>
+   <h1 id="h404b">Türbin burada değil.</h1>
+   <p class="ac">Aradığınız adres taşınmış ya da hiç var olmamış olabilir. Sahaya dönün ya da en çok kullanılan sayfalardan birine geçin.</p>
+   <a class="dg" href="/">Sahaya dön <span aria-hidden="true">&#8594;</span></a>
+  </div>
+  <svg viewBox="0 0 400 420" aria-hidden="true">
+   <path class="o" d="M40 400H360M200 120V20M100 120H300"/>
+   <path class="k" d="M193 128 L189 392 H211 L207 128 Z"/>
+   <rect class="k" x="186" y="112" width="40" height="16" rx="3"/>
+   <g class="r"><path class="k" d="M197 116 L200 22 L203 116Z"/><path class="k" d="M203 125 L284 172 L281 177 L199 128Z"/><path class="k" d="M197 125 L116 172 L119 177 L201 128Z"/><circle class="k" cx="200" cy="120" r="6"/></g>
+   <path class="k" d="M150 392H250"/>
+   <text x="228" y="252">KOT ? M</text><text x="40" y="414">KONUM: BİLİNMİYOR</text>
+  </svg>
+ </div>
+ <div class="wrap w2">
+  <p class="yol-b">Sık kullanılan sayfalar</p>
+  <ul class="yol">
    <li><a href="/sozluk/"><b>Terim sözlüğü</b><span>148 rüzgâr türbini teriminin Türkçe–İngilizce karşılığı.</span></a></li>
    <li><a href="/araclar/"><b>Hesaplama araçları</b><span>Kanat ucu hızı, kapasite faktörü, cıvata torku ve dahası.</span></a></li>
    <li><a href="/ariza/"><b>Arıza teşhis ağacı</b><span>Belirtiden olası nedene giden adım adım yol.</span></a></li>
    <li><a href="/rehber/"><b>Sahadan rehber</b><span>Mesleğe giriş, GWO, sahada bir gün, arıza ve bakım.</span></a></li>
-   <li><a href="/n90/"><b>N90 3B model</b><span>2,5 MW türbinin aşama aşama kurulumu.</span></a></li>
+   <li><a href="/deneyim/"><b>Türbinin içine</b><span>N117'nin kulesinden naseline 3B yolculuk.</span></a></li>
    <li><a href="/sistemler/"><b>Türbin sistemleri</b><span>Pitch, yaw, dişli kutusu ve jeneratörün teknik referansı.</span></a></li>
    <li><a href="/saha-notlari/"><b>Sahadan arıza vakaları</b><span>Gerçek arızaların adım adım teşhis notları.</span></a></li>
    <li><a href="/turbinler/"><b>Türbin model rehberi</b><span>Vestas ve Enercon modelleri: özellik, bakım, arıza.</span></a></li>
   </ul>
-  <p style="margin-top:2rem"><a class="arrow" href="/">Ana sayfaya dön <i>→</i></a></p>
  </div>
+</section>
 </main>
 <script src="/assets/site.js?v=2083a619" defer></script>
 <div class="doku" aria-hidden="true"></div>
