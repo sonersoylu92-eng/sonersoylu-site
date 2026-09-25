@@ -11,7 +11,7 @@
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 import { createScene, SPEC, araziY } from '/n117/n117.js?v=41c31c91';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=aa298c1e';
-import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=34257046';
+import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
@@ -141,7 +141,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       pos[i * 3] = p.x + Math.cos(a) * r; pos[i * 3 + 1] = p.y + (Math.random() - 0.5) * 0.4; pos[i * 3 + 2] = p.z + Math.sin(a) * r;
     }
     const tg = new THREE.BufferGeometry(); tg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    toz = new THREE.Points(tg, new THREE.PointsMaterial({ color: 0xfff4e2, size: 0.012, transparent: true, opacity: 0.35, depthWrite: false, blending: THREE.AdditiveBlending }));
+    toz = new THREE.Points(tg, new THREE.PointsMaterial({ color: 0xfff4e2, size: 0.006, transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending }));
     icIsik.add(toz);
   }
 

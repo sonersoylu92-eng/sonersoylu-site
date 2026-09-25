@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Enercon E70 — 2.3 MW Direct-Drive Technical Guide | Soner Soylu</title>
-<meta name="description" content="Enercon E70 technical guide: 2.3 MW, 70 m rotor, gearless direct-drive annular generator. Design rationale, assembly, maintenance and typical faults.">
+<title>Enercon E-70 — Technical Guide | Soner Soylu</title>
+<meta name="description" content="Enercon E-70 E4: 2.3 MW, 71 m rotor, gearless synchronous annular generator, independent pitch per blade and storm control. Verified data and field maintenance topics.">
 <link rel="canonical" href="https://sonersoylu.com/en/turbines/enercon/e70/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/enercon/e70/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/enercon/e70/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/enercon/e70/">
 <meta property="og:locale" content="en_GB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Enercon E70">
-<meta property="og:description" content="Enercon E70 technical guide: 2.3 MW, 70 m rotor, gearless direct-drive annular generator. Design rationale, assembly, maintenance and typical faults.">
+<meta property="og:title" content="Enercon E-70 — Technical Guide">
+<meta property="og:description" content="Enercon E-70 E4: 2.3 MW, 71 m rotor, gearless synchronous annular generator, independent pitch per blade and storm control. Verified data and field maintenance topics.">
 <meta property="og:url" content="https://sonersoylu.com/en/turbines/enercon/e70/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
 <meta property="og:image:width" content="1200">
@@ -20,8 +20,8 @@
 {
  "@context": "https://schema.org",
  "@type": "Article",
- "headline": "Enercon E70",
- "description": "Enercon E70 technical guide: 2.3 MW, 70 m rotor, gearless direct-drive annular generator. Design rationale, assembly, maintenance and typical faults.",
+ "headline": "Enercon E-70 — Technical Guide",
+ "description": "Enercon E-70 E4: 2.3 MW, 71 m rotor, gearless synchronous annular generator, independent pitch per blade and storm control. Verified data and field maintenance topics.",
  "url": "https://sonersoylu.com/en/turbines/enercon/e70/",
  "inLanguage": "en",
  "author": {
@@ -70,7 +70,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 
 <link rel="stylesheet" href="/style.css?v=1a5286e5">
-<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=445bc395">
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -88,104 +88,56 @@
 </header>
 
 <main class="kb" id="top">
- <article>
-  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/turbines/">Turbines</a> <i>/</i> <a href="/en/turbines/enercon/">Enercon</a> <i>/</i> <span aria-current="page">E70</span></nav>
-
-  <p class="kb-kicker">Model guide</p>
-  <h1>Enercon E70</h1>
-  <p class="kb-lead">2.3 MW rated power, 70 metre rotor. Enercon's most widely installed horizontal-axis design and the machine that makes the gearless argument most plainly: no gearbox, therefore no gearbox failures.</p>
-  <h2>The design signature: no gearbox</h2>
-  <p>Enercon turbines do not use a conventional gearbox. The rotor drives a many-poled annular generator directly. Speed stays low — roughly 6.6 to 16.5 rpm — and the generator diameter is correspondingly large.</p>
-  <p>The field consequence is that an entire category disappears from the maintenance list: no gear oil change, no oil sampling, no gear pitting, no reduction-stage bearing failure. Since gearbox problems account for a large share of downtime on geared machines, the availability advantage is real. What replaces them is thermal management of the generator.</p>
-
-  <h2>Specifications</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Parameter</th><th>Value</th></tr>
-   <tr><td>Rated power</td><td>2300 kW</td></tr>
-   <tr><td>Rotor diameter</td><td>70 m</td></tr>
-   <tr><td>Swept area</td><td>3,848 m²</td></tr>
-   <tr><td>Blade length</td><td>~34 m</td></tr>
-   <tr><td>Hub height (typical)</td><td>64 / 76 / 98 m</td></tr>
-   <tr><td>Rotor speed</td><td>6.6–16.5 rpm (variable)</td></tr>
-   <tr><td>Cut-in</td><td>2.5 m/s</td></tr>
-   <tr><td>High wind behaviour</td><td>Storm control — graded power reduction rather than a hard cut</td></tr>
-   <tr><td>Generator</td><td>Many-poled annular generator, gearless</td></tr>
-   <tr><td>Gearbox</td><td>None</td></tr>
-   <tr><td>Pitch</td><td>Independent electric pitch with backup supply</td></tr>
-   <tr><td>Cooling</td><td>Generator air ducts, natural and forced convection</td></tr>
-  </table></div>
-
-  <h2>Model-specific systems</h2>
-  <h3>Annular generator</h3>
-  <ul>
-   <li><strong>Arrangement:</strong> the rotor hub connects directly to the generator rotor; grid-compatible frequency is produced through the converter.</li>
-   <li><strong>Advantages:</strong> no mechanical transmission loss, no gear noise, no reduction-stage failure mode.</li>
-   <li><strong>Difficulties:</strong> heavy and large in diameter; transport and erection are planned around this component.</li>
-   <li><strong>Critical maintenance:</strong> the cooling air ducts. At dusty and salty sites a blocked duct returns directly as a temperature alarm — mechanism in <a href="/en/field-notes/generator-temperature/">Case 04</a>.</li>
-  </ul>
-  <h3>Storm control</h3>
-  <ul>
-   <li><strong>Conventional approach:</strong> most manufacturers stop the turbine completely at a given wind speed and restart when it drops.</li>
-   <li><strong>Enercon approach:</strong> as wind rises the blade angle and speed are reduced progressively and the machine keeps producing — a soft transition instead of a hard cut.</li>
-   <li><strong>Field consequence:</strong> partial production instead of a full stop on stormy days, and fewer repeated stop-start cycles, which reduces structural fatigue.</li>
-   <li><strong>Watch out:</strong> this behaviour is often mistaken for a fault. An operator seeing low power in high wind goes looking for an alarm; the control system is doing exactly what it was designed to do.</li>
-  </ul>
-  <h3>Pitch and backup supply</h3>
-  <ul>
-   <li>Each blade is driven independently, with a backup energy source able to feather the blades on loss of grid.</li>
-   <li>Because the aerodynamic brake is the primary safety function on a direct-drive machine, backup capacity testing is not an optional item.</li>
-  </ul>
-
-  <h2>Assembly stages (12–14 days)</h2>
-  <ol>
-   <li><strong>Days 1–2:</strong> tooling checks, safety briefing, grid synchronisation setup.</li>
-   <li><strong>Days 3–6:</strong> tower erection — lighter and faster than an equivalent geared machine.</li>
-   <li><strong>Days 7–8:</strong> nacelle and generator lift; the annular generator needs dedicated handling.</li>
-   <li><strong>Days 9–12:</strong> blade installation, ~34 m blades, comparatively light.</li>
-   <li><strong>Days 13–14:</strong> commissioning — control tuning, grid synchronisation, storm control parameter verification.</li>
-  </ol>
-
-  <h2>Maintenance schedule</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Task</th><th>Interval</th><th>Note</th></tr>
-   <tr><td>Visual inspection</td><td>Monthly</td><td>Blades, nacelle, tower</td></tr>
-   <tr><td>Generator cooling duct cleaning</td><td>6 months</td><td><strong>The primary job on this design</strong></td></tr>
-   <tr><td>Ventilation and filter check</td><td>3 months</td><td>Is airflow normal?</td></tr>
-   <tr><td>Blade cleaning</td><td>12 months</td><td>Measurable efficiency gain</td></tr>
-   <tr><td>Pitch drive and backup supply test</td><td>12 months</td><td>Safety function — never skipped</td></tr>
-   <tr><td>Yaw bearing greasing</td><td>12 months</td><td>Inspect purged grease for metal</td></tr>
-   <tr><td>Generator insulation (megohm) test</td><td>24 months</td><td>Target above 10 MΩ</td></tr>
-   <tr><td>Control software update</td><td>As required</td><td>Carried out by the OEM</td></tr>
-  </table></div>
-
-  <h2>Faults seen most</h2>
-  <ul>
-   <li><strong>Generator temperature alarm:</strong> almost always a blocked cooling duct or restricted airflow. Sensor calibration drift produces the same picture, so a physical reading comes first.</li>
-   <li><strong>Storm control mistaken for a fault:</strong> low output in high wind is usually normal behaviour; check the active control mode in SCADA before climbing.</li>
-   <li><strong>Pitch calibration drift:</strong> a few degrees between blades returns as vibration and lost production.</li>
-   <li><strong>Yaw bearing lubrication:</strong> a blocked auto-lube line starves one sector — see <a href="/en/field-notes/yaw-bearing-wear/">Case 06</a>.</li>
-   <li><strong>Gearbox failure:</strong> none, by design.</li>
-  </ul>
-
-  <aside class="kb-note">
-   <p>Field note</p>
-   <p>The rhythm of the work on an Enercon is different. On a geared machine the maintenance plan revolves around oil — sampling, filters, level, temperature. Here that centre is empty and generator cooling takes its place. The most common mistake newcomers make is carrying over the geared-machine habit and treating duct cleaning as a secondary job; on this design it is the primary one.</p>
-   <p>The second common misreading is storm control. Reading the control mode in SCADA before climbing the tower saves a lot of time.</p>
-   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
-  </aside>
-
-  <div class="kb-rel">
-   <p class="k">Related</p>
-   <ul>
-    <li><a href="/en/turbines/enercon/e82/">Enercon E82 (82 m rotor)</a></li>
-    <li><a href="/en/turbines/enercon/">All Enercon models</a></li>
-    <li><a href="/en/systems/generator/">Generator and Converter System</a></li>
-    <li><a href="/en/systems/pitch/">Pitch System</a></li>
-    <li><a href="/en/field-notes/">Field fault cases</a></li>
-   </ul>
-  </div>
-
- </article>
+ <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/turbines/">Turbines</a> <i>/</i> <a href="/en/turbines/enercon/">Enercon</a> <i>/</i> <span aria-current="page">E-70 E4</span></nav>
+ <p class="kb-kicker">Model guide</p>
+ <h1>Enercon E-70 E4</h1>
+ <p class="kb-lead">Enercon’s gearless 2 MW-class model: 2.3 MW rated power, 71 m rotor. The rotor drives a multi-pole synchronous annular generator directly; there is no gearbox in between. In the field, attention moves from the gearbox to the generator, the pitch system and the converter.</p>
+ <h2>What defines this model</h2>
+ <p>In the Enercon design the inner ring of the generator turns together with the rotor. Speed is low (6–21 rpm), so the generator is multi-pole and large in diameter. The variable-frequency power is rectified and converted to grid frequency by the Enercon converter.</p>
+ <p>Without a gearbox, gear oil changes, oil sampling and gearbox bearing failures drop off the list. Generator cooling, the pitch system’s emergency supply and the converter modules take their place.</p>
+ <h2>Key technical data</h2>
+ <div class="kb-table-scroll"><table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>Rated power</td><td>2.3 MW</td></tr>
+  <tr><td>Rotor diameter</td><td>71 m</td></tr>
+  <tr><td>Hub height</td><td>64–113 m</td></tr>
+  <tr><td>Rotor speed</td><td>6–21 rpm (variable)</td></tr>
+  <tr><td>Cut-in</td><td>2.5 m/s</td></tr>
+  <tr><td>Storm control</td><td>Power reduced gradually between 28 and 34 m/s</td></tr>
+  <tr><td>Generator</td><td>Direct-drive synchronous annular generator</td></tr>
+  <tr><td>Grid feed</td><td>Enercon converter (rectifier, DC link, inverter)</td></tr>
+  <tr><td>Pitch</td><td>Independent system per blade with emergency supply</td></tr>
+  <tr><td>Brakes</td><td>Aerodynamic (pitch), rotor brake, rotor lock</td></tr>
+ </table></div>
+ <h2>Drivetrain and systems</h2>
+ <h3>Annular generator</h3>
+ <ul><li>Large-diameter and multi-pole; heat and clean air paths are the most critical periodic items in this design. On dusty and salty sites a clogged air path comes straight back as a temperature warning.</li></ul>
+ <h3>Storm control</h3>
+ <ul><li>Classic designs stop the turbine completely at a set speed. Enercon reduces speed and power gradually as the wind rises, so the turbine keeps producing partially in high wind.</li><li>Low power in high wind can look like a fault; the control system may simply be working as designed.</li></ul>
+ <h3>Pitch and emergency supply</h3>
+ <ul><li>Each blade has its own pitch system and emergency energy source. The capacity test of that source, which feathers the blades on grid loss, should never be skipped.</li></ul>
+ <h2>E-70 and E-82 (Enercon)</h2>
+ <div class="kb-table-scroll"><table>
+  <tr><th>Item</th><th>E-70 E4</th><th>E-82 E2</th></tr>
+  <tr><td>Rated power</td><td>2.3 MW</td><td>2.0 / 2.3 MW</td></tr>
+  <tr><td>Rotor diameter</td><td>71 m</td><td>82 m</td></tr>
+  <tr><td>Rotor speed</td><td>6–21 rpm</td><td>6–19.5 rpm</td></tr>
+  <tr><td>Drivetrain</td><td>Gearless, annular generator</td><td>Gearless, annular generator</td></tr>
+ </table></div>
+ <h2>Maintenance topics that matter in the field</h2>
+ <ul><li>A slow rise in generator temperature: check the cooling air paths and filters first.</li><li>Pitch emergency supply: capacity test and connections.</li><li>Yaw: adjustment gears and lubrication; the first place to look for hunting and noise.</li><li>Converter modules and cooling: read temperature and fault logs together under load.</li></ul>
+ <aside class="kb-note">
+  <p>About this page</p>
+  <p>Technical data come from documents published by the manufacturer and can change with variant and site configuration. The maintenance topics summarise general field practice; for intervals and torque values the manufacturer’s service documentation governs. My first role at Enercon (2013–2016) was steel–concrete hybrid tower assembly; this page is a model summary built on verified data, not a maintenance technician’s personal log.</p>
+  <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+ </aside>
+ <h2>Sources</h2>
+ <ul class="kb-kaynak"><li><a href="https://archives.bape.gouv.qc.ca/sections/mandats/eole_massif_du_sud/documents/PR1_partie2.pdf" target="_blank" rel="noopener">ENERCON E-70 E4 teknik veri (BAPE dosyası, PR1)</a></li></ul>
+ <div class="kb-callout"><p><strong>Warning:</strong> Every job in the nacelle, hub and tower follows lockout–tagout (LOTO), rotor lock and the manufacturer’s safety instructions. This page is field experience and published data; it does not replace the service documentation.</p></div>
+ <div class="kb-rel">
+  <p class="k">Related</p>
+  <ul><li><a href="/en/turbines/">All turbine models</a></li><li><a href="/en/systems/">Turbine systems</a></li><li><a href="/en/field-notes/">Field notes — real faults</a></li><li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li></ul>
+ </div>
 </main>
 
 <footer class="son">
@@ -201,7 +153,7 @@
 </footer>
 
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=da9b2173" defer></script>
+<script src="/assets/ara.js?v=b6a27d00" defer></script>
 <script>
 document.getElementById('burger').addEventListener('click', function () {
   var open = this.getAttribute('aria-expanded') === 'true';

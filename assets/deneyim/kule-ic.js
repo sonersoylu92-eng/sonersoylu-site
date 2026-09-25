@@ -221,7 +221,7 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     lekeler(x, w, h, 1, 'rgba(70,66,60,A)', 22, 30, 0.18, 0.22, (() => { let k = 0; return () => [0.18, 0.52, 0.5][k++ % 3]; })());
     x.fillStyle = 'rgba(60,58,54,.2)'; x.fillRect(w * 0.2, h * 0.92, w * 0.6, h * 0.05);
     x.strokeStyle = 'rgba(40,44,46,.5)'; x.lineWidth = 2; x.strokeRect(5, 5, w - 10, h - 10);
-    x.fillStyle = '#4c5154'; for (let i = 0; i < 8; i++) x.fillRect(w * 0.28, h * 0.12 + i * h * 0.018, w * 0.44, h * 0.007);   // havalandırma panjuru
+    for (let i = 0; i < 8; i++) { const y = h * 0.12 + i * h * 0.018; x.fillStyle = '#9ea3a3'; x.fillRect(w * 0.28, y, w * 0.44, h * 0.006); x.fillStyle = 'rgba(40,44,46,.55)'; x.fillRect(w * 0.28, y + h * 0.006, w * 0.44, h * 0.003); }   // havalandırma panjuru: eğik lamalar, altında ince gölge
     // küçük yapışkan levha: yetkisiz girilmez (≈ 20 × 14 cm), köşesi hafif kalkık, güneşten solmuş
     { const lx = w * 0.39, ly = h * 0.305, lw = w * 0.22, lh = h * 0.07;
       x.fillStyle = '#ecebe4'; x.fillRect(lx, ly, lw, lh);
@@ -584,7 +584,7 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   kabloGuncelle(tabanY);
 
   // aydınlatma: giriş ve üst platform lambalarının kendisi
-  const girisIsik = new THREE.PointLight(0xffe4c4, hafif ? 3 : 2.4, 9, 1.5); girisIsik.position.copy(girisLamba || new THREE.Vector3(0.4, tabanY + 2.4, 0.9)); ic.add(girisIsik);
+  const girisIsik = new THREE.PointLight(0xffe4c4, hafif ? 2.2 : 1.7, 8, 1.6); girisIsik.position.copy(girisLamba || new THREE.Vector3(0.4, tabanY + 2.4, 0.9)); ic.add(girisIsik);
   const ustIsik = new THREE.PointLight(0xffe4c4, hafif ? 2 : 1.6, 7, 1.5); ustIsik.position.copy(ustLamba || new THREE.Vector3(0.5, ustY + 1.9, 0.5)); ic.add(ustIsik);
 
   /* ================= KULE TEPESİ: üst flanş, yaw yatağı ve iç dişli, yaw pinyonları, şasi altı, kapak bacası ================= */
@@ -592,7 +592,7 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     const rT = rIc(towerTopY);
     // üst flanş: içe dönük L-flanş, altta cıvata başları
     const f = new THREE.Mesh(new THREE.LatheGeometry(flansProfil(rT), 96), M.flans); f.position.y = towerTopY; ic.add(f);
-    const n = hafif ? 60 : 100, rb = rT - 0.1, so = new THREE.InstancedMesh(somunGeo, M.celik, n), pu = new THREE.InstancedMesh(pulGeo, M.galvaniz, n);
+    const n = hafif ? 60 : 100, rb = rT - 0.1, so = new THREE.InstancedMesh(somunGeo, M.galvaniz, n), pu = new THREE.InstancedMesh(pulGeo, M.galvaniz, n);
     for (let k = 0; k < n; k++) { const a = (k + 0.5) / n * Math.PI * 2; q.setFromAxisAngle(eY, a);
       pv.set(Math.sin(a) * rb, towerTopY - 0.2035, Math.cos(a) * rb); mt.compose(pv, q, s1); pu.setMatrixAt(k, mt);
       pv.y = towerTopY - 0.225; mt.compose(pv, q, s1); so.setMatrixAt(k, mt); }

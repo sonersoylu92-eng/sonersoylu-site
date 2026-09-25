@@ -117,8 +117,8 @@
 
 /* ---- yazar künyesi ---- */
 .kb-author{margin:3rem 0 0;padding:1.3rem 1.4rem;background:var(--raise);border:1px solid var(--line)}
-.kb-author .who{font-size:.9375rem;color:var(--ink)}
-.kb-author .role{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;
+.kb-author .who{display:block;font-size:.9375rem;color:var(--ink)}
+.kb-author .role{display:block;font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;
   text-transform:uppercase;color:var(--muted);margin:.3rem 0 0}
 
 /* ---- erişilebilirlik ---- */

@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Vestas V110 3.0 MW — Technical Guide | Soner Soylu</title>
-<meta name="description" content="Vestas V110-3.0 MW technical guide: 110 m rotor, parallel-axis gearbox, DFIG generator, assembly stages, maintenance schedule and the faults seen most in the field.">
+<title>Vestas V110-2.0 MW — Technical Guide | Soner Soylu</title>
+<meta name="description" content="Vestas V110-2.0 MW: 110 m rotor, one planetary and two helical gearbox stages, doubly-fed generator with slip rings, hydraulic pitch. Verified data and the maintenance topics that matter in the field.">
 <link rel="canonical" href="https://sonersoylu.com/en/turbines/vestas/v110/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/v110/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/v110/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/vestas/v110/">
 <meta property="og:locale" content="en_GB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vestas V110/3.0M">
-<meta property="og:description" content="Vestas V110-3.0 MW technical guide: 110 m rotor, parallel-axis gearbox, DFIG generator, assembly stages, maintenance schedule and the faults seen most in the field.">
+<meta property="og:title" content="Vestas V110-2.0 MW — Technical Guide">
+<meta property="og:description" content="Vestas V110-2.0 MW: 110 m rotor, one planetary and two helical gearbox stages, doubly-fed generator with slip rings, hydraulic pitch. Verified data and the maintenance topics that matter in the field.">
 <meta property="og:url" content="https://sonersoylu.com/en/turbines/vestas/v110/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-n117.jpg">
 <meta property="og:image:width" content="1200">
@@ -20,8 +20,8 @@
 {
  "@context": "https://schema.org",
  "@type": "Article",
- "headline": "Vestas V110/3.0M",
- "description": "Vestas V110-3.0 MW technical guide: 110 m rotor, parallel-axis gearbox, DFIG generator, assembly stages, maintenance schedule and the faults seen most in the field.",
+ "headline": "Vestas V110-2.0 MW — Technical Guide",
+ "description": "Vestas V110-2.0 MW: 110 m rotor, one planetary and two helical gearbox stages, doubly-fed generator with slip rings, hydraulic pitch. Verified data and the maintenance topics that matter in the field.",
  "url": "https://sonersoylu.com/en/turbines/vestas/v110/",
  "inLanguage": "en",
  "author": {
@@ -70,7 +70,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 
 <link rel="stylesheet" href="/style.css?v=1a5286e5">
-<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=445bc395">
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -88,106 +88,59 @@
 </header>
 
 <main class="kb" id="top">
- <article>
-  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/turbines/">Turbines</a> <i>/</i> <a href="/en/turbines/vestas/">Vestas</a> <i>/</i> <span aria-current="page">V110</span></nav>
-
-  <p class="kb-kicker">Model guide</p>
-  <h1>Vestas V110/3.0M</h1>
-  <p class="kb-lead">3.0 MW rated power, 110 metre rotor. A workhorse of the mid-to-late 2000s and still running in numbers across Türkiye. The generation before the V126, and the last of the Vestas 3 MW machines built around a parallel-axis gearbox.</p>
-  <h2>Where it sits in the series</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Feature</th><th>V90</th><th>V110</th><th>V126</th></tr>
-   <tr><td>Rated power</td><td>2.0 MW</td><td><strong>3.0 MW</strong></td><td>3.3 MW</td></tr>
-   <tr><td>Rotor diameter</td><td>90 m</td><td><strong>110 m</strong></td><td>126 m</td></tr>
-   <tr><td>Swept area</td><td>6,362 m²</td><td><strong>9,503 m²</strong></td><td>12,469 m²</td></tr>
-   <tr><td>Blade length</td><td>43.5 m</td><td><strong>53.5 m</strong></td><td>61.5 m</td></tr>
-   <tr><td>Gearbox type</td><td>Parallel-axis</td><td><strong>Parallel-axis</strong></td><td>Planetary</td></tr>
-   <tr><td>Gearbox oil volume</td><td>600 L</td><td><strong>700–750 L</strong></td><td>850+ L</td></tr>
-  </table></div>
-
-  <h2>Specifications</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Parameter</th><th>Value</th></tr>
-   <tr><td>Rated power</td><td>3000 kW</td></tr>
-   <tr><td>Rotor diameter</td><td>110 m</td></tr>
-   <tr><td>Swept area</td><td>9,503 m²</td></tr>
-   <tr><td>Blade length</td><td>53.5 m</td></tr>
-   <tr><td>Hub height (typical)</td><td>80 / 100 / 120 m</td></tr>
-   <tr><td>Rotor speed</td><td>6.9–12.6 rpm (variable)</td></tr>
-   <tr><td>Cut-in</td><td>3.5 m/s</td></tr>
-   <tr><td>Rated wind speed</td><td>~12.5 m/s</td></tr>
-   <tr><td>Cut-out</td><td>25 m/s</td></tr>
-   <tr><td>Gearbox</td><td>Parallel-axis, three stage, ratio ~1:81</td></tr>
-   <tr><td>Generator</td><td>DFIG with partial converter</td></tr>
-   <tr><td>Cooling</td><td>Active, thermostatically controlled</td></tr>
-  </table></div>
-
-  <h2>Model-specific systems</h2>
-  <h3>Parallel-axis gearbox</h3>
-  <ul>
-   <li><strong>Layout:</strong> successive parallel shaft stages to an overall ratio near 1:81.</li>
-   <li><strong>Strengths:</strong> mechanically simple and forgiving; stress is spread across conventional meshes rather than concentrated as in a planetary set.</li>
-   <li><strong>Costs:</strong> heavier and noisier than a planetary box of the same rating.</li>
-   <li><strong>Oil:</strong> 700–750 L, nominal 45–65 °C, alarm above roughly 75 °C.</li>
-  </ul>
-  <h3>Pitch and yaw</h3>
-  <ul>
-   <li><strong>Pitch motors:</strong> 15–18 kW, maximum rate around 5–7 °/s — slower than the V126.</li>
-   <li><strong>Yaw motors:</strong> 7–10 kW; slewing bearing about 3500 mm.</li>
-   <li><strong>Alignment tolerance:</strong> ±3–5°, wider than the ±1° of later machines, with less vane sensor redundancy.</li>
-  </ul>
-
-  <h2>Assembly stages (16–17 days)</h2>
-  <ol>
-   <li><strong>Days 1–2:</strong> site preparation, crane pad and tooling checks, safety briefing.</li>
-   <li><strong>Days 3–8:</strong> sectional tower erection to 80–120 m.</li>
-   <li><strong>Days 9–10:</strong> nacelle lift, 550–600 t. Gearbox alignment is more sensitive here than on planetary machines.</li>
-   <li><strong>Days 11–14:</strong> blade installation, 53.5 m blades at roughly 20 t each, root flange bolting.</li>
-   <li><strong>Days 15–16:</strong> electrical and cooling — converter cabling, coolant fill and bleed, SCADA.</li>
-   <li><strong>Day 17:</strong> commissioning — grid synchronisation, pitch calibration, performance test.</li>
-  </ol>
-
-  <h2>Maintenance schedule</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Task</th><th>Interval</th><th>Note</th></tr>
-   <tr><td>Visual inspection</td><td>Monthly</td><td>Blades, nacelle, tower, gearbox air ducts</td></tr>
-   <tr><td>Gearbox oil sampling</td><td>12 months</td><td>Metal analysis trend is the key output</td></tr>
-   <tr><td>Oil and hydraulic filter change</td><td>24 months</td><td>Parallel-axis boxes generate more particulate</td></tr>
-   <tr><td>Cooling system check</td><td>6 months</td><td>Coolant level, fan test, radiator cleaning</td></tr>
-   <tr><td>Converter capacitor check</td><td>24 months</td><td>Ripple voltage and power electronics health</td></tr>
-   <tr><td>Pitch sensor calibration</td><td>36 months</td><td>Limited vane redundancy makes this matter</td></tr>
-   <tr><td>Yaw bearing greasing</td><td>12 months</td><td>Inspect purged grease for metal</td></tr>
-   <tr><td>Gearbox borescope inspection</td><td>60 months</td><td>Tooth flank and bearing condition</td></tr>
-  </table></div>
-
-  <h2>Faults seen most</h2>
-  <ul>
-   <li><strong>Shaft seal oil leakage:</strong> the defining V110 issue, typically appearing after 8–12 years and developing slowly enough to pass unnoticed. Mechanism worked through in <a href="/en/field-notes/gearbox-temperature/">Case 02</a>.</li>
-   <li><strong>Gear pitting:</strong> from sustained overload combined with poor oil circulation.</li>
-   <li><strong>Converter thermal problems:</strong> including the intermittent, power-dependent kind described in <a href="/en/field-notes/converter-overcurrent/">Case 05</a>, which was found on a V110.</li>
-   <li><strong>Pitch asymmetry:</strong> with less sensor redundancy than later machines, a single failed sensor has more effect.</li>
-   <li><strong>Yaw bearing drag:</strong> grease ageing raises preload and drives yaw motor current up.</li>
-  </ul>
-
-  <aside class="kb-note">
-   <p>Field note</p>
-   <p>The V110 is a dependable machine, and its weak point is predictable enough to plan around. Around the ten-year mark the shaft seals start to pass oil, and because the loss is slow nobody notices until the temperature has moved. Operators who run metal analysis on schedule catch it early; operators who only top up the oil find out later and more expensively.</p>
-   <p>Blade vibration deserves more attention on this model than on the V90 — 53.5 m blades are long enough for resonance to matter — so periodic borescope and vibration checks earn their place.</p>
-   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
-  </aside>
-
-  <div class="kb-rel">
-   <p class="k">Related</p>
-   <ul>
-    <li><a href="/en/turbines/vestas/v126/">Vestas V126 (3.3 MW, planetary gearbox)</a></li>
-    <li><a href="/en/turbines/vestas/">All Vestas models</a></li>
-    <li><a href="/en/systems/gearbox/">Gearbox System — parallel-axis vs planetary</a></li>
-    <li><a href="/en/field-notes/gearbox-temperature/">Case 02: Gearbox Temperature Rise</a></li>
-    <li><a href="/en/field-notes/converter-overcurrent/">Case 05: Converter Overcurrent</a></li>
-   </ul>
-  </div>
-
- </article>
+ <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/turbines/">Turbines</a> <i>/</i> <a href="/en/turbines/vestas/">Vestas</a> <i>/</i> <span aria-current="page">V110-2.0 MW</span></nav>
+ <p class="kb-kicker">Model guide</p>
+ <h1>Vestas V110-2.0 MW</h1>
+ <p class="kb-lead">The large-rotor member of Vestas’ 2 MW platform for low-wind sites: 2.0 MW rated power, 110 m rotor, 54 m blades. A classic geared architecture with a doubly-fed (slip-ring) generator; in the field most of the time goes into the gearbox oil system, the hydraulic pitch and the generator slip-ring side.</p>
+ <h2>What defines this model</h2>
+ <p>The V110 grows the rotor instead of the rating. A 2.0 MW ceiling on a 110 m rotor gives a turbine that reaches useful power early in light wind and targets a high capacity factor. Wind class IEC IIIA.</p>
+ <p>The architecture is familiar: rotor → main shaft → gearbox → high-speed shaft → doubly-fed generator. The stator connects directly to the grid, the rotor through slip rings to a partial-power converter. Each blade is pitched by its own hydraulic cylinder.</p>
+ <h2>Key technical data</h2>
+ <div class="kb-table-scroll"><table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>Rated power</td><td>2.0 MW</td></tr>
+  <tr><td>Rotor diameter</td><td>110 m</td></tr>
+  <tr><td>Blade length</td><td>54 m</td></tr>
+  <tr><td>Hub height</td><td>80 / 95 / 125 m (by grid frequency and package)</td></tr>
+  <tr><td>Cut-in</td><td>3 m/s</td></tr>
+  <tr><td>Rated wind speed</td><td>11.5 m/s</td></tr>
+  <tr><td>Cut-out</td><td>20 m/s</td></tr>
+  <tr><td>Wind class</td><td>IEC IIIA</td></tr>
+  <tr><td>Gearbox</td><td>1 planetary + 2 helical stages</td></tr>
+  <tr><td>Generator</td><td>Doubly-fed with slip rings; 4-pole (50 Hz)</td></tr>
+  <tr><td>Pitch</td><td>Full-blade feathering, one pitch cylinder per blade</td></tr>
+  <tr><td>Tower</td><td>Tubular steel</td></tr>
+ </table></div>
+ <h2>Drivetrain and systems</h2>
+ <h3>Gearbox and oil system</h3>
+ <ul><li>One planetary and two helical stages step the main-shaft speed up to generator speed.</li><li>What gets checked most: oil level and temperature trend, filter differential pressure, oil samples (metals and water), seals, and vibration trends for the bearings.</li><li>A temperature that drifts up at the same wind speed matters more than any single absolute value.</li></ul>
+ <h3>Doubly-fed generator (DFIG)</h3>
+ <ul><li>The rotor winding reaches the converter through slip rings and brushes, so brush wear, brush dust and slip-ring surface are periodic checks.</li><li>Because the stator is tied directly to the grid, grid events (voltage dips, imbalance) can come back as generator or converter faults.</li></ul>
+ <h3>Hydraulic pitch</h3>
+ <ul><li>A pitch cylinder turns each blade; pressure, accumulator pre-charge and hose and fitting tightness decide the health of the system.</li><li>The accumulators hold the energy to feather the blades on grid loss; testing them is a safety item that should never be skipped.</li></ul>
+ <h2>V110 and V126 (Vestas)</h2>
+ <div class="kb-table-scroll"><table>
+  <tr><th>Item</th><th>V110-2.0 MW</th><th>V126-3.45 MW</th></tr>
+  <tr><td>Rated power</td><td>2.0 MW</td><td>3.45 MW</td></tr>
+  <tr><td>Rotor diameter</td><td>110 m</td><td>126 m</td></tr>
+  <tr><td>Gearbox</td><td>1 planetary + 2 helical</td><td>2 planetary + 1 helical</td></tr>
+  <tr><td>Generator / converter</td><td>Doubly-fed, partial converter</td><td>Full-scale converter</td></tr>
+  <tr><td>Pitch</td><td>Hydraulic cylinder</td><td>Hydraulic cylinder</td></tr>
+ </table></div>
+ <h2>Maintenance topics that matter in the field</h2>
+ <ul><li>Hydraulic leaks in the hub and nacelle: a small drip becomes a dirty hub and an out-of-spec accumulator over time.</li><li>A slow rise in gearbox oil temperature: filter, cooler radiator and oil level are checked together.</li><li>Brush dust in the generator slip-ring compartment: cleaning and brush-length measurement are routine.</li><li>Yaw brake pads and gear lubrication: the first place to look for hunting and noise complaints.</li></ul>
+ <aside class="kb-note">
+  <p>About this page</p>
+  <p>Technical data come from documents published by the manufacturer and can change with variant, software package and site configuration. The maintenance topics summarise general field practice; for intervals and torque values the manufacturer’s service documentation always governs.</p>
+  <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
+ </aside>
+ <h2>Sources</h2>
+ <ul class="kb-kaynak"><li><a href="https://www.vestas.com/en/products/2-mw-platform/v110-2_0_mw" target="_blank" rel="noopener">Vestas — V110-2.0 MW ürün sayfası</a></li><li><a href="https://www.edp.com/sites/default/files/document/2025-04/Arkwright-Summit-ArkwrightApplication_Exhibit7_DrawingsandSpecificationsforVestasV110.pdf" target="_blank" rel="noopener">EDP Arkwright Summit — V110 çizim ve teknik özellikler (Exhibit 7)</a></li></ul>
+ <div class="kb-callout"><p><strong>Warning:</strong> Every job in the nacelle, hub and tower follows lockout–tagout (LOTO), rotor lock and the manufacturer’s safety instructions. This page is field experience and published data; it does not replace the service documentation.</p></div>
+ <div class="kb-rel">
+  <p class="k">Related</p>
+  <ul><li><a href="/en/turbines/">All turbine models</a></li><li><a href="/en/systems/">Turbine systems</a></li><li><a href="/en/field-notes/">Field notes — real faults</a></li><li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li></ul>
+ </div>
 </main>
 
 <footer class="son">
@@ -203,7 +156,7 @@
 </footer>
 
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=da9b2173" defer></script>
+<script src="/assets/ara.js?v=b6a27d00" defer></script>
 <script>
 document.getElementById('burger').addEventListener('click', function () {
   var open = this.getAttribute('aria-expanded') === 'true';

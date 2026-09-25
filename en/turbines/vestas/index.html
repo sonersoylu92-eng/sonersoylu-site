@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vestas V110, V126, V136 — Technical Guide | Soner Soylu</title>
-<meta name="description" content="Field-oriented technical guides to the Vestas V110, V126 and V136: specifications, gearbox differences, DFIG generator, assembly, maintenance and typical faults.">
+<meta name="description" content="Sourced technical guide to the Vestas V110, V126 and V136: rating, rotor, gearbox layout, generator and converter differences, and the maintenance topics that matter in the field.">
 <link rel="canonical" href="https://sonersoylu.com/en/turbines/vestas/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/turbines/vestas/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/vestas/">
@@ -10,7 +10,7 @@
 <meta property="og:locale" content="en_GB">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vestas Series">
-<meta property="og:description" content="Field-oriented technical guides to the Vestas V110, V126 and V136: specifications, gearbox differences, DFIG generator, assembly, maintenance and typical faults.">
+<meta property="og:description" content="Sourced technical guide to the Vestas V110, V126 and V136: rating, rotor, gearbox layout, generator and converter differences, and the maintenance topics that matter in the field.">
 <meta property="og:url" content="https://sonersoylu.com/en/turbines/vestas/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-n117.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
  "@context": "https://schema.org",
  "@type": "CollectionPage",
  "name": "Vestas Series",
- "description": "Field-oriented technical guides to the Vestas V110, V126 and V136: specifications, gearbox differences, DFIG generator, assembly, maintenance and typical faults.",
+ "description": "Sourced technical guide to the Vestas V110, V126 and V136: rating, rotor, gearbox layout, generator and converter differences, and the maintenance topics that matter in the field.",
  "url": "https://sonersoylu.com/en/turbines/vestas/",
  "inLanguage": "en",
  "author": {
@@ -85,7 +85,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 
 <link rel="stylesheet" href="/style.css?v=1a5286e5">
-<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<link rel="stylesheet" href="/kb.css?v=445bc395">
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -108,12 +108,12 @@
 
   <p class="kb-kicker">Manufacturer</p>
   <h1>Vestas Series</h1>
-  <p class="kb-lead">Vestas designs are geared and use DFIG generators. The control system is mature and works well, but it needs tuning. The maintenance load concentrates in gearbox oil management and converter cooling.</p>
- <p>The most decisive difference across the series is the gearbox layout: V110 uses parallel-axis, V126 planetary, V136 a planetary–helical hybrid. That single choice changes weight, noise, oil volume and the character of the faults you will chase.</p>
+  <p class="kb-lead">All three Vestas models in this guide are geared. The V110-2.0 MW is the low-wind member of the 2 MW platform: a doubly-fed (slip-ring) generator with a partial-power converter. The V126-3.45 MW and V136-4.2 MW belong to the 4 MW platform and use a full-scale converter.</p>
+ <p>The most decisive difference across the series is the drivetrain layout: the V110 has one planetary and two helical stages, the 4 MW platform two planetary and one helical stage. That changes weight, the size of the oil system and the symptoms you follow in the field. Every specification on these pages comes from manufacturer-published documents, with sources listed.</p>
  <div class="kb-grid">
-  <a class="kb-card" href="/en/turbines/vestas/v110/"><span class="n">3.0 MW</span><span class="t">Vestas V110</span><span class="d">110 m rotor, parallel-axis gearbox, 700–750 L of oil. Shaft-seal oil leakage becomes the main topic after 8–12 years.</span></a>
-  <a class="kb-card" href="/en/turbines/vestas/v126/"><span class="n">3.3 MW</span><span class="t">Vestas V126</span><span class="d">126 m rotor, planetary gearbox, 850+ L of oil. Planetary gear pitting has to be caught early through metal analysis.</span></a>
-  <a class="kb-card" href="/en/turbines/vestas/v136/"><span class="n">4.2 MW</span><span class="t">Vestas V136</span><span class="d">136 m rotor, hybrid gearbox, ~1000 L of oil. Built for low-wind sites; vibration monitoring matters on the long blades.</span></a>
+  <a class="kb-card" href="/en/turbines/vestas/v110/"><span class="n">2.0 MW</span><span class="t">Vestas V110</span><span class="d">110 m rotor, 1 planetary + 2 helical stages, doubly-fed generator. Low-wind class (IEC IIIA).</span></a>
+  <a class="kb-card" href="/en/turbines/vestas/v126/"><span class="n">3.45 MW</span><span class="t">Vestas V126</span><span class="d">126 m rotor, 2 planetary + 1 helical stage, full-scale converter. 4 MW platform.</span></a>
+  <a class="kb-card" href="/en/turbines/vestas/v136/"><span class="n">4.2 MW</span><span class="t">Vestas V136</span><span class="d">136 m rotor, 66.7 m blade, full-scale converter. In 2020 I worked on ground and nacelle installation on a V136-3.45 MW project.</span></a>
  </div>
 
  </article>
@@ -132,7 +132,7 @@
 </footer>
 
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=da9b2173" defer></script>
+<script src="/assets/ara.js?v=b6a27d00" defer></script>
 <script>
 document.getElementById('burger').addEventListener('click', function () {
   var open = this.getAttribute('aria-expanded') === 'true';
