@@ -506,6 +506,8 @@ const SKY = {
   day:    ['#5f93c4', '#95b8d6', '#cfd9dc', '#c6bda9'],
   sunset: ['#2c4770', '#6d7a97', '#d9a273', '#c8a382'],
   night:  ['#050810', '#0b1224', '#12192e', '#0d1220'],
+  // mavi saat → şafak: soğuk gök, ufukta güneş tarafında sıcak ışıma (kapak sahnesi)
+  safak:  ['#0b1428', '#223a63', '#6d7894', '#8c8190'],
 };
 
 function skyDome(mode) {
@@ -515,17 +517,38 @@ function skyDome(mode) {
     uniforms: {
       c0: { value: stops[0] }, c1: { value: stops[1] },
       c2: { value: stops[2] }, c3: { value: stops[3] },
+      // güneş ışıması ve alçak bulut bandı: yalnız 'safak' modunda açılır (0 → eski görünüm)
+      uGunes: { value: new THREE.Vector3(-0.9, 0.12, -0.4).normalize() },
+      uIsima: { value: new THREE.Color('#ffae6e') }, uIsimaG: { value: 0 },
+      uBulut: { value: 0 }, uBulutR: { value: new THREE.Color('#3b4561') }, uBulutK: { value: new THREE.Color('#f0a878') },
     },
     vertexShader: `
       varying vec3 vP;
       void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
     fragmentShader: `
-      uniform vec3 c0,c1,c2,c3; varying vec3 vP;
+      uniform vec3 c0,c1,c2,c3; uniform vec3 uGunes, uIsima, uBulutR, uBulutK; uniform float uIsimaG, uBulut; varying vec3 vP;
+      float hs(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      float gurultu(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
+        return mix(mix(hs(i), hs(i+vec2(1,0)), f.x), mix(hs(i+vec2(0,1)), hs(i+vec2(1,1)), f.x), f.y); }
+      float fbm(vec2 p){ float t = 0.0, a = 0.5; for (int i = 0; i < 5; i++){ t += a*gurultu(p); p = p*2.03 + 17.0; a *= 0.5; } return t; }
       void main(){
         float h = clamp(vP.y * 0.5 + 0.5, 0.0, 1.0);
         vec3 c = mix(c3, c2, smoothstep(0.20, 0.50, h));
         c = mix(c, c1, smoothstep(0.46, 0.66, h));
         c = mix(c, c0, smoothstep(0.62, 0.96, h));
+        if (uIsimaG > 0.0) {
+          float g = max(dot(vP, uGunes), 0.0);
+          float ufuk = 1.0 - smoothstep(0.0, 0.32, abs(vP.y - 0.02));
+          c += uIsima * uIsimaG * (pow(g, 7.0) * 0.55 * ufuk + pow(g, 90.0) * 0.9 + pow(g, 2.5) * 0.12 * ufuk);
+        }
+        if (uBulut > 0.0 && vP.y > -0.02 && vP.y < 0.45) {
+          vec2 uv = vP.xz / (vP.y + 0.16) * 1.35;
+          float n = fbm(uv * 1.3 + vec2(3.1, 8.7));
+          float yogun = smoothstep(0.50, 0.78, n) * smoothstep(-0.02, 0.07, vP.y) * (1.0 - smoothstep(0.18, 0.42, vP.y));
+          float g = max(dot(normalize(vec3(vP.x, 0.0, vP.z)), normalize(vec3(uGunes.x, 0.0, uGunes.z))), 0.0);
+          vec3 bc = mix(uBulutR, uBulutK, pow(g, 6.0) * smoothstep(0.35, 0.8, n));
+          c = mix(c, bc, yogun * uBulut);
+        }
         gl_FragColor = vec4(c, 1.0);
       }`,
   });
@@ -544,6 +567,12 @@ function hills(x, z) {
     Math.sin((x + z) * 0.0175 + 0.4) * 4.2 +
     Math.sin(x * 0.041) * Math.cos(z * 0.037) * 1.1
   );
+}
+
+// arazi yüzeyinin yüksekliği (sahne koordinatında): kamera yere gömülmesin diye dışa açık
+export function araziY(x, z) {
+  const d = Math.hypot(x, z);
+  return (hills(x, z) + Math.sin(x * 0.13 + z * 0.09) * 0.5) * THREE.MathUtils.smoothstep(d, 52, 190);
 }
 
 function buildTerrain() {
@@ -741,10 +770,13 @@ export function createScene(canvas) {
 
   // uzaktaki türbinler (saha hissi)
   parts.farm = new THREE.Group();
-  [[-392, 330, 1.25], [-618, 420, 1.35], [338, 470, 1.3], [574, 318, 1.4], [-122, 556, 1.35], [146, 658, 1.3]]
+  [[-392, 330, 1.25], [-618, 420, 1.35], [338, 470, 1.3], [574, 318, 1.4], [-122, 556, 1.35], [146, 658, 1.3],
+   // sırt boyunca uzak dizi: saha derinliği
+   [-980, 760, 1.4], [-760, 980, 1.35], [-420, 1120, 1.4], [420, 1080, 1.35], [780, 900, 1.4], [1020, 620, 1.3],
+   [-1080, -260, 1.35], [-900, -640, 1.4], [980, -380, 1.35], [700, -860, 1.4], [-300, -1060, 1.35], [260, -1120, 1.4]]
     .forEach(([x, z, sc], i) => {
       const t = buildDistantTurbine();
-      t.position.set(x, 0, z);
+      t.position.set(x, araziY(x, z) - 1.5, z);
       t.rotation.y = (i * 0.7) % Math.PI;
       t.scale.setScalar(sc);
       t.userData.speed = 0.16 + i * 0.03;
@@ -804,8 +836,8 @@ export function createScene(canvas) {
     guncelle(tSn) {
       const f = (tSn % 1.5) / 1.5;
       const yanik = f < 0.34 ? Math.sin(Math.min(1, f / 0.34) * Math.PI) ** 0.35 : 0;
-      const guc = ikazMod === 'night' ? 1 : (ikazMod === 'sunset' ? 0.85 : 0.6);
-      IKAZ_MAT.emissiveIntensity = 0.15 + yanik * (ikazMod === 'night' ? 6 : 4.5);
+      const guc = ikazMod === 'night' ? 1 : (ikazMod === 'safak' ? 0.95 : (ikazMod === 'sunset' ? 0.85 : 0.6));
+      IKAZ_MAT.emissiveIntensity = 0.15 + yanik * (ikazMod === 'night' || ikazMod === 'safak' ? 6 : 4.5);
       IKAZ_HALE.opacity = yanik * guc;
       IKAZ_HALE_UZAK.opacity = yanik * Math.min(1, guc + 0.2);
     },
@@ -813,6 +845,24 @@ export function createScene(canvas) {
 
   function setLight(mode) {
     ikazMod = mode;
+    const u = sky.material.uniforms;
+    if (mode === 'safak') {
+      // mavi saat → şafak: soğuk ortam, ufka yakın sıcak güneş; türbin kenarına ince sıcak ışık
+      SKY.safak.forEach((h, i) => u['c' + i].value.set(h));
+      scene.background.set(0x4a5470);
+      scene.fog.color.set(0x4a5470); scene.fog.near = 260; scene.fog.far = 2050;
+      sun.color.set(0xffc39a); sun.intensity = 1.75;
+      sun.position.set(-352, 44, -196);
+      u.uGunes.value.copy(sun.position).normalize();
+      u.uIsimaG.value = 1; u.uBulut.value = 0.85;
+      hemi.color.set(0x7f93c2); hemi.groundColor.set(0x3a3833); hemi.intensity = 0.9;
+      fill.color.set(0x9db2de); fill.intensity = 0.22;
+      renderer.toneMappingExposure = 0.98;
+      return;
+    }
+    u.uIsimaG.value = 0; u.uBulut.value = 0;
+    fill.color.set(0xd6e4f2);
+    scene.fog.near = 520; scene.fog.far = 2400;
     const sunset = mode === 'sunset';
     const night = mode === 'night';
     const st = night ? SKY.night : (sunset ? SKY.sunset : SKY.day);

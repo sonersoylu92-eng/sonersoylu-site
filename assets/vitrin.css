@@ -349,9 +349,9 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
   .ana .dny-kapak-alt .dg{min-height:2.75rem;padding:.6rem .9rem;font-size:.875rem;white-space:nowrap}
 }
 @media (max-width:560px) and (max-height:700px){ .ralan-not{display:none} .ralan{padding-bottom:.5rem} .ralan-zaman::before{content:"tahmin+model ·";color:#f2b233;letter-spacing:.04em} .ralan-zaman .ralan-nokta{display:none} }
-/* alçak masaüstü: yatay gösterge sağa, "Deneyimi geç"in altına; kimliğin ve koordinat satırının üstüne binmesin */
+/* alçak masaüstü: yatay gösterge sol üstte, kimliğin üstünde; sağdaki türbin kadrajı açık kalır */
 @media (min-width:821px) and (max-height:780px){
-  .ralan{left:auto;right:var(--a-gut);top:calc(72px + 3.6rem);width:min(34rem,calc(100% - 2*var(--a-gut) - 22rem))}
+  .ralan{left:var(--a-gut);right:auto;top:calc(72px + 1.5rem);width:min(34rem,calc(52% - var(--a-gut)))}
 }
 /* kapak yazıları açık gökyüzünde de okunsun */
 .v-ad-unvan,.v-disiplin{text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 18px rgba(0,0,0,.45)}
@@ -387,3 +387,4 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
 .v-form-alt .dg{border:1px solid #8ccbff;cursor:pointer;font-family:var(--sans)}
 .v-durum{font-size:.875rem;line-height:1.5;color:var(--a-muted);max-width:40rem}
 .v-durum.tamam{color:#b3dcff}
+@media (min-width:821px) and (max-height:660px){ .ralan .ralan-not,.ralan .ralan-egri{display:none} .ralan{top:calc(72px + 1rem)} .ralan-zaman::before{content:"tahmin+model ·";color:#f2b233;letter-spacing:.04em} .ralan-zaman .ralan-nokta{display:none} }

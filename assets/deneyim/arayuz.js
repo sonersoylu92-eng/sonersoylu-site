@@ -110,7 +110,7 @@
       sozSatir.forEach(function (s, i) { s.classList.toggle('gor', sp > i * 0.13 && p < 0.158); });
       soz.classList.toggle('gor', p > 0.012 && p < 0.158);
     }
-    son.classList.toggle('gor', p > 0.968);
+    son.classList.toggle('gor', p > 0.976);
 
     // ray: geçilen ve etkin bölüm
     var ri = 0; rayOgeleri.forEach(function (o, i) { if (p >= o.p - 0.012) ri = i; });
@@ -166,6 +166,69 @@
     konumla();
   }
 
+  /* ---- dış teknik etiketler: parçaya ince çizgiyle bağlı, belli bölümlerde belirir ---- */
+  var ETIKET = {
+    kule:  { en: 'TOWER',   ad: 'Kule',  t: 'Çelik · göbek 120 m',     ar: [[0.07, 0.16], [0.17, 0.27], [0.978, 1.01]], y: -26, mob: true },
+    yaw:   { en: 'YAW',     ad: 'Yaw',   t: 'Nasel rüzgâra döner',     ar: [[0.272, 0.335]], y: 34 },
+    nasel: { en: 'NACELLE', ad: 'Nasel', t: '12,4 × 4,2 × 4,0 m',       ar: [[0.075, 0.16], [0.335, 0.395], [0.978, 1.01]], y: -52, mob: true },
+    gobek: { en: 'HUB',     ad: 'Göbek', t: 'Üç kanat yatağı',          ar: [[0.36, 0.395], [0.978, 1.01]], y: 50 },
+    rotor: { en: 'ROTOR',   ad: 'Rotor', t: 'Ø 116,8 m · 3 kanat',      ar: [[0.07, 0.16], [0.978, 1.01]], y: 38, mob: true }
+  };
+  var dar = matchMedia('(max-width: 820px)').matches;
+  var eKatman = document.createElement('div'); eKatman.className = 'v-etiketler'; eKatman.setAttribute('aria-hidden', 'true');
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var eSvg = document.createElementNS(SVGNS, 'svg'); eSvg.setAttribute('class', 'v-et-svg'); eKatman.appendChild(eSvg);
+  var eOge = {};
+  Object.keys(ETIKET).forEach(function (id, i) {
+    var e = ETIKET[id];
+    var yol = document.createElementNS(SVGNS, 'path'); yol.setAttribute('pathLength', '1'); yol.setAttribute('class', 'v-et-yol');
+    var nok = document.createElementNS(SVGNS, 'circle'); nok.setAttribute('r', '2.5'); nok.setAttribute('class', 'v-et-nok');
+    eSvg.appendChild(yol); eSvg.appendChild(nok);
+    var kut = document.createElement('p'); kut.className = 'v-etiket';
+    kut.innerHTML = '<span>' + e.en + '</span><b>' + e.ad + '</b><small>' + e.t + '</small>';
+    kut.style.setProperty('--gecikme', (i * 90) + 'ms');
+    eKatman.appendChild(kut);
+    eOge[id] = { yol: yol, nok: nok, kut: kut, gor: false };
+  });
+  function etiketler(liste, p) {
+    var w = sahne.clientWidth;
+    liste.forEach(function (n) {
+      var e = ETIKET[n.id], o = eOge[n.id]; if (!e || !o) return;
+      var aralikta = e.ar.some(function (a) { return p > a[0] && p < a[1]; });
+      var gor = !!(aralikta && n.ekranda && (!dar || e.mob));
+      if (gor !== o.gor) { o.gor = gor; o.yol.classList.toggle('gor', gor); o.nok.classList.toggle('gor', gor); o.kut.classList.toggle('gor', gor); }
+      if (!gor) return;
+      var yon = n.x < w * 0.6 ? 1 : -1, dx = dar ? 44 : 84, ex = n.x + yon * dx, ey = n.y + e.y;
+      o.yol.setAttribute('d', 'M' + n.x.toFixed(1) + ' ' + n.y.toFixed(1) + 'L' + (n.x + yon * Math.abs(e.y) * 0.6).toFixed(1) + ' ' + ey.toFixed(1) + 'L' + ex.toFixed(1) + ' ' + ey.toFixed(1));
+      o.nok.setAttribute('cx', n.x.toFixed(1)); o.nok.setAttribute('cy', n.y.toFixed(1));
+      o.kut.style.transform = 'translate3d(' + Math.round(yon > 0 ? ex + 8 : ex - 8) + 'px,' + Math.round(ey) + 'px,0) translateY(-50%)' + (yon > 0 ? '' : ' translateX(-100%)');
+      o.kut.classList.toggle('sol', yon < 0);
+    });
+  }
+  sahne.appendChild(eKatman);
+
+  /* ---- fare: sahnedeki parçanın üstüne gelince küçük sistem etiketi ---- */
+  var UST = { rotor: ['ROTOR SYSTEM', 'Rotor sistemi'], nasel: ['NACELLE SYSTEM', 'Nasel sistemi'], kule: ['STRUCTURE', 'Yapı · kule'] };
+  var ust = document.createElement('p'); ust.className = 'v-ust'; ust.setAttribute('aria-hidden', 'true'); sahne.appendChild(ust);
+  var sahneS = null, fx = 0, fy = 0;
+  function uzerinde(tur) {
+    if (tur && UST[tur]) { ust.innerHTML = '<span>' + UST[tur][0] + '</span>' + UST[tur][1]; ust.classList.add('gor'); }
+    else ust.classList.remove('gor');
+  }
+  if (matchMedia('(pointer: fine)').matches) {
+    addEventListener('pointermove', function (e) {
+      if (!sahneS || !sahneS.fare) return;
+      var r = sahne.getBoundingClientRect();
+      var ic = e.clientY >= r.top && e.clientY <= r.bottom && bolum.getBoundingClientRect().bottom > innerHeight * 0.5;
+      var arayuzde = e.target && e.target.closest && e.target.closest('a,button,input,.ralan,.v-kimlik,.dugmeler,.rakam,.dny-ray,.v-nokta-bilgi,header');
+      if (!ic || arayuzde) { sahneS.fare(null); ust.classList.remove('gor'); return; }
+      fx = e.clientX; fy = e.clientY - r.top;
+      ust.style.transform = 'translate3d(' + Math.round(fx + 16) + 'px,' + Math.round(fy + 18) + 'px,0)';
+      sahneS.fare((e.clientX - r.left) / r.width * 2 - 1, (e.clientY - r.top) / r.height * 2 - 1);
+    }, { passive: true });
+    document.addEventListener('pointerleave', function () { if (sahneS && sahneS.fare) sahneS.fare(null); ust.classList.remove('gor'); });
+  }
+
   /* ---- irtifa cetveli: dış bölümde 0–120 m ---- */
   var irtifa = document.createElement('div'); irtifa.className = 'v-irtifa'; irtifa.setAttribute('aria-hidden', 'true');
   irtifa.innerHTML = '<div class="v-ir-cetvel">' + [120, 90, 60, 30, 0].map(function (m) { return '<i style="--y:' + (m / 120) + '"><b>' + m + '</b></i>'; }).join('') + '<span class="v-ir-ok"></span></div><p class="v-ir-b">İRTİFA · m</p>';
@@ -188,16 +251,19 @@
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=53c5f586').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=5789e7b3').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
         noktalar: noktalar,
+        etiketler: etiketler,
+        uzerinde: uzerinde,
+        cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
         hazir: function () { bolum.classList.add('hazir'); },
         hata: function () { statik(false); }
       });
-      if (!S) statik(false);
+      if (!S) statik(false); else sahneS = S;
     }).catch(function (e) { console.error('deneyim yüklenemedi:', e); statik(false); });
   }
   var baslaBtn = $('dnyBaslaBtn');

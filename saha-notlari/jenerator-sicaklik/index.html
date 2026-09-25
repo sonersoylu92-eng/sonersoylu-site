@@ -21,7 +21,7 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?",
-  "description": "Türbin full power üretiyor ama jeneratör sıcaklık alarm veriyor. Sensor kalibrasyonu ve soğutma sistem teşhisi.",
+  "description": "116 °C jeneratör sıcaklık alarmı: IR termometre ve PT100 direnç ölçümüyle gerçek ısınma ile sensör kayması nasıl ayırt edilir.",
   "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknisyeni"},
   "datePublished": "2026-09-22T00:00:00Z",
   "inLanguage": "tr-TR"
@@ -54,216 +54,111 @@
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Jeneratör sıcaklık alarmı vakası — Sistem Çalışıyor, Uyarı Hatalı Mı?</span></nav>
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Jeneratör sıcaklık alarmı</span></nav>
+
   <p class="kb-kicker">Sahadan · Vaka 04</p>
   <h1>Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?</h1>
-  <p class="kb-lead"><strong>Arıza Bildirimi:</strong> "Vestas V126 dün akşam 'Jeneratör temperature high' alarmı verdi, fakat türbin normale dönüp kapandı. Motor ses tamam, verimi normal gözüküyor. Bu alarm gereksiz mi?"</p>
+  <p class="kb-lead">Vestas V126. Jeneratör sargı sıcaklığı 116 °C'ye çıkınca türbin alarmla duruyor, reset atınca normale dönüyor, aynı gün yine duruyor. Ama makinenin geri kalanı sağlıklı görünüyor: ses normal, titreşim yok, soğutma çalışıyor. Okunan değerle makinenin davranışı birbirini tutmuyorsa ikisinden biri yanlıştır. Hangisi olduğunu bulmadan jeneratöre el sürmemek gerekir.</p>
 
-  <section id="senaryo">
-   <h2>Bürsa RES, Vestas V126 — 3. Gün Sorun</h2>
-   <p><strong>Tarih çizelgesi:</strong></p>
+  <h2>Belirti</h2>
+  <ul>
+   <li><strong>Alarm:</strong> Generator temperature high, 116 °C (eşik 115 °C). Türbin duruyor.</li>
+   <li><strong>Reset sonrası:</strong> Türbin normal devreye giriyor; alarm aynı rüzgârda günde 2–3 kez tekrar ediyor.</li>
+   <li><strong>Zaman:</strong> Alarmlar öğleden sonra, nominal güçte (13–15 m/s rüzgârda) geliyor.</li>
+   <li><strong>Trend:</strong> Son üç günde okunan en yüksek değer 110 → 112 → 116 °C. Günde yaklaşık 2 °C'lik düzenli bir tırmanış.</li>
+   <li><strong>Diğer veriler:</strong> Güç, akım ve devir normal. Olağandışı ses, titreşim ya da koku yok.</li>
+  </ul>
+
+  <h2>İlk Değerlendirme</h2>
+  <p>Gerçekten aşırı ısınan bir jeneratör sessiz kalmaz. Sesi değişir, kokusu çıkar, soğutma devresinde bir yerde yükün izi görünür. Burada bunların hiçbiri yoktu. Ciddi bir sayı ama o sayının hiçbir sonucu yok: bu tablo çoğu zaman makine arızasına değil, ölçüm arızasına işaret eder.</p>
+  <p>İkinci ipucu trenddi. Gerçek bir ısınma sorunu yükü ve havayı izler; her gün düzenli olarak 2 °C tırmanmaz. Yükten bağımsız, düzenli bir sürüklenme, makinenin değil ölçüm zincirinin bir yerinin kaydığını düşündürür.</p>
+
+  <h2>Adım Adım Teşhis</h2>
+  <ol class="kb-steps">
+   <li><strong>SCADA kayıtlarını yük verisiyle birlikte inceledim.</strong> Alarm anlarında güç, akım ve devir nominal değerlerdeydi; jeneratör aşırı yüklenmemişti. Sıcaklık yükle birlikte değil, günden güne düzenli olarak yükseliyordu.</li>
+   <li><strong>Türbini durdurup IR termometreyle fiziksel ölçüm aldım.</strong> Vakayı çözen adım bu. Durdurulan jeneratörün gövdesi yaklaşık <strong>62 °C</strong> ölçtü; aynı anda SCADA <strong>103 °C</strong> gösteriyordu. Arada <strong>41 °C</strong> fark vardı. Sargının içindeki sensör gövde yüzeyinden bir miktar sıcak okur; birkaç derecelik fark normaldir, 41 derece değildir.</li>
+   <li><strong>Gövdenin birkaç noktasından ölçüm aldım.</strong> IR ölçümünün yerel bir yanıltma olmadığından emin olmak için. Dağılım düzenliydi; yerel bir sıcak nokta yoktu.</li>
+   <li><strong>Soğutma devresini kontrol ettim.</strong> Fan çalışıyordu (3,2 A), hava akışı normaldi, filtre temizdi. Gerçek bir 116 °C'yi açıklayacak bir şey yoktu; bu da ölçüm hipotezini güçlendirdi.</li>
+   <li><strong>Sensörün direncini ölçtüm.</strong> PT100 sensör 0 °C'de 100 Ω'dur ve her derecede yaklaşık 0,385 Ω artar. Jeneratörün ölçülen 62 °C'si için beklenen değer yaklaşık <strong>124 Ω</strong>. Sensör ise yaklaşık <strong>140 Ω</strong> ölçtü; bu, PT100 tablosunda yaklaşık 103 °C'ye karşılık gelir. Yani SCADA direnci doğru çeviriyordu; yanlış olan direncin kendisiydi.</li>
+   <li><strong>Kablo ve klemens bağlantılarını kontrol ettim.</strong> Gevşek ya da oksitlenmiş bir klemens devreye seri direnç ekler ve tam olarak bu tabloyu üretir. Bağlantılar sağlamdı; sapma sensör elemanının kendisindeydi.</li>
+   <li><strong>Sensörün servis süresine baktım.</strong> Yaklaşık dört yıldır görevdeydi.</li>
+  </ol>
+
+  <div class="kb-callout">
+   <p><strong>Kanıt zinciri:</strong> yükten bağımsız, düzenli tırmanan bir sıcaklık → IR ile SCADA arasında 41 °C fark → soğutmada sorun yok → PT100 direnci gerçek sıcaklığa değil, SCADA'nın gösterdiği sıcaklığa karşılık geliyor → bağlantılar sağlam. Her adım bir öncekini doğruluyor.</p>
+  </div>
+
+  <h2>Kök Neden</h2>
+  <p>Sargı sıcaklık sensöründe (PT100) kayma. Eleman yaklaşık 16 Ω fazla direnç gösteriyordu; bu da okumayı yaklaşık 41 °C yukarı taşıyordu. SCADA bu yanlış direnci doğru şekilde sıcaklığa çevirdi, kontrol sistemi de tasarlandığı işi yaptı: makineyi korumak için sağlıklı bir jeneratörü durdurdu.</p>
+  <p>Bu arızanın maliyeti hasar değildi. Maliyet, kaybedilen üretim ve bir sayının peşinden gidip sağlam bir jeneratörü sökme riskiydi.</p>
+
+  <h2>Çözüm</h2>
+  <ol>
+   <li><strong>Geçici düzeltme:</strong> SCADA'da, fiziksel ölçümle doğrulanmış farka göre geçici bir düzeltme girildi ve türbin üretime döndü. Bu, sahanın ve üreticinin prosedürüne göre, yetkili onayıyla, kayıt altına alınarak ve bitiş tarihi konarak yapılır. Düzeltme süresince okuma düzenli olarak IR ölçümüyle karşılaştırılır; kayma sürüyorsa fark değişir. Jeneratörde yedek sargı sensörü varsa, ona geçmek düzeltme girmekten daha güvenlidir.</li>
+   <li><strong>Alarm eşiği değiştirilmedi:</strong> Düzeltme ile eşik yükseltme birlikte yapılırsa gerçek bir ısınma iki kez gizlenir. Eşik, sebebi bilinmeden ve düzeltme varken değiştirilmez.</li>
+   <li><strong>Sensör değişimi planlandı:</strong> Yeni sensör takıldıktan sonra okuma birkaç yük noktasında IR ölçümüyle doğrulanır.</li>
+   <li><strong>Geçici düzeltme kaldırılır:</strong> Yeni sensör doğrulandığında düzeltme sistemden çıkarılır. Bu adım onarımın parçasıdır; unutulan bir düzeltme bir gün gerçek bir arızayı gizler.</li>
+  </ol>
+
+  <h2>Gerçek Isınma mı, Sensör Kayması mı?</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Kontrol</th><th>Gerçek aşırı ısınma</th><th>Sensör kayması</th></tr>
+   <tr><td>IR termometre ve SCADA</td><td>Birkaç derece içinde uyuşur</td><td>Büyük ve sabit bir fark</td></tr>
+   <tr><td>Yükle ilişkisi</td><td>Yükle birlikte artar, azalır</td><td>Yükten büyük ölçüde bağımsız</td></tr>
+   <tr><td>Trendin şekli</td><td>Düzensiz, havaya bağlı</td><td>Günden güne düzenli tırmanış</td></tr>
+   <tr><td>Ses ve koku</td><td>Genellikle değişir</td><td>Normal</td></tr>
+   <tr><td>Soğutma devresi</td><td>Çoğu zaman bir sebep gösterir</td><td>Bulunacak bir şey yok</td></tr>
+   <tr><td>PT100 direnci</td><td>Ölçülen sıcaklığa karşılık gelir</td><td>Karşılık gelmez</td></tr>
+  </table></div>
+
+  <h2>PT100 Direnç Tablosu</h2>
+  <div class="kb-table-scroll"><table>
+   <tr><th>Sıcaklık</th><th>Direnç</th></tr>
+   <tr><td>0 °C</td><td>100,0 Ω</td></tr><tr><td>20 °C</td><td>107,8 Ω</td></tr><tr><td>40 °C</td><td>115,5 Ω</td></tr><tr><td>60 °C</td><td>123,2 Ω</td></tr><tr><td>80 °C</td><td>130,9 Ω</td></tr><tr><td>100 °C</td><td>138,5 Ω</td></tr><tr><td>120 °C</td><td>146,1 Ω</td></tr>
+  </table></div>
+  <p><small>IEC 60751 standart PT100 değerleri. İki telli bağlantıda kablo direnci de okumaya eklenir; ölçümü mümkünse sensöre en yakın klemensten yapın ve kablo direncini ayrıca not edin.</small></p>
+
+  <h2>Önleyici Bakım</h2>
+  <ul>
+   <li><strong>Her sıcaklık alarmında önce fiziksel ölçüm:</strong> IR termometre birkaç dakika sürer ve sorunun makinede mi ölçümde mi olduğunu hemen ayırır.</li>
+   <li><strong>RTD sensörleri sarf malzemesi gibi düşünün:</strong> Zamanla kayabilirler. Saçma bir okuma beklemek yerine periyodik bakıma direnç kontrolünü ekleyin.</li>
+   <li><strong>Geçici düzeltmeleri kaydedin ve bitiş tarihi koyun:</strong> Kalıcı hale gelen bir düzeltme bir gün gerçek bir arızayı gizler.</li>
+   <li><strong>Yalnız değere değil, trendin şekline bakın:</strong> Yükten bağımsız, düzenli bir günlük tırmanış neredeyse hiçbir zaman gerçek bir ısınma sorunu değildir.</li>
+  </ul>
+
+  <h2>Hızlı Kontrol Listesi</h2>
+  <ul>
+   <li>IR termometreyle jeneratör gövdesini ölç, aynı anda SCADA değerini oku. Fark 10 °C'den büyük mü?</li>
+   <li>Alarm anlarındaki güç, akım ve devir normal mi?</li>
+   <li>Soğutma fanı çalışıyor mu, akımı normal mi, filtre temiz mi?</li>
+   <li>PT100 direncini ölç ve tabloya göre sıcaklığa çevir. Ölçtüğün sıcaklıkla uyuşuyor mu?</li>
+   <li>Klemens ve kablo bağlantıları sıkı ve temiz mi?</li>
+   <li>Aynı jeneratördeki diğer sargı sensörleri ne gösteriyor?</li>
+   <li>Trend yükü mü izliyor, yoksa günden güne düzenli mi tırmanıyor?</li>
+  </ul>
+
+  <aside class="kb-note">
+   <p>Saha Notu</p>
+   <p>Bu vakadan çıkardığım kural şu: bir sayı ile makinenin davranışı birbirini tutmuyorsa, sayıyı kanıtlayana kadar makineye inan. Gerçekten 116 °C'de olan bir jeneratör kendini belli eder. Bu makine sessizdi; sessizliği de kanıtın kendisiydi.</p>
+   <p>Disiplin isteyen kısım geçici düzeltme. Sensör beklerken türbini üretimde tutmak için doğru hamle; ama kimse yazmazsa kalıcı hale gelen türden bir çözüm. Değişimden sonra onu kaldırmak onarımın parçası, sonradan akla gelen bir iş değil.</p>
+   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr Türbini Saha Servis Teknisyeni — Enercon, Nordex, Vestas · GWO sertifikalı</span></p>
+  </aside>
+
+  <div class="kb-callout">
+   <p><strong>Uyarı:</strong> Jeneratör terminal kutusunda yüksek gerilim bulunur. Sensör ölçümü ve değişimi türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme-etiketleme (LOTO) uygulandıktan sonra yapılır. SCADA'da düzeltme ya da parametre değişikliği yalnızca yetkili onayıyla ve üretici prosedürüne göre yapılır. Bu not saha deneyimidir, servis dokümanının yerine geçmez.</p>
+  </div>
+
+  <div class="kb-rel">
+   <p class="k">İlgili kaynaklar</p>
    <ul>
-    <li><strong>Gün 1, 18:00:</strong> Jeneratör temperature alarm (Treshold: 115°C, reading: 116°C). Türbin pitch-down, power sıfır, 5 dakika sonra reset manual reset.</li>
-    <li><strong>Gün 1, 19:00:</strong> Tekrar normal operation, alarm yok. Rüzgâr: 12-14 m/s, jeneratör nominal çalışması.</li>
-    <li><strong>Gün 2, 09:00:</strong> Aynı rüzgârla tekrar alarm (116°C). Alarm sonra saatde 2-3 kere tekrarlanıyor.</li>
-    <li><strong>Bugün:</strong> Teknikyen gönderildi. Soğuk sabah, rüzgâr 15 m/s, jeneratör sıcaklığı SCADA'da: 103°C (normal)</li>
+    <li><a href="/teshis/#jenerator">Bu vakayı simülatörde çöz</a></li>
+    <li><a href="/sistemler/jenerator/">Jeneratör ve Converter Sistemi</a></li>
+    <li><a href="/saha-notlari/converter-asiri-akim/">Sahadan #5: Converter Aşırı Akım</a></li>
+    <li><a href="/turbinler/vestas/v126/">Vestas V126 — model rehberi</a></li>
+    <li><a href="/saha-notlari/">Tüm saha notları</a></li>
+    <li><a href="/ariza/">Arıza teşhis ağacı — belirtiden nedene</a></li>
    </ul>
-   <p><strong>Araştırma başladığında teşhis bulguları:</strong></p>
-   <ul>
-    <li>Jeneratör dokunduğunda: Kauçuk eldive ile bile çok sıcak (Tahmini: 65-70°C)</li>
-    <li>Fan motor çalışıyor mı? Dinle... Evet, fan işliyor (cooling fan running)</li>
-    <li>SCADA sıcaklık: 103°C (Dokunma ile his: 65-70°C → Büyük fark!)</li>
-    <li>Jeneratör mili: Sıcak ama tahammül edilebilir</li>
-   </ul>
-  </section>
-
-  <section id="teori">
-   <h2>Jeneratör Sıcaklık Problemi: İki Olasılık</h2>
-
-   <h3>Olasılık 1: Sensor Arızalı (Most Likely This Case)</h3>
-   <p>RTD (Resistance Temperature Detector) veya PT100 sensörü 3-4 yıl kullanımdan sonra sürüklenmesi başlar:</p>
-   <ul>
-    <li><strong>Kalibrasyonu Shift:</strong> Gerçek 60°C = Ölçülen 115°C (+55°C offset)</li>
-    <li><strong>Sebep:</strong> Sensör borusu paslı hale gelmiş, iç direnç değişmiş</li>
-    <li><strong>Sonuç:</strong> Kontrol sistemi yanlış sıcaklık okuyor → Gereksiz alarm</li>
-   </ul>
-
-   <h3>Olasılık 2: Gerçek Soğutma Sorunu</h3>
-   <p>Jeneratör gerçekten aşırı ısınıyor:</p>
-   <ul>
-    <li><strong>Sebep A:</strong> Soğutma fan motoru arızalı (hava akışı düşük)</li>
-    <li><strong>Sebep B:</strong> Fan hava kanalı tıkalı (toz filtesi saturated)</li>
-    <li><strong>Sebep C:</strong> Jeneratör yaşlı, çevrimlı demagnetization (yaşlılık, manyetik kaybı artan)</li>
-    <li><strong>Sebep D:</strong> Dişli kutusu output mil ekseni kaymış, jeneratör yüküne aşırı tepki</li>
-   </ul>
-
-  </section>
-
-  <section id="tanı">
-   <h2>Saha Teşhisi Prosedürü</h2>
-
-   <h3>Adım 1: Gerçek vs SCADA Sıcaklık Karşılaştırması (3 dakika)</h3>
-   <p><strong>Protokol:</strong></p>
-   <ul>
-    <li>Türbini STOP et, 30 dakika bekleme (jeneratör ısısı kaybasın)</li>
-    <li>SCADA sıcaklığını OKU → RTD input değer</li>
-    <li>IR termometre ile jeneratör gövde sıcaklığını ölç (bearing kutusu, stator dış yüzey)</li>
-    <li>Dokunmatik sıcaklık tahmininde (eldiveyle tut, kaç saniye dayanılıyor?)</li>
-   </ul>
-   <p><strong>Beklenen Farklar:</strong></p>
-   <ul>
-    <li>IR vs SCADA: ±5°C normal (sensor lokasyonu, thermal lag)</li>
-    <li>IR vs SCADA: >20°C fark → Sensor calibration drift</li>
-   </ul>
-   <p><strong>Bu Vakada Bulgu:</strong> IR: 62°C, SCADA: 103°C → +41°C fark (!!) = Sensor kesinlikle arızalı</p>
-
-   <h3>Adım 2: Sensor RTD Direnç Ölçümü (5 dakika)</h3>
-   <p><strong>Amaç:</strong> Sensörün elektriksel değeri sağlam mı?</p>
-   <p><strong>Test Protokolü:</strong> Sensör bağlantı terminallerine multimetre bağla (Resistance mode, 200Ω)</p>
-   <ul>
-    <li><strong>Normal Durumu (20°C ambient):</strong> PT100 sensör ~110Ω ölçer</li>
-    <li><strong>Jeneratör nominal (80°C):</strong> PT100 ~132Ω ölçer</li>
-    <li><strong>Arızalı Sensor (Drift):</strong> ~80Ω (Calibration küçülmüş), veya open circuit (Bağlantı kopmuş)</li>
-   </ul>
-   <p><strong>Bu Vakada Bulgu:</strong> Ölçülen direnç: 68Ω (Normal 110Ω olmalı) → Sensor filtresi shift!</p>
-
-   <h3>Adım 3: Soğutma Fan Motor Kontrol (2 dakika)</h3>
-   <p><strong>Visual İnceleme:</strong></p>
-   <ul>
-    <li>Fan havası: Sıcak hava çıkıyor mu? (El yakınlaştırılırsa hareket mi hissediliyor?)</li>
-    <li>Fan motoru: Ses çıkıyor mu? (Elektromanyetik humming 50 Hz?)</li>
-    <li>Fan toz filtresi: Tıkalı mı? (Parmağınız tutmıyor musunuz?)</li>
-   </ul>
-   <p><strong>Elektriksel Test (SCADA test modu):</strong></p>
-   <ul>
-    <li>Fan motor kontrol sinyali: PLC'den koşullu çalış (genellikle 70°C > çalış, <60°C stop)</li>
-    <li>Fan akımı: Normal 2-4A, yüksek (>6A) = rotor kilitli</li>
-   </ul>
-   <p><strong>Bu Vakada Bulgu:</strong> Fan normal çalışıyor, akımı 3.2A. Hava akışı normal. Fan temiz.</p>
-
-   <h3>Adım 4: SCADA Log Kontrolü (3 dakika)</h3>
-   <p><strong>Sorular:</strong></p>
-   <ul>
-    <li>Kaç gün önce bu alarm başladı? (Kesin tarih)</li>
-    <li>Alarm sıklığı: Sabah mı, akşam mı, tüm gün mı?</li>
-    <li>Alarm sıcaklığı: Her seferinde aynı mı (116°C) yoksa değişen mi?</li>
-    <li>Rüzgâr koşulları: Alarm zamanı rüzgâr hızı neydi?</li>
-   </ul>
-   <p><strong>Log Analizi:</strong></p>
-   <ul>
-    <li>Alarm zamanı: 16:00-18:00 (öğleden sonra, dış sıcaklık max)</li>
-    <li>Rüzgâr: 13-15 m/s (nominal power bölgesinde)</li>
-    <li>Sıcaklık: Hep 115-116°C, kesinlikle threshold değer</li>
-    <li>Trend: Son 3 gün ısı drift yüksek (110°C → 112°C → 116°C)</li>
-   </ul>
-   <p><strong>İçgörü:</strong> Yavaş sensör drift (günde +2°C), threshold'a ulaşınca alarm. Bu sensor calibration drift imzası!</p>
-
-   <h3>Adım 5: Bilhassa: Jeneratör Yükünü Kontrol Et (2 dakika)</h3>
-   <p><strong>SCADA Sorgusu:</strong> Alarm zamanında:</p>
-   <ul>
-    <li>Gücü çıkışı (kW): 3100-3200 kW (nominal)</li>
-    <li>Mevcut akımı (A): Nominal 330A?</li>
-    <li>Rotor hızı (RPM): Normal 1200 rpm?</li>
-    <li>Power factor: 0.95+ (normal)?</li>
-   </ul>
-   <p><strong>Bu Vakada:</strong> Tüm parametreler normal → Jeneratör aşırı yüklenmemiş, yazılım problemi değil → Sensor drift!</p>
-
-  </section>
-
-  <section id="kök-neden">
-   <h2>Kök Neden: RTD Sensor Calibration Drift</h2>
-   <p><strong>Süreç:</strong></p>
-   <ol>
-    <li>Sensör 4 yıl boyunca 70-90°C sıcaklık dalgalanmasında çalışmış</li>
-    <li>Sensor borusu (şaft) üzerinde hafif paslanma (humidity + thermal cycling)</li>
-    <li>İç direnç değeri sabit değilken kalibrasyon noktası kayıyor</li>
-    <li>SCADA sistem sensor okumasını 0-100°C → 0-10V mapping ile yorumluyor</li>
-    <li>Mapping arızalı: 60°C gerçek = 103°C okuma sonucu</li>
-   </ol>
-   <p><strong>Neden Alarm Düzenli?</strong> Öğleden sonra (12:00-18:00) dış sıcaklık yüksek, jeneratör nominal çalışırken soğutma biraz geride kalıyor. Gerçek 62°C × 1.7 mapping factor ≈ 105°C SCADA, biraz daha yüksek enerji → 116°C → Alarm.</p>
-  </section>
-
-  <section id="çözüm">
-   <h2>Alan Çözümleri</h2>
-
-   <h3>Hızlı Uyum (1 saat, yazılım tarafından)</h3>
-   <ol>
-    <li><strong>SCADA Sensor Offset Ayarı</strong>
-     <ul>
-      <li>Kalibrasyonu kontrol et: 0°C → 0Ω (RTD başlangıç), 100°C → 138.5Ω</li>
-      <li>Şu an mapping: 0V → 0°C, 10V → 150°C (hatalı!)</li>
-      <li>Doğru mapping yap: 10V → 120°C (jeneratör nominal sıcaklığı)</li>
-      <li>Offset: -30°C uygula (SCADA ayarında correction term)</li>
-     </ul>
-    </li>
-    <li><strong>Alarm Threshold Geçici Artırlım</strong>
-     <ul>
-      <li>Alarm threshold: 115°C → 130°C (geçici, 2 hafta için)</li>
-      <li>Bu, sistem çalışmaya devam eder iken sensor değişimini veya kalibrasyonu planlamana olanak tanır</li>
-     </ul>
-    </li>
-   </ol>
-
-   <h3>Orta Vadeli (1-2 hafta, Donanım Servis)</h3>
-   <ol>
-    <li><strong>RTD Sensor Kalibrasyonu veya Değişimi</strong>
-     <ul>
-      <li>Mevcut sensor: PT100, 1/3 DIN sınıfı (doğruluk ±0.45°C)</li>
-      <li>Kalibrasyonu: Kalibrasyon laboratuvarında kontrol (Standart: 0°C, 100°C, 200°C noktaları)</li>
-      <li>Eğer drift > 2°C → Yeni sensor ile değiştir (~$200, 30 dakika kurulum)</li>
-     </ul>
-    </li>
-    <li><strong>Sensör Borusu Muayenesi</strong>
-     <ul>
-      <li>Sensor bağlantı noktaları: Pas, korozyon var mı?</li>
-      <li>Koruyucu tüp: Hasar, pürüz?</li>
-      <li>Kontakt pinleri: Losse mi (vibrasyon)?</li>
-     </ul>
-    </li>
-   </ol>
-
-   <h3>Uzun Vadeli (Bakım Plan Revizyonu)</h3>
-   <ul>
-    <li><strong>Sensor Kalibrasyonu:</strong> 24 aylık aralık yerine 12 aylık yap (Vestas, daha eski jeneratörler drift eğilimli)</li>
-    <li><strong>Redundant Sensor:</strong> İkinci RTD sensörü parallel bağla (failover amaçlı)</li>
-    <li><strong>Log Trend Analizi:</strong> Jeneratör sıcaklığı saatlik trend ve aylık ort (drift erken tanılması)</li>
-   </ul>
-  </section>
-
-  <section id="sonuç">
-   <h2>Sonuç ve Dersi</h2>
-   <p>Türbin normal çalışırken alarm "gürültü" olabilir ama taşırt. Bu vakada: sensor drift'i beklentiler aşmıştı (+41°C!). Erken teşhis ile operasyon kesintisiz devam etti, ama uzun vadede sensor değişilmesi gerekiyordu.</p>
-   <p><strong>Elde Edilen Ders:</strong> Elektrik ölçüm vs kontrol sistemi okuması arasında tutarsızlık → Her zaman fizyolojik test (temas, IR) yapın. SCADA sensör sayı sadece otomasyon için değer, doğruluğu kontrol edilmek zorundadır.</p>
-  </section>
-
-  <section id="kontrol-listesi">
-   <h2>Hızlı Tanılama Kontrol Listesi: Jeneratör Sıcaklık Alarmı</h2>
-   <ul>
-    <li>☐ IR termometre ile gerçek jeneratör sıcaklığı ölç</li>
-    <li>☐ SCADA okuması ile karşılaştır: Fark >10°C mi?</li>
-    <li>☐ Fan motor sesini dinle: Çalışıyor mu?</li>
-    <li>☐ Fan toz filtresi: Temiz mi?</li>
-    <li>☐ Sensor RTD direnç: Multimetre ile 0°C'de ~110Ω mu?</li>
-    <li>☐ SCADA yük parametreleri: Jeneratör aşırı yüklenmiş mi? (Nominal çalışıyor mu?)</li>
-    <li>☐ Alarm tarih/saati: Belirli saatlarda mı (öğleden sonra güneş ısısı)?</li>
-    <li>☐ Log trend: Sensor drift trend var mı (günde +1-2°C)?</li>
-   </ul>
-   <p><strong>Eğer IR vs SCADA fark >15°C:</strong> Sensor değişim veya kalibrasyonu zamanı gelmiş.</p>
-  </section>
-
-  <section id="ilişkili">
-   <h2>İlgili Kaynaklar</h2>
-   <ul>
-    <li><a href="/sistemler/jenerator/">Jeneratör Sistemi — Teknik Rehberi</a></li>
-    <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
-    <li><a href="/turbinler/vestas/v126/">Vestas V126 — Teknik Özellikler</a></li>
-   </ul>
-  </section>
-
-  <footer class="field-note-footer">
-   <p><strong>⚠️ Saha Notu</strong></p>
-   <p>Jeneratör sıcaklık alarmaları genellikle sensor probleminden (kalibrasyonu drift) kaynaklanır. Kontrol sistemi "iyi davranmakta" — türbini güvenliğe yöneliş yapıyor. Fakat sistem tuning yapmazsa, gereksiz downtime ve enerji kaybı meydana gelir. RTD sensörü mekanik komponentler kadar önemli — bakım planına dahil edin.</p>
-  </footer>
+  </div>
 
  </article>
 </main>

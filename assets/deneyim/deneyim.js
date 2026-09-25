@@ -9,7 +9,7 @@
  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, SPEC } from '/n117/n117.js?v=4c390909';
+import { createScene, SPEC, araziY } from '/n117/n117.js?v=2675a459';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=7c5ea850';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
@@ -118,8 +118,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const Z = y => yZemin + y;                                  // yerden yükseklik → yaw yerel y
   const KARE = [
     // dış görünüm: Ege sırtında uzaktan
-    { p: 0.00, t: 'D', k: v(250, Z(30), 330),  h: v(0, Z(70), -5) },
-    { p: 0.08, t: 'D', k: v(120, Z(12), 170),  h: v(0, Z(72), 0) },
+    // açılış: yere yakın, türbin uzakta ama dev; masaüstünde kadrajın sağında (sol taraf kimliğe kalır)
+    { p: 0.00, t: 'D', k: v(122, Z(1.8), 168), h: mobil ? v(0, Z(76), 0) : v(-27, Z(68), 20) },
+    { p: 0.08, t: 'D', k: v(92, Z(3), 128),    h: mobil ? v(0, Z(72), 0) : v(-12, Z(70), 9) },
     { p: 0.15, t: 'D', k: v(26, Z(3), 38),     h: v(0, Z(40), 0) },
     // kuleye tırmanış
     { p: 0.22, t: 'D', k: v(18, Z(40), 26),    h: v(0, Z(70), 0) },
@@ -179,10 +180,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }).catch(e => { console.warn('post-processing yok:', e); composer = null; });
 
   /* ---------------- yardımcılar ---------------- */
-  function isikModu() {
-    const m = kok.getAttribute('data-vardiya');
-    return (m === 'gece' || m === 'safak' || m === 'aksam' || m === 'altin') ? 'sunset' : 'day';
-  }
+  // kapak sahnesinin ışığı sabit: mavi saat → şafak (sinematik atmosfer; saatten bağımsız)
+  function isikModu() { return 'safak'; }
   let sonMod = null;
   function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; } }
   isik();
@@ -251,7 +250,112 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     cb.noktalar(liste);
   }
 
-  let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0;
+  /* ---------------- dış teknik etiketler (ince çizgili işaretler) ----------------
+   * Dünya konumu her karede hesaplanır, ekrana izdüşürülüp sayfaya bildirilir; hangi aralıkta
+   * görüneceğine sayfa (arayuz.js) karar verir. */
+  const ETIKET = [
+    { id: 'kule',  f: o => o.set(0, towerTopY * 0.46, 0) },
+    { id: 'yaw',   f: o => o.set(0, -SPEC.nacelleHei / 2 - 0.3, 0).applyMatrix4(yaw.matrixWorld) },
+    { id: 'nasel', f: o => o.set(0, SPEC.nacelleHei / 2, 2.4).applyMatrix4(tilt.matrixWorld) },
+    { id: 'gobek', f: o => parts.spin.getWorldPosition(o) },
+    { id: 'rotor', f: o => { parts.spin.getWorldPosition(o); o.y -= 30; return o; } },
+  ];
+  const eDunya = new THREE.Vector3(), eEkran = new THREE.Vector3();
+  function etiketleriGuncelle() {
+    if (!cb.etiketler) return;
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    cb.etiketler(ETIKET.map(e => {
+      e.f(eDunya); eEkran.copy(eDunya).project(camera);
+      const x = (eEkran.x * 0.5 + 0.5) * w, y = (-eEkran.y * 0.5 + 0.5) * h;
+      return { id: e.id, x, y, ekranda: eEkran.z < 1 && x > w * 0.04 && x < w * 0.96 && y > h * 0.1 && y < h * 0.9 };
+    }), p);
+  }
+
+  /* ---------------- fare: çok hafif derinlik tepkisi ve parça üzerine gelme ---------------- */
+  const fare = { var: false, x: 0, y: 0, sx: 0, sy: 0, deg: false, sonIsin: 0, tur: null };
+  const fareIsin = new THREE.Raycaster(), fareNdc = new THREE.Vector2();
+  const HEDEF = [
+    { tur: 'rotor', kok: parts.spin },
+    { tur: 'nasel', kok: parts.nacelle },
+    ...parts.towerSegs.map(k => ({ tur: 'kule', kok: k })),
+  ];
+  function turBul(o) { while (o) { for (const hd of HEDEF) if (hd.kok === o) return hd.tur; o = o.parent; } return null; }
+  function fareIsinla(t) {
+    if (!cb.uzerinde) return;
+    let tur = null;
+    if (fare.var && !mobil && p < 0.17) {
+      if (!fare.deg && t - fare.sonIsin < 400) return;
+      if (t - fare.sonIsin < 90) return;
+      fare.sonIsin = t; fare.deg = false;
+      fareNdc.set(fare.x, -fare.y); fareIsin.setFromCamera(fareNdc, camera);
+      const vur = fareIsin.intersectObjects(HEDEF.map(hd => hd.kok), true).find(o => o.object.visible !== false && !o.object.isSprite);
+      tur = vur ? turBul(vur.object) : null;
+    }
+    if (tur !== fare.tur) { fare.tur = tur; cb.uzerinde(tur); }
+  }
+
+  /* ---------------- imza geçişi: gerçek türbin → teknik çizim ----------------
+   * Aynı sahne ikinci kez, tek bir "çizim" malzemesiyle çizilir: lacivert dolgu, kenar
+   * (siluet) çizgileri ve zeminde ölçek ızgarası. Üstüne saydamlıkla bindirildiği için geçiş
+   * yumuşak bir çapraz geçiştir. */
+  const cizimMat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: true, depthTest: true, toneMapped: false, fog: false,
+    uniforms: { uC: { value: 0 }, uDolgu: { value: new THREE.Color('#0f2036') }, uCizgi: { value: new THREE.Color('#d9ecff') }, uIzgara: { value: new THREE.Color('#5a9fd0') } },
+    vertexShader: `#include <common>
+      varying vec3 vN; varying vec3 vV; varying vec3 vW; varying vec3 vNw;
+      void main(){
+        #include <beginnormal_vertex>
+        #include <defaultnormal_vertex>
+        #include <begin_vertex>
+        #include <project_vertex>
+        vN = normalize(transformedNormal); vV = -mvPosition.xyz;
+        vec4 wp = vec4(transformed, 1.0);
+        #ifdef USE_INSTANCING
+          wp = instanceMatrix * wp;
+        #endif
+        vW = (modelMatrix * wp).xyz;
+        vNw = inverseTransformDirection(transformedNormal, viewMatrix);
+      }`,
+    fragmentShader: `uniform float uC; uniform vec3 uDolgu, uCizgi, uIzgara;
+      varying vec3 vN; varying vec3 vV; varying vec3 vW; varying vec3 vNw;
+      void main(){
+        float uz = length(vV);
+        float r = 1.0 - abs(dot(normalize(vN), normalize(vV)));
+        float yukari = smoothstep(0.72, 0.95, vNw.y);
+        float kenar = smoothstep(0.58, 0.9, r) * (1.0 - smoothstep(320.0, 1400.0, uz)) * (1.0 - 0.92 * smoothstep(0.55, 0.85, vNw.y));
+        vec2 q = vW.xz / 24.0; vec2 gg = abs(fract(q - 0.5) - 0.5) / fwidth(q);
+        float izgara = (1.0 - min(min(gg.x, gg.y), 1.0)) * yukari * (1.0 - smoothstep(180.0, 900.0, uz));
+        vec3 c = uDolgu * (1.0 - 0.45 * smoothstep(200.0, 1500.0, uz)) + uCizgi * kenar * 0.85 + uIzgara * izgara * 0.32;
+        gl_FragColor = vec4(c, uC);
+        #include <colorspace_fragment>
+      }`,
+  });
+  const cizimZeminMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#0a1628'), transparent: true, opacity: 0, depthTest: false, depthWrite: false, toneMapped: false });
+  const cizimZemin = new THREE.Scene(); { const q = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), cizimZeminMat); q.position.z = -0.5; q.frustumCulled = false; cizimZemin.add(q); }
+  const cizimKam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cizimGizle = [];
+  scene.traverse(o => {
+    if (o.isSprite || o.isPoints || o.isLine) cizimGizle.push(o);
+    else if (o.isMesh && o.material && o.material.side === THREE.BackSide && o.geometry.parameters && o.geometry.parameters.radius > 1000) cizimGizle.push(o);   // gök kubbesi
+  });
+  cizimGizle.push(ic.grup, icIsik);
+  function cizimCiz(c) {
+    const kapali = [];
+    cizimGizle.forEach(o => { if (o.visible) { o.visible = false; kapali.push(o); } });
+    const oto = renderer.autoClear, golge = renderer.shadowMap.autoUpdate, arka = scene.background, sis = scene.fog;
+    renderer.autoClear = false; renderer.shadowMap.autoUpdate = false;
+    renderer.setRenderTarget(null);
+    renderer.clearDepth();
+    cizimZeminMat.opacity = c; renderer.render(cizimZemin, cizimKam);
+    cizimMat.uniforms.uC.value = c;
+    scene.background = null; scene.fog = null; scene.overrideMaterial = cizimMat;
+    renderer.render(scene, camera);
+    scene.overrideMaterial = null; scene.background = arka; scene.fog = sis;
+    renderer.autoClear = oto; renderer.shadowMap.autoUpdate = golge;
+    kapali.forEach(o => { o.visible = true; });
+  }
+
+  let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0;
   const kKonum = new THREE.Vector3(), kHedef = new THREE.Vector3(), yumHedef = new THREE.Vector3();
   let hedefIlk = true, icAyar = null;
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
@@ -276,12 +380,29 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     yumHedef.lerp(kHedef, anlik ? 1 : 1 - Math.exp(-dt * 3.2));   // bakış hafif geriden gelir: ağırlık hissi
     // çok hafif el-kamera nefesi (yalnız dışarıda belirgin)
     if (!az) { kKonum.y += Math.sin(t / 2300) * 0.02; kKonum.x += Math.sin(t / 3100) * 0.02; }
+    // açılışta kamera kendiliğinden, çok yavaş türbine doğru ilerler (kaydırınca devri kaydırmaya bırakır)
+    const disAgirlik = (1 - yumusak(0.36, 0.43, p)) + yumusak(0.975, 0.995, p);
+    if (!az) {
+      if (!hazirT) hazirT = t;
+      const surun = (1 - Math.exp(-(t - hazirT) / 22000)) * 16 * (1 - yumusak(0, 0.05, p));
+      if (surun > 0.01) { tmp.subVectors(yumHedef, kKonum); tmp.y = 0; if (tmp.lengthSq() > 1) kKonum.addScaledVector(tmp.normalize(), surun); }
+      // fareye çok hafif derinlik tepkisi (kamera 1–2 derecelik kayar)
+      fare.sx += ((fare.var ? fare.x : 0) - fare.sx) * (1 - Math.exp(-dt * 1.8));
+      fare.sy += ((fare.var ? fare.y : 0) - fare.sy) * (1 - Math.exp(-dt * 1.8));
+      if (!mobil && disAgirlik > 0.01 && (Math.abs(fare.sx) + Math.abs(fare.sy)) > 0.001) {
+        const uzak = kKonum.distanceTo(yumHedef) * 0.016 * disAgirlik;
+        tmp.subVectors(yumHedef, kKonum).normalize().cross(camera.up).normalize();
+        kKonum.addScaledVector(tmp, fare.sx * uzak); kKonum.y -= fare.sy * uzak * 0.5;
+      }
+    }
+    // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
+    if (!sonIcerde) { const yer = araziY(kKonum.x, kKonum.z) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
     camera.position.copy(kKonum); camera.lookAt(yumHedef);
 
     // iç/dış geçişi
     naselYerel(camera.position, yerel);
     const b = ic.sinir;
-    const icerde = (Math.abs(yerel.x) < 2.15 && yerel.y > b.TABAN - 0.2 && yerel.y < b.TAVAN + 0.15 && yerel.z > b.ON - 0.15 && yerel.z < b.ARKA + 0.2) ? 1 : 0;
+    const icerde = sonIcerde = (Math.abs(yerel.x) < 2.15 && yerel.y > b.TABAN - 0.2 && yerel.y < b.TAVAN + 0.15 && yerel.z > b.ON - 0.15 && yerel.z < b.ARKA + 0.2) ? 1 : 0;
     const yakin = p > 0.42 && p < 0.99;
     ic.grup.visible = yakin; icIsik.visible = yakin;
     parts.nacelle.visible = !icerde;
@@ -312,6 +433,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (ic.anaMil) ic.anaMil.rotation.z -= w * dt;
     if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * dt;
     yawGuncelle(dt);
+    if (parts.farm && !az) parts.farm.children.forEach(k => { if (k.userData.spin) k.userData.spin.rotation.z -= k.userData.speed * dt; });
     if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
 
     // alan derinliği: bakılan noktaya odak
@@ -323,15 +445,26 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     }
 
     olcek();
-    if (composer) composer.render(dt); else renderer.render(scene, camera);
+    const cz = yumusak(0.972, 0.993, p);
+    if (cz < 0.995) { if (composer) composer.render(dt); else renderer.render(scene, camera); }
+    else renderer.clear();
+    if (cz > 0.002) cizimCiz(cz);
+    if (cb.cizim) cb.cizim(cz);
     if (cb.ilerleme) cb.ilerleme(p, Math.max(0, camera.position.y), icerde);
     noktalariGuncelle(t, icerde);
+    etiketleriGuncelle();
+    fareIsinla(t);
     if (ilk) { ilk = false; canvas.classList.add('hazir'); if (cb.hazir) cb.hazir(); }
     rafId = requestAnimationFrame(kare);
   }
   baslat();
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); calisiyor = false; if (rafId) cancelAnimationFrame(rafId); canvas.classList.remove('hazir'); if (cb.hata) cb.hata(); }, false);
 
+  // sayfa tarafı fare konumunu bildirir: nx, ny ∈ [-1, 1]; null → fare sahnede değil
+  S.fare = (nx, ny) => {
+    if (nx === null || nx === undefined) { fare.var = false; return; }
+    fare.var = true; fare.x = nx; fare.y = ny; fare.deg = true;
+  };
   // test ve hata ayıklama için
   window.__deneyim = { S, ic, KARE, egriU, kEgri, hEgri, yaw, tilt, get p() { return p; } };
   return S;
