@@ -875,4 +875,51 @@ document.getElementById('burger').addEventListener('click', function () {
 <div class="doku" aria-hidden="true"></div>
 <script src="/assets/canli.js?v=8be3b4e9" defer></script>
 <script src="/assets/olcum.js?v=37c7cfab" defer></script>
+<script>
+/* V4: her araca "sonucu kopyala" ve "sıfırla" */
+(function () {
+  'use strict';
+  function metin(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+  function deger(dd) { var k = dd.querySelector('small'); return k ? (dd.textContent.replace(k.textContent, '').trim() + ' ' + k.textContent.trim()) : metin(dd); }
+  function bildir(msg, t) { msg.textContent = t; setTimeout(function () { msg.textContent = ''; }, 2600); }
+  function kopya(yazi, msg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(yazi).then(function () { bildir(msg, 'Copied'); }, function () { bildir(msg, 'Could not copy'); });
+    else { var t = document.createElement('textarea'); t.value = yazi; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); bildir(msg, 'Copied'); } catch (e) { bildir(msg, 'Could not copy'); } t.remove(); }
+  }
+  [].forEach.call(document.querySelectorAll('section.tool'), function (sec) {
+    var pay = sec.querySelector('.pay'); if (!pay) return;
+    var msg = pay.querySelector('.paymsg');
+    var girdiler = [].slice.call(sec.querySelectorAll('.calc input:not([type=range]), .calc select'));
+    var kb = document.createElement('button'); kb.type = 'button'; kb.className = 'paydug sonucKopyala'; kb.textContent = 'Copy result';
+    var sb = document.createElement('button'); sb.type = 'button'; sb.className = 'paydug'; sb.textContent = 'Reset';
+    pay.insertBefore(sb, msg); pay.insertBefore(kb, sb);
+    kb.addEventListener('click', function () {
+      var satir = [metin(sec.querySelector('h2')), '', 'Inputs:'];
+      girdiler.forEach(function (e) {
+        var l = sec.querySelector('label[for="' + e.id + '"]'), u = e.parentNode.querySelector('.u');
+        var v = e.tagName === 'SELECT' ? metin(e.options[e.selectedIndex]) : e.value;
+        satir.push('  ' + metin(l) + ': ' + v + (u ? ' ' + metin(u) : ''));
+      });
+      satir.push('', 'Result:');
+      [].forEach.call(sec.querySelectorAll('.out > div'), function (d) {
+        var dt = d.querySelector('dt'), dd = d.querySelector('dd'); if (!dd) return;
+        if (dt && dt.classList.contains('gorsel-gizli')) satir.push('', metin(dd));
+        else satir.push('  ' + metin(dt) + ': ' + deger(dd));
+      });
+      satir.push('', 'sonersoylu.com/en/tools#' + sec.id);
+      kopya(satir.join('\n'), msg);
+    });
+    sb.addEventListener('click', function () {
+      girdiler.forEach(function (e) {
+        if (e.tagName === 'SELECT') [].forEach.call(e.options, function (o) { o.selected = o.defaultSelected; });
+        else e.value = e.defaultValue;
+        var ayna = document.getElementById(e.id + 'r'); if (ayna) ayna.value = ayna.defaultValue;
+        e.dispatchEvent(new Event('input', { bubbles: true })); e.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      try { history.replaceState(null, '', location.pathname + '#' + sec.id); } catch (e) {}
+      bildir(msg, 'Reset');
+    });
+  });
+})();
+</script>
 </body></html>
