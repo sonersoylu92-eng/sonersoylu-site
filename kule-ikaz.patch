@@ -1,0 +1,117 @@
+diff --git a/assets/deneyim/arayuz.js b/assets/deneyim/arayuz.js
+index a8a85fe..6f38e7f 100644
+--- a/assets/deneyim/arayuz.js
++++ b/assets/deneyim/arayuz.js
+@@ -188,7 +188,7 @@
+     bolum.classList.add('uc-boyut', 'dny-akis');
+     if (basla) basla.hidden = true;
+     acilabilir = false;
+-    import('/assets/deneyim/deneyim.js?v=4e2cf316').then(function (mod) {
++    import('/assets/deneyim/deneyim.js?v=53c5f586').then(function (mod) {
+       DURAKLAR = mod.DURAKLAR; rayKur();
+       var S = mod.deneyimBaslat(tuval, bolum, {
+         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
+diff --git a/assets/deneyim/deneyim.js b/assets/deneyim/deneyim.js
+index 2d10836..69e603c 100644
+--- a/assets/deneyim/deneyim.js
++++ b/assets/deneyim/deneyim.js
+@@ -9,7 +9,7 @@
+  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
+  */
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene, SPEC } from '/n117/n117.js?v=cfd3cd65';
++import { createScene, SPEC } from '/n117/n117.js?v=4c390909';
+ import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=7c5ea850';
+ import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
+ 
+diff --git a/assets/hero3d.js b/assets/hero3d.js
+index 6479013..e087433 100644
+--- a/assets/hero3d.js
++++ b/assets/hero3d.js
+@@ -13,7 +13,7 @@
+  * fotoğraf olduğu gibi kalıyor; sayfa hiçbir şey kaybetmiyor.
+  */
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene } from '/n117/n117.js?v=cfd3cd65';
++import { createScene } from '/n117/n117.js?v=4c390909';
+ 
+ export function kapak3BBaslat(canvas) {
+   let S;
+diff --git a/deneyim/index.html b/deneyim/index.html
+index e59276c..5ae3fd1 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -169,6 +169,6 @@
+ 
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=4947d907" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=0274e2bb" defer></script>
+ </body>
+ </html>
+diff --git a/index.html b/index.html
+index 8f3327c..fc83da2 100644
+--- a/index.html
++++ b/index.html
+@@ -672,7 +672,7 @@
+   }, 10 * 60 * 1000);
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=4947d907" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=0274e2bb" defer></script>
+ <script src="/assets/vitrin.js?v=e8d36a80" defer></script>
+ </body>
+ </html>
+diff --git a/n117/index.html b/n117/index.html
+index 5b93323..a9118e8 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -785,7 +785,7 @@ document.getElementById('burger').addEventListener('click', function () {
+ </script>
+ <script type="module">
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=cfd3cd65';
++import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=4c390909';
+ 
+ const canvas = document.getElementById('n117cv');
+ let S;
+diff --git a/n117/n117.js b/n117/n117.js
+index 74ebb07..7c8a133 100644
+--- a/n117/n117.js
++++ b/n117/n117.js
+@@ -670,6 +670,35 @@ export function createScene(canvas) {
+ 
+   const towerTopY = 3.55 + TOWER_SEGMENTS.reduce((a, s) => a + s.h, 0);
+ 
++  // kule gövdesi ikaz lambaları: kanat ucu 150 m'yi aşan yeni türbinlerde nasel
++  // lambalarına ek olarak kule yarı yüksekliğinde bir ara seviye bulunur. Dört lamba
++  // 90° arayla dizilir ki her yönden en az biri görünsün; nasel lambalarıyla eşzamanlı çakar.
++  parts.kuleIkaz = (() => {
++    const g = new THREE.Group();
++    const yL = Math.round(towerTopY / 2);
++    const r = THREE.MathUtils.lerp(SPEC.towerBase, SPEC.towerTop, (yL - 3.55) / (towerTopY - 3.55)) / 2;
++    g.userData.yukseklik = yL;
++    for (let i = 0; i < 4; i++) {
++      const a = Math.PI / 4 + i * Math.PI / 2;
++      const k = new THREE.Group();
++      k.position.set(Math.cos(a) * r, yL, Math.sin(a) * r);
++      k.rotation.y = -a;                                   // yerel +x kuleden dışarı bakar
++      const kol = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.07, 0.1), MAT.dark);
++      kol.position.x = 0.17; k.add(kol);
++      const govde = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.16, 14), MAT.dark);
++      govde.position.set(0.36, 0.06, 0); k.add(govde);
++      const kubbe = new THREE.Mesh(new THREE.SphereGeometry(0.12, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), IKAZ_MAT);
++      kubbe.position.set(0.36, 0.14, 0); k.add(kubbe);
++      const hale = new THREE.Sprite(IKAZ_HALE);
++      hale.position.set(0.42, 0.2, 0); hale.scale.set(2.6, 2.6, 1); hale.renderOrder = 5; k.add(hale);
++      const uzak = new THREE.Sprite(IKAZ_HALE_UZAK);
++      uzak.position.set(0.42, 0.2, 0); uzak.scale.set(0.024, 0.024, 1); uzak.renderOrder = 5; k.add(uzak);
++      g.add(k);
++    }
++    scene.add(g);
++    return g;
++  })();
++
+   // nacelle grubu
+   const yaw = new THREE.Group();
+   yaw.position.y = towerTopY + SPEC.nacelleHei / 2 + 0.25;
