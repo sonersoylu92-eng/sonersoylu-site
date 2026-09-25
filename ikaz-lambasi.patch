@@ -1,0 +1,181 @@
+diff --git a/assets/deneyim/arayuz.js b/assets/deneyim/arayuz.js
+index 1d2b12f..a8a85fe 100644
+--- a/assets/deneyim/arayuz.js
++++ b/assets/deneyim/arayuz.js
+@@ -188,7 +188,7 @@
+     bolum.classList.add('uc-boyut', 'dny-akis');
+     if (basla) basla.hidden = true;
+     acilabilir = false;
+-    import('/assets/deneyim/deneyim.js?v=cdc4c247').then(function (mod) {
++    import('/assets/deneyim/deneyim.js?v=4e2cf316').then(function (mod) {
+       DURAKLAR = mod.DURAKLAR; rayKur();
+       var S = mod.deneyimBaslat(tuval, bolum, {
+         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
+diff --git a/assets/deneyim/deneyim.js b/assets/deneyim/deneyim.js
+index 85b820d..2d10836 100644
+--- a/assets/deneyim/deneyim.js
++++ b/assets/deneyim/deneyim.js
+@@ -9,7 +9,7 @@
+  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
+  */
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene, SPEC } from '/n117/n117.js?v=2a90e4df';
++import { createScene, SPEC } from '/n117/n117.js?v=cfd3cd65';
+ import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=7c5ea850';
+ import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
+ 
+@@ -312,6 +312,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+     if (ic.anaMil) ic.anaMil.rotation.z -= w * dt;
+     if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * dt;
+     yawGuncelle(dt);
++    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
+ 
+     // alan derinliği: bakılan noktaya odak
+     if (bokeh) {
+diff --git a/assets/hero3d.js b/assets/hero3d.js
+index 1bc181f..6479013 100644
+--- a/assets/hero3d.js
++++ b/assets/hero3d.js
+@@ -13,7 +13,7 @@
+  * fotoğraf olduğu gibi kalıyor; sayfa hiçbir şey kaybetmiyor.
+  */
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene } from '/n117/n117.js?v=2a90e4df';
++import { createScene } from '/n117/n117.js?v=cfd3cd65';
+ 
+ export function kapak3BBaslat(canvas) {
+   let S;
+@@ -108,6 +108,7 @@ export function kapak3BBaslat(canvas) {
+     if (t - sonKontrol > 4000) { isikGuncelle(); sonKontrol = t; }
+ 
+     if (parts.spin) parts.spin.rotation.z -= devirRad() * dt;
++    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);
+ 
+     if (!az) {
+       imX += (hdX - imX) * 0.02;
+diff --git a/deneyim/index.html b/deneyim/index.html
+index da0d2f0..e59276c 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -169,6 +169,6 @@
+ 
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=2a059055" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=4947d907" defer></script>
+ </body>
+ </html>
+diff --git a/index.html b/index.html
+index ee8e7a0..8f3327c 100644
+--- a/index.html
++++ b/index.html
+@@ -672,7 +672,7 @@
+   }, 10 * 60 * 1000);
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=2a059055" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=4947d907" defer></script>
+ <script src="/assets/vitrin.js?v=e8d36a80" defer></script>
+ </body>
+ </html>
+diff --git a/n117/index.html b/n117/index.html
+index 43dc2ff..5b93323 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -785,7 +785,7 @@ document.getElementById('burger').addEventListener('click', function () {
+ </script>
+ <script type="module">
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=2a90e4df';
++import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=cfd3cd65';
+ 
+ const canvas = document.getElementById('n117cv');
+ let S;
+@@ -885,6 +885,7 @@ if (S) {
+     olcek();
+     const t = performance.now();
+     if (donuyor && parts.spin) parts.spin.rotation.z = -(t / 1000) * DEVIR;
++    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);
+     if (ucus) {
+       let k = (t - ucus.bas) / ucus.sure;
+       if (k >= 1) { k = 1; }
+diff --git a/n117/n117.js b/n117/n117.js
+index 39a8631..74ebb07 100644
+--- a/n117/n117.js
++++ b/n117/n117.js
+@@ -55,6 +55,22 @@ const MAT = {
+   glassy:  new THREE.MeshStandardMaterial({ color: 0x2f3439, roughness: 0.3, metalness: 0.5 }),
+ };
+ 
++// uçak ikaz lambası: kırmızı kubbe (yanıp söner) ve uzaktan görünen ışık halesi
++const IKAZ_MAT = new THREE.MeshStandardMaterial({ color: 0x5a0d08, emissive: 0xff2410, emissiveIntensity: 0.2, roughness: 0.25 });
++const IKAZ_HALE = (() => {
++  const c = document.createElement('canvas'); c.width = c.height = 64;
++  const x = c.getContext('2d'), gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
++  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.18, 'rgba(255,120,90,.9)');
++  gr.addColorStop(0.45, 'rgba(255,40,20,.28)'); gr.addColorStop(1, 'rgba(255,20,10,0)');
++  x.fillStyle = gr; x.fillRect(0, 0, 64, 64);
++  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
++  return new THREE.SpriteMaterial({ map: tex, color: 0xff3a22, transparent: true, opacity: 0,
++    blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
++})();
++
++const IKAZ_HALE_UZAK = IKAZ_HALE.clone();
++IKAZ_HALE_UZAK.sizeAttenuation = false;
++
+ /* ------------------------------------------------------------ kanat profili */
+ 
+ // NACA 63-4xx ailesine yakın, normalize (x 0..1, y ±)
+@@ -271,6 +287,28 @@ function buildNacelle() {
+   anem.position.set(0, H / 2 + 1.75, L / 2 - 0.4);
+   g.add(anem);
+ 
++  // uçak ikaz lambaları: arka çatıda, iki yanda. İki lamba olmasının sebebi,
++  // hangi yönden bakılırsa bakılsın en az birinin kanat ya da soğutucu arkasında kalmaması.
++  g.userData.ikaz = [-1, 1].map(yan => {
++    const k = new THREE.Group();
++    k.position.set(yan * (W / 2 - 0.42), H / 2 + 0.02, L / 2 - 0.75);
++    const ayak = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.42, 8), MAT.dark);
++    ayak.position.y = 0.21; k.add(ayak);
++    const govde = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.17, 0.18, 16), MAT.dark);
++    govde.position.y = 0.5; k.add(govde);
++    const kubbe = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), IKAZ_MAT);
++    kubbe.position.y = 0.59; k.add(kubbe);
++    const hale = new THREE.Sprite(IKAZ_HALE);
++    hale.position.y = 0.66; hale.scale.set(3.2, 3.2, 1); hale.renderOrder = 5;
++    k.add(hale);
++    // uzak hale: ekran boyutunda sabit, türbine uzaktan bakınca da çakma seçilsin
++    const uzak = new THREE.Sprite(IKAZ_HALE_UZAK);
++    uzak.position.y = 0.66; uzak.scale.set(0.03, 0.03, 1); uzak.renderOrder = 5;
++    k.add(uzak);
++    g.add(k);
++    return k;
++  });
++
+   // servis kapağı / helideck izi
+   const hatch = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.06, 1.2), MAT.steelDk);
+   hatch.position.set(0, H / 2 + 0.02, 0.6);
+@@ -729,7 +767,23 @@ export function createScene(canvas) {
+   })();
+   scene.add(parts.groundBlade);
+ 
++  // ikaz lambaları eşzamanlı yanıp söner: dakikada 40 çakma (1,5 sn'lik çevrim,
++  // ~0,5 sn yanık). Gündüz hale sönük, gece belirgin.
++  let ikazMod = 'day';
++  parts.ikaz = {
++    lambalar: parts.nacelle.userData.ikaz,
++    guncelle(tSn) {
++      const f = (tSn % 1.5) / 1.5;
++      const yanik = f < 0.34 ? Math.sin(Math.min(1, f / 0.34) * Math.PI) ** 0.35 : 0;
++      const guc = ikazMod === 'night' ? 1 : (ikazMod === 'sunset' ? 0.85 : 0.6);
++      IKAZ_MAT.emissiveIntensity = 0.15 + yanik * (ikazMod === 'night' ? 6 : 4.5);
++      IKAZ_HALE.opacity = yanik * guc;
++      IKAZ_HALE_UZAK.opacity = yanik * Math.min(1, guc + 0.2);
++    },
++  };
++
+   function setLight(mode) {
++    ikazMod = mode;
+     const sunset = mode === 'sunset';
+     const night = mode === 'night';
+     const st = night ? SKY.night : (sunset ? SKY.sunset : SKY.day);
