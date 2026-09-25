@@ -255,11 +255,25 @@
   erisim.appendChild(erisimBtn); sahne.appendChild(erisim);
   /* ---- servis asansörü: yukarı erişim göstergesi ---- */
   var asansor = document.createElement('div'); asansor.className = 'v-asansor'; asansor.setAttribute('aria-hidden', 'true');
-  asansor.innerHTML = '<p class="v-as-ust">Servis asansörü</p><p class="v-as-ad">Yukarı erişim</p><p class="v-as-yol"><span>Kule</span><i><b></b></i><span>Nasel</span></p><p class="v-as-kot">Kot <b>0</b> m</p>';
+  asansor.innerHTML = '<p class="v-as-ust">ZARGES tipi servis asansörü · temsili</p><p class="v-as-ad">Yukarı erişim</p><p class="v-as-yol"><span>Kule</span><i><b></b></i><span>Nasel</span></p><p class="v-as-kot">Kot <b>0</b> m</p>';
   sahne.appendChild(asansor);
   var asOran = asansor.querySelector('.v-as-yol i'), asKot = asansor.querySelector('.v-as-kot b');
   /* ---- temsili yerleşim notu: kule ve nasel içi üretici çizimi değildir ---- */
   var temsil = document.createElement('p'); temsil.className = 'v-temsil'; temsil.textContent = 'Temsili yerleşim · üretici çizimi değildir'; sahne.appendChild(temsil);
+
+  /* ---- ses: varsayılan kapalı; açılınca saha sesleri üretilir (dosya indirilmez) ---- */
+  var sesBtn = document.createElement('button'); sesBtn.type = 'button'; sesBtn.className = 'v-ses'; sesBtn.setAttribute('aria-pressed', 'false');
+  sesBtn.innerHTML = '<span aria-hidden="true"></span>Ses kapalı';
+  var sesMotor = null, sesYukleniyor = false;
+  sesBtn.addEventListener('click', function () {
+    if (sesMotor) { sesMotor.kapat(); sesMotor = null; sesBtn.setAttribute('aria-pressed', 'false'); sesBtn.lastChild.textContent = 'Ses kapalı'; return; }
+    if (sesYukleniyor) return; sesYukleniyor = true;
+    import('/assets/deneyim/ses.js?v=9dd49f08').then(function (m) {
+      sesMotor = m.sesKur(); sesYukleniyor = false;
+      if (sesMotor) { sesBtn.setAttribute('aria-pressed', 'true'); sesBtn.lastChild.textContent = 'Ses açık'; }
+    }).catch(function () { sesYukleniyor = false; });
+  });
+  sahne.appendChild(sesBtn);
 
   /* ---- irtifa cetveli: dış bölümde 0–120 m ---- */
   var irtifa = document.createElement('div'); irtifa.className = 'v-irtifa'; irtifa.setAttribute('aria-hidden', 'true');
@@ -283,13 +297,14 @@
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=c8f39ede').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=a1acae6c').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
         noktalar: noktalar,
         etiketler: etiketler,
         uzerinde: uzerinde,
+        ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
         hazir: function () { bolum.classList.add('hazir'); },
