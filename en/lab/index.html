@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Field Lab — Turbine Systems in One Place | Soner Soylu</title>
+<meta name="description" content="Wind turbine systems under eight headings: drivetrain, pitch, yaw, electrical, control, thermal, structure and wind — each with a system page, cases and tools.">
+<link rel="canonical" href="https://sonersoylu.com/en/lab/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/lab/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/lab/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/lab/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Field lab">
+<meta property="og:description" content="Wind turbine systems under eight headings: drivetrain, pitch, yaw, electrical, control, thermal, structure and wind — each with a system page, cases and tools.">
+<meta property="og:url" content="https://sonersoylu.com/en/lab/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0e10">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "name": "Field lab", "url": "https://sonersoylu.com/en/lab/", "inLanguage": "en", "description": "A technical lab that groups wind turbine systems under eight headings: drivetrain, pitch, yaw, electrical, control and SCADA, thermal, structure and wind. Each has a system page, a real case and tools.", "author": {"@type": "Person", "name": "Soner Soylu", "url": "https://sonersoylu.com/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sonersoylu.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Field lab", "item": "https://sonersoylu.com/en/lab/"}]}]}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+
+<link rel="stylesheet" href="/style.css?v=1a5286e5">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+
+<style>
+.lab{--w:min(74rem,calc(100vw - 3rem));max-width:var(--w);margin:0 auto;padding:calc(73px + 1.5rem) 0 4rem}
+.lab-kic{margin:1.6rem 0 0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--beacon)}
+.lab h1{margin:.8rem 0 0;font-family:var(--sans);font-weight:600;font-size:clamp(2.4rem,5.6vw,4.4rem);line-height:.98;letter-spacing:-.045em;max-width:14ch}
+.lab-lead{margin:1.2rem 0 0;max-width:62ch;font-size:1.0625rem;line-height:1.7;color:var(--muted)}
+.lab-sema{margin:2.4rem 0 0;border:1px solid var(--line);background:var(--surface);padding:1.2rem 1.2rem .9rem}
+.lab-sema p.b{margin:0 0 .8rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.lab-akis{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:0;padding:0;list-style:none}
+.lab-akis li{display:flex;align-items:center}
+.lab-akis li+li::before{content:"";width:1.4rem;height:1px;background:var(--line);margin:0 .2rem}
+.lab-akis a{display:flex;flex-direction:column;gap:.2rem;min-width:7rem;padding:.7rem .85rem;border:1px solid var(--line);background:var(--ground);color:var(--ink);text-decoration:none;transition:border-color .15s,background .15s}
+.lab-akis a:hover,.lab-akis a:focus-visible{border-color:var(--beacon);background:rgba(124,196,255,.06)}
+.lab-akis small{font-family:var(--mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--beacon)}
+.lab-akis b{font-weight:500;font-size:.875rem}
+.lab-sema p.n{margin:.8rem 0 0;font-size:.8125rem;color:var(--muted)}
+.lab-izgara{margin-top:2.5rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:56rem){.lab-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lab .lab-kat{display:flex;flex-direction:column;gap:.9rem;padding:1.6rem 1.5rem;border:0;background:var(--surface);scroll-margin-top:90px}
+.lab-kat:target{box-shadow:inset 0 2px 0 var(--beacon)}
+.lab-kat .no{margin:0;display:flex;justify-content:space-between;font-family:var(--mono);font-size:.625rem;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.lab-kat .no span{color:var(--muted)}
+.lab .lab-kat h2{margin:0;font-family:var(--sans);font-size:1.625rem;line-height:1.1;letter-spacing:-.03em;font-weight:600;border:0;padding:0}
+.lab-kat .alt{margin:-.4rem 0 0;font-family:var(--mono);font-size:.6875rem;color:var(--muted);letter-spacing:.04em}
+.lab-kat .oz{margin:0;font-size:.9375rem;line-height:1.65;color:var(--muted)}
+.lab-mod{margin:.2rem 0 0;padding:0;list-style:none;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.lab-mod a{display:grid;grid-template-columns:5.6rem minmax(0,1fr) auto;align-items:center;gap:.9rem;padding:.75rem .9rem;background:var(--ground);color:var(--ink);text-decoration:none;transition:background .15s}
+.lab-mod a:hover{background:var(--raise)}
+.lab-mod .t{justify-self:start;font-family:var(--mono);font-size:.5625rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .4rem;border:1px solid currentColor;border-radius:2px}
+.lab-mod .t.s{color:var(--beacon)}.lab-mod .t.v{color:var(--hata)}.lab-mod .t.e{color:#b9c6d0}.lab-mod .t.a,.lab-mod .t.d{color:var(--uyari)}.lab-mod .t.b{color:#9fdcff}.lab-mod .t.m{color:#c9a7ff}.lab-mod .t.k{color:#b9c6d0}
+.lab-mod b{display:block;font-weight:500;font-size:.9375rem}
+.lab-mod small{display:block;margin-top:.1rem;font-size:.8125rem;color:var(--muted)}
+.lab-mod .ok{color:var(--muted)}
+.lab-not{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);max-width:70ch;font-size:.875rem;line-height:1.7;color:var(--muted)}
+.lab-not a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:40rem){.lab{--w:calc(100vw - 2rem)}.lab-akis{flex-direction:column}.lab-akis li+li::before{width:1px;height:.9rem;margin:0 0 0 1.2rem}.lab-akis li{flex-direction:column;align-items:stretch}.lab-akis a{min-width:0}.lab-mod a{grid-template-columns:1fr auto}.lab-mod .t{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.lab-akis a,.lab-mod a{transition:none}}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/lab/">Field lab<span>Eight systems: cases, guides and tools</span></a><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" >Field notes<span>Real fault cases, step by step</span></a><a href="/en/diagnostics/">Diagnosis simulator<span>From alarm to root cause</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/about/">About</a><a href="/en/#contact">Contact</a><a href="/lab/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/lab/">Field lab</a><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><a href="/en/diagnostics/">Diagnosis simulator</a><a href="/en/assistant/">Assistant</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/about/">About</a><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/lab/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="lab" id="top">
+ <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <span aria-current="page">Field lab</span></nav>
+ <p class="lab-kic">Field lab</p>
+ <h1>Understand the systems, then diagnose</h1>
+ <p class="lab-lead">I have grouped the turbine under eight system headings. Each brings together a page on how the system works, a real case from the field and the relevant tools. Pages marked (Turkish) are not yet available in English.</p>
+ <div class="lab-sema"><p class="b">Power flow · click a section</p><ol class="lab-akis" aria-label="Power flow"><li><a href="#pitch"><small>Blades · hub</small><b>Rotor</b></a></li><li><a href="#guc"><small>Shaft · gearbox</small><b>Drivetrain</b></a></li><li><a href="#elektrik"><small>Electrical</small><b>Generator</b></a></li><li><a href="#elektrik"><small>Power electronics</small><b>Converter</b></a></li><li><a href="#elektrik"><small>Transformer · connection</small><b>Grid</b></a></li></ol><p class="n">Energy flows from wind to grid in this order. Yaw, control, thermal and structure serve the whole chain.</p></div>
+ <div class="lab-izgara"><section class="lab-kat" id="guc" aria-labelledby="lk-guc"><p class="no">Module 01<span>4 resources</span></p><h2 id="lk-guc">Drivetrain</h2><p class="alt">Main bearing, main shaft, gearbox and coupling</p><p class="oz">The chain that turns the rotor’s slow, high-torque rotation into the speed the generator needs. Most faults start with lubrication, alignment and bearing loads.</p><ul class="lab-mod"><li><a href="/en/systems/gearbox/"><span class="t s">System</span><span><b>Gearbox</b><small>Design, lubrication, temperature management, faults</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/gearbox-temperature/"><span class="t v">Case</span><span><b>Gearbox temperature rise</b><small>Vestas V126 · oil loss through a shaft seal</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/n117/"><span class="t b">3D</span><span><b>N117 tour (Turkish)</b><small>15-stop site tour</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/deneyim/"><span class="t b">3D</span><span><b>Inside the turbine (Turkish)</b><small>The drivetrain inside the nacelle</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="pitch" aria-labelledby="lk-pitch"><p class="no">Module 02<span>5 resources</span></p><h2 id="lk-pitch">Pitch and rotor</h2><p class="alt">Blade angle, pitch motor and gearbox, encoder</p><p class="oz">Adjusts the blade angle to limit power and stop the turbine; it is also the turbine’s primary brake.</p><ul class="lab-mod"><li><a href="/en/systems/pitch/"><span class="t s">System</span><span><b>Pitch system</b><small>Motor, gearbox, sensors, faults</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/pitch-motor-high-current/"><span class="t v">Case</span><span><b>Pitch motor high current</b><small>Nordex N117 · gearbox housing crack</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/blade-vibration/"><span class="t v">Case</span><span><b>Blade vibration</b><small>Vestas V126 · encoder calibration</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/diagnostics/#pitch"><span class="t m">Simulator</span><span><b>Pitch motor high current</b><small>Alarm to root cause in 5 steps</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/tools/#ucucu"><span class="t a">Tool</span><span><b>Tip speed and TSR</b><small>Rotor diameter, speed, wind</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="yaw" aria-labelledby="lk-yaw"><p class="no">Module 03<span>3 resources</span></p><h2 id="lk-yaw">Yaw</h2><p class="alt">Bearing, motors and brake that turn the nacelle into the wind</p><p class="oz">Turns the nacelle to face the wind. Lubrication, the wind vane and the control parameters work together; when one fails, oscillation and wear follow.</p><ul class="lab-mod"><li><a href="/en/systems/yaw/"><span class="t s">System</span><span><b>Yaw system</b><small>Motor, bearing, sensor, control</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/yaw-hunting/"><span class="t v">Case</span><span><b>Yaw hunting</b><small>Enercon E92 · three causes together</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/yaw-bearing-wear/"><span class="t v">Case</span><span><b>Yaw bearing wear</b><small>Enercon E92 · blocked lubrication line</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="elektrik" aria-labelledby="lk-elektrik"><p class="no">Module 04<span>3 resources</span></p><h2 id="lk-elektrik">Electrical and power electronics</h2><p class="alt">Generator, converter, transformer and connections</p><p class="oz">Turns mechanical power into electricity at the voltage and frequency the grid needs. Intermittent faults often point to a connection that heats up under load.</p><ul class="lab-mod"><li><a href="/en/systems/generator/"><span class="t s">System</span><span><b>Generator and converter</b><small>DFIG, converter, cooling, fault finding</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/converter-overcurrent/"><span class="t v">Case</span><span><b>Converter overcurrent</b><small>Vestas V110 · loose DC busbar</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/diagnostics/#converter"><span class="t m">Simulator</span><span><b>Converter overcurrent</b><small>Finding the power threshold</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="kontrol" aria-labelledby="lk-kontrol"><p class="no">Module 05<span>4 resources</span></p><h2 id="lk-kontrol">Control and SCADA</h2><p class="alt">Sensors, PLC, alarm codes, trends</p><p class="oz">The part of the turbine that makes decisions. The first step of a good diagnosis is reading the alarm code and the SCADA trend correctly; the reading does not always show reality.</p><ul class="lab-mod"><li><a href="/en/field-notes/generator-temperature/"><span class="t v">Case</span><span><b>Generator temperature alarm</b><small>Vestas V126 · sensor drift</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/diagnostics/#generator"><span class="t m">Simulator</span><span><b>Generator temperature alarm</b><small>Verifying the measurement chain</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/kodlar/"><span class="t e">Guide</span><span><b>Alarm code library (Turkish)</b><small>12 code families, 50 common conditions</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/ariza/"><span class="t e">Guide</span><span><b>Fault tree (Turkish)</b><small>From symptom to likely cause</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="termal" aria-labelledby="lk-termal"><p class="no">Module 06<span>3 resources</span></p><h2 id="lk-termal">Thermal and lubrication</h2><p class="alt">Temperature, cooling, oil and grease</p><p class="oz">Temperature is often the first visible trace of a fault. If oil level and grease distribution are not checked regularly, the fault builds up in the trend months ahead.</p><ul class="lab-mod"><li><a href="/en/field-notes/gearbox-temperature/"><span class="t v">Case</span><span><b>Gearbox temperature rise</b><small>Comparing with neighbouring turbines</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/generator-temperature/"><span class="t v">Case</span><span><b>Generator temperature alarm</b><small>IR measurement versus SCADA</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/field-notes/yaw-bearing-wear/"><span class="t v">Case</span><span><b>Yaw bearing wear</b><small>Grease sector map</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="yapi" aria-labelledby="lk-yapi"><p class="no">Module 07<span>3 resources</span></p><h2 id="lk-yapi">Structure and joints</h2><p class="alt">Foundation, tower, flanges, bolts</p><p class="oz">The structure that carries the turbine’s loads to the ground. Bolt preload and flange joints are among the most repeated jobs on site, and the ones not to skip.</p><ul class="lab-mod"><li><a href="/n90/"><span class="t b">3D</span><span><b>N90 assembly (Turkish)</b><small>Seven stages from foundation to commissioning</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/tools/bolt-tension/"><span class="t a">Tool</span><span><b>Bolt tensioning</b><small>Assembly force and tensioning tables</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/guide/"><span class="t e">Guide</span><span><b>Field guide</b><small>Getting in, a day on site</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section><section class="lab-kat" id="ruzgar" aria-labelledby="lk-ruzgar"><p class="no">Module 08<span>3 resources</span></p><h2 id="lk-ruzgar">Wind and production</h2><p class="alt">Power curve, air density, capacity factor</p><p class="oz">The energy you can take from the wind rises with the cube of its speed. Judging production means reading wind, density and the power curve together.</p><ul class="lab-mod"><li><a href="/en/tools/"><span class="t a">Tool</span><span><b>Field calculators</b><small>Power, height, capacity factor, Weibull</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/ruzgar/"><span class="t d">Data</span><span><b>Live wind (Turkish)</b><small>Seven regions, forecast at hub height</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li><li><a href="/en/turbines/"><span class="t e">Guide</span><span><b>Model guide</b><small>Vestas and Enercon specs</small></span><span class="ok" aria-hidden="true">&#8594;</span></a></li></ul></section></div>
+ <div class="lab-not"><p>The information here is field experience and does not replace the manufacturer service documentation. On every intervention your own turbine OEM instructions, LOTO procedure and site safety rules govern. For unfamiliar terms, see the <a href="/en/glossary/">glossary</a>.</p></div>
+</main>
+
+<footer class="son">
+ <div class="wrap">
+  <p class="son-koord" aria-hidden="true"><span>38°51′ N · 27°00′ E</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → today</span></p>
+  <p class="son-soz">The field never stops.<br><em>Neither does learning.</em></p>
+  <div class="son-orta">
+   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Wind turbine field service technician</p></div>
+   <nav class="son-nav" aria-label="Footer"><div><p class="son-bas">Field</p><ul><li><a href="/en/lab/">Field lab</a></li><li><a href="/en/field-notes/">Field notes</a></li><li><a href="/en/diagnostics/">Diagnosis simulator</a></li><li><a href="/en/turbines/">Turbines</a></li><li><a href="/en/systems/">Systems</a></li><li><a href="/en/guide/">Field guide</a></li></ul></div><div><p class="son-bas">Tools</p><ul><li><a href="/en/tools/">Calculators</a></li><li><a href="/en/glossary/">Glossary</a></li><li><a href="/en/assistant/">Field assistant</a></li></ul></div><div><p class="son-bas">Career</p><ul><li><a href="/en/about/">About me</a></li><li><a href="/en/how-to-become/">How to become one</a></li><li><a href="/en/gwo/">GWO training</a></li><li><a href="/en/pay/">Pay and offers</a></li></ul></div><div><p class="son-bas">Contact</p><ul><li><a href="mailto:sonersoylu@yandex.com">Email</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+  </div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/en/ad-policy/">Ad &amp; revenue policy</a><a href="/en/privacy/">Privacy policy</a><a href="/lab/" hreflang="tr" lang="tr">Türkçe</a></p></div>
+ </div>
+</footer>
+
+<script src="/assets/site.js?v=2083a619" defer></script>
+<script src="/assets/ara.js?v=da9b2173" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

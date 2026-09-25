@@ -504,14 +504,44 @@
   </url>
   <url>
     <loc>https://sonersoylu.com/teshis/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/teshis/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/diagnostics/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/teshis/"/>
+    <lastmod>2026-09-25</lastmod>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/diagnostics/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/teshis/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/diagnostics/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/teshis/"/>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
     <loc>https://sonersoylu.com/hakkimda/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/hakkimda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/hakkimda/"/>
+    <lastmod>2026-09-25</lastmod>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/hakkimda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/hakkimda/"/>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
     <loc>https://sonersoylu.com/lab/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/lab/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/lab/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/lab/"/>
+    <lastmod>2026-09-25</lastmod>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/en/lab/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/lab/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/lab/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/lab/"/>
     <lastmod>2026-09-25</lastmod>
   </url>
 </urlset>

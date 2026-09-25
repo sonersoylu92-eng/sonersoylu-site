@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fault Diagnosis Simulator — From Alarm to Root Cause | Soner Soylu</title>
+<meta name="description" content="An educational diagnosis simulator built from real field cases: read the alarm, choose the next step, and see why, what the measurement tells you and the root cause.">
+<link rel="canonical" href="https://sonersoylu.com/en/diagnostics/">
+<link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/diagnostics/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/teshis/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/teshis/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fault diagnosis simulator">
+<meta property="og:description" content="An educational diagnosis simulator built from real field cases: read the alarm, choose the next step, and see why, what the measurement tells you and the root cause.">
+<meta property="og:url" content="https://sonersoylu.com/en/diagnostics/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0e10">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "name": "Fault diagnosis simulator", "url": "https://sonersoylu.com/en/diagnostics/", "inLanguage": "en", "description": "An educational diagnosis simulator built from real field cases: read the alarm, choose the next step, and see why, what the measurement tells you and the root cause.", "isAccessibleForFree": true, "author": {"@type": "Person", "name": "Soner Soylu", "url": "https://sonersoylu.com/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sonersoylu.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Fault diagnosis simulator", "item": "https://sonersoylu.com/en/diagnostics/"}]}]}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+
+<link rel="stylesheet" href="/style.css?v=1a5286e5">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<style>
+.tsh{--w:min(74rem,calc(100vw - 3rem));max-width:var(--w);margin:0 auto;padding:calc(73px + 1.5rem) 0 5rem}
+.tsh-ust{margin-top:1.6rem!important}
+.tsh-kic{margin:0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--beacon)}
+.tsh h1{margin:.8rem 0 0;font-family:var(--sans);font-weight:600;font-size:clamp(2.2rem,5.4vw,4.2rem);line-height:1;letter-spacing:-.045em;max-width:16ch}
+.tsh-lead{margin:1.2rem 0 0;max-width:62ch;font-size:1.0625rem;line-height:1.7;color:var(--muted)}
+.tsh-rozet{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;padding:.55rem .8rem;border:1px solid rgba(242,178,51,.5);color:var(--uyari);font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;line-height:1.5}
+.tsh-rozet::before{content:"";flex:none;width:.45rem;height:.45rem;background:var(--uyari);transform:rotate(45deg)}
+.tsh-akis{display:flex;flex-wrap:wrap;gap:.3rem .5rem;margin:2rem 0 0;padding:0;list-style:none;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tsh-akis li{display:inline-flex;align-items:center;gap:.5rem}
+.tsh-akis li+li::before{content:"\2192";color:var(--line)}
+.tsh-sec{margin-top:2.5rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:52rem){.tsh-sec{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tsh-kart{display:flex;flex-direction:column;gap:.55rem;text-align:left;padding:1.4rem;background:var(--surface);border:0;color:var(--ink);font:inherit;cursor:pointer;transition:background .2s}
+.tsh-kart:hover{background:var(--raise)}
+.tsh-kart[aria-pressed="true"]{background:var(--raise);box-shadow:inset 0 2px 0 var(--beacon)}
+.tsh-kart .n{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.tsh-kart .n span{color:var(--muted)}
+.tsh-kart .a{font-size:1.25rem;font-weight:600;letter-spacing:-.02em}
+.tsh-kart .l{font-family:var(--mono);font-size:.75rem;line-height:1.5;color:var(--uyari)}
+.tsh-kart .g{margin-top:auto;padding-top:.6rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tsh-motor{margin-top:2.5rem;display:grid;gap:1.5rem}
+.tsh-motor[hidden]{display:none}
+@media(min-width:60rem){.tsh-motor{grid-template-columns:minmax(0,1fr) 20rem;align-items:start}}
+.tsh-ray{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:1px;margin:0;padding:0;list-style:none;border:1px solid var(--line);background:var(--line)}
+.tsh-ray li{flex:1 0 auto;padding:.7rem .9rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--surface);white-space:nowrap}
+
+.tsh-ray li.gecti{color:var(--ink)}
+.tsh-ray li.gecti::before{content:"\2713  ";color:var(--beacon)}
+.tsh-ray li.simdi{color:var(--on-beacon);background:var(--beacon)}
+.tsh-sahne{border:1px solid var(--line);background:var(--surface);padding:1.5rem}
+.tsh-baslik{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1rem;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.tsh-baslik p{margin:0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tsh-baslik b{color:var(--ink);font-weight:500}
+.tsh-alarm{margin:1rem 0 0;padding:.8rem 1rem;border-left:2px solid var(--hata);background:var(--ground);font-family:var(--mono);font-size:.8125rem;line-height:1.55;color:var(--ink)}
+.tsh-alarm small{display:block;margin-bottom:.2rem;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hata)}
+.tsh-durum{margin:1rem 0 0;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.tsh-soru{margin:1.6rem 0 0;font-size:1.25rem;line-height:1.35;letter-spacing:-.015em;font-weight:600;color:var(--ink)}
+.tsh-soru:focus{outline:none}
+.tsh-evre{display:block;margin-bottom:.35rem;font-family:var(--mono);font-size:.625rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.tsh-sec-l{margin:1rem 0 0;padding:0;list-style:none;display:grid;gap:.5rem}
+.tsh-sec-b{display:flex;gap:.9rem;width:100%;text-align:left;padding:.95rem 1rem;min-height:3rem;background:var(--ground);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:.9375rem;line-height:1.5;cursor:pointer;transition:border-color .15s,background .15s}
+.tsh-sec-b:hover:not(:disabled){border-color:var(--beacon)}
+.tsh-sec-b .h{flex:none;font-family:var(--mono);font-size:.75rem;color:var(--muted);padding-top:.1rem}
+.tsh-sec-b:disabled{cursor:default;opacity:.55}
+.tsh-sec-b.secildi{opacity:1;border-color:var(--ink)}
+.tsh-sec-b[data-d="en"].goster{opacity:1;border-color:var(--beacon);background:rgba(124,196,255,.07)}
+.tsh-geri{margin-top:1.2rem;padding:1.1rem 1.2rem;border:1px solid var(--line);background:var(--ground)}
+.tsh-geri[hidden]{display:none}
+.tsh-hukum{margin:0;display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase}
+.tsh-hukum::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:currentColor}
+.tsh-hukum.en{color:var(--beacon)}.tsh-hukum.iyi{color:var(--uyari)}.tsh-hukum.yanlis{color:var(--hata)}
+.tsh-geri dl{margin:.9rem 0 0;display:grid;gap:.8rem}
+.tsh-geri dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tsh-geri dd{margin:.25rem 0 0;font-size:.9375rem;line-height:1.65;color:var(--ink)}
+.tsh-bulgu{margin-top:1rem;padding:.9rem 1rem;border-left:2px solid var(--beacon);background:rgba(124,196,255,.06)}
+.tsh-bulgu small{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.tsh-bulgu p{margin:.35rem 0 0;font-size:.9375rem;line-height:1.65;color:var(--ink)}
+.tsh-ileri{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.1rem;min-height:2.9rem;padding:.7rem 1.3rem;font:inherit;font-weight:500;color:var(--on-beacon);background:var(--beacon);border:1px solid var(--beacon);cursor:pointer}
+.tsh-ileri:hover{filter:brightness(1.08)}
+.tsh-defter{border:1px solid var(--line);background:var(--surface);padding:1.2rem}
+.tsh-defter h2{margin:0;font-family:var(--mono);font-size:.6875rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:0;padding:0}
+.tsh-defter ol{margin:.9rem 0 0;padding:0;list-style:none;display:grid;gap:.8rem;counter-reset:d}
+.tsh-defter li{position:relative;padding-left:1.8rem;font-size:.8125rem;line-height:1.6;color:var(--muted);counter-increment:d}
+.tsh-defter li::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:.05rem;font-family:var(--mono);font-size:.6875rem;color:var(--beacon)}
+.tsh-defter li b{display:block;color:var(--ink);font-weight:500}
+.tsh-defter .bos{font-size:.8125rem;color:var(--muted)}
+.tsh-sonuc{border:1px solid var(--line);background:var(--surface);padding:1.6rem 1.5rem}
+.tsh-sonuc h2{margin:0;font-family:var(--sans);font-size:1.75rem;letter-spacing:-.03em;border:0;padding:0}
+.tsh-puan{margin:.6rem 0 0;font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;color:var(--beacon)}
+.tsh-sonuc dl{margin:1.2rem 0 0;display:grid;gap:1rem}
+.tsh-sonuc dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tsh-sonuc dt.kok{color:var(--hata)}
+.tsh-sonuc dd{margin:.3rem 0 0;font-size:1rem;line-height:1.65;color:var(--ink)}
+.tsh-son-dg{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.tsh-son-dg a,.tsh-son-dg button{display:inline-flex;align-items:center;min-height:2.9rem;padding:.7rem 1.2rem;font:inherit;font-size:.9375rem;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none}
+.tsh-son-dg a.bir{background:var(--beacon);border-color:var(--beacon);color:var(--on-beacon)}
+.tsh-not{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.875rem;line-height:1.7;color:var(--muted);max-width:70ch}
+.tsh-not a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:40rem){.tsh{--w:calc(100vw - 2rem)}.tsh-sahne{padding:1.1rem}}
+@media(prefers-reduced-motion:reduce){.tsh-kart,.tsh-sec-b{transition:none}}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/en/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/lab/">Field lab<span>Eight systems: cases, guides and tools</span></a><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/" >Field notes<span>Real fault cases, step by step</span></a><a href="/en/diagnostics/">Diagnosis simulator<span>From alarm to root cause</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/about/">About</a><a href="/en/#contact">Contact</a><a href="/teshis/" hreflang="tr" lang="tr">Türkçe</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Search the site" title="Search (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menu" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Resources</p><a href="/en/lab/">Field lab</a><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><a href="/en/systems/">Systems</a><a href="/en/field-notes/">Field notes</a><a href="/en/diagnostics/">Diagnosis simulator</a><a href="/en/assistant/">Assistant</a><p class="mgrup">Turbines</p><a href="/n90/">N90 assembly</a><a href="/n117/">N117 tour</a><a href="/en/turbines/">Model guide</a><p class="mgrup">Site</p><a href="/en/about/">About</a><a href="/en/#contact">Contact</a><a href="mailto:sonersoylu@yandex.com">Get in touch</a><a href="/teshis/" hreflang="tr" lang="tr">Türkçe</a></nav></div>
+</header>
+
+<main class="tsh" id="top">
+ <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <span aria-current="page">Fault diagnosis simulator</span></nav>
+ <p class="tsh-kic tsh-ust">Training · fault diagnosis</p>
+ <h1>When the turbine stops, thinking starts</h1>
+ <p class="tsh-lead">Scenarios built from real field cases. Read the alarm and choose the next step yourself. After every choice you see why it was right or premature, what that measurement tells you, and what was actually found on site.</p>
+ <p class="tsh-rozet">Educational simulation · not a substitute for OEM procedures or site safety rules</p>
+ <ol class="tsh-akis" aria-label="Diagnosis sequence"><li>Turbine</li><li>Alarm</li><li>Data</li><li>Observation</li><li>Hypothesis</li><li>Test</li><li>Result</li><li>Root cause</li></ol>
+ <div class="tsh-sec" role="group" aria-label="Choose a scenario"><button type="button" class="tsh-kart" data-s="pitch" aria-pressed="false" aria-controls="tshMotor"><span class="n">Scenario 01<span>Nordex N117/3000</span></span><span class="a">Pitch motor high current</span><span class="l">Pitch motor phase current high (Motor A)</span><span class="g">5 decision steps · Case 01</span></button><button type="button" class="tsh-kart" data-s="generator" aria-pressed="false" aria-controls="tshMotor"><span class="n">Scenario 02<span>Vestas V126</span></span><span class="a">Generator temperature alarm</span><span class="l">Generator temperature high · 116 °C (threshold 115 °C)</span><span class="g">3 decision steps · Case 04</span></button><button type="button" class="tsh-kart" data-s="converter" aria-pressed="false" aria-controls="tshMotor"><span class="n">Scenario 03<span>Vestas V110</span></span><span class="a">Converter overcurrent</span><span class="l">Rotor-side overcurrent / converter fault</span><span class="g">3 decision steps · Case 05</span></button></div>
+ <noscript><p class="tsh-not">The simulator needs JavaScript. You can read the same cases step by step in the <a href="/en/field-notes/">field notes</a>.</p></noscript>
+ <section class="tsh-motor" id="tshMotor" aria-label="Simulation" hidden></section>
+ <div class="tsh-not">
+  <p>The scenarios come from real cases in the <a href="/en/field-notes/">field notes</a>; the findings are the values measured in those cases. On every intervention your own turbine OEM instructions, LOTO procedure and site safety rules govern; work near energised equipment is done only by authorised personnel.</p>
+  <p>For technical background on each system, see the <a href="/en/systems/">systems</a> pages; for terms, the <a href="/en/glossary/">glossary</a>.</p>
+ </div>
+</main>
+
+<footer class="son">
+ <div class="wrap">
+  <p class="son-koord" aria-hidden="true"><span>38°51′ N · 27°00′ E</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → today</span></p>
+  <p class="son-soz">The field never stops.<br><em>Neither does learning.</em></p>
+  <div class="son-orta">
+   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Wind turbine field service technician</p></div>
+   <nav class="son-nav" aria-label="Footer"><div><p class="son-bas">Field</p><ul><li><a href="/en/lab/">Field lab</a></li><li><a href="/en/field-notes/">Field notes</a></li><li><a href="/en/diagnostics/">Diagnosis simulator</a></li><li><a href="/en/turbines/">Turbines</a></li><li><a href="/en/systems/">Systems</a></li><li><a href="/en/guide/">Field guide</a></li></ul></div><div><p class="son-bas">Tools</p><ul><li><a href="/en/tools/">Calculators</a></li><li><a href="/en/glossary/">Glossary</a></li><li><a href="/en/assistant/">Field assistant</a></li></ul></div><div><p class="son-bas">Career</p><ul><li><a href="/en/about/">About me</a></li><li><a href="/en/how-to-become/">How to become one</a></li><li><a href="/en/gwo/">GWO training</a></li><li><a href="/en/pay/">Pay and offers</a></li></ul></div><div><p class="son-bas">Contact</p><ul><li><a href="mailto:sonersoylu@yandex.com">Email</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+  </div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/en/ad-policy/">Ad &amp; revenue policy</a><a href="/en/privacy/">Privacy policy</a><a href="/teshis/" hreflang="tr" lang="tr">Türkçe</a></p></div>
+ </div>
+</footer>
+
+<script type="application/json" id="tshVeri">[{"id": "pitch", "no": "01", "model": "Nordex N117/3000", "yer": "Bergama wind farm", "ad": "Pitch motor high current", "alarm": "Pitch motor phase current high (Motor A)", "durum": "The turbine is trying to start in the morning but the pitch system never becomes ready. The alarm threshold is 15 A; the last log shows Motor A drawing 18 A.", "vaka": "/en/field-notes/pitch-motor-high-current/", "adimlar": [{"evre": "Data", "soru": "Before you climb, what do you do first?", "secenek": [{"t": "Pull the alarm history and the pitch motor current trend for the last few months from SCADA.", "d": "en", "neden": "It tells you, at the lowest cost and before climbing, whether the fault appeared suddenly or has been growing for months.", "soyler": "A sudden jump points to an electrical break; a slow, steady rise points to a growing mechanical resistance.", "bekle": "On a healthy axis the current stays roughly flat over months."}, {"t": "Order a replacement pitch motor.", "d": "yanlis", "neden": "There is no evidence yet that the motor is faulty. High current is usually a symptom of the load the motor drives, not of the motor itself."}, {"t": "Reset the alarm and try to bring the turbine back online.", "d": "yanlis", "neden": "The same alarm will return. Running a struggling pitch axis again and again makes the damage worse — and pitch is also the turbine's brake."}], "bulgu": "Motor A current has climbed gradually over 8 months: 11 A → 12.5 A → 14 A → 16 A → 18 A. Not a sudden jump — a steady rise."}, {"evre": "Observation", "soru": "The turbine is stopped, the rotor locked and the pitch system put into service mode per the OEM instructions. What is your first check up-tower?", "secenek": [{"t": "In service mode, move the three blades one at a time at low speed and compare: which one is stiff?", "d": "en", "neden": "The three axes of the same turbine are each other's best reference. It separates a single-axis problem from something shared by all three.", "soyler": "Stiffness on one axis points to that axis' own chain (motor, gearbox, bearing); all three at once points to supply or control.", "bekle": "Healthy axes move with similar effort and similar current."}, {"t": "Measure the outputs of the blade position sensors.", "d": "iyi", "neden": "A valid check to rule it out, but not the priority here: a position error does not make the current rise steadily for months.", "ek": "In this case all three sensors gave the expected value (2.5 V); the fault was not in the sensors."}, {"t": "Grease the pitch bearing and try again.", "d": "yanlis", "neden": "Acting before you know the cause changes the evidence in front of you. And if the drag comes from the gearbox, grease will not fix anything."}], "bulgu": "Blade A moves noticeably harder than the other two. B and C are free."}, {"evre": "Hypothesis", "soru": "Axis A is heavy. Is the problem the motor or the mechanical side?", "secenek": [{"t": "Isolate the axis (LOTO) and measure the motor's phase-to-phase winding resistances.", "d": "en", "neden": "In a few minutes the motor is either in or out. If the winding is healthy, the load is coming from the mechanical side.", "soyler": "Three phase resistances close to each other mean a healthy winding; an open circuit or a clear imbalance is a winding fault.", "bekle": "On a healthy motor the three values come out very close."}, {"t": "Swap the motor for a new one straight away.", "d": "yanlis", "neden": "If the motor is healthy, a new one will pull the same load and raise the same alarm. An expensive guess."}, {"t": "Replace the pitch control card.", "d": "yanlis", "neden": "A card fault does not produce a steady, months-long current rise on a single axis; the symptom points to a mechanical load."}], "bulgu": "Phase resistances 8.2 Ω / 8.1 Ω / 8.3 Ω. Balanced — the motor is healthy."}, {"evre": "Test", "soru": "The motor is healthy. Where is the extra load coming from?", "secenek": [{"t": "Check the oil in axis A's pitch gearbox: level, colour, smell, particles.", "d": "en", "neden": "The gearbox is the most likely source of friction between motor and bearing, and its oil tells you a lot in a few minutes.", "soyler": "A low level means loss; dark colour and a burnt smell mean overheating; metal particles mean gear wear.", "bekle": "The level should sit between the marks and the oil should be light and clean."}, {"t": "Listen to the gearbox with a stethoscope.", "d": "iyi", "neden": "A good supporting check: you may hear a gear problem. On its own it does not tell you why; it makes sense together with the oil check.", "ek": "In this case an irregular crackling came from the gearbox."}, {"t": "Check the torque of the blade root bolts.", "d": "yanlis", "neden": "That is a periodic maintenance task; it does not explain the pitch axis resisting rotation."}], "bulgu": "Oil level at minimum. Dark brown, burnt smell, visible metal particles. The gearbox has been running dry and hot."}, {"evre": "Result", "soru": "Oil is missing. Last step: why?", "secenek": [{"t": "Clean the gearbox housing and look for traces of the leak.", "d": "en", "neden": "Oil does not disappear by itself. Until you find the leak, every top-up is lost again.", "soyler": "Fresh oil on a cleaned surface leads you to where the leak starts.", "bekle": "A sound housing shows no fresh oil."}, {"t": "Top up the oil and bring the turbine online.", "d": "iyi", "neden": "Gets the turbine running in the short term but does not solve the cause; as long as it leaks, the same fault returns. The worn gears also need inspecting."}, {"t": "Change the oil type.", "d": "yanlis", "neden": "The problem is the quantity, not the grade. As long as it leaks, any oil will run low."}], "bulgu": "A 2 mm crack was found in the gearbox housing. Oil had been leaking from it for months."}], "kok": "Months of oil loss through a 2 mm crack in the pitch gearbox housing. With the gears running dry, friction rose and so did the motor current.", "cozum": "The gearbox was drained, the crack welded and checked by NDT, the gears inspected; filter and oil renewed.", "ders": "The oil level had not been checked at the last service. The current rise was visible in the SCADA trend 8 months earlier."}, {"id": "generator", "no": "04", "model": "Vestas V126", "yer": "Wind farm", "ad": "Generator temperature alarm", "alarm": "Generator temperature high · 116 °C (threshold 115 °C)", "durum": "The turbine stops on the alarm and comes back normal after a reset. The alarm repeats several times a day in the same wind. Sound and production look normal.", "vaka": "/en/field-notes/generator-temperature/", "adimlar": [{"evre": "Data", "soru": "What do you do first?", "secenek": [{"t": "Review the alarm times, the temperature trend and the load data at those moments in SCADA.", "d": "en", "neden": "Is the generator really overloaded, or is only the reading rising? The load data starts to separate the two.", "soyler": "A temperature that drifts slowly while power, current and speed are normal points to the measurement side.", "bekle": "Real overheating moves with load and ambient temperature."}, {"t": "Raise the alarm threshold a little.", "d": "yanlis", "neden": "It can hide real overheating and puts the winding insulation at risk. A threshold is never changed before the cause is found."}, {"t": "Replace the cooling fan motor.", "d": "yanlis", "neden": "There is no evidence the fan is faulty. Look at the data first."}], "bulgu": "Alarms come in the afternoon at rated power, each time at 115–116 °C. Over the last three days the reading drifted 110 → 112 → 116 °C. Power, current and speed are normal."}, {"evre": "Test", "soru": "Does the reading reflect reality?", "secenek": [{"t": "Measure the generator with an IR thermometer and read the SCADA value at the same time.", "d": "en", "neden": "If what the control system says and the physical measurement disagree, the problem is most likely in the measurement chain.", "soyler": "A sensor inside the winding reads somewhat hotter than the housing surface; a few degrees of difference is normal. Tens of degrees make the sensor suspect. If you can, compare with the other winding sensors in the same generator.", "bekle": "With a healthy measurement chain the two values come out close."}, {"t": "Measure the insulation resistance of the windings.", "d": "iyi", "neden": "A valuable test for other faults, but it does not explain the gap between the reading and the real temperature. Not the priority here."}, {"t": "Grease the generator bearings.", "d": "yanlis", "neden": "Nothing points to a bearing problem; the alarm comes from the winding temperature."}], "bulgu": "IR thermometer 62 °C, SCADA 103 °C: a 41 °C gap."}, {"evre": "Hypothesis", "soru": "The gap is huge. How do you proceed?", "secenek": [{"t": "Measure the sensor's resistance, compare it with the PT100 table, and check the terminal and cable connections.", "d": "en", "neden": "It tests the measurement chain directly: has the sensor drifted, is a connection bad, or is it the reading side?", "soyler": "A PT100 is 100 Ω at 0 °C and rises by roughly 0.385 Ω per degree. If the measured resistance does not match the generator's real temperature, the sensor or its wiring is faulty.", "bekle": "A healthy sensor's resistance comes out close to the value for the temperature measured by IR."}, {"t": "Check the cooling fan and the air filter.", "d": "iyi", "neden": "A correct, quick check to rule out a real cooling problem.", "ek": "In this case the fan was running normally (3.2 A), airflow was normal and the filter was clean."}, {"t": "Write a report recommending generator replacement.", "d": "yanlis", "neden": "The generator is actually at 62 °C; there is no overheating machine. No such decision is made before the measurement chain is verified."}], "bulgu": "The sensor resistance does not match the expected value. Fan, filter and generator load are normal: the measurement chain is at fault."}], "kok": "Calibration drift in the winding temperature sensor (RTD). The generator was not actually overheating; the reading drifted up until it hit the threshold.", "cozum": "A temporary correction was applied on the SCADA side; calibration or replacement of the sensor was scheduled.", "ders": "When the control system reading and a physical measurement disagree, verify the sensor first. A temporary correction must rest on a physically verified difference and only last until the sensor is replaced."}, {"id": "converter", "no": "05", "model": "Vestas V110", "yer": "Wind farm", "ad": "Converter overcurrent", "alarm": "Rotor-side overcurrent / converter fault", "durum": "An intermittent fault: the turbine runs for days without trouble, then stops; after a reset it produces for hours. 19 events in six weeks, and getting more frequent. On the stopped turbine, insulation, phase balance, cable connections and coolant level are all normal.", "vaka": "/en/field-notes/converter-overcurrent/", "adimlar": [{"evre": "Data", "soru": "Everything is normal on the stopped turbine. What do you do first?", "secenek": [{"t": "Export the full fault log with timestamps and match every event with the power output at that moment.", "d": "en", "neden": "With an intermittent fault you look for the condition, not the fault. Power, wind, temperature or time of day: if there is a pattern, it shows up here.", "soyler": "If events cluster above a certain power level, the trigger is current, and you look for a problem that appears with heat.", "bekle": "A random fault is spread across the production range."}, {"t": "Check the grid voltage and frequency records.", "d": "iyi", "neden": "A valid check to rule it out: short grid disturbances can cause similar faults.", "ek": "In this case there was no grid disturbance at the moments of the faults."}, {"t": "Replace the IGBT modules straight away.", "d": "yanlis", "neden": "An expensive guess. The modules may be the victim, not the cause; if the real cause stays, the new module gets stressed too."}], "bulgu": "17 of the 19 events happened above 2.4 MW, the other two around 2.3 MW. Not a single event at low power, and none in high wind while the turbine was curtailed. The trigger is current, not wind."}, {"evre": "Test", "soru": "The fault appears at high current. How do you find a hot spot?", "secenek": [{"t": "Scan the converter cabinet with a thermal camera while the turbine is producing, following site rules and wearing the proper PPE.", "d": "en", "neden": "A problem that shows up with heat can only be seen while there is heat. Work near an energised cabinet is done only by authorised personnel, from a safe distance.", "soyler": "A joint clearly hotter than its neighbours is a sign of high contact resistance; resistance generates heat with the square of the current.", "bekle": "Similar joints carrying the same load sit at a similar temperature."}, {"t": "Stop the turbine and scan the cabinet with a thermal camera.", "d": "yanlis", "neden": "Once stopped, the joints cool down and leave no trace. In this case every measurement on the stopped turbine had already come out normal."}, {"t": "Replace the converter control card.", "d": "yanlis", "neden": "A fault tied to a power threshold points to a power joint heating under load, not a card fault."}], "bulgu": "One DC busbar joint was about 30 °C hotter than its neighbours. One IGBT module was also 8–10 °C hotter than the others."}, {"evre": "Result", "soru": "You found the hot spot. How do you confirm and close it?", "secenek": [{"t": "Stop the turbine, apply LOTO, measure the torque on that joint and open up the contact surface.", "d": "en", "neden": "It physically confirms the cause of the hot spot: looseness, surface damage, or both?", "soyler": "If the torque is below the OEM value and the surface is oxidised, the joint has been heating and cooling for a long time.", "bekle": "A sound joint is at OEM torque with a clean surface."}, {"t": "Tighten the bolt and leave.", "d": "iyi", "neden": "The right direction but not enough: tightening without cleaning the oxidised surface brings the problem back, and the stressed IGBT module stays in place."}, {"t": "Treat the fault as permanently solved by curtailing power.", "d": "yanlis", "neden": "A power limit is only a temporary way to keep producing until the parts arrive. The cause does not go away."}], "bulgu": "The bolt torque is well below the OEM value. The contact surface shows oxidation and discolouration."}], "kok": "A loosened DC busbar joint. It overheated at high current and also stressed the neighbouring IGBT module, which reached its protection limit earlier while hot and tripped as overcurrent.", "cozum": "The joint was cleaned and tightened to OEM torque, every power connection in the cabinet was checked, and the stressed IGBT was replaced. Until the part arrived the turbine kept producing with a 2.2 MW limit.", "ders": "With an intermittent fault, look for the condition it appears in, not the fault itself. Do thermal scans while the turbine is producing."}]</script>
+<script>
+(function(){
+ var S=JSON.parse(document.getElementById('tshVeri').textContent), M=document.getElementById('tshMotor');
+ var kartlar=[].slice.call(document.querySelectorAll('.tsh-kart')), az=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var s,i,puan,defter;
+ function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+ function ray(){ var ev=['Turbine','Alarm'].concat(s.adimlar.map(function(a){return a.evre;})).concat(['Root cause']);
+  return '<ol class="tsh-ray" aria-label="Progress">'+ev.map(function(e,k){ var c=k<i+2?'gecti':(k===i+2?'simdi':''); if(i>=s.adimlar.length) c=k<ev.length-1?'gecti':'simdi'; return '<li class="'+c+'"'+(c==='simdi'?' aria-current="step"':'')+'>'+esc(e)+'</li>';}).join('')+'</ol>'; }
+ function defterHTML(){ return '<aside class="tsh-defter" aria-label="Field log"><h2>Field log</h2>'+(defter.length?'<ol>'+defter.map(function(d){return '<li><b>'+esc(d.e)+'</b>'+esc(d.b)+'</li>';}).join('')+'</ol>':'<p class="bos">Findings will collect here.</p>')+'</aside>'; }
+ function basla(id){ s=S.filter(function(x){return x.id===id;})[0]; i=0; puan=0; defter=[]; M.hidden=false;
+  kartlar.forEach(function(k){k.setAttribute('aria-pressed',k.getAttribute('data-s')===id?'true':'false');});
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+  adim(); M.scrollIntoView({behavior:az?'auto':'smooth',block:'start'}); }
+ function adim(){
+  if(i>=s.adimlar.length) return bitir();
+  var a=s.adimlar[i], harf='ABCD';
+  var sira=a.secenek.map(function(x,k){return k;}); for(var k=sira.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=sira[k];sira[k]=sira[r];sira[r]=t;}
+  M.innerHTML=ray()+'<div class="tsh-sahne"><div class="tsh-baslik"><p><b>'+esc(s.model)+'</b> · '+esc(s.yer)+'</p><p>Step '+(i+1)+' / '+s.adimlar.length+'</p></div>'+
+   (i===0?'<p class="tsh-alarm"><small>Alarm</small>'+esc(s.alarm)+'</p><p class="tsh-durum">'+esc(s.durum)+'</p>':'')+
+   '<h2 class="tsh-soru" tabindex="-1"><span class="tsh-evre">'+esc(a.evre)+'</span>'+esc(a.soru)+'</h2>'+
+   '<ul class="tsh-sec-l">'+sira.map(function(k,n){var x=a.secenek[k];return '<li><button type="button" class="tsh-sec-b" data-k="'+k+'" data-d="'+x.d+'"><span class="h">'+harf[n]+'</span><span>'+esc(x.t)+'</span></button></li>';}).join('')+'</ul>'+
+   '<div class="tsh-geri" id="tshGeri" aria-live="polite" hidden></div></div>'+defterHTML();
+  [].forEach.call(M.querySelectorAll('.tsh-sec-b'),function(b){ b.addEventListener('click',function(){ sec(+b.getAttribute('data-k')); }); });
+  if(i>0) M.querySelector('.tsh-soru').focus({preventScroll:true});
+ }
+ function sec(k){
+  var a=s.adimlar[i], x=a.secenek[k], en=a.secenek.filter(function(y){return y.d==='en';})[0];
+  puan+= x.d==='en'?2:(x.d==='iyi'?1:0);
+  [].forEach.call(M.querySelectorAll('.tsh-sec-b'),function(b){ b.disabled=true; if(+b.getAttribute('data-k')===k) b.classList.add('secildi'); if(b.getAttribute('data-d')==='en') b.classList.add('goster'); });
+  var hk={en:'Best move',iyi:'Acceptable, but not the priority',yanlis:'Not right at this stage'}[x.d];
+  var h='<p class="tsh-hukum '+x.d+'">'+hk+'</p><dl><div><dt>Why?</dt><dd>'+esc(x.neden)+'</dd></div>'+
+   (x.soyler?'<div><dt>What does this measurement tell you?</dt><dd>'+esc(x.soyler)+'</dd></div>':'')+
+   (x.bekle?'<div><dt>What would you expect?</dt><dd>'+esc(x.bekle)+'</dd></div>':'')+
+   (x.ek?'<div><dt>On site</dt><dd>'+esc(x.ek)+'</dd></div>':'')+
+   (x.d!=='en'?'<div><dt>Best move at this step</dt><dd>'+esc(en.t)+' '+esc(en.neden)+'</dd></div>':'')+'</dl>'+
+   '<div class="tsh-bulgu"><small>Found on site</small><p>'+esc(a.bulgu)+'</p></div>'+
+   '<button type="button" class="tsh-ileri" id="tshIleri">'+(i+1<s.adimlar.length?'Next step':'See the root cause')+' <span aria-hidden="true">&#8594;</span></button>';
+  var g=document.getElementById('tshGeri'); g.innerHTML=h; g.hidden=false;
+  defter.push({e:a.evre,b:a.bulgu});
+  var d=M.querySelector('.tsh-defter'); d.outerHTML=defterHTML();
+  var ileri=document.getElementById('tshIleri'); ileri.addEventListener('click',function(){ i++; adim(); M.scrollIntoView({behavior:az?'auto':'smooth',block:'start'}); });
+  ileri.focus({preventScroll:true}); g.scrollIntoView({behavior:az?'auto':'smooth',block:'nearest'});
+ }
+ function bitir(){
+  var enCok=s.adimlar.length*2;
+  M.innerHTML=ray()+'<div class="tsh-sonuc"><p class="tsh-kic">Case '+esc(s.no)+' · '+esc(s.model)+'</p><h2 tabindex="-1">'+esc(s.ad)+': root cause</h2>'+
+   '<p class="tsh-puan">Diagnosis efficiency: '+puan+' / '+enCok+'</p>'+
+   '<dl><div><dt class="kok">Root cause</dt><dd>'+esc(s.kok)+'</dd></div><div><dt>Solution</dt><dd>'+esc(s.cozum)+'</dd></div><div><dt>Lesson</dt><dd>'+esc(s.ders)+'</dd></div></dl>'+
+   '<div class="tsh-son-dg"><a class="bir" href="'+s.vaka+'">Read the full case</a><button type="button" id="tshTekrar">Try again</button><a href="#top">Another scenario</a></div></div>'+defterHTML();
+  document.getElementById('tshTekrar').addEventListener('click',function(){ basla(s.id); });
+  M.querySelector('.tsh-sonuc h2').focus({preventScroll:true});
+ }
+ kartlar.forEach(function(k){ k.addEventListener('click',function(){ basla(k.getAttribute('data-s')); }); });
+ function hashten(){ var h=location.hash.slice(1); if(h&&S.some(function(x){return x.id===h;})&&(!s||s.id!==h||i>=s.adimlar.length)) basla(h); }
+ addEventListener('hashchange',hashten); hashten();
+})();
+</script>
+<script src="/assets/site.js?v=2083a619" defer></script>
+<script src="/assets/ara.js?v=da9b2173" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>
