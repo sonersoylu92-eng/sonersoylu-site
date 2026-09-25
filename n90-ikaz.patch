@@ -1,0 +1,100 @@
+diff --git a/n90/index.html b/n90/index.html
+index 30342a6..95c9cac 100644
+--- a/n90/index.html
++++ b/n90/index.html
+@@ -330,7 +330,7 @@ document.getElementById('burger').addEventListener('click', function () {
+ 
+ <script type="module">
+ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
+-import { createScene, STAGES, SPEC } from './n90.js?v=73154c94';
++import { createScene, STAGES, SPEC } from './n90.js?v=a48ab6b0';
+ 
+ const canvas = document.getElementById('scene');
+ const S = createScene(canvas);
+@@ -806,6 +806,7 @@ function frame() {
+   const targetVel = spinning ? rpmAt(windV) * Math.PI / 30 : 0;
+   spinVel += (targetVel - spinVel) * Math.min(dt * 0.9, 1);
+   parts.spin.rotation.z -= spinVel * dt;
++  if (parts.ikaz) parts.ikaz.guncelle(performance.now() / 1000);
+   if (spinning) parts.yaw.rotation.y += Math.sin(performance.now() / 9000) * 0.00035;
+   parts.farm.children.forEach(t => { t.userData.spin.rotation.z -= t.userData.speed * dt; });
+ 
+diff --git a/n90/n90.js b/n90/n90.js
+index 2b7a2a8..03ce7be 100644
+--- a/n90/n90.js
++++ b/n90/n90.js
+@@ -53,6 +53,22 @@ const MAT = {
+   glassy:  new THREE.MeshStandardMaterial({ color: 0x2f3439, roughness: 0.3, metalness: 0.5 }),
+ };
+ 
++// uçak ikaz lambası: kırmızı kubbe (yanıp söner) ve uzaktan görünen ışık halesi
++const IKAZ_MAT = new THREE.MeshStandardMaterial({ color: 0x5a0d08, emissive: 0xff2410, emissiveIntensity: 0.2, roughness: 0.25 });
++const IKAZ_HALE = (() => {
++  const c = document.createElement('canvas'); c.width = c.height = 64;
++  const x = c.getContext('2d'), gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
++  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.18, 'rgba(255,120,90,.9)');
++  gr.addColorStop(0.45, 'rgba(255,40,20,.28)'); gr.addColorStop(1, 'rgba(255,20,10,0)');
++  x.fillStyle = gr; x.fillRect(0, 0, 64, 64);
++  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
++  return new THREE.SpriteMaterial({ map: tex, color: 0xff3a22, transparent: true, opacity: 0,
++    blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
++})();
++
++const IKAZ_HALE_UZAK = IKAZ_HALE.clone();
++IKAZ_HALE_UZAK.sizeAttenuation = false;
++
+ /* ------------------------------------------------------------ kanat profili */
+ 
+ // NACA 63-4xx ailesine yakın, normalize (x 0..1, y ±)
+@@ -269,6 +285,28 @@ function buildNacelle() {
+   anem.position.set(0, H / 2 + 1.75, L / 2 - 0.4);
+   g.add(anem);
+ 
++  // uçak ikaz lambaları: arka çatıda, iki yanda. İki lamba olmasının sebebi,
++  // hangi yönden bakılırsa bakılsın en az birinin kanat ya da soğutucu arkasında kalmaması.
++  g.userData.ikaz = [-1, 1].map(yan => {
++    const k = new THREE.Group();
++    k.position.set(yan * (W / 2 - 0.42), H / 2 + 0.02, L / 2 - 0.75);
++    const ayak = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.42, 8), MAT.dark);
++    ayak.position.y = 0.21; k.add(ayak);
++    const govde = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.17, 0.18, 16), MAT.dark);
++    govde.position.y = 0.5; k.add(govde);
++    const kubbe = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), IKAZ_MAT);
++    kubbe.position.y = 0.59; k.add(kubbe);
++    const hale = new THREE.Sprite(IKAZ_HALE);
++    hale.position.y = 0.66; hale.scale.set(3.2, 3.2, 1); hale.renderOrder = 5;
++    k.add(hale);
++    // uzak hale: ekran boyutunda sabit, türbine uzaktan bakınca da çakma seçilsin
++    const uzak = new THREE.Sprite(IKAZ_HALE_UZAK);
++    uzak.position.y = 0.66; uzak.scale.set(0.03, 0.03, 1); uzak.renderOrder = 5;
++    k.add(uzak);
++    g.add(k);
++    return k;
++  });
++
+   // servis kapağı / helideck izi
+   const hatch = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.06, 1.2), MAT.steelDk);
+   hatch.position.set(0, H / 2 + 0.02, 0.6);
+@@ -726,7 +764,22 @@ export function createScene(canvas) {
+   })();
+   scene.add(parts.groundBlade);
+ 
++  // ikaz lambaları eşzamanlı yanıp söner: dakikada 40 çakma (1,5 sn'lik çevrim, ~0,5 sn yanık)
++  let ikazMod = 'day';
++  parts.ikaz = {
++    lambalar: parts.nacelle.userData.ikaz,
++    guncelle(tSn) {
++      const f = (tSn % 1.5) / 1.5;
++      const yanik = f < 0.34 ? Math.sin(Math.min(1, f / 0.34) * Math.PI) ** 0.35 : 0;
++      const guc = ikazMod === 'sunset' ? 0.85 : 0.6;
++      IKAZ_MAT.emissiveIntensity = 0.15 + yanik * 4.5;
++      IKAZ_HALE.opacity = yanik * guc;
++      IKAZ_HALE_UZAK.opacity = yanik * Math.min(1, guc + 0.2);
++    },
++  };
++
+   function setLight(mode) {
++    ikazMod = mode;
+     const sunset = mode === 'sunset';
+     const st = (sunset ? SKY.sunset : SKY.day);
+     ['c0', 'c1', 'c2', 'c3'].forEach((k, i) => sky.material.uniforms[k].value.set(st[i]));
