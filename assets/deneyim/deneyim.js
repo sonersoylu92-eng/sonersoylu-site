@@ -11,12 +11,13 @@
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 import { createScene, SPEC, araziY } from '/n117/n117.js?v=2675a459';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=7c5ea850';
+import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=9e288b84';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export const DURAKLAR = [
-  { p: 0.41,  id: 'rotor',     ad: 'Rotor',              en: 'ROTOR',           bilgi: '116,8 m çap · 57,3 m kanat · 7,9–14,1 d/dk' },
-  { p: 0.455, id: 'gobek',     ad: 'Göbek',              en: 'HUB',             bilgi: 'Üç kanat yatağı · kanat açısı burada ayarlanır' },
+  { p: 0.125, id: 'rotor',     ad: 'Rotor',              en: 'ROTOR',           bilgi: '116,8 m çap · 57,3 m kanat · 7,9–14,1 d/dk' },
+  { p: 0.49,  id: 'gobek',     ad: 'Göbek',              en: 'HUB',             bilgi: 'Üç kanat yatağı · kanat açısı burada ayarlanır' },
   { p: 0.515, id: 'nasel',     ad: 'Nasel içi',          en: 'NACELLE',         bilgi: '12,4 × 4,2 × 4,0 m · yerden 120 m' },
   { p: 0.55,  id: 'anaYatak',  ad: 'Ana yatak',          en: 'MAIN BEARING',    bilgi: 'Rotorun ağırlığını ve itkisini taşır' },
   { p: 0.59,  id: 'anaMil',    ad: 'Ana mil',            en: 'MAIN SHAFT',      bilgi: 'Düşük devir, yüksek tork · göbekten dişli kutusuna' },
@@ -28,6 +29,8 @@ export const DURAKLAR = [
   { p: 0.905, id: 'panolar',   ad: 'Elektrik panoları',  en: 'CONTROL CABINETS',bilgi: 'Yardımcı güç · soğutma, aydınlatma, vinç devreleri' },
   { p: 0.93,  id: 'kablolar',  ad: 'Kablolar',           en: 'CABLES',          bilgi: 'Güç kabloları · kuleye inen sarkma ilmeği' },
 ];
+
+function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
 
 export function deneyimBaslat(canvas, bolum, cb = {}) {
   const mobil = matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches;
@@ -49,7 +52,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // sahnedeki mevcut ışıklar (n117.js): içeri girince dış ortam ışığı kısılır
   let hemi = null, gunes = null, dolgu = null;
   scene.traverse(o => { if (o.isHemisphereLight) hemi = o; else if (o.isDirectionalLight) { if (o.castShadow) gunes = o; else dolgu = o; } });
-  const hemiTaban = hemi ? hemi.intensity : 1, dolguTaban = dolgu ? dolgu.intensity : 0.3;
+  let hemiTaban = hemi ? hemi.intensity : 1, dolguTaban = dolgu ? dolgu.intensity : 0.3, gunesTaban = gunes ? gunes.intensity : 1;
 
   // ortam yansıması: yalnız iç metal malzemelere
   let env = null;
@@ -60,6 +63,29 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const ic = naselIciKur({ hafif: mobil, envMap: env });
   tilt.add(ic.grup);
   ic.grup.visible = false;
+
+  /* ---------------- kule: kapı, kule içi, servis asansörü ----------------
+   * Kule yereli: kapı +z yönünde. Kule, kapı ve kule içi naselin yaw açısıyla birlikte döner;
+   * böylece kamera yolu (yaw yerelinde) her rüzgâr yönünde kapıya aynı açıdan gelir. */
+  const KAPAK = new THREE.Vector2(-0.9, 0.65);            // nasel tabanındaki erişim kapağı (yaw yerelinde x, z)
+  const dAz = Math.atan2(26, 38), cA = Math.cos(dAz), sA = Math.sin(dAz);
+  const tl2yaw = (x, z) => [x * cA + z * sA, -x * sA + z * cA];
+  const yaw2tl = (x, z) => [x * cA - z * sA, x * sA + z * cA];
+  const kapakTL = yaw2tl(KAPAK.x, KAPAK.y);
+  const kule = kuleIciKur({ SPEC, towerTopY, hafif: mobil, kapakXZ: new THREE.Vector2(kapakTL[0], kapakTL[1]) });
+  scene.add(kule.grup);
+  kapiBosluguAc(parts.towerSegs[0]);
+  parts.towerSegs.forEach(sg => sg.children.forEach(o => {   // kule duvarı içeriden de görünsün
+    if (o.isMesh && o.geometry.type === 'CylinderGeometry') { o.material = o.material.clone(); o.material.side = THREE.DoubleSide; }
+  }));
+  function kuleDondur() {
+    const r = yaw.rotation.y + dAz;
+    kule.grup.rotation.y = r; parts.towerSegs.forEach(sg => { sg.rotation.y = r; });
+    if (parts.kuleIkaz) parts.kuleIkaz.rotation.y = r;
+  }
+  { const h0 = yonHedefIlk(); if (h0 !== null) yaw.rotation.y = h0; }
+  kuleDondur();
+  const KO = kule.olcu;
 
   /* ---------------- iç aydınlatma ---------------- */
   const icIsik = new THREE.Group(); tilt.add(icIsik); icIsik.visible = false;
@@ -116,22 +142,34 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const v = (x, y, z) => new THREE.Vector3(x, y, z);
   const yZemin = -(towerTopY + SPEC.nacelleHei / 2 + 0.25);   // yaw yerelinde yer seviyesi
   const Z = y => yZemin + y;                                  // yerden yükseklik → yaw yerel y
+  const T = (x, h, z) => { const [a, b] = tl2yaw(x, z); return v(a, Z(h), b); };   // kule yereli → yaw yereli
   const KARE = [
     // dış görünüm: Ege sırtında uzaktan
     // açılış: yere yakın, türbin uzakta ama dev; masaüstünde kadrajın sağında (sol taraf kimliğe kalır)
     { p: 0.00, t: 'D', k: v(122, Z(1.8), 168), h: mobil ? v(0, Z(76), 0) : v(-27, Z(68), 20) },
     { p: 0.08, t: 'D', k: v(92, Z(3), 128),    h: mobil ? v(0, Z(72), 0) : v(-12, Z(70), 9) },
-    { p: 0.15, t: 'D', k: v(26, Z(3), 38),     h: v(0, Z(40), 0) },
-    // kuleye tırmanış
-    { p: 0.22, t: 'D', k: v(18, Z(40), 26),    h: v(0, Z(70), 0) },
-    { p: 0.30, t: 'D', k: v(15, Z(100), 22),   h: v(0, Z(118), -1) },
-    // nasele yaklaşma, rotor ve göbek
-    { p: 0.37, t: 'D', k: v(11, 3.5, 13),      h: v(0, 0.5, -3) },
-    { p: 0.41, t: 'D', k: v(26, 4, -26),       h: v(0, 0, -8) },
-    { p: 0.455,t: 'D', k: v(4.2, 1.4, -15.5),  h: v(0, 0, -8) },
-    // göbekten içeri: önce tüm naseli gösteren geniş plan, sonra güç akışı yönünde
-    { p: 0.475,t: 'N', k: v(0.12, 0.08, -12.2),h: v(0, 0, -6.0), akis: true },   // burun ekseninde: kanat köklerinden uzak
-    { p: 0.49, t: 'N', k: v(0.6, 0.45, -6.3),  h: v(0.9, 0.6, -4.5) },
+    // kulenin dibinde: rotora bakış
+    { p: 0.125,t: 'D', k: v(15, Z(1.8), 24),   h: v(0, Z(76), -3) },
+    // kule kapısı: dış merdiven, sahanlık, kapı açılır
+    { p: 0.155,t: 'D', k: T(0, 2.55, 9.6),     h: T(0, 4.7, 2.2) },
+    { p: 0.178,t: 'D', k: T(0, 5.4, 3.35),     h: T(0, 4.95, 1.0) },
+    { p: 0.194,t: 'D', k: T(0, 5.4, 3.1),      h: T(0, 5.0, 0.3) },
+    { p: 0.207,t: 'D', k: T(0, 5.45, 1.85),    h: T(0, 5.5, -0.6), akis: true },
+    // kule içi: karanlık silindir, yukarı bakış, servis asansörü
+    { p: 0.224,t: 'D', k: T(0.3, 5.45, 0.9),   h: T(-0.15, 32, -0.4) },
+    { p: 0.246,t: 'D', k: T(0.12, 5.45, 0.75), h: T(0, 5.2, -0.9) },
+    { p: 0.264,t: 'D', k: T(0, 5.5, -0.98),    h: T(0.1, 6.1, 1.3) },
+    // yukarı erişim: kabin kule boyunca çıkar
+    { p: 0.285,t: 'D', k: T(0, 5.55, -1.0),    h: T(0.15, 6.1, 1.3), akis: true },
+    { p: 0.345,t: 'D', k: T(0, 62, -1.0),      h: T(0.25, 62.6, 1.3), akis: true },
+    { p: 0.40, t: 'D', k: T(0, KO.ustY + 1.62, -0.98), h: T(0.1, KO.ustY + 2.0, 1.3) },
+    // yaw katı: kabinden çık, merdivenle nasel kapağına
+    { p: 0.418,t: 'D', k: T(0.15, KO.ustY + 1.62, 0.4), h: T(kapakTL[0], KO.ustY + 2.35, kapakTL[1]) },
+    { p: 0.434,t: 'D', k: T(kapakTL[0] * 0.72, KO.ustY + 1.62, kapakTL[1] * 0.72 + 0.05), h: v(KAPAK.x + 0.1, Z(KO.ustY + 6.5), KAPAK.y - 3.2) },
+    { p: 0.45, t: 'D', k: v(KAPAK.x, Z(towerTopY + 1.1), KAPAK.y), h: v(KAPAK.x + 0.4, Z(towerTopY + 3.4), KAPAK.y - 3.6), akis: true },
+    // naselin tabanından içeri: makine
+    { p: 0.468,t: 'N', k: v(KAPAK.x, TABAN + 1.66, KAPAK.y), h: v(0.25, 0.3, 4.6) },
+    { p: 0.49, t: 'N', k: v(-1.2, 1.0, -3.9),  h: v(0.3, 0.1, -6.2) },
     { p: 0.515,t: 'N', k: v(1.55, 1.35, -5.3), h: v(-0.3, -0.2, 3.5) },
     { p: 0.55, t: 'N', k: v(1.5, 0.55, -2.9),  h: v(0, -0.05, -5.0) },
     { p: 0.59, t: 'N', k: v(-1.1, 1.2, -4.3),  h: v(0.1, -0.1, -2.9) },
@@ -183,7 +221,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // kapak sahnesinin ışığı sabit: mavi saat → şafak (sinematik atmosfer; saatten bağımsız)
   function isikModu() { return 'safak'; }
   let sonMod = null;
-  function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; } }
+  function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; if (hemi) hemiTaban = hemi.intensity; if (dolgu) dolguTaban = dolgu.intensity; if (gunes) gunesTaban = gunes.intensity; } }
   isik();
   function devirRad() { const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure')); return s > 0 ? 2 * Math.PI / s : 0; }
   function yonHedef() { const d = parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
@@ -234,7 +272,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     for (const n of NOKTALAR) {
       nDunya.copy(n.v); tilt.localToWorld(nDunya);
       const d = camera.position.distanceTo(nDunya);
-      let aday = n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.43 && p < 0.478 && d < 26);
+      let aday = n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.1 && p < 0.145);
       if (aday) {
         nEkran.copy(nDunya).project(camera);
         aday = nEkran.z < 1 && Math.abs(nEkran.x) < 0.92 && Math.abs(nEkran.y) < 0.86;
@@ -283,7 +321,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   function fareIsinla(t) {
     if (!cb.uzerinde) return;
     let tur = null;
-    if (fare.var && !mobil && p < 0.17) {
+    if (fare.var && !mobil && p < 0.12) {
       if (!fare.deg && t - fare.sonIsin < 400) return;
       if (t - fare.sonIsin < 90) return;
       fare.sonIsin = t; fare.deg = false;
@@ -355,7 +393,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     kapali.forEach(o => { o.visible = true; });
   }
 
-  let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0;
+  let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
+  const tlKam = new THREE.Vector3();
+  const kabinIsikTaban = kule.kabinIsik.intensity, girisIsikTaban = kule.girisIsik.intensity, ustIsikTaban = kule.ustIsik.intensity;
   const kKonum = new THREE.Vector3(), kHedef = new THREE.Vector3(), yumHedef = new THREE.Vector3();
   let hedefIlk = true, icAyar = null;
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
@@ -396,7 +436,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       }
     }
     // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
-    if (!sonIcerde) { const yer = araziY(kKonum.x, kKonum.z) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
+    if (!sonIcerde && !sonKulede) { const yer = araziY(kKonum.x, kKonum.z) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
     camera.position.copy(kKonum); camera.lookAt(yumHedef);
 
     // iç/dış geçişi
@@ -406,25 +446,42 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const yakin = p > 0.42 && p < 0.99;
     ic.grup.visible = yakin; icIsik.visible = yakin;
     parts.nacelle.visible = !icerde;
-    // dış ortam ışığı içeride kısılır
-    const kIc = icerde;
+    // kule içi mi? (kule yereline çevir: eksene uzaklık iç yarıçaptan küçük)
+    kule.grup.updateMatrixWorld();
+    kule.grup.worldToLocal(tlKam.copy(camera.position));
+    const kulede = sonKulede = !icerde && tlKam.y > 3.6 && tlKam.y < towerTopY + 1.3 && Math.hypot(tlKam.x, tlKam.z) < KO.rIc(tlKam.y) - 0.01 ? 1 : 0;
+    const kuleBolum = p > 0.14 && p < 0.47;
+    kule.ic.visible = kuleBolum;
+    kule.kabinIsik.intensity = kuleBolum ? kabinIsikTaban : 0; kule.girisIsik.intensity = kuleBolum ? girisIsikTaban : 0; kule.ustIsik.intensity = kuleBolum ? ustIsikTaban : 0;
+    // kapı: sahanlıkta açılır; kabin: altta bekler, kapısı kapanır, kamerayla birlikte çıkar, üstte açılır
+    kule.kanatPivot.rotation.y = 1.75 * yumusak(0.181, 0.197, p);
+    const kabinY = p < 0.272 ? KO.tabanY : (p > 0.405 ? KO.ustY : THREE.MathUtils.clamp(camera.position.y - 1.65, KO.tabanY, KO.ustY));
+    kule.kabin.position.y = kabinY;
+    const kabinAcik = THREE.MathUtils.clamp(1 - yumusak(0.266, 0.279, p) + yumusak(0.402, 0.414, p), 0, 1);
+    kule.kabinKapi.position.x = -(KO.ASN.gen - 0.06) * kabinAcik;
+    // dış ortam ışığı içeride kısılır (nasel ya da kule)
+    const kIc = icerde || kulede;
     // objektif değişimi: iç/dış geçişi karartmanın içinde olur, göze batmaz
     const fovHedef = kIc ? FOV_IC : FOV_DIS;
     if (Math.abs(camera.fov - fovHedef) > 0.05) { camera.fov += (fovHedef - camera.fov) * (anlik ? 1 : 1 - Math.exp(-dt * 5)); camera.updateProjectionMatrix(); }
     // içeride karanlık endüstriyel hava: yakın sis ve düşük pozlama
     if (kIc && !icAyar) { icAyar = { renk: scene.fog.color.getHex(), yakin: scene.fog.near, uzak: scene.fog.far, poz: renderer.toneMappingExposure }; }
-    if (kIc) { scene.fog.color.setHex(0x0b0e11); scene.fog.near = 2.5; scene.fog.far = 19; renderer.toneMappingExposure = 0.92; }
+    if (kIc) { scene.fog.color.setHex(0x0b0e11); scene.fog.near = kulede ? 3.5 : 2.5; scene.fog.far = kulede ? 42 : 19; renderer.toneMappingExposure = kulede ? 0.86 : 0.92; }
     else if (icAyar) { scene.fog.color.setHex(icAyar.renk); scene.fog.near = icAyar.yakin; scene.fog.far = icAyar.uzak; renderer.toneMappingExposure = icAyar.poz; icAyar = null; }
-    if (toz) toz.visible = !!kIc && yerel.y < ic.sinir.TAVAN - 0.3;
+    if (toz) toz.visible = !!icerde && yerel.y < ic.sinir.TAVAN - 0.3;
+    if (gunes) gunes.intensity = gunesTaban * (kIc ? 0 : 1);
     if (hemi) hemi.intensity = THREE.MathUtils.lerp(hemi.intensity, hemiTaban * (kIc ? 0.1 : 1), 1 - Math.exp(-dt * 6));
     if (dolgu) dolgu.intensity = dolguTaban * (kIc ? 0.1 : 1);
-    huzmeMat.uniforms.uGuc.value = THREE.MathUtils.lerp(huzmeMat.uniforms.uGuc.value, kIc ? 1 : 0, 1 - Math.exp(-dt * 4));
+    huzmeMat.uniforms.uGuc.value = THREE.MathUtils.lerp(huzmeMat.uniforms.uGuc.value, icerde ? 1 : 0, 1 - Math.exp(-dt * 4));
     huzmeMat.uniforms.uZaman.value = t / 1000;
     if (toz) { toz.rotation.y = Math.sin(t / 9000) * 0.02; toz.position.y = Math.sin(t / 4000) * 0.03; }
     // geçişte kısa karartma: göbekten ve kapaktan geçerken
     const dip = Math.max(
       Math.abs(yerel.x) < 2.4 && Math.abs(yerel.y) < 2.4 ? yumusak(-10.4, -9.5, yerel.z) * (1 - yumusak(-5.85, -5.2, yerel.z)) : 0,
-      Math.abs(yerel.x) < 1.2 && Math.abs(yerel.z - kapakZ) < 2.2 ? can(yerel.y, b.TAVAN + 0.25, 0.45) : 0);
+      Math.abs(yerel.x) < 1.2 && Math.abs(yerel.z - kapakZ) < 2.2 ? can(yerel.y, b.TAVAN + 0.25, 0.45) : 0,
+      // kule kapısından geçiş ve nasel tabanındaki kapaktan çıkış
+      Math.abs(tlKam.x) < 1.2 && tlKam.y < 7.5 && tlKam.y > 2 ? can(tlKam.z, KO.kR - 0.15, 0.3) * 0.9 : 0,
+      Math.abs(yerel.x - KAPAK.x) < 0.9 && Math.abs(yerel.z - KAPAK.y) < 0.9 ? can(yerel.y, b.TABAN - 0.35, 0.5) : 0);
     if (cb.karartma) cb.karartma(Math.min(1, dip));
 
     // mekanik: rotor gerçek devirde, ana mil onunla, hızlı taraf ~×100 (görsel olarak yavaşlatılmış)
@@ -433,6 +490,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (ic.anaMil) ic.anaMil.rotation.z -= w * dt;
     if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * dt;
     yawGuncelle(dt);
+    kuleDondur();
     if (parts.farm && !az) parts.farm.children.forEach(k => { if (k.userData.spin) k.userData.spin.rotation.z -= k.userData.speed * dt; });
     if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
 
@@ -466,6 +524,6 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     fare.var = true; fare.x = nx; fare.y = ny; fare.deg = true;
   };
   // test ve hata ayıklama için
-  window.__deneyim = { S, ic, KARE, egriU, kEgri, hEgri, yaw, tilt, get p() { return p; } };
+  window.__deneyim = { S, ic, kule, KARE, egriU, kEgri, hEgri, yaw, tilt, get p() { return p; } };
   return S;
 }

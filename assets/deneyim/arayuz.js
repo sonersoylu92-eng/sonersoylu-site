@@ -14,13 +14,15 @@
   var DURAKLAR = [];
 
   var DIS = [
-    { p: 0.0, a: 0.035, b: 0.14, k: 'Uzaktan', t: 'Ege, rüzgâr çiftliği. Göbek yerden 120 metrede; rotorun çapı 116,8 metre.' },
-    { p: 0.22, a: 0.165, b: 0.325, k: 'Kule', t: 'Her bakım günü bu tırmanışla başlar. Kule içinden, 120 metre yukarı.' },
-    { p: 0.355, a: 0.34, b: 0.39, k: 'Nasel', t: '' }
+    { p: 0.0, a: 0.035, b: 0.11, k: 'Uzaktan', t: 'Ege, rüzgâr çiftliği. Göbek yerden 120 metrede; rotorun çapı 116,8 metre.' },
+    { p: 0.15, a: 0.143, b: 0.168, k: 'Kule kapısı', t: 'Her bakım günü bu kapının önünde başlar: iş izni, kilitleme ve kişisel koruyucu donanım.' },
+    { p: 0.212, a: 0.212, b: 0.258, k: 'Kule içi', t: 'Dışarıdaki rüzgâr burada susar. Merdiven, kablo demeti ve servis asansörü: yukarı çıkan dikey bir koridor.' },
+    { p: 0.285, a: 0.29, b: 0.395, k: 'Yukarı erişim', t: 'Servis asansörü kule boyunca çıkar. Flanşlar ve platformlar birer birer aşağıda kalır.' },
+    { p: 0.418, a: 0.416, b: 0.458, k: 'Yaw katı', t: '', yon: true }
   ];
   function bolumAdi(p) {
-    if (p < 0.15) return 'Dışarıda'; if (p < 0.31) return 'Kule'; if (p < 0.48) return 'Nasel · rotor';
-    if (p < 0.72) return 'Güç aktarma'; if (p < 0.80) return 'Jeneratör'; if (p < 0.945) return 'Elektrik'; return 'Çıkış';
+    if (p < 0.14) return 'Dışarıda'; if (p < 0.205) return 'Kule kapısı'; if (p < 0.262) return 'Kule içi'; if (p < 0.41) return 'Servis asansörü';
+    if (p < 0.462) return 'Yaw katı'; if (p < 0.72) return 'Güç aktarma'; if (p < 0.80) return 'Jeneratör'; if (p < 0.945) return 'Elektrik'; return 'Çıkış';
   }
   function canliYon() { return isFinite(parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece'))); }
 
@@ -65,7 +67,7 @@
   });
   var sahaya = $('dnySahaya');
   if (sahaya) sahaya.addEventListener('click', function (e) {
-    if (bolum.classList.contains('uc-boyut')) { e.preventDefault(); git(0.2); return; }
+    if (bolum.classList.contains('uc-boyut')) { e.preventDefault(); git(0.15); return; }
     if (acilabilir) { e.preventDefault(); kur(); }          // hareket azaltılmışsa: yalnız tıklayınca 3B açılır
     // WebGL hiç yoksa bağlantı /deneyim/ sayfasına gider
   });
@@ -98,7 +100,7 @@
     if (ai !== sonAlt) {
       if (ai >= 0) {
         var d2 = DIS[ai], metin = d2.t;
-        if (ai === 2) metin = canliYon() ? 'Makine dairesi. Nasel rüzgâra döner; şu an Aliağa\'daki gerçek rüzgâr yönüne bakıyor.' : 'Makine dairesi. Nasel rüzgârı takip ederek kulenin üstünde döner.';
+        if (d2.yon) metin = canliYon() ? 'Son merdiven. Yukarıda nasel; şu an Aliağa\'daki gerçek rüzgâr yönüne dönük.' : 'Son merdiven: naselin tabanındaki kapaktan makine dairesine.';
         alt.innerHTML = '<b>' + String(ai + 1).padStart(2, '0') + ' · ' + d2.k + '</b>' + metin;
       }
       sonAlt = ai;
@@ -106,11 +108,19 @@
     alt.classList.toggle('gor', ai >= 0);
     // kapak cümlesi: kamera türbine yaklaşırken satır satır belirir
     if (soz) {
-      var sp = (p - 0.012) / 0.13;
-      sozSatir.forEach(function (s, i) { s.classList.toggle('gor', sp > i * 0.13 && p < 0.158); });
-      soz.classList.toggle('gor', p > 0.012 && p < 0.158);
+      var sp = (p - 0.012) / 0.085;
+      sozSatir.forEach(function (s, i) { s.classList.toggle('gor', sp > i * 0.13 && p < 0.106); });
+      soz.classList.toggle('gor', p > 0.012 && p < 0.106);
     }
     son.classList.toggle('gor', p > 0.976);
+    // kule kapısı: erişim işareti ve "Türbine gir"
+    erisim.classList.toggle('gor', p > 0.168 && p < 0.199);
+    erisimBtn.tabIndex = p > 0.168 && p < 0.199 ? 0 : -1;
+    // servis asansörü: yukarı erişim göstergesi
+    var asn = p > 0.279 && p < 0.412;
+    asansor.classList.toggle('gor', asn);
+    if (asn) { var oran = Math.max(0, Math.min(1, (y - 5.5) / 115)); asOran.style.setProperty('--o', oran.toFixed(3)); asKot.textContent = Math.round(y); }
+    temsil.classList.toggle('gor', p > 0.2 && p < 0.95);
 
     // ray: geçilen ve etkin bölüm
     var ri = 0; rayOgeleri.forEach(function (o, i) { if (p >= o.p - 0.012) ri = i; });
@@ -119,12 +129,18 @@
 
   /* ---- teknik işaret noktaları: sahnede parçanın üstünde küçük halka, üstüne gelince bilgi ---- */
   var NOKTA = {
-    anaYatak:  { no: 'MAIN BEARING', ad: 'Ana yatak', t: 'Rotorun ağırlığını ve rüzgâr itkisini taşır; torku ana mile bırakır.', u: '/n117/', ul: 'N117 turu' },
-    disli:     { no: 'GEARBOX', ad: 'Dişli kutusu', t: 'Üç kademe: iki planet, bir helisel. Rotor devrini jeneratörün istediği hıza çıkarır.', u: '/sistemler/disli-kutusu/', ul: 'Dişli kutusu sistemi' },
-    jenerator: { no: 'GENERATOR', ad: 'Jeneratör', t: '3.000 kW, çift beslemeli asenkron, 660 V.', u: '/sistemler/jenerator/', ul: 'Jeneratör sistemi' },
-    konvertor: { no: 'CONVERTER', ad: 'Konvertör', t: 'Jeneratörün rotor devresini besler; değişen rüzgârda şebekeye sabit frekans verir.', u: '/sistemler/jenerator/', ul: 'Jeneratör ve konvertör' },
-    yaw:       { no: 'YAW', ad: 'Yaw sistemi', t: 'Naseli rüzgâra döndüren halka yatak ve motorlar. Güç kabloları bu açıklıktan kuleye iner.', u: '/sistemler/yaw/', ul: 'Yaw sistemi' },
-    pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.', u: '/sistemler/pitch/', ul: 'Pitch sistemi' }
+    anaYatak:  { no: 'MAIN BEARING', ad: 'Ana yatak', t: 'Rotorun ağırlığını ve rüzgâr itkisini taşır; torku ana mile bırakır.',
+      k: 'Gres durumu ve kaçak, yatak sıcaklığı trendi, titreşim, sızdırmazlık.', b: 'Komşu türbinlere göre yükselen sıcaklık, titreşimde yatak frekansları, conta çevresinde gres.', u: '/n117/', ul: 'N117 turu' },
+    disli:     { no: 'GEARBOX', ad: 'Dişli kutusu', t: 'Üç kademe: iki planet, bir helisel. Rotor devrini jeneratörün istediği hıza çıkarır.',
+      k: 'Yağ seviyesi ve sıcaklığı, filtre fark basıncı, yağ numunesi, endoskopla dişli yüzeyleri.', b: 'Yavaş yükselen yağ sıcaklığı, filtre alarmı, yağda metal partikül, ses değişimi.', u: '/saha-notlari/disli-kutusu-sicaklik/', ul: 'İlgili vaka' },
+    jenerator: { no: 'GENERATOR', ad: 'Jeneratör', t: '3.000 kW, çift beslemeli asenkron, 660 V.',
+      k: 'Sargı ve yatak sıcaklıkları, yalıtım direnci, bilezik ve kömürler, soğutma havası.', b: 'Sıcaklık alarmı (önce sensörü doğrula), kömür tozu birikimi, yatak sesi.', u: '/saha-notlari/jenerator-sicaklik/', ul: 'İlgili vaka' },
+    konvertor: { no: 'CONVERTER', ad: 'Konvertör', t: 'Jeneratörün rotor devresini besler; değişen rüzgârda şebekeye sabit frekans verir.',
+      k: 'Soğutma devresi, bara bağlantı torkları, yük altında termal görüntü, filtreler.', b: 'Belirli güçte atan aşırı akım, aşırı sıcaklık hataları, reset sonrası normal çalışma.', u: '/saha-notlari/converter-asiri-akim/', ul: 'İlgili vaka' },
+    yaw:       { no: 'YAW', ad: 'Yaw sistemi', t: 'Naseli rüzgâra döndüren halka yatak ve motorlar. Güç kabloları bu açıklıktan kuleye iner.',
+      k: 'Yaw dişlisi yağlaması, fren balataları ve basıncı, motor-redüktörler, kablo burulma sayacı.', b: 'Salınım (hunting), gıcırtı ya da vuruntu, kablo burulma uyarısı.', u: '/saha-notlari/yaw-salinimi/', ul: 'İlgili vaka' },
+    pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.',
+      k: 'Kanat yatağı gresi, pitch motoru ve sürücü akımı, acil durum enerji kaynağı, açı enkoderi.', b: 'Kanatlar arası açı farkı, yüksek motor akımı, açı sapması hatası.', u: '/saha-notlari/pitch-motor-yuksek-akim/', ul: 'İlgili vaka' }
   };
   var sahne = bolum.querySelector('.dny-sahne');
   var katman = document.createElement('div'); katman.className = 'v-noktalar'; sahne.appendChild(katman);
@@ -143,7 +159,9 @@
   pencere.addEventListener('mouseleave', function () { if (acikNokta) noktaKapa(acikNokta); });
   function noktaAc(id) {
     var n = NOKTA[id]; acikNokta = id;
-    pencere.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p><a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a>';
+    pencere.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p>' +
+      '<dl class="v-nb-dl"><div><dt>Kontrol</dt><dd>' + n.k + '</dd></div><div><dt>Sahada belirti</dt><dd>' + n.b + '</dd></div></dl>' +
+      '<a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a>';
     pencere.classList.add('gor'); konumla();
   }
   function noktaKapa(id, zorla) { if (acikNokta === id || zorla) { acikNokta = null; pencere.classList.remove('gor'); } }
@@ -151,7 +169,7 @@
     if (!acikNokta) return;
     var n = null; sonListe.forEach(function (o) { if (o.id === acikNokta) n = o; });
     if (!n || !n.gor) { noktaKapa(acikNokta, true); return; }
-    var w = sahne.clientWidth, h = sahne.clientHeight, sag = n.x > w - 300, ust = n.y > h - 220;
+    var w = sahne.clientWidth, h = sahne.clientHeight, sag = n.x > w - 330, ust = n.y > h - 330;
     pencere.style.transform = 'translate3d(' + Math.round(sag ? n.x + 14 : n.x - 14) + 'px,' + Math.round(ust ? n.y - 22 : n.y + 22) + 'px,0)' +
       (sag ? ' translateX(-100%)' : '') + (ust ? ' translateY(-100%)' : '');
   }
@@ -168,11 +186,11 @@
 
   /* ---- dış teknik etiketler: parçaya ince çizgiyle bağlı, belli bölümlerde belirir ---- */
   var ETIKET = {
-    kule:  { en: 'TOWER',   ad: 'Kule',  t: 'Çelik · göbek 120 m',     ar: [[0.07, 0.16], [0.17, 0.27], [0.978, 1.01]], y: -26, mob: true },
-    yaw:   { en: 'YAW',     ad: 'Yaw',   t: 'Nasel rüzgâra döner',     ar: [[0.272, 0.335]], y: 34 },
-    nasel: { en: 'NACELLE', ad: 'Nasel', t: '12,4 × 4,2 × 4,0 m',       ar: [[0.075, 0.16], [0.335, 0.395], [0.978, 1.01]], y: -52, mob: true },
-    gobek: { en: 'HUB',     ad: 'Göbek', t: 'Üç kanat yatağı',          ar: [[0.36, 0.395], [0.978, 1.01]], y: 50 },
-    rotor: { en: 'ROTOR',   ad: 'Rotor', t: 'Ø 116,8 m · 3 kanat',      ar: [[0.07, 0.16], [0.978, 1.01]], y: 38, mob: true }
+    kule:  { en: 'TOWER',   ad: 'Kule',  t: 'Çelik · göbek 120 m',     ar: [[0.075, 0.118], [0.978, 1.01]], y: -26, mob: true },
+    yaw:   { en: 'YAW',     ad: 'Yaw',   t: 'Nasel rüzgâra döner',     ar: [], y: 34 },
+    nasel: { en: 'NACELLE', ad: 'Nasel', t: '12,4 × 4,2 × 4,0 m',       ar: [[0.08, 0.14], [0.978, 1.01]], y: -52, mob: true },
+    gobek: { en: 'HUB',     ad: 'Göbek', t: 'Üç kanat yatağı',          ar: [[0.978, 1.01]], y: 50 },
+    rotor: { en: 'ROTOR',   ad: 'Rotor', t: 'Ø 116,8 m · 3 kanat',      ar: [[0.075, 0.118], [0.978, 1.01]], y: 38, mob: true }
   };
   var dar = matchMedia('(max-width: 820px)').matches;
   var eKatman = document.createElement('div'); eKatman.className = 'v-etiketler'; eKatman.setAttribute('aria-hidden', 'true');
@@ -229,6 +247,20 @@
     document.addEventListener('pointerleave', function () { if (sahneS && sahneS.fare) sahneS.fare(null); ust.classList.remove('gor'); });
   }
 
+  /* ---- kule kapısı: erişim işareti ---- */
+  var erisim = document.createElement('div'); erisim.className = 'v-erisim';
+  erisim.innerHTML = '<p class="v-er-ust"><span aria-hidden="true"></span>Erişim · saha servisi</p><p class="v-er-ad">Kule kapısı</p>';
+  var erisimBtn = document.createElement('button'); erisimBtn.type = 'button'; erisimBtn.className = 'v-er-git'; erisimBtn.textContent = 'Türbine gir'; erisimBtn.tabIndex = -1;
+  erisimBtn.addEventListener('click', function () { git(0.226); });
+  erisim.appendChild(erisimBtn); sahne.appendChild(erisim);
+  /* ---- servis asansörü: yukarı erişim göstergesi ---- */
+  var asansor = document.createElement('div'); asansor.className = 'v-asansor'; asansor.setAttribute('aria-hidden', 'true');
+  asansor.innerHTML = '<p class="v-as-ust">Servis asansörü</p><p class="v-as-ad">Yukarı erişim</p><p class="v-as-yol"><span>Kule</span><i><b></b></i><span>Nasel</span></p><p class="v-as-kot">Kot <b>0</b> m</p>';
+  sahne.appendChild(asansor);
+  var asOran = asansor.querySelector('.v-as-yol i'), asKot = asansor.querySelector('.v-as-kot b');
+  /* ---- temsili yerleşim notu: kule ve nasel içi üretici çizimi değildir ---- */
+  var temsil = document.createElement('p'); temsil.className = 'v-temsil'; temsil.textContent = 'Temsili yerleşim · üretici çizimi değildir'; sahne.appendChild(temsil);
+
   /* ---- irtifa cetveli: dış bölümde 0–120 m ---- */
   var irtifa = document.createElement('div'); irtifa.className = 'v-irtifa'; irtifa.setAttribute('aria-hidden', 'true');
   irtifa.innerHTML = '<div class="v-ir-cetvel">' + [120, 90, 60, 30, 0].map(function (m) { return '<i style="--y:' + (m / 120) + '"><b>' + m + '</b></i>'; }).join('') + '<span class="v-ir-ok"></span></div><p class="v-ir-b">İRTİFA · m</p>';
@@ -251,7 +283,7 @@
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=5789e7b3').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=c8f39ede').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
