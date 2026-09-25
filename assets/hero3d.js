@@ -13,7 +13,7 @@
  * fotoğraf olduğu gibi kalıyor; sayfa hiçbir şey kaybetmiyor.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene } from '/n117/n117.js?v=2a90e4df';
+import { createScene } from '/n117/n117.js?v=cfd3cd65';
 
 export function kapak3BBaslat(canvas) {
   let S;
@@ -108,6 +108,7 @@ export function kapak3BBaslat(canvas) {
     if (t - sonKontrol > 4000) { isikGuncelle(); sonKontrol = t; }
 
     if (parts.spin) parts.spin.rotation.z -= devirRad() * dt;
+    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);
 
     if (!az) {
       imX += (hdX - imX) * 0.02;

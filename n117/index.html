@@ -785,7 +785,7 @@ document.getElementById('burger').addEventListener('click', function () {
 </script>
 <script type="module">
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=2a90e4df';
+import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=cfd3cd65';
 
 const canvas = document.getElementById('n117cv');
 let S;
@@ -885,6 +885,7 @@ if (S) {
     olcek();
     const t = performance.now();
     if (donuyor && parts.spin) parts.spin.rotation.z = -(t / 1000) * DEVIR;
+    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);
     if (ucus) {
       let k = (t - ucus.bas) / ucus.sure;
       if (k >= 1) { k = 1; }

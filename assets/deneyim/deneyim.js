@@ -9,7 +9,7 @@
  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, SPEC } from '/n117/n117.js?v=2a90e4df';
+import { createScene, SPEC } from '/n117/n117.js?v=cfd3cd65';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=7c5ea850';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
@@ -312,6 +312,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (ic.anaMil) ic.anaMil.rotation.z -= w * dt;
     if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * dt;
     yawGuncelle(dt);
+    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
 
     // alan derinliği: bakılan noktaya odak
     if (bokeh) {
