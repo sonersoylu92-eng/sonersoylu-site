@@ -24,7 +24,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
-<link rel="stylesheet" href="/style.css?v=1811ddb7">
+<link rel="stylesheet" href="/style.css?v=5241d317">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
      crossorigin="anonymous"></script>
 <style>
@@ -261,11 +261,13 @@
 .verdict p{font-size:.875rem;line-height:1.7;color:var(--ink)}
 .verdict p+p{margin-top:.6rem}
 .verdict b{font-weight:500;color:var(--beacon)}
-.warn{margin-top:1.75rem;border-left:2px solid var(--beacon);background:var(--surface);
+.warn{margin-top:1.75rem;border-left:2px solid var(--uyari);background:var(--surface);
  padding:1.15rem 1.35rem}
 .warn p{font-size:.875rem;line-height:1.7;color:var(--muted)}
 .warn b{color:var(--ink);font-weight:500}
 
+.out dd.pay-dd{margin:0;font:inherit;font-size:inherit}
+.out .verdict dd{margin:0;font:inherit;letter-spacing:normal;color:inherit;line-height:inherit}
 </style>
 </head><body>
 <header><div class="wrap bar"><a class="brand" href="/en/">Soner Soylu</a><nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-res">Resources</button><div class="ddm" id="dd-res"><a href="/en/guide/">Guide<span>Getting in, a day on site</span></a><a href="/en/glossary/">Glossary<span>148 terms, English–Turkish</span></a><a href="/en/tools/">Tools<span>Field calculators</span></a><a href="/en/systems/">Systems<span>Pitch, yaw, gearbox, generator</span></a><a href="/en/field-notes/">Field notes<span>Real fault cases, step by step</span></a><a href="/en/assistant/">Assistant<span>Answers from this site’s own field content</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turb">Turbines</button><div class="ddm" id="dd-turb"><a href="/n90/">N90 assembly<span>Nordex N90/2500 · 7-stage 3D build</span></a><a href="/n117/">N117 tour<span>Nordex N117 Delta · 15-stop site tour</span></a><a href="/en/turbines/">Model guide<span>Vestas and Enercon · specs, maintenance, faults</span></a></div></div><a href="/en/#contact">Contact</a><a href="/" hreflang="tr" lang="tr">Türkçe</a></nav><div class="hd-right"><button id="araAc" class="ara-dugme" type="button" aria-label="Search"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button><a class="lang" href="/maas/" hreflang="tr" lang="tr" title="Türkçe">TR</a><a class="plate" href="mailto:sonersoylu@yandex.com">Get in touch</a></div><button id="burger" type="button" aria-expanded="false" aria-controls="mobmenu" aria-label="Menu"><span></span><span></span></button></div><div id="mobmenu" class="mob"><p class="mob-baslik">Resources</p><a href="/en/guide/">Guide</a><a href="/en/glossary/">Glossary</a><a href="/en/tools/">Tools</a><p class="mob-baslik">Career</p><a href="/en/how-to-become/">How to become one</a><a href="/en/gwo/">GWO certification</a><a href="/en/pay/" aria-current="page">Pay and conditions</a><a href="/en/#contact">Contact</a></div></header><main id="top">
@@ -276,7 +278,7 @@
 <p class="lede">Most people who search for this page are looking for a single number. I am not going to give one &#8212; and if you read to the end you will agree with me. What I will do instead is teach you to read an offer: two technicians doing the same job end up in very different places, and the one who knows where that gap comes from stands somewhere else in a negotiation.</p>
 <p class="g-meta"><span>13 years in the field</span><span>Turkey and Europe</span><span>Manufacturer and contractor side</span><span>Last updated: September 2026</span></p>
 <nav class="toc" aria-label="Contents"><p>Contents</p><ol><li><a href="#short">The short answer</a></li><li><a href="#why">Why there is no number here</a></li><li><a href="#levers">The six levers that set your pay</a></li><li><a href="#calc">Offer reader</a></li><li><a href="#questions">Five sentences to say at interview</a></li><li><a href="#progress">How it moves year by year</a></li><li><a href="#abroad">Working abroad and per diem</a></li><li><a href="#flags">Red flags</a></li><li><a href="#faq">Frequently asked questions</a></li></ol></nav>
-</section><section class="wrap"><div class="kisa"><p class="k">The short answer</p>
+</section><section class="wrap"><div class="kisa" id="short"><p class="k">The short answer</p>
 <p>A wind turbine technician&#8217;s pay is not one number but the result of six variables:
 whether you work for the manufacturer or a contractor, whether you can do mechanical and
 electrical work together, site allowance and shift pattern, overseas per diem, your
@@ -388,10 +390,9 @@ other, so the currency does not matter.</p>
    <div><dt>Annual total</dt><dd id="oYil">&#8212;</dd></div>
    <div><dt>Fixed / conditional split</dt>
     <dd id="oPayYazi" style="font-size:.9375rem">&#8212;</dd>
-    <div class="pay"><i class="s" id="oBarS" style="width:50%"></i><i class="d" id="oBarD" style="width:50%"></i></div>
-    <div class="paylbl"><span>Fixed</span><span>Conditional</span></div></div>
-   <div class="verdict" id="oYorum"><p>Enter your figures and I will tell you what is solid
-    in the offer and what is fragile.</p></div>
+    <dd class="pay-dd"><div class="pay"><i class="s" id="oBarS" style="width:50%"></i><i class="d" id="oBarD" style="width:50%"></i></div><div class="paylbl"><span>Fixed</span><span>Conditional</span></div></dd></div>
+   <div class="verdict"><dt class="gorsel-gizli">Assessment</dt><dd id="oYorum"><p>Enter your figures and I will tell you what is solid
+    in the offer and what is fragile.</p></dd></div>
   </dl>
  </div>
 </div>

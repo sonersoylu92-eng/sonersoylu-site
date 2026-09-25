@@ -349,3 +349,15 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
   .ana .dny-kapak-alt .dg{min-height:2.75rem;padding:.6rem .9rem;font-size:.875rem;white-space:nowrap}
 }
 @media (max-width:560px) and (max-height:700px){ .ralan-not{display:none} .ralan{padding-bottom:.5rem} .ralan-zaman::before{content:"tahmin+model ·";color:#f2b233;letter-spacing:.04em} .ralan-zaman .ralan-nokta{display:none} }
+/* alçak masaüstü: yatay gösterge sağa, "Deneyimi geç"in altına; kimliğin ve koordinat satırının üstüne binmesin */
+@media (min-width:821px) and (max-height:780px){
+  .ralan{left:auto;right:var(--a-gut);top:calc(72px + 3.6rem);width:min(34rem,calc(100% - 2*var(--a-gut) - 22rem))}
+}
+/* kapak yazıları açık gökyüzünde de okunsun */
+.v-ad-unvan,.v-disiplin{text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 18px rgba(0,0,0,.45)}
+.v-disiplin{color:#e3e8eb}
+.dny-ana .dny-kapak-alt{isolation:isolate}
+.dny-ana .dny-kapak-alt::before{content:"";position:absolute;z-index:-1;left:-25%;right:15%;top:-30%;bottom:-15%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(5,8,11,.5),rgba(5,8,11,.28) 50%,rgba(5,8,11,0))}
+.v-disiplin{font-weight:500}
+@media (max-width:820px){ .dny-ana .dny-kapak-alt::before{left:0;right:0;top:-10%;bottom:0;background:linear-gradient(180deg,transparent,rgba(5,8,11,.35) 30%,rgba(5,8,11,.5))} }
