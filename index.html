@@ -28,9 +28,9 @@
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
 <link rel="stylesheet" href="/style.css?v=aef6de0e">
-<link rel="stylesheet" href="/ana.css?v=5948980a">
-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e9f6cc25">
-<link rel="stylesheet" href="/assets/vitrin.css?v=145dd3c9">
+<link rel="stylesheet" href="/ana.css?v=c5a622e8">
+<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=96f4a9b6">
+<link rel="stylesheet" href="/assets/vitrin.css?v=ff6e5716">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -80,16 +80,24 @@
     <div class="v-isik" aria-hidden="true"></div>
     <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
 
-    <div class="hud" id="hud" hidden>
-      <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
-      <dl>
-        <div><dt>Rüzgâr</dt><dd><b id="hHiz">–</b> m/s</dd></div>
-        <div><dt>Yön</dt><dd><svg class="pusula" id="hOk" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.5 11.5 13 8 10.6 4.5 13Z" fill="currentColor"/></svg><span id="hYon">–</span></dd></div>
-        <div><dt>Rotor</dt><dd><b id="hDevir">–</b> d/dk</dd></div>
-        <div><dt>Bir N117</dt><dd><b id="hGuc">–</b> kW</dd></div>
+    <div class="ralan" id="ralan" role="group" aria-label="Aliağa canlı rüzgâr alanı" hidden>
+      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı</p>
+      <p class="ralan-yer">Aliağa<span>göbek 120 m</span></p>
+      <dl class="ralan-dl">
+        <div><dt>Rüzgâr</dt><dd><b id="rHiz">–</b><small>m/s</small></dd></div>
+        <div><dt>Yön</dt><dd><svg class="ralan-ok" id="rOk" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M8 1.5 11.5 13 8 10.6 4.5 13Z" fill="currentColor"/></svg><b id="rYon">–</b><small id="rYonAd"></small></dd></div>
+        <div><dt>Yoğunluk</dt><dd><b id="rRho">–</b><small>kg/m³</small></dd></div>
+        <div><dt>Rotor</dt><dd><b id="rDevir">–</b><small>d/dk</small></dd></div>
+        <div><dt>N117</dt><dd><b id="rGuc">–</b><small>MW</small></dd></div>
       </dl>
-      <div class="egri" id="egri" hidden><p class="egri-b"><span>Önümüzdeki 24 saat</span><span id="egriAralik"></span></p><svg viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true"><path id="egriAlan" class="alan"/><path id="egriCizgi" class="cizgi"/><circle id="egriNokta" r="2.6"/></svg></div>
-      <p class="hud-alt">Open-Meteo sayısal tahmini, saha ölçümü değildir. <a href="/ruzgar/">Canlı rüzgâr</a></p>
+      <div class="ralan-egri">
+        <p><span>Güç eğrisi</span><b id="rYuk">–</b></p>
+        <div class="ralan-bar" id="rBar" role="img" aria-label="Anlık güç, anma gücüne oranı hesaplanıyor"></div>
+        <p class="ralan-olcek" aria-hidden="true"><span>0</span><span>3 MW</span></p>
+      </div>
+      <p class="ralan-kf" id="rKfSatir" hidden><span class="ralan-kf-ad">Kapasite faktörü<small>önümüzdeki 24 sa</small></span><abbr class="ralan-kf-kisa" title="Kapasite faktörü, önümüzdeki 24 saat">KF 24 sa</abbr><b id="rKf">–</b></p>
+      <p class="ralan-zaman"><span class="ralan-nokta" aria-hidden="true"></span><span id="rZaman">Güncellendi az önce</span></p>
+      <p class="ralan-not"><span class="ralan-uzun">Open-Meteo tahmini; güç ve devir modelden hesaplanır, ölçüm değildir.</span><span class="ralan-kisa">Tahmin ve model, ölçüm değil.</span> <a href="/ruzgar/">Canlı rüzgâr &#8594;</a></p>
     </div>
 
     <div class="kule-alt dny-kapak-alt">
@@ -581,45 +589,85 @@
   }
   function devir(v) { if (v < 3 || v > 25) return 0; return Math.max(7.9, Math.min(14.1, (8 * v / YARICAP) * 60 / (2 * Math.PI))); }
   function virgul(x, n) { return x.toFixed(n).replace('.', ','); }
-  fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
-    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-    .then(function (d) {
-      var c = d && d.current; if (!c) throw 0;
-      var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
-      if (!isFinite(v)) throw 0;
-      var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
-      var rho = p120 / (287.05 * (sic - 0.78 + 273.15));
-      var dv = devir(v), kw = guc(v, rho);
-      kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
-      document.getElementById('hHiz').textContent = virgul(v, 1);
-      document.getElementById('hYon').textContent = isFinite(yon) ? YONLER[Math.round(yon / 22.5) % 16] + ' ' + Math.round(yon) + '°' : '–';
-      document.getElementById('hDevir').textContent = dv > 0 ? virgul(dv, 1) : '0';
-      document.getElementById('hGuc').textContent = kw > 0 ? Math.round(kw).toLocaleString('tr-TR') : '0';
-      if (isFinite(yon)) { kok.style.setProperty('--yon-derece', String(yon)); document.getElementById('hOk').style.transform = 'rotate(' + (yon + 180) + 'deg)'; }
-      egriCiz(d.hourly);
-      document.getElementById('hud').hidden = false;
-    })
-    .catch(function () { /* veri yoksa gösterge hiç görünmez */ });
-
-  function egriCiz(h) {
+  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(i) { return document.getElementById(i); }
+  function yogunluk(sic, bas) {   /* 120 m'de hava yoğunluğu: barometrik indirgeme + ideal gaz */
+    var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
+    return p120 / (287.05 * (sic - 0.78 + 273.15));
+  }
+  /* sayılar ilk gelişte sıfırdan akar; sonraki yenilemelerde eski değerden */
+  var onceki = {};
+  function yaz(id, x, n) {
+    var el = $(id), bas = onceki[id], son = x;
+    onceki[id] = x;
+    if (az || !isFinite(x)) { el.textContent = isFinite(x) ? virgul(x, n) : '–'; return; }
+    var ilk = bas === undefined ? 0 : bas, t0 = performance.now(), sure = bas === undefined ? 1100 : 700;
+    (function adim(t) {
+      var k = Math.min(1, (t - t0) / sure), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = virgul(ilk + (son - ilk) * e, n);
+      if (k < 1) requestAnimationFrame(adim);
+    })(t0);
+  }
+  var BOLUT = 19, bar = $('rBar');
+  for (var i = 0; i < BOLUT; i++) bar.appendChild(document.createElement('i'));
+  var cekilen = 0;
+  function zamanYaz() {
+    if (!cekilen) return;
+    var sn = Math.max(0, Math.round((Date.now() - cekilen) / 1000));
+    $('rZaman').innerHTML = '<span class="ralan-g">Güncellendi </span>' + (sn < 5 ? 'az önce' : sn < 60 ? sn + ' sn önce' : Math.floor(sn / 60) + ' dk önce');
+  }
+  function isle(d) {
+    var c = d && d.current; if (!c) throw 0;
+    var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
+    if (!isFinite(v)) throw 0;
+    var rho = isFinite(sic) && isFinite(bas) ? yogunluk(sic, bas) : 1.225;
+    var dv = devir(v), kw = guc(v, rho), oran = kw / 3000;
+    kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
+    yaz('rHiz', v, 1); yaz('rRho', rho, 2); yaz('rDevir', dv, 1); yaz('rGuc', kw / 1000, 2);
+    if (isFinite(yon)) {
+      $('rYon').textContent = Math.round(yon) + '°';
+      $('rYonAd').textContent = YONLER[Math.round(yon / 22.5) % 16];
+      kok.style.setProperty('--yon-derece', String(yon));
+      $('rOk').style.transform = 'rotate(' + (yon + 180) + 'deg)';
+    }
+    var yuzde = Math.round(oran * 100);
+    $('rYuk').textContent = '%' + yuzde;
+    var yanan = oran > 0 ? Math.max(1, Math.round(oran * BOLUT)) : 0;
+    [].forEach.call(bar.children, function (b, k) { b.className = k < yanan ? 'y' : ''; b.style.transitionDelay = az ? '0s' : (k * 0.035).toFixed(3) + 's'; });
+    bar.setAttribute('aria-label', 'Anlık tahmini güç, anma gücünün yüzde ' + yuzde + '’i');
+    kf(d.hourly);
+    cekilen = Date.now(); zamanYaz();
+    $('ralan').hidden = false;
+  }
+  /* kapasite faktörü: önümüzdeki 24 saatin saatlik tahmininden, aynı model ve saatlik yoğunlukla */
+  function kf(h) {
     try {
       if (!h || !h.time || !h.wind_speed_120m) return;
-      var simdi = Date.now(), i0 = 0;
+      var simdi = Date.now(), i0 = 0, top = 0, n = 0;
       for (var i = 0; i < h.time.length; i++) { if (new Date(h.time[i] + ':00+03:00').getTime() <= simdi) i0 = i; }
-      var v = h.wind_speed_120m.slice(i0, i0 + 25).map(Number).filter(isFinite);
-      if (v.length < 6) return;
-      var en = Math.max.apply(null, v), ek = Math.min.apply(null, v), ust = Math.max(en * 1.1, 4);
-      var X = function (k) { return (k / (v.length - 1) * 236 + 2).toFixed(1); };
-      var Y = function (x) { return (42 - x / ust * 38).toFixed(1); };
-      var d = v.map(function (x, k) { return (k ? 'L' : 'M') + X(k) + ' ' + Y(x); }).join(' ');
-      document.getElementById('egriCizgi').setAttribute('d', d);
-      document.getElementById('egriAlan').setAttribute('d', d + ' L' + X(v.length - 1) + ' 44 L' + X(0) + ' 44 Z');
-      var n = document.getElementById('egriNokta'); n.setAttribute('cx', X(0)); n.setAttribute('cy', Y(v[0]));
-      document.getElementById('egriAralik').textContent = virgul(ek, 1) + '–' + virgul(en, 1) + ' m/s';
-      document.getElementById('egri').hidden = false;
+      for (var k = i0; k < Math.min(h.time.length, i0 + 24); k++) {
+        var v = +h.wind_speed_120m[k]; if (!isFinite(v)) continue;
+        var t = +(h.temperature_2m || [])[k], p = +(h.pressure_msl || [])[k];
+        top += guc(v, isFinite(t) && isFinite(p) ? yogunluk(t, p) : 1.225) / 3000; n++;
+      }
+      if (n < 12) return;
+      $('rKf').textContent = '%' + virgul(top / n * 100, 1);
+      $('rKfSatir').hidden = false;
     } catch (e) {}
   }
-
+  function cek() {
+    return fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(isle)
+      .catch(function () { /* veri yoksa gösterge hiç görünmez; varsa son değer kalır */ });
+  }
+  cek();
+  setInterval(zamanYaz, 1000);
+  /* on dakikada bir, sayfa görünürken ve kapaktayken yenile (kaynak uçta 15 dk önbellekli) */
+  setInterval(function () {
+    var s = $('deneyim');
+    if (!document.hidden && !(s && s.classList.contains('gecti'))) cek();
+  }, 10 * 60 * 1000);
 })();
 </script>
 <script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
