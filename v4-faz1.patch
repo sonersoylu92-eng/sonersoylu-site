@@ -1,0 +1,1856 @@
+diff --git a/404.html b/404.html
+index 9f20d33..a3d7f1c 100644
+--- a/404.html
++++ b/404.html
+@@ -3,45 +3,86 @@
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Sayfa bulunamadı — Soner Soylu</title>
+ <meta name="robots" content="noindex">
+-<meta name="theme-color" content="#f6f4f0">
++<meta name="theme-color" content="#0b0e10">
+ <meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
+ <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+-.mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
+-.mid .in{max-width:36rem}
+-.mid h1{font-size:2.25rem;line-height:1.1;margin-top:1.5rem}
+-.mid p{margin-top:1.5rem;font-size:1rem;line-height:1.75;color:var(--muted)}
+-.mid ul{margin-top:2rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+-.mid ul li{background:var(--surface)}
+-.mid ul a{display:grid;gap:.35rem;padding:1.1rem 1.2rem;transition:background .2s}
+-.mid ul a:hover{background:var(--raise)}
+-.mid ul b{font-weight:500;font-size:.9375rem}
+-.mid ul span{font-size:.8125rem;color:var(--muted);line-height:1.55}
+-@media (min-width:768px){.mid h1{font-size:3rem}}
++html,:root[data-vardiya]{--ground:#0b0e10 !important;--ink:#e9edf0 !important}
++html,body{background:#0b0e10;color:#e9edf0}
++main{padding-top:0}
++section.h404{position:relative;border:0;min-height:100vh;min-height:100dvh;display:grid;align-items:center;overflow:hidden;padding:clamp(3.5rem,10vh,6rem) 0 3rem;
++  background:radial-gradient(120% 80% at 70% 100%,#1a2530 0,#0b0e10 60%)}
++.h404::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
++  background-image:linear-gradient(rgba(124,196,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,196,255,.05) 1px,transparent 1px);background-size:48px 48px;
++  -webkit-mask-image:radial-gradient(80% 70% at 50% 60%,#000,transparent);mask-image:radial-gradient(80% 70% at 50% 60%,#000,transparent)}
++.h404 .wrap{position:relative;display:grid;gap:3rem;align-items:center}
++@media (min-width:900px){.h404 .wrap:not(.w2){grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}}
++.h404 .ust{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#aab3ba}
++.h404 .ust b{font-weight:400;color:#f2b233}
++.h404 .kod{margin-top:1.25rem;font-family:var(--mono);font-size:clamp(4rem,14vw,9rem);line-height:.9;letter-spacing:-.06em;color:#7cc4ff}
++.h404 h1{font-family:var(--sans);margin-top:.75rem;font-size:clamp(2.25rem,6vw,4.5rem);line-height:.98;letter-spacing:-.045em;font-weight:600;color:#fff}
++.h404 .ac{margin-top:1.5rem;max-width:34rem;font-size:1rem;line-height:1.7;color:#c3cbd1}
++.h404 .dg{display:inline-flex;align-items:center;gap:.6rem;margin-top:2rem;min-height:2.9rem;padding:.75rem 1.4rem;font-weight:500;color:#0b0e10;
++  background:linear-gradient(180deg,#a3d6ff 0%,#7cc4ff 55%,#6ab4f2 100%);border:1px solid #8ccbff;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px -12px rgba(124,196,255,.6);transition:transform .2s}
++.h404 .dg:hover{transform:translateY(-1px)}
++.h404 .dg:focus-visible,.h404 a:focus-visible{outline:2px solid #7cc4ff;outline-offset:3px}
++.h404 svg{width:100%;max-width:26rem;justify-self:center;color:#7cc4ff}
++.h404 svg .k{fill:none;stroke:rgba(233,237,240,.55);stroke-width:1.2}
++.h404 svg .o{fill:none;stroke:rgba(124,196,255,.35);stroke-width:1;stroke-dasharray:3 5}
++.h404 svg text{font-family:var(--mono);font-size:9px;letter-spacing:.14em;fill:#aab3ba}
++.h404 svg .r{transform-origin:200px 120px;animation:r404 14s linear infinite}
++@keyframes r404{to{transform:rotate(360deg)}}
++.yol{margin-top:3rem;display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
++@media (min-width:640px){.yol{grid-template-columns:repeat(2,minmax(0,1fr))}}
++@media (min-width:1000px){.yol{grid-template-columns:repeat(4,minmax(0,1fr))}}
++.yol li{display:grid}
++.h404 .w2{display:block}
++.yol a{display:grid;align-content:start;gap:.35rem;padding:1.1rem 1.2rem;background:#0f1418;transition:background .2s}
++.yol a:hover{background:#141b21}
++.yol b{font-weight:500;font-size:.9375rem;color:#fff}
++.yol span{font-size:.8125rem;line-height:1.55;color:#aab3ba}
++.yol-b{margin-top:4rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#aab3ba}
++@media (prefers-reduced-motion:reduce){.h404 svg .r{animation:none}.h404 .dg{transition:none}}
+ </style>
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ </head><body>
+-<main class="wrap mid">
+- <div class="in">
+-  <p class="mono" style="display:flex;align-items:center;gap:.75rem"><span class="beacon"></span>Hata 404</p>
+-  <h1>Bu sayfa yok</h1>
+-  <p>Aradığınız adres taşınmış ya da hiç var olmamış olabilir. Sitede en çok kullanılan sayfalar aşağıda.</p>
+-  <ul>
++<main>
++<section class="h404" aria-labelledby="h404b">
++ <div class="wrap">
++  <div>
++   <p class="ust"><span><b>&#9679;</b> Durum: bulunamadı</span><span>Hata kodu 404</span></p>
++   <p class="kod" aria-hidden="true">404</p>
++   <h1 id="h404b">Türbin burada değil.</h1>
++   <p class="ac">Aradığınız adres taşınmış ya da hiç var olmamış olabilir. Sahaya dönün ya da en çok kullanılan sayfalardan birine geçin.</p>
++   <a class="dg" href="/">Sahaya dön <span aria-hidden="true">&#8594;</span></a>
++  </div>
++  <svg viewBox="0 0 400 420" aria-hidden="true">
++   <path class="o" d="M40 400H360M200 120V20M100 120H300"/>
++   <path class="k" d="M193 128 L189 392 H211 L207 128 Z"/>
++   <rect class="k" x="186" y="112" width="40" height="16" rx="3"/>
++   <g class="r"><path class="k" d="M197 116 L200 22 L203 116Z"/><path class="k" d="M203 125 L284 172 L281 177 L199 128Z"/><path class="k" d="M197 125 L116 172 L119 177 L201 128Z"/><circle class="k" cx="200" cy="120" r="6"/></g>
++   <path class="k" d="M150 392H250"/>
++   <text x="228" y="252">KOT ? M</text><text x="40" y="414">KONUM: BİLİNMİYOR</text>
++  </svg>
++ </div>
++ <div class="wrap w2">
++  <p class="yol-b">Sık kullanılan sayfalar</p>
++  <ul class="yol">
+    <li><a href="/sozluk/"><b>Terim sözlüğü</b><span>148 rüzgâr türbini teriminin Türkçe–İngilizce karşılığı.</span></a></li>
+    <li><a href="/araclar/"><b>Hesaplama araçları</b><span>Kanat ucu hızı, kapasite faktörü, cıvata torku ve dahası.</span></a></li>
+    <li><a href="/ariza/"><b>Arıza teşhis ağacı</b><span>Belirtiden olası nedene giden adım adım yol.</span></a></li>
+    <li><a href="/rehber/"><b>Sahadan rehber</b><span>Mesleğe giriş, GWO, sahada bir gün, arıza ve bakım.</span></a></li>
+-   <li><a href="/n90/"><b>N90 3B model</b><span>2,5 MW türbinin aşama aşama kurulumu.</span></a></li>
++   <li><a href="/deneyim/"><b>Türbinin içine</b><span>N117'nin kulesinden naseline 3B yolculuk.</span></a></li>
+    <li><a href="/sistemler/"><b>Türbin sistemleri</b><span>Pitch, yaw, dişli kutusu ve jeneratörün teknik referansı.</span></a></li>
+    <li><a href="/saha-notlari/"><b>Sahadan arıza vakaları</b><span>Gerçek arızaların adım adım teşhis notları.</span></a></li>
+    <li><a href="/turbinler/"><b>Türbin model rehberi</b><span>Vestas ve Enercon modelleri: özellik, bakım, arıza.</span></a></li>
+   </ul>
+-  <p style="margin-top:2rem"><a class="arrow" href="/">Ana sayfaya dön <i>→</i></a></p>
+  </div>
++</section>
+ </main>
+ <script src="/assets/site.js?v=2083a619" defer></script>
+ <div class="doku" aria-hidden="true"></div>
+diff --git a/ana.css b/ana.css
+index 68334b4..1a226ca 100644
+--- a/ana.css
++++ b/ana.css
+@@ -5,7 +5,7 @@
+ .ana{
+   --a-bg:#0b0e10;--a-surface:#12171b;--a-raise:#182026;--a-line:#232a31;
+   --a-ink:#e9edf0;--a-muted:#9aa3ab;--a-faint:#8a939b;
+-  --a-accent:#c7ff32;--a-warn:#f2b233;--a-err:#ff6b5e;
++  --a-accent:#7cc4ff;--a-warn:#f2b233;--a-err:#ff6b5e;
+   --a-max:76rem;--a-gut:clamp(1rem,4vw,2rem);
+   background:var(--a-bg);color:var(--a-ink);color-scheme:dark;
+   font-family:var(--sans);
+@@ -40,7 +40,7 @@ body.ana-body,:root[data-vardiya] body.ana-body{background:#0b0e10}
+ .ana .dg{display:inline-flex;align-items:center;justify-content:center;min-height:2.9rem;padding:.75rem 1.35rem;font-size:.9375rem;font-weight:500;border:1px solid rgba(255,255,255,.28);color:#fff;transition:background .2s,color .2s,border-color .2s}
+ .ana .dg:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+ .ana .dg.birincil{background:var(--a-accent);border-color:var(--a-accent);color:#0b0e10}
+-.ana .dg.birincil:hover{background:#d8ff6a}
++.ana .dg.birincil:hover{background:#b3dcff}
+ .ana .rakam{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:clamp(2.5rem,6vw,4rem) 0 0;border-top:1px solid rgba(255,255,255,.18)}
+ .ana .rakam div{padding:1.1rem 1rem 0 0}
+ .ana .rakam dt{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:#aeb6bc}
+@@ -145,8 +145,8 @@ body.ana-body #lb{background:rgba(7,9,9,.96)}
+ body.ana-body header{--ink:#e9edf0;--muted:#aab3ba;--line:#262e35;--surface:#141a1f;--raise:#1b2328;--ground:#0b0e10;
+   background:rgba(11,14,16,.82);border-bottom-color:#1d252b;backdrop-filter:blur(12px)}
+ :root[data-vardiya] body.ana-body header,:root body.ana-body header{background:rgba(11,14,16,.82);backdrop-filter:blur(12px)}
+-body.ana-body header .plate{background:#c7ff32;border-color:#c7ff32;color:#0b0e10}
+-body.ana-body header .plate:hover{background:#d8ff6a}
++body.ana-body header .plate{background:#7cc4ff;border-color:#7cc4ff;color:#0b0e10}
++body.ana-body header .plate:hover{background:#b3dcff}
+ 
+ .ana .kule{position:relative;border-top:0;padding:0;height:min(86svh,54rem);background:#0b0e10}
+ .ana .kule.uc-boyut{height:380vh}
+@@ -159,8 +159,8 @@ body.ana-body header .plate:hover{background:#d8ff6a}
+   background:linear-gradient(180deg,rgba(11,14,16,.55) 0,rgba(11,14,16,0) 26%,rgba(11,14,16,0) 52%,rgba(11,14,16,.72) 84%,#0b0e10 100%)}
+ 
+ /* canlı gösterge: assets/vitrin.css (.ralan) */
+-.ana .nabiz{width:.45rem;height:.45rem;border-radius:50%;background:#c7ff32;box-shadow:0 0 0 0 rgba(199,255,50,.6);animation:nabiz 2s infinite}
+-@keyframes nabiz{70%{box-shadow:0 0 0 .5rem rgba(199,255,50,0)}100%{box-shadow:0 0 0 0 rgba(199,255,50,0)}}
++.ana .nabiz{width:.45rem;height:.45rem;border-radius:50%;background:#7cc4ff;box-shadow:0 0 0 0 rgba(124,196,255,.6);animation:nabiz 2s infinite}
++@keyframes nabiz{70%{box-shadow:0 0 0 .5rem rgba(124,196,255,0)}100%{box-shadow:0 0 0 0 rgba(124,196,255,0)}}
+ 
+ /* kot göstergesi (kameranın gerçek yüksekliği) */
+ .ana .kot{position:absolute;right:var(--a-gut);top:calc(72px + 2rem);bottom:clamp(12rem,30vh,16rem);width:4.5rem;
+@@ -171,25 +171,25 @@ body.ana-body header .plate:hover{background:#d8ff6a}
+ .ana .kot-cetvel{position:relative;flex:1;width:100%;border-right:1px solid rgba(255,255,255,.35)}
+ .ana .kot-cetvel i{position:absolute;right:.6rem;bottom:calc(var(--y)*100%);transform:translateY(50%);font-style:normal;font-size:.625rem;color:#aab3ba}
+ .ana .kot-cetvel i::after{content:"";position:absolute;right:-.6rem;top:50%;width:.4rem;height:1px;background:rgba(255,255,255,.5)}
+-.ana .kot-ok{position:absolute;right:-.35rem;bottom:calc(var(--y,0)*100%);width:.7rem;height:.7rem;transform:translateY(50%) rotate(45deg);background:#c7ff32;box-shadow:0 0 12px rgba(199,255,50,.7);transition:bottom .15s linear}
++.ana .kot-ok{position:absolute;right:-.35rem;bottom:calc(var(--y,0)*100%);width:.7rem;height:.7rem;transform:translateY(50%) rotate(45deg);background:#7cc4ff;box-shadow:0 0 12px rgba(124,196,255,.7);transition:bottom .15s linear}
+ 
+ /* alt bant: duraklar üst üste, etkin olan görünür */
+ .ana .kule-alt{position:absolute;left:0;right:0;bottom:0;padding:0 var(--a-gut) clamp(1.5rem,4vh,2.75rem);max-width:var(--a-max);margin:0 auto;display:grid}
+ .ana .durak{grid-area:1/1;align-self:end;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
+ .ana .durak.etkin{opacity:1;transform:none;pointer-events:auto}
+ .ana .kule.statik .durak[data-d="1"],.ana .kule.statik .durak[data-d="2"],.ana .kule.statik .durak[data-d="3"]{display:none}
+-.ana .durak .etiket{color:#c7ff32}
++.ana .durak .etiket{color:#7cc4ff}
+ .ana .durak-m{margin:.6rem 0 0;max-width:36ch;font-size:clamp(1.15rem,2.1vw,1.6rem);line-height:1.35;letter-spacing:-.015em;color:#fff;text-wrap:balance}
+-.ana .durak-m a{color:#c7ff32;border-bottom:1px solid rgba(199,255,50,.4);white-space:nowrap}
++.ana .durak-m a{color:#7cc4ff;border-bottom:1px solid rgba(124,196,255,.4);white-space:nowrap}
+ .ana .kaydir{margin:1.25rem 0 0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba;display:flex;align-items:center;gap:.6rem}
+-.ana .kaydir::before{content:"";width:1px;height:1.6rem;background:linear-gradient(#c7ff32,transparent);animation:inis 1.8s ease-in-out infinite}
++.ana .kaydir::before{content:"";width:1px;height:1.6rem;background:linear-gradient(#7cc4ff,transparent);animation:inis 1.8s ease-in-out infinite}
+ @keyframes inis{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+ .ana .kule.statik .kaydir{display:none}
+ .ana .kule .rakam{margin-top:clamp(1.5rem,4vh,2.5rem)}
+ 
+ /* ===================== kısaca ===================== */
+ .ana .giris-izgara{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:end}
+-.ana .soz{margin:1.25rem 0 0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(1.6rem,3.3vw,2.7rem);line-height:1.22;letter-spacing:-.02em;color:#f2f4f5;text-wrap:pretty;position:relative;padding-left:clamp(1.25rem,3vw,2rem);border-left:2px solid #c7ff32}
++.ana .soz{margin:1.25rem 0 0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(1.6rem,3.3vw,2.7rem);line-height:1.22;letter-spacing:-.02em;color:#f2f4f5;text-wrap:pretty;position:relative;padding-left:clamp(1.25rem,3vw,2rem);border-left:2px solid #7cc4ff}
+ .ana .giris-yan .giris{margin-top:0}
+ .ana .platform{list-style:none;margin:1.75rem 0 0;padding:0;border-top:1px solid var(--a-line)}
+ .ana .platform li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--a-line)}
+@@ -201,7 +201,7 @@ body.ana-body header .plate:hover{background:#d8ff6a}
+ .ana .zaman::before{content:"";position:absolute;left:4.25rem;top:.4rem;bottom:.4rem;width:1px;background:var(--a-line)}
+ .ana .zaman li{display:grid;grid-template-columns:4.25rem minmax(0,1fr);gap:0 2rem;padding:0 0 2rem;position:relative}
+ .ana .zaman li::before{content:"";position:absolute;left:calc(4.25rem - .3rem);top:.45rem;width:.6rem;height:.6rem;border-radius:50%;background:#0b0e10;border:1px solid var(--a-faint)}
+-.ana .zaman li:first-child::before{background:#c7ff32;border-color:#c7ff32;box-shadow:0 0 12px rgba(199,255,50,.6)}
++.ana .zaman li:first-child::before{background:#7cc4ff;border-color:#7cc4ff;box-shadow:0 0 12px rgba(124,196,255,.6)}
+ .ana .zaman .yil{font-family:var(--mono);font-size:.8125rem;color:var(--a-accent);padding-top:.1rem}
+ .ana .zaman h3{margin:0;font-size:1.1875rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
+ .ana .zaman .rol{margin:.3rem 0 0;font-size:.875rem;color:var(--a-muted)}
+@@ -257,7 +257,7 @@ main.ana{padding-top:0}
+ body.ana-body #lb{flex-direction:column;gap:1rem}
+ body.ana-body #lb img{max-height:80vh;cursor:pointer}
+ body.ana-body #lb .lb-ok{position:absolute;top:50%;transform:translateY(-50%);width:3rem;height:3rem;border:1px solid rgba(255,255,255,.25);background:rgba(11,14,16,.6);color:#fff;font-size:1.25rem;cursor:pointer}
+-body.ana-body #lb .lb-ok:hover{border-color:#c7ff32;color:#c7ff32}
++body.ana-body #lb .lb-ok:hover{border-color:#7cc4ff;color:#7cc4ff}
+ body.ana-body #lbOnce{left:1rem}
+ body.ana-body #lbSonra{right:1rem}
+ body.ana-body #lb .lb-alt{margin:0;font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:#aab3ba}
+diff --git a/ara/index.html b/ara/index.html
+index 8233c5b..c080ebb 100644
+--- a/ara/index.html
++++ b/ara/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/araclar/civata-germe/index.html b/araclar/civata-germe/index.html
+index d2006cb..22b6241 100644
+--- a/araclar/civata-germe/index.html
++++ b/araclar/civata-germe/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/araclar/index.html b/araclar/index.html
+index 0e5579b..3996ad3 100644
+--- a/araclar/index.html
++++ b/araclar/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+diff --git a/ariza/index.html b/ariza/index.html
+index 89a1e9f..211c70a 100644
+--- a/ariza/index.html
++++ b/ariza/index.html
+@@ -19,7 +19,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/ariza/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/ariza/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/asistan/index.html b/asistan/index.html
+index d780145..e7c406d 100644
+--- a/asistan/index.html
++++ b/asistan/index.html
+@@ -38,7 +38,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ <style>
+ .as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+diff --git a/assets/deneyim/arayuz.js b/assets/deneyim/arayuz.js
+index 657dd4e..1d2b12f 100644
+--- a/assets/deneyim/arayuz.js
++++ b/assets/deneyim/arayuz.js
+@@ -63,9 +63,16 @@
+     window.scrollTo({ top: Math.round(scrollY + h.getBoundingClientRect().top - 72), behavior: 'instant' });
+     h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
+   });
++  var sahaya = $('dnySahaya');
++  if (sahaya) sahaya.addEventListener('click', function (e) {
++    if (bolum.classList.contains('uc-boyut')) { e.preventDefault(); git(0.2); return; }
++    if (acilabilir) { e.preventDefault(); kur(); }          // hareket azaltılmışsa: yalnız tıklayınca 3B açılır
++    // WebGL hiç yoksa bağlantı /deneyim/ sayfasına gider
++  });
+   var basaDon = $('dnyBasaDon');
+   if (basaDon) basaDon.addEventListener('click', function () { git(0); });
+ 
++  var soz = $('vSoz'), sozSatir = soz ? [].slice.call(soz.querySelectorAll('span')) : [];
+   var sonDurak = -2, sonRay = -1, sonAlt = -1;
+   function ilerleme(p, y, icerde) {
+     sonP = p;
+@@ -87,7 +94,7 @@
+     hud.classList.toggle('gor', goster);
+ 
+     // dış altyazılar
+-    var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b) ai = i; });
++    var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b && !(i === 0 && soz)) ai = i; });
+     if (ai !== sonAlt) {
+       if (ai >= 0) {
+         var d2 = DIS[ai], metin = d2.t;
+@@ -97,6 +104,12 @@
+       sonAlt = ai;
+     }
+     alt.classList.toggle('gor', ai >= 0);
++    // kapak cümlesi: kamera türbine yaklaşırken satır satır belirir
++    if (soz) {
++      var sp = (p - 0.012) / 0.13;
++      sozSatir.forEach(function (s, i) { s.classList.toggle('gor', sp > i * 0.13 && p < 0.158); });
++      soz.classList.toggle('gor', p > 0.012 && p < 0.158);
++    }
+     son.classList.toggle('gor', p > 0.968);
+ 
+     // ray: geçilen ve etkin bölüm
+@@ -163,16 +176,18 @@
+     irOk.style.setProperty('--y', Math.max(0, Math.min(1, y / 120)).toFixed(3));
+   }
+ 
+-  var basla = $('dnyBasla');
++  var basla = $('dnyBasla'), acilabilir = false;
+   function statik(dugme) {
+     bolum.classList.remove('uc-boyut', 'hazir');
+     bolum.classList.add('statik');
+-    if (dugme && basla) basla.hidden = false;
++    acilabilir = !!dugme;
++    if (dugme && basla && !sahaya) basla.hidden = false;   // ana sayfada bu işi "Sahaya gir" yapıyor
+   }
+   function kur() {
+     bolum.classList.remove('statik');
+     bolum.classList.add('uc-boyut', 'dny-akis');
+     if (basla) basla.hidden = true;
++    acilabilir = false;
+     import('/assets/deneyim/deneyim.js?v=cdc4c247').then(function (mod) {
+       DURAKLAR = mod.DURAKLAR; rayKur();
+       var S = mod.deneyimBaslat(tuval, bolum, {
+diff --git a/assets/deneyim/deneyim.css b/assets/deneyim/deneyim.css
+index 4ad1125..24d949e 100644
+--- a/assets/deneyim/deneyim.css
++++ b/assets/deneyim/deneyim.css
+@@ -2,7 +2,7 @@
+  * Palet: grafit, çelik, mat siyah, soğuk beyaz, ince camgöbeği. Sitenin limon
+  * vurgusu yalnız marka ve eylem düğmelerinde. */
+ .dny{--d-bg:#07090b;--d-ink:#eef2f5;--d-muted:#a3adb5;--d-faint:#76818a;--d-line:rgba(238,242,245,.14);
+-  --d-cyan:#6fdcec;--d-accent:#c7ff32;--d-gut:clamp(1rem,4vw,2.25rem);
++  --d-cyan:#6fdcec;--d-accent:#7cc4ff;--d-gut:clamp(1rem,4vw,2.25rem);
+   background:var(--d-bg);color:var(--d-ink);color-scheme:dark}
+ .dny .gizli{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+ .dny :focus-visible{outline:2px solid var(--d-cyan);outline-offset:3px}
+@@ -83,7 +83,7 @@
+   font:500 .8125rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--d-ink);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+ .dny-dg a:hover,.dny-dg button:hover{border-color:var(--d-ink)}
+ .dny-dg .birincil{background:var(--d-accent);border-color:var(--d-accent);color:#0b0e10}
+-.dny-dg .birincil:hover{background:#d8ff6a;border-color:#d8ff6a}
++.dny-dg .birincil:hover{background:#b3dcff;border-color:#b3dcff}
+ 
+ /* ---- yükleniyor ---- */
+ .dny-yuk{position:absolute;right:var(--d-gut);bottom:1.4rem;margin:0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--d-faint);transition:opacity .6s}
+@@ -129,8 +129,8 @@ body.dny-body,:root[data-vardiya] body.dny-body{background:#07090b}
+ body.dny-body header{--ink:#e9edf0;--muted:#aab3ba;--line:#262e35;--surface:#141a1f;--raise:#1b2328;--ground:#0b0e10;
+   background:rgba(7,9,11,.55);border-bottom-color:rgba(238,242,245,.08);backdrop-filter:blur(12px)}
+ :root[data-vardiya] body.dny-body header,:root body.dny-body header{background:rgba(7,9,11,.55);backdrop-filter:blur(12px)}
+-body.dny-body header .plate{background:#c7ff32;border-color:#c7ff32;color:#0b0e10}
+-body.dny-body header .plate:hover{background:#d8ff6a}
++body.dny-body header .plate{background:#7cc4ff;border-color:#7cc4ff;color:#0b0e10}
++body.dny-body header .plate:hover{background:#b3dcff}
+ body.dny-body footer{background:#050607;border-top:1px solid #1b2127;color:#9aa3ab}
+ body.dny-body footer .mono,body.dny-body footer .mono a{color:#9aa3ab}
+ body.dny-body footer a:hover{color:#e9edf0}
+@@ -198,3 +198,13 @@ html:has(body.dny-body){background:#07090b}
+ .dny-bolum.statik .v-noktalar,.dny-bolum.statik .v-irtifa,.dny-bolum.statik .v-nokta-bilgi{display:none}
+ @media (max-width:820px){ .v-irtifa{display:none} .v-nokta span{display:none} }
+ @media (prefers-reduced-motion:reduce){ .v-nokta i::before{animation:none;opacity:0} }
++/* V4: kısa açılış göstergesi — yalnız sahne 0,4 sn'den uzun sürerse görünür */
++.dny-yuk{display:grid;gap:.3rem;text-align:right;opacity:0;animation:dnyYukGel .5s ease .4s forwards}
++.dny-yuk b{font-weight:500;color:var(--d-ink);letter-spacing:.24em}
++.dny-yuk-s{display:inline-flex;align-items:center;justify-content:flex-end;gap:.6rem;color:#7cc4ff}
++.dny-yuk-s i{position:relative;width:3.5rem;height:1px;background:rgba(124,196,255,.25);overflow:hidden}
++.dny-yuk-s i::after{content:"";position:absolute;inset:0;width:40%;background:#7cc4ff;animation:dnyYukCiz 1.1s cubic-bezier(.6,0,.4,1) infinite}
++@keyframes dnyYukGel{to{opacity:1}}
++@keyframes dnyYukCiz{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
++.dny-bolum.hazir .dny-yuk,.dny-bolum.statik .dny-yuk{animation:none;opacity:0;visibility:hidden}
++@media (prefers-reduced-motion:reduce){ .dny-yuk-s i::after{animation:none;width:100%} }
+diff --git a/assets/vitrin.css b/assets/vitrin.css
+index 406f8b3..2ccc14c 100644
+--- a/assets/vitrin.css
++++ b/assets/vitrin.css
+@@ -31,7 +31,7 @@
+ .v-ad-isim{display:block;font-size:clamp(3.1rem,8.2vw,7.4rem);line-height:.9;letter-spacing:-.058em;
+   background:linear-gradient(180deg,#fff 40%,#c9d0d5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-wrap:balance}
+ .v-ad-unvan{display:flex;align-items:center;gap:.9rem;font-family:var(--mono);font-weight:400;font-size:clamp(.6875rem,1.05vw,.8125rem);letter-spacing:.26em;text-transform:uppercase;color:#dfe5e9}
+-.v-ad-unvan::before{content:"";flex:none;width:clamp(1.75rem,4vw,3.25rem);height:1px;background:#c7ff32}
++.v-ad-unvan::before{content:"";flex:none;width:clamp(1.75rem,4vw,3.25rem);height:1px;background:#7cc4ff}
+ 
+ /* teknik ölçüm şeridi */
+ .ana .rakam.v-olcu{border-top:0;gap:0;position:relative;margin-top:clamp(1.5rem,3.5vh,2.25rem)}
+@@ -39,9 +39,9 @@
+   background:linear-gradient(90deg,rgba(233,237,240,.28),rgba(233,237,240,.28)) top/100% 1px no-repeat,
+     repeating-linear-gradient(90deg,rgba(233,237,240,.28) 0 1px,transparent 1px 24px) top/100% 6px no-repeat}
+ .ana .rakam.v-olcu > div{position:relative;padding:1rem 1.25rem 0 0}
+-.ana .rakam.v-olcu > div::before{content:"";position:absolute;left:0;top:-2px;width:1px;height:12px;background:#c7ff32}
++.ana .rakam.v-olcu > div::before{content:"";position:absolute;left:0;top:-2px;width:1px;height:12px;background:#7cc4ff}
+ .ana .rakam.v-olcu dt{display:flex;align-items:center;gap:.6rem}
+-.v-no{font-size:.5625rem;color:#c7ff32;letter-spacing:.14em}
++.v-no{font-size:.5625rem;color:#7cc4ff;letter-spacing:.14em}
+ .ana .rakam.v-olcu dd{font-size:clamp(2rem,4vw,3rem);line-height:1}
+ .ana .rakam.v-olcu dd.v-alt{margin-top:.5rem;font-family:var(--mono);font-size:.625rem;font-weight:400;letter-spacing:.1em;color:#8f989f;line-height:1.4}
+ 
+@@ -61,7 +61,7 @@
+ .ana .dg{transition:background .2s,color .2s,border-color .2s,transform .2s var(--v-ease)}
+ .ana .dg:hover{transform:translateY(-1px)}
+ .ana .dg:active{transform:translateY(0) scale(.98)}
+-.ana .dg:focus-visible{outline:2px solid #c7ff32;outline-offset:3px}
++.ana .dg:focus-visible{outline:2px solid #7cc4ff;outline-offset:3px}
+ .ana .kartlar a,.ana .yazi{transition:border-color .25s,transform .3s var(--v-ease),background .25s}
+ .ana .kartlar a:hover,.ana .yazi:hover{transform:translateY(-2px);background:#141a1f}
+ .ana .kartlar a:active,.ana .yazi:active{transform:translateY(0)}
+@@ -80,7 +80,7 @@
+ .v-cizim .k{fill:none;stroke:rgba(233,237,240,.72);stroke-width:1.1;vector-effect:non-scaling-stroke;transition:stroke .3s}
+ .v-cizim .o{fill:none;stroke:rgba(111,220,236,.5);stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+ .v-cizim .m{fill:rgba(111,220,236,.8);stroke:rgba(111,220,236,.8);stroke-width:1;vector-effect:non-scaling-stroke}
+-.v-cizim .v{fill:#c7ff32;stroke:#c7ff32;stroke-width:1.2;vector-effect:non-scaling-stroke}
++.v-cizim .v{fill:#7cc4ff;stroke:#7cc4ff;stroke-width:1.2;vector-effect:non-scaling-stroke}
+ .v-cizim text{font-family:var(--mono);font-size:7px;letter-spacing:.08em;fill:#8f989f}
+ .ana .v-parca:hover .v-cizim .k{stroke:#fff}
+ .ana .v-parca:hover .v-cizim text{fill:#c9d0d5}
+@@ -91,9 +91,9 @@
+ .ana .v-vk-bas{margin:0;font:inherit}
+ .v-vk-bas button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:5.5rem minmax(0,1fr) minmax(0,15rem) 7rem 1.5rem;gap:.5rem 1.5rem;align-items:center;
+   padding:1.35rem 0;cursor:pointer;transition:background .2s}
+-.v-vk-bas button:hover{background:linear-gradient(90deg,rgba(199,255,50,.035),transparent 70%)}
+-.v-vk-bas button:focus-visible{outline:2px solid #c7ff32;outline-offset:2px}
+-.v-vk-no{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;color:#c7ff32}
++.v-vk-bas button:hover{background:linear-gradient(90deg,rgba(124,196,255,.035),transparent 70%)}
++.v-vk-bas button:focus-visible{outline:2px solid #7cc4ff;outline-offset:2px}
++.v-vk-no{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;color:#7cc4ff}
+ .v-vk-ad{font-size:1.1875rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
+ .v-vk-deger{display:flex;flex-direction:column;gap:.2rem}
+ .v-vk-deger b{font-family:var(--mono);font-size:1rem;font-weight:500;color:#fff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+@@ -106,11 +106,11 @@
+ .v-vk-panel{padding:0 0 2rem 7rem}
+ .v-vk-panel[hidden]{display:none}
+ .v-akis{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:0}
+-.v-akis::before{content:"";position:absolute;left:.3rem;top:.6rem;bottom:.6rem;width:1px;background:linear-gradient(#c7ff32,rgba(199,255,50,.15))}
++.v-akis::before{content:"";position:absolute;left:.3rem;top:.6rem;bottom:.6rem;width:1px;background:linear-gradient(#7cc4ff,rgba(124,196,255,.15))}
+ .v-akis li{position:relative;display:grid;grid-template-columns:10rem minmax(0,1fr);gap:.25rem 1.5rem;padding:.85rem 0 .85rem 1.6rem}
+-.v-akis li::before{content:"";position:absolute;left:0;top:1.15rem;width:.6rem;height:.6rem;border-radius:50%;background:#0b0e10;border:1px solid #c7ff32}
++.v-akis li::before{content:"";position:absolute;left:0;top:1.15rem;width:.6rem;height:.6rem;border-radius:50%;background:#0b0e10;border:1px solid #7cc4ff}
+ .v-akis li:nth-child(3)::before{background:#ff6b5e;border-color:#ff6b5e}
+-.v-akis li:nth-child(4)::before{background:#c7ff32}
++.v-akis li:nth-child(4)::before{background:#7cc4ff}
+ .v-akis li + li{border-top:1px dashed rgba(233,237,240,.08)}
+ .v-ak-e{display:flex;flex-direction:column;gap:.2rem}
+ .v-ak-e b{font-size:.9375rem;font-weight:600;color:var(--a-ink)}
+@@ -130,7 +130,7 @@
+ .ana .gal figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,9,11,0) 45%,rgba(7,9,11,.75));opacity:.55;transition:opacity .4s;pointer-events:none}
+ .ana .gal figure:hover::after,.ana .gal figure:focus-within::after{opacity:1}
+ .ana .gal figcaption{z-index:1;background:none;padding:1rem;display:flex;flex-direction:column;gap:.35rem}
+-.ana .gal figcaption::before{content:counter(g,decimal-leading-zero) " / 08";font-size:.5625rem;letter-spacing:.2em;color:#c7ff32}
++.ana .gal figcaption::before{content:counter(g,decimal-leading-zero) " / 08";font-size:.5625rem;letter-spacing:.2em;color:#7cc4ff}
+ .ana .gal figcaption::after{content:attr(data-aciklama);font-family:var(--sans);font-size:.8125rem;line-height:1.45;letter-spacing:0;text-transform:none;color:#d6dce0;
+   max-height:0;opacity:0;overflow:hidden;transition:max-height .45s var(--v-ease),opacity .35s}
+ .ana .gal figure:hover figcaption::after,.ana .gal figure:focus-within figcaption::after{max-height:5rem;opacity:1}
+@@ -149,17 +149,17 @@
+ /* ===================== 7. kariyer çizgisi ===================== */
+ .v-zaman{position:relative;margin-top:3rem}
+ .v-z-hat{position:absolute;left:8.5rem;top:.5rem;bottom:.5rem;width:1px;background:var(--a-line)}
+-.v-z-hat i{position:absolute;inset:0 0 auto 0;height:100%;background:linear-gradient(#c7ff32,#6fdcec);transform-origin:top;transform:scaleY(var(--z,0))}
++.v-z-hat i{position:absolute;inset:0 0 auto 0;height:100%;background:linear-gradient(#7cc4ff,#6fdcec);transform-origin:top;transform:scaleY(var(--z,0))}
+ .ana .zaman.v-z{margin:0}
+ .ana .zaman.v-z::before{display:none}
+ .ana .zaman.v-z li{grid-template-columns:8.5rem minmax(0,1fr);gap:0 2.5rem;padding:0 0 2.25rem}
+ .ana .zaman.v-z li::before{left:calc(8.5rem - .3rem);top:.55rem;background:#0b0e10;border-color:#4a535a;box-shadow:none;transition:background .4s,border-color .4s,box-shadow .4s}
+-.ana .zaman.v-z li.ulasti::before{background:#c7ff32;border-color:#c7ff32}
+-.ana .zaman.v-z li.v-z-simdi::before{box-shadow:0 0 0 4px rgba(199,255,50,.15),0 0 14px rgba(199,255,50,.6)}
++.ana .zaman.v-z li.ulasti::before{background:#7cc4ff;border-color:#7cc4ff}
++.ana .zaman.v-z li.v-z-simdi::before{box-shadow:0 0 0 4px rgba(124,196,255,.15),0 0 14px rgba(124,196,255,.6)}
+ .v-z-yil{display:flex;flex-direction:column;gap:.35rem;padding-right:1rem}
+ .v-z-yil b{font-family:var(--mono);font-size:1.5rem;font-weight:500;letter-spacing:-.02em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+ .v-z-yil span{font-family:var(--mono);font-size:.625rem;letter-spacing:.06em;color:#8f989f;line-height:1.4}
+-.v-z-simdi .v-z-yil b{color:#c7ff32}
++.v-z-simdi .v-z-yil b{color:#7cc4ff}
+ .v-z-kart h3{margin:0;font-size:1.25rem;font-weight:600;letter-spacing:-.02em;color:var(--a-ink)}
+ .ana .v-z-kart .rol{margin:.25rem 0 0;font-size:.9375rem;color:#c9d0d5}
+ .v-z-dl{margin:.9rem 0 0;display:grid;gap:.45rem;padding-top:.8rem;border-top:1px solid var(--a-line);max-width:72ch}
+@@ -180,12 +180,12 @@ footer.v-son::before{content:"";position:absolute;inset:0;z-index:-1;pointer-eve
+ .v-son-alan{margin:1.25rem 0 0;font-family:var(--mono);font-size:clamp(.75rem,1.4vw,.9375rem);letter-spacing:.32em;text-transform:uppercase;color:#e9edf0}
+ .v-son-yer{margin:.5rem 0 0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#8f989f}
+ .v-son-imza{margin:clamp(2.5rem,6vw,4.5rem) 0 0;font-size:clamp(1.9rem,5vw,3.75rem);font-weight:600;letter-spacing:-.05em;line-height:1;color:#e9edf0}
+-.v-son-imza em{font-style:normal;color:#c7ff32}
++.v-son-imza em{font-style:normal;color:#7cc4ff}
+ .v-son-alt{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.25rem;border-top:1px solid #1b2127;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem}
+ .v-son-alt p{margin:0;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+ .v-son-alt a{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:#9aa3ab;padding:.35rem 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+ .v-son-sosyal a{color:#e9edf0}
+-.v-son-alt a:hover{color:#c7ff32;border-color:rgba(199,255,50,.5)}
++.v-son-alt a:hover{color:#7cc4ff;border-color:rgba(124,196,255,.5)}
+ 
+ /* ===================== 8. üst menü: sahnede şeffaf ===================== */
+ :root body.ana-body.v-sahnede header,:root[data-vardiya] body.ana-body.v-sahnede header{
+@@ -232,45 +232,45 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
+ }
+ 
+ /* ===================== canlı rüzgâr alanı (kapak göstergesi) ===================== */
+-.ralan{position:absolute;z-index:3;top:calc(72px + 4.25rem);right:var(--a-gut);width:17.75rem;padding:.95rem 1.05rem .85rem;
++.ralan{position:absolute;z-index:3;top:calc(72px + 4.25rem);right:var(--a-gut);width:18.75rem;padding:.95rem 1.05rem .85rem;
+   background:rgba(8,11,13,.74);border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+   font-family:var(--mono);color:#e9edf0;font-variant-numeric:tabular-nums}
+ .ralan[hidden]{display:none}
+ .ralan::before,.ralan::after{content:"";position:absolute;width:.55rem;height:.55rem;pointer-events:none}
+-.ralan::before{left:-1px;top:-1px;border-left:1px solid #c7ff32;border-top:1px solid #c7ff32}
+-.ralan::after{right:-1px;bottom:-1px;border-right:1px solid #c7ff32;border-bottom:1px solid #c7ff32}
++.ralan::before{left:-1px;top:-1px;border-left:1px solid #7cc4ff;border-top:1px solid #7cc4ff}
++.ralan::after{right:-1px;bottom:-1px;border-right:1px solid #7cc4ff;border-bottom:1px solid #7cc4ff}
+ .ralan p{margin:0}
+-.ralan-ust{display:flex;align-items:center;gap:.55rem;font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:#c7ff32}
++.ralan-ust{display:flex;align-items:center;gap:.55rem;white-space:nowrap;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#7cc4ff}
+ .ralan-yer{margin-top:.55rem!important;display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;
+   font-family:var(--sans);font-size:1.375rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;line-height:1.1}
+ .ralan-yer span{font-family:var(--mono);font-size:.625rem;font-weight:400;letter-spacing:.12em;color:#aab3ba}
+ .ralan-dl{position:relative;margin:.6rem 0 0;padding-top:.45rem;border-top:1px solid rgba(255,255,255,.16)}
+-.ralan-dl::before{content:"";position:absolute;left:0;top:-1px;width:2.25rem;height:1px;background:#c7ff32}
++.ralan-dl::before{content:"";position:absolute;left:0;top:-1px;width:2.25rem;height:1px;background:#7cc4ff}
+ .ralan-dl > div{display:flex;align-items:baseline;gap:.6rem;padding:.26rem 0}
+ .ralan-dl dt{flex:1;display:flex;align-items:center;gap:.55rem;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba}
+ .ralan-dl dt::after{content:"";flex:1;height:1px;min-width:.75rem;background:repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 2px,transparent 2px 5px)}
+ .ralan-dl dd{margin:0;display:flex;align-items:baseline;gap:.3rem;white-space:nowrap}
+ .ralan-dl dd b{font-size:.9375rem;font-weight:500;color:#fff;letter-spacing:-.01em}
+ .ralan-dl dd small{font-size:.625rem;color:#aab3ba;letter-spacing:.04em}
+-.ralan-ok{align-self:center;flex:none;color:#c7ff32;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
++.ralan-ok{align-self:center;flex:none;color:#7cc4ff;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+ .ralan-egri{margin-top:.7rem;padding-top:.65rem;border-top:1px solid rgba(255,255,255,.12)}
+ .ralan-egri > p:first-child{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.45rem;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba}
+-.ralan-egri > p:first-child b{font-weight:500;font-size:.75rem;letter-spacing:.04em;color:#c7ff32}
++.ralan-egri > p:first-child b{font-weight:500;font-size:.75rem;letter-spacing:.04em;color:#7cc4ff}
+ .ralan-bar{display:grid;grid-template-columns:repeat(19,minmax(0,1fr));gap:2px;height:.75rem}
+ .ralan-bar i{background:rgba(255,255,255,.1);transition:background-color .3s ease}
+-.ralan-bar i.y{background:#c7ff32}
++.ralan-bar i.y{background:#7cc4ff}
+ .ralan-olcek{display:flex;justify-content:space-between;margin-top:.3rem!important;font-size:.5625rem;letter-spacing:.08em;color:#aab3ba}
+ .ralan-kf{display:flex;justify-content:space-between;align-items:flex-end;gap:.75rem;margin-top:.7rem!important;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba}
+ .ralan-kf[hidden]{display:none}
+ .ralan-kf small{display:block;margin-top:.2rem;font-size:.5625rem;letter-spacing:.06em;text-transform:none}
+ .ralan-kf b{font-family:var(--sans);font-size:1.5rem;font-weight:600;letter-spacing:-.02em;line-height:1;color:#fff}
+ .ralan-zaman{display:flex;align-items:center;gap:.45rem;margin-top:.7rem!important;padding-top:.6rem;border-top:1px solid rgba(255,255,255,.12);font-size:.625rem;letter-spacing:.06em;color:#dfe5e9}
+-.ralan-nokta{width:.3rem;height:.3rem;border-radius:50%;background:#c7ff32;flex:none}
++.ralan-nokta{width:.3rem;height:.3rem;border-radius:50%;background:#7cc4ff;flex:none}
+ .ralan-not{margin-top:.35rem!important;font-size:.5625rem;line-height:1.55;color:#aab3ba}
+ .ralan-kisa,.ralan-kf-kisa{display:none}
+ .ralan-kf-kisa{text-decoration:none;border:0;cursor:help}
+ .ralan-not a{color:#e9edf0;border-bottom:1px solid rgba(255,255,255,.3);white-space:nowrap}
+-.ralan-not a:hover,.ralan-not a:focus-visible{color:#c7ff32;border-color:#c7ff32}
++.ralan-not a:hover,.ralan-not a:focus-visible{color:#7cc4ff;border-color:#7cc4ff}
+ 
+ /* dar ve alçak ekranlar: gösterge yatay, kapağı kapatmasın */
+ @media (max-width:820px),(min-width:821px) and (max-height:780px){
+@@ -314,3 +314,38 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
+   .ralan-kisa{display:inline}
+ }
+ @media (prefers-reduced-motion:reduce){ .ralan-bar i,.ralan-ok{transition:none} }
++
++/* ===================== V4: kapak — disiplinler, cümle, düğmeler ===================== */
++.v-disiplin{margin:clamp(.6rem,1.4vh,.9rem) 0 0;display:flex;flex-wrap:wrap;gap:.35rem 0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.22em;text-transform:uppercase;color:#c9d3da}
++.v-disiplin span{display:inline-flex;align-items:center}
++.v-disiplin span+span::before{content:"";width:.28rem;height:.28rem;margin:0 .85rem;background:#f2b233;transform:rotate(45deg)}
++.ralan-rozet{margin-left:auto;padding:.12rem .35rem;letter-spacing:.08em!important;border:1px solid rgba(242,178,51,.55);color:#f2b233;font-size:.5625rem;letter-spacing:.14em}
++
++.v-soz{position:absolute;z-index:2;left:calc(var(--a-gut) + 5rem);top:50%;transform:translateY(-50%);max-width:min(40rem,calc(100% - 2*var(--a-gut)));margin:0;
++  font-family:var(--sans);font-weight:600;font-size:clamp(2rem,4.6vw,4.25rem);line-height:1.02;letter-spacing:-.045em;color:#fff;
++  pointer-events:none;opacity:0;transition:opacity .6s ease;text-shadow:0 2px 30px rgba(0,0,0,.45)}
++.v-soz.gor{opacity:1}
++.v-soz span{display:inline-block;opacity:0;transform:translateY(.45em);filter:blur(6px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .8s ease}
++.v-soz span.gor{opacity:1;transform:none;filter:none}
++.v-soz em{display:block;margin-top:.55em;font-style:normal;color:#7cc4ff}
++.dny-bolum.statik .v-soz{display:none}
++@media (max-width:820px){ .v-soz{left:var(--a-gut);top:auto;bottom:clamp(6rem,22vh,11rem);transform:none;font-size:clamp(1.9rem,8.4vw,2.6rem)} }
++
++/* fiziksel düğmeler: üst kenarda ince ışık, basınca iner */
++.ana .dg{position:relative;gap:.6rem;letter-spacing:-.005em}
++.ana .dg.birincil{background:linear-gradient(180deg,#a3d6ff 0%,#7cc4ff 55%,#6ab4f2 100%);border-color:#8ccbff;
++  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.18),0 10px 28px -12px rgba(124,196,255,.6)}
++.ana .dg.birincil:hover{background:linear-gradient(180deg,#b8e0ff 0%,#8ccbff 55%,#76bdf6 100%)}
++.ana .dg:not(.birincil){background:rgba(10,13,16,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
++.dg-ok{font-family:var(--mono);font-size:.8125rem;transition:transform .3s cubic-bezier(.16,1,.3,1)}
++.ana .dg:hover .dg-ok{transform:translateY(2px)}
++.v-miknatis{will-change:transform}
++@media (prefers-reduced-motion:reduce){ .v-soz span{transition:none;filter:none} .dg-ok{transition:none} }
++@media (max-width:820px),(min-width:821px) and (max-height:780px){ .ralan-rozet{display:none} }
++@media (max-width:560px){
++  .v-disiplin{font-size:.5625rem;letter-spacing:.1em;flex-wrap:nowrap;white-space:nowrap;margin-top:.5rem}
++  .v-disiplin span+span::before{margin:0 .5rem;width:.22rem;height:.22rem}
++  .ana .dny-kapak-alt .dugmeler{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.5rem}
++  .ana .dny-kapak-alt .dg{min-height:2.75rem;padding:.6rem .9rem;font-size:.875rem;white-space:nowrap}
++}
++@media (max-width:560px) and (max-height:700px){ .ralan-not{display:none} .ralan{padding-bottom:.5rem} .ralan-zaman::before{content:"tahmin+model ·";color:#f2b233;letter-spacing:.04em} .ralan-zaman .ralan-nokta{display:none} }
+diff --git a/assets/vitrin.js b/assets/vitrin.js
+index 5818a7e..8fee44f 100644
+--- a/assets/vitrin.js
++++ b/assets/vitrin.js
+@@ -74,6 +74,15 @@
+     }, { passive: true });
+   }
+ 
++  /* ---- düğmeler: fareye çok hafif mıknatıs (en çok 5 px) ---- */
++  if (ince && !az) [].slice.call(document.querySelectorAll('.v-miknatis')).forEach(function (d) {
++    d.addEventListener('pointermove', function (e) {
++      var r = d.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
++      d.style.transform = 'translate(' + (x * 10).toFixed(1) + 'px,' + (y * 6).toFixed(1) + 'px)';
++    });
++    d.addEventListener('pointerleave', function () { d.style.transform = ''; });
++  });
++
+   /* ---- kapak: rüzgâr akış çizgileri ve toz (yalnız masaüstü, yalnız ilk sahnede) ---- */
+   var tuval = document.getElementById('vRuzgar');
+   if (!tuval || az || !ince) return;
+diff --git a/cevrimdisi.html b/cevrimdisi.html
+index eb77529..0163a82 100644
+--- a/cevrimdisi.html
++++ b/cevrimdisi.html
+@@ -8,7 +8,7 @@
+ <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .mid{min-height:100vh;display:grid;place-items:center;padding:2rem 0}
+ .mid .in{max-width:34rem}
+diff --git a/deneyim/index.html b/deneyim/index.html
+index e3bd31d..cd92822 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -22,8 +22,8 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=96f4a9b6">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=b1efc250">
+ </head>
+ 
+ <body class="dny-body">
+@@ -84,7 +84,7 @@
+     </div>
+ 
+     <div class="dny-ilerleme" aria-hidden="true"><i id="dnyIlerleme"></i></div>
+-    <p class="dny-yuk" aria-hidden="true">Sahne yükleniyor</p>
++    <p class="dny-yuk" aria-hidden="true"><b>Soner Soylu</b><span>Saha sistemi</span><span class="dny-yuk-s">Başlatılıyor<i></i></span></p>
+   </div>
+ </section>
+ 
+@@ -169,6 +169,6 @@
+ 
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=2a059055" defer></script>
+ </body>
+ </html>
+diff --git a/deniz-ustu/index.html b/deniz-ustu/index.html
+index e450392..b308307 100644
+--- a/deniz-ustu/index.html
++++ b/deniz-ustu/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/arizaya-yaklasim/index.html b/egitim/arizaya-yaklasim/index.html
+index baab184..b93e37b 100644
+--- a/egitim/arizaya-yaklasim/index.html
++++ b/egitim/arizaya-yaklasim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/belge/index.html b/egitim/belge/index.html
+index c075d03..1eadc6c 100644
+--- a/egitim/belge/index.html
++++ b/egitim/belge/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/bu-is-ne-is/index.html b/egitim/bu-is-ne-is/index.html
+index 00ee893..68e4546 100644
+--- a/egitim/bu-is-ne-is/index.html
++++ b/egitim/bu-is-ne-is/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/elektrik-ve-kontrol/index.html b/egitim/elektrik-ve-kontrol/index.html
+index dce87bd..43c4254 100644
+--- a/egitim/elektrik-ve-kontrol/index.html
++++ b/egitim/elektrik-ve-kontrol/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/guvenlik/index.html b/egitim/guvenlik/index.html
+index 161b3ba..7c4358c 100644
+--- a/egitim/guvenlik/index.html
++++ b/egitim/guvenlik/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/index.html b/egitim/index.html
+index 1181b8e..6db3cc5 100644
+--- a/egitim/index.html
++++ b/egitim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/kariyer/index.html b/egitim/kariyer/index.html
+index aa21d60..8e0e000 100644
+--- a/egitim/kariyer/index.html
++++ b/egitim/kariyer/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/mekanik-is/index.html b/egitim/mekanik-is/index.html
+index 75ef865..55bffe5 100644
+--- a/egitim/mekanik-is/index.html
++++ b/egitim/mekanik-is/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/periyodik-bakim/index.html b/egitim/periyodik-bakim/index.html
+index 0739a31..25b27ed 100644
+--- a/egitim/periyodik-bakim/index.html
++++ b/egitim/periyodik-bakim/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/egitim/turbin-nasil-calisir/index.html b/egitim/turbin-nasil-calisir/index.html
+index 6d9c347..a10f0fc 100644
+--- a/egitim/turbin-nasil-calisir/index.html
++++ b/egitim/turbin-nasil-calisir/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/en/ad-policy/index.html b/en/ad-policy/index.html
+index e3fab3c..b593177 100644
+--- a/en/ad-policy/index.html
++++ b/en/ad-policy/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/assistant/index.html b/en/assistant/index.html
+index da11dd6..5a29b47 100644
+--- a/en/assistant/index.html
++++ b/en/assistant/index.html
+@@ -38,7 +38,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ <style>
+ .as-kutu{margin:2rem 0 0;padding:1.5rem;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shade)}
+diff --git a/en/field-notes/blade-vibration/index.html b/en/field-notes/blade-vibration/index.html
+index 502ee05..ebcbf3d 100644
+--- a/en/field-notes/blade-vibration/index.html
++++ b/en/field-notes/blade-vibration/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/converter-overcurrent/index.html b/en/field-notes/converter-overcurrent/index.html
+index 3920380..117bd6e 100644
+--- a/en/field-notes/converter-overcurrent/index.html
++++ b/en/field-notes/converter-overcurrent/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/gearbox-temperature/index.html b/en/field-notes/gearbox-temperature/index.html
+index 748238d..eedfdca 100644
+--- a/en/field-notes/gearbox-temperature/index.html
++++ b/en/field-notes/gearbox-temperature/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/generator-temperature/index.html b/en/field-notes/generator-temperature/index.html
+index 19130e3..904a18c 100644
+--- a/en/field-notes/generator-temperature/index.html
++++ b/en/field-notes/generator-temperature/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/index.html b/en/field-notes/index.html
+index e3070f9..a5d0c82 100644
+--- a/en/field-notes/index.html
++++ b/en/field-notes/index.html
+@@ -126,7 +126,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/pitch-motor-high-current/index.html b/en/field-notes/pitch-motor-high-current/index.html
+index 1843002..cc6bad7 100644
+--- a/en/field-notes/pitch-motor-high-current/index.html
++++ b/en/field-notes/pitch-motor-high-current/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/yaw-bearing-wear/index.html b/en/field-notes/yaw-bearing-wear/index.html
+index 10b752b..f5edd0f 100644
+--- a/en/field-notes/yaw-bearing-wear/index.html
++++ b/en/field-notes/yaw-bearing-wear/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/field-notes/yaw-hunting/index.html b/en/field-notes/yaw-hunting/index.html
+index b9b3ac5..158dada 100644
+--- a/en/field-notes/yaw-hunting/index.html
++++ b/en/field-notes/yaw-hunting/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/glossary/index.html b/en/glossary/index.html
+index 3546f2d..34b835d 100644
+--- a/en/glossary/index.html
++++ b/en/glossary/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sozluk/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sozluk/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -59,7 +59,7 @@
+ .tm.hide,.lt.hide{display:none}
+ .empty{padding:3rem 0;font-size:.9375rem;color:var(--muted)}
+ .empty.hide{display:none}
+-mark{background:rgba(192,57,47,.16);color:inherit;padding:0 .1em}
++mark{background:rgba(31,95,214,.14);color:inherit;padding:0 .1em}
+ 
+ .gsec{border-top:1px solid var(--line);padding:4rem 0}
+ .ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+diff --git a/en/guide/index.html b/en/guide/index.html
+index be1d406..d888a35 100644
+--- a/en/guide/index.html
++++ b/en/guide/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/rehber/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/en/gwo/index.html b/en/gwo/index.html
+index 86f1700..9d41680 100644
+--- a/en/gwo/index.html
++++ b/en/gwo/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/how-to-become/index.html b/en/how-to-become/index.html
+index 79ae7e9..3dd7ed5 100644
+--- a/en/how-to-become/index.html
++++ b/en/how-to-become/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/index.html b/en/index.html
+index e8abf9a..9f45a6e 100644
+--- a/en/index.html
++++ b/en/index.html
+@@ -21,7 +21,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .h-hero{padding:4.5rem 0 3rem}
+ .h-hero h1{font-size:2.5rem;line-height:1.05;letter-spacing:-.04em;margin-top:1.75rem;max-width:16ch}
+diff --git a/en/pay/index.html b/en/pay/index.html
+index 8925807..813fef5 100644
+--- a/en/pay/index.html
++++ b/en/pay/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/privacy/index.html b/en/privacy/index.html
+index 174ee40..74cbb64 100644
+--- a/en/privacy/index.html
++++ b/en/privacy/index.html
+@@ -24,7 +24,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+      crossorigin="anonymous"></script>
+ <style>
+diff --git a/en/systems/gearbox/index.html b/en/systems/gearbox/index.html
+index 3b7d309..7fba3d2 100644
+--- a/en/systems/gearbox/index.html
++++ b/en/systems/gearbox/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/generator/index.html b/en/systems/generator/index.html
+index c4c8682..c20016b 100644
+--- a/en/systems/generator/index.html
++++ b/en/systems/generator/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/index.html b/en/systems/index.html
+index cd60354..7f30f9e 100644
+--- a/en/systems/index.html
++++ b/en/systems/index.html
+@@ -116,7 +116,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/pitch/index.html b/en/systems/pitch/index.html
+index cfec548..00396d6 100644
+--- a/en/systems/pitch/index.html
++++ b/en/systems/pitch/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/systems/yaw/index.html b/en/systems/yaw/index.html
+index d4c81cc..80577b6 100644
+--- a/en/systems/yaw/index.html
++++ b/en/systems/yaw/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/tools/bolt-tension/index.html b/en/tools/bolt-tension/index.html
+index e3a6c1d..5d39d95 100644
+--- a/en/tools/bolt-tension/index.html
++++ b/en/tools/bolt-tension/index.html
+@@ -63,7 +63,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/tools/index.html b/en/tools/index.html
+index 6dd8c97..50f6184 100644
+--- a/en/tools/index.html
++++ b/en/tools/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/araclar/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+diff --git a/en/turbines/enercon/e70/index.html b/en/turbines/enercon/e70/index.html
+index f6fae05..d1ec924 100644
+--- a/en/turbines/enercon/e70/index.html
++++ b/en/turbines/enercon/e70/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/enercon/e82/index.html b/en/turbines/enercon/e82/index.html
+index 249b423..1db477a 100644
+--- a/en/turbines/enercon/e82/index.html
++++ b/en/turbines/enercon/e82/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/enercon/e92/index.html b/en/turbines/enercon/e92/index.html
+index 5555afe..746c789 100644
+--- a/en/turbines/enercon/e92/index.html
++++ b/en/turbines/enercon/e92/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/enercon/index.html b/en/turbines/enercon/index.html
+index 9458183..96f606b 100644
+--- a/en/turbines/enercon/index.html
++++ b/en/turbines/enercon/index.html
+@@ -84,7 +84,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/index.html b/en/turbines/index.html
+index 8cf33ab..0aec054 100644
+--- a/en/turbines/index.html
++++ b/en/turbines/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/index.html b/en/turbines/vestas/index.html
+index d064fd0..be89c83 100644
+--- a/en/turbines/vestas/index.html
++++ b/en/turbines/vestas/index.html
+@@ -84,7 +84,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/v110/index.html b/en/turbines/vestas/v110/index.html
+index 25252df..c7dc084 100644
+--- a/en/turbines/vestas/v110/index.html
++++ b/en/turbines/vestas/v110/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/v126/index.html b/en/turbines/vestas/v126/index.html
+index e57d85c..7335ac0 100644
+--- a/en/turbines/vestas/v126/index.html
++++ b/en/turbines/vestas/v126/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/en/turbines/vestas/v136/index.html b/en/turbines/vestas/v136/index.html
+index 421fda6..dcf2328 100644
+--- a/en/turbines/vestas/v136/index.html
++++ b/en/turbines/vestas/v136/index.html
+@@ -69,7 +69,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">Skip to content</a>
+diff --git a/gelir/index.html b/gelir/index.html
+index 1767fcd..46849a0 100644
+--- a/gelir/index.html
++++ b/gelir/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/ad-policy/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gelir/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/gizlilik/index.html b/gizlilik/index.html
+index 64028f0..6f32527 100644
+--- a/gizlilik/index.html
++++ b/gizlilik/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/privacy/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/gizlilik/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/gwo/index.html b/gwo/index.html
+index e2e621e..eceed8e 100644
+--- a/gwo/index.html
++++ b/gwo/index.html
+@@ -20,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/index.html b/index.html
+index d22bf49..67c74c7 100644
+--- a/index.html
++++ b/index.html
+@@ -27,10 +27,10 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
+-<link rel="stylesheet" href="/ana.css?v=c5a622e8">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=96f4a9b6">
+-<link rel="stylesheet" href="/assets/vitrin.css?v=ff6e5716">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
++<link rel="stylesheet" href="/ana.css?v=0a32572b">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=b1efc250">
++<link rel="stylesheet" href="/assets/vitrin.css?v=e62bb630">
+ 
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@graph":[
+@@ -79,9 +79,10 @@
+     <canvas class="v-ruzgar" id="vRuzgar" aria-hidden="true"></canvas>
+     <div class="v-isik" aria-hidden="true"></div>
+     <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
++    <p class="v-soz" id="vSoz" aria-hidden="true"><span>Mühendislik</span> <span>yalnızca ne bildiğin</span> <span>değildir.</span> <em><span>Türbin durduğunda</span> <span>nasıl karşılık</span> <span>verdiğindir.</span></em></p>
+ 
+     <div class="ralan" id="ralan" role="group" aria-label="Aliağa canlı rüzgâr alanı" hidden>
+-      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı</p>
++      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı<span class="ralan-rozet">Tahmin·model</span></p>
+       <p class="ralan-yer">Aliağa<span>göbek 120 m</span></p>
+       <dl class="ralan-dl">
+         <div><dt>Rüzgâr</dt><dd><b id="rHiz">–</b><small>m/s</small></dd></div>
+@@ -104,10 +105,11 @@
+       <div class="v-kimlik">
+         <p class="v-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir</span><span>Göbek 120 m</span></p>
+         <h1 id="kapak-b" class="v-ad"><span class="v-ad-isim">Soner Soylu</span><span class="gizli">, </span><span class="v-ad-unvan">Rüzgâr Türbini Saha Servis Teknisyeni</span></h1>
++        <p class="v-disiplin"><span>Mekanik</span><span>Elektrik</span><span>Devreye alma</span><span>Servis</span></p>
+       </div>
+       <div class="dugmeler">
+-        <a class="dg birincil" href="#iletisim">İletişime geç</a>
+-        <a class="dg" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a>
++        <a class="dg birincil v-miknatis" href="/deneyim/" id="dnySahaya">Sahaya gir<span class="dg-ok" aria-hidden="true">&#8595;</span></a>
++        <a class="dg v-miknatis" href="#makine">Mühendisliğimi keşfet</a>
+         <span class="dny-basla" id="dnyBasla" hidden><button type="button" class="dg" id="dnyBaslaBtn">Türbinin içine gir</button></span>
+       </div>
+       <dl class="rakam v-olcu">
+@@ -143,7 +145,7 @@
+     </div>
+ 
+     <div class="dny-ilerleme" aria-hidden="true"><i id="dnyIlerleme"></i></div>
+-    <p class="dny-yuk" aria-hidden="true">Sahne yükleniyor</p>
++    <p class="dny-yuk" aria-hidden="true"><b>Soner Soylu</b><span>Saha sistemi</span><span class="dny-yuk-s">Başlatılıyor<i></i></span></p>
+   </div>
+ </section>
+ 
+@@ -670,7 +672,7 @@
+   }, 10 * 60 * 1000);
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
+-<script src="/assets/vitrin.js?v=7b455e73" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=2a059055" defer></script>
++<script src="/assets/vitrin.js?v=e8d36a80" defer></script>
+ </body>
+ </html>
+diff --git a/kodlar/index.html b/kodlar/index.html
+index 8282b29..7295316 100644
+--- a/kodlar/index.html
++++ b/kodlar/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/maas/index.html b/maas/index.html
+index a267e94..ed00413 100644
+--- a/maas/index.html
++++ b/maas/index.html
+@@ -20,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/n117/index.html b/n117/index.html
+index d09893b..0351538 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.06;margin-top:1.5rem;max-width:16ch}
+diff --git a/n90/index.html b/n90/index.html
+index dd5bd9a..247fe9d 100644
+--- a/n90/index.html
++++ b/n90/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ /* ---- N90 sayfasına özel ---- */
+ .n-hero{padding:4rem 0 3rem}
+diff --git a/nasil-olunur/index.html b/nasil-olunur/index.html
+index 8a3acdd..952b8cb 100644
+--- a/nasil-olunur/index.html
++++ b/nasil-olunur/index.html
+@@ -20,7 +20,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/rehber/index.html b/rehber/index.html
+index d1ba315..d9802ff 100644
+--- a/rehber/index.html
++++ b/rehber/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/guide/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/rehber/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2.5rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:18ch}
+diff --git a/ruzgar/index.html b/ruzgar/index.html
+index becfc70..2fa0a3f 100644
+--- a/ruzgar/index.html
++++ b/ruzgar/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/saha-notlari/converter-asiri-akim/index.html b/saha-notlari/converter-asiri-akim/index.html
+index 5a399bf..2395ef2 100644
+--- a/saha-notlari/converter-asiri-akim/index.html
++++ b/saha-notlari/converter-asiri-akim/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/disli-kutusu-sicaklik/index.html b/saha-notlari/disli-kutusu-sicaklik/index.html
+index 54354a9..31b3b21 100644
+--- a/saha-notlari/disli-kutusu-sicaklik/index.html
++++ b/saha-notlari/disli-kutusu-sicaklik/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/index.html b/saha-notlari/index.html
+index ba86590..b0a36f2 100644
+--- a/saha-notlari/index.html
++++ b/saha-notlari/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/jenerator-sicaklik/index.html b/saha-notlari/jenerator-sicaklik/index.html
+index 9935958..14f1930 100644
+--- a/saha-notlari/jenerator-sicaklik/index.html
++++ b/saha-notlari/jenerator-sicaklik/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/kanat-titresimi/index.html b/saha-notlari/kanat-titresimi/index.html
+index 726ce51..9aae9dc 100644
+--- a/saha-notlari/kanat-titresimi/index.html
++++ b/saha-notlari/kanat-titresimi/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/pitch-motor-yuksek-akim/index.html b/saha-notlari/pitch-motor-yuksek-akim/index.html
+index 6c2ed28..a5b0496 100644
+--- a/saha-notlari/pitch-motor-yuksek-akim/index.html
++++ b/saha-notlari/pitch-motor-yuksek-akim/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/yaw-salinimi/index.html b/saha-notlari/yaw-salinimi/index.html
+index 311e6e8..d1a3ff6 100644
+--- a/saha-notlari/yaw-salinimi/index.html
++++ b/saha-notlari/yaw-salinimi/index.html
+@@ -34,7 +34,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/saha-notlari/yaw-yatak-asinmasi/index.html b/saha-notlari/yaw-yatak-asinmasi/index.html
+index 94f7dcc..ad8cf24 100644
+--- a/saha-notlari/yaw-yatak-asinmasi/index.html
++++ b/saha-notlari/yaw-yatak-asinmasi/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/disli-kutusu/index.html b/sistemler/disli-kutusu/index.html
+index 2cfefa2..d12aebd 100644
+--- a/sistemler/disli-kutusu/index.html
++++ b/sistemler/disli-kutusu/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/index.html b/sistemler/index.html
+index 63e999c..615b1b3 100644
+--- a/sistemler/index.html
++++ b/sistemler/index.html
+@@ -116,7 +116,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/jenerator/index.html b/sistemler/jenerator/index.html
+index 24655ac..3f1ddbc 100644
+--- a/sistemler/jenerator/index.html
++++ b/sistemler/jenerator/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/pitch/index.html b/sistemler/pitch/index.html
+index 175f60b..af9557b 100644
+--- a/sistemler/pitch/index.html
++++ b/sistemler/pitch/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sistemler/yaw/index.html b/sistemler/yaw/index.html
+index e08cfbe..635bf9e 100644
+--- a/sistemler/yaw/index.html
++++ b/sistemler/yaw/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/sor/index.html b/sor/index.html
+index abe174e..9aed2d8 100644
+--- a/sor/index.html
++++ b/sor/index.html
+@@ -17,7 +17,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .g-hero{padding:4rem 0 2rem}
+diff --git a/sozluk/index.html b/sozluk/index.html
+index 3369f2c..0daa97b 100644
+--- a/sozluk/index.html
++++ b/sozluk/index.html
+@@ -20,7 +20,7 @@
+ <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/glossary/">
+ <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sozluk/">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ .g-hero{padding:4rem 0 2rem}
+ .g-hero h1{font-size:2.25rem;line-height:1.08;margin-top:1.5rem;max-width:20ch}
+@@ -58,7 +58,7 @@
+ .tm.hide,.lt.hide{display:none}
+ .empty{padding:3rem 0;font-size:.9375rem;color:var(--muted)}
+ .empty.hide{display:none}
+-mark{background:rgba(192,57,47,.16);color:inherit;padding:0 .1em}
++mark{background:rgba(31,95,214,.14);color:inherit;padding:0 .1em}
+ 
+ .gsec{border-top:1px solid var(--line);padding:4rem 0}
+ .ghead{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+diff --git a/style-cinematic.css b/style-cinematic.css
+index 0a2c79f..b52a250 100644
+--- a/style-cinematic.css
++++ b/style-cinematic.css
+@@ -204,7 +204,7 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
+   opacity: 1;
+   border-color: var(--color-accent);
+   box-shadow: var(--glow-accent-intense);
+-  background: rgba(199, 255, 50, 0.05);
++  background: rgba(124,196,255, 0.05);
+ }
+ 
+ .component-name {
+@@ -618,10 +618,10 @@ html.cinematic::-webkit-scrollbar-thumb:hover {
+ 
+ @keyframes pulseGlow {
+   0%, 100% {
+-    box-shadow: 0 0 20px rgba(199, 255, 50, 0.4);
++    box-shadow: 0 0 20px rgba(124,196,255, 0.4);
+   }
+   50% {
+-    box-shadow: 0 0 40px rgba(199, 255, 50, 0.8);
++    box-shadow: 0 0 40px rgba(124,196,255, 0.8);
+   }
+ }
+ 
+diff --git a/style-tokens.css b/style-tokens.css
+index 1a14283..3eeb250 100644
+--- a/style-tokens.css
++++ b/style-tokens.css
+@@ -20,10 +20,10 @@
+   --color-text-tertiary: #5C6570;   /* Tertiary/faded text */
+ 
+   /* Accent — Green (Controlled Use) */
+-  --color-accent: #C7FF32;          /* Primary accent — bright green */
++  --color-accent: #7cc4ff;          /* Primary accent — bright green */
+   --color-accent-hover: #D4FF4D;    /* Hover state — lighter */
+   --color-accent-active: #A8D914;   /* Active/focus state — darker */
+-  --color-accent-subtle: rgba(199, 255, 50, 0.15);  /* Subtle background */
++  --color-accent-subtle: rgba(124,196,255, 0.15);  /* Subtle background */
+ 
+   /* Status Colors */
+   --color-success: #10B981;         /* Green success indicator */
+@@ -131,8 +131,8 @@
+   --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.7);
+ 
+   /* Glow Effects */
+-  --glow-accent: 0 0 20px rgba(199, 255, 50, 0.4);
+-  --glow-accent-intense: 0 0 40px rgba(199, 255, 50, 0.6);
++  --glow-accent: 0 0 20px rgba(124,196,255, 0.4);
++  --glow-accent-intense: 0 0 40px rgba(124,196,255, 0.6);
+ 
+   /* ─────────────────────────────────────────────────────────────────────────────
+      7. BORDER RADIUS
+diff --git a/style.css b/style.css
+index 1ace075..a349170 100644
+--- a/style.css
++++ b/style.css
+@@ -26,7 +26,7 @@
+ @font-face{font-family:"Geist Mono";font-style:normal;font-display:swap;font-weight:500;
+  src:url(/assets/font/mono-latinext-500.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+-:root{color-scheme:light;--ground:#f6f4f0;--surface:#ffffff;--raise:#ece8e2;--line:#ddd7cf;--ink:#16191c;--muted:#62686e;--beacon:#c0392f;--shade:0 1px 2px rgba(22,25,28,.04),0 8px 24px rgba(22,25,28,.05);
++:root{color-scheme:light;--ground:#f6f4f0;--surface:#ffffff;--raise:#ece8e2;--line:#ddd7cf;--ink:#16191c;--muted:#62686e;--beacon:#1f5fd6;--shade:0 1px 2px rgba(22,25,28,.04),0 8px 24px rgba(22,25,28,.05);
+ --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+ *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+ html{background:var(--ground);color:var(--ink);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+diff --git a/sw.js b/sw.js
+index f2989db..cfccbd9 100644
+--- a/sw.js
++++ b/sw.js
+@@ -2,7 +2,7 @@
+    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
+    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
+ 
+-const SURUM = 'vitrin-ff6e57167b455e73';
++const SURUM = 'vitrin-e62bb630e8d36a80';
+ const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
+ const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
+ 
+@@ -21,7 +21,7 @@ const ONBELLEGE = [
+   '/assets/arama.json?v=726ee1c8',
+   '/assets/ara.js?v=10ccf569',
+   '/assets/kaydirma.js?v=23cd28e6',
+-  '/style.css?v=aef6de0e',
++  '/style.css?v=1811ddb7',
+   '/assets/site.js?v=2083a619',
+   '/favicon.svg',
+   '/cevrimdisi.html',
+diff --git a/turbinler/enercon/e70/index.html b/turbinler/enercon/e70/index.html
+index c9ab6c2..6094670 100644
+--- a/turbinler/enercon/e70/index.html
++++ b/turbinler/enercon/e70/index.html
+@@ -39,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/enercon/e82/index.html b/turbinler/enercon/e82/index.html
+index 606f4b0..d70bbec 100644
+--- a/turbinler/enercon/e82/index.html
++++ b/turbinler/enercon/e82/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/enercon/e92/index.html b/turbinler/enercon/e92/index.html
+index 6d3d4e4..6f2a6f8 100644
+--- a/turbinler/enercon/e92/index.html
++++ b/turbinler/enercon/e92/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/enercon/index.html b/turbinler/enercon/index.html
+index e08cc95..40e85cd 100644
+--- a/turbinler/enercon/index.html
++++ b/turbinler/enercon/index.html
+@@ -72,7 +72,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/index.html b/turbinler/index.html
+index 55ffc53..cb0d191 100644
+--- a/turbinler/index.html
++++ b/turbinler/index.html
+@@ -108,7 +108,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/index.html b/turbinler/vestas/index.html
+index 9df3025..da5dee3 100644
+--- a/turbinler/vestas/index.html
++++ b/turbinler/vestas/index.html
+@@ -78,7 +78,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/v110/index.html b/turbinler/vestas/v110/index.html
+index 8d93fb9..00db918 100644
+--- a/turbinler/vestas/v110/index.html
++++ b/turbinler/vestas/v110/index.html
+@@ -39,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/v126/index.html b/turbinler/vestas/v126/index.html
+index 344f047..ba3658b 100644
+--- a/turbinler/vestas/v126/index.html
++++ b/turbinler/vestas/v126/index.html
+@@ -39,7 +39,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/turbinler/vestas/v136/index.html b/turbinler/vestas/v136/index.html
+index ec577f4..9591f8f 100644
+--- a/turbinler/vestas/v136/index.html
++++ b/turbinler/vestas/v136/index.html
+@@ -35,7 +35,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+ </head><body>
+ <a class="skip" href="#top">İçeriğe geç</a>
+diff --git a/veri/index.html b/veri/index.html
+index 8d471c5..2290542 100644
+--- a/veri/index.html
++++ b/veri/index.html
+@@ -18,7 +18,7 @@
+ <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latinext.woff2">
+-<link rel="stylesheet" href="/style.css?v=aef6de0e">
++<link rel="stylesheet" href="/style.css?v=1811ddb7">
+ <style>
+ 
+ .veri-kilit{max-width:26rem}
