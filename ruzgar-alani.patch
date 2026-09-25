@@ -1,0 +1,379 @@
+diff --git a/ana.css b/ana.css
+index 57dabdd..68334b4 100644
+--- a/ana.css
++++ b/ana.css
+@@ -158,20 +158,9 @@ body.ana-body header .plate:hover{background:#d8ff6a}
+ .ana .kule-sahne::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+   background:linear-gradient(180deg,rgba(11,14,16,.55) 0,rgba(11,14,16,0) 26%,rgba(11,14,16,0) 52%,rgba(11,14,16,.72) 84%,#0b0e10 100%)}
+ 
+-/* canlı gösterge */
+-.ana .hud{position:absolute;top:calc(72px + 1.25rem);left:var(--a-gut);width:min(19rem,calc(100% - 2*var(--a-gut)));
+-  padding:.9rem 1rem .8rem;background:rgba(11,14,16,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);
+-  font-family:var(--mono);color:#e9edf0}
+-.ana .hud[hidden]{display:none}
+-.ana .hud-ust{margin:0;display:flex;align-items:center;gap:.5rem;font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:#c7ff32}
++/* canlı gösterge: assets/vitrin.css (.ralan) */
+ .ana .nabiz{width:.45rem;height:.45rem;border-radius:50%;background:#c7ff32;box-shadow:0 0 0 0 rgba(199,255,50,.6);animation:nabiz 2s infinite}
+ @keyframes nabiz{70%{box-shadow:0 0 0 .5rem rgba(199,255,50,0)}100%{box-shadow:0 0 0 0 rgba(199,255,50,0)}}
+-.ana .hud dl{margin:.75rem 0 0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem 1rem}
+-.ana .hud dt{font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:#aab3ba}
+-.ana .hud dd{margin:.15rem 0 0;font-size:.8125rem;color:#e9edf0;font-variant-numeric:tabular-nums}
+-.ana .hud dd b{font-family:var(--sans);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin-right:.15rem}
+-.ana .hud-alt{margin:.7rem 0 0;font-size:.625rem;line-height:1.5;color:#aab3ba}
+-.ana .hud-alt a{color:#e9edf0;border-bottom:1px solid rgba(255,255,255,.3)}
+ 
+ /* kot göstergesi (kameranın gerçek yüksekliği) */
+ .ana .kot{position:absolute;right:var(--a-gut);top:calc(72px + 2rem);bottom:clamp(12rem,30vh,16rem);width:4.5rem;
+@@ -255,8 +244,6 @@ body.ana-body header .plate:hover{background:#d8ff6a}
+   .ana .zaman::before{left:3.2rem}
+   .ana .zaman li{grid-template-columns:3.2rem minmax(0,1fr);gap:0 1.25rem}
+   .ana .zaman li::before{left:calc(3.2rem - .3rem)}
+-  .ana .hud{top:calc(64px + .75rem)}
+-  .ana .hud dd b{font-size:1.15rem}
+   .ana .kot{display:none}
+ }
+ @media (prefers-reduced-motion:reduce){ .ana .nabiz,.ana .kaydir::before{animation:none} }
+@@ -264,27 +251,7 @@ main.ana{padding-top:0}
+ 
+ @media (min-width:861px){.ana .kartlar.uclu{grid-template-columns:repeat(3,minmax(0,1fr))}}
+ .ana .an-video{background:transparent}
+-@media (max-width:560px){
+-  .ana .hud{padding:.6rem .75rem .55rem}
+-  .ana .hud dl{grid-template-columns:repeat(4,auto);gap:.2rem .9rem;margin-top:.45rem}
+-  .ana .hud dt{font-size:.5625rem}
+-  .ana .hud dd{font-size:.6875rem}
+-  .ana .hud dd b{font-size:1rem}
+-  .ana .hud-alt{margin-top:.4rem;font-size:.5625rem}
+-}
+ 
+-/* ===================== v4: pusula ve 24 saatlik eğri ===================== */
+-.ana .hud dd{display:flex;align-items:baseline;gap:.3rem}
+-.ana .pusula{width:14px;height:14px;flex:none;color:#c7ff32;align-self:center;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+-.ana .egri{margin-top:.8rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.12)}
+-.ana .egri[hidden]{display:none}
+-.ana .egri-b{margin:0 0 .4rem;display:flex;justify-content:space-between;gap:.5rem;font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:#aab3ba}
+-.ana .egri-b span:last-child{color:#e9edf0;letter-spacing:.04em;text-transform:none}
+-.ana .egri svg{display:block;width:100%;height:2.75rem}
+-.ana .egri .alan{fill:rgba(199,255,50,.14)}
+-.ana .egri .cizgi{fill:none;stroke:#c7ff32;stroke-width:1.5;vector-effect:non-scaling-stroke}
+-.ana .egri circle{fill:#fff}
+-@media (max-width:560px){ .ana .egri{display:none} }
+ 
+ /* ===================== v4: ışık kutusu, kopyala, belirme, hız ===================== */
+ body.ana-body #lb{flex-direction:column;gap:1rem}
+diff --git a/assets/deneyim/deneyim.css b/assets/deneyim/deneyim.css
+index e1d2981..4ad1125 100644
+--- a/assets/deneyim/deneyim.css
++++ b/assets/deneyim/deneyim.css
+@@ -148,8 +148,8 @@ html:has(body.dny-body){background:#07090b}
+ .dny-basla[hidden]{display:none}
+ .dny-basla .dg{font-family:var(--sans);background:transparent;cursor:pointer}
+ .dny-bolum.gecti .dny-kapak-alt{opacity:0;transform:translateY(-1rem);pointer-events:none}
+-.dny-ana .hud{transition:opacity .5s ease}
+-.dny-bolum.gecti .hud{opacity:0;pointer-events:none}
++.dny-ana .ralan{transition:opacity .5s ease}
++.dny-bolum.gecti .ralan{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+ .dny-bolum.statik .kaydir{display:none}
+ .dny-atla{position:absolute;right:var(--d-gut);top:calc(4.4rem + env(safe-area-inset-top) + 1.6rem);font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;
+   color:var(--d-muted);border-bottom:1px solid rgba(238,242,245,.25);padding:.35rem 0;opacity:0;pointer-events:none;transition:opacity .5s ease,color .2s}
+@@ -160,11 +160,6 @@ html:has(body.dny-body){background:#07090b}
+ @media (max-width:820px){.dny-ana:not(.gecti) .dny-atla{top:auto;bottom:clamp(1.3rem,4vh,2.6rem)}}
+ /* alçak ekranlar (dizüstü, tarayıcı çubukları açık): canlı rüzgâr kutusu tek satır, düğmelerle çakışmasın */
+ @media (min-width:821px) and (max-height:780px){
+-  .dny-ana .hud{width:auto;max-width:36rem;padding:.6rem .8rem .55rem}
+-  .dny-ana .hud .egri{display:none!important}
+-  .dny-ana .hud dl{grid-template-columns:repeat(4,auto);gap:.2rem 1.2rem;margin-top:.45rem}
+-  .dny-ana .hud dd b{font-size:1.05rem}
+-  .dny-ana .hud-alt{margin-top:.4rem}
+   .dny-ana .dny-kapak-alt .rakam{margin-top:1rem}
+ }
+ 
+diff --git a/assets/vitrin.css b/assets/vitrin.css
+index 520c347..406f8b3 100644
+--- a/assets/vitrin.css
++++ b/assets/vitrin.css
+@@ -230,3 +230,87 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
+   .v-izgara,.v-isik{transform:none!important}
+   .ana .v-parca:hover,.ana .dg:hover,.ana .kartlar a:hover,.ana .yazi:hover{transform:none}
+ }
++
++/* ===================== canlı rüzgâr alanı (kapak göstergesi) ===================== */
++.ralan{position:absolute;z-index:3;top:calc(72px + 4.25rem);right:var(--a-gut);width:17.75rem;padding:.95rem 1.05rem .85rem;
++  background:rgba(8,11,13,.74);border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
++  font-family:var(--mono);color:#e9edf0;font-variant-numeric:tabular-nums}
++.ralan[hidden]{display:none}
++.ralan::before,.ralan::after{content:"";position:absolute;width:.55rem;height:.55rem;pointer-events:none}
++.ralan::before{left:-1px;top:-1px;border-left:1px solid #c7ff32;border-top:1px solid #c7ff32}
++.ralan::after{right:-1px;bottom:-1px;border-right:1px solid #c7ff32;border-bottom:1px solid #c7ff32}
++.ralan p{margin:0}
++.ralan-ust{display:flex;align-items:center;gap:.55rem;font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:#c7ff32}
++.ralan-yer{margin-top:.55rem!important;display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;
++  font-family:var(--sans);font-size:1.375rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;line-height:1.1}
++.ralan-yer span{font-family:var(--mono);font-size:.625rem;font-weight:400;letter-spacing:.12em;color:#aab3ba}
++.ralan-dl{position:relative;margin:.6rem 0 0;padding-top:.45rem;border-top:1px solid rgba(255,255,255,.16)}
++.ralan-dl::before{content:"";position:absolute;left:0;top:-1px;width:2.25rem;height:1px;background:#c7ff32}
++.ralan-dl > div{display:flex;align-items:baseline;gap:.6rem;padding:.26rem 0}
++.ralan-dl dt{flex:1;display:flex;align-items:center;gap:.55rem;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba}
++.ralan-dl dt::after{content:"";flex:1;height:1px;min-width:.75rem;background:repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 2px,transparent 2px 5px)}
++.ralan-dl dd{margin:0;display:flex;align-items:baseline;gap:.3rem;white-space:nowrap}
++.ralan-dl dd b{font-size:.9375rem;font-weight:500;color:#fff;letter-spacing:-.01em}
++.ralan-dl dd small{font-size:.625rem;color:#aab3ba;letter-spacing:.04em}
++.ralan-ok{align-self:center;flex:none;color:#c7ff32;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
++.ralan-egri{margin-top:.7rem;padding-top:.65rem;border-top:1px solid rgba(255,255,255,.12)}
++.ralan-egri > p:first-child{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.45rem;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba}
++.ralan-egri > p:first-child b{font-weight:500;font-size:.75rem;letter-spacing:.04em;color:#c7ff32}
++.ralan-bar{display:grid;grid-template-columns:repeat(19,minmax(0,1fr));gap:2px;height:.75rem}
++.ralan-bar i{background:rgba(255,255,255,.1);transition:background-color .3s ease}
++.ralan-bar i.y{background:#c7ff32}
++.ralan-olcek{display:flex;justify-content:space-between;margin-top:.3rem!important;font-size:.5625rem;letter-spacing:.08em;color:#aab3ba}
++.ralan-kf{display:flex;justify-content:space-between;align-items:flex-end;gap:.75rem;margin-top:.7rem!important;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:#aab3ba}
++.ralan-kf[hidden]{display:none}
++.ralan-kf small{display:block;margin-top:.2rem;font-size:.5625rem;letter-spacing:.06em;text-transform:none}
++.ralan-kf b{font-family:var(--sans);font-size:1.5rem;font-weight:600;letter-spacing:-.02em;line-height:1;color:#fff}
++.ralan-zaman{display:flex;align-items:center;gap:.45rem;margin-top:.7rem!important;padding-top:.6rem;border-top:1px solid rgba(255,255,255,.12);font-size:.625rem;letter-spacing:.06em;color:#dfe5e9}
++.ralan-nokta{width:.3rem;height:.3rem;border-radius:50%;background:#c7ff32;flex:none}
++.ralan-not{margin-top:.35rem!important;font-size:.5625rem;line-height:1.55;color:#aab3ba}
++.ralan-kisa,.ralan-kf-kisa{display:none}
++.ralan-kf-kisa{text-decoration:none;border:0;cursor:help}
++.ralan-not a{color:#e9edf0;border-bottom:1px solid rgba(255,255,255,.3);white-space:nowrap}
++.ralan-not a:hover,.ralan-not a:focus-visible{color:#c7ff32;border-color:#c7ff32}
++
++/* dar ve alçak ekranlar: gösterge yatay, kapağı kapatmasın */
++@media (max-width:820px),(min-width:821px) and (max-height:780px){
++  .ralan{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"ust yer" "dl dl" "egri egri" "kf zaman" "not not";
++    align-items:center;column-gap:.75rem;top:calc(72px + 1.25rem);left:var(--a-gut);width:auto;max-width:34rem;right:var(--a-gut);padding:.6rem .8rem .55rem}
++  .ralan-ust{grid-area:ust;font-size:.5625rem}
++  .ralan-yer{grid-area:yer;justify-self:end;margin:0!important;font-size:.75rem;letter-spacing:.12em}
++  .ralan-yer span{display:none}
++  .ralan-dl{grid-area:dl;display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:space-between;gap:.25rem .9rem;margin-top:.45rem;padding-top:.4rem}
++  .ralan-dl > div{flex-direction:column;align-items:flex-start;gap:.1rem;padding:0}
++  .ralan-dl dt{font-size:.5625rem;letter-spacing:.12em}
++  .ralan-dl dt::after{display:none}
++  .ralan-dl dd b{font-size:.875rem}
++  .ralan-dl dd small{font-size:.5625rem}
++  .ralan-egri{grid-area:egri;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:.6rem;margin-top:.45rem;padding-top:.45rem}
++  .ralan-egri > p:first-child{margin:0;gap:.5rem;font-size:.5625rem;letter-spacing:.12em}
++  .ralan-bar{height:.5rem}
++  .ralan-olcek{display:none!important}
++  .ralan-kf{grid-area:kf;justify-content:flex-start;align-items:baseline;margin-top:.4rem!important;font-size:.5625rem;letter-spacing:.12em}
++  .ralan-kf small{display:inline;margin:0 0 0 .35rem}
++  .ralan-kf b{order:2;font-family:var(--mono);font-size:.75rem;font-weight:500;letter-spacing:.02em}
++  .ralan-zaman{grid-area:zaman;margin-top:.4rem!important;padding:0;border:0;font-size:.5625rem;justify-self:end}
++  .ralan-not{grid-area:not;margin-top:.3rem!important}
++}
++@media (max-width:560px){
++  .ralan{top:calc(64px + .5rem);padding:.5rem .7rem .45rem;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"ust yer zaman" "dl dl dl" "egri egri kf" "not not not";column-gap:.6rem}
++  .ralan-yer{justify-self:start;font-size:.6875rem}
++  .ralan-zaman{margin:0!important}
++  .ralan-g{display:none}
++  .ralan-dl{gap:.2rem .5rem}
++  .ralan-dl dt{font-size:.5rem;letter-spacing:.08em}
++  .ralan-dl dd{flex-wrap:wrap;column-gap:.25rem;row-gap:0}
++  .ralan-dl dd small{flex-basis:100%}
++  .ralan-dl dd b{font-size:.8125rem}
++  .ralan-dl{margin-top:.35rem;padding-top:.35rem}
++  .ralan-egri{margin-top:.35rem;padding-top:.35rem}
++  .ralan-kf{margin:.35rem 0 0!important;gap:.4rem;padding-top:.35rem;border-top:1px solid rgba(255,255,255,.12);align-self:stretch}
++  .ralan-kf-ad{display:none}
++  .ralan-kf-kisa{display:inline}
++  .ralan-uzun{display:none}
++  .ralan-kisa{display:inline}
++}
++@media (prefers-reduced-motion:reduce){ .ralan-bar i,.ralan-ok{transition:none} }
+diff --git a/deneyim/index.html b/deneyim/index.html
+index 3708377..e3bd31d 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -23,7 +23,7 @@
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+ <link rel="stylesheet" href="/style.css?v=aef6de0e">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e9f6cc25">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=96f4a9b6">
+ </head>
+ 
+ <body class="dny-body">
+diff --git a/index.html b/index.html
+index 0025719..d22bf49 100644
+--- a/index.html
++++ b/index.html
+@@ -28,9 +28,9 @@
+ <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
+ <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+ <link rel="stylesheet" href="/style.css?v=aef6de0e">
+-<link rel="stylesheet" href="/ana.css?v=5948980a">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e9f6cc25">
+-<link rel="stylesheet" href="/assets/vitrin.css?v=145dd3c9">
++<link rel="stylesheet" href="/ana.css?v=c5a622e8">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=96f4a9b6">
++<link rel="stylesheet" href="/assets/vitrin.css?v=ff6e5716">
+ 
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@graph":[
+@@ -80,16 +80,24 @@
+     <div class="v-isik" aria-hidden="true"></div>
+     <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
+ 
+-    <div class="hud" id="hud" hidden>
+-      <p class="hud-ust"><span class="nabiz" aria-hidden="true"></span>Aliağa · 120 m · şu an</p>
+-      <dl>
+-        <div><dt>Rüzgâr</dt><dd><b id="hHiz">–</b> m/s</dd></div>
+-        <div><dt>Yön</dt><dd><svg class="pusula" id="hOk" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.5 11.5 13 8 10.6 4.5 13Z" fill="currentColor"/></svg><span id="hYon">–</span></dd></div>
+-        <div><dt>Rotor</dt><dd><b id="hDevir">–</b> d/dk</dd></div>
+-        <div><dt>Bir N117</dt><dd><b id="hGuc">–</b> kW</dd></div>
++    <div class="ralan" id="ralan" role="group" aria-label="Aliağa canlı rüzgâr alanı" hidden>
++      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı</p>
++      <p class="ralan-yer">Aliağa<span>göbek 120 m</span></p>
++      <dl class="ralan-dl">
++        <div><dt>Rüzgâr</dt><dd><b id="rHiz">–</b><small>m/s</small></dd></div>
++        <div><dt>Yön</dt><dd><svg class="ralan-ok" id="rOk" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M8 1.5 11.5 13 8 10.6 4.5 13Z" fill="currentColor"/></svg><b id="rYon">–</b><small id="rYonAd"></small></dd></div>
++        <div><dt>Yoğunluk</dt><dd><b id="rRho">–</b><small>kg/m³</small></dd></div>
++        <div><dt>Rotor</dt><dd><b id="rDevir">–</b><small>d/dk</small></dd></div>
++        <div><dt>N117</dt><dd><b id="rGuc">–</b><small>MW</small></dd></div>
+       </dl>
+-      <div class="egri" id="egri" hidden><p class="egri-b"><span>Önümüzdeki 24 saat</span><span id="egriAralik"></span></p><svg viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true"><path id="egriAlan" class="alan"/><path id="egriCizgi" class="cizgi"/><circle id="egriNokta" r="2.6"/></svg></div>
+-      <p class="hud-alt">Open-Meteo sayısal tahmini, saha ölçümü değildir. <a href="/ruzgar/">Canlı rüzgâr</a></p>
++      <div class="ralan-egri">
++        <p><span>Güç eğrisi</span><b id="rYuk">–</b></p>
++        <div class="ralan-bar" id="rBar" role="img" aria-label="Anlık güç, anma gücüne oranı hesaplanıyor"></div>
++        <p class="ralan-olcek" aria-hidden="true"><span>0</span><span>3 MW</span></p>
++      </div>
++      <p class="ralan-kf" id="rKfSatir" hidden><span class="ralan-kf-ad">Kapasite faktörü<small>önümüzdeki 24 sa</small></span><abbr class="ralan-kf-kisa" title="Kapasite faktörü, önümüzdeki 24 saat">KF 24 sa</abbr><b id="rKf">–</b></p>
++      <p class="ralan-zaman"><span class="ralan-nokta" aria-hidden="true"></span><span id="rZaman">Güncellendi az önce</span></p>
++      <p class="ralan-not"><span class="ralan-uzun">Open-Meteo tahmini; güç ve devir modelden hesaplanır, ölçüm değildir.</span><span class="ralan-kisa">Tahmin ve model, ölçüm değil.</span> <a href="/ruzgar/">Canlı rüzgâr &#8594;</a></p>
+     </div>
+ 
+     <div class="kule-alt dny-kapak-alt">
+@@ -581,45 +589,85 @@
+   }
+   function devir(v) { if (v < 3 || v > 25) return 0; return Math.max(7.9, Math.min(14.1, (8 * v / YARICAP) * 60 / (2 * Math.PI))); }
+   function virgul(x, n) { return x.toFixed(n).replace('.', ','); }
+-  fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
+-    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+-    .then(function (d) {
+-      var c = d && d.current; if (!c) throw 0;
+-      var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
+-      if (!isFinite(v)) throw 0;
+-      var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
+-      var rho = p120 / (287.05 * (sic - 0.78 + 273.15));
+-      var dv = devir(v), kw = guc(v, rho);
+-      kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
+-      document.getElementById('hHiz').textContent = virgul(v, 1);
+-      document.getElementById('hYon').textContent = isFinite(yon) ? YONLER[Math.round(yon / 22.5) % 16] + ' ' + Math.round(yon) + '°' : '–';
+-      document.getElementById('hDevir').textContent = dv > 0 ? virgul(dv, 1) : '0';
+-      document.getElementById('hGuc').textContent = kw > 0 ? Math.round(kw).toLocaleString('tr-TR') : '0';
+-      if (isFinite(yon)) { kok.style.setProperty('--yon-derece', String(yon)); document.getElementById('hOk').style.transform = 'rotate(' + (yon + 180) + 'deg)'; }
+-      egriCiz(d.hourly);
+-      document.getElementById('hud').hidden = false;
+-    })
+-    .catch(function () { /* veri yoksa gösterge hiç görünmez */ });
+-
+-  function egriCiz(h) {
++  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
++  function $(i) { return document.getElementById(i); }
++  function yogunluk(sic, bas) {   /* 120 m'de hava yoğunluğu: barometrik indirgeme + ideal gaz */
++    var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
++    return p120 / (287.05 * (sic - 0.78 + 273.15));
++  }
++  /* sayılar ilk gelişte sıfırdan akar; sonraki yenilemelerde eski değerden */
++  var onceki = {};
++  function yaz(id, x, n) {
++    var el = $(id), bas = onceki[id], son = x;
++    onceki[id] = x;
++    if (az || !isFinite(x)) { el.textContent = isFinite(x) ? virgul(x, n) : '–'; return; }
++    var ilk = bas === undefined ? 0 : bas, t0 = performance.now(), sure = bas === undefined ? 1100 : 700;
++    (function adim(t) {
++      var k = Math.min(1, (t - t0) / sure), e = 1 - Math.pow(1 - k, 3);
++      el.textContent = virgul(ilk + (son - ilk) * e, n);
++      if (k < 1) requestAnimationFrame(adim);
++    })(t0);
++  }
++  var BOLUT = 19, bar = $('rBar');
++  for (var i = 0; i < BOLUT; i++) bar.appendChild(document.createElement('i'));
++  var cekilen = 0;
++  function zamanYaz() {
++    if (!cekilen) return;
++    var sn = Math.max(0, Math.round((Date.now() - cekilen) / 1000));
++    $('rZaman').innerHTML = '<span class="ralan-g">Güncellendi </span>' + (sn < 5 ? 'az önce' : sn < 60 ? sn + ' sn önce' : Math.floor(sn / 60) + ' dk önce');
++  }
++  function isle(d) {
++    var c = d && d.current; if (!c) throw 0;
++    var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
++    if (!isFinite(v)) throw 0;
++    var rho = isFinite(sic) && isFinite(bas) ? yogunluk(sic, bas) : 1.225;
++    var dv = devir(v), kw = guc(v, rho), oran = kw / 3000;
++    kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
++    yaz('rHiz', v, 1); yaz('rRho', rho, 2); yaz('rDevir', dv, 1); yaz('rGuc', kw / 1000, 2);
++    if (isFinite(yon)) {
++      $('rYon').textContent = Math.round(yon) + '°';
++      $('rYonAd').textContent = YONLER[Math.round(yon / 22.5) % 16];
++      kok.style.setProperty('--yon-derece', String(yon));
++      $('rOk').style.transform = 'rotate(' + (yon + 180) + 'deg)';
++    }
++    var yuzde = Math.round(oran * 100);
++    $('rYuk').textContent = '%' + yuzde;
++    var yanan = oran > 0 ? Math.max(1, Math.round(oran * BOLUT)) : 0;
++    [].forEach.call(bar.children, function (b, k) { b.className = k < yanan ? 'y' : ''; b.style.transitionDelay = az ? '0s' : (k * 0.035).toFixed(3) + 's'; });
++    bar.setAttribute('aria-label', 'Anlık tahmini güç, anma gücünün yüzde ' + yuzde + '’i');
++    kf(d.hourly);
++    cekilen = Date.now(); zamanYaz();
++    $('ralan').hidden = false;
++  }
++  /* kapasite faktörü: önümüzdeki 24 saatin saatlik tahmininden, aynı model ve saatlik yoğunlukla */
++  function kf(h) {
+     try {
+       if (!h || !h.time || !h.wind_speed_120m) return;
+-      var simdi = Date.now(), i0 = 0;
++      var simdi = Date.now(), i0 = 0, top = 0, n = 0;
+       for (var i = 0; i < h.time.length; i++) { if (new Date(h.time[i] + ':00+03:00').getTime() <= simdi) i0 = i; }
+-      var v = h.wind_speed_120m.slice(i0, i0 + 25).map(Number).filter(isFinite);
+-      if (v.length < 6) return;
+-      var en = Math.max.apply(null, v), ek = Math.min.apply(null, v), ust = Math.max(en * 1.1, 4);
+-      var X = function (k) { return (k / (v.length - 1) * 236 + 2).toFixed(1); };
+-      var Y = function (x) { return (42 - x / ust * 38).toFixed(1); };
+-      var d = v.map(function (x, k) { return (k ? 'L' : 'M') + X(k) + ' ' + Y(x); }).join(' ');
+-      document.getElementById('egriCizgi').setAttribute('d', d);
+-      document.getElementById('egriAlan').setAttribute('d', d + ' L' + X(v.length - 1) + ' 44 L' + X(0) + ' 44 Z');
+-      var n = document.getElementById('egriNokta'); n.setAttribute('cx', X(0)); n.setAttribute('cy', Y(v[0]));
+-      document.getElementById('egriAralik').textContent = virgul(ek, 1) + '–' + virgul(en, 1) + ' m/s';
+-      document.getElementById('egri').hidden = false;
++      for (var k = i0; k < Math.min(h.time.length, i0 + 24); k++) {
++        var v = +h.wind_speed_120m[k]; if (!isFinite(v)) continue;
++        var t = +(h.temperature_2m || [])[k], p = +(h.pressure_msl || [])[k];
++        top += guc(v, isFinite(t) && isFinite(p) ? yogunluk(t, p) : 1.225) / 3000; n++;
++      }
++      if (n < 12) return;
++      $('rKf').textContent = '%' + virgul(top / n * 100, 1);
++      $('rKfSatir').hidden = false;
+     } catch (e) {}
+   }
+-
++  function cek() {
++    return fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
++      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
++      .then(isle)
++      .catch(function () { /* veri yoksa gösterge hiç görünmez; varsa son değer kalır */ });
++  }
++  cek();
++  setInterval(zamanYaz, 1000);
++  /* on dakikada bir, sayfa görünürken ve kapaktayken yenile (kaynak uçta 15 dk önbellekli) */
++  setInterval(function () {
++    var s = $('deneyim');
++    if (!document.hidden && !(s && s.classList.contains('gecti'))) cek();
++  }, 10 * 60 * 1000);
+ })();
+ </script>
+ <script src="/assets/deneyim/arayuz.js?v=2789bc50" defer></script>
+diff --git a/sw.js b/sw.js
+index 40b87d1..f2989db 100644
+--- a/sw.js
++++ b/sw.js
+@@ -2,7 +2,7 @@
+    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
+    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
+ 
+-const SURUM = 'vitrin-145dd3c97b455e73';
++const SURUM = 'vitrin-ff6e57167b455e73';
+ const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
+ const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
+ 
