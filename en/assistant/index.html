@@ -65,6 +65,17 @@
 .as-cevap .k{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;
   text-transform:uppercase;color:var(--muted);margin:0}
 .as-cevap .metin{margin:.75rem 0 0;line-height:1.75;white-space:pre-wrap}
+.as-cevap .metin{white-space:normal}
+.as-duz{margin:0;white-space:pre-wrap;line-height:1.75}
+.as-yapi{margin:.4rem 0 0;display:grid;gap:0}
+.as-yapi dt{margin-top:.9rem}
+.as-yapi dt:first-child{margin-top:0}
+.as-yapi dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.as-yapi dd{margin:.25rem 0 0;padding-left:.9rem;border-left:1px solid var(--line)}
+.as-yapi dd p{margin:0 0 .2rem;line-height:1.65;color:var(--ink)}
+.as-guv{margin:1.2rem 0 0;padding:.8rem 1rem;border-left:2px solid var(--uyari);background:rgba(242,178,51,.07)}
+.as-guv .k{margin:0 0 .25rem;color:var(--uyari)!important}
+.as-guv p{margin:0;font-size:.875rem;line-height:1.6}
 .as-kaynak{margin:1.4rem 0 0;padding-top:1rem;border-top:1px solid var(--line)}
 .as-kaynak p.k{margin:0 0 .5rem}
 .as-kaynak a{display:block;padding:.45rem 0;font-size:.9375rem;color:var(--ink);
@@ -168,7 +179,7 @@
 </footer>
 
 <script src="/assets/site.js?v=2083a619" defer></script>
-<script src="/assets/ara.js?v=10ccf569" defer></script>
+<script src="/assets/ara.js?v=b8677b23" defer></script>
 <script>
 document.getElementById('burger').addEventListener('click', function () {
   var open = this.getAttribute('aria-expanded') === 'true';
@@ -190,6 +201,23 @@ document.getElementById('burger').addEventListener('click', function () {
   var kSar   = document.getElementById('asKaynak');
   var kList  = document.getElementById('asKaynakListe');
 
+
+  function yapili(m) {
+    var BAS = ['Observation','Possible causes','First check','Measurement','Next step'], dl = document.createElement('dl'), cur = null, duz = [];
+    metin.innerHTML = '';
+    var parca = String(m || '').split('\n\n'), guv = '';
+    if (parca.length && parca[parca.length - 1].indexOf('This is field experience') === 0) guv = parca.pop();
+    parca.join('\n').split('\n').forEach(function (sat) {
+      var t = sat.trim(); if (!t) return;
+      var b = BAS.filter(function (h) { return t.toLocaleLowerCase('tr').indexOf(h.toLocaleLowerCase('tr') + ':') === 0; })[0];
+      if (b) { var dt = document.createElement('dt'); dt.textContent = b; dl.appendChild(dt); cur = document.createElement('dd'); dl.appendChild(cur);
+        t = t.slice(b.length + 1).trim(); if (!t) return; }
+      if (cur) { var p = document.createElement('p'); p.textContent = t; cur.appendChild(p); } else duz.push(t);
+    });
+    if (duz.length) { var d = document.createElement('p'); d.className = 'as-duz'; d.textContent = duz.join('\n'); metin.appendChild(d); }
+    if (dl.children.length) { dl.className = 'as-yapi'; metin.appendChild(dl); }
+    if (guv) { var g = document.createElement('div'); g.className = 'as-guv'; var gb = document.createElement('p'); gb.className = 'k'; gb.textContent = 'Safety'; var gt = document.createElement('p'); gt.textContent = guv; g.appendChild(gb); g.appendChild(gt); metin.appendChild(g); }
+  }
   document.getElementById('asOrnek').addEventListener('click', function (e) {
     if (e.target.tagName !== 'BUTTON') return;
     soru.value = e.target.textContent;
@@ -230,8 +258,8 @@ document.getElementById('burger').addEventListener('click', function () {
         return;
       }
 
-      baslik.textContent = (x.d.uretim === false) ? 'Relevant passages from the site' : 'Answer';
-      metin.textContent = x.d.cevap || '';
+      baslik.textContent = (x.d.uretim === false) ? 'Relevant passages from the site' : 'AI-generated field guidance';
+      yapili(x.d.cevap);
       var k = x.d.kaynaklar || [];
       if (k.length) {
         kSar.hidden = false;

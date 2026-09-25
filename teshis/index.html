@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arıza Teşhis Simülatörü — Alarmdan Kök Nedene | Soner Soylu</title>
+<meta name="description" content="Gerçek saha vakalarından kurulmuş eğitim amaçlı teşhis simülatörü: alarmı oku, sıradaki adımı seç, her seçimin nedenini, ölçümün ne söylediğini ve kök nedeni gör.">
+<link rel="canonical" href="https://sonersoylu.com/teshis/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/teshis/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/teshis/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Arıza teşhis simülatörü">
+<meta property="og:description" content="Gerçek saha vakalarından kurulmuş eğitim amaçlı teşhis simülatörü: alarmı oku, sıradaki adımı seç, her seçimin nedenini, ölçümün ne söylediğini ve kök nedeni gör.">
+<meta property="og:url" content="https://sonersoylu.com/teshis/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0e10">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "name": "Arıza teşhis simülatörü", "url": "https://sonersoylu.com/teshis/", "inLanguage": "tr", "description": "Gerçek saha vakalarından kurulmuş eğitim amaçlı teşhis simülatörü: alarmı oku, sıradaki adımı seç, her seçimin nedenini, ölçümün ne söylediğini ve kök nedeni gör.", "isAccessibleForFree": true, "author": {"@type": "Person", "name": "Soner Soylu", "url": "https://sonersoylu.com/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Anasayfa", "item": "https://sonersoylu.com/"}, {"@type": "ListItem", "position": 2, "name": "Arıza teşhis simülatörü", "item": "https://sonersoylu.com/teshis/"}]}]}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+
+<link rel="stylesheet" href="/style.css?v=1a5286e5">
+<link rel="stylesheet" href="/kb.css?v=5fbf4cd3">
+<style>
+.tsh{--w:min(74rem,calc(100vw - 3rem));max-width:var(--w);margin:0 auto;padding:calc(73px + 1.5rem) 0 5rem}
+.tsh-ust{margin-top:1.6rem!important}
+.tsh-kic{margin:0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--beacon)}
+.tsh h1{margin:.8rem 0 0;font-family:var(--sans);font-weight:600;font-size:clamp(2.2rem,5.4vw,4.2rem);line-height:1;letter-spacing:-.045em;max-width:16ch}
+.tsh-lead{margin:1.2rem 0 0;max-width:62ch;font-size:1.0625rem;line-height:1.7;color:var(--muted)}
+.tsh-rozet{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;padding:.55rem .8rem;border:1px solid rgba(242,178,51,.5);color:var(--uyari);font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;line-height:1.5}
+.tsh-rozet::before{content:"";flex:none;width:.45rem;height:.45rem;background:var(--uyari);transform:rotate(45deg)}
+.tsh-akis{display:flex;flex-wrap:wrap;gap:.3rem .5rem;margin:2rem 0 0;padding:0;list-style:none;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tsh-akis li{display:inline-flex;align-items:center;gap:.5rem}
+.tsh-akis li+li::before{content:"\2192";color:var(--line)}
+.tsh-sec{margin-top:2.5rem;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:52rem){.tsh-sec{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tsh-kart{display:flex;flex-direction:column;gap:.55rem;text-align:left;padding:1.4rem;background:var(--surface);border:0;color:var(--ink);font:inherit;cursor:pointer;transition:background .2s}
+.tsh-kart:hover{background:var(--raise)}
+.tsh-kart[aria-pressed="true"]{background:var(--raise);box-shadow:inset 0 2px 0 var(--beacon)}
+.tsh-kart .n{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.tsh-kart .n span{color:var(--muted)}
+.tsh-kart .a{font-size:1.25rem;font-weight:600;letter-spacing:-.02em}
+.tsh-kart .l{font-family:var(--mono);font-size:.75rem;line-height:1.5;color:var(--uyari)}
+.tsh-kart .g{margin-top:auto;padding-top:.6rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tsh-motor{margin-top:2.5rem;display:grid;gap:1.5rem}
+.tsh-motor[hidden]{display:none}
+@media(min-width:60rem){.tsh-motor{grid-template-columns:minmax(0,1fr) 20rem;align-items:start}}
+.tsh-ray{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:1px;margin:0;padding:0;list-style:none;border:1px solid var(--line);background:var(--line)}
+.tsh-ray li{flex:1 0 auto;padding:.7rem .9rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--surface);white-space:nowrap}
+
+.tsh-ray li.gecti{color:var(--ink)}
+.tsh-ray li.gecti::before{content:"\2713  ";color:var(--beacon)}
+.tsh-ray li.simdi{color:var(--on-beacon);background:var(--beacon)}
+.tsh-sahne{border:1px solid var(--line);background:var(--surface);padding:1.5rem}
+.tsh-baslik{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1rem;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.tsh-baslik p{margin:0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tsh-baslik b{color:var(--ink);font-weight:500}
+.tsh-alarm{margin:1rem 0 0;padding:.8rem 1rem;border-left:2px solid var(--hata);background:var(--ground);font-family:var(--mono);font-size:.8125rem;line-height:1.55;color:var(--ink)}
+.tsh-alarm small{display:block;margin-bottom:.2rem;font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hata)}
+.tsh-durum{margin:1rem 0 0;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.tsh-soru{margin:1.6rem 0 0;font-size:1.25rem;line-height:1.35;letter-spacing:-.015em;font-weight:600;color:var(--ink)}
+.tsh-soru:focus{outline:none}
+.tsh-evre{display:block;margin-bottom:.35rem;font-family:var(--mono);font-size:.625rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--beacon)}
+.tsh-sec-l{margin:1rem 0 0;padding:0;list-style:none;display:grid;gap:.5rem}
+.tsh-sec-b{display:flex;gap:.9rem;width:100%;text-align:left;padding:.95rem 1rem;min-height:3rem;background:var(--ground);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:.9375rem;line-height:1.5;cursor:pointer;transition:border-color .15s,background .15s}
+.tsh-sec-b:hover:not(:disabled){border-color:var(--beacon)}
+.tsh-sec-b .h{flex:none;font-family:var(--mono);font-size:.75rem;color:var(--muted);padding-top:.1rem}
+.tsh-sec-b:disabled{cursor:default;opacity:.55}
+.tsh-sec-b.secildi{opacity:1;border-color:var(--ink)}
+.tsh-sec-b[data-d="en"].goster{opacity:1;border-color:var(--beacon);background:rgba(124,196,255,.07)}
+.tsh-geri{margin-top:1.2rem;padding:1.1rem 1.2rem;border:1px solid var(--line);background:var(--ground)}
+.tsh-geri[hidden]{display:none}
+.tsh-hukum{margin:0;display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase}
+.tsh-hukum::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:currentColor}
+.tsh-hukum.en{color:var(--beacon)}.tsh-hukum.iyi{color:var(--uyari)}.tsh-hukum.yanlis{color:var(--hata)}
+.tsh-geri dl{margin:.9rem 0 0;display:grid;gap:.8rem}
+.tsh-geri dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tsh-geri dd{margin:.25rem 0 0;font-size:.9375rem;line-height:1.65;color:var(--ink)}
+.tsh-bulgu{margin-top:1rem;padding:.9rem 1rem;border-left:2px solid var(--beacon);background:rgba(124,196,255,.06)}
+.tsh-bulgu small{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--beacon)}
+.tsh-bulgu p{margin:.35rem 0 0;font-size:.9375rem;line-height:1.65;color:var(--ink)}
+.tsh-ileri{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.1rem;min-height:2.9rem;padding:.7rem 1.3rem;font:inherit;font-weight:500;color:var(--on-beacon);background:var(--beacon);border:1px solid var(--beacon);cursor:pointer}
+.tsh-ileri:hover{filter:brightness(1.08)}
+.tsh-defter{border:1px solid var(--line);background:var(--surface);padding:1.2rem}
+.tsh-defter h2{margin:0;font-family:var(--mono);font-size:.6875rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:0;padding:0}
+.tsh-defter ol{margin:.9rem 0 0;padding:0;list-style:none;display:grid;gap:.8rem;counter-reset:d}
+.tsh-defter li{position:relative;padding-left:1.8rem;font-size:.8125rem;line-height:1.6;color:var(--muted);counter-increment:d}
+.tsh-defter li::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:.05rem;font-family:var(--mono);font-size:.6875rem;color:var(--beacon)}
+.tsh-defter li b{display:block;color:var(--ink);font-weight:500}
+.tsh-defter .bos{font-size:.8125rem;color:var(--muted)}
+.tsh-sonuc{border:1px solid var(--line);background:var(--surface);padding:1.6rem 1.5rem}
+.tsh-sonuc h2{margin:0;font-family:var(--sans);font-size:1.75rem;letter-spacing:-.03em;border:0;padding:0}
+.tsh-puan{margin:.6rem 0 0;font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;color:var(--beacon)}
+.tsh-sonuc dl{margin:1.2rem 0 0;display:grid;gap:1rem}
+.tsh-sonuc dt{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tsh-sonuc dt.kok{color:var(--hata)}
+.tsh-sonuc dd{margin:.3rem 0 0;font-size:1rem;line-height:1.65;color:var(--ink)}
+.tsh-son-dg{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.tsh-son-dg a,.tsh-son-dg button{display:inline-flex;align-items:center;min-height:2.9rem;padding:.7rem 1.2rem;font:inherit;font-size:.9375rem;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none}
+.tsh-son-dg a.bir{background:var(--beacon);border-color:var(--beacon);color:var(--on-beacon)}
+.tsh-not{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.875rem;line-height:1.7;color:var(--muted);max-width:70ch}
+.tsh-not a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:40rem){.tsh{--w:calc(100vw - 2rem)}.tsh-sahne{padding:1.1rem}}
+@media(prefers-reduced-motion:reduce){.tsh-kart,.tsh-sec-b{transition:none}}
+</style>
+</head><body>
+<a class="skip" href="#top">İçeriğe geç</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" >Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <a class="lang" href="/en/field-notes/" hreflang="en" lang="en" title="English">EN</a>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" >Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main class="tsh" id="top">
+ <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <span aria-current="page">Arıza teşhis simülatörü</span></nav>
+ <p class="tsh-kic tsh-ust">Eğitim · arıza teşhisi</p>
+ <h1>Türbin durduğunda düşünme başlar</h1>
+ <p class="tsh-lead">Gerçek saha vakalarından kurulmuş senaryolar. Alarmı oku, sıradaki adımı sen seç. Her seçimden sonra neden doğru ya da erken olduğunu, o ölçümün ne söylediğini ve sahada gerçekte ne bulunduğunu görürsün.</p>
+ <p class="tsh-rozet">Eğitim amaçlı simülasyon · OEM prosedürlerinin ve saha güvenlik kurallarının yerine geçmez</p>
+ <ol class="tsh-akis" aria-label="Teşhis sırası"><li>Türbin</li><li>Alarm</li><li>Veri</li><li>Gözlem</li><li>Hipotez</li><li>Test</li><li>Sonuç</li><li>Kök neden</li></ol>
+ <div class="tsh-sec" role="group" aria-label="Senaryo seç"><button type="button" class="tsh-kart" data-s="pitch" aria-pressed="false" aria-controls="tshMotor"><span class="n">Senaryo 01<span>Nordex N117/3000</span></span><span class="a">Pitch motor yüksek akım</span><span class="l">Pitch motor phase current high (Motor A)</span><span class="g">5 karar adımı · Vaka 01</span></button><button type="button" class="tsh-kart" data-s="jenerator" aria-pressed="false" aria-controls="tshMotor"><span class="n">Senaryo 02<span>Vestas V126</span></span><span class="a">Jeneratör sıcaklık alarmı</span><span class="l">Generator temperature high · 116 °C (eşik 115 °C)</span><span class="g">3 karar adımı · Vaka 04</span></button><button type="button" class="tsh-kart" data-s="konvertor" aria-pressed="false" aria-controls="tshMotor"><span class="n">Senaryo 03<span>Vestas V110</span></span><span class="a">Konvertör aşırı akım</span><span class="l">Rotor tarafı aşırı akım / converter arızası</span><span class="g">3 karar adımı · Vaka 05</span></button></div>
+ <noscript><p class="tsh-not">Simülatör JavaScript ile çalışır. Aynı vakaları <a href="/saha-notlari/">saha notlarında</a> adım adım okuyabilirsiniz.</p></noscript>
+ <section class="tsh-motor" id="tshMotor" aria-label="Simülasyon" hidden></section>
+ <div class="tsh-not">
+  <p>Senaryolar <a href="/saha-notlari/">saha notlarındaki</a> gerçek vakalardan alındı; bulgular o vakalarda ölçülen değerlerdir. Her müdahalede kendi türbininizin OEM talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir; enerjili ekipmana yakın çalışma yalnız yetkili personelle yapılır.</p>
+  <p>Belirtiden olası nedenlere hızlı bir bakış için <a href="/ariza/">arıza teşhis ağacını</a>, alarm kodlarını okumak için <a href="/kodlar/">kod kütüphanesini</a> kullanın.</p>
+ </div>
+</main>
+
+<footer class="son">
+ <div class="wrap">
+  <p class="son-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → bugün</span></p>
+  <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
+  <div class="son-orta">
+   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknisyeni</p></div>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+  </div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/" hreflang="en" lang="en">English</a></p></div>
+ </div>
+</footer>
+
+<script type="application/json" id="tshVeri">[{"id": "pitch", "no": "01", "model": "Nordex N117/3000", "yer": "Bergama RES", "ad": "Pitch motor yüksek akım", "alarm": "Pitch motor phase current high (Motor A)", "durum": "Türbin sabah devreye girmeye çalışıyor ama pitch sistemi hazır olmuyor. Alarm eşiği 15 A, son kayıtta Motor A 18 A çekiyor.", "vaka": "/saha-notlari/pitch-motor-yuksek-akim/", "adimlar": [{"evre": "Veri", "soru": "Kuleye çıkmadan önce ilk ne yaparsın?", "secenek": [{"t": "Alarm geçmişini ve son aylardaki pitch motor akımı trendini SCADA'dan incelerim.", "d": "en", "neden": "Arızanın bir anda mı çıktığını yoksa aylardır mı büyüdüğünü en ucuz yoldan, kuleye çıkmadan öğrenirsin.", "soyler": "Ani sıçrama elektriksel bir kopmayı, yavaş ve düzenli artış ise büyüyen bir mekanik direnci düşündürür.", "bekle": "Sağlam bir eksende akım aylar boyunca aşağı yukarı sabit kalır."}, {"t": "Pitch motorunu değiştirmek için yedek parça isterim.", "d": "yanlis", "neden": "Motorun arızalı olduğuna dair henüz hiçbir kanıt yok. Yüksek akım çoğu zaman motorun değil, motorun çevirdiği yükün belirtisidir."}, {"t": "Alarmı resetleyip türbini yeniden devreye almayı denerim.", "d": "yanlis", "neden": "Aynı alarm geri gelir. Zorlanan bir pitch eksenini tekrar tekrar çalıştırmak hasarı büyütür; pitch aynı zamanda türbinin fren sistemidir."}], "bulgu": "Motor A'nın akımı 8 ayda kademeli olarak yükselmiş: 11 A → 12,5 A → 14 A → 16 A → 18 A. Artış ani değil, doğrusal."}, {"evre": "Gözlem", "soru": "Türbin durduruldu, rotor kilitlendi; pitch sistemi OEM talimatına uygun servis moduna alındı. Kulede ilk kontrolün ne?", "secenek": [{"t": "Servis modunda üç kanadı tek tek, düşük hızda hareket ettirip karşılaştırırım: hangisi zor dönüyor?", "d": "en", "neden": "Aynı türbinin üç ekseni birbirinin en iyi referansıdır. Sorun tek eksende mi, yoksa üçünü de etkileyen ortak bir yerde mi, bunu ayırır.", "soyler": "Tek eksende zorlanma o eksenin kendi zincirini (motor, redüktör, yatak) işaret eder; üçünde birden olursa besleme veya kontrol taraf öne çıkar.", "bekle": "Sağlam eksenler benzer eforla ve benzer akımla hareket eder."}, {"t": "Kanat konum sensörlerinin çıkışlarını ölçerim.", "d": "iyi", "neden": "Dışlamak için doğru bir kontrol, ama bu aşamada öncelikli değil: konum hatası akımı aylar boyunca düzenli şekilde büyütmez.", "ek": "Vakada üç sensör de beklenen değeri (2,5 V) verdi; sorun sensörde değildi."}, {"t": "Pitch yatağını gresleyip tekrar denerim.", "d": "yanlis", "neden": "Sebebi bilmeden müdahale etmek elindeki kanıtı değiştirir. Üstelik zorlanma redüktörden geliyorsa gres hiçbir şey çözmez."}], "bulgu": "A kanadı diğer ikisine göre belirgin şekilde zor hareket ediyor. B ve C rahat."}, {"evre": "Hipotez", "soru": "A ekseni ağır çalışıyor. Sorun motorda mı, mekanik tarafta mı?", "secenek": [{"t": "Ekseni enerjisizleştirip (LOTO) motorun faz–faz sargı dirençlerini ölçerim.", "d": "en", "neden": "Motoru birkaç dakikada ya içeri alır ya da listeden çıkarırsın. Sargı sağlamsa yük mekanik taraftan geliyordur.", "soyler": "Üç faz direncinin birbirine yakın olması sargının sağlam olduğunu gösterir; açık devre ya da belirgin dengesizlik sargı arızasıdır.", "bekle": "Sağlam motorda üç değer birbirine çok yakın çıkar."}, {"t": "Motoru doğrudan yenisiyle değiştiririm.", "d": "yanlis", "neden": "Motor sağlamsa yeni motor da aynı yükü çeker ve aynı alarmı verir. Pahalı bir tahmin olur."}, {"t": "Pitch kontrol kartını değiştiririm.", "d": "yanlis", "neden": "Kart arızası tek bir eksende aylar süren, düzenli bir akım artışı üretmez; belirti mekanik bir yükü işaret ediyor."}], "bulgu": "Faz dirençleri 8,2 Ω / 8,1 Ω / 8,3 Ω. Dengeli, motor sağlam."}, {"evre": "Test", "soru": "Motor sağlam. Fazladan yük nereden geliyor?", "secenek": [{"t": "A ekseninin redüktör yağını kontrol ederim: seviye, renk, koku, parçacık.", "d": "en", "neden": "Redüktör motor ile yatak arasındaki en olası sürtünme kaynağıdır ve yağı birkaç dakikada çok şey anlatır.", "soyler": "Düşük seviye kayıp olduğunu; koyu renk ve yanık koku aşırı ısınmayı; metal parçacık dişli aşınmasını gösterir.", "bekle": "Seviye işaretler arasında, yağ açık renkli ve temiz olmalı."}, {"t": "Redüktörü stetoskopla dinlerim.", "d": "iyi", "neden": "Destekleyici, iyi bir kontrol: dişli sorununu duyabilirsin. Ama tek başına nedenini söylemez; yağ kontrolüyle birlikte anlam kazanır.", "ek": "Vakada redüktörden düzensiz bir çıtırtı geliyordu."}, {"t": "Kanat bağlantı cıvatalarının torkunu kontrol ederim.", "d": "yanlis", "neden": "Bu bir periyodik bakım işi; pitch ekseninin dönmeye direnmesini açıklamaz."}], "bulgu": "Yağ seviyesi minimumda. Renk koyu kahve, yanık koku var, metal parçacıklar görülüyor. Redüktör yağsız ve sıcak çalışmış."}, {"evre": "Sonuç", "soru": "Yağ eksik. Son adım: neden eksildi?", "secenek": [{"t": "Redüktör gövdesini temizleyip sızıntı izi ararım.", "d": "en", "neden": "Yağ kendiliğinden azalmaz. Kaçağın yerini bulmadan yapılan her ekleme yeniden kaybolur.", "soyler": "Temizlenmiş yüzeyde taze yağ izi kaçağın başladığı yere götürür.", "bekle": "Sağlam bir gövdede taze yağ izi olmaz."}, {"t": "Yağı tamamlayıp türbini devreye alırım.", "d": "iyi", "neden": "Kısa vadede türbini çalıştırır ama sebebi çözmez; kaçak devam ettikçe aynı arıza geri gelir. Üstelik aşınmış dişlilerin incelenmesi gerekiyor."}, {"t": "Yağ tipini değiştiririm.", "d": "yanlis", "neden": "Sorun yağın cinsi değil, miktarı. Kaçak sürdükçe hangi yağ olursa olsun azalır."}], "bulgu": "Redüktör gövdesinde 2 mm'lik bir çatlak bulundu. Yağ aylardır buradan sızıyormuş."}], "kok": "Redüktör gövdesindeki 2 mm'lik çatlaktan aylar süren yağ kaybı. Dişliler yağsız çalışınca sürtünme arttı, motor akımı yükseldi.", "cozum": "Redüktör boşaltıldı, çatlak kaynatılıp NDT ile kontrol edildi, dişliler incelendi; filtre ve yağ yenilendi.", "ders": "Son bakımda yağ seviyesi kontrol edilmemişti. Akım artışı SCADA trendinde 8 ay önceden görünüyordu."}, {"id": "jenerator", "no": "04", "model": "Vestas V126", "yer": "Rüzgâr santrali", "ad": "Jeneratör sıcaklık alarmı", "alarm": "Generator temperature high · 116 °C (eşik 115 °C)", "durum": "Türbin alarmla duruyor, resetten sonra normale dönüyor. Alarm aynı rüzgârda günde birkaç kez tekrar ediyor. Ses ve üretim normal görünüyor.", "vaka": "/saha-notlari/jenerator-sicaklik/", "adimlar": [{"evre": "Veri", "soru": "İlk ne yaparsın?", "secenek": [{"t": "SCADA'dan alarm anlarını, sıcaklık trendini ve o anki yük verilerini incelerim.", "d": "en", "neden": "Jeneratör gerçekten aşırı mı yükleniyor, yoksa yalnız okunan değer mi yükseliyor? Yük verisi bu ikisini ayırmaya başlar.", "soyler": "Güç, akım ve devir normalken sıcaklığın yavaş yavaş sürüklenmesi ölçüm tarafını düşündürür.", "bekle": "Gerçek aşırı ısınmada sıcaklık yük ve dış hava ile birlikte hareket eder."}, {"t": "Alarm eşiğini biraz yükseltirim.", "d": "yanlis", "neden": "Gerçek bir aşırı ısınmayı gizleyebilir ve sargı yalıtımını riske atar. Eşik, sebebi bulmadan değiştirilmez."}, {"t": "Soğutma fanı motorunu değiştiririm.", "d": "yanlis", "neden": "Fanın arızalı olduğuna dair kanıt yok. Önce veriye bakmak gerekiyor."}], "bulgu": "Alarmlar öğleden sonra, nominal güçte geliyor ve her seferinde 115–116 °C. Son üç günde okunan değer 110 → 112 → 116 °C diye sürüklenmiş. Güç, akım ve devir normal."}, {"evre": "Test", "soru": "Okunan sıcaklık gerçeği yansıtıyor mu?", "secenek": [{"t": "Jeneratörün sıcaklığını IR termometreyle ölçüp aynı anda SCADA değerini okurum.", "d": "en", "neden": "Kontrol sisteminin söylediği ile fiziksel ölçüm tutmuyorsa sorun büyük ihtimalle ölçüm zincirindedir.", "soyler": "Sargının içindeki sensör gövde yüzeyinden bir miktar sıcak okur; birkaç derecelik fark normaldir. Onlarca derecelik fark ise sensörü şüpheli yapar. Mümkünse aynı jeneratördeki diğer sargı sensörleriyle de karşılaştır.", "bekle": "Ölçüm zinciri sağlamsa iki değer birbirine yakın çıkar."}, {"t": "Sargıların yalıtım direncini ölçerim.", "d": "iyi", "neden": "Başka arızalar için değerli bir test, ama okunan değerle gerçek sıcaklık arasındaki farkı açıklamaz. Bu aşamada öncelikli değil."}, {"t": "Jeneratör yataklarını greslerim.", "d": "yanlis", "neden": "Yatak sorunu olduğuna dair bir belirti yok; alarm sargı sıcaklığından geliyor."}], "bulgu": "IR termometre 62 °C, SCADA 103 °C gösteriyor: 41 °C fark."}, {"evre": "Hipotez", "soru": "Fark çok büyük. Hangisiyle ilerlersin?", "secenek": [{"t": "Sensörün direncini ölçüp PT100 tablosuyla karşılaştırır, klemens ve kablo bağlantılarını kontrol ederim.", "d": "en", "neden": "Ölçüm zincirini doğrudan test eder: sensör mü sürüklenmiş, bağlantı mı bozuk, yoksa okuma tarafı mı?", "soyler": "PT100 sensör 0 °C'de 100 Ω'dur ve her derecede yaklaşık 0,385 Ω artar. Ölçülen direnç jeneratörün gerçek sıcaklığıyla uyuşmuyorsa sensör ya da bağlantısı hatalıdır.", "bekle": "Sağlam bir sensörün direnci, IR ile ölçülen sıcaklığa karşılık gelen değere yakın çıkar."}, {"t": "Soğutma fanını ve hava filtresini kontrol ederim.", "d": "iyi", "neden": "Gerçek bir soğutma sorununu dışlamak için doğru ve hızlı bir kontrol.", "ek": "Vakada fan normal çalışıyordu (3,2 A), hava akışı normaldi ve filtre temizdi."}, {"t": "Jeneratörün değiştirilmesi için rapor yazarım.", "d": "yanlis", "neden": "Jeneratör gerçekte 62 °C'de; aşırı ısınan bir makine yok. Ölçüm zinciri doğrulanmadan böyle bir karar verilmez."}], "bulgu": "Sensörün direnci beklenen değerle uyuşmuyor. Fan ve filtre normal, jeneratör yükü normal: ölçüm zinciri hatalı."}], "kok": "Sargı sıcaklık sensöründe (RTD) kalibrasyon kayması. Jeneratör gerçekte aşırı ısınmıyordu; okunan değer sürüklenip eşiğe ulaşınca alarm geliyordu.", "cozum": "SCADA tarafında geçici düzeltme yapıldı; sensörün kalibrasyonu veya değişimi planlandı.", "ders": "Kontrol sistemi okumasıyla fiziksel ölçüm tutmuyorsa önce sensörü doğrulayın. Geçici bir düzeltme, sensör değişene kadar ve fiziksel ölçümle doğrulanmış bir farka dayanmalı."}, {"id": "konvertor", "no": "05", "model": "Vestas V110", "yer": "Rüzgâr santrali", "ad": "Konvertör aşırı akım", "alarm": "Rotor tarafı aşırı akım / converter arızası", "durum": "Aralıklı bir arıza: türbin günlerce sorunsuz çalışıyor, sonra duruyor; reset sonrası saatlerce üretiyor. Altı haftada 19 olay, sıklık artıyor. Duran türbinde yalıtım, faz dengesi, kablo bağlantıları ve soğutma sıvısı normal.", "vaka": "/saha-notlari/converter-asiri-akim/", "adimlar": [{"evre": "Veri", "soru": "Duran türbinde her şey normal. İlk ne yaparsın?", "secenek": [{"t": "Fault log'un tamamını zaman damgasıyla çıkarıp her olayı o anki güç verisiyle eşleştiririm.", "d": "en", "neden": "Aralıklı arızada hatayı değil, hatanın çıktığı koşulu ararsın. Güç, rüzgâr, sıcaklık ya da saat: bir desen varsa buradan çıkar.", "soyler": "Olaylar belirli bir güç eşiğinin üstünde toplanıyorsa tetikleyen şey akımdır ve ısıyla ortaya çıkan bir sorun aranır.", "bekle": "Rastgele bir arızada olaylar üretim aralıklarına dağınık düşer."}, {"t": "Şebeke gerilim ve frekans kayıtlarına bakarım.", "d": "iyi", "neden": "Dışlamak için doğru bir kontrol: şebekeden gelen kısa bozulmalar da benzer arızalar üretebilir.", "ek": "Vakada arıza anlarına denk gelen bir şebeke bozulması yoktu."}, {"t": "IGBT modüllerini hemen değiştiririm.", "d": "yanlis", "neden": "Pahalı bir tahmin. Modüller sebep değil de kurban olabilir; asıl sebep yerinde kalırsa yeni modül de zorlanır."}], "bulgu": "19 olayın 17'si 2,4 MW'ın üzerinde, kalan ikisi 2,3 MW civarında. Düşük güçte tek olay yok; rüzgâr yüksek ama türbin kısıtlıyken de yok. Tetikleyen şey rüzgâr değil, akım."}, {"evre": "Test", "soru": "Arıza yüksek akımda çıkıyor. Isınan bir nokta nasıl bulunur?", "secenek": [{"t": "Türbin üretirken, saha kurallarına ve kişisel koruyucu donanıma uygun şekilde converter kabinini termal kamerayla tararım.", "d": "en", "neden": "Isıyla ortaya çıkan bir sorun ancak ısı varken görülür. Enerjili kabine yakın çalışma yalnız yetkili personelle ve güvenli mesafeden yapılır.", "soyler": "Komşularından belirgin sıcak bir bağlantı, yüksek temas direncinin işaretidir; direnç akımın karesiyle ısı üretir.", "bekle": "Aynı yükü taşıyan benzer bağlantılar benzer sıcaklıkta olur."}, {"t": "Türbini durdurup kabini termal kamerayla tararım.", "d": "yanlis", "neden": "Durunca bağlantılar soğur ve iz kalmaz. Bu vakada durmuş türbinde yapılan her ölçüm zaten normal çıkmıştı."}, {"t": "Converter kontrol kartını değiştiririm.", "d": "yanlis", "neden": "Arızanın güç eşiğine bağlı olması bir kart arızasını değil, yükle ısınan bir güç bağlantısını işaret ediyor."}], "bulgu": "DC bara bağlantılarından birinde komşularından yaklaşık 30 °C sıcak bir nokta. Bir IGBT modülü de diğerlerinden 8–10 °C sıcak."}, {"evre": "Sonuç", "soru": "Sıcak nokta bulundu. Nasıl doğrular ve kapatırsın?", "secenek": [{"t": "Türbini durdurur, LOTO uygular, o bağlantının torkunu ölçer ve temas yüzeyini açıp incelerim.", "d": "en", "neden": "Sıcak noktanın sebebini fiziksel olarak doğrular: gevşeklik mi, yüzey bozulması mı, ikisi birden mi?", "soyler": "Tork OEM değerinin altındaysa ve yüzeyde oksitlenme varsa bağlantı uzun süredir ısınıp soğuyordur.", "bekle": "Sağlam bir bağlantıda tork OEM değerinde, yüzey temiz olur."}, {"t": "Cıvatayı sıkıp çıkarım.", "d": "iyi", "neden": "Doğru yönde ama yetersiz: oksitlenmiş yüzey temizlenmeden sıkmak sorunu geri getirir, zorlanan IGBT modülü de yerinde kalır."}, {"t": "Arızayı güç sınırlamasıyla kalıcı olarak çözülmüş sayarım.", "d": "yanlis", "neden": "Güç sınırı yalnız parça gelene kadar üretimi sürdürmenin geçici bir yolu. Sebep ortadan kalkmaz."}], "bulgu": "Cıvata torku OEM değerinin belirgin altında. Temas yüzeyinde oksitlenme ve renk değişimi var."}], "kok": "Gevşemiş bir DC bara bağlantısı. Yüksek akımda aşırı ısınıyor ve komşu IGBT modülünü de zorluyordu; modül koruma eşiğine sıcakken daha erken ulaşıp aşırı akım olarak atıyordu.", "cozum": "Bağlantı temizlenip OEM torkuyla sıkıldı, kabindeki tüm güç bağlantıları kontrol edildi, zorlanan IGBT değiştirildi. Parça gelene kadar türbin 2,2 MW sınırla üretimde kaldı.", "ders": "Aralıklı arızada hatayı değil, çıktığı koşulu arayın. Termal taramayı türbin üretirken yapın."}]</script>
+<script>
+(function(){
+ var S=JSON.parse(document.getElementById('tshVeri').textContent), M=document.getElementById('tshMotor');
+ var kartlar=[].slice.call(document.querySelectorAll('.tsh-kart')), az=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var s,i,puan,defter;
+ function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+ function ray(){ var ev=['Türbin','Alarm'].concat(s.adimlar.map(function(a){return a.evre;})).concat(['Kök neden']);
+  return '<ol class="tsh-ray" aria-label="İlerleme">'+ev.map(function(e,k){ var c=k<i+2?'gecti':(k===i+2?'simdi':''); if(i>=s.adimlar.length) c=k<ev.length-1?'gecti':'simdi'; return '<li class="'+c+'"'+(c==='simdi'?' aria-current="step"':'')+'>'+esc(e)+'</li>';}).join('')+'</ol>'; }
+ function defterHTML(){ return '<aside class="tsh-defter" aria-label="Saha defteri"><h2>Saha defteri</h2>'+(defter.length?'<ol>'+defter.map(function(d){return '<li><b>'+esc(d.e)+'</b>'+esc(d.b)+'</li>';}).join('')+'</ol>':'<p class="bos">Bulgular burada birikecek.</p>')+'</aside>'; }
+ function basla(id){ s=S.filter(function(x){return x.id===id;})[0]; i=0; puan=0; defter=[]; M.hidden=false;
+  kartlar.forEach(function(k){k.setAttribute('aria-pressed',k.getAttribute('data-s')===id?'true':'false');});
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+  adim(); M.scrollIntoView({behavior:az?'auto':'smooth',block:'start'}); }
+ function adim(){
+  if(i>=s.adimlar.length) return bitir();
+  var a=s.adimlar[i], harf='ABCD';
+  var sira=a.secenek.map(function(x,k){return k;}); for(var k=sira.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=sira[k];sira[k]=sira[r];sira[r]=t;}
+  M.innerHTML=ray()+'<div class="tsh-sahne"><div class="tsh-baslik"><p><b>'+esc(s.model)+'</b> · '+esc(s.yer)+'</p><p>Adım '+(i+1)+' / '+s.adimlar.length+'</p></div>'+
+   (i===0?'<p class="tsh-alarm"><small>Alarm</small>'+esc(s.alarm)+'</p><p class="tsh-durum">'+esc(s.durum)+'</p>':'')+
+   '<h2 class="tsh-soru" tabindex="-1"><span class="tsh-evre">'+esc(a.evre)+'</span>'+esc(a.soru)+'</h2>'+
+   '<ul class="tsh-sec-l">'+sira.map(function(k,n){var x=a.secenek[k];return '<li><button type="button" class="tsh-sec-b" data-k="'+k+'" data-d="'+x.d+'"><span class="h">'+harf[n]+'</span><span>'+esc(x.t)+'</span></button></li>';}).join('')+'</ul>'+
+   '<div class="tsh-geri" id="tshGeri" aria-live="polite" hidden></div></div>'+defterHTML();
+  [].forEach.call(M.querySelectorAll('.tsh-sec-b'),function(b){ b.addEventListener('click',function(){ sec(+b.getAttribute('data-k')); }); });
+  if(i>0) M.querySelector('.tsh-soru').focus({preventScroll:true});
+ }
+ function sec(k){
+  var a=s.adimlar[i], x=a.secenek[k], en=a.secenek.filter(function(y){return y.d==='en';})[0];
+  puan+= x.d==='en'?2:(x.d==='iyi'?1:0);
+  [].forEach.call(M.querySelectorAll('.tsh-sec-b'),function(b){ b.disabled=true; if(+b.getAttribute('data-k')===k) b.classList.add('secildi'); if(b.getAttribute('data-d')==='en') b.classList.add('goster'); });
+  var hk={en:'En iyi hamle',iyi:'Olur, ama öncelikli değil',yanlis:'Bu aşamada doğru değil'}[x.d];
+  var h='<p class="tsh-hukum '+x.d+'">'+hk+'</p><dl><div><dt>Neden?</dt><dd>'+esc(x.neden)+'</dd></div>'+
+   (x.soyler?'<div><dt>Bu ölçüm ne söyler?</dt><dd>'+esc(x.soyler)+'</dd></div>':'')+
+   (x.bekle?'<div><dt>Ne beklersin?</dt><dd>'+esc(x.bekle)+'</dd></div>':'')+
+   (x.ek?'<div><dt>Sahada</dt><dd>'+esc(x.ek)+'</dd></div>':'')+
+   (x.d!=='en'?'<div><dt>Bu adımda en iyisi</dt><dd>'+esc(en.t)+' '+esc(en.neden)+'</dd></div>':'')+'</dl>'+
+   '<div class="tsh-bulgu"><small>Sahada bulunan</small><p>'+esc(a.bulgu)+'</p></div>'+
+   '<button type="button" class="tsh-ileri" id="tshIleri">'+(i+1<s.adimlar.length?'Sonraki adım':'Kök nedeni gör')+' <span aria-hidden="true">&#8594;</span></button>';
+  var g=document.getElementById('tshGeri'); g.innerHTML=h; g.hidden=false;
+  defter.push({e:a.evre,b:a.bulgu});
+  var d=M.querySelector('.tsh-defter'); d.outerHTML=defterHTML();
+  var ileri=document.getElementById('tshIleri'); ileri.addEventListener('click',function(){ i++; adim(); M.scrollIntoView({behavior:az?'auto':'smooth',block:'start'}); });
+  ileri.focus({preventScroll:true}); g.scrollIntoView({behavior:az?'auto':'smooth',block:'nearest'});
+ }
+ function bitir(){
+  var enCok=s.adimlar.length*2;
+  M.innerHTML=ray()+'<div class="tsh-sonuc"><p class="tsh-kic">Vaka '+esc(s.no)+' · '+esc(s.model)+'</p><h2 tabindex="-1">'+esc(s.ad)+': kök neden</h2>'+
+   '<p class="tsh-puan">Teşhis verimliliği: '+puan+' / '+enCok+'</p>'+
+   '<dl><div><dt class="kok">Kök neden</dt><dd>'+esc(s.kok)+'</dd></div><div><dt>Çözüm</dt><dd>'+esc(s.cozum)+'</dd></div><div><dt>Ders</dt><dd>'+esc(s.ders)+'</dd></div></dl>'+
+   '<div class="tsh-son-dg"><a class="bir" href="'+s.vaka+'">Vakanın tamamını oku</a><button type="button" id="tshTekrar">Baştan dene</button><a href="#top">Başka senaryo</a></div></div>'+defterHTML();
+  document.getElementById('tshTekrar').addEventListener('click',function(){ basla(s.id); });
+  M.querySelector('.tsh-sonuc h2').focus({preventScroll:true});
+ }
+ kartlar.forEach(function(k){ k.addEventListener('click',function(){ basla(k.getAttribute('data-s')); }); });
+ function hashten(){ var h=location.hash.slice(1); if(h&&S.some(function(x){return x.id===h;})&&(!s||s.id!==h||i>=s.adimlar.length)) basla(h); }
+ addEventListener('hashchange',hashten); hashten();
+})();
+</script>
+<script src="/assets/site.js?v=2083a619" defer></script>
+<script src="/assets/ara.js?v=b8677b23" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+</body>
+</html>

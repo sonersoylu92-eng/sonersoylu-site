@@ -409,7 +409,10 @@ const TALIMAT_TR = [
   '7. Kaynak listesi ekleme; kaynaklar ayrıca gösteriliyor.',
   '8. Aynı şeyi iki kez söyleme. Madde yazacaksan her madde tek satır ve tek iş olsun',
   '   ("Yağ seviyesini kontrol et" yeter; "kontrol et ve düşük olup olmadığını belirle" fazladır).',
-  '9. Cevabı kısa tut: en fazla üç paragraf ya da bir paragraf artı kısa bir madde listesi.',
+  '9. Soru bir arıza, alarm ya da teşhis sorusuysa cevabı şu başlıklarla yaz; her başlık kendi satırında,',
+  '   iki nokta üst üsteyle başlasın: "Gözlem:", "Olası nedenler:", "İlk kontrol:", "Ölçüm:", "Sonraki adım:".',
+  '   Alıntılarda karşılığı olmayan başlığı hiç yazma. Her başlığın altı en fazla iki kısa satır olsun.',
+  '10. Soru arıza sorusu değilse başlık kullanma; en fazla iki kısa paragrafla cevap ver.',
 ].join('\n');
 
 const TALIMAT_EN = [
@@ -428,7 +431,10 @@ const TALIMAT_EN = [
   '6. Do not write the safety caveat yourself; the system appends it for you.',
   '7. Do not append a source list; sources are shown separately.',
   '8. Never say the same thing twice. If you use bullets, one line and one action per bullet.',
-  '9. Keep it short: three paragraphs at most, or one paragraph plus a short bullet list.',
+  '9. If the question is about a fault, alarm or diagnosis, answer under these headings, each on its own',
+  '   line and ending with a colon: "Observation:", "Possible causes:", "First check:", "Measurement:",',
+  '   "Next step:". Leave out any heading the excerpts do not support. At most two short lines per heading.',
+  '10. If it is not a fault question, use no headings; answer in at most two short paragraphs.',
 ].join('\n');
 
 async function asistan(request, env) {

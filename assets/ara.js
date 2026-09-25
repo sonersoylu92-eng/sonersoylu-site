@@ -39,7 +39,7 @@
   function dizinAl() {
     if (dizin) return Promise.resolve(dizin);
     if (yukleniyor) return yukleniyor;
-    yukleniyor = fetch('/assets/arama.json?v=726ee1c8')
+    yukleniyor = fetch('/assets/arama.json?v=b8955a70')
       .then(function (r) { return r.json(); })
       .then(function (d) {
         d.e.forEach(function (e) { e[4] = nrm(e[1]); e[5] = nrm(e[2]); });
