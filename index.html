@@ -27,10 +27,10 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 <link rel="preload" as="image" fetchpriority="high" href="/assets/saha/ege-levha.webp" type="image/webp">
 <link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
-<link rel="stylesheet" href="/style.css?v=5241d317">
+<link rel="stylesheet" href="/style.css?v=1a5286e5">
 <link rel="stylesheet" href="/ana.css?v=0a32572b">
 <link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=b1efc250">
-<link rel="stylesheet" href="/assets/vitrin.css?v=df51c636">
+<link rel="stylesheet" href="/assets/vitrin.css?v=953475ef">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -473,21 +473,34 @@
       <a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener"><span class="k-ust">YouTube</span><span class="d">The Turbine Tech</span></a>
       <div><span class="k-ust">Saha</span><span class="d">Aliağa ve Bergama RES, İzmir</span></div>
     </div>
+    <form class="v-form" id="vForm" novalidate aria-labelledby="vFormB">
+      <div class="v-form-bas"><h3 id="vFormB">Bir mesaj yazın</h3><p>Form, yazdıklarınızla hazır bir e-posta açar. Hiçbir bilgi bu sitede saklanmaz.</p></div>
+      <fieldset class="v-konu"><legend>Konu</legend>
+        <label><input type="radio" name="konu" value="Kariyer" checked><span>Kariyer</span></label>
+        <label><input type="radio" name="konu" value="Proje"><span>Proje</span></label>
+        <label><input type="radio" name="konu" value="Teknik"><span>Teknik soru</span></label>
+        <label><input type="radio" name="konu" value="İşbirliği"><span>İşbirliği</span></label>
+      </fieldset>
+      <div class="v-alanlar">
+        <div class="v-alan"><label for="vAd">Adınız</label><input id="vAd" name="ad" type="text" autocomplete="name" required maxlength="80"><p class="v-hata" id="vAdH" hidden></p></div>
+        <div class="v-alan"><label for="vEposta">E-posta adresiniz</label><input id="vEposta" name="eposta" type="email" autocomplete="email" inputmode="email" required maxlength="160"><p class="v-hata" id="vEpostaH" hidden></p></div>
+        <div class="v-alan v-genis"><label for="vMesaj">Mesajınız</label><textarea id="vMesaj" name="mesaj" rows="5" required maxlength="3000"></textarea><p class="v-hata" id="vMesajH" hidden></p></div>
+      </div>
+      <div class="v-form-alt"><button type="submit" class="dg birincil v-miknatis">E-postayı hazırla<span class="dg-ok" aria-hidden="true">&#8599;</span></button><p class="v-durum" id="vDurum" role="status" aria-live="polite"></p></div>
+    </form>
   </div>
 </section>
 
 </main>
-<footer class="v-son">
- <div class="v-son-ic">
-  <p class="v-son-ust" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Göbek 120 m</span><span>2013 → bugün</span></p>
-  <p class="v-son-ad">Soner Soylu</p>
-  <p class="v-son-alan">Wind Turbine Field Service</p>
-  <p class="v-son-yer">Aliağa · İzmir · Türkiye</p>
-  <p class="v-son-imza">Makineyi <em>çalışır</em> tutun.</p>
-  <div class="v-son-alt">
-   <p class="v-son-sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
-   <p class="v-son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" hreflang="en" lang="en">English</a></p>
+<footer class="son">
+ <div class="wrap">
+  <p class="son-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → bugün</span></p>
+  <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
+  <div class="son-orta">
+   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknisyeni</p></div>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 <div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><button type="button" class="lb-ok" id="lbOnce" aria-label="Önceki fotoğraf">←</button><img alt="" src=""><button type="button" class="lb-ok" id="lbSonra" aria-label="Sonraki fotoğraf">→</button><p class="lb-alt" id="lbAlt"></p></div>
@@ -673,6 +686,6 @@
 })();
 </script>
 <script src="/assets/deneyim/arayuz.js?v=0274e2bb" defer></script>
-<script src="/assets/vitrin.js?v=e8d36a80" defer></script>
+<script src="/assets/vitrin.js?v=58db4934" defer></script>
 </body>
 </html>

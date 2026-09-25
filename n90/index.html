@@ -10,14 +10,14 @@
 <meta property="og:url" content="https://sonersoylu.com/n90/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-n90.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f6f4f0">
+<meta name="theme-color" content="#0b0e10">
 <meta name='impact-site-verification' value='f53d4fb9-1c7d-4894-a65a-51e08c52ef11'>
 <meta name='impact-site-verification' value='07956752-78f4-4cdd-a74d-134f7bfefaa7'>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/fraunces-latin.woff2">
-<link rel="stylesheet" href="/style.css?v=5241d317">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+<link rel="stylesheet" href="/style.css?v=1a5286e5">
 <style>
 /* ---- N90 sayfasına özel ---- */
 .n-hero{padding:4rem 0 3rem}
@@ -32,12 +32,12 @@
 #scene:active{cursor:grabbing}
 .stage-view .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);background:#eceae4;transition:opacity .5s}
 .stage-view .loading.gone{opacity:0;pointer-events:none}
-.hud{position:absolute;left:1rem;bottom:1rem;transition:opacity .25s;display:flex;flex-direction:column;gap:.3rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(246,244,240,.82);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.6rem .75rem;pointer-events:none}
+.hud{position:absolute;left:1rem;bottom:1rem;transition:opacity .25s;display:flex;flex-direction:column;gap:.3rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(11,14,16,.82);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.6rem .75rem;pointer-events:none}
 .hud b{color:var(--ink);font-weight:400}
 .viewtools{position:absolute;right:1rem;top:1rem;display:flex;flex-direction:column;gap:.4rem}
-.viewtools button{border:1px solid var(--line);background:rgba(246,244,240,.9);backdrop-filter:blur(6px);color:var(--ink);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem .7rem;cursor:pointer;transition:background .2s}
+.viewtools button{border:1px solid var(--line);background:rgba(11,14,16,.9);backdrop-filter:blur(6px);color:var(--ink);font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem .7rem;cursor:pointer;transition:background .2s}
 .viewtools button:hover{background:var(--raise)}
-.viewtools button[aria-pressed=true]{background:var(--beacon);color:#fff;border-color:var(--beacon)}
+.viewtools button[aria-pressed=true]{background:var(--beacon);color:var(--on-beacon);border-color:var(--beacon)}
 
 .timeline{display:flex;gap:0;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
 .timeline button{flex:1 0 auto;min-width:8.5rem;border:0;border-right:1px solid var(--line);background:var(--surface);padding:1rem .9rem;text-align:left;cursor:pointer;transition:background .2s;position:relative}
@@ -47,7 +47,7 @@
 .timeline button .t{display:block;margin-top:.4rem;font-size:.875rem;color:var(--ink)}
 .timeline button[aria-current=true]{background:var(--raise)}
 .timeline button[aria-current=true]::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--beacon)}
-.timeline button[aria-current=true] .k{color:#a8322a}
+.timeline button[aria-current=true] .k{color:var(--beacon)}
 
 .transport{display:flex;align-items:center;gap:1rem;border-top:1px solid var(--line);padding:1rem 1.25rem;flex-wrap:wrap}
 .transport .bar{flex:1;min-width:8rem;height:2px;background:var(--line);position:relative}
@@ -74,15 +74,15 @@
 /* hotspot */
 .hotspots{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .hs{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;gap:.45rem;background:none;border:0;padding:0;cursor:pointer;white-space:nowrap;transition:opacity .25s}
-.hs .dot{width:15px;height:15px;flex:none;border-radius:50%;border:1.5px solid var(--beacon);background:rgba(246,244,240,.92);position:relative;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center}
+.hs .dot{width:15px;height:15px;flex:none;border-radius:50%;border:1.5px solid var(--beacon);background:rgba(11,14,16,.92);position:relative;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center}
 .hs .dot i{display:none;font-style:normal;font-family:var(--mono);font-size:.625rem;color:var(--beacon);line-height:1}
 .hs .dot::after{content:"";position:absolute;inset:3.5px;border-radius:50%;background:var(--beacon);opacity:0;transition:opacity .2s}
 .hs:hover .dot,.hs[aria-pressed=true] .dot{transform:scale(1.15)}
 .hs[aria-pressed=true] .dot::after{opacity:1}
-.hs .lb{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(246,244,240,.88);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.28rem .5rem}
+.hs .lb{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(11,14,16,.88);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.28rem .5rem}
 .hs.hidden{opacity:0;pointer-events:none}
 .stage-view.paneled .hud{opacity:0}
-.hspanel{position:absolute;right:1rem;bottom:1rem;width:min(21rem,calc(100% - 2rem));background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:var(--shade);padding:1.1rem 1.2rem;display:none}
+.hspanel{position:absolute;right:1rem;bottom:1rem;width:min(21rem,calc(100% - 2rem));background:rgba(17,22,26,.95);backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:var(--shade);padding:1.1rem 1.2rem;display:none}
 .hspanel.open{display:block}
 .hspanel h3{font-size:1rem;font-weight:500;letter-spacing:-.01em}
 .hspanel p{margin-top:.6rem;font-size:.8125rem;line-height:1.65;color:var(--muted)}
@@ -118,7 +118,7 @@
 
 @media (max-width:719px){
   .hs .lb{display:none}
-  .hs .dot{width:24px;height:24px;background:rgba(246,244,240,.96)}
+  .hs .dot{width:24px;height:24px;background:rgba(11,14,16,.96)}
   .hs .dot i{display:block}
   .hs[aria-pressed=true] .dot{background:var(--beacon)}
   .hs[aria-pressed=true] .dot i{color:#fff}
@@ -311,13 +311,16 @@
 
 </main>
 
-<footer>
-  <div class="wrap">
-    <p class="mono">Soner Soylu · Rüzgâr türbini saha servis teknisyeni</p>
-    <p class="mono">Aliağa, İzmir</p>
-<p class="mono sosyal"><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="mailto:sonersoylu@yandex.com">E-posta</a></p>
-<p class="mono"><a href="/gelir/">Reklam ve gelir politikası</a></p>
-<p class="mono"><a href="/gizlilik/">Gizlilik politikası</a></p></div>
+<footer class="son">
+ <div class="wrap">
+  <p class="son-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → bugün</span></p>
+  <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
+  <div class="son-orta">
+   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknisyeni</p></div>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+  </div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" hreflang="en" lang="en">English</a></p></div>
+ </div>
 </footer>
 
 <script>

@@ -74,6 +74,42 @@
     }, { passive: true });
   }
 
+  /* ---- iletişim formu: doğrular, hazır bir e-posta açar; hiçbir şey sunucuya gitmez ---- */
+  var form = document.getElementById('vForm');
+  if (form) {
+    var ADRES = 'sonersoylu@yandex.com';
+    var alan = function (id) { return document.getElementById(id); };
+    var hata = function (id, msj) {
+      var el = alan(id), h = alan(id + 'H');
+      el.setAttribute('aria-invalid', msj ? 'true' : 'false');
+      if (msj) { h.textContent = msj; h.hidden = false; el.setAttribute('aria-describedby', id + 'H'); }
+      else { h.hidden = true; el.removeAttribute('aria-describedby'); }
+      return !msj;
+    };
+    var kontrol = function () {
+      var ad = alan('vAd').value.trim(), ep = alan('vEposta').value.trim(), ms = alan('vMesaj').value.trim();
+      var a = hata('vAd', ad.length < 2 ? 'Adınızı yazın.' : '');
+      var b = hata('vEposta', !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep) ? 'Geçerli bir e-posta adresi yazın; size buradan dönülecek.' : '');
+      var c = hata('vMesaj', ms.length < 20 ? 'Mesajınız en az 20 karakter olsun (' + ms.length + '/20).' : '');
+      return a && b && c;
+    };
+    ['vAd', 'vEposta', 'vMesaj'].forEach(function (id) {
+      alan(id).addEventListener('blur', function () { if (alan(id).value) kontrol(); });
+      alan(id).addEventListener('input', function () { if (alan(id).getAttribute('aria-invalid') === 'true') kontrol(); });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var durum = alan('vDurum'); durum.className = 'v-durum';
+      if (!kontrol()) { durum.textContent = 'Lütfen işaretli alanları düzeltin.'; var ilk = form.querySelector('[aria-invalid=true]'); if (ilk) ilk.focus(); return; }
+      var konu = (form.querySelector('input[name=konu]:checked') || {}).value || 'Genel';
+      var ad = alan('vAd').value.trim(), ep = alan('vEposta').value.trim(), ms = alan('vMesaj').value.trim();
+      var govde = ms + '\n\n— ' + ad + '\n' + ep + '\n(sonersoylu.com iletişim formundan)';
+      location.href = 'mailto:' + ADRES + '?subject=' + encodeURIComponent('[' + konu + '] ' + ad) + '&body=' + encodeURIComponent(govde);
+      durum.className = 'v-durum tamam';
+      durum.textContent = 'E-posta uygulamanız açılıyor. Açılmazsa mesajınızı ' + ADRES + ' adresine gönderebilirsiniz; adresi yukarıdan kopyalayabilirsiniz.';
+    });
+  }
+
   /* ---- düğmeler: fareye çok hafif mıknatıs (en çok 5 px) ---- */
   if (ince && !az) [].slice.call(document.querySelectorAll('.v-miknatis')).forEach(function (d) {
     d.addEventListener('pointermove', function (e) {
