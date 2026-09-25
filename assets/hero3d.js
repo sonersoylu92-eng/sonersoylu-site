@@ -13,7 +13,7 @@
  * fotoğraf olduğu gibi kalıyor; sayfa hiçbir şey kaybetmiyor.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene } from '/n117/n117.js?v=2675a459';
+import { createScene } from '/n117/n117.js?v=41c31c91';
 
 export function kapak3BBaslat(canvas) {
   let S;

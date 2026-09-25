@@ -48,13 +48,39 @@ function normalHaritasi(yc, guc = 2) {
   ox.putImageData(img, 0, 0); return out;
 }
 function etiket(w, h, ciz) { return doku(tuval(w, h, ciz)); }
+/* ızgara ve tel örgü: çubukların derinliği eğik bakışta boşlukları kapatır. Gerçek bir 30×100 ızgara
+ * tepeden bakınca delik delik, yandan bakınca dolu görünür; uzakta da (mip) kaybolmaz, gri bir yüzeye döner.
+ * k = çubuk derinliği / aralık; yanRenk = çubuk yan yüzünün (gölgede) rengi. */
+function derinlikli(mat, k, yanRenk) {
+  mat.transparent = true; mat.alphaTest = 0;
+  mat.onBeforeCompile = sh => {
+    sh.uniforms.uDerin = { value: k }; sh.uniforms.uYan = { value: new THREE.Color(yanRenk) };
+    sh.fragmentShader = 'uniform float uDerin;\nuniform vec3 uYan;\n' + sh.fragmentShader.replace('#include <alphamap_fragment>', `#include <alphamap_fragment>
+      { vec3 gn = normalize(cross(dFdx(vViewPosition), dFdy(vViewPosition)));
+        float ct = clamp(abs(dot(gn, normalize(vViewPosition))), 0.04, 1.0);
+        float tn = sqrt(1.0 - ct * ct) / ct;
+        float a0 = diffuseColor.a;
+        diffuseColor.rgb = mix(uYan, min(diffuseColor.rgb / max(a0, 0.02), vec3(1.0)), a0);
+        diffuseColor.a = clamp(a0 + (1.0 - a0) * clamp(tn * uDerin, 0.0, 1.0), 0.0, 1.0); }`);
+  };
+  mat.customProgramCacheKey = () => 'derin' + k;
+  return mat;
+}
 
-export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE.Vector2(-0.8, -0.8) }) {
+/* kapakXZ: nasel tabanındaki erişim kapağının merkezi (kule yereli x, z)
+ * kapakYon: naselin +z ekseninin kule yerelindeki yönü (kapak kenarları ve merdiven başı buna hizalı)
+ * naselTabanY: nasel döşemesinin kule yerelindeki yüksekliği
+ * yawSurucu: yaw pinyonlarının merkezleri (kule yereli x, z) */
+export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE.Vector2(-0.8, 0.2), kapakYon = new THREE.Vector2(-0.56, 0.83), naselTabanY = null, yawSurucu = null }) {
   const g = new THREE.Group(); g.name = 'kuleIci';
   const H = towerTopY - TABAN0;
   const rDis = h => THREE.MathUtils.lerp(SPEC.towerBase, SPEC.towerTop, THREE.MathUtils.clamp((h - TABAN0) / H, 0, 1)) / 2;
   const rIc = h => rDis(h) - 0.035;
   const rnd = tohum(20130417);
+  const naselY = naselTabanY ?? towerTopY + 0.68;   // nasel döşemesi
+  const tavanY = towerTopY + 0.3;                    // yatak şasisinin alt yüzü (kule içinden tavan)
+  const kZ = kapakYon.clone().normalize(), kX = new THREE.Vector2(kZ.y, -kZ.x);   // naselin z ve x eksenleri (kule yereli)
+  if (!yawSurucu) yawSurucu = [0.35, 1.3, 2.2, -2.05, -0.45].map(a => new THREE.Vector2(Math.sin(a) * 1.08, Math.cos(a) * 1.08));
   const TS = hafif ? 256 : 512;   // doku çözünürlüğü
 
   /* ================= dokular ================= */
@@ -105,10 +131,11 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   });
   const baklavaMap = doku(baklavaC), baklavaNor = doku(normalHaritasi(baklavaY, 4), false); baklavaNor.repeat.set(5, 5);
   // tel örgü (kabin üst yarısı ve kapı)
-  const agC = tuval(64, 64, (x, w, h) => { x.clearRect(0, 0, w, h); x.strokeStyle = '#4b5053'; x.lineWidth = 1.5; x.strokeRect(0, 0, w, h); x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.moveTo(0, h / 2); x.lineTo(w, h / 2); x.stroke(); });
-  const agMap = doku(agC); agMap.repeat.set(8, 9);
+  // kaynaklı tel örgü: ≈25 mm göz, ≈3 mm tel (64 px karo = 4 göz = 0,1 m)
+  const agC = tuval(64, 64, (x, w, h) => { x.clearRect(0, 0, w, h); x.fillStyle = '#8d9396'; for (let i = 0; i < 64; i += 16) { x.fillRect(i, 0, 2, h); x.fillRect(0, i, w, 2); } });
+  const agMap = doku(agC); agMap.repeat.set(8.9, 11);
   // ışık havuzu (lamba çevresinde duvara düşen ışık)
-  const havuzMap = doku(tuval(128, 128, (x, w, h) => { const g = x.createRadialGradient(64, 58, 0, 64, 64, 64); g.addColorStop(0, 'rgba(255,226,186,.55)'); g.addColorStop(0.35, 'rgba(255,214,170,.18)'); g.addColorStop(1, 'rgba(255,205,160,0)'); x.fillStyle = g; x.fillRect(0, 0, w, h); }));
+  const havuzMap = doku(tuval(128, 128, (x, w, h) => { const g = x.createRadialGradient(64, 58, 0, 64, 64, 64); g.addColorStop(0, 'rgba(255,226,186,.42)'); g.addColorStop(0.35, 'rgba(255,214,170,.13)'); g.addColorStop(1, 'rgba(255,205,160,0)'); x.fillStyle = g; x.fillRect(0, 0, w, h); }));
   // topraklama iletkeni: yeşil-sarı şerit
   const tprkMap = doku(tuval(8, 64, (x, w, h) => { x.fillStyle = '#2e8b3a'; x.fillRect(0, 0, w, h); x.fillStyle = '#e1c11d'; for (let i = 0; i < h; i += 16) x.fillRect(0, i, w, 8); }));
   tprkMap.repeat.set(1, 180);
@@ -130,18 +157,29 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     mavi:    new THREE.MeshStandardMaterial({ color: 0x1f5c9e, roughness: 0.48, metalness: 0.3 }),
     maviSac: new THREE.MeshStandardMaterial({ color: 0x21609f, roughness: 0.52, metalness: 0.28, side: THREE.DoubleSide }),
     alu:     new THREE.MeshStandardMaterial({ color: 0xb7bcc0, roughness: 0.36, metalness: 0.85 }),
-    izgara:  new THREE.MeshStandardMaterial({ map: izgaraMap, alphaTest: 0.5, roughness: 0.55, metalness: 0.6, side: THREE.DoubleSide }),
+    izgara:  derinlikli(new THREE.MeshStandardMaterial({ map: izgaraMap, roughness: 0.55, metalness: 0.6, side: THREE.DoubleSide }), 0.75, 0x34383a),
     baklava: new THREE.MeshStandardMaterial({ map: baklavaMap, normalMap: baklavaNor, roughness: 0.5, metalness: 0.7 }),
-    ag:      new THREE.MeshStandardMaterial({ map: agMap, transparent: true, alphaTest: 0.35, side: THREE.DoubleSide, roughness: 0.7, metalness: 0.4 }),
+    ag:      derinlikli(new THREE.MeshStandardMaterial({ map: agMap, side: THREE.DoubleSide, roughness: 0.5, metalness: 0.7, depthWrite: false }), 0.1, 0x55595c),
     lens:    new THREE.MeshBasicMaterial({ color: 0xfff2dd, fog: false }),
     kirmizi: new THREE.MeshStandardMaterial({ color: 0xb3261e, roughness: 0.45, emissive: 0x2a0503 }),
     yangin:  new THREE.MeshStandardMaterial({ color: 0xa81d16, roughness: 0.4, metalness: 0.2 }),
+    sariC:   new THREE.MeshStandardMaterial({ color: 0xc9961c, roughness: 0.58, metalness: 0.2, side: THREE.DoubleSide }),
+    sasi:    new THREE.MeshStandardMaterial({ color: 0x585e63, roughness: 0.62, metalness: 0.45, side: THREE.DoubleSide }),   // yatak şasisi (döküm, boyalı)
+    gres:    new THREE.MeshStandardMaterial({ color: 0x3b3428, roughness: 0.3, metalness: 0.5 }),                            // yaw dişlisi: gresli
+    koyuC:   new THREE.MeshStandardMaterial({ color: 0x1d1f21, roughness: 0.8, metalness: 0.1, side: THREE.DoubleSide }),
     havuz:   new THREE.MeshBasicMaterial({ map: havuzMap, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, side: THREE.DoubleSide }),
   };
   const kutu = (w, h, d, m, x, y, z, par = g) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); par.add(o); return o; };
   const cubuk = (a, b, r, m, par = g, seg = 8) => {
     const d = new THREE.Vector3().subVectors(b, a), L = d.length();
     const o = new THREE.Mesh(new THREE.CylinderGeometry(r, r, L, seg), m);
+    o.position.copy(a).addScaledVector(d, 0.5); o.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize());
+    par.add(o); return o;
+  };
+  // eğimli/yatay kiriş: uzun eksen a→b, kesit w × h (h düşey düzlemde kalır)
+  const kiris = (a, b, w, h, m, par = g) => {
+    const d = new THREE.Vector3().subVectors(b, a), L = d.length();
+    const o = new THREE.Mesh(new THREE.BoxGeometry(w, L, h), m);
     o.position.copy(a).addScaledVector(d, 0.5); o.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize());
     par.add(o); return o;
   };
@@ -157,11 +195,12 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   const ustY = towerTopY - 3.0;
   const flansY = []; for (let k = 1; k < 5; k++) flansY.push(TABAN0 + H * k / 5);
   const platY = [tabanY, ...flansY.map(y => y - 1.05), ustY];
-  const merdivenYon = kapakXZ.clone().normalize();
+  const merdivenYon = kapakYon.clone().normalize();
   const mAlt = new THREE.Vector3(merdivenYon.x * (rIc(tabanY) - 0.36), tabanY, merdivenYon.y * (rIc(tabanY) - 0.36));
-  const mUst = new THREE.Vector3(kapakXZ.x, towerTopY + 0.4, kapakXZ.y);
+  // merdiven başı kapak açıklığının duvar tarafı kenarında; tırmanan kişi açıklığın ortasından geçer
+  const mUst = new THREE.Vector3(kapakXZ.x + merdivenYon.x * 0.2, naselY, kapakXZ.y + merdivenYon.y * 0.2);
   const merdivenXZ = y => { const f = (y - mAlt.y) / (mUst.y - mAlt.y); return new THREE.Vector2(THREE.MathUtils.lerp(mAlt.x, mUst.x, f), THREE.MathUtils.lerp(mAlt.z, mUst.z, f)); };
-  const TAVA = -2.25;      // kablo tavası açısı
+  const TAVA = 1.35;       // kablo tavası açısı (asansör boşluğunun dışında, kablo ilmeği buradan duvara döner)
   const LAMBA = 0.55;      // servis lambaları açısı (kabin kapısından görünen duvar)
   const Hm = TABAN0 + H * 0.5;   // asansör besleme kablosunun bağlantı kutusu (kule ortası)
 
@@ -183,8 +222,13 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     x.fillStyle = 'rgba(60,58,54,.2)'; x.fillRect(w * 0.2, h * 0.92, w * 0.6, h * 0.05);
     x.strokeStyle = 'rgba(40,44,46,.5)'; x.lineWidth = 2; x.strokeRect(5, 5, w - 10, h - 10);
     x.fillStyle = '#4c5154'; for (let i = 0; i < 8; i++) x.fillRect(w * 0.28, h * 0.12 + i * h * 0.018, w * 0.44, h * 0.007);   // havalandırma panjuru
-    x.fillStyle = '#2b2f32'; x.font = `bold ${Math.round(w * 0.05)}px sans-serif`; x.textAlign = 'center'; x.fillText('SERVİS GİRİŞİ', w / 2, h * 0.34);
-    x.font = `${Math.round(w * 0.036)}px sans-serif`; x.fillText('Yalnızca yetkili personel', w / 2, h * 0.37);
+    // küçük yapışkan levha: yetkisiz girilmez (≈ 20 × 14 cm), köşesi hafif kalkık, güneşten solmuş
+    { const lx = w * 0.39, ly = h * 0.305, lw = w * 0.22, lh = h * 0.07;
+      x.fillStyle = '#ecebe4'; x.fillRect(lx, ly, lw, lh);
+      x.fillStyle = '#b8453d'; x.beginPath(); x.arc(lx + lh * 0.5, ly + lh * 0.5, lh * 0.36, 0, Math.PI * 2); x.fill();
+      x.fillStyle = '#ecebe4'; x.fillRect(lx + lh * 0.3, ly + lh * 0.44, lh * 0.4, lh * 0.12);
+      x.fillStyle = '#3a3a38'; x.font = `bold ${Math.round(lh * 0.2)}px sans-serif`; x.textAlign = 'left';
+      x.fillText('YETKİSİZ', lx + lh * 0.95, ly + lh * 0.42); x.fillText('GİRİLMEZ', lx + lh * 0.95, ly + lh * 0.72); }
   });
   const kanatPivot = new THREE.Group(); kanatPivot.position.set(kg / 2, kapiOrta, kR + 0.08); dis.add(kanatPivot);
   const kanatMat = new THREE.MeshStandardMaterial({ map: doku(kanatC), roughness: 0.62, metalness: 0.3 });
@@ -224,12 +268,23 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   for (let i = 0; i < basamak; i++) izgaraKutu(1.0, run - 0.03, 0, sahanlikY - ris * (i + 1) + 0.02, z0 + run * (i + 0.5), dis);
   const zSon = z0 + run * basamak;
   for (const sx of [-0.53, 0.53]) {
-    cubuk(new THREE.Vector3(sx, sahanlikY - 0.06, z0), new THREE.Vector3(sx, zeminY, zSon), 0.03, M.galvaniz, dis, 6);
+    kiris(new THREE.Vector3(sx, sahanlikY - 0.05, z0), new THREE.Vector3(sx, zeminY - 0.06, zSon + 0.04), 0.05, 0.2, M.galvaniz, dis);   // U-profil merdiven yanağı
     cubuk(new THREE.Vector3(sx, sahanlikY + 1.1, z0 - 0.35), new THREE.Vector3(sx, zeminY + 1.1, zSon), 0.021, M.galvaniz, dis, 8);
     cubuk(new THREE.Vector3(sx, sahanlikY + 0.55, z0 - 0.35), new THREE.Vector3(sx, zeminY + 0.55, zSon), 0.015, M.galvaniz, dis, 6);
     for (let i = 0; i <= 4; i++) { const f = i / 4, z = THREE.MathUtils.lerp(z0 - 0.35, zSon, f), y = THREE.MathUtils.lerp(sahanlikY, zeminY, Math.max(0, (z - z0) / (zSon - z0))); cubuk(new THREE.Vector3(sx, y, z), new THREE.Vector3(sx, y + 1.1, z), 0.018, M.galvaniz, dis, 6); }
   }
+  // sahanlık taşıyıcıları: altta iki kiriş, kaideye inen iki dikme; merdiven ortada bir çift dikmeye, dipte beton pabuca oturur
+  for (const sx of [-0.8, 0.8]) {
+    kutu(0.08, 0.12, 1.3, M.galvaniz, sx, sahanlikY - 0.08, kR + 0.65, dis);
+    const zd = kR + 1.2, yK = 2.875 - (Math.hypot(sx, zd) - 3.15) / 2.25 * 2.05;
+    kutu(0.08, sahanlikY - 0.14 - yK, 0.08, M.galvaniz, sx, (sahanlikY - 0.14 + yK) / 2, zd, dis);
+    kutu(0.2, 0.02, 0.2, M.galvaniz, sx, yK + 0.01, zd, dis);
+  }
+  { const zd = z0 + run * 8, yD = sahanlikY - ris * 8 - 0.16;
+    for (const sx of [-0.52, 0.52]) { kutu(0.07, yD - zeminY, 0.07, M.galvaniz, sx, (yD + zeminY) / 2, zd, dis); kutu(0.18, 0.02, 0.18, M.galvaniz, sx, zeminY + 0.01, zd, dis); }
+    kutu(1.3, 0.14, 0.55, M.boyali, 0, zeminY - 0.05, zSon + 0.05, dis); }
   for (const sx of [-0.85, 0.85]) {
+    kutu(0.01, 0.1, 1.22, M.galvaniz, sx, sahanlikY + 0.07, kR + 0.67, dis);   // topuk levhası
     cubuk(new THREE.Vector3(sx, sahanlikY, kR + 0.06), new THREE.Vector3(sx, sahanlikY + 1.1, kR + 0.06), 0.02, M.galvaniz, dis, 6);
     cubuk(new THREE.Vector3(sx, sahanlikY + 1.1, kR + 0.06), new THREE.Vector3(sx, sahanlikY + 1.1, kR + 1.28), 0.021, M.galvaniz, dis, 8);
     cubuk(new THREE.Vector3(sx, sahanlikY + 0.55, kR + 0.06), new THREE.Vector3(sx, sahanlikY + 0.55, kR + 1.28), 0.015, M.galvaniz, dis, 6);
@@ -290,6 +345,8 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   ic.add(somun, pul, dis_, iz);
 
   // --- platformlar: ızgara döşeme, kenar sacı, alt kirişler, asansör boşluğu korkuluğu, merdiven kapağı ---
+  const mU = merdivenYon, mY = new THREE.Vector2(-merdivenYon.y, merdivenYon.x);
+  const merdivenDelik = m => [[0.04, -0.31], [0.04, 0.31], [-0.58, 0.31], [-0.58, -0.31]].map(([a, b]) => new THREE.Vector2(m.x + mU.x * a + mY.x * b, m.y + mU.y * a + mY.y * b));
   const asnDelik = { x0: -ASN.gen / 2 - 0.12, x1: ASN.gen / 2 + 0.12, z0: ASN.z - ASN.der / 2 - 0.12, z1: ASN.z + ASN.der / 2 + 0.12 };
   function platformKur(y, i) {
     const r = rIc(y) - 0.02;
@@ -297,7 +354,9 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     const m = merdivenXZ(y);
     if (i > 0) {
       const h = new THREE.Path(); h.moveTo(asnDelik.x0, -asnDelik.z1); h.lineTo(asnDelik.x1, -asnDelik.z1); h.lineTo(asnDelik.x1, -asnDelik.z0); h.lineTo(asnDelik.x0, -asnDelik.z0); h.lineTo(asnDelik.x0, -asnDelik.z1); s.holes.push(h);
-      const dl = new THREE.Path(); const hw = 0.34; dl.moveTo(m.x - hw, -m.y - hw); dl.lineTo(m.x + hw, -m.y - hw); dl.lineTo(m.x + hw, -m.y + hw); dl.lineTo(m.x - hw, -m.y + hw); dl.lineTo(m.x - hw, -m.y - hw); s.holes.push(dl);
+      // merdiven açıklığı: merdivenin önünde (tırmananın gövdesi için), merdivene hizalı
+      const dl = new THREE.Path(), K = merdivenDelik(m); dl.moveTo(K[0].x, -K[0].y); for (let k = 1; k <= 4; k++) dl.lineTo(K[k % 4].x, -K[k % 4].y); s.holes.push(dl);
+      if (y === ustY) { const ch = new THREE.Path(); ch.absarc(0, 0, 0.3, 0, Math.PI * 2, true); s.holes.push(ch); }   // kablo ilmeği geçişi
     }
     const geo = new THREE.ShapeGeometry(s, 48); geo.rotateX(-Math.PI / 2);
     const uv = geo.attributes.uv; for (let k = 0; k < uv.count; k++) uv.setXY(k, uv.getX(k) / 0.6, uv.getY(k) / 0.6);
@@ -308,21 +367,23 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
       const a = k / 6 * Math.PI * 2 + 0.3;
       // asansör ve merdiven boşluğundan geçen kirişi koyma
       let carp = false; for (let t = 0.44; t <= 1.0; t += 0.04) { const px = Math.sin(a) * r * t, pz = Math.cos(a) * r * t;
-        if ((px > asnDelik.x0 - 0.1 && px < asnDelik.x1 + 0.1 && pz > asnDelik.z0 - 0.1 && pz < asnDelik.z1 + 0.1) || Math.hypot(px - m.x, pz - m.y) < 0.55) carp = true; }
+        if ((px > asnDelik.x0 - 0.1 && px < asnDelik.x1 + 0.1 && pz > asnDelik.z0 - 0.1 && pz < asnDelik.z1 + 0.1) || Math.hypot(px - m.x, pz - m.y) < 0.55 || (y === ustY && Math.hypot(px, pz) < 0.42)) carp = true; }
       if (carp) continue;
       const b = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.12, r * 0.55), M.galvaniz);
       b.position.set(Math.sin(a) * r * 0.72, y - 0.08, Math.cos(a) * r * 0.72); b.rotation.y = a; ic.add(b);
     }
     if (i === 0) return;
+    if (y === ustY) { const bl = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.1, 32, 1, true), M.sariC); bl.position.set(0, y + 0.05, 0); ic.add(bl); }
     // asansör boşluğu: kenar sacı ve kapı tarafında korkuluk kapısı
     const { x0, x1, z0, z1 } = asnDelik;
     kutu(x1 - x0, 0.1, 0.012, M.sari, (x0 + x1) / 2, y + 0.05, z1, ic); kutu(0.012, 0.1, z1 - z0, M.sari, x0, y + 0.05, (z0 + z1) / 2, ic); kutu(0.012, 0.1, z1 - z0, M.sari, x1, y + 0.05, (z0 + z1) / 2, ic);
     for (const [px, pz] of [[x0, z1], [x1, z1], [x0, z0], [x1, z0]]) cubuk(new THREE.Vector3(px, y, pz), new THREE.Vector3(px, y + 1.1, pz), 0.02, M.sari, ic, 6);
     for (const hh of [0.55, 1.1]) for (const [a0, a1] of [[[x0, z1], [x0, z0]], [[x1, z1], [x1, z0]]]) cubuk(new THREE.Vector3(a0[0], y + hh, a0[1]), new THREE.Vector3(a1[0], y + hh, a1[1]), 0.017, M.sari, ic, 6);
-    // merdiven kapağı: menteşeli, açık bekler
-    const kp = kutu(0.66, 0.012, 0.66, M.galvaniz, 0, 0, 0, ic);
-    const dis2 = new THREE.Vector3(merdivenYon.x, 0, merdivenYon.y).multiplyScalar(-0.34);
-    kp.position.set(m.x + dis2.x, y + 0.32, m.y + dis2.z); kp.rotation.y = Math.atan2(merdivenYon.x, merdivenYon.y); kp.rotateX(-1.35);
+    // merdiven kapağı: kapalı (geçtikten sonra kapatılır); baklava sac, menteşe ve sarı tutamak
+    { const kg_ = new THREE.Group(); kg_.position.set(m.x - mU.x * 0.315, y + 0.008, m.y - mU.y * 0.315); kg_.rotation.y = Math.atan2(mU.x, mU.y); ic.add(kg_);
+      const b = kutu(0.6, 0.012, 0.53, M.baklava, 0, 0, 0, kg_); b.scale.set(1, 1, 1);
+      for (const x of [-0.2, 0.2]) kutu(0.06, 0.02, 0.03, M.koyu, x, 0.01, -0.27, kg_);
+      kutu(0.14, 0.02, 0.03, M.sari, 0, 0.012, 0.22, kg_); }
   }
   platY.forEach(platformKur);
 
@@ -332,7 +393,7 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     const aci = Math.atan2(merdivenYon.x, merdivenYon.y), L = mAlt.distanceTo(mUst), orta = mAlt.clone().lerp(mUst, 0.5);
     const egim = new THREE.Quaternion().setFromUnitVectors(eY, mUst.clone().sub(mAlt).normalize());
     for (const sg of [-0.21, 0.21]) { const r = new THREE.Mesh(new THREE.BoxGeometry(0.06, L, 0.022), M.galvaniz); r.position.copy(orta).addScaledVector(yan, sg); r.quaternion.copy(egim); r.rotateY(aci - Math.PI / 2); ic.add(r); }
-    const ray = new THREE.Mesh(new THREE.BoxGeometry(0.03, L, 0.014), M.galvaniz); ray.position.copy(orta).addScaledVector(disa, 0.035); ray.quaternion.copy(egim); ray.rotateY(aci - Math.PI / 2); ic.add(ray);
+    const ray = new THREE.Mesh(new THREE.BoxGeometry(0.03, L, 0.014), M.galvaniz); ray.position.copy(orta).addScaledVector(disa, -0.03); ray.quaternion.copy(egim); ray.rotateY(aci - Math.PI / 2); ic.add(ray);
     const n = Math.floor(L / 0.28), bg = new THREE.CylinderGeometry(0.014, 0.014, 0.42, 8); bg.rotateZ(Math.PI / 2);
     const bs = new THREE.InstancedMesh(bg, M.galvaniz, n); q.setFromAxisAngle(eY, aci);
     for (let i = 0; i < n; i++) { pv.lerpVectors(mAlt, mUst, (i + 0.5) / n); mt.compose(pv, q, s1); bs.setMatrixAt(i, mt); }
@@ -344,59 +405,84 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
       for (const sg of [-0.21, 0.21]) { pv.set(m.x + yan.x * sg + disa.x * d / 2, y, m.y + yan.z * sg + disa.z * d / 2); q.setFromAxisAngle(eY, aci); mt.compose(pv, q, new THREE.Vector3(1, 1, Math.max(0.05, d))); bb.setMatrixAt(bi++, mt); }
     }
     ic.add(bb);
-    // üst platformda nasel kapağına çıkış: sarı kapak çerçevesi
-    const ku = merdivenXZ(ustY);
-    for (const [dx, dz, w, d] of [[0, -0.34, 0.74, 0.04], [0, 0.34, 0.74, 0.04], [-0.35, 0, 0.04, 0.72], [0.35, 0, 0.04, 0.72]]) kutu(w, 0.08, d, M.sari, ku.x + dx, ustY + 0.04, ku.y + dz, ic);
   }
 
-  // --- kablo tavası: kablo merdiveni, güç kabloları, kontrol kabloları, topraklama iletkeni, bağlar ---
+  // --- kablo tavası ve kablo ilmeği ---
+  // Güç ve kontrol kabloları duvardaki kablo merdiveninde çıkar; üst bölümde tavadan ayrılıp kule eksenine
+  // döner ve naselden sarkan serbest demete (ilmek) katılır. Yaw dönünce bu demet burulur; aralayıcı
+  // diskler kabloları ayrık tutar. Topraklama iletkeni tava üstündeki bara ile biter.
+  const yB = ustY - 6.2;   // ilmek dibi
   {
     const n0 = new THREE.Vector3(Math.sin(TAVA), 0, Math.cos(TAVA)), yan = new THREE.Vector3(-n0.z, 0, n0.x);
     const nokta = (y, ic_, sg) => { const r = rIc(y) - ic_; return new THREE.Vector3(n0.x * r + yan.x * sg, y, n0.z * r + yan.z * sg); };
-    const y0 = tabanY, y1 = towerTopY - 0.4;
+    const y0 = tabanY, y1 = yB - 1.3;
     for (const sg of [-0.21, 0.21]) cubuk(nokta(y0, 0.09, sg), nokta(y1, 0.09, sg), 0.012, M.galvaniz, ic, 4).scale.set(1.6, 1, 4);   // tava yan rayları
     const rn = Math.floor((y1 - y0) / 0.3), rg = new THREE.BoxGeometry(0.42, 0.018, 0.03), ri = new THREE.InstancedMesh(rg, M.galvaniz, rn);
     for (let i = 0; i < rn; i++) { const y = y0 + (i + 0.5) * 0.3; pv.copy(nokta(y, 0.1, 0)); q.setFromAxisAngle(eY, TAVA); mt.compose(pv, q, s1); ri.setMatrixAt(i, mt); }
     ic.add(ri);
-    const kN = hafif ? 4 : 6;
-    for (let k = 0; k < kN; k++) cubuk(nokta(y0, 0.15, -0.15 + k * 0.06), nokta(y1, 0.15, -0.15 + k * 0.06), 0.021, M.kablo, ic, 8);
-    for (let k = 0; k < 3; k++) cubuk(nokta(y0, 0.13, 0.19 - k * 0.018), nokta(y1, 0.13, 0.19 - k * 0.018), 0.006, M.kabloGri, ic, 5);
+    // kablolar: [yarıçap, malzeme, tavadaki yan konum, duvardan uzaklık]
+    const kN = hafif ? 4 : 8, kablolar = [];
+    for (let k = 0; k < kN; k++) kablolar.push([0.019, M.kablo, -0.17 + k * (0.27 / (kN - 1)), 0.15]);
+    for (let k = 0; k < 3; k++) kablolar.push([0.006, M.kabloGri, 0.19 - k * 0.018, 0.13]);
+    kablolar.forEach(([r, m, sg, icx], k) => {
+      cubuk(nokta(y0, icx, sg), nokta(y1, icx, sg), r, m, ic, r > 0.01 ? 8 : 5);
+      const fi = k / kablolar.length * Math.PI * 2 + (r < 0.01 ? 0.2 : 0), rr = r > 0.01 ? 0.1 : 0.05;
+      const bx = Math.cos(fi) * rr, bz = Math.sin(fi) * rr, duvar = nokta(yB - 0.3, icx + 0.06, sg);
+      const e = new THREE.CatmullRomCurve3([nokta(y1, icx, sg), nokta(yB - 0.75, icx + 0.02, sg), duvar,
+        new THREE.Vector3(THREE.MathUtils.lerp(duvar.x, bx, 0.55), yB + 0.25, THREE.MathUtils.lerp(duvar.z, bz, 0.55)),
+        new THREE.Vector3(bx, yB + 1.1, bz), new THREE.Vector3(bx, yB + 2.4, bz), new THREE.Vector3(bx, naselY + 0.2, bz)], false, 'centripetal');
+      ic.add(new THREE.Mesh(new THREE.TubeGeometry(e, hafif ? 40 : 90, r, r > 0.01 ? 8 : 5, false), m));
+    });
     cubuk(nokta(y0, 0.13, 0.13), nokta(y1, 0.13, 0.13), 0.008, M.tprk, ic, 6);
+    { const bara = kutu(0.3, 0.05, 0.012, M.celik, 0, 0, 0, ic); bara.position.copy(nokta(y1 + 0.05, 0.1, 0.05)); bara.rotation.y = TAVA; }   // topraklama barası
     const bn = Math.floor((y1 - y0) / 0.9), bg = new THREE.BoxGeometry(0.4, 0.008, 0.05), bgm = new THREE.InstancedMesh(bg, M.lastik, bn);
     for (let i = 0; i < bn; i++) { const y = y0 + (i + 0.5) * 0.9; pv.copy(nokta(y, 0.17, 0)); q.setFromAxisAngle(eY, TAVA); mt.compose(pv, q, s1); bgm.setMatrixAt(i, mt); }
     ic.add(bgm);
+    // ilmek aralayıcıları: kauçuk diskler
+    const ag_ = new THREE.CylinderGeometry(0.16, 0.16, 0.035, 20);
+    for (let y = yB + 2.1; y < towerTopY - 0.2; y += 2.3) { if (Math.abs(y - ustY) < 0.45) continue; const d = new THREE.Mesh(ag_, M.lastik); d.position.set(0, y, 0); ic.add(d); }
   }
 
   // --- servis lambaları: IP korumalı LED armatür; altında duvara düşen ışık havuzu ---
-  const lambaYler = []; platY.slice(1).forEach(y => lambaYler.push(y - 1.3)); for (let y = tabanY + 2.4; y < towerTopY - 2; y += 8) if (!lambaYler.some(v => Math.abs(v - y) < 3)) lambaYler.push(y);
+  // Giriş ve üst platform lambaları gerçek ışık kaynağıdır (havuzu ışığın kendisi çizer); diğerleri havuzla temsil edilir.
+  const lambalar = []; platY.slice(1).forEach(y => lambalar.push([y - 1.3, LAMBA])); for (let y = tabanY + 2.4; y < towerTopY - 2; y += 8) if (!lambalar.some(v => Math.abs(v[0] - y) < 3)) lambalar.push([y, LAMBA]);
+  lambalar.push([ustY + 1.9, 0.9]);
   const armGeo = new THREE.BoxGeometry(0.09, 0.62, 0.07), lensGeo = new THREE.BoxGeometry(0.06, 0.56, 0.01);
-  for (const y of lambaYler) {
-    const a = LAMBA + (rnd() - 0.5) * 0.12;
+  const lambaYeri = (y, a, ic_) => { const r = rIc(y) - ic_; return new THREE.Vector3(Math.sin(a) * r, y, Math.cos(a) * r); };
+  let girisLamba = null, ustLamba = null;
+  for (const [y, a0] of lambalar) {
+    const a = a0 + (rnd() - 0.5) * 0.12;
     const arm = duvaraKoy(new THREE.Mesh(armGeo, M.koyu), a, y, 0.06); ic.add(arm);
+    for (const dy of [-0.2, 0.2]) { const b = duvaraKoy(new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.03, 0.03), M.galvaniz), a, y + dy, 0.015); ic.add(b); }   // duvar klipsleri
     const lens = duvaraKoy(new THREE.Mesh(lensGeo, M.lens), a, y, 0.1); ic.add(lens);
-    const hv = new THREE.Mesh(new THREE.CylinderGeometry(rIc(y) - 0.012, rIc(y) - 0.012, 3.0, 12, 1, true, a - 0.62, 1.24), M.havuz); hv.position.y = y - 0.25; ic.add(hv);
+    if (Math.abs(y - tabanY - 2.4) < 0.01) { girisLamba = lambaYeri(y, a, 0.4); continue; }
+    if (Math.abs(y - ustY - 1.9) < 0.01) { ustLamba = lambaYeri(y, a, 0.4); continue; }
+    const hv = new THREE.Mesh(new THREE.CylinderGeometry(rIc(y) - 0.012, rIc(y) - 0.012, 2.4, 12, 1, true, a - 0.48, 0.96), M.havuz); hv.position.y = y - 0.2; ic.add(hv);
   }
 
   // --- kule dibi: pano, yangın söndürücü, levhalar ---
-  { const pano = new THREE.Group(); ic.add(duvaraKoy(pano, 1.15, tabanY, 0.3));
+  { const pano = new THREE.Group(); ic.add(duvaraKoy(pano, 2.0, tabanY, 0.3));
     kutu(0.8, 2.0, 0.4, M.boyali, 0, 1.0, 0, pano); kutu(0.78, 0.02, 0.02, M.koyu, 0, 1.0, 0.205, pano); kutu(0.02, 1.9, 0.02, M.koyu, 0, 1.0, 0.205, pano);
     for (const x of [-0.3, 0.3]) kutu(0.03, 0.12, 0.03, M.koyu, x, 1.05, 0.215, pano);
     const pl = levhaMesh(etiket(128, 64, (x, w, h) => { x.fillStyle = '#f4c20d'; x.fillRect(0, 0, w, h); x.fillStyle = '#111'; x.font = 'bold 13px sans-serif'; x.textAlign = 'center'; x.fillText('DİKKAT', w / 2, 24); x.font = '11px sans-serif'; x.fillText('Enerjili pano', w / 2, 42); x.fillText('Yalnızca yetkili', w / 2, 56); }), 0.2, 0.1, pano); pl.position.set(0.2, 1.6, 0.203);
-    const yy = new THREE.Group(); ic.add(duvaraKoy(yy, -0.75, tabanY + 0.9, 0.12));
+    const yy = new THREE.Group(); ic.add(duvaraKoy(yy, -1.5, tabanY + 0.9, 0.12));
     cubuk(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0.5, 0), 0.075, M.yangin, yy, 16); kutu(0.05, 0.12, 0.04, M.koyu, 0, 0.56, 0, yy); kutu(0.2, 0.04, 0.12, M.koyu, 0, 0.3, -0.07, yy);
     const dl = levhaMesh(etiket(120, 150, (x, w, h) => { x.fillStyle = '#f2f0ea'; x.fillRect(0, 0, w, h); x.fillStyle = '#1f5fa8'; x.beginPath(); x.arc(w / 2, 48, 36, 0, Math.PI * 2); x.fill(); x.fillStyle = '#fff'; x.fillRect(w / 2 - 12, 26, 24, 18); x.fillRect(w / 2 - 4, 44, 8, 22); x.fillStyle = '#111'; x.font = 'bold 11px sans-serif'; x.textAlign = 'center'; x.fillText('DÜŞME KORUMASI', w / 2, 104); x.font = '9.5px sans-serif'; x.fillText('Emniyet kemeri ve düşme', w / 2, 122); x.fillText('durdurucu takılmadan tırmanmayın', w / 2, 136); }), 0.24, 0.3, ic);
-    duvaraKoy(dl, Math.atan2(merdivenYon.x, merdivenYon.y) + 0.34, tabanY + 1.55, 0.012);
+    duvaraKoy(dl, Math.atan2(merdivenYon.x, merdivenYon.y) - 0.36, tabanY + 1.55, 0.012);
   }
 
   /* ================= GENEL SERVİS ASANSÖRÜ ================= */
-  // kılavuz teller (iki yanda), taşıyıcı ve emniyet halatları (kabin üstündeki tahrik ünitesinden geçer)
-  const telUst = towerTopY - 0.6;
-  kutu(1.4, 0.16, 0.12, M.celik, 0, telUst + 0.1, ASN.z, ic);   // üst askı kirişi
+  // kılavuz teller (iki yanda); taşıyıcı ve emniyet halatları kabinin arka duvarındaki tahrik ünitesinden
+  // ve düşme tutucudan geçer, tavandan çıkar, üstte askı kirişine bağlanır
+  const telUst = towerTopY - 0.6, halatZ = ASN.z - ASN.der / 2 + 0.13;
+  kutu(1.0, 0.16, 0.12, M.celik, 0, telUst + 0.1, ASN.z, ic);   // üst askı kirişi
+  kutu(0.12, 0.16, ASN.z - halatZ + 0.12, M.celik, 0, telUst + 0.1, (ASN.z + halatZ) / 2, ic);
+  for (const sx of [-0.06, 0.06]) kutu(0.04, 0.12, 0.04, M.koyu, sx, telUst - 0.02, halatZ, ic);   // halat bağlantı kilitleri
   for (const sx of [-ASN.gen / 2 - 0.07, ASN.gen / 2 + 0.07]) {
     cubuk(new THREE.Vector3(sx, tabanY, ASN.z), new THREE.Vector3(sx, telUst, ASN.z), 0.006, M.galvaniz, ic, 5);
     kutu(0.12, 0.3, 0.12, M.koyu, sx, tabanY + 0.15, ASN.z, ic);   // alt gergi ağırlığı
   }
-  for (const sx of [-0.06, 0.06]) cubuk(new THREE.Vector3(sx, tabanY + 0.05, ASN.z - 0.18), new THREE.Vector3(sx, telUst, ASN.z - 0.18), 0.0045, M.galvaniz, ic, 5);
+  for (const sx of [-0.06, 0.06]) cubuk(new THREE.Vector3(sx, tabanY - 0.05, halatZ), new THREE.Vector3(sx, telUst, halatZ), 0.0045, M.galvaniz, ic, 5);
   // platform geçişlerinde tel kılavuzları
   platY.slice(1).forEach(y => { for (const sx of [-ASN.gen / 2 - 0.07, ASN.gen / 2 + 0.07]) kutu(0.08, 0.05, 0.12, M.sari, sx, y + 0.03, ASN.z, ic); });
 
@@ -448,10 +534,16 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
     e2.position.set(0, altH - 0.12, -kd / 2 + 0.005); }
   // tavan lambası (IP korumalı) ve ışığı
   kutu(0.3, 0.035, 0.08, M.koyu, 0, kh - 0.03, 0.05, kabin); kutu(0.27, 0.006, 0.05, M.lens, 0, kh - 0.05, 0.05, kabin);
-  const kabinIsik = new THREE.PointLight(0xffe9cf, hafif ? 1.6 : 1.2, 7, 1.6); kabinIsik.position.set(0, kh - 0.25, 0.1); kabin.add(kabinIsik);
-  // tahrik ünitesi (kabin üstü) ve halat geçişi
-  kutu(0.34, 0.28, 0.3, M.koyu, 0.05, kh + 0.19, -0.2, kabin); cubuk(new THREE.Vector3(-0.12, kh + 0.19, -0.2), new THREE.Vector3(-0.12 - 0.2, kh + 0.19, -0.2), 0.08, M.celik, kabin, 16);
-  kutu(0.12, 0.12, 0.1, M.mavi, 0.05, kh + 0.39, -0.2, kabin);
+  const kabinIsik = new THREE.SpotLight(0xffe9cf, hafif ? 2.2 : 1.8, 7, 1.4, 0.35, 1.5); kabinIsik.position.set(0, kh - 0.07, 0.05); kabinIsik.target.position.set(0, 0, 0.12); kabin.add(kabinIsik, kabinIsik.target);
+  // tahrik ünitesi: arka duvarda, göğüs hizasında (halat içinden geçer); üstünde düşme tutucu; tavanda halat çıkışı
+  { const hz = -kd / 2 + 0.13;
+    kutu(0.3, 0.4, 0.17, M.koyu, 0, 1.5, hz, kabin);                                     // sürtünmeli tahrik (traction hoist)
+    cubuk(new THREE.Vector3(0.15, 1.56, hz), new THREE.Vector3(0.3, 1.56, hz), 0.075, M.koyu, kabin, 16);   // motor
+    kutu(0.012, 0.28, 0.2, M.mavi, 0.31, 1.56, hz, kabin);                                // motor kapağı
+    kutu(0.14, 0.2, 0.12, M.sari, 0, 1.98, hz, kabin);                                    // düşme tutucu (emniyet halatında)
+    kutu(0.12, 0.05, 0.12, M.koyu, 0, 1.2, hz, kabin);                                    // alt halat kılavuzu
+    kutu(0.2, 0.05, 0.1, M.koyu, 0, kh + 0.065, hz, kabin);                                // tavanda halat çıkışı
+    for (const sy of [1.3, 1.75]) kutu(0.34, 0.03, 0.03, M.mavi, 0, sy, -kd / 2 + 0.03, kabin); }   // taşıyıcı lamalar
   // katlanır kapı: iki kanat, menteşe sağ dikmede; açılırken dışarı doğru V şeklinde katlanır, uç üst rayda kayar
   kutu(kw, 0.04, 0.05, M.alu, 0, kh - 0.02, kd / 2 + 0.05, kabin);   // üst ray
   const kanatG = (kw - 0.05) / 2;
@@ -477,9 +569,9 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   const kilitDili = kutu(0.05, 0.025, 0.025, M.alu, -kw / 2 + 0.03, 1.2, kd / 2 + 0.07, kabin);
   // asansör besleme kablosu: kule ortasındaki kutudan sarkma ilmeği ile kabine
   const kutuKon = duvaraKoy(new THREE.Group(), Math.PI + 0.25, Hm, 0.1); ic.add(kutuKon); kutu(0.3, 0.4, 0.16, M.boyali, 0, 0, 0, kutuKon);
-  const kA = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.013, 1, 8), M.kablo), kB = kA.clone(), kC = new THREE.Mesh(new THREE.TorusGeometry(0.115, 0.013, 6, 16, Math.PI), M.kablo);
+  const kA = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.013, 1, 8), M.kablo), kB = kA.clone(), kC = new THREE.Mesh(new THREE.TorusGeometry((ASN.der / 2 + 0.065 - 0.22) / 2, 0.013, 6, 16, Math.PI), M.kablo);
   ic.add(kA, kB, kC);
-  const kx = 0.28, kzA = ASN.z - 0.22, kzB = ASN.z - 0.45, L_KABLO = (Hm - tabanY) + (0 - 0) + 0.2;
+  const kx = 0.28, kzA = ASN.z - 0.22, kzB = ASN.z - ASN.der / 2 - 0.065, L_KABLO = (Hm - tabanY) + 0.2;   // sabit kol kabin arkasında, boşluğun içinde
   cubuk(new THREE.Vector3(kx, Hm, kzB), new THREE.Vector3(kutuKon.position.x, Hm, kutuKon.position.z), 0.013, M.kablo, ic, 6);
   function kabloGuncelle(kabinY) {
     // ilmek dibi: iki kol boyunun toplamı sabit uzunluk (serbest sarkma), zemine inmez
@@ -491,13 +583,53 @@ export function kuleIciKur({ SPEC, towerTopY, hafif = false, kapakXZ = new THREE
   }
   kabloGuncelle(tabanY);
 
-  // aydınlatma: giriş katı, yaw katı
-  const girisIsik = new THREE.PointLight(0xffe4c4, hafif ? 3 : 2.4, 9, 1.5); girisIsik.position.set(0.4, tabanY + 2.6, 0.9); ic.add(girisIsik);
-  const ustIsik = new THREE.PointLight(0xffe4c4, hafif ? 2 : 1.5, 7, 1.6); ustIsik.position.set(kapakXZ.x * 0.4, ustY + 1.25, kapakXZ.y * 0.4 + 0.3); ic.add(ustIsik);
-  // nasel kapağından süzülen ışık
-  { const kp = new THREE.Mesh(new THREE.PlaneGeometry(0.66, 0.66), new THREE.MeshBasicMaterial({ color: 0xfff0da, fog: false }));
-    kp.rotation.x = Math.PI / 2; kp.position.set(kapakXZ.x, towerTopY - 0.12, kapakXZ.y); ic.add(kp);
-    for (const [dx, dz, w, d] of [[0, -0.36, 0.8, 0.05], [0, 0.36, 0.8, 0.05], [-0.38, 0, 0.05, 0.76], [0.38, 0, 0.05, 0.76]]) kutu(w, 0.1, d, M.sari, kapakXZ.x + dx, towerTopY - 0.16, kapakXZ.y + dz, ic); }
+  // aydınlatma: giriş ve üst platform lambalarının kendisi
+  const girisIsik = new THREE.PointLight(0xffe4c4, hafif ? 3 : 2.4, 9, 1.5); girisIsik.position.copy(girisLamba || new THREE.Vector3(0.4, tabanY + 2.4, 0.9)); ic.add(girisIsik);
+  const ustIsik = new THREE.PointLight(0xffe4c4, hafif ? 2 : 1.6, 7, 1.5); ustIsik.position.copy(ustLamba || new THREE.Vector3(0.5, ustY + 1.9, 0.5)); ic.add(ustIsik);
+
+  /* ================= KULE TEPESİ: üst flanş, yaw yatağı ve iç dişli, yaw pinyonları, şasi altı, kapak bacası ================= */
+  {
+    const rT = rIc(towerTopY);
+    // üst flanş: içe dönük L-flanş, altta cıvata başları
+    const f = new THREE.Mesh(new THREE.LatheGeometry(flansProfil(rT), 96), M.flans); f.position.y = towerTopY; ic.add(f);
+    const n = hafif ? 60 : 100, rb = rT - 0.1, so = new THREE.InstancedMesh(somunGeo, M.celik, n), pu = new THREE.InstancedMesh(pulGeo, M.galvaniz, n);
+    for (let k = 0; k < n; k++) { const a = (k + 0.5) / n * Math.PI * 2; q.setFromAxisAngle(eY, a);
+      pv.set(Math.sin(a) * rb, towerTopY - 0.2035, Math.cos(a) * rb); mt.compose(pv, q, s1); pu.setMatrixAt(k, mt);
+      pv.y = towerTopY - 0.225; mt.compose(pv, q, s1); so.setMatrixAt(k, mt); }
+    ic.add(so, pu);
+    // yaw yatağı: flanşın üstünde; iç halkada gresli düz dişli
+    const yb = new THREE.Mesh(new THREE.LatheGeometry([new THREE.Vector2(rT + 0.02, 0), new THREE.Vector2(1.265, 0), new THREE.Vector2(1.265, 0.28), new THREE.Vector2(rT + 0.02, 0.28)], 96), M.koyuC);
+    yb.position.y = towerTopY; ic.add(yb);
+    const dn = hafif ? 90 : 128, dis_ = new THREE.InstancedMesh(new THREE.BoxGeometry(0.036, 0.2, 0.05), M.gres, dn);
+    for (let k = 0; k < dn; k++) { const a = k / dn * Math.PI * 2; q.setFromAxisAngle(eY, a); pv.set(Math.sin(a) * 1.24, towerTopY + 0.13, Math.cos(a) * 1.24); mt.compose(pv, q, s1); dis_.setMatrixAt(k, mt); }
+    ic.add(dis_);
+    // yaw sürücüleri: motor ve dişli kutusu naselin içinde; kule tarafında yalnızca pinyon ve alt yatak kapağı görünür
+    for (const p of yawSurucu) {
+      const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.125, 0.125, 0.2, 22), M.gres); pin.position.set(p.x, towerTopY + 0.13, p.y); ic.add(pin);
+      const kp = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.1, 0.12, 18), M.koyu); kp.position.set(p.x, towerTopY - 0.03, p.y); ic.add(kp);
+      const mil = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.06, 22), M.sasi); mil.position.set(p.x, tavanY - 0.03, p.y); ic.add(mil);
+    }
+    // şasi altı (kule içinden tavan): kapak ve kablo ilmeği açıklıkları
+    const kose = (lx, lz) => new THREE.Vector2(kapakXZ.x + kX.x * lx + kZ.x * lz, kapakXZ.y + kX.y * lx + kZ.y * lz);
+    const s = new THREE.Shape(); s.absarc(0, 0, rT + 0.02, 0, Math.PI * 2, false);
+    { const h = new THREE.Path(), K = [kose(-0.3, -0.3), kose(0.3, -0.3), kose(0.3, 0.3), kose(-0.3, 0.3)]; h.moveTo(K[0].x, K[0].y); for (let k = 1; k <= 4; k++) h.lineTo(K[k % 4].x, K[k % 4].y); s.holes.push(h); }
+    { const h = new THREE.Path(); h.absarc(0, 0, 0.3, 0, Math.PI * 2, true); s.holes.push(h); }
+    const tv = new THREE.Mesh(new THREE.ShapeGeometry(s, 48), M.sasi); tv.rotation.x = Math.PI / 2; tv.position.y = tavanY; ic.add(tv);
+    // döküm şasinin alt nervürleri (kapak ve ilmekten kaçarak)
+    for (const [a, b] of [[-1.15, -0.55], [0.55, 1.15]]) for (const sz of [-0.62, 0.62]) {
+      const pA = new THREE.Vector2(kZ.x * a + kX.x * sz, kZ.y * a + kX.y * sz), pB = new THREE.Vector2(kZ.x * b + kX.x * sz, kZ.y * b + kX.y * sz);
+      const mid = pA.clone().add(pB).multiplyScalar(0.5); if (mid.distanceTo(kapakXZ) < 0.5 || Math.max(pA.length(), pB.length()) > rT - 0.25) continue;
+      kiris(new THREE.Vector3(pA.x, tavanY - 0.06, pA.y), new THREE.Vector3(pB.x, tavanY - 0.06, pB.y), 0.06, 0.12, M.sasi, ic);
+    }
+    // kapak bacası: şasi kalınlığı boyunca dört duvar, alt kenarda sarı-siyah çerçeve
+    const baca = new THREE.Group(); baca.position.set(kapakXZ.x, 0, kapakXZ.y); baca.rotation.y = Math.atan2(kZ.x, kZ.y); ic.add(baca);
+    const hc = naselY - tavanY + 0.04, yc = (naselY + tavanY) / 2;
+    for (const [w, d, x, z] of [[0.62, 0.02, 0, -0.31], [0.62, 0.02, 0, 0.31], [0.02, 0.62, -0.31, 0], [0.02, 0.62, 0.31, 0]]) kutu(w, hc, d, M.sasi, x, yc, z, baca);
+    for (const [w, d, x, z] of [[0.7, 0.05, 0, -0.335], [0.7, 0.05, 0, 0.335], [0.05, 0.62, -0.335, 0], [0.05, 0.62, 0.335, 0]]) kutu(w, 0.05, d, M.sari, x, tavanY - 0.03, z, baca);
+    // kablo ilmeği geçişi: kauçuk kaplı bilezik
+    const bil = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, naselY - tavanY + 0.1, 32, 1, true), M.koyuC); bil.position.set(0, (naselY + tavanY) / 2 - 0.05, 0); ic.add(bil);
+    const bil2 = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.03, 8, 32), M.lastik); bil2.rotation.x = Math.PI / 2; bil2.position.set(0, tavanY - 0.08, 0); ic.add(bil2);
+  }
 
   return {
     grup: g, kanatPivot, kapiKol, kabin, kabinKapi, kabinKapiAyarla, kilitDili, pilot, kabinIsik, girisIsik, ustIsik, ic, dis, kabloGuncelle,

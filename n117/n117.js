@@ -205,29 +205,23 @@ function buildFoundation() {
   collar.position.y = 3.05; collar.castShadow = true;
   g.add(collar);
 
-  // ankraj kafesi (görünen üst bölüm)
-  const cage = new THREE.Group();
-  const N = 44;
+  // kule taban flanşı (T-flanş) ankraj cıvatalarıyla kaideye bağlı: altta harç yatağı, flanşın dış
+  // tarafında bir sıra somun ve koruyucu kapak (içteki sıra kule içinde kalır). Çelik kafes görünmez;
+  // o, betonun içinde kalır.
+  const rK = SPEC.towerBase / 2;
+  const harc = new THREE.Mesh(new THREE.CylinderGeometry(rK + 0.34, rK + 0.36, 0.07, 64), MAT.concrete);
+  harc.position.y = 3.335; harc.receiveShadow = true; g.add(harc);
+  const bf = new THREE.Mesh(new THREE.CylinderGeometry(rK + 0.25, rK + 0.25, 0.18, 64), MAT.steelDk);
+  bf.position.y = 3.46; bf.castShadow = true; bf.receiveShadow = true; bf.name = 'baseFlange'; g.add(bf);
+  const N = 72, kapakGeo = new THREE.CylinderGeometry(0.036, 0.042, 0.1, 10), somunGeo = new THREE.CylinderGeometry(0.048, 0.048, 0.045, 6);
+  const kapaklar = new THREE.InstancedMesh(kapakGeo, MAT.steelDk, N), somunlar = new THREE.InstancedMesh(somunGeo, MAT.steelDk, N);
+  const m4 = new THREE.Matrix4(), q4 = new THREE.Quaternion(), p4 = new THREE.Vector3(), s4 = new THREE.Vector3(1, 1, 1), eY = new THREE.Vector3(0, 1, 0);
   for (let i = 0; i < N; i++) {
-    const a = (i / N) * Math.PI * 2;
-    const r = SPEC.towerBase / 2 + 0.10;
-    const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.032, 1.0, 6), MAT.rebar);
-    bar.position.set(Math.cos(a) * r, 3.6, Math.sin(a) * r);
-    cage.add(bar);
+    const a = (i + 0.5) / N * Math.PI * 2; q4.setFromAxisAngle(eY, a);
+    p4.set(Math.cos(a) * (rK + 0.14), 3.573, Math.sin(a) * (rK + 0.14)); m4.compose(p4, q4, s4); somunlar.setMatrixAt(i, m4);
+    p4.y = 3.64; m4.compose(p4, q4, s4); kapaklar.setMatrixAt(i, m4);
   }
-  const topRing = new THREE.Mesh(new THREE.TorusGeometry(SPEC.towerBase / 2 + 0.10, 0.045, 8, 64), MAT.rebar);
-  topRing.rotation.x = Math.PI / 2; topRing.position.y = 4.03;
-  cage.add(topRing);
-  const midRing = new THREE.Mesh(new THREE.TorusGeometry(SPEC.towerBase / 2 + 0.10, 0.04, 8, 64), MAT.rebar);
-  midRing.rotation.x = Math.PI / 2; midRing.position.y = 3.4;
-  cage.add(midRing);
-  cage.name = 'cage';
-  g.add(cage);
-
-  // taban flanşı
-  const bf = ringFlange(SPEC.towerBase / 2, 0.26);
-  bf.position.y = 3.43; bf.name = 'baseFlange';
-  g.add(bf);
+  g.add(kapaklar, somunlar);
 
   return g;
 }
@@ -242,8 +236,9 @@ function buildTowerSegment(seg, withDoor) {
   body.castShadow = true; body.receiveShadow = true;
   g.add(body);
 
-  const f = ringFlange(seg.d1 / 2);
-  f.position.y = seg.h - 0.09;
+  // bölüm birleşimi: flanşlar içe dönüktür (L-flanş); dışarıdan yalnızca ince bir ek yeri görünür
+  const f = new THREE.Mesh(new THREE.CylinderGeometry(seg.d1 / 2 + 0.006, seg.d1 / 2 + 0.006, 0.035, 48, 1, true), MAT.steelDk);
+  f.position.y = seg.h;
   g.add(f);
 
   if (withDoor) {

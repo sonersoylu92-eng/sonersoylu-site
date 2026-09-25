@@ -12,6 +12,9 @@ import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 
 export function naselIciKur(opts = {}) {
   const hafif = !!opts.hafif;          // mobil: daha az ayrıntı
+  // tabandaki erişim kapağı, yaw ekseni (kablo ilmeği) ve yaw sürücüleri — nasel yerel (x, z); deneyim.js kuleyle eşleyip verir
+  const KP = opts.kapak || new THREE.Vector2(-0.55, 0.5), YM = opts.yawMerkez || new THREE.Vector2(0, -0.14);
+  const YS = opts.yawSurucu || [-30, 30, 90, 165, 195].map(d => new THREE.Vector2(YM.x + Math.cos(d * Math.PI / 180) * 1.08, YM.y + Math.sin(d * Math.PI / 180) * 1.08));
   const g = new THREE.Group();
   g.name = 'naselIci';
 
@@ -96,11 +99,15 @@ export function naselIciKur(opts = {}) {
     x.strokeStyle = '#5a6168'; x.lineWidth = 5;
     for (let i = 0; i <= 64; i += 16) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 64); x.stroke(); }
     x.lineWidth = 2; for (let i = 0; i <= 64; i += 32) { x.beginPath(); x.moveTo(0, i); x.lineTo(64, i); x.stroke(); }
-    const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(gen * 4, uz * 4);
+    const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(4, 4);
     t.anisotropy = 4; t.colorSpace = THREE.SRGBColorSpace;
     const izgara = new THREE.MeshStandardMaterial({ map: t, roughness: 0.6, metalness: 0.6 });
     if (opts.envMap) { izgara.envMap = opts.envMap; izgara.envMapIntensity = 0.25; }
-    const z = ekle(new THREE.PlaneGeometry(gen, uz), izgara, 0, TABAN, 0, -Math.PI / 2, 0, 0, kabuk);
+    // döşeme: kuleden çıkış kapağı ve kablo ilmeği için iki açıklık (şekil y = −z)
+    const sk = new THREE.Shape(); sk.moveTo(SOL, -ARKA); sk.lineTo(SAG, -ARKA); sk.lineTo(SAG, -ON); sk.lineTo(SOL, -ON); sk.lineTo(SOL, -ARKA);
+    { const h = new THREE.Path(); h.moveTo(KP.x - 0.3, -KP.y - 0.3); h.lineTo(KP.x - 0.3, -KP.y + 0.3); h.lineTo(KP.x + 0.3, -KP.y + 0.3); h.lineTo(KP.x + 0.3, -KP.y - 0.3); h.lineTo(KP.x - 0.3, -KP.y - 0.3); sk.holes.push(h); }
+    { const h = new THREE.Path(); h.absarc(YM.x, -YM.y, 0.3, 0, Math.PI * 2, true); sk.holes.push(h); }
+    const z = ekle(new THREE.ShapeGeometry(sk, 40), izgara, 0, TABAN, 0, -Math.PI / 2, 0, 0, kabuk);
     z.castShadow = false;
   }
   // korkuluklar: yürüyüş yolunun iki yanı
@@ -226,18 +233,42 @@ export function naselIciKur(opts = {}) {
     for (let k = 0; k < (hafif ? 3 : 6); k++) ekle(silindirZ(0.028, 0.028, z1 - z0, 8), M.kablo, x - 0.15 + k * 0.06, TAVAN - 0.13, (z0 + z1) / 2, 0, 0, 0, kablolar);
   };
   tava(1.5, -3.5, 5.6); tava(-0.95, -4.8, 5.6);
-  // kuleye inen demet: yaw deliğinden aşağı sarkan güç kabloları (sarkma ilmeği)
-  ekle(cember(0.62, 0.05, 40), M.celik, -0.2, TABAN + 0.01, 0.55, Math.PI / 2, 0, 0, kablolar);
+  // kuleye inen demet: arka tavadan sağ yandan döşemeye iner, dişli kutusunun altından yaw eksenindeki
+  // açıklığa girer ve kuleye sarkar (kule tarafında serbest ilmek olarak devam eder)
+  ekle(cember(0.3, 0.035, 40), M.lastik, YM.x, TABAN + 0.02, YM.y, Math.PI / 2, 0, 0, kablolar);
   for (let k = 0; k < (hafif ? 4 : 8); k++) {
-    const a = k / 8 * Math.PI * 2, r = 0.22;
+    const a = k / 8 * Math.PI * 2, r = 0.1, bx = YM.x + Math.cos(a) * r, bz = YM.y + Math.sin(a) * r;
     const e = new THREE.CatmullRomCurve3([
       new THREE.Vector3(1.4 - k * 0.04, TAVAN - 0.15, 1.2),
-      new THREE.Vector3(0.6 + Math.cos(a) * 0.1, TAVAN - 0.6, 0.8),
-      new THREE.Vector3(-0.2 + Math.cos(a) * r, 0.4, 0.55 + Math.sin(a) * r),
-      new THREE.Vector3(-0.2 + Math.cos(a) * r, TABAN - 0.2, 0.55 + Math.sin(a) * r),
-      new THREE.Vector3(-0.2 + Math.cos(a) * r, TABAN - 2.5, 0.55 + Math.sin(a) * r),
-    ]);
-    ekle(new THREE.TubeGeometry(e, hafif ? 24 : 60, 0.034, 8, false), M.kablo, 0, 0, 0, 0, 0, 0, kablolar);
+      new THREE.Vector3(1.5 - k * 0.025, TAVAN - 0.7, 0.98),
+      new THREE.Vector3(1.48 - k * 0.025, TABAN + 0.55, 0.9 - k * 0.012),
+      new THREE.Vector3(1.05 - k * 0.02, TABAN + 0.2, 0.78 - k * 0.015),
+      new THREE.Vector3(YM.x + 0.32 + Math.cos(a) * 0.05, TABAN + 0.16, YM.y + 0.3 + Math.sin(a) * 0.05),
+      new THREE.Vector3(bx, TABAN - 0.1, bz),
+      new THREE.Vector3(bx, TABAN - 0.95, bz),
+    ], false, 'centripetal');
+    ekle(new THREE.TubeGeometry(e, hafif ? 36 : 80, 0.019, 8, false), M.kablo, 0, 0, 0, 0, 0, 0, kablolar);
+  }
+
+  /* =================== tabandaki erişim kapağı ve yaw sürücüleri =================== */
+  {
+    const kg = new THREE.Group(); kg.name = 'taban-kapagi'; g.add(kg);
+    // sarı çerçeve (topuk levhası), açık kapak (dış kenarda menteşeli, dik durur), merdiven tutamakları, arka korkuluk
+    for (const [w, d, x, z] of [[0.7, 0.05, 0, -0.325], [0.7, 0.05, 0, 0.325], [0.05, 0.6, -0.325, 0], [0.05, 0.6, 0.325, 0]]) ekle(kutu(w, 0.1, d), M.sari, KP.x + x, TABAN + 0.05, KP.y + z, 0, 0, 0, kg);
+    const mp = new THREE.Group(); mp.position.set(KP.x - 0.35, TABAN + 0.1, KP.y); mp.rotation.z = 1.72; kg.add(mp);
+    ekle(kutu(0.6, 0.03, 0.6), M.celik, 0.3, 0, 0, 0, 0, 0, mp); ekle(kutu(0.04, 0.035, 0.6), M.sari, 0.58, 0.01, 0, 0, 0, 0, mp);
+    for (const sx of [-0.21, 0.21]) { ekle(new THREE.CylinderGeometry(0.02, 0.02, 1.05, 10), M.sari, KP.x + sx, TABAN + 0.52, KP.y + 0.3, 0, 0, 0, kg);
+      ekle(new THREE.SphereGeometry(0.024, 10, 8), M.sari, KP.x + sx, TABAN + 1.05, KP.y + 0.3, 0, 0, 0, kg); }
+    for (const sx of [-0.33, 0.33]) ekle(new THREE.CylinderGeometry(0.022, 0.022, 1.1, 8), M.sari, KP.x + sx, TABAN + 0.55, KP.y - 0.33, 0, 0, 0, kg);
+    for (const hh of [0.55, 1.1]) ekle(new THREE.CylinderGeometry(0.02, 0.02, 0.66, 8), M.sari, KP.x, TABAN + hh, KP.y - 0.33, 0, 0, Math.PI / 2, kg);
+    // yaw sürücüleri: gövde (dişli kutusu) şasiye cıvatalı, üstte motor ve fren
+    for (const p of YS) {
+      ekle(new THREE.CylinderGeometry(0.18, 0.18, 0.06, 24), M.dokum, p.x, TABAN + 0.03, p.y, 0, 0, 0, kg);
+      ekle(new THREE.CylinderGeometry(0.15, 0.16, 0.42, 24), M.dokum, p.x, TABAN + 0.27, p.y, 0, 0, 0, kg);
+      ekle(new THREE.CylinderGeometry(0.125, 0.125, 0.3, 24), M.dolapK, p.x, TABAN + 0.63, p.y, 0, 0, 0, kg);
+      ekle(new THREE.CylinderGeometry(0.1, 0.12, 0.08, 20), M.siyah, p.x, TABAN + 0.82, p.y, 0, 0, 0, kg);
+      ekle(kutu(0.1, 0.1, 0.08), M.siyah, p.x + 0.13, TABAN + 0.62, p.y, 0, 0, 0, kg);   // klemens kutusu
+    }
   }
 
   /* =================== servis vinci rayı =================== */
@@ -280,7 +311,7 @@ export function naselIciKur(opts = {}) {
     jenerator:  new THREE.Vector3(0, HIZLI, 3.3),
     konvertor:  new THREE.Vector3(SAG - 0.4, TABAN + 1.1, 2.7),
     ustKutu:    new THREE.Vector3(SOL + 0.4, TABAN + 1.0, 4.75),
-    kablolar:   new THREE.Vector3(-0.2, TABAN + 0.4, 0.55),
+    kablolar:   new THREE.Vector3(YM.x + 0.2, TABAN + 0.3, YM.y + 0.2),
     panolar:    new THREE.Vector3(SOL + 0.3, TABAN + 0.8, 2.8),
     kapak:      new THREE.Vector3(0, TAVAN, (KZ0 + KZ1) / 2),
   };
