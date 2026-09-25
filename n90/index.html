@@ -330,7 +330,7 @@ document.getElementById('burger').addEventListener('click', function () {
 
 <script type="module">
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, STAGES, SPEC } from './n90.js?v=73154c94';
+import { createScene, STAGES, SPEC } from './n90.js?v=a48ab6b0';
 
 const canvas = document.getElementById('scene');
 const S = createScene(canvas);
@@ -806,6 +806,7 @@ function frame() {
   const targetVel = spinning ? rpmAt(windV) * Math.PI / 30 : 0;
   spinVel += (targetVel - spinVel) * Math.min(dt * 0.9, 1);
   parts.spin.rotation.z -= spinVel * dt;
+  if (parts.ikaz) parts.ikaz.guncelle(performance.now() / 1000);
   if (spinning) parts.yaw.rotation.y += Math.sin(performance.now() / 9000) * 0.00035;
   parts.farm.children.forEach(t => { t.userData.spin.rotation.z -= t.userData.speed * dt; });
 
