@@ -35,6 +35,8 @@ function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.document
 export function deneyimBaslat(canvas, bolum, cb = {}) {
   const mobil = matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches;
   const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let performans = false;
+  try { performans = new URLSearchParams(location.search).get('performance') === '1' || localStorage.getItem('ss-performance-mode') === '1'; } catch (e) {}
   const kok = document.documentElement;
 
   let S;
@@ -44,8 +46,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   if (parts.crane) parts.crane.visible = false;
   if (parts.groundBlade) parts.groundBlade.visible = false;
 
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobil ? 1.25 : 1.6));
-  if (mobil) renderer.shadowMap.enabled = false;
+  const normalDpr = Math.min(devicePixelRatio || 1, mobil ? 1.25 : 1.6);
+  const normalShadow = renderer.shadowMap.enabled && !mobil;
+  renderer.setPixelRatio(performans ? 1 : normalDpr);
+  renderer.shadowMap.enabled = normalShadow && !performans;
   const FOV_DIS = mobil ? 58 : 42, FOV_IC = mobil ? 74 : 60;   // içeride geniş objektif: dar nasel, gerçek ölçek
   camera.fov = FOV_DIS; camera.near = 0.05; camera.far = 6000; camera.updateProjectionMatrix();
 
@@ -259,6 +263,12 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       if (composer) { composer.setPixelRatio(pr); composer.setSize(w, h); }
     }
   }
+  window.addEventListener('ss:performance', event => {
+    performans = !!event.detail?.enabled;
+    renderer.setPixelRatio(performans ? 1 : normalDpr);
+    renderer.shadowMap.enabled = normalShadow && !performans;
+    olcek(true);
+  });
   const tmp = new THREE.Vector3(), yerel = new THREE.Vector3();
   const tiltTers = new THREE.Matrix4();
   function naselYerel(dunya, out) { tiltTers.copy(tilt.matrixWorld).invert(); return out.copy(dunya).applyMatrix4(tiltTers); }
@@ -539,7 +549,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
     olcek();
     const cz = yumusak(0.972, 0.993, p);
-    if (cz < 0.995) { if (composer) composer.render(dt); else renderer.render(scene, camera); }
+    if (cz < 0.995) { if (composer && !performans) composer.render(dt); else renderer.render(scene, camera); }
     else renderer.clear();
     if (cz > 0.002) cizimCiz(cz);
     if (cb.cizim) cb.cizim(cz);
