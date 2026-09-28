@@ -37,6 +37,30 @@
     });
   }
 
+  /* ---- makine: sinematik yorum / ölçülü şema, JS yoksa şema görünür ---- */
+  var gorunum = document.getElementById('vGorunum');
+  if (gorunum) {
+    var kartlar = [].slice.call(document.querySelectorAll('#makine .v-parca'));
+    var teknik = false;
+    function goster() {
+      kartlar.forEach(function (kart) {
+        var foto = kart.querySelector('.v-sinema'), sema = kart.querySelector('.v-cizim');
+        var bozuk = foto.dataset.hata === '1';
+        foto.hidden = teknik || bozuk;
+        sema.hidden = !teknik && !bozuk;
+      });
+      gorunum.setAttribute('aria-pressed', String(teknik));
+      gorunum.textContent = teknik ? 'Sinematik görselleri göster' : 'Teknik şemaları göster';
+    }
+    kartlar.forEach(function (kart) {
+      var foto = kart.querySelector('.v-sinema');
+      foto.querySelector('img').addEventListener('error', function () { foto.dataset.hata = '1'; goster(); });
+    });
+    gorunum.hidden = false;
+    gorunum.addEventListener('click', function () { teknik = !teknik; goster(); });
+    goster();
+  }
+
   /* ---- vaka akordeonu ---- */
   [].slice.call(document.querySelectorAll('.v-vk')).forEach(function (li) {
     var d = li.querySelector('.v-vk-bas button'), p = li.querySelector('.v-vk-panel');
