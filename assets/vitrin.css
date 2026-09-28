@@ -82,9 +82,19 @@
 .ana .ok:hover::after{transform:translateX(3px)}
 
 /* ===================== 4. N117: teknik çizimler ===================== */
+.v-makine-kontrol{display:flex;align-items:center;justify-content:space-between;gap:.75rem 2rem;margin:2rem 0 -1.5rem}
+.v-makine-kontrol p{margin:0;max-width:55ch;color:var(--a-faint);font-size:.8125rem;line-height:1.5}
+.v-makine-kontrol button{flex:none;min-height:2.75rem;padding:.65rem 1rem;background:transparent;border:1px solid rgba(124,196,255,.55);color:var(--a-accent);font:500 .75rem var(--mono);letter-spacing:.04em;cursor:pointer;transition:background .2s,border-color .2s}
+.v-makine-kontrol button:hover{background:rgba(124,196,255,.08);border-color:var(--a-accent)}
+.v-makine-kontrol button[hidden],.v-sinema[hidden],.v-cizim[hidden]{display:none!important}
 .ana .v-parca{position:relative;transition:background .3s,transform .3s var(--v-ease)}
 .ana .v-parca:hover{background:#0e1316;transform:translateY(-1px)}
-.v-cizim{margin:-1.75rem -1.5rem .25rem;padding:1rem 1rem .6rem;border-bottom:1px solid var(--a-line);position:relative;
+.v-cizim,.v-sinema{margin:-1.75rem -1.5rem .25rem;aspect-ratio:240/150;border-bottom:1px solid var(--a-line);position:relative;overflow:hidden}
+.v-sinema{background:#0a0f12}
+.v-sinema img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.v-sinema::after{content:"";position:absolute;inset:50% 0 0;pointer-events:none;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+.v-sinema figcaption{position:absolute;z-index:1;bottom:.8rem;left:1rem;right:1rem;color:#fff;font:500 .625rem var(--mono);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 1px 8px #000}
+.v-cizim{display:grid;place-items:center;padding:1rem 1rem .6rem;
   background-color:#0a0f12;
   background-image:linear-gradient(rgba(111,220,236,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(111,220,236,.07) 1px,transparent 1px),
     linear-gradient(rgba(111,220,236,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(111,220,236,.035) 1px,transparent 1px);
@@ -222,6 +232,8 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
   .ana .rakam.v-olcu dd.v-alt{letter-spacing:.04em}
 }
 @media (max-width:560px){
+  .v-makine-kontrol{align-items:flex-start;flex-direction:column;margin:1.5rem 0 -1.5rem}
+  .v-makine-kontrol button{width:100%}
   .v-koord{display:none}
   .ana .rakam.v-olcu dd.v-alt{display:none}
   .ana .v-ad{margin-top:.6rem}
