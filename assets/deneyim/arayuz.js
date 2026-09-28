@@ -17,8 +17,8 @@
   var sahne = bolum.querySelector('.dny-sahne');
   var havaKat = document.createElement('div'); havaKat.className = 'dny-hava-kat'; havaKat.setAttribute('aria-hidden', 'true');
   sahne.insertBefore(havaKat, kararti);
-  var havaEtiket = document.createElement('p'); havaEtiket.className = 'dny-hava-etiket';
-  havaEtiket.setAttribute('aria-live', 'polite'); sahne.appendChild(havaEtiket);
+  var havaEtiket = document.createElement('a'); havaEtiket.className = 'dny-hava-etiket';
+  havaEtiket.href = '/ruzgar/?s=aliaga'; havaEtiket.setAttribute('aria-live', 'polite'); sahne.appendChild(havaEtiket);
   function havaTuru(kod) {
     if (kod === 0) return ['acik', 'Açık'];
     if (kod >= 1 && kod <= 3) return ['bulutlu', kod === 3 ? 'Kapalı' : 'Parçalı bulutlu'];
@@ -33,7 +33,7 @@
     if (!tur) return;
     var h = { tur: tur[0], kod: kod, gece: Number(c.is_day) === 0 };
     bolum.dataset.hava = h.tur;
-    havaEtiket.textContent = 'Aliağa · ' + tur[1] + ' · tahmin';
+    havaEtiket.textContent = 'Aliağa · ' + tur[1] + ' · tahmin ↗';
     window.__sonerHava = h;
     window.dispatchEvent(new CustomEvent('ss:hava', { detail: h }));
   }
