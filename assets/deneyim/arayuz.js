@@ -13,6 +13,40 @@
   var kararti = $('dnyKararti'), cizgi = $('dnyIlerleme'), ray = $('dnyRay');
   var DURAKLAR = [];
 
+  // Aynı Aliağa tahmini hem 3B atmosferi hem de hafif hava katmanını sürer.
+  var sahne = bolum.querySelector('.dny-sahne');
+  var havaKat = document.createElement('div'); havaKat.className = 'dny-hava-kat'; havaKat.setAttribute('aria-hidden', 'true');
+  sahne.insertBefore(havaKat, kararti);
+  var havaEtiket = document.createElement('p'); havaEtiket.className = 'dny-hava-etiket';
+  havaEtiket.setAttribute('aria-live', 'polite'); sahne.appendChild(havaEtiket);
+  function havaTuru(kod) {
+    if (kod === 0) return ['acik', 'Açık'];
+    if (kod >= 1 && kod <= 3) return ['bulutlu', kod === 3 ? 'Kapalı' : 'Parçalı bulutlu'];
+    if (kod === 45 || kod === 48) return ['sis', 'Sisli'];
+    if ((kod >= 71 && kod <= 77) || kod === 85 || kod === 86) return ['kar', 'Karlı'];
+    if (kod >= 95 && kod <= 99) return ['firtina', 'Gök gürültülü'];
+    if ((kod >= 51 && kod <= 67) || (kod >= 80 && kod <= 82)) return ['yagmur', 'Yağmurlu'];
+    return null;
+  }
+  function havaUygula(d) {
+    var c = d && d.current, kod = c && c.weather_code != null ? Number(c.weather_code) : NaN, tur = havaTuru(kod);
+    if (!tur) return;
+    var h = { tur: tur[0], kod: kod, gece: Number(c.is_day) === 0 };
+    bolum.dataset.hava = h.tur;
+    havaEtiket.textContent = 'Aliağa · ' + tur[1] + ' · tahmin';
+    window.__sonerHava = h;
+    window.dispatchEvent(new CustomEvent('ss:hava', { detail: h }));
+  }
+  function havaCek() {
+    if (document.hidden) return;
+    fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
+      .then(function (r) { if (!r.ok) throw new Error('Hava verisi'); return r.json(); })
+      .then(havaUygula).catch(function () { /* ağ kesilirse son geçerli sahne korunur */ });
+  }
+  havaCek();
+  setInterval(havaCek, 10 * 60 * 1000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) havaCek(); });
+
   var DIS = [
     { p: 0.0, a: 0.035, b: 0.11, k: 'Uzaktan', t: 'Ege, rüzgâr çiftliği. Göbek yerden 120 metrede; rotorun çapı 116,8 metre.' },
     { p: 0.15, a: 0.143, b: 0.168, k: 'Kule kapısı', t: 'Her bakım günü bu kapının önünde başlar: iş izni, kilitleme ve kişisel koruyucu donanım.' },
@@ -53,6 +87,7 @@
       window.scrollTo({ top: hedef, behavior: 'instant' }); window.__deneyimKes = true;
       setTimeout(function () {
         kararti.style.transition = 'opacity .6s ease'; kesiyor = false;
+        kararti.style.opacity = '0';
         setTimeout(function () { kararti.style.transition = ''; }, 650);
       }, 180);
     }, 320);
@@ -80,6 +115,7 @@
     sonP = p;
     bolum.classList.toggle('gecti', p > 0.02);
     bolum.classList.toggle('sonda', p > 0.95);
+    bolum.classList.toggle('dny-disarida', p < 0.203 || p > 0.948);
     cizgi.style.setProperty('--p', p.toFixed(4));
     eBolum.textContent = bolumAdi(p);
     eKot.innerHTML = icerde ? '<span class="dny-ic">Nasel içi</span> · <b>120</b> m' : 'Kot <b>' + Math.round(y) + '</b> m';
@@ -142,7 +178,6 @@
     pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.',
       k: 'Kanat yatağı gresi, pitch motoru ve sürücü akımı, acil durum enerji kaynağı, açı enkoderi.', b: 'Kanatlar arası açı farkı, yüksek motor akımı, açı sapması hatası.', u: '/saha-notlari/pitch-motor-yuksek-akim/', ul: 'İlgili vaka' }
   };
-  var sahne = bolum.querySelector('.dny-sahne');
   var katman = document.createElement('div'); katman.className = 'v-noktalar'; sahne.appendChild(katman);
   var pencere = document.createElement('div'); pencere.className = 'v-nokta-bilgi'; pencere.setAttribute('role', 'tooltip'); pencere.id = 'vNoktaBilgi'; sahne.appendChild(pencere);
   var noktaEl = {}, acikNokta = null, sonListe = [];
@@ -303,7 +338,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=8fa6da13').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=weather2').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },

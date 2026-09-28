@@ -943,7 +943,7 @@ export function createScene(canvas, { lite = false } = {}) {
     renderer.toneMappingExposure = night ? 0.82 : (sunset ? 1.0 : 1.05);
   }
 
-  return { renderer, scene, camera, controls, parts, towerTopY, SPEC, setLight };
+  return { renderer, scene, camera, controls, parts, towerTopY, SPEC, setLight, sun, fill, hemi, sky };
 }
 
 /* ------------------------------------------------------------- aşamalar */
