@@ -22,17 +22,17 @@
     linear-gradient(180deg,rgba(5,7,8,.55) 0,transparent 18%,transparent 62%,rgba(5,7,8,.78) 100%)}
 .dny-kararti{position:absolute;inset:0;z-index:-1;background:#000;opacity:0;pointer-events:none}
 /* Tek bir bileşik katman: mobilde çok sayıda parçacık veya bulanıklık hesabı yok. */
-.dny-hava-kat{position:absolute;inset:-18%;z-index:-2;pointer-events:none;opacity:0;transition:opacity 1.2s ease;background-repeat:repeat;will-change:transform}
+.dny-hava-kat{position:absolute;inset:-18%;z-index:-2;pointer-events:none;opacity:0;transition:opacity 1.2s ease;background-repeat:repeat}
 .dny-bolum.dny-disarida[data-hava=yagmur] .dny-hava-kat,
-.dny-bolum.dny-disarida[data-hava=firtina] .dny-hava-kat{opacity:.38;background-image:repeating-linear-gradient(104deg,transparent 0 29px,rgba(201,224,239,.38) 30px,transparent 31px,transparent 67px);background-size:128px 240px;animation:dnyYagmur .7s linear infinite}
+.dny-bolum.dny-disarida[data-hava=firtina] .dny-hava-kat{opacity:.38;background-image:repeating-linear-gradient(104deg,transparent 0 29px,rgba(201,224,239,.38) 30px,transparent 31px,transparent 67px);background-size:128px 240px;animation:dnyYagmur .7s linear infinite;will-change:transform}
 .dny-bolum.dny-disarida[data-hava=firtina] .dny-hava-kat{opacity:.55}
-.dny-bolum.dny-disarida[data-hava=kar] .dny-hava-kat{opacity:.7;background-image:radial-gradient(2px 2px at 12px 22px,#e8f2fa 60%,transparent),radial-gradient(3px 3px at 87px 65px,#eef6fb 55%,transparent),radial-gradient(2px 2px at 129px 100px,#fff 55%,transparent);background-size:160px 130px;animation:dnyKar 9s linear infinite}
+.dny-bolum.dny-disarida[data-hava=kar] .dny-hava-kat{opacity:.7;background-image:radial-gradient(2px 2px at 12px 22px,#e8f2fa 60%,transparent),radial-gradient(3px 3px at 87px 65px,#eef6fb 55%,transparent),radial-gradient(2px 2px at 129px 100px,#fff 55%,transparent);background-size:160px 130px;animation:dnyKar 9s linear infinite;will-change:transform}
 .dny-bolum.dny-disarida[data-hava=sis] .dny-hava-kat{opacity:.52;background:linear-gradient(100deg,rgba(192,208,217,.25),transparent 48%,rgba(208,218,224,.3)),linear-gradient(0deg,rgba(192,208,217,.36),transparent 70%)}
 @keyframes dnyYagmur{to{transform:translate3d(-36px,120px,0)}}
 @keyframes dnyKar{to{transform:translate3d(36px,130px,0)}}
-.dny-hava-etiket{position:absolute;z-index:2;right:var(--d-gut);top:calc(6rem + env(safe-area-inset-top));margin:0;font:500 .625rem/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#eaf3f7;text-shadow:0 1px 8px #090d12;pointer-events:none;opacity:.72}
+.dny-hava-etiket{position:absolute;z-index:2;right:var(--d-gut);top:calc(6rem + env(safe-area-inset-top));margin:0;font:500 .625rem/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#eaf3f7;text-shadow:0 1px 8px #090d12;opacity:.72}
 .dny-hava-etiket:empty{display:none}
-.dny-bolum:not(.dny-disarida) .dny-hava-etiket{opacity:0}
+.dny-bolum:not(.dny-disarida) .dny-hava-etiket{opacity:0;visibility:hidden}
 
 /* ---- açılış ---- */
 .dny-acilis{position:absolute;left:var(--d-gut);right:var(--d-gut);bottom:clamp(2rem,9vh,5rem);max-width:40rem;transition:opacity .6s ease,transform .6s ease}
@@ -258,7 +258,7 @@ html:has(body.dny-body){background:#07090b}
 .dny-son .dny-sistem{margin:1.1rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(238,242,245,.7)}
 .dny-son .dny-sistem li::before{content:"";display:inline-block;width:.9rem;height:1px;margin-right:.5rem;vertical-align:middle;background:var(--d-cyan)}
 
-@media (max-width:820px){ .v-etiket small{display:none} .v-etiket b{font-size:.8125rem} }
+@media (max-width:820px){ .v-etiket small{display:none} .v-etiket b{font-size:.8125rem} .dny-sahne::before{animation:none;mix-blend-mode:normal;opacity:.035} }
 @media (prefers-reduced-motion:reduce){
   .dny-sahne::before{animation:none}
   .dny-hava-kat{animation:none!important}

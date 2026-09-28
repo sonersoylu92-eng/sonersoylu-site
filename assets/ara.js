@@ -35,18 +35,19 @@
   var KAT_SIRA = ['Saha notu', 'Sistemler', 'N117 turu', 'Türbin modeli', 'Arıza ağacı', 'Araçlar', 'Kod kütüphanesi', 'Sözlük', 'Eğitim', 'Rehber', 'Sayfa', 'N90 montajı', 'Soru-cevap', 'Asistan'];
   var KAT_AD = { 'Saha notu': 'Saha notları', 'N117 turu': 'N117', 'Türbin modeli': 'Türbin modelleri', 'Araçlar': 'Hesaplayıcılar', 'Sayfa': 'Sayfalar', 'Soru-cevap': 'Soru-cevap' };
 
-  var dizin = null, yukleniyor = null;
+  var dizin = null, yukleniyor = null, dizinHata = false;
   function dizinAl() {
     if (dizin) return Promise.resolve(dizin);
     if (yukleniyor) return yukleniyor;
     yukleniyor = fetch('/assets/arama.json?v=3c76b522')
-      .then(function (r) { return r.json(); })
+      .then(function (r) { if (!r.ok) throw new Error('Arama dizini'); return r.json(); })
       .then(function (d) {
+        if (!d || !Array.isArray(d.e) || !Array.isArray(d.k)) throw new Error('Geçersiz arama dizini');
         d.e.forEach(function (e) { e[4] = nrm(e[1]); e[5] = nrm(e[2]); });
-        dizin = d;
+        dizin = d; dizinHata = false;
         return d;
       })
-      .catch(function () { return null; });
+      .catch(function () { dizinHata = true; yukleniyor = null; return null; });
     return yukleniyor;
   }
 
@@ -155,6 +156,17 @@
   }
   function yenile() {
     if (oneri) oneri.hidden = giris.value.trim().length >= 2;
+    if (!dizin) {
+      var bekle = cikti.parentNode.querySelector('.ara-bos'); if (bekle) bekle.remove();
+      cikti.innerHTML = '';
+      if (giris.value.trim().length >= 2) {
+        var uyari = document.createElement('p'); uyari.className = 'ara-bos';
+        uyari.textContent = dizinHata ? 'Arama yüklenemedi. Bağlantınızı kontrol edip yeniden deneyin.' : 'Arama yükleniyor…';
+        cikti.parentNode.insertBefore(uyari, cikti.nextSibling);
+      }
+      if (dizinHata) { dizinAl().then(function (d) { if (d) yenile(); }); }
+      return;
+    }
     sonSonuc = ara(giris.value);
     sec = -1;
     ciz(cikti, sonSonuc, giris.value);
@@ -229,6 +241,12 @@
     var ilk = new URLSearchParams(location.search).get('q') || '';
     function sayfaYenile() {
       var q = sayfaGiris.value;
+      if (!dizin) {
+        sayfaCikti.innerHTML = '';
+        sayfaBilgi.textContent = dizinHata ? 'Arama yüklenemedi. Bağlantınızı kontrol edip yeniden deneyin.' : 'Arama yükleniyor…';
+        if (dizinHata) dizinAl().then(function (d) { if (d) sayfaYenile(); });
+        return;
+      }
       var r = ara(q);
       ciz(sayfaCikti, r, q);
       if (q.trim().length < 2) sayfaBilgi.textContent = 'En az iki harf yazın.';

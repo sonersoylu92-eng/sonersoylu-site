@@ -521,9 +521,10 @@ document.getElementById("sahalar").addEventListener("click",function(ev){
  secili=b.getAttribute("data-s"); yukle(secili);
  try{localStorage.setItem("ruzgarSaha",secili);}catch(e){}
 });
-try{var kayit=localStorage.getItem("ruzgarSaha");
- if(kayit&&SAHA.some(function(x){return x[0]===kayit;})){secili=kayit;
-  [].forEach.call(document.querySelectorAll("#sahalar button"),function(x){x.setAttribute("aria-pressed",String(x.getAttribute("data-s")===kayit));});}}catch(e){}
+try{var kayit=localStorage.getItem("ruzgarSaha"), baglanti=new URLSearchParams(location.search).get('s');
+ var tercih=baglanti&&SAHA.some(function(x){return x[0]===baglanti;})?baglanti:kayit;
+ if(tercih&&SAHA.some(function(x){return x[0]===tercih;})){secili=tercih;
+  [].forEach.call(document.querySelectorAll("#sahalar button"),function(x){x.setAttribute("aria-pressed",String(x.getAttribute("data-s")===tercih));});}}catch(e){}
 yukle(secili);
 })();
 </script>
