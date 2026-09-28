@@ -9,8 +9,8 @@
  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, SPEC, araziY } from '/n117/n117.js?v=41c31c91';
-import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=aa298c1e';
+import { createScene, SPEC, araziY } from '/n117/n117.js?v=3aef9f0d';
+import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=d525e0e0';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
@@ -199,15 +199,14 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     { p: 0.845,t: 'N', k: v(0.9, 1.2, 5.7),    h: v(1.55, -0.1, 2.4) },
     { p: 0.875,t: 'N', k: v(-0.25, 0.8, 5.8),  h: v(-1.6, -0.1, 4.6) },
     { p: 0.905,t: 'N', k: v(-1.0, 1.15, 5.2),  h: v(-1.75, -0.5, 2.8) },
-    { p: 0.93, t: 'N', k: v(-0.3, 1.3, 1.95),  h: v(-0.2, -1.4, 0.55) },
-    // Açık çatı kapağının ortasından yüksel; kamerayı önce açıklığa çevir.
-    { p: 0.934,t: 'N', k: v(-0.2, 1.55, kapakZ - 0.15), h: v(0, 2.5, -5.0) },
-    { p: 0.938,t: 'N', k: v(-0.2, 2.45, kapakZ), h: v(0, 2.6, -5.0) },
-    // Kabuktan çıktıktan sonra rotor ve nasel çatısı kadraja girer.
-    { p: 0.940,t: 'N', k: v(-0.3, 3.4, kapakZ + 0.3), h: v(0, 2.4, -4.0) },
-    { p: 0.947,t: 'N', k: v(-0.2, 4.5, kapakZ + 3.0), h: v(0, 2.2, -5.0) },
-    { p: 0.955,t: 'N', k: v(4, 8, kapakZ + 12), h: v(0, 1.6, -5) },
-    { p: 0.975,t: 'N', k: v(12, 15, kapakZ + 26),h: v(0, 1.2, -5) },
+    // Kamerayı önce kapağın altına al, açıklıktan dik yükselt, sonra yavaşça geriye aç.
+    { p: 0.918,t: 'N', k: v(-0.2, 1.15, kapakZ - 0.2), h: v(0, 5.0, kapakZ + 3) },
+    { p: 0.930,t: 'N', k: v(0, 1.45, kapakZ), h: v(0, 5.0, kapakZ + 7) },
+    { p: 0.940,t: 'N', k: v(0, 1.83, kapakZ), h: v(0, 4.4, kapakZ + 8) },
+    { p: 0.948,t: 'N', k: v(0, 2.65, kapakZ), h: v(0, 3.6, kapakZ + 12) },
+    { p: 0.955,t: 'N', k: v(3.5, 5.5, kapakZ + 5), h: v(0, 2.0, kapakZ + 2) },
+    { p: 0.965,t: 'N', k: v(8, 9, kapakZ + 14), h: v(0, 1.0, 0) },
+    { p: 0.980,t: 'N', k: v(20, 16, kapakZ + 30), h: v(0, 0.5, -3) },
     { p: 1.00, t: 'D', k: v(88, -8, -150),     h: v(0, -12, -6) },
   ];
   tilt.updateMatrixWorld(true); yaw.updateMatrixWorld(true);
@@ -472,19 +471,18 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     // iç/dış geçişi
     naselYerel(camera.position, yerel);
     const b = ic.sinir;
-    const icerde = sonIcerde = (Math.abs(yerel.x) < 2.15 && yerel.y > b.TABAN - 0.2 && yerel.y < b.TAVAN + 0.15 && yerel.z > b.ON - 0.15 && yerel.z < b.ARKA + 0.2 && !(p > 0.934 && yerel.y > b.TAVAN - 0.35)) ? 1 : 0;
+    const icerde = sonIcerde = (Math.abs(yerel.x) < 2.15 && yerel.y > b.TABAN - 0.2 && yerel.y < b.TAVAN + 0.15 && yerel.z > b.ON - 0.15 && yerel.z < b.ARKA + 0.2) ? 1 : 0;
     const yakin = p > 0.4 && p < 0.99;   // kule tepesinden kapağa bakarken naselin içi görünür
-    // Once the camera clears the roof, hide the interior roof underside.
-    ic.grup.visible = yakin && (icerde || p < 0.934);
+    // İç yüzeyler kapaktan dışarı bakınca da yerinde kalır; model bir karede kaybolmaz.
+    ic.grup.visible = yakin;
     icIsik.visible = ic.grup.visible;
+    gunIsigi.intensity = (mobil ? 90 : 140) * (1 - 0.85 * yumusak(0.925, 0.965, p));
     // kule içi mi? (kule yereline çevir: eksene uzaklık iç yarıçaptan küçük)
     kule.grup.updateMatrixWorld();
     kule.grup.worldToLocal(tlKam.copy(camera.position));
     const kulede = sonKulede = !icerde && tlKam.y > 3.6 && tlKam.y < towerTopY + 1.3 && Math.hypot(tlKam.x, tlKam.z) < KO.rIc(tlKam.y) - 0.01 ? 1 : 0;
-    // dış nasel kabuğu: içerideyken ve kule tepesinden kapağa bakarken çizilmez (kapaktan naselin içi görünür)
-    // The camera crosses the open roof hatch before it clears the outer shell.
-    // Keep the shell hidden for those few frames instead of showing its dark back face.
-    parts.nacelle.visible = !icerde && !(p > 0.935 && yerel.y < 2.8) && !(kulede && tlKam.y > KO.ustY - 1);
+    // Fiziksel çatı açıklığına yaklaşırken dış kabuk da görünür; geçişte yok olup geri gelmez.
+    parts.nacelle.visible = (p >= 0.918 || !icerde) && !(kulede && tlKam.y > KO.ustY - 1);
     const kuleBolum = p > 0.14 && p < 0.47;
     kule.ic.visible = kuleBolum;
     kule.kabinIsik.intensity = kuleBolum ? kabinIsikTaban : 0; kule.girisIsik.intensity = kuleBolum ? girisIsikTaban : 0; kule.ustIsik.intensity = kuleBolum ? ustIsikTaban : 0;
@@ -507,26 +505,30 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     kule.pilot.material.color.setHex(asnHizYum > 0.05 ? 0xf2b233 : 0x46d06a);
     if (cb.ses) cb.ses({ disari: kIcOnce ? 0 : 1, kule: sonKulede, asnHiz: asnHizYum, kapi: yumusak(0.186, 0.199, p), kabinKapi: kabinAcik, p });
     // dış ortam ışığı içeride kısılır (nasel ya da kule)
-    const kIc = icerde || kulede;
+    const cikis = yumusak(0.918, 0.948, p);
+    const icPay = kulede ? 1 : (p > 0.915 && p < 0.948 ? 1 - cikis : icerde ? 1 : 0);
+    const kIc = icPay > 0.001;
     // objektif değişimi: iç/dış geçişi karartmanın içinde olur, göze batmaz
     // kule kapısında görüş kademeli genişler (kapıya yaklaşan gözün alanı); kule ve nasel içi aynı objektifle
-    let fovHedef = kIc ? FOV_IC : FOV_DIS;
+    let fovHedef = THREE.MathUtils.lerp(FOV_DIS, FOV_IC, icPay);
     if (p > 0.15 && p < 0.47) fovHedef = THREE.MathUtils.lerp(FOV_DIS, FOV_IC, yumusak(0.158, 0.19, p));
     if (Math.abs(camera.fov - fovHedef) > 0.05) { camera.fov += (fovHedef - camera.fov) * (anlik || (p > 0.15 && p < 0.47) ? 1 : 1 - Math.exp(-dt * 5)); camera.updateProjectionMatrix(); }
     // içeride karanlık endüstriyel hava: yakın sis ve düşük pozlama
     if (kIc && !icAyar) { icAyar = { renk: scene.fog.color.getHex(), yakin: scene.fog.near, uzak: scene.fog.far, poz: disPoz }; }
-    if (kIc) { const sy = anlik ? 1 : 1 - Math.exp(-dt * 3); scene.fog.color.setHex(0x0b0e11);
-      scene.fog.near += ((kulede ? 3.5 : 2.5) - scene.fog.near) * sy; scene.fog.far += ((kulede ? 42 : 19) - scene.fog.far) * sy; }
+    if (kIc) { const sy = anlik ? 1 : 1 - Math.exp(-dt * 3);
+      scene.fog.color.setHex(icAyar.renk).lerp(new THREE.Color(0x0b0e11), icPay);
+      scene.fog.near += (THREE.MathUtils.lerp(icAyar.yakin, kulede ? 3.5 : 2.5, icPay) - scene.fog.near) * sy;
+      scene.fog.far += (THREE.MathUtils.lerp(icAyar.uzak, kulede ? 42 : 19, icPay) - scene.fog.far) * sy; }
     else if (icAyar) { scene.fog.color.setHex(icAyar.renk); scene.fog.near = icAyar.yakin; scene.fog.far = icAyar.uzak; icAyar = null; }
     // göz uyumu: iç ve dış arasında pozlama sıçramaz, göz alışır gibi bir iki saniyede yerine oturur
-    const pozHedef = kIc ? (kulede ? 0.9 : 0.92) : disPoz;
+    const pozHedef = THREE.MathUtils.lerp(disPoz, kulede ? 0.9 : 0.92, icPay);
     kIcOnce = kIc;
     pozAnlik += (pozHedef - pozAnlik) * (anlik ? 1 : 1 - Math.exp(-dt * (kIc ? 1.15 : 1.7)));
     renderer.toneMappingExposure = pozAnlik;
     if (toz) toz.visible = !!icerde && yerel.y < ic.sinir.TAVAN - 0.3;
-    if (gunes) gunes.intensity = gunesTaban * (kIc ? 0 : 1);
-    if (hemi) hemi.intensity = THREE.MathUtils.lerp(hemi.intensity, hemiTaban * (kIc ? (kulede ? 0.24 : 0.1) : 1), 1 - Math.exp(-dt * 6));
-    if (dolgu) dolgu.intensity = dolguTaban * (kIc ? 0.1 : 1);
+    if (gunes) gunes.intensity = gunesTaban * (1 - icPay);
+    if (hemi) hemi.intensity = THREE.MathUtils.lerp(hemi.intensity, hemiTaban * THREE.MathUtils.lerp(1, kulede ? 0.24 : 0.1, icPay), 1 - Math.exp(-dt * 6));
+    if (dolgu) dolgu.intensity = dolguTaban * (1 - 0.9 * icPay);
     huzmeMat.uniforms.uGuc.value = THREE.MathUtils.lerp(huzmeMat.uniforms.uGuc.value, icerde ? 1 : 0, 1 - Math.exp(-dt * 4));
     huzmeMat.uniforms.uZaman.value = t / 1000;
     if (toz) { toz.rotation.y = Math.sin(t / 9000) * 0.02; toz.position.y = Math.sin(t / 4000) * 0.03; }
