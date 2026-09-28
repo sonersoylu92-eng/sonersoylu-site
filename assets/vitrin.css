@@ -22,6 +22,19 @@
 .dny-bolum.gecti .v-izgara,.dny-bolum.gecti .v-isik{opacity:0}
 .dny-bolum.gecti canvas.v-ruzgar{opacity:0}
 
+/* Gerçek zamanlı 3B yolculuktan teknik içeriğe tek, sakin bir film kesmesi. */
+.ana .v-ara-sahne{position:relative;min-height:clamp(34rem,78svh,58rem);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;background:#101519;color:#fff}
+.v-ara-sahne > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;z-index:0}
+.v-ara-sahne::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(4,7,9,.81),rgba(4,7,9,.38) 55%,transparent 85%),linear-gradient(0deg,rgba(4,7,9,.86),transparent 66%),linear-gradient(180deg,rgba(4,7,9,.35),transparent 24%)}
+.v-ara-metin{width:min(100% - 2 * clamp(1rem,5vw,5rem),76rem);margin:0 auto;padding:clamp(4rem,9vh,7rem) 0;position:relative;z-index:2}
+.v-ara-etiket{margin:0 0 1.15rem;font:500 .7rem/1.5 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:#a7d9f4}
+.v-ara-etiket::before{content:"";display:inline-block;width:2.5rem;height:1px;margin:0 .8rem .25rem 0;background:#a7d9f4}
+.ana .v-ara-metin h2{margin:0;max-width:10ch;font:600 clamp(3.4rem,8.5vw,8.5rem)/.91 var(--sans);letter-spacing:-.065em;text-wrap:balance;text-shadow:0 3px 35px rgba(0,0,0,.24)}
+.v-ara-metin > p:not(.v-ara-etiket){max-width:33rem;margin:1.5rem 0 0;font-size:clamp(1rem,1.55vw,1.2rem);line-height:1.6;color:#e5e9ea}
+.v-ara-metin small{display:block;margin-top:2rem;font:400 .62rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#a6b1b9}
+@media(prefers-reduced-motion:no-preference){.v-ara-sahne > img{transform:scale(1.055);transition:transform 2.4s cubic-bezier(.18,.7,.16,1)}.v-ara-sahne.v-gor > img{transform:none}}
+@media(max-width:820px){.ana .v-ara-sahne{min-height:72svh}.v-ara-sahne > img{object-position:62% center}.v-ara-sahne::after{background:linear-gradient(0deg,rgba(4,7,9,.94),rgba(4,7,9,.38) 67%,rgba(4,7,9,.1))}.v-ara-metin{padding:4rem 0 3rem}.ana .v-ara-metin h2{font-size:clamp(3.4rem,13vw,6rem)}}
+
 /* kimlik: isim ve unvan */
 .v-kimlik{margin-bottom:clamp(1.25rem,3.2vh,2rem)}
 .v-koord{margin:0;display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:#e3e8eb;text-shadow:0 1px 10px rgba(0,0,0,.55)}

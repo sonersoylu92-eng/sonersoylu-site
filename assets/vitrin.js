@@ -10,7 +10,14 @@
   kok.classList.add('v-js');
 
   /* ---- bölüm numaraları ve belirme ---- */
-  var bolumler = [].slice.call(document.querySelectorAll('main.ana > section:not(.dny-bolum)'));
+  var bolumler = [].slice.call(document.querySelectorAll('main.ana > section:not(.dny-bolum):not(.v-ara-sahne)'));
+  var araSahne = document.querySelector('.v-ara-sahne');
+  if (araSahne && 'IntersectionObserver' in window && !az) {
+    var araGozcu = new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) { araSahne.classList.add('v-gor'); araGozcu.disconnect(); }
+    }, { threshold: .08 });
+    araGozcu.observe(araSahne);
+  }
   bolumler.forEach(function (b, i) {
     var e = b.querySelector('.etiket'); if (e) e.setAttribute('data-sira', String(i + 1).padStart(2, '0'));
   });
