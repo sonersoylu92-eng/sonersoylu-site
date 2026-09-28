@@ -15,6 +15,19 @@
 
   // Aynı Aliağa tahmini hem 3B atmosferi hem de hafif hava katmanını sürer.
   var sahne = bolum.querySelector('.dny-sahne');
+  // Önceki ziyaretin gerçek 3B ilk karesi, WebGL yüklenirken eski fotoğrafın yerini alır.
+  var poster = sahne.querySelector('.dny-poster');
+  try {
+    var sakli = JSON.parse(sessionStorage.getItem('dny-kare:' + location.pathname) || 'null');
+    var enBoy = tuval.clientWidth / Math.max(1, tuval.clientHeight);
+    if (sakli && Date.now() - sakli.t < 5 * 60 * 1000 &&
+        sakli.v === kok.dataset.vardiya &&
+        Math.abs(sakli.w / sakli.h - enBoy) < .08 &&
+        /^data:image\/webp;base64,/.test(sakli.data)) {
+      poster.style.backgroundImage = 'url("' + sakli.data + '")';
+      poster.classList.add('dny-anlik-kare');
+    }
+  } catch (e) { /* oturum depolaması kapalı olabilir */ }
   var havaKat = document.createElement('div'); havaKat.className = 'dny-hava-kat'; havaKat.setAttribute('aria-hidden', 'true');
   sahne.insertBefore(havaKat, kararti);
   var havaEtiket = document.createElement('a'); havaEtiket.className = 'dny-hava-etiket';
@@ -338,7 +351,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=weather2').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=poster3d1').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
