@@ -87,7 +87,7 @@
     // parça etiketi: durağa yaklaşınca belirir, uzaklaşınca söner
     var en = -1, fark = 1;
     DURAKLAR.forEach(function (d, i) { var f = Math.abs(p - d.p); if (f < fark) { fark = f; en = i; } });
-    var goster = en >= 0 && fark < 0.019;
+    var goster = en >= 0 && fark < 0.019 && p < 0.934;
     if (goster && en !== sonDurak) {
       var d = DURAKLAR[en];
       eNo.textContent = String(en + 1).padStart(2, '0'); eEn.textContent = d.en; eAd.textContent = d.ad; eBilgi.textContent = d.bilgi;
@@ -285,19 +285,22 @@
     irOk.style.setProperty('--y', Math.max(0, Math.min(1, y / 120)).toFixed(3));
   }
 
-  var basla = $('dnyBasla'), acilabilir = false;
+  var basla = $('dnyBasla'), acilabilir = false, kuruluyor = false;
   function statik(dugme) {
-    bolum.classList.remove('uc-boyut', 'hazir');
+    bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'hazir');
     bolum.classList.add('statik');
+    kuruluyor = false;
     acilabilir = !!dugme;
     if (dugme && basla && !sahaya) basla.hidden = false;   // ana sayfada bu işi "Sahaya gir" yapıyor
   }
   function kur() {
-    bolum.classList.remove('statik');
+    if (kuruluyor || sahneS) return;
+    kuruluyor = true;
+    bolum.classList.remove('statik', 'dny-hazirlaniyor');
     bolum.classList.add('uc-boyut', 'dny-akis');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=cc8566e3').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=d4a84e9a').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -318,5 +321,7 @@
 
   try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
+  // Reserve the scroll path before the idle callback, so a fast first scroll does not jump.
+  bolum.classList.add('dny-hazirlaniyor');
   if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);
 })();
