@@ -563,7 +563,7 @@ const SKY = {
   safak:  ['#0b1428', '#223a63', '#6d7894', '#8c8190'],
 };
 
-function skyDome(mode) {
+function skyDome(mode, lite = false) {
   const stops = (SKY[mode] || SKY.day).map(h => new THREE.Color(h));
   const mat = new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false, fog: false,
@@ -578,7 +578,17 @@ function skyDome(mode) {
     vertexShader: `
       varying vec3 vP;
       void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-    fragmentShader: `
+    fragmentShader: lite ? `
+      uniform vec3 c0,c1,c2,c3; uniform vec3 uGunes,uIsima; uniform float uIsimaG; varying vec3 vP;
+      void main(){
+        float h = clamp(vP.y * 0.5 + 0.5, 0.0, 1.0);
+        vec3 c = mix(c3, c2, smoothstep(0.20, 0.50, h));
+        c = mix(c, c1, smoothstep(0.46, 0.66, h));
+        c = mix(c, c0, smoothstep(0.62, 0.96, h));
+        float g = max(dot(vP, uGunes), 0.0);
+        c += uIsima * uIsimaG * pow(g, 16.0) * 0.35;
+        gl_FragColor = vec4(c, 1.0);
+      }` : `
       uniform vec3 c0,c1,c2,c3; uniform vec3 uGunes, uIsima, uBulutR, uBulutK; uniform float uIsimaG, uBulut; varying vec3 vP;
       float hs(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
       float gurultu(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
@@ -628,8 +638,8 @@ export function araziY(x, z) {
   return (hills(x, z) + Math.sin(x * 0.13 + z * 0.09) * 0.5) * THREE.MathUtils.smoothstep(d, 52, 190);
 }
 
-function buildTerrain() {
-  const size = 2600, seg = 190;
+function buildTerrain(lite = false) {
+  const size = 2600, seg = lite ? 72 : 190;
   const g = new THREE.PlaneGeometry(size, size, seg, seg);
   g.rotateX(-Math.PI / 2);
   const pos = g.attributes.position;
@@ -664,10 +674,10 @@ function buildTerrain() {
 
 /* ------------------------------------------------------------------ sahne */
 
-export function createScene(canvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 820 ? 1.6 : 2));
-  renderer.shadowMap.enabled = true;
+export function createScene(canvas, { lite = false } = {}) {
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lite, alpha: false, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(lite ? 1 : Math.min(devicePixelRatio, innerWidth < 820 ? 1.6 : 2));
+  renderer.shadowMap.enabled = !lite;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -675,7 +685,7 @@ export function createScene(canvas) {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xc9cfd0);
-  const sky = skyDome('day');
+  const sky = skyDome('day', lite);
   scene.add(sky);
   scene.fog = new THREE.Fog(0xc9cfd0, 520, 2400);
 
@@ -695,7 +705,7 @@ export function createScene(canvas) {
   scene.add(hemi);
   const sun = new THREE.DirectionalLight(0xfff2dd, 2.2);
   sun.position.set(-150, 245, 150);
-  sun.castShadow = true;
+  sun.castShadow = !lite;
   const small = Math.min(innerWidth, innerHeight) < 820;
   sun.shadow.mapSize.set(small ? 1024 : 2048, small ? 1024 : 2048);
   const d = 145;
@@ -710,7 +720,7 @@ export function createScene(canvas) {
   scene.add(fill);
 
   // arazi
-  const ground = buildTerrain();
+  const ground = buildTerrain(lite);
   scene.add(ground);
 
   const padMat = new THREE.MeshStandardMaterial({ color: 0xc6bfae, roughness: 1 });
@@ -827,6 +837,7 @@ export function createScene(canvas) {
    // sırt boyunca uzak dizi: saha derinliği
    [-980, 760, 1.4], [-760, 980, 1.35], [-420, 1120, 1.4], [420, 1080, 1.35], [780, 900, 1.4], [1020, 620, 1.3],
    [-1080, -260, 1.35], [-900, -640, 1.4], [980, -380, 1.35], [700, -860, 1.4], [-300, -1060, 1.35], [260, -1120, 1.4]]
+    .filter((_, i) => !lite || i < 6)
     .forEach(([x, z, sc], i) => {
       const t = buildDistantTurbine();
       t.position.set(x, araziY(x, z) - 1.5, z);
@@ -853,7 +864,7 @@ export function createScene(canvas) {
   parts.anchors = A;
 
   // vinç ve insan
-  parts.crane = buildCrane();
+  parts.crane = lite ? new THREE.Group() : buildCrane();
   parts.crane.position.set(-40, 0, 10);
   parts.crane.rotation.y = Math.atan2(40, -10);
   scene.add(parts.crane);
@@ -863,7 +874,7 @@ export function createScene(canvas) {
   scene.add(parts.person);
 
   // yerdeki kanat (montaj öncesi sahada bekleyen)
-  parts.groundBlade = (() => {
+  parts.groundBlade = lite ? new THREE.Group() : (() => {
     const g = new THREE.Group();
     const b = buildBlade(SPEC.bladeLength);
     b.rotation.z = Math.PI / 2;
