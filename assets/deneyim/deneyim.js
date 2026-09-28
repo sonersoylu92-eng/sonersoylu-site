@@ -231,7 +231,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   /* ---------------- yardımcılar ---------------- */
   // Saat ve Aliağa hava kodu dış atmosferi belirler; iç mekân kendi ışığını korur.
   let hava = window.__sonerHava || null, havaSurum = 0, sonSurum = -1;
-  window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; if (!icAyar) isik(); });
+  window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; kareSakla = true; if (!icAyar) isik(); });
   function isikModu() {
     const v = kok.dataset.vardiya;
     return v === 'gece' ? 'night' : v === 'aksam' || v === 'altin' ? 'sunset' : 'day';
@@ -440,6 +440,23 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }
 
   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
+  let kareSay = 0, kareSakla = false;
+  function ilkKareyiSakla() {
+    if (p > .02 || !canvas.width || !canvas.height) return;
+    try {
+      const k = document.createElement('canvas');
+      const oran = Math.min(1, 960 / canvas.width);
+      k.width = Math.max(1, Math.round(canvas.width * oran));
+      k.height = Math.max(1, Math.round(canvas.height * oran));
+      const ctx = k.getContext('2d', { alpha: false });
+      ctx.drawImage(canvas, 0, 0, k.width, k.height);
+      const data = k.toDataURL('image/webp', .58);
+      if (data.length < 5000) return;
+      sessionStorage.setItem('dny-kare:' + location.pathname, JSON.stringify({
+        t: Date.now(), v: kok.dataset.vardiya, w: canvas.clientWidth, h: canvas.clientHeight, data
+      }));
+    } catch (e) { /* WebGL okuma ya da depolama engellenebilir */ }
+  }
   const tlKam = new THREE.Vector3();
   const kabinIsikTaban = kule.kabinIsik.intensity, girisIsikTaban = kule.girisIsik.intensity, ustIsikTaban = kule.ustIsik.intensity;
   const kKonum = new THREE.Vector3(), kHedef = new THREE.Vector3(), yumHedef = new THREE.Vector3();
@@ -579,6 +596,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (cz < 0.995) { if (composer && !performans) composer.render(dt); else renderer.render(scene, camera); }
     else renderer.clear();
     if (cz > 0.002) cizimCiz(cz);
+    // WebGL çizim arabelleği bir sonraki karede silinir: görüntüyü render'ın hemen ardından al.
+    if (++kareSay === 3 || kareSakla) { kareSakla = false; ilkKareyiSakla(); }
     if (cb.cizim) cb.cizim(cz);
     if (cb.ilerleme) cb.ilerleme(p, Math.max(0, camera.position.y), icerde);
     noktalariGuncelle(t, icerde);
