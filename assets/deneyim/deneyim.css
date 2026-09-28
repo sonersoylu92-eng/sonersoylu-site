@@ -13,6 +13,9 @@
 .dny-sahne{position:sticky;top:0;height:100svh;max-height:100vh;overflow:hidden;isolation:isolate}
 .dny-sahne canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-3;opacity:0;transition:opacity .7s ease}
 .dny-sahne canvas.hazir{opacity:1}
+.dny-kare{position:absolute;inset:0;z-index:-3;background:#0b0e10 center/cover no-repeat;pointer-events:none}
+.dny-kareli .dny-poster{opacity:0}
+.dny-kareli #dnyTuval,.dny-kareli .v-noktalar,.dny-kareli .v-etiketler,.dny-kareli .v-ses{display:none}
 .dny-poster{position:absolute;inset:0;z-index:-4;background:#0b0e10 url(/assets/saha/ege-levha.webp) center/cover no-repeat;filter:saturate(.7) brightness(.55)}
 .dny-bolum.dny-akis .dny-poster{transition:opacity .7s ease}
 .dny-bolum.hazir .dny-poster{opacity:0}
@@ -82,6 +85,7 @@
 .dny-dg a,.dny-dg button{display:inline-flex;align-items:center;min-height:2.75rem;padding:0 1.15rem;border:1px solid rgba(238,242,245,.28);background:rgba(7,9,11,.45);backdrop-filter:blur(6px);
   font:500 .8125rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--d-ink);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
 .dny-dg a:hover,.dny-dg button:hover{border-color:var(--d-ink)}
+.dny-dg button[hidden]{display:none}
 .dny-dg .birincil{background:var(--d-accent);border-color:var(--d-accent);color:#0b0e10}
 .dny-dg .birincil:hover{background:#b3dcff;border-color:#b3dcff}
 

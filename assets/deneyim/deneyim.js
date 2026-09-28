@@ -9,26 +9,13 @@
  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, SPEC, araziY } from '/n117/n117.js?v=3aef9f0d';
+import { createScene, SPEC, araziY } from '/n117/n117.js?v=36f4a7c1';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=d525e0e0';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
-export const DURAKLAR = [
-  { p: 0.125, id: 'rotor',     ad: 'Rotor',              en: 'ROTOR',           bilgi: '116,8 m çap · 57,3 m kanat · 7,9–14,1 d/dk' },
-  { p: 0.49,  id: 'gobek',     ad: 'Göbek',              en: 'HUB',             bilgi: 'Üç kanat yatağı · kanat açısı burada ayarlanır' },
-  { p: 0.515, id: 'nasel',     ad: 'Nasel içi',          en: 'NACELLE',         bilgi: '12,4 × 4,2 × 4,0 m · yerden 120 m' },
-  { p: 0.55,  id: 'anaYatak',  ad: 'Ana yatak',          en: 'MAIN BEARING',    bilgi: 'Rotorun ağırlığını ve itkisini taşır' },
-  { p: 0.59,  id: 'anaMil',    ad: 'Ana mil',            en: 'MAIN SHAFT',      bilgi: 'Düşük devir, yüksek tork · göbekten dişli kutusuna' },
-  { p: 0.635, id: 'disli',     ad: 'Dişli kutusu',       en: 'GEARBOX',         bilgi: '3 kademe · planet-planet-helisel' },
-  { p: 0.685, id: 'kaplin',    ad: 'Kaplin',             en: 'COUPLING',        bilgi: 'Hızlı mil → jeneratör · fren diski ve kaliper' },
-  { p: 0.76,  id: 'jenerator', ad: 'Jeneratör',          en: 'GENERATOR',       bilgi: '3.000 kW · çift beslemeli asenkron · 660 V' },
-  { p: 0.845, id: 'konvertor', ad: 'Konvertör',          en: 'CONVERTER',       bilgi: 'Rotor devresini besler · şebekeye sabit frekans' },
-  { p: 0.875, id: 'ustKutu',   ad: 'Üst kutu',           en: 'TOP BOX',         bilgi: 'Nasel kontrolü · PLC ve güvenlik zinciri' },
-  { p: 0.905, id: 'panolar',   ad: 'Elektrik panoları',  en: 'CONTROL CABINETS',bilgi: 'Yardımcı güç · soğutma, aydınlatma, vinç devreleri' },
-  { p: 0.93,  id: 'kablolar',  ad: 'Kablolar',           en: 'CABLES',          bilgi: 'Güç kabloları · kuleye inen sarkma ilmeği' },
-];
+export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
 
 function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
 
@@ -40,13 +27,13 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const kok = document.documentElement;
 
   let S;
-  try { S = createScene(canvas); } catch (e) { console.error('deneyim sahne:', e); return null; }
+  try { S = createScene(canvas, { lite: mobil }); } catch (e) { console.error('deneyim sahne:', e); return null; }
   const { renderer, scene, camera, controls, parts, towerTopY, setLight } = S;
   controls.enabled = false;
   if (parts.crane) parts.crane.visible = false;
   if (parts.groundBlade) parts.groundBlade.visible = false;
 
-  const normalDpr = Math.min(devicePixelRatio || 1, mobil ? 1.25 : 1.6);
+  const normalDpr = mobil ? 1 : Math.min(devicePixelRatio || 1, 1.6);
   const normalShadow = renderer.shadowMap.enabled && !mobil;
   renderer.setPixelRatio(performans ? 1 : normalDpr);
   renderer.shadowMap.enabled = normalShadow && !performans;
@@ -60,7 +47,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
   // ortam yansıması: yalnız iç metal malzemelere
   let env = null;
-  try { const pm = new THREE.PMREMGenerator(renderer); env = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); } catch (e) { env = null; }
+  if (!mobil) {
+    try { const pm = new THREE.PMREMGenerator(renderer); env = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); } catch (e) { env = null; }
+  }
 
   const tilt = parts.nacelle.parent;
   const yaw = parts.yaw;
@@ -433,6 +422,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
   function kare(t) {
     rafId = 0; if (!calisiyor || !gorunur) return;
+    if (mobil && sonT && t - sonT < 33) { rafId = requestAnimationFrame(kare); return; }
     const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
     if (t - sonIsik > 5000 && !icAyar) { isik(); sonIsik = t; }
 

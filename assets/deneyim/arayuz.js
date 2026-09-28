@@ -287,20 +287,23 @@
 
   var basla = $('dnyBasla'), acilabilir = false, kuruluyor = false;
   function statik(dugme) {
-    bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'hazir');
+    bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'dny-akis', 'hazir');
     bolum.classList.add('statik');
+    bolum.removeAttribute('aria-busy');
     kuruluyor = false;
     acilabilir = !!dugme;
-    if (dugme && basla && !sahaya) basla.hidden = false;   // ana sayfada bu işi "Sahaya gir" yapıyor
+    if (basla && !sahaya) basla.hidden = false;
+    if (baslaBtn) baslaBtn.hidden = !dugme;
   }
   function kur() {
     if (kuruluyor || sahneS) return;
     kuruluyor = true;
-    bolum.classList.remove('statik', 'dny-hazirlaniyor');
-    bolum.classList.add('uc-boyut', 'dny-akis');
+    bolum.classList.remove('statik');
+    bolum.classList.add('uc-boyut', 'dny-akis', 'dny-hazirlaniyor');
+    bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=80c440dc').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=6b11f7dd').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -310,7 +313,7 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { bolum.classList.add('hazir'); },
+        hazir: function () { bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
         hata: function () { statik(false); }
       });
       if (!S) statik(false); else sahneS = S;
@@ -318,6 +321,48 @@
   }
   var baslaBtn = $('dnyBaslaBtn');
   if (baslaBtn) baslaBtn.addEventListener('click', kur);
+
+  // Telefonda WebGL'in yüzlerce çizim çağrısı kaydırmayı saniyelerce bloke ediyor.
+  // Aynı kameradan alınmış kareleri kaydırma konumuna göre karıştır; anlatı ve HUD canlı kalır.
+  function mobilBaslat() {
+    if (kuruluyor || sahneS) return;
+    kuruluyor = true;
+    var duraklar = [0, .075, .15, .215, .29, .37, .44, .51, .58, .66, .74, .82, .89, .95, .985, 1];
+    var adres = duraklar.map(function (_, i) { return '/assets/deneyim/kareler/kare-' + String(i).padStart(2, '0') + '.jpg'; });
+    var katlar = [document.createElement('div'), document.createElement('div')];
+    katlar.forEach(function (el) { el.className = 'dny-kare'; el.setAttribute('aria-hidden', 'true'); sahne.insertBefore(el, tuval); });
+    var resimler = adres.map(function (src, i) { var im = new Image(); im.decoding = 'async'; im.fetchPriority = i < 3 ? 'high' : 'low'; im.src = src; return im; });
+    var onceki = -1, ciz = false;
+    function guncelle() {
+      ciz = false;
+      var r = bolum.getBoundingClientRect(), yol = r.height - innerHeight;
+      var p = yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0;
+      var i = 0; while (i < duraklar.length - 2 && p >= duraklar[i + 1]) i++;
+      if (i !== onceki) {
+        if (!resimler[i].complete) resimler[i].fetchPriority = 'high';
+        if (!resimler[i + 1].complete) resimler[i + 1].fetchPriority = 'high';
+        katlar[0].style.backgroundImage = 'url("' + adres[i] + '")';
+        katlar[1].style.backgroundImage = 'url("' + adres[i + 1] + '")';
+        onceki = i;
+      }
+      var t = Math.max(0, Math.min(1, (p - duraklar[i]) / (duraklar[i + 1] - duraklar[i])));
+      katlar[1].style.opacity = (t * t * (3 - 2 * t)).toFixed(3);
+      var y = p < .22 ? 2 + p * 45 : p < .41 ? 12 + (p - .22) / .19 * 108 : 120;
+      ilerleme(p, y, p > .49 && p < .93); irtifaGuncelle(p, y);
+      bolum.classList.toggle('cizimde', p > .972);
+    }
+    function zamanla() { if (!ciz) { ciz = true; requestAnimationFrame(guncelle); } }
+    bolum.classList.remove('statik', 'dny-hazirlaniyor');
+    bolum.classList.add('uc-boyut', 'dny-akis', 'dny-kareli', 'hazir');
+    if (basla) basla.hidden = true;
+    sahneS = { mobil: true };
+    import('/assets/deneyim/duraklar.js?v=1').then(function (mod) { DURAKLAR = mod.DURAKLAR; rayKur(); zamanla(); });
+    addEventListener('scroll', zamanla, { passive: true });
+    addEventListener('resize', zamanla, { passive: true });
+    zamanla();
+  }
+
+  if (matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches) return mobilBaslat();
 
   try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
