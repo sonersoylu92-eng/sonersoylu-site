@@ -9,7 +9,7 @@
  * kadraj bozulmaz, yolculuk türbinle birlikte döner.
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, SPEC, araziY } from '/n117/n117.js?v=36f4a7c1';
+import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=d525e0e0';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
@@ -41,8 +41,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   camera.fov = FOV_DIS; camera.near = 0.05; camera.far = 6000; camera.updateProjectionMatrix();
 
   // sahnedeki mevcut ışıklar (n117.js): içeri girince dış ortam ışığı kısılır
-  let hemi = null, gunes = null, dolgu = null;
-  scene.traverse(o => { if (o.isHemisphereLight) hemi = o; else if (o.isDirectionalLight) { if (o.castShadow) gunes = o; else dolgu = o; } });
+  // Mobilde gölgeler kapalı olsa da güneş ışığı aynı nesne olarak kalır.
+  const hemi = S.hemi, gunes = S.sun, dolgu = S.fill;
   let hemiTaban = hemi ? hemi.intensity : 1, dolguTaban = dolgu ? dolgu.intensity : 0.3, gunesTaban = gunes ? gunes.intensity : 1;
 
   // ortam yansıması: yalnız iç metal malzemelere
@@ -229,11 +229,40 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }).catch(e => { console.warn('post-processing yok:', e); composer = null; });
 
   /* ---------------- yardımcılar ---------------- */
-  // kapak sahnesinin ışığı sabit: mavi saat → şafak (sinematik atmosfer; saatten bağımsız)
-  function isikModu() { return 'safak'; }
+  // Saat ve Aliağa hava kodu dış atmosferi belirler; iç mekân kendi ışığını korur.
+  let hava = window.__sonerHava || null, havaSurum = 0, sonSurum = -1;
+  window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; if (!icAyar) isik(); });
+  function isikModu() {
+    const v = kok.dataset.vardiya;
+    return v === 'gece' ? 'night' : v === 'aksam' || v === 'altin' ? 'sunset' : 'day';
+  }
   let sonMod = null;
   let disPoz = renderer.toneMappingExposure, pozAnlik = disPoz;
-  function isik() { const m = isikModu(); if (m !== sonMod) { setLight(m); sonMod = m; if (hemi) hemiTaban = hemi.intensity; if (dolgu) dolguTaban = dolgu.intensity; if (gunes) gunesTaban = gunes.intensity; disPoz = renderer.toneMappingExposure; } }
+  function isik() {
+    const m = isikModu();
+    if (m === sonMod && havaSurum === sonSurum) return;
+    setLight(m); sonMod = m; sonSurum = havaSurum;
+    const tur = hava && hava.tur;
+    const u = S.sky.material.uniforms;
+    if (tur === 'bulutlu' || tur === 'yagmur' || tur === 'firtina' || tur === 'kar' || tur === 'sis') {
+      const koyu = tur === 'yagmur' || tur === 'firtina';
+      const renk = m === 'night' ? 0x26313c : tur === 'kar' ? 0xb2bbc2 : koyu ? 0x667380 : 0x909da7;
+      scene.background.setHex(renk); scene.fog.color.setHex(renk);
+      scene.fog.near = tur === 'sis' ? 90 : koyu ? 180 : tur === 'kar' ? 160 : 360;
+      scene.fog.far = tur === 'sis' ? 670 : koyu ? 1100 : tur === 'kar' ? 1050 : 1700;
+      gunes.intensity *= tur === 'sis' ? 0.22 : koyu ? 0.35 : 0.6;
+      hemi.intensity *= tur === 'firtina' ? 0.65 : 0.85;
+      if (u && u.uBulut) u.uBulut.value = 1;
+      if (u && u.c0 && m !== 'night') {
+        u.c0.value.setHex(koyu ? 0x525f70 : tur === 'kar' ? 0x8c9baa : 0x738695);
+        u.c1.value.setHex(koyu ? 0x75818c : tur === 'kar' ? 0xb3c1ca : 0x9aabb6);
+      }
+    } else if (tur === 'acik' && m !== 'night') {
+      u.uIsimaG.value = m === 'day' ? 0.5 : 0.8;
+    }
+    hemiTaban = hemi.intensity; dolguTaban = dolgu.intensity; gunesTaban = gunes.intensity;
+    disPoz = renderer.toneMappingExposure;
+  }
   isik();
   function devirRad() { const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure')); return s > 0 ? 2 * Math.PI / s : 0; }
   function yonHedef() { const d = parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
@@ -509,7 +538,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       scene.fog.color.setHex(icAyar.renk).lerp(new THREE.Color(0x0b0e11), icPay);
       scene.fog.near += (THREE.MathUtils.lerp(icAyar.yakin, kulede ? 3.5 : 2.5, icPay) - scene.fog.near) * sy;
       scene.fog.far += (THREE.MathUtils.lerp(icAyar.uzak, kulede ? 42 : 19, icPay) - scene.fog.far) * sy; }
-    else if (icAyar) { scene.fog.color.setHex(icAyar.renk); scene.fog.near = icAyar.yakin; scene.fog.far = icAyar.uzak; icAyar = null; }
+    else if (icAyar) { scene.fog.color.setHex(icAyar.renk); scene.fog.near = icAyar.yakin; scene.fog.far = icAyar.uzak; icAyar = null; isik(); }
     // göz uyumu: iç ve dış arasında pozlama sıçramaz, göz alışır gibi bir iki saniyede yerine oturur
     const pozHedef = THREE.MathUtils.lerp(disPoz, kulede ? 0.9 : 0.92, icPay);
     kIcOnce = kIc;
