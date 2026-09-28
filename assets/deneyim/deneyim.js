@@ -428,7 +428,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
     // kaydırma → ilerleme; ataletli (sinema kamerası dolly'si gibi)
     const hedefP = ilerleme();
-    const anlik = az || window.__deneyimAnlik || window.__deneyimKes;   // test/erişilebilirlik/bölüm atlama: ataletsiz
+    const anlik = mobil || az || window.__deneyimAnlik || window.__deneyimKes;   // dokunmatik kaydırmada kamera parmağı geriden izlemesin
     window.__deneyimKes = false;
     p += (hedefP - p) * (anlik ? 1 : 1 - Math.exp(-dt * 2.6));
     const u = egriU(p);
