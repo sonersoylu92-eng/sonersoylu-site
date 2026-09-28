@@ -17,7 +17,7 @@
       location.reload();
     });
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('/sw.js').then(function (kayit) {
+      function kaydet() { navigator.serviceWorker.register('/sw.js').then(function (kayit) {
         if (!kayit) return;
         kayit.update();
         // sekme günlerce açık kalabiliyor; saatte bir yeni sürüm var mı diye bak
@@ -26,7 +26,19 @@
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) kayit.update();
         });
-      }).catch(function () {});
+      }).catch(function () {}); }
+      // İlk ziyarette çevrimdışı sayfaların toplu indirilmesi 3B kapağın
+      // yüklenmesiyle yarışmasın. Diğer sayfalarda kayıt normal devam eder.
+      var sahne = document.getElementById('deneyim');
+      if (!sahne || sahne.classList.contains('hazir') || sahne.classList.contains('statik')) { kaydet(); return; }
+      var bitti = false, gozlem;
+      function sahneSonra() {
+        if (bitti) return; bitti = true; gozlem.disconnect(); clearTimeout(zaman);
+        if ('requestIdleCallback' in window) requestIdleCallback(kaydet, { timeout: 3000 }); else setTimeout(kaydet, 300);
+      }
+      gozlem = new MutationObserver(function () { if (sahne.classList.contains('hazir') || sahne.classList.contains('statik')) sahneSonra(); });
+      gozlem.observe(sahne, { attributes: true, attributeFilter: ['class'] });
+      var zaman = setTimeout(sahneSonra, 20000);
     });
   }
 
