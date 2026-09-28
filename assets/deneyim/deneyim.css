@@ -13,8 +13,9 @@
 .dny-sahne{position:sticky;top:0;height:100svh;max-height:100vh;overflow:hidden;isolation:isolate}
 .dny-sahne canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-3;opacity:0;transition:opacity .7s ease}
 .dny-sahne canvas.hazir{opacity:1}
-.dny-poster{position:absolute;inset:0;z-index:-4;background:linear-gradient(180deg,#263c52 0%,#556472 55%,#121a20 100%) center/cover no-repeat}
-:root[data-vardiya=gece] .dny-poster{background-image:linear-gradient(180deg,#0a1324 0%,#202d40 55%,#0a1018 100%)}
+.dny-poster{position:absolute;inset:0;z-index:-4;background:#263c52 url('/assets/saha/sahne-ilk-kare-wide.webp') center/cover no-repeat}
+@media(max-width:820px){.dny-poster{background-image:url('/assets/saha/sahne-ilk-kare-mobile.webp')}}
+:root[data-vardiya=gece] .dny-poster:not(.dny-anlik-kare){filter:brightness(.52) saturate(.65)}
 .dny-poster.dny-anlik-kare{background-size:cover;background-position:center}
 .dny-bolum.dny-akis .dny-poster{transition:opacity .7s ease}
 .dny-bolum.hazir .dny-poster{opacity:0}
