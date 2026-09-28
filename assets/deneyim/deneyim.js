@@ -199,10 +199,15 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     { p: 0.845,t: 'N', k: v(0.9, 1.2, 5.7),    h: v(1.55, -0.1, 2.4) },
     { p: 0.875,t: 'N', k: v(-0.25, 0.8, 5.8),  h: v(-1.6, -0.1, 4.6) },
     { p: 0.905,t: 'N', k: v(-1.0, 1.15, 5.2),  h: v(-1.75, -0.5, 2.8) },
-    { p: 0.93, t: 'N', k: v(-0.9, 1.3, 1.95),  h: v(-0.2, -1.4, 0.55) },
-    // tavan kapağından dışarı, kahraman kadrajı
-    { p: 0.955,t: 'N', k: v(0, 1.62, kapakZ - 0.3), h: v(0, 4.5, kapakZ + 0.5) },
-    { p: 0.975,t: 'N', k: v(0.6, 4.2, kapakZ + 1.2),h: v(0, 1.2, -5) },
+    { p: 0.93, t: 'N', k: v(-0.3, 1.3, 1.95),  h: v(-0.2, -1.4, 0.55) },
+    // Açık çatı kapağının ortasından yüksel; kamerayı önce açıklığa çevir.
+    { p: 0.934,t: 'N', k: v(-0.2, 1.55, kapakZ - 0.15), h: v(0, 2.5, -5.0) },
+    { p: 0.938,t: 'N', k: v(-0.2, 2.45, kapakZ), h: v(0, 2.6, -5.0) },
+    // Kabuktan çıktıktan sonra rotor ve nasel çatısı kadraja girer.
+    { p: 0.940,t: 'N', k: v(-0.3, 3.4, kapakZ + 0.3), h: v(0, 2.4, -4.0) },
+    { p: 0.947,t: 'N', k: v(-0.2, 4.5, kapakZ + 3.0), h: v(0, 2.2, -5.0) },
+    { p: 0.955,t: 'N', k: v(4, 8, kapakZ + 12), h: v(0, 1.6, -5) },
+    { p: 0.975,t: 'N', k: v(12, 15, kapakZ + 26),h: v(0, 1.2, -5) },
     { p: 1.00, t: 'D', k: v(88, -8, -150),     h: v(0, -12, -6) },
   ];
   tilt.updateMatrixWorld(true); yaw.updateMatrixWorld(true);
@@ -272,7 +277,6 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const tmp = new THREE.Vector3(), yerel = new THREE.Vector3();
   const tiltTers = new THREE.Matrix4();
   function naselYerel(dunya, out) { tiltTers.copy(tilt.matrixWorld).invert(); return out.copy(dunya).applyMatrix4(tiltTers); }
-  const can = (x, m, s) => Math.exp(-((x - m) / s) * ((x - m) / s));
   const yumusak = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
   /* ---------------- döngü ---------------- */
@@ -468,15 +472,19 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     // iç/dış geçişi
     naselYerel(camera.position, yerel);
     const b = ic.sinir;
-    const icerde = sonIcerde = (Math.abs(yerel.x) < 2.15 && yerel.y > b.TABAN - 0.2 && yerel.y < b.TAVAN + 0.15 && yerel.z > b.ON - 0.15 && yerel.z < b.ARKA + 0.2) ? 1 : 0;
+    const icerde = sonIcerde = (Math.abs(yerel.x) < 2.15 && yerel.y > b.TABAN - 0.2 && yerel.y < b.TAVAN + 0.15 && yerel.z > b.ON - 0.15 && yerel.z < b.ARKA + 0.2 && !(p > 0.934 && yerel.y > b.TAVAN - 0.35)) ? 1 : 0;
     const yakin = p > 0.4 && p < 0.99;   // kule tepesinden kapağa bakarken naselin içi görünür
-    ic.grup.visible = yakin; icIsik.visible = yakin;
+    // Once the camera clears the roof, hide the interior roof underside.
+    ic.grup.visible = yakin && (icerde || p < 0.934);
+    icIsik.visible = ic.grup.visible;
     // kule içi mi? (kule yereline çevir: eksene uzaklık iç yarıçaptan küçük)
     kule.grup.updateMatrixWorld();
     kule.grup.worldToLocal(tlKam.copy(camera.position));
     const kulede = sonKulede = !icerde && tlKam.y > 3.6 && tlKam.y < towerTopY + 1.3 && Math.hypot(tlKam.x, tlKam.z) < KO.rIc(tlKam.y) - 0.01 ? 1 : 0;
     // dış nasel kabuğu: içerideyken ve kule tepesinden kapağa bakarken çizilmez (kapaktan naselin içi görünür)
-    parts.nacelle.visible = !icerde && !(kulede && tlKam.y > KO.ustY - 1);
+    // The camera crosses the open roof hatch before it clears the outer shell.
+    // Keep the shell hidden for those few frames instead of showing its dark back face.
+    parts.nacelle.visible = !icerde && !(p > 0.935 && yerel.y < 2.8) && !(kulede && tlKam.y > KO.ustY - 1);
     const kuleBolum = p > 0.14 && p < 0.47;
     kule.ic.visible = kuleBolum;
     kule.kabinIsik.intensity = kuleBolum ? kabinIsikTaban : 0; kule.girisIsik.intensity = kuleBolum ? girisIsikTaban : 0; kule.ustIsik.intensity = kuleBolum ? ustIsikTaban : 0;
@@ -522,11 +530,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     huzmeMat.uniforms.uGuc.value = THREE.MathUtils.lerp(huzmeMat.uniforms.uGuc.value, icerde ? 1 : 0, 1 - Math.exp(-dt * 4));
     huzmeMat.uniforms.uZaman.value = t / 1000;
     if (toz) { toz.rotation.y = Math.sin(t / 9000) * 0.02; toz.position.y = Math.sin(t / 4000) * 0.03; }
-    // geçişte kısa karartma: göbekten ve kapaktan geçerken
-    const dip = Math.max(
-      Math.abs(yerel.x) < 2.4 && Math.abs(yerel.y) < 2.4 ? yumusak(-10.4, -9.5, yerel.z) * (1 - yumusak(-5.85, -5.2, yerel.z)) : 0,
-      Math.abs(yerel.x) < 1.2 && Math.abs(yerel.z - kapakZ) < 2.2 ? can(yerel.y, b.TAVAN + 0.25, 0.45) : 0,
-      0);   // kule kapısı ve nasel tabanındaki kapak gerçek açıklıklar: karartma yok
+    // Only the hub transition needs a brief occlusion; the open roof hatch stays visible.
+    const dip = Math.abs(yerel.x) < 2.4 && Math.abs(yerel.y) < 2.4
+      ? yumusak(-10.4, -9.5, yerel.z) * (1 - yumusak(-5.85, -5.2, yerel.z)) : 0;
     if (cb.karartma) cb.karartma(Math.min(1, dip));
 
     // mekanik: rotor gerçek devirde, ana mil onunla, hızlı taraf ~×100 (görsel olarak yavaşlatılmış)
