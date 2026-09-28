@@ -258,8 +258,9 @@ function buildNacelle() {
   yawRing.position.y = -H / 2 - 0.05;
   g.add(yawRing);
 
-  // GRP kapak — yuvarlatılmış gövde
-  const shell = new THREE.Mesh(roundedBox(W, H, L, 0.55), MAT.grp);
+  // GRP kabuk: çatıdaki servis açıklığı iç modeldeki kapakla aynı yerde.
+  // Katı bir kutu kullanılırsa kamera çatıdan çıkarken yüzeyin içinden geçer.
+  const shell = new THREE.Mesh(nacelleShell(W, H, L, 0.55, 1.05, 1.2, 4.2), MAT.grp);
   shell.castShadow = true; shell.receiveShadow = true;
   g.add(shell);
 
@@ -270,10 +271,12 @@ function buildNacelle() {
   nose.castShadow = true;
   g.add(nose);
 
-  // arka bölme: soğutucu ve anemometre direği
-  const cooler = new THREE.Mesh(new THREE.BoxGeometry(W * 0.72, 0.75, 1.5), MAT.steelDk);
-  cooler.position.set(0, H / 2 + 0.35, L / 2 - 1.4);
-  g.add(cooler);
+  // Arka soğutma modülleri servis kapağının görüş hattını açık bırakır.
+  for (const side of [-1, 1]) {
+    const cooler = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.24, 0.9), MAT.steelDk);
+    cooler.position.set(side * 1.48, H / 2 + 0.13, L / 2 - 0.9);
+    g.add(cooler);
+  }
 
   const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.5, 8), MAT.dark);
   mast.position.set(0, H / 2 + 1.0, L / 2 - 0.4);
@@ -304,10 +307,15 @@ function buildNacelle() {
     return k;
   });
 
-  // servis kapağı / helideck izi
-  const hatch = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.06, 1.2), MAT.steelDk);
-  hatch.position.set(0, H / 2 + 0.02, 0.6);
-  g.add(hatch);
+  // Açık servis kapağının dış çerçevesi; kamera içinden geçebilir.
+  const hatchFrame = new THREE.Group();
+  const framePiece = (w, d, x, z) => {
+    const piece = new THREE.Mesh(new THREE.BoxGeometry(w, 0.10, d), MAT.steelDk);
+    piece.position.set(x, H / 2 + 0.04, z); hatchFrame.add(piece);
+  };
+  framePiece(2.26, 0.10, 0, 1.20); framePiece(2.26, 0.10, 0, 4.20);
+  framePiece(0.10, 2.90, -1.08, 2.70); framePiece(0.10, 2.90, 1.08, 2.70);
+  g.add(hatchFrame);
 
   // yan yazı şeridi (Nordex kimliği yerine nötr bant)
   const band = new THREE.Mesh(new THREE.BoxGeometry(W + 0.02, 0.22, 3.2), MAT.steelDk);
@@ -478,6 +486,56 @@ function buildPerson() {
   legs.position.y = 0.42;
   [body, head, legs].forEach(m => { m.castShadow = true; g.add(m); });
   return g;
+}
+
+function nacelleShell(w, h, d, r, hatchHalfWidth, hatchFront, hatchBack) {
+  const x = -w / 2, y = -h / 2, shape = new THREE.Shape();
+  shape.moveTo(x + r, y);
+  shape.lineTo(x + w - r, y);
+  shape.quadraticCurveTo(x + w, y, x + w, y + r);
+  shape.lineTo(x + w, y + h - r);
+  shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  shape.lineTo(hatchHalfWidth, y + h);
+  shape.lineTo(-hatchHalfWidth, y + h);
+  shape.lineTo(x + r, y + h);
+  shape.quadraticCurveTo(x, y + h, x, y + h - r);
+  shape.lineTo(x, y + r);
+  shape.quadraticCurveTo(x, y, x + r, y);
+
+  const outline = shape.getPoints(8);
+  if (outline[0].distanceToSquared(outline[outline.length - 1]) < 1e-10) outline.pop();
+  const positions = [], zSections = [-d / 2, hatchFront, hatchBack, d / 2];
+  for (let section = 0; section < 3; section++) {
+    const z0 = zSections[section], z1 = zSections[section + 1];
+    for (let i = 0; i < outline.length; i++) {
+      const a = outline[i], b = outline[(i + 1) % outline.length];
+      const overHatch = section === 1 && Math.abs(a.y - h / 2) < 1e-5 && Math.abs(b.y - h / 2) < 1e-5
+        && Math.max(Math.abs(a.x), Math.abs(b.x)) <= hatchHalfWidth + 1e-5;
+      if (overHatch) continue;
+      positions.push(a.x, a.y, z0, b.x, b.y, z0, a.x, a.y, z1,
+        b.x, b.y, z0, b.x, b.y, z1, a.x, a.y, z1);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  // Yalnız dış uçları kapat; ara kesitlere kapak eklemek kamera yolunu tıkar.
+  const cap = new THREE.ShapeGeometry(shape, 8);
+  const capPos = cap.getAttribute('position');
+  const capIdx = cap.index;
+  const triCount = capIdx ? capIdx.count : capPos.count;
+  const capPositions = [];
+  for (const z of [-d / 2, d / 2]) {
+    for (let i = 0; i < triCount; i += 3) {
+      for (const j of (z < 0 ? [2, 1, 0] : [0, 1, 2])) {
+        const q = capIdx ? capIdx.getX(i + j) : i + j;
+        capPositions.push(capPos.getX(q), capPos.getY(q), z);
+      }
+    }
+  }
+  const all = new Float32Array(positions.length + capPositions.length);
+  all.set(positions); all.set(capPositions, positions.length);
+  geometry.setAttribute('position', new THREE.BufferAttribute(all, 3));
+  geometry.computeVertexNormals();
+  return geometry;
 }
 
 function roundedBox(w, h, d, r) {

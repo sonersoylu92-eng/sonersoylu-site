@@ -64,8 +64,8 @@ export function naselIciKur(opts = {}) {
   const uz = ARKA - ON, gen = SAG - SOL, yuk = TAVAN - TABAN;
   ekle(new THREE.PlaneGeometry(uz, yuk), M.duvar, SOL, (TABAN + TAVAN) / 2, 0, 0, Math.PI / 2, 0, kabuk);
   ekle(new THREE.PlaneGeometry(uz, yuk), M.duvar, SAG, (TABAN + TAVAN) / 2, 0, 0, -Math.PI / 2, 0, kabuk);
-  // tavan: servis kapağı açıklığı bırakarak dört parça (açıklık z 1,6–2,9, x −0,65–0,65)
-  const KZ0 = 1.6, KZ1 = 2.9, KX = 0.65;
+  // tavan: dış kabukla aynı hizadaki servis açıklığını dört parçayla çevrele.
+  const KZ0 = 1.2, KZ1 = 4.2, KX = 1.05;
   const tavan = (x0, x1, z0, z1) => ekle(new THREE.PlaneGeometry(x1 - x0, z1 - z0), M.duvar, (x0 + x1) / 2, TAVAN, (z0 + z1) / 2, Math.PI / 2, 0, 0, kabuk);
   tavan(SOL, SAG, ON, KZ0); tavan(SOL, SAG, KZ1, ARKA); tavan(SOL, -KX, KZ0, KZ1); tavan(KX, SAG, KZ0, KZ1);
   // kapak çerçevesi
