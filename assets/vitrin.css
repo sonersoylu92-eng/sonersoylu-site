@@ -24,9 +24,9 @@
 
 /* Gerçek zamanlı 3B yolculuktan teknik içeriğe tek, sakin bir film kesmesi. */
 .ana .v-ara-sahne{position:relative;min-height:clamp(34rem,78svh,58rem);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;background:#101519;color:#fff}
-.v-ara-sahne > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;z-index:-2}
-.v-ara-sahne::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(4,7,9,.81),rgba(4,7,9,.38) 55%,transparent 85%),linear-gradient(0deg,rgba(4,7,9,.86),transparent 66%),linear-gradient(180deg,rgba(4,7,9,.35),transparent 24%)}
-.v-ara-metin{width:min(100% - 2 * clamp(1rem,5vw,5rem),76rem);margin:0 auto;padding:clamp(4rem,9vh,7rem) 0;position:relative}
+.v-ara-sahne > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;z-index:0}
+.v-ara-sahne::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(4,7,9,.81),rgba(4,7,9,.38) 55%,transparent 85%),linear-gradient(0deg,rgba(4,7,9,.86),transparent 66%),linear-gradient(180deg,rgba(4,7,9,.35),transparent 24%)}
+.v-ara-metin{width:min(100% - 2 * clamp(1rem,5vw,5rem),76rem);margin:0 auto;padding:clamp(4rem,9vh,7rem) 0;position:relative;z-index:2}
 .v-ara-etiket{margin:0 0 1.15rem;font:500 .7rem/1.5 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:#a7d9f4}
 .v-ara-etiket::before{content:"";display:inline-block;width:2.5rem;height:1px;margin:0 .8rem .25rem 0;background:#a7d9f4}
 .ana .v-ara-metin h2{margin:0;max-width:10ch;font:600 clamp(3.4rem,8.5vw,8.5rem)/.91 var(--sans);letter-spacing:-.065em;text-wrap:balance;text-shadow:0 3px 35px rgba(0,0,0,.24)}
