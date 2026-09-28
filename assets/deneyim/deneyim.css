@@ -164,7 +164,7 @@ html:has(body.dny-body){background:#07090b}
 .dny-ana .ralan{transition:opacity .5s ease}
 .dny-bolum.gecti .ralan{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .dny-bolum.statik .kaydir{display:none}
-.dny-atla{position:absolute;right:var(--d-gut);top:calc(4.4rem + env(safe-area-inset-top) + 1.6rem);font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;
+.dny-atla{position:absolute;z-index:5;right:var(--d-gut);top:calc(4.4rem + env(safe-area-inset-top) + 1.6rem);font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;
   color:var(--d-muted);border-bottom:1px solid rgba(238,242,245,.25);padding:.35rem 0;opacity:0;pointer-events:none;transition:opacity .5s ease,color .2s}
 .dny-atla:hover,.dny-atla:focus-visible{color:var(--d-ink);opacity:1}
 .dny-bolum.uc-boyut:not(.sonda) .dny-atla,.dny-bolum.dny-hazirlaniyor:not(.sonda) .dny-atla{opacity:1;pointer-events:auto}
