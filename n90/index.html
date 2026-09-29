@@ -332,9 +332,16 @@ document.getElementById('burger').addEventListener('click', function () {
 </script>
 
 <script type="module">
-import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, STAGES, SPEC } from './n90.js?v=a48ab6b0';
-
+(async function () {
+try {
+  const kontrol = document.createElement('canvas');
+  if (!window.WebGLRenderingContext || !(kontrol.getContext('webgl2') || kontrol.getContext('webgl'))) {
+    throw new Error('WebGL kullanılamıyor');
+  }
+  const [THREE, { createScene, STAGES, SPEC }] = await Promise.all([
+    import('/assets/vendor/three.module.min.js?v=3eb31ec4'),
+    import('./n90.js?v=a48ab6b0')
+  ]);
 const canvas = document.getElementById('scene');
 const S = createScene(canvas);
 const { renderer, scene, camera, controls, parts } = S;
@@ -830,6 +837,17 @@ go(0, false);
 resize();
 renderer.render(scene, camera);
 setTimeout(() => document.getElementById('loading').classList.add('gone'), 260);
+} catch (err) {
+  const loading = document.getElementById('loading');
+  loading.innerHTML = '<span>3B model bu cihazda açılamadı.<br><a href="#kunye">Teknik künyeye geç →</a></span>';
+  loading.style.padding = '1.5rem';
+  loading.style.textAlign = 'center';
+  loading.style.lineHeight = '1.8';
+  document.getElementById('stLead').textContent = '3B görünüm kullanılamıyor. Nordex N90/2500 ölçüleri ve kaynakları teknik künyede okunabilir.';
+  document.querySelectorAll('.stage-wrap button').forEach(function (button) { button.disabled = true; });
+  console.warn('N90 3B kullanılamıyor:', err);
+}
+})();
 </script>
 <script src="/assets/site.js?v=2083a619" defer></script>
 <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
