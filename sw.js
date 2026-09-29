@@ -2,7 +2,7 @@
    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
 
-const SURUM = 'kule-20260928-cinema2';
+const SURUM = 'kule-20260928-speed1';
 const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
 const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
 
@@ -84,7 +84,7 @@ self.addEventListener('fetch', (e) => {
         ]);
         if (y && y.ok) {
           const c = await caches.open(KABUK);
-          c.put(istek, y.clone());
+          e.waitUntil(c.put(istek, y.clone()).catch(() => {}));
         }
         return y;
       } catch {
@@ -97,11 +97,18 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Diğer aynı köken istekleri: önce önbellek, arkada tazele
+  // Sürümlü statik dosyalar: önbellek varsa tekrar ağ isteği çıkarma.
+  // Yeni dağıtımda SURUM değişir ve eski önbellek kaldırılır.
   e.respondWith((async () => {
     const c = await caches.open(VARLIK);
     const v = await c.match(istek);
-    const ag = fetch(istek).then((y) => { if (y.ok) c.put(istek, y.clone()); return y; }).catch(() => null);
-    return v || (await ag) || new Response('', { status: 504 });
+    if (v) return v;
+    try {
+      const y = await fetch(istek);
+      if (y.ok) e.waitUntil(c.put(istek, y.clone()).catch(() => {}));
+      return y;
+    } catch {
+      return new Response('', { status: 504 });
+    }
   })());
 });

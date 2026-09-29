@@ -142,7 +142,7 @@
 }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Nordex N90/2500 — aşama aşama montaj","about":"Rüzgâr türbini montajı","author":{"@type":"Person","name":"Soner Soylu","url":"https://sonersoylu.com"},"inLanguage":"tr","url":"https://sonersoylu.com/n90/"}</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
      crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
@@ -332,9 +332,16 @@ document.getElementById('burger').addEventListener('click', function () {
 </script>
 
 <script type="module">
-import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, STAGES, SPEC } from './n90.js?v=a48ab6b0';
-
+(async function () {
+try {
+  const kontrol = document.createElement('canvas');
+  if (!window.WebGLRenderingContext || !(kontrol.getContext('webgl2') || kontrol.getContext('webgl'))) {
+    throw new Error('WebGL kullanılamıyor');
+  }
+  const [THREE, { createScene, STAGES, SPEC }] = await Promise.all([
+    import('/assets/vendor/three.module.min.js?v=3eb31ec4'),
+    import('./n90.js?v=a48ab6b0')
+  ]);
 const canvas = document.getElementById('scene');
 const S = createScene(canvas);
 const { renderer, scene, camera, controls, parts } = S;
@@ -769,13 +776,20 @@ function resize() {
 }
 
 const clock = new THREE.Clock();
-let tickErrors = 0;
+let tickErrors = 0, raf = 0, gorunur = false;
 function tick() {
+  raf = 0;
+  if (!gorunur || document.hidden) return;
   try { frame(); } catch (e) {
     if (tickErrors++ < 3) console.error('sahne karesi:', e);
   }
-  requestAnimationFrame(tick);
+  raf = requestAnimationFrame(tick);
 }
+function uyandir() { if (gorunur && !document.hidden && !raf) raf = requestAnimationFrame(tick); }
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(function (es) { gorunur = es[0].isIntersecting; uyandir(); }, { rootMargin: '120px' }).observe(canvas);
+} else { gorunur = true; uyandir(); }
+document.addEventListener('visibilitychange', uyandir);
 
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.1);
@@ -822,8 +836,18 @@ applyWind(10);
 go(0, false);
 resize();
 renderer.render(scene, camera);
-requestAnimationFrame(tick);
 setTimeout(() => document.getElementById('loading').classList.add('gone'), 260);
+} catch (err) {
+  const loading = document.getElementById('loading');
+  loading.innerHTML = '<span>3B model bu cihazda açılamadı.<br><a href="#kunye">Teknik künyeye geç →</a></span>';
+  loading.style.padding = '1.5rem';
+  loading.style.textAlign = 'center';
+  loading.style.lineHeight = '1.8';
+  document.getElementById('stLead').textContent = '3B görünüm kullanılamıyor. Nordex N90/2500 ölçüleri ve kaynakları teknik künyede okunabilir.';
+  document.querySelectorAll('.stage-wrap button').forEach(function (button) { button.disabled = true; });
+  console.warn('N90 3B kullanılamıyor:', err);
+}
+})();
 </script>
 <script src="/assets/site.js?v=2083a619" defer></script>
 <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>

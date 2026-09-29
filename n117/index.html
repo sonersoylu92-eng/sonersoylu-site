@@ -212,7 +212,7 @@ dl.spec dd{margin-top:.4rem;font-family:var(--mono);font-size:.9375rem;color:var
  {"@type":"Question","name":"N117 kanatları Türkiye'de mi üretiliyor?","acceptedAnswer":{"@type":"Answer","text":"Evet. Nordex, 2013 yılında TPI Composites ile anlaşarak N117/2400 ve N117/3000 kanatlarının İzmir'de üretilmesini sağladı; ilk kanatlar 2014 Mart'ında çıktı ve aynı yılın ortasında Türkiye'deki ilk proje bu kanatlarla kuruldu. TPI'nin kapanmasından sonra duran üretim, Nisan 2026'da Nordex tarafından İzmir Serbest Bölgesi'ndeki tesiste yeniden başlatıldı."}}]}
 ]}
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
      crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
@@ -787,15 +787,37 @@ document.getElementById('burger').addEventListener('click', function () {
 })();
 </script>
 <script type="module">
-import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
-import { createScene, BAKIS, SPEC } from '/n117/n117.js?v=36f4a7c1';
-
 const canvas = document.getElementById('n117cv');
+const viz = canvas.closest('.viz');
+let basladi = false;
+async function modelKur() {
+if (basladi) return;
+basladi = true;
+function modelHata(metin) {
+  document.getElementById('vizYuk').textContent = metin;
+  viz.querySelectorAll('button').forEach(function (button) { button.disabled = true; });
+}
+const kontrol = document.createElement('canvas');
+if (!window.WebGLRenderingContext || !(kontrol.getContext('webgl2') || kontrol.getContext('webgl'))) {
+  modelHata('3B görünüm bu cihazda açılamadı. Turun 15 durağı yukarıda okunabilir.');
+  return;
+}
+let THREE, createScene, BAKIS;
+try {
+  [THREE, { createScene, BAKIS }] = await Promise.all([
+    import('/assets/vendor/three.module.min.js?v=3eb31ec4'),
+    import('/n117/n117.js?v=36f4a7c1')
+  ]);
+} catch (err) {
+  modelHata('Model yüklenemedi; bağlantıyı kontrol edin.');
+  console.error('n117 dosyaları:', err);
+  return;
+}
 let S;
 try {
   S = createScene(canvas);
 } catch (err) {
-  document.getElementById('vizYuk').textContent = 'Model açılamadı';
+  modelHata('3B model açılamadı. Turun 15 durağı yukarıda okunabilir.');
   console.error('n117 sahne:', err);
 }
 
@@ -883,7 +905,7 @@ if (S) {
     }
   }
 
-  let hata = 0;
+  let hata = 0, raf = 0, gorunur = false, ilkKare = true;
   function kare() {
     olcek();
     const t = performance.now();
@@ -902,15 +924,31 @@ if (S) {
   }
 
   function dongu() {
-    try { kare(); } catch (e) { if (hata++ < 3) console.error('n117 kare:', e); }
-    requestAnimationFrame(dongu);
+    raf = 0;
+    if (!gorunur || document.hidden) return;
+    try {
+      kare();
+      if (ilkKare) { document.getElementById('vizYuk').classList.add('gitti'); ilkKare = false; }
+    } catch (e) {
+      if (hata++ < 3) console.error('n117 kare:', e);
+      if (hata >= 3) { document.getElementById('vizYuk').textContent = 'Model görüntülenemedi.'; return; }
+    }
+    raf = requestAnimationFrame(dongu);
   }
-  requestAnimationFrame(function () {
-    try { kare(); } catch (e) { console.error('n117 ilk kare:', e); }
-    document.getElementById('vizYuk').classList.add('gitti');
-    dongu();
-  });
+  function uyandir() { if (gorunur && !document.hidden && !raf) raf = requestAnimationFrame(dongu); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { gorunur = es[0].isIntersecting; uyandir(); }, { rootMargin: '150px' }).observe(viz);
+  } else { gorunur = true; uyandir(); }
+  document.addEventListener('visibilitychange', uyandir);
 }
+}
+// Büyük 3B motoru, kullanıcı bu bölüme yaklaşana kadar ana sayfa yüküne katma.
+if ('IntersectionObserver' in window) {
+  const gozcu = new IntersectionObserver(function (es) {
+    if (es[0].isIntersecting) { gozcu.disconnect(); modelKur(); }
+  }, { rootMargin: '700px' });
+  gozcu.observe(viz);
+} else modelKur();
 </script>
 
 <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
