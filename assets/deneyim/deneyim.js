@@ -440,21 +440,23 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }
 
   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
-  let kareSay = 0, kareSakla = false;
+  let kareSay = 0, kareSakla = false, sonHedefP = null, durgunT = 0;
   function ilkKareyiSakla() {
     if (p > .02 || !canvas.width || !canvas.height) return;
     try {
       const k = document.createElement('canvas');
-      const oran = Math.min(1, 960 / canvas.width);
+      const oran = Math.min(1, (mobil ? 540 : 960) / canvas.width);
       k.width = Math.max(1, Math.round(canvas.width * oran));
       k.height = Math.max(1, Math.round(canvas.height * oran));
       const ctx = k.getContext('2d', { alpha: false });
       ctx.drawImage(canvas, 0, 0, k.width, k.height);
-      const data = k.toDataURL('image/webp', .58);
-      if (data.length < 5000) return;
-      sessionStorage.setItem('dny-kare:' + location.pathname, JSON.stringify({
-        t: Date.now(), v: kok.dataset.vardiya, w: canvas.clientWidth, h: canvas.clientHeight, data
-      }));
+      const w = canvas.clientWidth, h = canvas.clientHeight, v = kok.dataset.vardiya;
+      const kodla = () => { try {
+        const data = k.toDataURL('image/webp', .58);
+        if (data.length < 5000) return;
+        sessionStorage.setItem('dny-kare:' + location.pathname, JSON.stringify({ t: Date.now(), v, w, h, data }));
+      } catch (e) { /* depolama dolu ya da kapalı */ } };
+      if ('requestIdleCallback' in window) requestIdleCallback(kodla, { timeout: 4000 }); else setTimeout(kodla, 1500);
     } catch (e) { /* WebGL okuma ya da depolama engellenebilir */ }
   }
   const tlKam = new THREE.Vector3();
@@ -468,12 +470,17 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
   function kare(t) {
     rafId = 0; if (!calisiyor || !gorunur) return;
-    if (mobil && sonT && t - sonT < 33) { rafId = requestAnimationFrame(kare); return; }
+    // kaydırma → ilerleme; ataletli (sinema kamerası dolly'si gibi)
+    const hedefP = ilerleme();
+    // kaydırma durduğunda sahne yalnızca rotor ve hafif kamera nefesi için çizilir: kare seyreltilir,
+    // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
+    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg) { sonHedefP = hedefP; durgunT = t; }
+    const durgun = t - durgunT > 1200;
+    const aralik = mobil ? (durgun ? 90 : 33) : (durgun && !fare.var ? 33 : 0);
+    if (sonT && t - sonT < aralik) { rafId = requestAnimationFrame(kare); return; }
     const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
     if (t - sonIsik > 5000 && !icAyar) { isik(); sonIsik = t; }
 
-    // kaydırma → ilerleme; ataletli (sinema kamerası dolly'si gibi)
-    const hedefP = ilerleme();
     const anlik = mobil || az || window.__deneyimAnlik || window.__deneyimKes;   // dokunmatik kaydırmada kamera parmağı geriden izlemesin
     window.__deneyimKes = false;
     p += (hedefP - p) * (anlik ? 1 : 1 - Math.exp(-dt * 2.6));
@@ -606,7 +613,21 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (ilk) { ilk = false; canvas.classList.add('hazir'); if (cb.hazir) cb.hazir(); }
     rafId = requestAnimationFrame(kare);
   }
-  baslat();
+  // Gölgelendirici derlemesi: görünmeyen iç sahneler (kule, nasel) de dahil hepsi ilk kareden önce derlenir.
+  // KHR_parallel_shader_compile olan cihazlarda (Chrome, Android) derleme ana iş parçacığını kilitlemez;
+  // olmayanlarda bile donma kule kapısına gelince değil, sahne ilk açılırken ve tek seferde olur.
+  (function derleSonraBaslat() {
+    let basladi = false;
+    const git = () => { if (basladi) return; basladi = true; baslat(); };
+    try {
+      const gizli = [];
+      scene.traverse(o => { if (!o.visible) { o.visible = true; gizli.push(o); } });
+      const pr = renderer.compileAsync ? renderer.compileAsync(scene, camera) : Promise.resolve(renderer.compile(scene, camera));
+      gizli.forEach(o => { o.visible = false; });
+      pr.then(git, git);
+      setTimeout(git, 5000);   // hiçbir durumda sahne bekletilmesin
+    } catch (e) { git(); }
+  })();
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); calisiyor = false; if (rafId) cancelAnimationFrame(rafId); canvas.classList.remove('hazir'); if (cb.hata) cb.hata(); }, false);
 
   // sayfa tarafı fare konumunu bildirir: nx, ny ∈ [-1, 1]; null → fare sahnede değil

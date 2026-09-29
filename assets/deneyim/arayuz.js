@@ -351,7 +351,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=poster3d1').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=akici1').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
