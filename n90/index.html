@@ -142,7 +142,7 @@
 }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Nordex N90/2500 — aşama aşama montaj","about":"Rüzgâr türbini montajı","author":{"@type":"Person","name":"Soner Soylu","url":"https://sonersoylu.com"},"inLanguage":"tr","url":"https://sonersoylu.com/n90/"}</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
      crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
@@ -769,13 +769,20 @@ function resize() {
 }
 
 const clock = new THREE.Clock();
-let tickErrors = 0;
+let tickErrors = 0, raf = 0, gorunur = false;
 function tick() {
+  raf = 0;
+  if (!gorunur || document.hidden) return;
   try { frame(); } catch (e) {
     if (tickErrors++ < 3) console.error('sahne karesi:', e);
   }
-  requestAnimationFrame(tick);
+  raf = requestAnimationFrame(tick);
 }
+function uyandir() { if (gorunur && !document.hidden && !raf) raf = requestAnimationFrame(tick); }
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(function (es) { gorunur = es[0].isIntersecting; uyandir(); }, { rootMargin: '120px' }).observe(canvas);
+} else { gorunur = true; uyandir(); }
+document.addEventListener('visibilitychange', uyandir);
 
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.1);
@@ -822,7 +829,6 @@ applyWind(10);
 go(0, false);
 resize();
 renderer.render(scene, camera);
-requestAnimationFrame(tick);
 setTimeout(() => document.getElementById('loading').classList.add('gone'), 260);
 </script>
 <script src="/assets/site.js?v=2083a619" defer></script>
