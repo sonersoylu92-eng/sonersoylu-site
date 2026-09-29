@@ -7,6 +7,7 @@
 // /api/asistan → saha asistanı: soruyu sitenin kendi içeriğinden yanıtlar (RAG)
 // /api/olcum  → sayfa içi davranış sayaçları (KV, anonim ve toplu)
 // /api/olcum/rapor → sayaçların özeti (anahtarla korumalı)
+// /api/tani   → 3B sahnenin gerçek cihazlardaki tanı kaydı (D1; anonim: IP, kimlik tutulmaz)
 // www.sonersoylu.com → sonersoylu.com kalıcı yönlendirme (SEO: tek kanonik alan adı)
 
 const MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -60,6 +61,11 @@ export default {
 
     if (url.pathname === '/api/olcum') {
       if (request.method === 'POST') return olcumKaydet(request, env);
+      return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
+    }
+
+    if (url.pathname === '/api/tani') {
+      if (request.method === 'POST') return taniKaydet(request, env);
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
     }
 
@@ -646,4 +652,39 @@ async function workersAiSor(env, talimat, istem, tani) {
     }
   }
   return null;
+}
+
+// ---------------------------------------------------------------- tanı
+// 3B deneyimin gerçek telefonlarda nasıl çalıştığını görmek için: açıldı mı, kaç ms'de,
+// hangi kalite kademesinde, neden kapağa döndü. IP, çerez ya da kişisel veri tutulmaz.
+const TANI_OLAY = ['basla', 'hazir', 'birak', 'statik', 'hata', 'ozet'];
+function kisa(v, n) { return v == null ? null : String(v).replace(/[\u0000-\u001f]/g, ' ').slice(0, n); }
+function sayi(v, alt, ust) { const x = Number(v); return Number.isFinite(x) ? Math.max(alt, Math.min(ust, x)) : null; }
+async function taniKaydet(request, env) {
+  if (!env.TANI) return new Response(null, { status: 204 });
+  const metin = await request.text().catch(() => '');
+  if (!metin || metin.length > 3000) return new Response(null, { status: 204 });
+  let b; try { b = JSON.parse(metin); } catch { return new Response(null, { status: 204 }); }
+  if (TANI_OLAY.indexOf(b.olay) < 0) return new Response(null, { status: 204 });
+  const ua = request.headers.get('user-agent') || '';
+  // cihaz: işletim sistemi + (Android'de) model kodu; tarayıcı: ad ve ana sürüm
+  const android = ua.match(/Android\s([\d.]+);\s*([^;)]+?)(?:\sBuild|\))/);
+  const ios = ua.match(/(iPhone|iPad)[^)]*OS\s([\d_]+)/);
+  const cihaz = android ? 'Android ' + android[1] + ' · ' + android[2] : ios ? ios[1] + ' iOS ' + ios[2].replace(/_/g, '.') :
+    /Windows/.test(ua) ? 'Windows' : /Mac OS X/.test(ua) ? 'Mac' : /Linux/.test(ua) ? 'Linux' : 'diğer';
+  let tarayici = 'diğer';
+  for (const ad of ['SamsungBrowser', 'Edg', 'OPR', 'Firefox', 'CriOS', 'FxiOS', 'Chrome', 'Version']) {
+    const m = ua.match(new RegExp(ad + '\\/(\\d+)'));
+    if (m) { tarayici = (ad === 'Version' ? 'Safari' : ad) + ' ' + m[1] + (/;\s*wv\)/.test(ua) ? ' (uygulama içi)' : ''); break; }
+  }
+  try {
+    await env.TANI.prepare(
+      'INSERT INTO olay (t, sayfa, olay, neden, cihaz, tarayici, gpu, ekran, dpr, kalite, kare_ms, sure_ms, oturum, ulke, surum) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15)'
+    ).bind(
+      Date.now(), kisa(b.sayfa, 40), b.olay, kisa(b.neden, 160), kisa(cihaz, 80), kisa(tarayici, 40),
+      kisa(b.gpu, 80), kisa(b.ekran, 20), sayi(b.dpr, 0, 5), sayi(b.kalite, 0, 3), sayi(b.kare_ms, 0, 5000),
+      sayi(b.sure_ms, 0, 3600000), kisa(b.oturum, 12), kisa(request.cf && request.cf.country, 4), kisa(b.surum, 20)
+    ).run();
+  } catch { /* tanı kaydı hiçbir zaman sayfayı etkilemez */ }
+  return new Response(null, { status: 204 });
 }
