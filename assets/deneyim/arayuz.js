@@ -13,6 +13,39 @@
   var kararti = $('dnyKararti'), cizgi = $('dnyIlerleme'), ray = $('dnyRay');
   var DURAKLAR = [];
 
+  /* ---- tanı: 3B sahnenin gerçek cihazlarda nasıl çalıştığı (anonim, /api/tani) ---- */
+  var taniOturum = Math.random().toString(36).slice(2, 10), taniSay = 0, taniT0 = 0, taniGpu = null;
+  function taniGpuOku() {
+    if (taniGpu !== null) return taniGpu;
+    taniGpu = '';
+    try {
+      var c = document.createElement('canvas'), g = c.getContext('webgl2') || c.getContext('webgl');
+      var e = g && g.getExtension('WEBGL_debug_renderer_info');
+      taniGpu = g ? String(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER)).slice(0, 80) : 'webgl-yok';
+      var k = g && g.getExtension('WEBGL_lose_context'); if (k) k.loseContext();
+    } catch (er) { taniGpu = 'okunamadi'; }
+    return taniGpu;
+  }
+  function tani(olay, ek) {
+    if (taniSay++ > 12) return;
+    try {
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici5', gpu: taniGpuOku(),
+        ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
+      for (var k in ek) v[k] = ek[k];
+      var govde = JSON.stringify(v);
+      if (!(navigator.sendBeacon && navigator.sendBeacon('/api/tani', new Blob([govde], { type: 'application/json' }))))
+        fetch('/api/tani', { method: 'POST', body: govde, keepalive: true, headers: { 'content-type': 'application/json' } }).catch(function () {});
+    } catch (er) { /* tanı sayfayı hiçbir zaman etkilemez */ }
+  }
+  // sayfadan çıkarken kısa özet: sahne hâlâ açık mı, hangi kademede, ortalama kare süresi
+  var taniOzetGitti = false;
+  addEventListener('pagehide', function () {
+    if (taniOzetGitti || !taniT0) return; taniOzetGitti = true;
+    var d = sahneS && sahneS.durum ? sahneS.durum() : {};
+    tani('ozet', { neden: bolum.classList.contains('statik') ? 'kapakta' : (bolum.classList.contains('hazir') ? 'sahnede' : 'acilmadi'),
+      kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) });
+  });
+
   // Aynı Aliağa tahmini hem 3B atmosferi hem de hafif hava katmanını sürer.
   var sahne = bolum.querySelector('.dny-sahne');
   // Önceki ziyaretin gerçek 3B ilk karesi, WebGL yüklenirken eski fotoğrafın yerini alır.
@@ -346,12 +379,13 @@
   function kur() {
     if (kuruluyor || sahneS) return;
     kuruluyor = true;
+    taniT0 = performance.now(); tani('basla', {});
     bolum.classList.remove('statik');
     bolum.classList.add('uc-boyut', 'dny-akis', 'dny-hazirlaniyor');
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=akici3').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=akici5').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -361,15 +395,15 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
-        hata: birak
+        hazir: function () { tani('hazir', { sure_ms: Math.round(performance.now() - taniT0) }); bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
+        hata: function (neden, d) { d = d || {}; tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       });
-      if (!S) statik(false); else sahneS = S;
-    }).catch(function (e) { console.error('deneyim yüklenemedi:', e); statik(false); });
+      if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else sahneS = S;
+    }).catch(function (e) { console.error('deneyim yüklenemedi:', e); tani('hata', { neden: 'yukleme: ' + String(e && e.message || e).slice(0, 120) }); statik(false); });
     // 15 sn içinde ilk kare gelmezse bekletme: kapağa dön
     setTimeout(function () {
       if (bolum.classList.contains('hazir') || bolum.classList.contains('statik')) return;
-      if (sahneS && sahneS.birak) sahneS.birak(); else birak();
+      if (sahneS && sahneS.birak) sahneS.birak('zaman-asimi'); else { tani('birak', { neden: 'zaman-asimi-yukleme', sure_ms: 15000 }); birak(); }
     }, 15000);
   }
   var baslaBtn = $('dnyBaslaBtn');
@@ -383,8 +417,11 @@
     if (icinde) window.scrollTo({ top: Math.round(scrollY + bolum.getBoundingClientRect().bottom - 72), behavior: 'instant' });
   }
 
-  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
+  try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) { taniT0 = 1; tani('statik', { neden: 'webgl-yok' }); return statik(false); } } catch (e) { tani('statik', { neden: 'webgl-hata' }); return statik(false); }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) {
+    tani('statik', { neden: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'hareket-azaltilmis' : 'veri-tasarrufu' });
+    return statik(true);
+  }
   // Reserve the scroll path before the idle callback, so a fast first scroll does not jump.
   bolum.classList.add('dny-hazirlaniyor');
   if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);

@@ -468,7 +468,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     ortKare += (araMs - ortKare) * 0.08;
     const hedef = 1000 / 58;
     // en düşük kademede bile kare 40 ms'yi (25 fps) sürekli aşıyorsa cihaz bu sahneyi taşıyamıyor: bırak
-    if (kalite >= 3 && ortKare > 40) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak(); return; } } else cokKotuT = 0;
+    if (kalite >= 3 && ortKare > 40) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
     if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
     else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { kalite--; kaliteUygula(); iyiT = 0; } }
     else { kotuT = 0; iyiT = 0; }
@@ -667,16 +667,17 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       setTimeout(git, 5000);   // hiçbir durumda sahne bekletilmesin
     } catch (e) { git(); }
   })();
-  function birak() {
+  function birak(neden) {
     if (birakildi) return; birakildi = true;
     calisiyor = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0;
     canvas.classList.remove('hazir');
     try { sessionStorage.removeItem('dny-kalite'); } catch (e) {}
-    if (cb.hata) cb.hata();
+    if (cb.hata) cb.hata(typeof neden === 'string' ? neden : 'bilinmiyor', { kalite, kare_ms: Math.round(ortKare * 10) / 10 });
     try { renderer.dispose(); } catch (e) {}
   }
   S.birak = birak;
-  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak(); }, false);
+  S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi });
+  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak('baglam-kaybi'); }, false);
 
   // sayfa tarafı fare konumunu bildirir: nx, ny ∈ [-1, 1]; null → fare sahnede değil
   S.fare = (nx, ny) => {
