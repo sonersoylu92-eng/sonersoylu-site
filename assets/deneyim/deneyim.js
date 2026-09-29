@@ -454,7 +454,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
    * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
    * Kademe 0 tam kalite · 1 çözünürlük −%20 · 2 alan derinliği ve parlama kapalı · 3 çözünürlük −%40 */
   const KADEME_PR = mobil ? [1, 0.85, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
-  let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0;
+  let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0, cokKotuT = 0, birakildi = false;
   try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= 3) kalite = k; } catch (e) {}
   function kaliteUygula() {
     if (performans) return;
@@ -467,6 +467,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     araMs = Math.min(araMs, 100);
     ortKare += (araMs - ortKare) * 0.08;
     const hedef = 1000 / 58;
+    // en düşük kademede bile kare 40 ms'yi (25 fps) sürekli aşıyorsa cihaz bu sahneyi taşıyamıyor: bırak
+    if (kalite >= 3 && ortKare > 40) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak(); return; } } else cokKotuT = 0;
     if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
     else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { kalite--; kaliteUygula(); iyiT = 0; } }
     else { kotuT = 0; iyiT = 0; }
@@ -496,8 +498,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   let hedefIlk = true, icAyar = null, kabinOnce = null, asnHizYum = 0, kIcOnce = 0;
   pozAnlik = disPoz;
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
-  document.addEventListener('visibilitychange', () => { calisiyor = !document.hidden; if (calisiyor) baslat(); });
-  function baslat() { if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
+  document.addEventListener('visibilitychange', () => { calisiyor = !document.hidden && !birakildi; if (calisiyor) baslat(); });
+  function baslat() { if (birakildi) return; if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
 
   function kare(t) {
     rafId = 0; if (!calisiyor || !gorunur) return;
@@ -665,7 +667,16 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       setTimeout(git, 5000);   // hiçbir durumda sahne bekletilmesin
     } catch (e) { git(); }
   })();
-  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); calisiyor = false; if (rafId) cancelAnimationFrame(rafId); canvas.classList.remove('hazir'); if (cb.hata) cb.hata(); }, false);
+  function birak() {
+    if (birakildi) return; birakildi = true;
+    calisiyor = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0;
+    canvas.classList.remove('hazir');
+    try { sessionStorage.removeItem('dny-kalite'); } catch (e) {}
+    if (cb.hata) cb.hata();
+    try { renderer.dispose(); } catch (e) {}
+  }
+  S.birak = birak;
+  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak(); }, false);
 
   // sayfa tarafı fare konumunu bildirir: nx, ny ∈ [-1, 1]; null → fare sahnede değil
   S.fare = (nx, ny) => {

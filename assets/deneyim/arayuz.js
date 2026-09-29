@@ -351,7 +351,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=akici2').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=akici3').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -362,16 +362,37 @@
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
         hazir: function () { bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
-        hata: function () { statik(false); }
+        hata: birak
       });
       if (!S) statik(false); else sahneS = S;
     }).catch(function (e) { console.error('deneyim yüklenemedi:', e); statik(false); });
+    // 15 sn içinde ilk kare gelmezse bekletme: kapağa dön
+    setTimeout(function () {
+      if (bolum.classList.contains('hazir') || bolum.classList.contains('statik')) return;
+      if (sahneS && sahneS.birak) sahneS.birak(); else birak();
+    }, 15000);
   }
   var baslaBtn = $('dnyBaslaBtn');
   if (baslaBtn) baslaBtn.addEventListener('click', kur);
 
+  // 3B sahne vazgeçerse (bağlam kaybı ya da cihaz en düşük kalitede bile yetişemiyorsa)
+  // bölüm tek ekranlık kapağa döner; okuyucu uzun boş bir kaydırma yolunda kalmaz.
+  function birak() {
+    var r = bolum.getBoundingClientRect(), icinde = r.top < 0 && r.bottom > innerHeight;
+    statik(false);
+    if (icinde) window.scrollTo({ top: Math.round(scrollY + bolum.getBoundingClientRect().bottom - 72), behavior: 'instant' });
+  }
+
   try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
+  // Telefon ve tablette ana sayfa 3B kaydırma yolculuğunu kendiliğinden başlatmaz:
+  // kapak tek ekranlık, hafif ve yerel kaydırmayla açılır. "Türbine gir" /deneyim/ sayfasına götürür.
+  // (Ayrı deneyim sayfası isteğe bağlıdır; orada sahne telefonda hafif kipte çalışır.)
+  if (bolum.classList.contains('dny-ana') && matchMedia('(max-width: 820px), (pointer: coarse)').matches) {
+    bolum.classList.add('dny-mobil');
+    if (sahaya) { var ok = sahaya.querySelector('.dg-ok'); if (ok) ok.textContent = '\u2192'; }
+    return statik(false);
+  }
   // Reserve the scroll path before the idle callback, so a fast first scroll does not jump.
   bolum.classList.add('dny-hazirlaniyor');
   if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);
