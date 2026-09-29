@@ -385,14 +385,6 @@
 
   try { var tc = document.createElement('canvas'); if (!(window.WebGLRenderingContext && (tc.getContext('webgl2') || tc.getContext('webgl')))) return statik(false); } catch (e) { return statik(false); }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return statik(true);
-  // Telefon ve tablette ana sayfa 3B kaydırma yolculuğunu kendiliğinden başlatmaz:
-  // kapak tek ekranlık, hafif ve yerel kaydırmayla açılır. "Türbine gir" /deneyim/ sayfasına götürür.
-  // (Ayrı deneyim sayfası isteğe bağlıdır; orada sahne telefonda hafif kipte çalışır.)
-  if (bolum.classList.contains('dny-ana') && matchMedia('(max-width: 820px), (pointer: coarse)').matches) {
-    bolum.classList.add('dny-mobil');
-    if (sahaya) { var ok = sahaya.querySelector('.dg-ok'); if (ok) ok.textContent = '\u2192'; }
-    return statik(false);
-  }
   // Reserve the scroll path before the idle callback, so a fast first scroll does not jump.
   bolum.classList.add('dny-hazirlaniyor');
   if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);
