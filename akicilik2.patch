@@ -1,0 +1,224 @@
+diff --git a/assets/deneyim/arayuz.js b/assets/deneyim/arayuz.js
+index 6ecdce2..a01b04d 100644
+--- a/assets/deneyim/arayuz.js
++++ b/assets/deneyim/arayuz.js
+@@ -351,7 +351,7 @@
+     bolum.setAttribute('aria-busy', 'true');
+     if (basla) basla.hidden = true;
+     acilabilir = false;
+-    import('/assets/deneyim/deneyim.js?v=akici1').then(function (mod) {
++    import('/assets/deneyim/deneyim.js?v=akici2').then(function (mod) {
+       DURAKLAR = mod.DURAKLAR; rayKur();
+       var S = mod.deneyimBaslat(tuval, bolum, {
+         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
+diff --git a/assets/deneyim/deneyim.css b/assets/deneyim/deneyim.css
+index 9a9f13b..a522bea 100644
+--- a/assets/deneyim/deneyim.css
++++ b/assets/deneyim/deneyim.css
+@@ -324,10 +324,10 @@ html:has(body.dny-body){background:#07090b}
+ .dny-bolum.statik .v-ses{display:none}
+ @media (max-width:820px){ .v-ses{bottom:auto;top:calc(4.4rem + env(safe-area-inset-top) + 3.4rem);right:var(--d-gut)} }
+ 
+-/* ---- dokunmatik cihazlar: canlı 3B tuvalin üstünde bulanık cam yok ----
++/* ---- canlı 3B tuvalin üstünde bulanık cam yok (tüm cihazlar) ----
+    backdrop-filter, altındaki WebGL görüntüsü her karede değiştiği için her karede yeniden
+    hesaplanır; telefonlarda kaydırmayı en çok bu yavaşlatır. Aynı okunabilirlik koyu zeminle sağlanır. */
+-@media (hover: none) and (pointer: coarse), (max-width: 820px) {
++@media all {
+   body.dny-body header, :root body.dny-body header, :root[data-vardiya] body.dny-body header,
+   body.ana-body header, :root body.ana-body header, :root[data-vardiya] body.ana-body header,
+   .dny-dg a, .dny-dg button, .v-ust, .v-nokta-bilgi, .ralan, .kapak-rozet, .kapak-dok a, .kapak-serit {
+diff --git a/assets/deneyim/deneyim.js b/assets/deneyim/deneyim.js
+index 7c31ca5..3606a16 100644
+--- a/assets/deneyim/deneyim.js
++++ b/assets/deneyim/deneyim.js
+@@ -37,6 +37,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+   const normalShadow = renderer.shadowMap.enabled && !mobil;
+   renderer.setPixelRatio(performans ? 1 : normalDpr);
+   renderer.shadowMap.enabled = normalShadow && !performans;
++  renderer.shadowMap.autoUpdate = false; renderer.shadowMap.needsUpdate = true;   // gölge haritasını döngü seyreltilmiş günceller
+   const FOV_DIS = mobil ? 58 : 42, FOV_IC = mobil ? 74 : 60;   // içeride geniş objektif: dar nasel, gerçek ölçek
+   camera.fov = FOV_DIS; camera.near = 0.05; camera.far = 6000; camera.updateProjectionMatrix();
+ 
+@@ -264,8 +265,16 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+     disPoz = renderer.toneMappingExposure;
+   }
+   isik();
+-  function devirRad() { const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure')); return s > 0 ? 2 * Math.PI / s : 0; }
+-  function yonHedef() { const d = parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
++  // CSS değişkenleri (canlı rüzgâr) saniyede bir okunur; her karede getComputedStyle stil hesabını zorlar
++  let cssT = -1e9, cssDevir = 0, cssYon = null;
++  function cssOku() {
++    const n = performance.now(); if (n - cssT < 1000) return; cssT = n;
++    const st = getComputedStyle(kok);
++    const s = parseFloat(st.getPropertyValue('--devir-sure')); cssDevir = s > 0 ? 2 * Math.PI / s : 0;
++    const d = parseFloat(st.getPropertyValue('--yon-derece')); cssYon = isFinite(d) ? -d * Math.PI / 180 : null;
++  }
++  function devirRad() { cssOku(); return cssDevir; }
++  function yonHedef() { cssOku(); return cssYon; }
+   let yawIlk = true;
+   function yawGuncelle(dt) {
+     const h = yonHedef(); if (h === null) return;
+@@ -440,7 +449,29 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+   }
+ 
+   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
+-  let kareSay = 0, kareSakla = false, sonHedefP = null, durgunT = 0;
++  let kareSay = 0, kareSakla = false, sonHedefP = null, durgunT = 0, sonAralik = 0;
++  /* Uyarlanır kalite: kaydırma sırasında kare süresi ölçülür; cihaz yetişemiyorsa önce çözünürlük,
++   * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
++   * Kademe 0 tam kalite · 1 çözünürlük −%20 · 2 alan derinliği ve parlama kapalı · 3 çözünürlük −%40 */
++  const KADEME_PR = mobil ? [1, 0.85, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
++  let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0;
++  try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= 3) kalite = k; } catch (e) {}
++  function kaliteUygula() {
++    if (performans) return;
++    renderer.setPixelRatio(KADEME_PR[kalite]); olcek(true);
++    try { sessionStorage.setItem('dny-kalite', String(kalite)); } catch (e) {}
++  }
++  function kaliteOlc(araMs, t) {
++    // yalnızca hareket sırasında ve sekme önplandayken ölç
++    if (araMs <= 0 || araMs > 1500) return;   // sekme dönüşü gibi uzun aralar sayılmaz
++    araMs = Math.min(araMs, 100);
++    ortKare += (araMs - ortKare) * 0.08;
++    const hedef = 1000 / 58;
++    if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
++    else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { kalite--; kaliteUygula(); iyiT = 0; } }
++    else { kotuT = 0; iyiT = 0; }
++  }
++  if (kalite > 0) kaliteUygula();
+   function ilkKareyiSakla() {
+     if (p > .02 || !canvas.width || !canvas.height) return;
+     try {
+@@ -476,8 +507,13 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+     // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
+     if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg) { sonHedefP = hedefP; durgunT = t; }
+     const durgun = t - durgunT > 1200;
+-    const aralik = mobil ? (durgun ? 90 : 33) : (durgun && !fare.var ? 33 : 0);
++    // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
++    const aralik = durgun ? (mobil ? 90 : (fare.var ? 0 : 33)) : 0;
+     if (sonT && t - sonT < aralik) { rafId = requestAnimationFrame(kare); return; }
++    if (!durgun && sonT && sonAralik === 0) kaliteOlc(t - sonT, t);
++    sonAralik = aralik;
++    // gölge haritası her karede değil: hareketteyken iki karede bir, boştayken dört karede bir
++    if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = kareSay % (durgun ? 4 : 2) === 0;
+     const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
+     if (t - sonIsik > 5000 && !icAyar) { isik(); sonIsik = t; }
+ 
+@@ -591,7 +627,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+     if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
+ 
+     // alan derinliği: bakılan noktaya odak
+-    if (bokeh) {
++    if (bokeh) bokeh.enabled = !!icerde && kalite < 2;
++    if (bokeh && bokeh.enabled) {
+       const odak = camera.position.distanceTo(yumHedef);
+       bokeh.uniforms.focus.value = odak;
+       bokeh.uniforms.aperture.value = icerde ? 0.0009 : 0.00003;
+@@ -600,7 +637,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
+ 
+     olcek();
+     const cz = yumusak(0.972, 0.993, p);
+-    if (cz < 0.995) { if (composer && !performans) composer.render(dt); else renderer.render(scene, camera); }
++    if (cz < 0.995) { if (composer && !performans && kalite < 2) composer.render(dt); else renderer.render(scene, camera); }
+     else renderer.clear();
+     if (cz > 0.002) cizimCiz(cz);
+     // WebGL çizim arabelleği bir sonraki karede silinir: görüntüyü render'ın hemen ardından al.
+diff --git a/deneyim/index.html b/deneyim/index.html
+index b74b3ae..76df9bc 100644
+--- a/deneyim/index.html
++++ b/deneyim/index.html
+@@ -21,7 +21,7 @@
+ <link rel="manifest" href="/manifest.webmanifest">
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="stylesheet" href="/style.css?v=47d4c147">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=akici1">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=akici2">
+ </head>
+ 
+ <body class="dny-body">
+@@ -175,7 +175,7 @@
+ 
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=akici1" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=akici2" defer></script>
+ <script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
+ </body>
+ </html>
+diff --git a/index.html b/index.html
+index ac79366..26f679e 100644
+--- a/index.html
++++ b/index.html
+@@ -27,7 +27,7 @@
+ <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+ <link rel="stylesheet" href="/style.css?v=47d4c147">
+ <link rel="stylesheet" href="/ana.css?v=poster3d1">
+-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=akici1">
++<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=akici2">
+ <link rel="stylesheet" href="/assets/vitrin.css?v=cinema2">
+ 
+ <script type="application/ld+json">
+@@ -703,7 +703,7 @@
+   }, 10 * 60 * 1000);
+ })();
+ </script>
+-<script src="/assets/deneyim/arayuz.js?v=akici1" defer></script>
++<script src="/assets/deneyim/arayuz.js?v=akici2" defer></script>
+ <script src="/assets/vitrin.js?v=cinema2" defer></script>
+ <script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
+ </body>
+diff --git a/n117/index.html b/n117/index.html
+index 8aadc8d..10e6e82 100644
+--- a/n117/index.html
++++ b/n117/index.html
+@@ -815,7 +815,7 @@ try {
+ }
+ let S;
+ try {
+-  S = createScene(canvas);
++  S = createScene(canvas, { lite: matchMedia('(max-width: 820px), (pointer: coarse)').matches });   // telefonda hafif sahne
+ } catch (err) {
+   modelHata('3B model açılamadı. Turun 15 durağı yukarıda okunabilir.');
+   console.error('n117 sahne:', err);
+diff --git a/n90/index.html b/n90/index.html
+index a52f5eb..f317859 100644
+--- a/n90/index.html
++++ b/n90/index.html
+@@ -340,7 +340,7 @@ try {
+   }
+   const [THREE, { createScene, STAGES, SPEC }] = await Promise.all([
+     import('/assets/vendor/three.module.min.js?v=3eb31ec4'),
+-    import('./n90.js?v=a48ab6b0')
++    import('./n90.js?v=akici2')
+   ]);
+ const canvas = document.getElementById('scene');
+ const S = createScene(canvas);
+diff --git a/n90/n90.js b/n90/n90.js
+index 03ce7be..8ed4363 100644
+--- a/n90/n90.js
++++ b/n90/n90.js
+@@ -581,7 +581,9 @@ function buildTerrain() {
+ 
+ export function createScene(canvas) {
+   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+-  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 820 ? 1.6 : 2));
++  // telefonda çözünürlük sınırı daha düşük: kaydırırken takılmasın
++  const dokunmatik = matchMedia('(max-width: 820px), (pointer: coarse)').matches;
++  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, dokunmatik ? 1.25 : 1.75));
+   renderer.shadowMap.enabled = true;
+   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+   renderer.outputColorSpace = THREE.SRGBColorSpace;
+diff --git a/sw.js b/sw.js
+index 1b0b07f..7633579 100644
+--- a/sw.js
++++ b/sw.js
+@@ -2,7 +2,7 @@
+    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
+    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
+ 
+-const SURUM = 'kule-20260929-akici1';
++const SURUM = 'kule-20260929-akici2';
+ const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
+ const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
+ 
