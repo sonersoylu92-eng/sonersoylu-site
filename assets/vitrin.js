@@ -21,7 +21,9 @@
   bolumler.forEach(function (b, i) {
     var e = b.querySelector('.etiket'); if (e) e.setAttribute('data-sira', String(i + 1).padStart(2, '0'));
   });
-  if (!az && 'IntersectionObserver' in window) {
+  // Telefonda içerik beklemeden görünür: hızlı parmak kaydırmasında boş, karanlık alan kalmaz.
+  var dokunmatik = matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+  if (!az && !dokunmatik && 'IntersectionObserver' in window) {
     var gozcu = new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('v-gor'); gozcu.unobserve(en.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });

@@ -68,7 +68,7 @@
   .v-js .ana [data-v="b"]{filter:blur(8px)}
   .v-js .ana [data-v].v-gor{opacity:1;transform:none;filter:none}
 }
-@media (max-width:820px){ .v-js .ana [data-v="b"]{filter:none} }
+@media (max-width:820px),(pointer:coarse){ .v-js .ana [data-v]{opacity:1;transform:none;filter:none;transition:none} }
 
 /* ===================== mikro etkileşimler ===================== */
 .ana .dg{transition:background .2s,color .2s,border-color .2s,transform .2s var(--v-ease)}
