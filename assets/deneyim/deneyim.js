@@ -37,6 +37,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const normalShadow = renderer.shadowMap.enabled && !mobil;
   renderer.setPixelRatio(performans ? 1 : normalDpr);
   renderer.shadowMap.enabled = normalShadow && !performans;
+  renderer.shadowMap.autoUpdate = false; renderer.shadowMap.needsUpdate = true;   // gölge haritasını döngü seyreltilmiş günceller
   const FOV_DIS = mobil ? 58 : 42, FOV_IC = mobil ? 74 : 60;   // içeride geniş objektif: dar nasel, gerçek ölçek
   camera.fov = FOV_DIS; camera.near = 0.05; camera.far = 6000; camera.updateProjectionMatrix();
 
@@ -264,8 +265,16 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     disPoz = renderer.toneMappingExposure;
   }
   isik();
-  function devirRad() { const s = parseFloat(getComputedStyle(kok).getPropertyValue('--devir-sure')); return s > 0 ? 2 * Math.PI / s : 0; }
-  function yonHedef() { const d = parseFloat(getComputedStyle(kok).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
+  // CSS değişkenleri (canlı rüzgâr) saniyede bir okunur; her karede getComputedStyle stil hesabını zorlar
+  let cssT = -1e9, cssDevir = 0, cssYon = null;
+  function cssOku() {
+    const n = performance.now(); if (n - cssT < 1000) return; cssT = n;
+    const st = getComputedStyle(kok);
+    const s = parseFloat(st.getPropertyValue('--devir-sure')); cssDevir = s > 0 ? 2 * Math.PI / s : 0;
+    const d = parseFloat(st.getPropertyValue('--yon-derece')); cssYon = isFinite(d) ? -d * Math.PI / 180 : null;
+  }
+  function devirRad() { cssOku(); return cssDevir; }
+  function yonHedef() { cssOku(); return cssYon; }
   let yawIlk = true;
   function yawGuncelle(dt) {
     const h = yonHedef(); if (h === null) return;
@@ -440,7 +449,29 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }
 
   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
-  let kareSay = 0, kareSakla = false, sonHedefP = null, durgunT = 0;
+  let kareSay = 0, kareSakla = false, sonHedefP = null, durgunT = 0, sonAralik = 0;
+  /* Uyarlanır kalite: kaydırma sırasında kare süresi ölçülür; cihaz yetişemiyorsa önce çözünürlük,
+   * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
+   * Kademe 0 tam kalite · 1 çözünürlük −%20 · 2 alan derinliği ve parlama kapalı · 3 çözünürlük −%40 */
+  const KADEME_PR = mobil ? [1, 0.85, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
+  let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0;
+  try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= 3) kalite = k; } catch (e) {}
+  function kaliteUygula() {
+    if (performans) return;
+    renderer.setPixelRatio(KADEME_PR[kalite]); olcek(true);
+    try { sessionStorage.setItem('dny-kalite', String(kalite)); } catch (e) {}
+  }
+  function kaliteOlc(araMs, t) {
+    // yalnızca hareket sırasında ve sekme önplandayken ölç
+    if (araMs <= 0 || araMs > 1500) return;   // sekme dönüşü gibi uzun aralar sayılmaz
+    araMs = Math.min(araMs, 100);
+    ortKare += (araMs - ortKare) * 0.08;
+    const hedef = 1000 / 58;
+    if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
+    else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { kalite--; kaliteUygula(); iyiT = 0; } }
+    else { kotuT = 0; iyiT = 0; }
+  }
+  if (kalite > 0) kaliteUygula();
   function ilkKareyiSakla() {
     if (p > .02 || !canvas.width || !canvas.height) return;
     try {
@@ -476,8 +507,13 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
     if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg) { sonHedefP = hedefP; durgunT = t; }
     const durgun = t - durgunT > 1200;
-    const aralik = mobil ? (durgun ? 90 : 33) : (durgun && !fare.var ? 33 : 0);
+    // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
+    const aralik = durgun ? (mobil ? 90 : (fare.var ? 0 : 33)) : 0;
     if (sonT && t - sonT < aralik) { rafId = requestAnimationFrame(kare); return; }
+    if (!durgun && sonT && sonAralik === 0) kaliteOlc(t - sonT, t);
+    sonAralik = aralik;
+    // gölge haritası her karede değil: hareketteyken iki karede bir, boştayken dört karede bir
+    if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = kareSay % (durgun ? 4 : 2) === 0;
     const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
     if (t - sonIsik > 5000 && !icAyar) { isik(); sonIsik = t; }
 
@@ -591,7 +627,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
 
     // alan derinliği: bakılan noktaya odak
-    if (bokeh) {
+    if (bokeh) bokeh.enabled = !!icerde && kalite < 2;
+    if (bokeh && bokeh.enabled) {
       const odak = camera.position.distanceTo(yumHedef);
       bokeh.uniforms.focus.value = odak;
       bokeh.uniforms.aperture.value = icerde ? 0.0009 : 0.00003;
@@ -600,7 +637,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
     olcek();
     const cz = yumusak(0.972, 0.993, p);
-    if (cz < 0.995) { if (composer && !performans) composer.render(dt); else renderer.render(scene, camera); }
+    if (cz < 0.995) { if (composer && !performans && kalite < 2) composer.render(dt); else renderer.render(scene, camera); }
     else renderer.clear();
     if (cz > 0.002) cizimCiz(cz);
     // WebGL çizim arabelleği bir sonraki karede silinir: görüntüyü render'ın hemen ardından al.

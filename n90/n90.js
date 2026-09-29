@@ -581,7 +581,9 @@ function buildTerrain() {
 
 export function createScene(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 820 ? 1.6 : 2));
+  // telefonda çözünürlük sınırı daha düşük: kaydırırken takılmasın
+  const dokunmatik = matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, dokunmatik ? 1.25 : 1.75));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;

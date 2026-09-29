@@ -324,10 +324,10 @@ html:has(body.dny-body){background:#07090b}
 .dny-bolum.statik .v-ses{display:none}
 @media (max-width:820px){ .v-ses{bottom:auto;top:calc(4.4rem + env(safe-area-inset-top) + 3.4rem);right:var(--d-gut)} }
 
-/* ---- dokunmatik cihazlar: canlı 3B tuvalin üstünde bulanık cam yok ----
+/* ---- canlı 3B tuvalin üstünde bulanık cam yok (tüm cihazlar) ----
    backdrop-filter, altındaki WebGL görüntüsü her karede değiştiği için her karede yeniden
    hesaplanır; telefonlarda kaydırmayı en çok bu yavaşlatır. Aynı okunabilirlik koyu zeminle sağlanır. */
-@media (hover: none) and (pointer: coarse), (max-width: 820px) {
+@media all {
   body.dny-body header, :root body.dny-body header, :root[data-vardiya] body.dny-body header,
   body.ana-body header, :root body.ana-body header, :root[data-vardiya] body.ana-body header,
   .dny-dg a, .dny-dg button, .v-ust, .v-nokta-bilgi, .ralan, .kapak-rozet, .kapak-dok a, .kapak-serit {

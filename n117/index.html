@@ -815,7 +815,7 @@ try {
 }
 let S;
 try {
-  S = createScene(canvas);
+  S = createScene(canvas, { lite: matchMedia('(max-width: 820px), (pointer: coarse)').matches });   // telefonda hafif sahne
 } catch (err) {
   modelHata('3B model açılamadı. Turun 15 durağı yukarıda okunabilir.');
   console.error('n117 sahne:', err);
