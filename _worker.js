@@ -657,7 +657,7 @@ async function workersAiSor(env, talimat, istem, tani) {
 // ---------------------------------------------------------------- tanı
 // 3B deneyimin gerçek telefonlarda nasıl çalıştığını görmek için: açıldı mı, kaç ms'de,
 // hangi kalite kademesinde, neden kapağa döndü. IP, çerez ya da kişisel veri tutulmaz.
-const TANI_OLAY = ['basla', 'hazir', 'birak', 'statik', 'hata', 'ozet'];
+const TANI_OLAY = ['takilma', 'basla', 'hazir', 'birak', 'statik', 'hata', 'ozet'];
 function kisa(v, n) { return v == null ? null : String(v).replace(/[\u0000-\u001f]/g, ' ').slice(0, n); }
 function sayi(v, alt, ust) { const x = Number(v); return Number.isFinite(x) ? Math.max(alt, Math.min(ust, x)) : null; }
 async function taniKaydet(request, env) {

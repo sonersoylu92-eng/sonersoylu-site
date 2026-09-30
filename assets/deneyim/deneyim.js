@@ -505,8 +505,20 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   document.addEventListener('visibilitychange', () => { calisiyor = !document.hidden && !birakildi; if (calisiyor) baslat(); });
   function baslat() { if (birakildi) return; if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
 
+  // donma kaydı: iki kare arası 200 ms'yi aşarsa nerede ve neden olduğunu anonim tanıya bildir
+  let sonRaf = 0, sonIsMs = 0, takilmaSay = 0, sonProg = 0, sonGeo = 0, sonTex = 0, sonVh = innerHeight;
   function kare(t) {
-    rafId = 0; if (!calisiyor || !gorunur) return;
+    rafId = 0; if (!calisiyor || !gorunur) { sonRaf = 0; return; }
+    const isBas = performance.now();
+    if (sonRaf && t - sonRaf > 200 && !document.hidden && cb.takilma && takilmaSay < 8) {
+      takilmaSay++;
+      const inf = renderer.info;
+      cb.takilma({ p: Math.round(p * 1000) / 1000, ms: Math.round(t - sonRaf), is: Math.round(sonIsMs),
+        prog: inf.programs.length - sonProg, geo: inf.memory.geometries - sonGeo, tex: inf.memory.textures - sonTex,
+        vh: sonVh + '>' + innerHeight, kalite });
+    }
+    sonRaf = t; sonVh = innerHeight;
+    sonProg = renderer.info.programs.length; sonGeo = renderer.info.memory.geometries; sonTex = renderer.info.memory.textures;
     // kaydırma → ilerleme; ataletli (sinema kamerası dolly'si gibi)
     const hedefP = ilerleme();
     // kaydırma durduğunda sahne yalnızca rotor ve hafif kamera nefesi için çizilir: kare seyreltilir,
@@ -655,6 +667,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     etiketleriGuncelle();
     fareIsinla(t);
     if (ilk) { ilk = false; canvas.classList.add('hazir'); if (cb.hazir) cb.hazir(); }
+    sonIsMs = performance.now() - isBas;
     rafId = requestAnimationFrame(kare);
   }
   // Gölgelendirici derlemesi: görünmeyen iç sahneler (kule, nasel) de dahil hepsi ilk kareden önce derlenir.
