@@ -29,7 +29,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 12) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici5', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici6', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -124,7 +124,7 @@
 
   var kesiyor = false, sonP = 0;
   function git(p) {
-    var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - innerHeight;
+    var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight);
     var hedef = Math.round(scrollY + r.top + yol * p);
     if (Math.abs(p - sonP) < 0.1 || kesiyor) { window.scrollTo({ top: hedef, behavior: 'instant' }); return; }   // yakın: kamera ataletle süzülür
     // uzak bölüm: kısa kararma, kesme, açılma (film kurgusu gibi)
@@ -156,15 +156,16 @@
   if (basaDon) basaDon.addEventListener('click', function () { git(0); });
 
   var soz = $('vSoz'), sozSatir = soz ? [].slice.call(soz.querySelectorAll('span')) : [];
-  var sonDurak = -2, sonRay = -1, sonAlt = -1;
+  var sonDurak = -2, sonRay = -1, sonAlt = -1, sonBolumAdi = '', sonKot = '';
   function ilerleme(p, y, icerde) {
     sonP = p;
     bolum.classList.toggle('gecti', p > 0.02);
     bolum.classList.toggle('sonda', p > 0.95);
     bolum.classList.toggle('dny-disarida', p < 0.203 || p > 0.948);
     cizgi.style.setProperty('--p', p.toFixed(4));
-    eBolum.textContent = bolumAdi(p);
-    eKot.innerHTML = icerde ? '<span class="dny-ic">Nasel içi</span> · <b>120</b> m' : 'Kot <b>' + Math.round(y) + '</b> m';
+    var ba = bolumAdi(p); if (ba !== sonBolumAdi) { eBolum.textContent = ba; sonBolumAdi = ba; }
+    var kot = icerde ? '<span class="dny-ic">Nasel içi</span> · <b>120</b> m' : 'Kot <b>' + Math.round(y) + '</b> m';
+    if (kot !== sonKot) { eKot.innerHTML = kot; sonKot = kot; }
 
     // parça etiketi: durağa yaklaşınca belirir, uzaklaşınca söner
     var en = -1, fark = 1;
@@ -385,7 +386,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=akici5').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=akici6').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -400,11 +401,18 @@
       });
       if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else sahneS = S;
     }).catch(function (e) { console.error('deneyim yüklenemedi:', e); tani('hata', { neden: 'yukleme: ' + String(e && e.message || e).slice(0, 120) }); statik(false); });
-    // 15 sn içinde ilk kare gelmezse bekletme: kapağa dön
-    setTimeout(function () {
-      if (bolum.classList.contains('hazir') || bolum.classList.contains('statik')) return;
+    // 15 sn içinde ilk kare gelmezse bekletme: kapağa dön. Süre yalnız sekme görünürken işler;
+    // arka planda açılan sekmede tarayıcı çizim yapmaz, sahne bu yüzden yanlışlıkla kapanmasın.
+    var gorunurMs = 0, sonKontrol = performance.now();
+    var bekci = setInterval(function () {
+      var simdi = performance.now();
+      if (!document.hidden) gorunurMs += simdi - sonKontrol;
+      sonKontrol = simdi;
+      if (bolum.classList.contains('hazir') || bolum.classList.contains('statik')) { clearInterval(bekci); return; }
+      if (gorunurMs < 15000) return;
+      clearInterval(bekci);
       if (sahneS && sahneS.birak) sahneS.birak('zaman-asimi'); else { tani('birak', { neden: 'zaman-asimi-yukleme', sure_ms: 15000 }); birak(); }
-    }, 15000);
+    }, 500);
   }
   var baslaBtn = $('dnyBaslaBtn');
   if (baslaBtn) baslaBtn.addEventListener('click', kur);

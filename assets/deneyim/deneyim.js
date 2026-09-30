@@ -282,8 +282,11 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     let f = Math.atan2(Math.sin(h - yaw.rotation.y), Math.cos(h - yaw.rotation.y));
     const adim = 0.3 * Math.PI / 180 * dt * 60; yaw.rotation.y += Math.max(-adim, Math.min(adim, f));
   }
+  const sahneEl = canvas.parentElement;
   function ilerleme() {
-    const r = bolum.getBoundingClientRect(), yol = r.height - innerHeight;
+    // yol, yapışkan sahnenin kendi yüksekliğiyle (100svh) ölçülür: iPhone'da adres çubuğu açılıp kapanınca
+    // innerHeight değişir ve kamera sıçrardı; sahne yüksekliği sabit kalır.
+    const r = bolum.getBoundingClientRect(), yol = r.height - (sahneEl.clientHeight || innerHeight);
     return yol <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / yol));
   }
   function olcek(zorla) {
@@ -454,7 +457,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
    * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
    * Kademe 0 tam kalite · 1 çözünürlük −%20 · 2 alan derinliği ve parlama kapalı · 3 çözünürlük −%40 */
   const KADEME_PR = mobil ? [1, 0.85, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
-  let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0, cokKotuT = 0, birakildi = false;
+  let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0, cokKotuT = 0, birakildi = false, yukselt = false;
   try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= 3) kalite = k; } catch (e) {}
   function kaliteUygula() {
     if (performans) return;
@@ -470,7 +473,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     // en düşük kademede bile kare 40 ms'yi (25 fps) sürekli aşıyorsa cihaz bu sahneyi taşıyamıyor: bırak
     if (kalite >= 3 && ortKare > 40) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
     if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
-    else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { kalite--; kaliteUygula(); iyiT = 0; } }
+    // kaliteyi geri yükseltmek tuvali yeniden boyutlandırır: kaydırma sırasında değil, parmak durunca yapılır
+    else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { yukselt = true; iyiT = 0; } }
     else { kotuT = 0; iyiT = 0; }
   }
   if (kalite > 0) kaliteUygula();
@@ -513,6 +517,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const aralik = durgun ? (mobil ? 90 : (fare.var ? 0 : 33)) : 0;
     if (sonT && t - sonT < aralik) { rafId = requestAnimationFrame(kare); return; }
     if (!durgun && sonT && sonAralik === 0) kaliteOlc(t - sonT, t);
+    if (durgun && yukselt) { yukselt = false; if (kalite > 0) { kalite--; kaliteUygula(); } }
     sonAralik = aralik;
     // gölge haritası her karede değil: hareketteyken iki karede bir, boştayken dört karede bir
     if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = kareSay % (durgun ? 4 : 2) === 0;
@@ -659,12 +664,45 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     let basladi = false;
     const git = () => { if (basladi) return; basladi = true; baslat(); };
     try {
-      const gizli = [];
-      scene.traverse(o => { if (!o.visible) { o.visible = true; gizli.push(o); } });
-      const pr = renderer.compileAsync ? renderer.compileAsync(scene, camera) : Promise.resolve(renderer.compile(scene, camera));
-      gizli.forEach(o => { o.visible = false; });
-      pr.then(git, git);
-      setTimeout(git, 5000);   // hiçbir durumda sahne bekletilmesin
+      /* Işık düzenleri: three.js'te görünen ışık sayısı gölgelendiricinin parçasıdır. Yolculukta dört düzen var
+       * (dışarı · kule ışıkları · kule + nasel · nasel). Hepsi burada, kapak dururken derlenir; yoksa kule
+       * kapısında ve nasel girişinde sahne 0,3–2 sn donuyordu (kaydırırken yeniden derleme). */
+      const altinda = (o, kok) => { for (let q = o.parent; q; q = q.parent) if (q === kok) return true; return false; };
+      const isiklar = []; scene.traverse(o => { if (o.isLight) isiklar.push(o); });
+      const kuleI = isiklar.filter(l => altinda(l, kule.ic)), icI = isiklar.filter(l => altinda(l, icIsik));
+      const gizli = [], kesilen = [];
+      scene.traverse(o => {
+        if (!o.visible) { o.visible = true; gizli.push(o); }
+        if (o.frustumCulled) { o.frustumCulled = false; kesilen.push(o); }
+      });
+      const derle = (sc, kam) => renderer.compileAsync ? renderer.compileAsync(sc, kam) : Promise.resolve(renderer.compile(sc, kam));
+      const DUZEN = [[false, false], [true, false], [true, true], [false, true]];
+      const duzen = ([k, n]) => { kuleI.forEach(l => { l.visible = k; }); icI.forEach(l => { l.visible = n; }); };
+      const sozler = [];
+      DUZEN.forEach(d => { duzen(d); sozler.push(derle(scene, camera)); });
+      duzen([true, true]);
+      // yolculuğun sonundaki teknik çizim geçişi de (ayrı zemin sahnesi + tek malzemeyle çizim)
+      sozler.push(derle(cizimZemin, cizimKam));
+      scene.overrideMaterial = cizimMat; sozler.push(derle(scene, camera)); scene.overrideMaterial = null;
+      const geriAl = () => { gizli.forEach(o => { o.visible = false; }); kesilen.forEach(o => { o.frustumCulled = true; }); };
+      const bitti = () => {
+        if (basladi) return;
+        // ısınma kareleri: her ışık düzeni bir kez gerçekten çizilir; geometri, dokular ve ekran kartının
+        // çizim durumları şimdi hazırlanır (Safari/Metal bunları ilk çizimde kurar). Tuval henüz görünmez.
+        try {
+          gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
+          DUZEN.forEach(d => { duzen(d); renderer.render(scene, camera); });
+          duzen([true, true]);
+          cizimCiz(0.5);
+          renderer.clear();
+        } catch (e) { /* ısınma olmasa da sahne çalışır */ }
+        geriAl(); git();
+        // masaüstü efektleri (alan derinliği, parlama) nasel içinde ilk açıldığında derlenip takılmasın
+        ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; try { const e = bokeh.enabled; bokeh.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } });
+      };
+      geriAl();
+      Promise.all(sozler).then(bitti, bitti);
+      setTimeout(() => { if (!basladi) { geriAl(); git(); } }, 8000);   // hiçbir durumda sahne bekletilmesin
     } catch (e) { git(); }
   })();
   function birak(neden) {
