@@ -536,15 +536,21 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
     if (t - sonIsik > 5000 && !icAyar) { isik(); sonIsik = t; }
 
-    const anlik = mobil || az || window.__deneyimAnlik || window.__deneyimKes;   // dokunmatik kaydırmada kamera parmağı geriden izlemesin
+    const anlik = az || window.__deneyimAnlik || window.__deneyimKes;
     window.__deneyimKes = false;
-    p += (hedefP - p) * (anlik ? 1 : 1 - Math.exp(-dt * 2.6));
+    // Telefonda kaydırma konumu tarayıcıdan düzensiz aralıklarla gelir (özellikle yukarı çekerken, alt çubuk
+    // geri gelirken). Kamera konuma doğrudan bağlıyken bu düzensizlik takılma gibi görünüyordu; ~70 ms'lik
+    // kısa bir yumuşatma sarsıntıyı alır, parmağı hissedilir biçimde geriden izlemez.
+    const kSabit = mobil ? 14 : 2.6;
+    const pAdim = anlik ? 1 : 1 - Math.exp(-dt * kSabit);
+    p += (hedefP - p) * pAdim;
+    if (Math.abs(hedefP - p) < 1e-5) p = hedefP;
     const u = egriU(p);
     kEgri.getPoint(u, kKonum); hEgri.getPoint(u, kHedef);
     // yaw yerelinden dünyaya
     kKonum.applyMatrix4(yaw.matrixWorld); kHedef.applyMatrix4(yaw.matrixWorld);
     if (hedefIlk) { yumHedef.copy(kHedef); hedefIlk = false; }
-    yumHedef.lerp(kHedef, anlik ? 1 : 1 - Math.exp(-dt * 3.2));   // bakış hafif geriden gelir: ağırlık hissi
+    yumHedef.lerp(kHedef, anlik ? 1 : 1 - Math.exp(-dt * (mobil ? 14 : 3.2)));   // bakış hafif geriden gelir: ağırlık hissi
     // çok hafif el-kamera nefesi (yalnız dışarıda belirgin)
     if (!az) { kKonum.y += Math.sin(t / 2300) * 0.02; kKonum.x += Math.sin(t / 3100) * 0.02; }
     // açılışta kamera kendiliğinden, çok yavaş türbine doğru ilerler (kaydırınca devri kaydırmaya bırakır)

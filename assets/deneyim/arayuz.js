@@ -29,7 +29,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici7', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici8', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -386,7 +386,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=akici7').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=akici8').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
