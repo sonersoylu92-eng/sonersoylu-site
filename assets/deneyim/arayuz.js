@@ -26,10 +26,25 @@
     } catch (er) { taniGpu = 'okunamadi'; }
     return taniGpu;
   }
+  // Zayıf cihaz: tanı kayıtlarında ilk karesi 18–22 sn süren ve 15 sn donan ekran kartları.
+  // Bu cihazlarda canlı 3B hiç yüklenmez; kapak ve içerik akıcı kalır. ?uc=1 testte zorlar.
+  var ZAYIF_ANAHTAR = 'dny-zayif-v1';
+  function zayifIsaretle(neden) { try { localStorage.setItem(ZAYIF_ANAHTAR, String(neden).slice(0, 40)); } catch (e) {} }
+  function zayifCihaz() {
+    if (/[?&]uc=1\b/.test(location.search)) return '';
+    try { var k = localStorage.getItem(ZAYIF_ANAHTAR); if (k) return 'onceki-' + k; } catch (e) {}
+    var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (/SwiftShader|llvmpipe|softpipe|Basic Render/i.test(g)) return 'yazilim-gpu';
+    if (/Intel/i.test(g) && !/Iris\(R\) Xe|Arc/i.test(g)) return 'intel-tumlesik';
+    if (/Adreno \(TM\) [1-6]\d\d\b/.test(g) || /Mali-(T|G[0-6]\d\b)/.test(g) || /PowerVR/i.test(g)) return 'zayif-mobil-gpu';
+    if (!ios && navigator.deviceMemory && navigator.deviceMemory <= 4) return 'az-bellek';
+    if (!ios && navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return 'az-cekirdek';
+    return '';
+  }
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici8', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: 'akici9', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -386,7 +401,7 @@
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
-    import('/assets/deneyim/deneyim.js?v=akici8').then(function (mod) {
+    import('/assets/deneyim/deneyim.js?v=akici9').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = mod.deneyimBaslat(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -396,9 +411,9 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { tani('hazir', { sure_ms: Math.round(performance.now() - taniT0) }); bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
-        takilma: function (d) { tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
-        hata: function (neden, d) { d = d || {}; tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
+        hazir: function () { var hs = Math.round(performance.now() - taniT0); tani('hazir', { sure_ms: hs }); if (hs > 8000) { zayifIsaretle('ilk-kare-' + hs); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
+        takilma: function (d) { if (d.ms > 1500) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
+        hata: function (neden, d) { d = d || {}; if (neden === 'yavas') zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       });
       if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else sahneS = S;
     }).catch(function (e) { console.error('deneyim yüklenemedi:', e); tani('hata', { neden: 'yukleme: ' + String(e && e.message || e).slice(0, 120) }); statik(false); });
@@ -433,5 +448,7 @@
   }
   // Reserve the scroll path before the idle callback, so a fast first scroll does not jump.
   bolum.classList.add('dny-hazirlaniyor');
+  var zayif = zayifCihaz();
+  if (zayif) { taniT0 = 1; tani('statik', { neden: 'zayif-' + zayif }); bolum.classList.remove('dny-hazirlaniyor'); return statik(false); }
   if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);
 })();
