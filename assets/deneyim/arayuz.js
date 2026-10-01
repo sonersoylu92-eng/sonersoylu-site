@@ -51,7 +51,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici12', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici13', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -409,7 +409,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=film1' : '/assets/deneyim/deneyim.js?v=akici9').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=film1' : '/assets/deneyim/deneyim.js?v=akici13').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },

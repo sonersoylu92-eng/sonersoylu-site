@@ -710,7 +710,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
         // çizim durumları şimdi hazırlanır (Safari/Metal bunları ilk çizimde kurar). Tuval henüz görünmez.
         try {
           gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
-          DUZEN.forEach(d => { duzen(d); renderer.render(scene, camera); });
+          // gölge haritası da her düzende bir kez çizilir: derinlik gölgelendiricileri kaydırırken değil şimdi derlenir
+          DUZEN.forEach(d => { duzen(d); if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = true; renderer.render(scene, camera); });
           duzen([true, true]);
           cizimCiz(0.5);
           renderer.clear();
