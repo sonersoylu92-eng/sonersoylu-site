@@ -19,7 +19,8 @@
 .v-isik{position:absolute;inset:0;z-index:-3;pointer-events:none;mix-blend-mode:screen;opacity:.55;
   background:radial-gradient(60% 45% at 78% 12%,rgba(255,226,190,.16),transparent 70%),radial-gradient(40% 30% at 20% 100%,rgba(111,220,236,.05),transparent 70%);
   transform:translate3d(calc(var(--v-mx,0)*6px),calc(var(--v-my,0)*4px),0);transition:opacity .8s ease,transform .8s var(--v-ease)}
-.dny-bolum.gecti .v-izgara,.dny-bolum.gecti .v-isik{opacity:0}
+.dny-bolum.gecti .v-izgara,.dny-bolum.gecti .v-isik{opacity:0;visibility:hidden;transition:opacity .8s ease,visibility 0s .8s}
+/* karışım kipli ışık katmanı 3B tuvalin üstünde; görünmezken de birleştirme maliyeti çıkarmasın (iOS) */
 .dny-bolum.gecti canvas.v-ruzgar{opacity:0}
 
 /* Gerçek zamanlı 3B yolculuktan teknik içeriğe tek, sakin bir film kesmesi. */
