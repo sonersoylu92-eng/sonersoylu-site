@@ -63,6 +63,25 @@
     goster();
   }
 
+  /* ---- saha kararı: iki kanıta dayanarak kaynak seçimi; kayan animasyon yok ---- */
+  var karar = document.getElementById('saha-karari');
+  if (karar) {
+    var secimler = [].slice.call(karar.querySelectorAll('[data-karar]'));
+    var ipucu = document.getElementById('kararIpucu');
+    var sonuc = document.getElementById('kararSonuc');
+    secimler.forEach(function (dugme) {
+      dugme.addEventListener('click', function () {
+        secimler.forEach(function (d) { d.setAttribute('aria-pressed', String(d === dugme)); });
+        if (dugme.dataset.karar === 'reduktor') {
+          ipucu.textContent = 'Doğru iz: faz dirençleri birbirine yakın; zorlanan pitch hareketi mekanik yükü işaret ediyor.';
+          sonuc.open = true;
+        } else {
+          ipucu.textContent = 'Faz dirençleri birbirine yakın. Tek kanadın pitch hareketindeki direnç hangi mekanik parçayı düşündürür?';
+        }
+      });
+    });
+  }
+
   /* ---- vaka akordeonu ---- */
   [].slice.call(document.querySelectorAll('.v-vk')).forEach(function (li) {
     var d = li.querySelector('.v-vk-bas button'), p = li.querySelector('.v-vk-panel');
