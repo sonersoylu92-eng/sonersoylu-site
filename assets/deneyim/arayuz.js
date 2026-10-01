@@ -12,8 +12,8 @@
   var eBolum = $('dnyBolum'), eKot = $('dnyKot');
   var kararti = $('dnyKararti'), cizgi = $('dnyIlerleme'), ray = $('dnyRay');
   var DURAKLAR = [];
-  // Film kipi: yolculuk önceden çekilmiş karelerle oynar (her cihazda akıcı). ?uc=1 canlı 3B'yi açar.
-  var filmKip = !/[?&]uc=1\b/.test(location.search) && 'createImageBitmap' in window;
+  // Canlı 3B varsayılan. Önceden çekilmiş film sürümü yalnız ?film=1 ile açılır (karşılaştırma için saklı).
+  var filmKip = /[?&]film=1\b/.test(location.search) && 'createImageBitmap' in window;
 
   /* ---- tanı: 3B sahnenin gerçek cihazlarda nasıl çalıştığı (anonim, /api/tani) ---- */
   var taniOturum = Math.random().toString(36).slice(2, 10), taniSay = 0, taniT0 = 0, taniGpu = null;
@@ -46,7 +46,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici9', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici10', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
