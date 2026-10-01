@@ -51,7 +51,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici13', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici14', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -70,19 +70,8 @@
 
   // Aynı Aliağa tahmini hem 3B atmosferi hem de hafif hava katmanını sürer.
   var sahne = bolum.querySelector('.dny-sahne');
-  // Önceki ziyaretin gerçek 3B ilk karesi, WebGL yüklenirken eski fotoğrafın yerini alır.
-  var poster = sahne.querySelector('.dny-poster');
-  try {
-    var sakli = JSON.parse(sessionStorage.getItem('dny-kare:' + location.pathname) || 'null');
-    var enBoy = tuval.clientWidth / Math.max(1, tuval.clientHeight);
-    if (sakli && Date.now() - sakli.t < 5 * 60 * 1000 &&
-        sakli.v === kok.dataset.vardiya &&
-        Math.abs(sakli.w / sakli.h - enBoy) < .08 &&
-        /^data:image\/webp;base64,/.test(sakli.data)) {
-      poster.style.backgroundImage = 'url("' + sakli.data + '")';
-      poster.classList.add('dny-anlik-kare');
-    }
-  } catch (e) { /* oturum depolaması kapalı olabilir */ }
+  // Yenilemede önceki ziyaretin donmuş karesi gösterilmez; sahne hazır olunca doğrudan canlı görüntü belirir.
+  try { sessionStorage.removeItem('dny-kare:' + location.pathname); } catch (e) { /* depolama kapalı olabilir */ }
   var havaKat = document.createElement('div'); havaKat.className = 'dny-hava-kat'; havaKat.setAttribute('aria-hidden', 'true');
   sahne.insertBefore(havaKat, kararti);
   var havaEtiket = document.createElement('a'); havaEtiket.className = 'dny-hava-etiket';
@@ -409,7 +398,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=film1' : '/assets/deneyim/deneyim.js?v=akici13').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=film1' : '/assets/deneyim/deneyim.js?v=akici14').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },

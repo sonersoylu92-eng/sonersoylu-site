@@ -666,7 +666,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     else renderer.clear();
     if (cz > 0.002) cizimCiz(cz);
     // WebGL çizim arabelleği bir sonraki karede silinir: görüntüyü render'ın hemen ardından al.
-    if (++kareSay === 3 || kareSakla) { kareSakla = false; ilkKareyiSakla(); }
+    // İlk kare artık saklanmıyor: tuvali geri okumak telefonda ekran kartını bekletiyordu ve yenilemede eski kare görünüyordu.
+    ++kareSay; kareSakla = false;
     if (cb.cizim) cb.cizim(cz);
     if (cb.ilerleme) cb.ilerleme(p, Math.max(0, camera.position.y), icerde);
     noktalariGuncelle(t, icerde);
