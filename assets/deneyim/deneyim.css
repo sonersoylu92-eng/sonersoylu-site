@@ -338,3 +338,6 @@ html:has(body.dny-body){background:#07090b}
   .dny-dg a, .dny-dg button, .v-ust { background: rgba(7, 9, 11, .82) !important; }
   .ralan { background: rgba(8, 11, 13, .9) !important; }
 }
+
+/* film kipi: ses motoru canlı sahneye bağlı, filmde gizli */
+.dny-film .v-ses{display:none}
