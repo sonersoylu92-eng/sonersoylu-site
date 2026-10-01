@@ -30,7 +30,8 @@
   }
   // Zayıf cihaz: tanı kayıtlarında ilk karesi 18–22 sn süren ve 15 sn donan ekran kartları.
   // Bu cihazlarda canlı 3B hiç yüklenmez; kapak ve içerik akıcı kalır. ?uc=1 testte zorlar.
-  var ZAYIF_ANAHTAR = 'dny-zayif-v2';
+  var ZAYIF_ANAHTAR = 'dny-zayif-v3';
+  var hazirAni = 0;   // ilk karede geometri yüklemesi uzun sürer; açılış takılması donma sayılmaz
   // Sekme arka plandayken ya da bilgisayar uykudayken kare gelmez; bu boşluklar donma sayılmaz.
   var gizlendi = document.hidden;
   document.addEventListener('visibilitychange', function () { if (document.hidden) gizlendi = true; });
@@ -50,7 +51,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici11', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici12', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -418,8 +419,8 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { var hs = Math.round(performance.now() - taniT0); tani('hazir', { sure_ms: hs }); if (hs > 8000 && !filmKip && !gizlendi) { zayifIsaretle('ilk-kare-' + hs); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
-        takilma: function (d) { if (d.ms > 1500 && d.is > 1000 && !filmKip && !gizlendi && !document.hidden) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
+        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0); tani('hazir', { sure_ms: hs }); if (hs > 8000 && !filmKip && !gizlendi) { zayifIsaretle('ilk-kare-' + hs); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
+        takilma: function (d) { if (d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
         hata: function (neden, d) { d = d || {}; if (neden === 'yavas' && !filmKip) zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       });
       if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else sahneS = S;
