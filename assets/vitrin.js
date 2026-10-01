@@ -73,10 +73,10 @@
       dugme.addEventListener('click', function () {
         secimler.forEach(function (d) { d.setAttribute('aria-pressed', String(d === dugme)); });
         if (dugme.dataset.karar === 'reduktor') {
-          ipucu.textContent = 'Doğru iz: faz dirençleri birbirine yakın; sıkı dönen kanat mekanik yükü işaret ediyor.';
+          ipucu.textContent = 'Doğru iz: faz dirençleri birbirine yakın; zorlanan pitch hareketi mekanik yükü işaret ediyor.';
           sonuc.open = true;
         } else {
-          ipucu.textContent = 'Faz dirençleri birbirine yakın. Tek kanadın sıkı dönmesi hangi mekanik parçayı düşündürür?';
+          ipucu.textContent = 'Faz dirençleri birbirine yakın. Tek kanadın pitch hareketindeki direnç hangi mekanik parçayı düşündürür?';
         }
       });
     });
