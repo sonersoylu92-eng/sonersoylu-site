@@ -28,12 +28,16 @@ Ders biçimi:
 - **K-009** Sohbete gönderilen dosya sınırı ~30 MB: uzun videoyu `-crf 24 -tune animation -preset slow` ile sıkıştır
   ve kaliteyi kare farkıyla doğrula. (D-009)
 - **K-011** Piper tek üretimde güvenilmez: sahne başına 3–5 aday üret, her birini Whisper'la yazdırıp puanla, sahneye
-  sığan en iyiyi seç ve önbelleğe al. Okunamayan kelimeye net eşanlamlı kullan ("trafo" → "transformatör"). (D-051)
+  sığan en iyiyi seç ve önbelleğe al. Okunamayan kelimeye net eşanlamlı kullan ("trafo" → "transformatör",
+  "klemens" → "bağlantılar", "sonersoylu.com" → "Soner Soylu nokta kom"). Puanlamadan önce Whisper'ın rakamlarını
+  Türkçe yazıya çevir ("116" → "yüz on altı"), yoksa sayıyla biten cümle haksız düşük puan alır. "Türbin" kısa ve
+  cümle başındaysa "tübin" duyulur: cümle içine al. (D-051, D-061)
 - **K-012** Render öncesi `ajans/araclar/tasma_kontrol.mjs` çalışır; düzeltilmesi gereken bulgu 0 değilse render yok.
   Diyagram etiketlerine koyu hale ver (`stroke:#07090B; stroke-width:8; paint-order:stroke`); kart genişliği yazıdan
   en az 24 px geniş. Gözle kare kontrolü (K-003) bunu tek başına yakalamadı. (D-052)
 - **K-013** `transcribe.py`'nin kelime hizalaması cümle sonunu kesik gösterebilir (VAD parçası dolgusuz). Sesin doğruluğuna
-  sahne bazlı tam yazıya dökümle (±0,3 sn dolgu) karar ver. (D-053)
+  sahne bazlı tam yazıya dökümle (±0,3 sn dolgu) karar ver. Aday seçiminde de geçerli: ~7,5 sn'den uzun cümlede
+  sona ≥0,4 sn sessizlik ekle; karar tek Whisper geçişiyle değil, tam dosyada dolgulu yazımla verilir. (D-053, D-061)
 - **K-010** Uzun (16:9) videolar için YouTube paketi: MP4 (H.264+AAC) + 1280×720 kapak + .srt + bölüm zaman damgaları. (D-010)
 
 ### Site
@@ -57,7 +61,8 @@ Ders biçimi:
 ### İçerik ve doğruluk
 - **K-030** Rüzgârla güç ilişkisi her zaman nitelenir: "rüzgârdaki güç hızın küpüyle"; türbin gücü için "anma gücüne kadar". (D-056)
 - **K-031** Siteden alıntı ya da kural aktarırken dosyadan **aynen** kopyala; güvenlikle ilgili koşulları ("gerekiyorsa",
-  "sistem varsa") asla düşürme. (D-057)
+  "sistem varsa") asla düşürme. CEO brifindeki başlık ve rakamlar da kaynak sayfayla kıyaslanır; brif kaynaktan
+  üstün değildir. (D-057, D-062)
 - **K-032** Metin teslimleri betikle üretilir: karakter sayıları + metindeki **rakam listesi** otomatik çıkar; denetçi listeyi
   brifle kıyaslar. Paket başlığında teslim edilen dosya adı yazar. (D-058)
 - **K-033** YouTube sayfaları 429 verir: rakip kanıtı için `site:youtube.com` araması; izlenme/tarih "doğrulanmadı".
@@ -98,6 +103,9 @@ Ders biçimi:
 - [D-057 · 2026-10-02 · denetçi] Olan: "gerekiyorsa rotor kilidi" → "rotor kilitlidir" genellemesi; alıntı kelimeleri kaymış · Karar: K-031
 - [D-058 · 2026-10-02 · icerik-yazari] Olan: sayımlar betikle yapıldı, hata çıkmadı; paket "sessiz" diyordu ama video sesliydi · Karar: K-032
 - [D-059 · 2026-10-02 · arastirmaci] Olan: youtube.com/watch 4/4 istek 429 · Karar: K-033
+- [D-060 · 2026-10-02 · CEO] Olan: Soner birinci şahıs anlatım için "Evet" dedi (saha vakası ölçümünü kendisi yaptı) · Karar: kural değil, PANO #9 kapandı; saha vakaları serisinde ölçümün kime ait olduğu her vaka için ayrıca sorulur (K-031'e not)
+- [D-061 · 2026-10-02 · video-yapimci] Olan: saha vakası anlatımında rakamla biten cümleler Whisper puanında haksız düştü; ~7,5 sn+ cümlelerde son kelime 4 adayda da kesik göründü; aynı klip iki geçişte farklı yazıldı ("Tübini/Türbini"); "klemens" ve bitişik "sonersoylu" okunamadı · Karar: K-011 ve K-013 genişletildi
+- [D-062 · 2026-10-02 · video-yapimci] Olan: CEO brifinde başlık "Alarm 103 °C" idi; sayfaya göre alarm 116 °C (eşik 115), 103 °C ölçüm anındaki ekran değeri. Yapımcı sayfaya göre düzeltti · Karar: K-031'e "brif de kaynakla kıyaslanır" eklendi
 
 ## Emekli kurallar
 (yok)

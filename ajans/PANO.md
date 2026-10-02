@@ -13,7 +13,8 @@ Durum: `bekliyor` · `yapiliyor` · `onay-bekliyor` (Soner'e soruldu) · `bitti`
 | 6 | 2. uzun video planı: "Rüzgâr türbini teknisyeni nasıl olunur" | video-yapimci | P1 | bekliyor | Beat sheet + anlatım süresi PANO'da, Soner onayı bekliyor (K-040) | Araştırma konu 2; maaş rakamı yok |
 | 7 | Short planı: "Rüzgâr esiyor, türbin duruyor. Arızalı mı?" | video-yapimci | P1 | bekliyor | Beat sheet Soner'e sunuldu | Araştırma konu 1 (güven yüksek) |
 | 8 | transcribe.py: VAD parçalarına ±0,3 sn dolgu | video-yapimci | P2 | bekliyor | Kelime hizalamasında cümle sonu kesilmiyor (K-013 emekliye) | |
-| 9 | Konu 4 (saha vakası) için Soner'e teyit: ölçümü kendisi mi yaptı? | CEO | P2 | onay-bekliyor | Cevap alındı | Birinci şahıs anlatım için |
+| 9 | Konu 4 (saha vakası) için Soner'e teyit: ölçümü kendisi mi yaptı? | CEO | P2 | bitti (2026-10-02: "Evet" — ölçümü Soner yaptı) | Cevap alındı | Birinci şahıs anlatım uygun |
+| 10 | Short planı: "Ekran 103 °C, termometre 62 °C: arıza sensördeydi" (saha vakası, birinci ağız) | video-yapimci | P1 | onay-bekliyor (2026-10-02: plan → `cikti/plan-saha-vakasi-2026-10-02.md`, 12 beat, 78,9 sn ölçülü ses) | Beat sheet + ölçülmüş anlatım süresi, Soner onayına sunuldu | Kaynak: saha-notlari/jenerator-sicaklik/ — rakamlar sayfadan AYNEN (K-031), 17 rakam doğrulandı; alarm kodu yok. Onay gelince: B4/B7 için yeni ses adayı, sonra render |
 
 ## Hazır ürünler (Soner'e teslim edildi)
 - 2026-10-02 · Short · Türbin nasıl elektrik üretir (sessiz, 52 sn) — sitede "Son paylaşım"
