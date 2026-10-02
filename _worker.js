@@ -33,6 +33,9 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // ajans çalışma klasörü ve ajan tanımları dışarıya kapalı (depoda durur, yayınlanmaz)
+    if (/^\/(ajans|\.claude)(\/|$)/.test(url.pathname)) return new Response('Bulunamadı', { status: 404 });
+
     if (url.pathname === '/api/abone') {
       if (request.method === 'POST') return aboneKaydet(request, env);
       if (request.method === 'GET') return json({ ok: true, bilgi: 'POST ile e-posta gonderin' });
