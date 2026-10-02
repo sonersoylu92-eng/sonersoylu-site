@@ -251,6 +251,13 @@ main.ana{padding-top:0}
 
 @media (min-width:861px){.ana .kartlar.uclu{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .ana .an-video{background:transparent}
+.ana .an-video-ikili{display:flex;gap:clamp(.75rem,2vw,1.25rem);align-items:flex-start}
+.ana .an-video-kart{margin:0;width:min(16rem,42vw)}
+.ana .an-video-kart .an-video-kutu{width:100%}
+.ana .an-video-kutu video{width:100%;height:100%;display:block;object-fit:cover;background:#07090b}
+.ana .an-video-kart figcaption{margin-top:.6rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;color:var(--a-muted);line-height:1.4}
+.ana .an-video-yeni{display:inline-block;padding:.1rem .45rem;margin-right:.35rem;border:1px solid var(--a-accent);border-radius:999px;color:var(--a-accent)}
+@media (max-width:420px){.ana .an-video-kart{width:calc(50vw - 1.6rem)}}
 
 
 /* ===================== v4: ışık kutusu, kopyala, belirme, hız ===================== */

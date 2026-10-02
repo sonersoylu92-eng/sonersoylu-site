@@ -2,7 +2,7 @@
    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
 
-const SURUM = 'kule-20261001-akici14';
+const SURUM = 'kule-20261002-video1bed';
 const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
 const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
 
@@ -73,6 +73,9 @@ self.addEventListener('fetch', (e) => {
   }
 
   if (u.origin !== location.origin) return;
+
+  // Video/ses parça istekleri (Range) servis çalışanından geçmez; Safari'de oynatma bozulmasın
+  if (istek.headers.has('range') || istek.destination === 'video' || istek.destination === 'audio') return;
 
   // Sayfa gezinmeleri: önce ağ (3,5 sn), olmazsa önbellek, o da yoksa çevrimdışı sayfası
   if (istek.mode === 'navigate') {
