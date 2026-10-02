@@ -21,11 +21,19 @@ Ders biçimi:
   numaralarını "Birinci konu, …" yap; İngilizce adları okunuşla yaz ("Dı Törbayn Tek"). Sesi Whisper'a geri
   yazdırıp kontrol et. (D-005)
 - **K-006** Sahne süresi = seslendirme süresi + pay. Önce sesi üret, süreleri ölç, sonra görüntüyü o zamanlara kur. (D-006)
-- **K-007** 2 dakikadan uzun render'ı `setsid nohup betik.sh &` ile tamamen ayrık başlat; komut kapanınca iptal olur.
-  `pkill -f` ile kalıp kullanma, kendi kabuğunu da öldürür. (D-007)
+- **K-007** 2 dakikadan uzun render'ı ayrık başlat: betikte `export HYPERFRAMES_RENDER_DETACHED=1` + `setsid nohup betik.sh < /dev/null > /dev/null 2>&1 & disown`.
+  Yalnız setsid yetmez (hyperframes üst süreç zincirini izler, "render_cancelled_parent_exited"). `pkill -f` ile kalıp kullanma,
+  kendi kabuğunu da öldürür; PID dosyası + `kill`. (D-007, D-050)
 - **K-008** `npx hyperframes` en son sürümü çekmeye çalışıp ETARGET verebilir: sürümü sabitle (`npx --yes hyperframes@0.8.106`). (D-008)
 - **K-009** Sohbete gönderilen dosya sınırı ~30 MB: uzun videoyu `-crf 24 -tune animation -preset slow` ile sıkıştır
   ve kaliteyi kare farkıyla doğrula. (D-009)
+- **K-011** Piper tek üretimde güvenilmez: sahne başına 3–5 aday üret, her birini Whisper'la yazdırıp puanla, sahneye
+  sığan en iyiyi seç ve önbelleğe al. Okunamayan kelimeye net eşanlamlı kullan ("trafo" → "transformatör"). (D-051)
+- **K-012** Render öncesi `ajans/araclar/tasma_kontrol.mjs` çalışır; düzeltilmesi gereken bulgu 0 değilse render yok.
+  Diyagram etiketlerine koyu hale ver (`stroke:#07090B; stroke-width:8; paint-order:stroke`); kart genişliği yazıdan
+  en az 24 px geniş. Gözle kare kontrolü (K-003) bunu tek başına yakalamadı. (D-052)
+- **K-013** `transcribe.py`'nin kelime hizalaması cümle sonunu kesik gösterebilir (VAD parçası dolgusuz). Sesin doğruluğuna
+  sahne bazlı tam yazıya dökümle (±0,3 sn dolgu) karar ver. (D-053)
 - **K-010** Uzun (16:9) videolar için YouTube paketi: MP4 (H.264+AAC) + 1280×720 kapak + .srt + bölüm zaman damgaları. (D-010)
 
 ### Site
@@ -41,6 +49,19 @@ Ders biçimi:
   dosyaları 4 saat önbellekte tutar. Dinamik `import()` edilen dosyanın damgası, onu çağıran dosyanın içindedir. (D-023)
 - **K-024** `/api/*` yolları robots ile kapalı: dışarıdan WebFetch ile okunamaz. Veriyi D1'den ya da Cloudflare
   bağlantısından oku. (D-024)
+
+- **K-025** Telemetri: rAF ile süre ölçen her kod `visibilitychange`'te zaman referansını sıfırlar; yoksa sekme arkadayken
+  geçen süre "takılma" diye yazılır. H1 ölçüsü S5'teki "ciddi" sütunuyla, bot/test ve arka plan boşluğu hariç okunur.
+  Bir varsayımı ("sorunlar botlardan") oran hedefine bağlamadan önce veriyle sına. (D-054, D-055)
+
+### İçerik ve doğruluk
+- **K-030** Rüzgârla güç ilişkisi her zaman nitelenir: "rüzgârdaki güç hızın küpüyle"; türbin gücü için "anma gücüne kadar". (D-056)
+- **K-031** Siteden alıntı ya da kural aktarırken dosyadan **aynen** kopyala; güvenlikle ilgili koşulları ("gerekiyorsa",
+  "sistem varsa") asla düşürme. (D-057)
+- **K-032** Metin teslimleri betikle üretilir: karakter sayıları + metindeki **rakam listesi** otomatik çıkar; denetçi listeyi
+  brifle kıyaslar. Paket başlığında teslim edilen dosya adı yazar. (D-058)
+- **K-033** YouTube sayfaları 429 verir: rakip kanıtı için `site:youtube.com` araması; izlenme/tarih "doğrulanmadı".
+  İlk 429'dan sonra YouTube'a istek atma. (D-059)
 
 ### Süreç
 - **K-040** Plan önce, üretim sonra: saniye saniye plan (beat sheet) Soner'e tek mesajda gösterilir; onay gelince
@@ -66,6 +87,17 @@ Ders biçimi:
 - [D-024 · 2026-10-02 · site] Olan: /api/youtube canlıda okunamadı · Karar: K-024
 - [D-040 · 2026-10-02 · süreç] Olan: Soner plan tablosunu görüp "Yap/Onay" dedi, değişiklikleri sahne numarasıyla verdi · Karar: K-040
 - [D-041 · 2026-10-02 · süreç] Olan: YouTube'a erişim yok, Soner Studio'dan kendisi yükledi · Karar: K-041
+
+- [D-050 · 2026-10-02 · video-yapimci] Olan: setsid'le başlatılan render 160. karede iptal · Neden: hyperframes üst süreç zincirini izliyor · Karar: K-007 güncellendi
+- [D-051 · 2026-10-02 · video-yapimci] Olan: aynı cümle 3,10/3,33 sn, bazı adaylarda "Tafo", "Sağdan" · Karar: K-011
+- [D-052 · 2026-10-02 · denetçi] Olan: video KALDI — kare alınmıştı ama kart taşması ve aynı renkte çizgi-yazı çakışması kaçtı · Karar: K-012 (otomatik kontrol, yapımcı yazdı, eski sürümde 7 sorun buldu)
+- [D-053 · 2026-10-02 · denetçi] Olan: geri.json'da "ak", "dö", "doğur" · Neden: hizalama aracı · Karar: K-013
+- [D-054 · 2026-10-02 · site-bakimci] Olan: `takilma ms=61360046` (17 saat) · Neden: arka plan süresi takılma sayılıyordu · Karar: K-025, deneyim.js + film.js düzeltildi, sürüm akici16
+- [D-055 · 2026-10-02 · site-bakimci] Beklenen: masaüstü sorunları botlardan · Olan: botlar çıkınca oran %56→%79; gerçek oturumların %72'si tek cihaz (Mac M1) · Karar: K-025
+- [D-056 · 2026-10-02 · denetçi] Olan: "2 kat rüzgâr → 8 kat güç" niteleyicisiz (grafik 12 m/s'den sonra düz) · Karar: K-030
+- [D-057 · 2026-10-02 · denetçi] Olan: "gerekiyorsa rotor kilidi" → "rotor kilitlidir" genellemesi; alıntı kelimeleri kaymış · Karar: K-031
+- [D-058 · 2026-10-02 · icerik-yazari] Olan: sayımlar betikle yapıldı, hata çıkmadı; paket "sessiz" diyordu ama video sesliydi · Karar: K-032
+- [D-059 · 2026-10-02 · arastirmaci] Olan: youtube.com/watch 4/4 istek 429 · Karar: K-033
 
 ## Emekli kurallar
 (yok)

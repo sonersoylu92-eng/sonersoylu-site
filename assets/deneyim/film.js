@@ -141,7 +141,7 @@ export function filmBaslat(tuval, bolum, cb = {}, secenek = {}) {
   function iste() { if (!rafId && !durdu) { istT = performance.now(); rafId = requestAnimationFrame(kare); } }
   addEventListener('scroll', iste, { passive: true });
   addEventListener('resize', () => { sonCizilen = -1; iste(); });
-  document.addEventListener('visibilitychange', iste);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) istT = 0; else iste(); });
 
   // yükleme: önce dizin, sonra paketler sırayla (en fazla iki eşzamanlı)
   fetch(kok + set + '/film.json?v=' + FILM_SURUM).then(r => { if (!r.ok) throw new Error('film.json ' + r.status); return r.json(); }).then(m => {

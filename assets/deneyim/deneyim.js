@@ -505,7 +505,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   let hedefIlk = true, icAyar = null, kabinOnce = null, asnHizYum = 0, kIcOnce = 0;
   pozAnlik = disPoz;
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
-  document.addEventListener('visibilitychange', () => { calisiyor = !document.hidden && !birakildi; if (calisiyor) baslat(); });
+  // sekme arkadayken geçen süre takılma sayılmasın: görünürlük değişince kare referansı sıfırlanır
+  document.addEventListener('visibilitychange', () => { sonRaf = 0; sonT = 0; calisiyor = !document.hidden && !birakildi; if (calisiyor) baslat(); });
   function baslat() { if (birakildi) return; if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
 
   // donma kaydı: iki kare arası 200 ms'yi aşarsa nerede ve neden olduğunu anonim tanıya bildir

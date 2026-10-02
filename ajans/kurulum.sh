@@ -39,6 +39,7 @@ HS=$(ls -d /opt/pw-browsers/chromium_headless_shell-*/chrome-linux/headless_shel
 cat > "$V/env.sh" <<ENV
 export HYPERFRAMES_BROWSER_PATH=$HS
 export HYPERFRAMES_SKIP_SKILLS=1
+export HYPERFRAMES_RENDER_DETACHED=1   # K-007
 export MODEL_DIZIN=$M
 # K-008: sürümü sabitle → npx --yes hyperframes@0.8.106 …
 ENV
