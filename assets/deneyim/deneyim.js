@@ -92,10 +92,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
   /* ---------------- iç aydınlatma ---------------- */
   const icIsik = new THREE.Group(); tilt.add(icIsik); icIsik.visible = false;
-  (mobil ? ic.lambalar.filter((_, i) => i % 2 === 0) : ic.lambalar).forEach(p => {
-    const l = new THREE.PointLight(0xdfe9ff, mobil ? 6.5 : 4, 5.5, 1.6); l.position.set(...p); icIsik.add(l);
+  (mobil ? ic.lambalar.filter((_, i, a) => i === 0 || i === a.length - 1) : ic.lambalar).forEach(p => {
+    const l = new THREE.PointLight(0xdfe9ff, mobil ? 9 : 4, mobil ? 7 : 5.5, 1.6); l.position.set(...p); icIsik.add(l);
   });
-  const camgobegi = new THREE.PointLight(0x4fd6ea, 1.6, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi);
+  if (!mobil) { const camgobegi = new THREE.PointLight(0x4fd6ea, 1.6, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi); }
   // tavan kapağından giren gün ışığı
   const { TAVAN, TABAN, KZ0, KZ1 } = ic.sinir;
   const kapakZ = (KZ0 + KZ1) / 2;
@@ -456,12 +456,15 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   /* Uyarlanır kalite: kaydırma sırasında kare süresi ölçülür; cihaz yetişemiyorsa önce çözünürlük,
    * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
    * Kademe 0 tam kalite · 1 çözünürlük −%20 · 2 alan derinliği ve parlama kapalı · 3 çözünürlük −%40 */
-  const KADEME_PR = mobil ? [1, 0.85, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
+  const KADEME_PR = mobil ? [0.9, 0.9, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
+  // telefonda hareket sırasında kare aralığı (ms): kademe 1'den itibaren 30 fps. Sabit 30, dalgalı 60'tan akıcı görünür.
+  const KADEME_ARALIK = mobil ? [0, 32, 32, 32] : [0, 0, 0, 0];
   let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0, cokKotuT = 0, birakildi = false, yukselt = false;
   try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= 3) kalite = k; } catch (e) {}
   function kaliteUygula() {
     if (performans) return;
-    renderer.setPixelRatio(KADEME_PR[kalite]); olcek(true);
+    // yalnız çözünürlük değişiyorsa tuval yeniden boyutlanır; kare hızı kademesi takılma üretmez
+    if (renderer.getPixelRatio() !== KADEME_PR[kalite]) { renderer.setPixelRatio(KADEME_PR[kalite]); olcek(true); }
     try { sessionStorage.setItem('dny-kalite', String(kalite)); } catch (e) {}
   }
   function kaliteOlc(araMs, t) {
@@ -469,9 +472,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (araMs <= 0 || araMs > 1500) return;   // sekme dönüşü gibi uzun aralar sayılmaz
     araMs = Math.min(araMs, 100);
     ortKare += (araMs - ortKare) * 0.08;
-    const hedef = 1000 / 58;
+    const hedef = KADEME_ARALIK[kalite] ? 1000 / 29 : 1000 / 58;
     // en düşük kademede bile kare 40 ms'yi (25 fps) sürekli aşıyorsa cihaz bu sahneyi taşıyamıyor: bırak
-    if (kalite >= 3 && ortKare > 40) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
+    if (kalite >= 3 && ortKare > (mobil ? 60 : 40)) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
     if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
     // kaliteyi geri yükseltmek tuvali yeniden boyutlandırır: kaydırma sırasında değil, parmak durunca yapılır
     else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { yukselt = true; iyiT = 0; } }
@@ -526,9 +529,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg) { sonHedefP = hedefP; durgunT = t; }
     const durgun = t - durgunT > 1200;
     // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
-    const aralik = durgun ? (mobil ? 90 : (fare.var ? 0 : 33)) : 0;
+    const hareketAralik = KADEME_ARALIK[kalite] || 0;
+    const aralik = durgun ? (mobil ? 90 : (fare.var ? 0 : 33)) : hareketAralik;
     if (sonT && t - sonT < aralik) { rafId = requestAnimationFrame(kare); return; }
-    if (!durgun && sonT && sonAralik === 0) kaliteOlc(t - sonT, t);
+    if (!durgun && sonT && sonAralik === hareketAralik) kaliteOlc(t - sonT, t);
     if (durgun && yukselt) { yukselt = false; if (kalite > 0) { kalite--; kaliteUygula(); } }
     sonAralik = aralik;
     // gölge haritası her karede değil: hareketteyken iki karede bir, boştayken dört karede bir
@@ -723,7 +727,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       };
       geriAl();
       Promise.all(sozler).then(bitti, bitti);
-      setTimeout(() => { if (!basladi) { geriAl(); git(); } }, 8000);   // hiçbir durumda sahne bekletilmesin
+      setTimeout(() => { if (!basladi) { geriAl(); git(); } }, mobil ? 16000 : 8000);   // hiçbir durumda sahne bekletilmesin
     } catch (e) { git(); }
   })();
   function birak(neden) {

@@ -398,7 +398,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=film1' : '/assets/deneyim/deneyim.js?v=akici14').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=film1' : '/assets/deneyim/deneyim.js?v=8938addb').then(function (mod) {
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },

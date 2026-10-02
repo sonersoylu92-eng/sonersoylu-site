@@ -469,3 +469,6 @@ body.ana-body header{transition:background .4s ease,border-color .4s ease}
   .v-karar-olcum-not{margin-top:1.6rem}
 }
 @media(max-width:440px){.v-karar-ust > p:last-child{max-width:13ch;line-height:1.5}.v-karar-esik{font-size:.59rem}.v-karar-esik dd{font-size:.9rem}}
+
+/* telefon: kaydırırken üst üste tetiklenen bulanıklık geçişleri GPU'yu yorar; aynı belirme bulanıksız */
+@media (max-width:820px),(pointer:coarse){.v-js .ana [data-v="b"]{filter:none}.v-soz span{filter:none}.v-js .ana [data-v]{transition:opacity .6s ease,transform .75s var(--v-ease)}}
