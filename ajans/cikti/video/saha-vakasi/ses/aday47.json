@@ -1,0 +1,269 @@
+{
+ "4": [
+  {
+   "no": 0,
+   "sure": 6.5,
+   "tek": "Gerçek ısınma yükü ve havayı izler, her gün düzenli 2 derece tırmanmaz. Bu, ölçüm zincirinin kaydığını düşündürür.",
+   "tek_uyum": 1.0,
+   "tam": [
+    [
+     0.3,
+     1.0,
+     [],
+     "Gerçek ısınma yükü ve havayı izler, her gün düzenli 2 derece tırmanmaz. Bu ölçüm zincirinin kaydığını düşündürür."
+    ],
+    [
+     0.12,
+     1.0,
+     [],
+     "Gerçek ısınma yükü ve havayı izler, her gün düzenli 2 derece tırmanmaz. Bu, ölçüm zincirinin kaydığını düşündürür."
+    ]
+   ],
+   "kuyruk": "Bu ölçüm zincirinin kaydığını düşündürür.",
+   "kabul": true
+  }
+ ],
+ "7": [
+  {
+   "no": 0,
+   "sure": 7.81,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra",
+   "tek_uyum": 0.971,
+   "tam": [
+    [
+     0.3,
+     0.971,
+     [
+      [
+       "delete",
+       "yapılır",
+       ""
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra"
+    ],
+    [
+     0.12,
+     0.944,
+     [
+      [
+       "replace",
+       "yapılır",
+       "yapıl"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl"
+    ]
+   ],
+   "kuyruk": "İkilikleme etiketleme uygulandıktan sonra yapılır. İ",
+   "kabul": false
+  },
+  {
+   "no": 7,
+   "sure": 7.81,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra",
+   "tek_uyum": 0.971,
+   "tam": [
+    [
+     0.3,
+     0.971,
+     [
+      [
+       "delete",
+       "yapılır",
+       ""
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra"
+    ],
+    [
+     0.12,
+     0.944,
+     [
+      [
+       "replace",
+       "yapılır",
+       "yapıl"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl"
+    ]
+   ],
+   "kuyruk": "kilitleme etiketleme uygulandıktan sonra yapılır.",
+   "kabul": true
+  },
+  {
+   "no": 4,
+   "sure": 7.85,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl",
+   "tek_uyum": 0.944,
+   "tam": [
+    [
+     0.3,
+     0.944,
+     [
+      [
+       "replace",
+       "yapılır",
+       "yapıl"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl"
+    ],
+    [
+     0.12,
+     0.944,
+     [
+      [
+       "replace",
+       "yapılır",
+       "yapıl"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl"
+    ]
+   ],
+   "kuyruk": "Kilitleme etiketleme uygulandıktan sonra yapılır.",
+   "kabul": true
+  },
+  {
+   "no": 5,
+   "sure": 7.91,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl",
+   "tek_uyum": 0.944,
+   "tam": [
+    [
+     0.3,
+     0.944,
+     [
+      [
+       "replace",
+       "yapılır",
+       "yapıl"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl"
+    ],
+    [
+     0.12,
+     0.944,
+     [
+      [
+       "replace",
+       "yapılır",
+       "yapıl"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl"
+    ]
+   ],
+   "kuyruk": "etiketleme uygulandıktan sonra yapılır.",
+   "kabul": true
+  },
+  {
+   "no": 6,
+   "sure": 8.0,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle dorulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır",
+   "tek_uyum": 0.944,
+   "tam": [
+    [
+     0.3,
+     0.944,
+     [
+      [
+       "replace",
+       "doğrulandıktan",
+       "dorulandıktan"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle dorulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır"
+    ],
+    [
+     0.12,
+     0.944,
+     [
+      [
+       "replace",
+       "doğrulandıktan",
+       "dorulandıktan"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle dorulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır"
+    ]
+   ],
+   "kuyruk": "etiketleme uygulandıktan sonra yapılır.",
+   "kabul": false
+  },
+  {
+   "no": 1,
+   "sure": 8.1,
+   "tek": "Sensör ölçümü ve değişimi, tübin durdurulup deve ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır",
+   "tek_uyum": 0.889,
+   "tam": [
+    [
+     0.3,
+     0.889,
+     [
+      [
+       "replace",
+       "türbin",
+       "tübin"
+      ],
+      [
+       "replace",
+       "devre",
+       "deve"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, tübin durdurulup deve ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır"
+    ],
+    [
+     0.12,
+     0.889,
+     [
+      [
+       "replace",
+       "türbin",
+       "tübin"
+      ],
+      [
+       "replace",
+       "devre",
+       "deve"
+      ]
+     ],
+     "Sensör ölçümü ve değişimi, tübin durdurulup deve ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır"
+    ]
+   ],
+   "kuyruk": "etiketleme uygulandıktan sonra yapılır.",
+   "kabul": false
+  },
+  {
+   "no": 8,
+   "sure": 7.9,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümüne dorulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl",
+   "tek_uyum": 0.833,
+   "tam": null,
+   "kuyruk": null,
+   "kabul": null
+  },
+  {
+   "no": 3,
+   "sure": 7.93,
+   "tek": "Sensör ölçümü ve değişimi, türbin durdurulup deve ayrıldıktan, gerilim yoklu ölçümüne doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapılır.",
+   "tek_uyum": 0.833,
+   "tam": null,
+   "kuyruk": null,
+   "kabul": null
+  },
+  {
+   "no": 2,
+   "sure": 7.94,
+   "tek": "Sensör ölçümü ve değişimi, tübin durdurulup deve ayrıldıktan, gerilim yokluğu ölçümüne doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra yapıl",
+   "tek_uyum": 0.778,
+   "tam": null,
+   "kuyruk": null,
+   "kabul": null
+  }
+ ]
+}

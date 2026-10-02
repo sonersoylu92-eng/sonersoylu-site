@@ -1,0 +1,120 @@
+[
+ {
+  "beat": 1,
+  "ad": "kanca",
+  "duyulan": "Ekran 103 derece diyor. Elimdeki termometre 62. Hangisine inanırsın?",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 2,
+  "ad": "durum",
+  "duyulan": "Sahadan bir vaka. Vestas V126. Jeneratör sargı sıcaklığı 116 dereceye çıkınca türbin alarmla duruyor.",
+  "kelime_uyum": 0.947,
+  "fark": [
+   [
+    "replace",
+    "ve",
+    "v"
+   ]
+  ]
+ },
+ {
+  "beat": 3,
+  "ad": "belirti",
+  "duyulan": "Ama ses normal, titreşim yok, soğutma çalışıyor. Son 3 günün en yüksek değeri 110, 112, 116.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 4,
+  "ad": "ipucu",
+  "duyulan": "Gerçek ısınma yükü ve havayı izler, her gün düzenli 2 derece tırmanmaz. Bu ölçüm zincirinin kaydığını düşündürür.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 5,
+  "ad": "olcum",
+  "duyulan": "Tübini durdurdum. Jeneratör gövdesini termometreyle ben ölçtüm. Yaklaşık 62 derece. Aynı anda ekranda 103.",
+  "kelime_uyum": 0.938,
+  "fark": [
+   [
+    "replace",
+    "türbini",
+    "tübini"
+   ]
+  ]
+ },
+ {
+  "beat": 6,
+  "ad": "fark",
+  "duyulan": "Arada 41 derece fark var. Birkaç derece normaldir. 41 derece değildir.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 7,
+  "ad": "guvenlik",
+  "duyulan": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra",
+  "kelime_uyum": 0.971,
+  "fark": [
+   [
+    "delete",
+    "yapılır",
+    ""
+   ]
+  ]
+ },
+ {
+  "beat": 8,
+  "ad": "direnc",
+  "duyulan": "Sensörün direncini ölçtüm. 62 derecede beklenen değer yaklaşık 124 ohm. Sensör yaklaşık 140 ohm gösterdi.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 9,
+  "ad": "karsilik",
+  "duyulan": "Bu tabloda yaklaşık 103 dereceye karşılık gelir. Sistem direnci doğru çeviriyordu. Yanlış olan direncin kendisiydi.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 10,
+  "ad": "kok",
+  "duyulan": "Bağlantılar sağlamdı. Kayma sensörün kendisindeydi. Sistem işini yaptı. Sağlıklı bir jeneratörü korumak için durdurdu.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 11,
+  "ad": "ders",
+  "duyulan": "Bir sayı ile makinenin davranışı birbirini tutmuyorsa sayıyı kanıtlayana kadar makineye inan.",
+  "kelime_uyum": 1.0,
+  "fark": []
+ },
+ {
+  "beat": 12,
+  "ad": "cta",
+  "duyulan": "Teşhisin tamamı sonersoğlu.com sitesinde. The Turbine Tech. Sıradaki vaka için takip yet.",
+  "kelime_uyum": 0.5,
+  "fark": [
+   [
+    "replace",
+    "soner soylu nokta kom",
+    "sonersoğlu com"
+   ],
+   [
+    "replace",
+    "dı törbayn tek",
+    "the turbine tech"
+   ],
+   [
+    "replace",
+    "et",
+    "yet"
+   ]
+  ]
+ }
+]

@@ -1,0 +1,108 @@
+[
+ {
+  "beat": 1,
+  "duyulan": "Ekran 103 derece diyor. Elimdeki termometre 62. Hangisine inanırsın?",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 2,
+  "duyulan": "Sahadan bir vaka. Vestas V126. Jeneratör sargı sıcaklığı 116 dereceye çıkınca türbin alarmla duruyor.",
+  "fark": [
+   [
+    "replace",
+    "ve",
+    "v"
+   ]
+  ],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 3,
+  "duyulan": "Ama ses normal, titreşim yok, soğutma çalışıyor. Son 3 günün en yüksek değeri 110, 112, 116.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 4,
+  "duyulan": "Gerçek ısınma yükü ve havayı izler, her gün düzenli 2 derece tırmanmaz. Bu ölçüm zincirinin kaydığını düşündürür.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 5,
+  "duyulan": "Tübini durdurdum. Jeneratör gövdesini termometreyle ben ölçtüm. Yaklaşık 62 derece. Aynı anda ekranda 103.",
+  "fark": [
+   [
+    "replace",
+    "türbini",
+    "tübini"
+   ]
+  ],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 6,
+  "duyulan": "Arada 41 derece fark var. Birkaç derece normaldir. 41 derece değildir.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 7,
+  "duyulan": "Sensör ölçümü ve değişimi, türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme etiketleme uygulandıktan sonra",
+  "fark": [
+   [
+    "delete",
+    "yapılır",
+    ""
+   ]
+  ],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 8,
+  "duyulan": "Sensörün direncini ölçtüm. 62 derecede beklenen değer yaklaşık 124 ohm. Sensör yaklaşık 140 ohm gösterdi.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 9,
+  "duyulan": "Bu tabloda yaklaşık 103 dereceye karşılık gelir. Sistem direnci doğru çeviriyordu. Yanlış olan direncin kendisiydi.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 10,
+  "duyulan": "Bağlantılar sağlamdı. Kayma sensörün kendisindeydi. Sistem işini yaptı. Sağlıklı bir jeneratörü korumak için durdurdu.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 11,
+  "duyulan": "Bir sayı ile makinenin davranışı birbirini tutmuyorsa sayıyı kanıtlayana kadar makineye inan.",
+  "fark": [],
+  "dolgu": 0.3
+ },
+ {
+  "beat": 12,
+  "duyulan": "Teşhisin tamamı sonersoylu.com sitesinde. The Turbine Tech. Sıradaki vaka için takip yet.",
+  "fark": [
+   [
+    "replace",
+    "soner soylu nokta kom",
+    "sonersoylu com"
+   ],
+   [
+    "replace",
+    "dı törbayn tek",
+    "the turbine tech"
+   ],
+   [
+    "replace",
+    "et",
+    "yet"
+   ]
+  ],
+  "dolgu": 0.3
+ }
+]
