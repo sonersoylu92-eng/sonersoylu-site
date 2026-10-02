@@ -49,6 +49,11 @@ export default {
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
     }
 
+    if (url.pathname === '/api/youtube') {
+      if (request.method === 'GET') return youtubeSon();
+      return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
+    }
+
     if (url.pathname === '/api/soru') {
       if (request.method === 'POST') return soruKaydet(request, env);
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
@@ -113,6 +118,47 @@ async function ruzgar(url) {
         'content-type': 'application/json; charset=utf-8',
         'cache-control': 'public, max-age=600',
         'x-veri-kaynagi': 'open-meteo.com (CC BY 4.0)',
+      },
+    });
+  } catch {
+    return json({ ok: false, hata: 'ulasilamadi' }, 502);
+  }
+}
+
+// ---------------------------------------------------------------- youtube
+// The Turbine Tech kanalının son paylaşımları (herkese açık RSS akışı).
+// Kanal kimliği sabit; dışarıdan parametre alınmaz. Uçta 15 dk önbellek.
+const YT_KANAL = 'UCpi-UVV3SEoW7koAEU0yqSQ';
+
+function xmlCoz(t) {
+  return String(t || '')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'").replace(/&apos;/g, "'").replace(/&amp;/g, '&');
+}
+
+async function youtubeSon() {
+  try {
+    const r = await fetch('https://www.youtube.com/feeds/videos.xml?channel_id=' + YT_KANAL, {
+      cf: { cacheTtl: 900, cacheEverything: true },
+      headers: { accept: 'application/atom+xml, application/xml, text/xml' },
+    });
+    if (!r.ok) return json({ ok: false, hata: 'kaynak-hatasi' }, 502);
+    const xml = await r.text();
+    const videolar = [];
+    for (const m of xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)) {
+      const e = m[1];
+      const id = (e.match(/<yt:videoId>([\w-]{6,20})<\/yt:videoId>/) || [])[1];
+      if (!id) continue;
+      const baslik = xmlCoz((e.match(/<title>([\s\S]*?)<\/title>/) || [])[1]).trim();
+      const tarih = (e.match(/<published>([^<]+)<\/published>/) || [])[1] || '';
+      const link = (e.match(/<link rel="alternate" href="([^"]+)"/) || [])[1] || '';
+      videolar.push({ id, baslik, tarih, kisa: link.includes('/shorts/') });
+      if (videolar.length >= 6) break;
+    }
+    return new Response(JSON.stringify({ ok: true, kanal: YT_KANAL, videolar }), {
+      headers: {
+        'content-type': 'application/json; charset=utf-8',
+        'cache-control': 'public, max-age=600',
       },
     });
   } catch {
