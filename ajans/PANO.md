@@ -28,3 +28,4 @@ Durum: `bekliyor` · `yapiliyor` · `onay-bekliyor` (Soner'e soruldu) · `bitti`
 - 2026-10-02 · Metin paketi · 3 video için YouTube + LinkedIn (cikti/metin-2026-10-02.md)
 - 2026-10-03 · Metin paketi · Saha vakası YouTube + LinkedIn (cikti/metin-saha-vakasi-2026-10-02.md, denetçi GEÇTİ, LinkedIn 1256 karakter)
 - 2026-10-03 · Short · Rüzgâr esiyor, türbin duruyor (sesli, 60 sn; MP4 depoda değil, build.py + .srt depoda)
+- 2026-10-03 · Short · Wind blowing, turbine stopped — İNGİLİZCE (63 sn, mph'li; MP4 depoda değil)

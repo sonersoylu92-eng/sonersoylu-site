@@ -83,6 +83,7 @@ Ders biçimi:
   durduğu ve Soner'e gönderilip gönderilmediği PANO'ya yazılır. MP4 depoya girmez, o yüzden yeniden üretim betikleri
   (build/ses) depoda olmalı. (D-072)
 - **K-043** Soner hız/limit isterse: denetim tek kare sayfası (tüm beat kareleri tek görselde) + otomatik kontroller (taşma, Whisper) ile CEO'da yapılır; ayrı denetçi ajanı yalnız metin/rakam değişikliği varsa. (D-080)
+- **K-044** Kanal izleyicisinin çoğu ABD'de: her Short'un İngilizce sürümü de üretilir (ABD İngilizcesi, m/s yanında mph, Türkçe alıntı tırnakla çevrilmez, CTA sonersoylu.com/en). (D-083)
 - **K-041** Soner'den komut çalıştırması ya da dosya yüklemesi istenmez; YouTube/LinkedIn'e erişim yoksa yükleme
   paketi kopyala-yapıştır hazır verilir. (D-041)
 
@@ -136,6 +137,9 @@ Ders biçimi:
 - [D-078 · 2026-10-03 · video-yapimci] Olan: tasma_kontrol.mjs varsayılan 0,25–51,75 sn tarıyor, 60 sn videonun sonu atlanırdı · Karar: K-012'ye not — anlar video süresine göre verilir
 - [D-079 · 2026-10-03 · video-yapimci] Olan: tam daire SVG yayı yanlış merkezde çizildi, yalnız gözle yakalandı · Karar: K-001'e not — tam daire iki yarım yayla
 - [D-080 · 2026-10-03 · CEO] Olan: Soner "hızlı ve en az limitle" dedi; denetçi ajanı yerine CEO 12 karelik tek sayfa + yapımcının otomatik kontrolleriyle (taşma 0, Whisper 9/9) denetledi · Karar: K-043 eklendi
+- [D-081 · 2026-10-03 · video-yapimci] Olan: İngilizce Piper "sonersoylu"yu "sonar solu", "opened, locked"ı "open, locked" okudu; cümle bölünce düzeldi · Karar: K-011'e not — çok dilli videoda özel adlar ayrı yazılır ("Soner Soylu dot com"), CTC ile ikinci kontrol
+- [D-082 · 2026-10-03 · video-yapimci] Olan: sed yol değişikliği "-en-en" üretti, render yanlış klasörde başladı; `pgrep -f` kabuğu öldürdü · Karar: K-002 ve K-007 zaten kapsıyor (yol değişikliğinden sonra grep; PID dosyası) — yeni kural yok
+- [D-083 · 2026-10-03 · CEO] Olan: Soner, izleyici çoğunluğu ABD olduğu için İngilizce sürüm istedi · Karar: K-044 eklendi
 
 ## Emekli kurallar
 (yok)

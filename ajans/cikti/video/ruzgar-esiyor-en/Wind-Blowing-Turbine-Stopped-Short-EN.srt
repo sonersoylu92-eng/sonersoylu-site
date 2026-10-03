@@ -1,0 +1,131 @@
+1
+00:00:00,060 --> 00:00:02,540
+The wind is blowing, but
+the turbine is stopped.
+
+2
+00:00:02,560 --> 00:00:03,260
+Is it broken?
+
+3
+00:00:03,280 --> 00:00:04,310
+Usually, no.
+
+4
+00:00:04,560 --> 00:00:06,660
+If the wind is too weak, there's no power.
+
+5
+00:00:06,680 --> 00:00:10,880
+On this model, for example, the turbine
+stops below 3 meters per second,
+
+6
+00:00:10,900 --> 00:00:12,530
+about 7 miles per hour.
+
+7
+00:00:12,630 --> 00:00:14,510
+It also stops in very strong wind.
+
+8
+00:00:14,530 --> 00:00:18,270
+Above 25 meters per second,
+about 56 miles per hour,
+
+9
+00:00:18,290 --> 00:00:19,940
+the blades are feathered for safety.
+
+10
+00:00:19,980 --> 00:00:23,780
+At the base of the tower, the answer to
+why it stopped is usually not a fault.
+
+11
+00:00:23,800 --> 00:00:25,370
+It's one end of this curve.
+
+12
+00:00:25,390 --> 00:00:27,810
+Turbines are also stopped
+for planned maintenance.
+
+13
+00:00:27,830 --> 00:00:28,990
+The breaker is opened.
+
+14
+00:00:29,010 --> 00:00:30,370
+Then it's locked and tagged.
+
+15
+00:00:30,390 --> 00:00:32,540
+If required, the rotor lock goes in too.
+
+16
+00:00:32,730 --> 00:00:35,390
+Sometimes the wind and the
+machine are both ready,
+
+17
+00:00:35,410 --> 00:00:37,690
+but the grid operator sends a curtailment,
+
+18
+00:00:37,710 --> 00:00:39,050
+and the turbine is stopped.
+
+19
+00:00:39,070 --> 00:00:40,150
+This is not a fault.
+
+20
+00:00:40,170 --> 00:00:42,270
+If there's an alarm, it's a different job:
+
+21
+00:00:42,290 --> 00:00:43,680
+read the alarm first.
+
+22
+00:00:43,760 --> 00:00:45,060
+It works the other way too:
+
+23
+00:00:45,080 --> 00:00:46,980
+no wind, but the nacelle is turning.
+
+24
+00:00:47,000 --> 00:00:47,540
+Not the rotor.
+
+25
+00:00:47,560 --> 00:00:48,850
+The nacelle on top.
+
+26
+00:00:48,940 --> 00:00:52,260
+The power cables inside the
+tower twist as the nacelle yaws.
+
+27
+00:00:52,280 --> 00:00:56,800
+After a set number of turns, the turbine
+turns back the other way to untwist them,
+
+28
+00:00:56,820 --> 00:00:57,950
+wind or no wind.
+
+29
+00:00:58,020 --> 00:01:00,340
+More from the field at sonersoylu.com.
+
+30
+00:01:00,360 --> 00:01:01,280
+The Turbine Tech.
+
+31
+00:01:01,300 --> 00:01:02,790
+Follow for the next question.
