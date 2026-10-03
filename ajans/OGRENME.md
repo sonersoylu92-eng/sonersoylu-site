@@ -29,15 +29,17 @@ Ders biçimi:
   ve kaliteyi kare farkıyla doğrula. (D-009)
 - **K-011** Piper tek üretimde güvenilmez: sahne başına 3–5 aday üret, her birini Whisper'la yazdırıp puanla, sahneye
   sığan en iyiyi seç ve önbelleğe al. Okunamayan kelimeye net eşanlamlı kullan ("trafo" → "transformatör",
-  "klemens" → "bağlantılar", "sonersoylu.com" → "Soner Soylu nokta kom"). Puanlamadan önce Whisper'ın rakamlarını
+  "klemens" → "bağlantılar", "sonersoylu.com" → "Soner Soylu nokta kom", "nasel" → "makine dairesi" (ekranda NASEL kalır)). ğ'li kelimede önce ğ'siz
+  eşdeğer dene ("bayrağa" → "bayrak konumuna"); son kelimesi bozulan cümlede araya nokta koy ("için. Takip et."). Puanlamadan önce Whisper'ın rakamlarını
   Türkçe yazıya çevir ("116" → "yüz on altı"), yoksa sayıyla biten cümle haksız düşük puan alır. "Türbin" kısa ve
-  cümle başındaysa "tübin" duyulur: cümle içine al. (D-051, D-061)
+  cümle başındaysa "tübin" duyulur: cümle içine al. (D-051, D-061, D-067, D-068)
 - **K-012** Render öncesi `ajans/araclar/tasma_kontrol.mjs` çalışır; düzeltilmesi gereken bulgu 0 değilse render yok.
   Diyagram etiketlerine koyu hale ver (`stroke:#07090B; stroke-width:8; paint-order:stroke`); kart genişliği yazıdan
   en az 24 px geniş. Gözle kare kontrolü (K-003) bunu tek başına yakalamadı. (D-052)
 - **K-013** `transcribe.py`'nin kelime hizalaması cümle sonunu kesik gösterebilir (VAD parçası dolgusuz). Sesin doğruluğuna
   sahne bazlı tam yazıya dökümle (±0,3 sn dolgu) karar ver. Aday seçiminde de geçerli: ~7,5 sn'den uzun cümlede
-  sona ≥0,4 sn sessizlik ekle; karar tek Whisper geçişiyle değil, tam dosyada dolgulu yazımla verilir. (D-053, D-061)
+  sona ≥0,4 sn sessizlik ekle; karar tek Whisper geçişiyle değil, tam dosyada dolgulu yazımla verilir. Aday seçimi de iki ayrı dolguyla yapılır
+  (`ajans/cikti/video/ruzgar-esiyor/aday.py`); tek geçişli puan yalnız ön elemedir. (D-053, D-061, D-069)
 - **K-010** Uzun (16:9) videolar için YouTube paketi: MP4 (H.264+AAC) + 1280×720 kapak + .srt + bölüm zaman damgaları. (D-010)
 
 ### Site
@@ -56,21 +58,30 @@ Ders biçimi:
 
 - **K-025** Telemetri: rAF ile süre ölçen her kod `visibilitychange`'te zaman referansını sıfırlar; yoksa sekme arkadayken
   geçen süre "takılma" diye yazılır. H1 ölçüsü S5'teki "ciddi" sütunuyla, bot/test ve arka plan boşluğu hariç okunur.
-  Bir varsayımı ("sorunlar botlardan") oran hedefine bağlamadan önce veriyle sına. (D-054, D-055)
+  Bir varsayımı ("sorunlar botlardan") oran hedefine bağlamadan önce veriyle sına. Sürüm kohortları da bot/test
+  hariç okunur (S4b); telefonda `tarayici='diğer'` uygulama içi tarayıcıdır, bot sayılmaz. H1 ana ölçüsü S6. (D-054, D-055, D-063, D-064)
 
 ### İçerik ve doğruluk
 - **K-030** Rüzgârla güç ilişkisi her zaman nitelenir: "rüzgârdaki güç hızın küpüyle"; türbin gücü için "anma gücüne kadar". (D-056)
 - **K-031** Siteden alıntı ya da kural aktarırken dosyadan **aynen** kopyala; güvenlikle ilgili koşulları ("gerekiyorsa",
   "sistem varsa") asla düşürme. CEO brifindeki başlık ve rakamlar da kaynak sayfayla kıyaslanır; brif kaynaktan
-  üstün değildir. (D-057, D-062)
+  üstün değildir. Güvenlik bloğu her kanala **bütün** taşınır (tehlike + koşullar + sorumluluk reddi); yer yoksa
+  başka cümle kısaltılır. Telaffuz ya da uzunluk için metin değişince güvenlik adımları kaynakla yeniden sayılır.
+  Kaynağın kendi aritmetiği de kontrol edilir; kaynak kendi içinde tutarsızsa aktarılmaz, Soner'e sorulur. Videoda
+  gösterilecek sayfa çizimi de sayfadaki gerçek grafikle aynı türde olmalı; açık nokta önerilerinde kaynaktan gelen
+  kısım ile yeni yazılan ayrı gösterilir. (D-057, D-062, D-065, D-066, D-070, D-071)
 - **K-032** Metin teslimleri betikle üretilir: karakter sayıları + metindeki **rakam listesi** otomatik çıkar; denetçi listeyi
-  brifle kıyaslar. Paket başlığında teslim edilen dosya adı yazar. (D-058)
+  brifle kıyaslar. Paket başlığında teslim edilen dosya adı yazar. icerik-yazari'nın komut aracı yoktur: betiği CEO ya da
+  denetçi çalıştırır, yazar sayımı fark hesabıyla verip "betik bekliyor" yazar; betik çalışmadan paket GEÇMEZ. (D-058, D-073)
 - **K-033** YouTube sayfaları 429 verir: rakip kanıtı için `site:youtube.com` araması; izlenme/tarih "doğrulanmadı".
   İlk 429'dan sonra YouTube'a istek atma. (D-059)
 
 ### Süreç
 - **K-040** Plan önce, üretim sonra: saniye saniye plan (beat sheet) Soner'e tek mesajda gösterilir; onay gelince
   üretilir. Zamanlanmış turda Soner yoksa plan PANO'ya yazılır, üretim bekler. (D-040)
+- **K-042** Her oturum (zamanlanmış ya da etkileşimli) PANO ve günlüğü kapanmadan günceller; üretilen MP4'ün nerede
+  durduğu ve Soner'e gönderilip gönderilmediği PANO'ya yazılır. MP4 depoya girmez, o yüzden yeniden üretim betikleri
+  (build/ses) depoda olmalı. (D-072)
 - **K-041** Soner'den komut çalıştırması ya da dosya yüklemesi istenmez; YouTube/LinkedIn'e erişim yoksa yükleme
   paketi kopyala-yapıştır hazır verilir. (D-041)
 
@@ -106,6 +117,19 @@ Ders biçimi:
 - [D-060 · 2026-10-02 · CEO] Olan: Soner birinci şahıs anlatım için "Evet" dedi (saha vakası ölçümünü kendisi yaptı) · Karar: kural değil, PANO #9 kapandı; saha vakaları serisinde ölçümün kime ait olduğu her vaka için ayrıca sorulur (K-031'e not)
 - [D-061 · 2026-10-02 · video-yapimci] Olan: saha vakası anlatımında rakamla biten cümleler Whisper puanında haksız düştü; ~7,5 sn+ cümlelerde son kelime 4 adayda da kesik göründü; aynı klip iki geçişte farklı yazıldı ("Tübini/Türbini"); "klemens" ve bitişik "sonersoylu" okunamadı · Karar: K-011 ve K-013 genişletildi
 - [D-062 · 2026-10-02 · video-yapimci] Olan: CEO brifinde başlık "Alarm 103 °C" idi; sayfaya göre alarm 116 °C (eşik 115), 103 °C ölçüm anındaki ekran değeri. Yapımcı sayfaya göre düzeltti · Karar: K-031'e "brif de kaynakla kıyaslanır" eklendi
+- [D-063 · 2026-10-03 · CEO] Beklenen: S4'te akici16 sahne oranı düzeltmenin etkisini gösterir · Olan: %12,5 · Neden: 8 oturumun 6'sı bot/test; S4 filtresizdi · Karar: K-025 genişledi, S4b + S6 eklendi
+- [D-064 · 2026-10-03 · CEO] Olan: S4b'nin ilk hâli sahnede kalan gerçek bir iPhone'u bot saydı · Neden: telefonda `tarayici='diğer'` uygulama içi tarayıcı (LinkedIn/Instagram) · Karar: K-025 (telefonda bu filtre yok)
+- [D-065 · 2026-10-03 · denetçi] Olan: saha vakası LinkedIn metninde "yüksek gerilim bulunur" ve sorumluluk reddi düşmüştü; YouTube'da tamdı · Neden: karakter sınırı için kısaltma · Karar: K-031 genişledi (güvenlik bloğu bütün)
+- [D-066 · 2026-10-03 · denetçi] Olan: kaynak sayfa 110→112→116 °C (+2, +4) ile "günde yaklaşık 2 °C düzenli" diyor · Karar: K-031 (kaynağın aritmetiği); PANO #13 Soner'e
+- [D-067 · 2026-10-03 · video-yapimci] Olan: "nasel" 10/10 geçişte "naser" duyuldu, harf düzeyli CTC de aynı · Neden: Piper telaffuzu · Karar: K-011 (nasel → makine dairesi)
+- [D-068 · 2026-10-03 · video-yapimci] Olan: "bayrağa" → "bayrağı" (9/10); "cevabı, çoğu zaman" → "şov zaman"; "için takip et" → "takip let" (5/5), "için. Takip et." 3/3 doğru · Karar: K-011
+- [D-069 · 2026-10-03 · video-yapimci] Olan: B3 ve B5 adayken doğru, tam dosyada bozuk · Neden: tek Whisper geçişi kararsız · Karar: K-013 (aday seçimi iki dolguyla)
+- [D-070 · 2026-10-03 · video-yapimci] Olan: telaffuz için kısaltırken LOTO'nun "şalter açılır" adımı düştü, kaynakla kıyaslarken yapımcı kendisi yakaladı · Karar: K-031
+- [D-071 · 2026-10-03 · denetçi] Olan: B9 tarifi sayfada olmayan bir grafik (kesik çizgiler güç eğrisinde) çizdirecekti; açık noktadaki önerinin tamamı kaynaktan gibi sunulmuştu; "sağ alt" Short güvenli alanının dışı · Karar: K-031; konum tarifleri piksel sınırıyla (MOTION B)
+- [D-072 · 2026-10-02/03 · CEO] Olan: önceki oturum PANO #10'u üretip commit'ledi ama PANO "onay-bekliyor", günlük tur 1'de kaldı; MP4 depoda yok, teslim durumu bilinmiyor · Karar: K-042
+- [D-073 · 2026-10-03 · icerik-yazari] Olan: ikinci kez komut aracı olmadan teslim; sayım betikle yapılamadı (ilki D-058 dönemindeki saha paketi) · Neden: ajan tanımında Bash yok · Karar: K-032 genişledi (aynı hata iki kez → kural)
+- [D-074 · 2026-10-03 · CEO] Olan: bu turda sohbet arama aracı yoktu; geri bildirim yalnız hafıza dosyalarından okundu, yeni tepki bulunmadı · Karar: reddedildi (araç eksikliği, ajansın elinde değil; günlükte not edildi)
+- [D-075 · 2026-10-03 · video-yapimci] Olan: normalize.sh'deki `grep -E "I:|Peak:"` ebur128'in kare satırlarını da yakalayıp 98 KB çıktı üretti · Karar: reddedildi (kural gerekmez; yeni betiklerde `"^\s+(I|LRA|Peak):"` kullanılır, karara etkisi yok)
 
 ## Emekli kurallar
 (yok)

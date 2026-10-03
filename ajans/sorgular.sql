@@ -45,3 +45,23 @@ SELECT CASE
        COUNT(*) oturum, SUM(sorunlu) sorunlu, SUM(ciddi) ciddi, SUM(arka_plan) arka_plan,
        ROUND(100.0*SUM(sorunlu)/COUNT(*),0) sorunlu_yuzde
 FROM o GROUP BY sinif ORDER BY oturum DESC;
+
+-- S4b: S4'ün bot/test hariç sürümü (S4 akici16'da 8 oturumun 6'sı bot olduğu için %12,5 gösterdi; bkz. D-063)
+SELECT surum, COUNT(DISTINCT oturum) oturum,
+       ROUND(100.0*COUNT(DISTINCT CASE WHEN olay='ozet' AND neden='sahnede' THEN oturum END)/COUNT(DISTINCT oturum),1) sahnede_yuzde
+FROM olay WHERE t > strftime('%s','now','-14 days')*1000
+  AND oturum NOT IN (SELECT oturum FROM olay WHERE gpu='webgl-yok' OR gpu LIKE '%SwiftShader%' OR gpu LIKE '%llvmpipe%'
+                     OR (tarayici='diğer' AND cihaz NOT LIKE 'iPhone%' AND cihaz NOT LIKE 'Android%')
+                     OR (cihaz='Linux' AND gpu LIKE '%Iris OpenGL%'))
+-- Not: telefonda tarayici='diğer' uygulama içi tarayıcıdır (LinkedIn/Instagram), bot değil (D-064)
+GROUP BY surum ORDER BY oturum DESC;
+
+-- S6: H1 ana ölçüsü — telefonda gün gün gerçek oturum, ciddi sorun ve sahnede (K-025)
+WITH e AS (SELECT *, CASE WHEN olay='takilma' THEN CAST(substr(neden, instr(neden,'ms=')+3, instr(substr(neden, instr(neden,'ms=')+3),' ')-1) AS INTEGER) END tms
+  FROM olay WHERE (cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%') AND t > strftime('%s','now','-7 days')*1000),
+o AS (SELECT oturum, date(MIN(t)/1000,'unixepoch') gun, MIN(surum) surum, MIN(gpu) gpu,
+  MAX(CASE WHEN olay='birak' OR (olay='statik' AND neden LIKE 'zayif%') OR (olay='takilma' AND tms BETWEEN 1000 AND 9999) THEN 1 ELSE 0 END) ciddi,
+  MAX(CASE WHEN olay='ozet' AND neden='sahnede' THEN 1 ELSE 0 END) sahnede FROM e GROUP BY oturum)
+SELECT gun, CASE WHEN gpu='webgl-yok' OR gpu LIKE '%SwiftShader%' THEN 'bot/webglsiz' ELSE 'gercek' END sinif,
+       COUNT(*) oturum, SUM(ciddi) ciddi, SUM(sahnede) sahnede, GROUP_CONCAT(DISTINCT surum) surumler
+FROM o GROUP BY gun, sinif ORDER BY gun, sinif;
