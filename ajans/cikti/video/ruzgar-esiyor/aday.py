@@ -11,7 +11,7 @@ src = open(f"{B}/anlatim.py").read(); ns = {"re": re}; exec(src[src.index("BIR =
 os.chdir(os.environ.get("SES_DIZIN", "/home/claude/video-edit/videos/ruzgar-esiyor/ses"))
 M = os.environ.get("MODEL_DIZIN", "/home/claude/models"); ADAY = int(os.environ.get("ADAY", "5"))
 ESDEGER = [("erinin", "eğrinin"), ("eriyi", "eğriyi"), ("sonersoylu com", "soner soylu nokta kom"),
-           ("the turbine tech", "dı törbayn tek"), ("the turbine tek", "dı törbayn tek"), ("rüzgarda makinede", "rüzgar da makine de")]
+           ("the turbine tech", "dı törbayn tek"), ("the turbine tek", "dı törbayn tek"), ("rüzgarda makinede", "rüzgar da makine de"), ("rüzgarda makine de", "rüzgar da makine de")]
 def esle(s):
     s = " ".join(norm(s))
     for a, b in ESDEGER: s = s.replace(a, b)
@@ -24,7 +24,7 @@ def yaz(x, sr, bas):
     sf.write("_a.wav", y, sr); subprocess.run(["ffmpeg","-y","-loglevel","error","-i","_a.wav","-ac","1","-ar","16000","_b.wav"], check=True)
     z, _ = sf.read("_b.wav", dtype="float32"); s = W.create_stream(); s.accept_waveform(16000, z); W.decode_stream(s); return s.result.text.strip()
 T = tts("fahrettin")
-for n in map(int, sys.argv[1:]):
+for n in (map(int, sys.argv[1:]) if __name__ == "__main__" else []):
     ad, metinler, hiz = BEAT[n-1]; iyi = []
     for m in metinler:
         for k in range(ADAY):
@@ -40,5 +40,6 @@ for n in map(int, sys.argv[1:]):
          "secim": "aday.py: iki dolgulu geçişte tam eşleşen en kısa aday", "_anahtar": [metinler, hiz]}
     sf.write(f"sec_{n}.wav", x, SR); json.dump(k, open(f"sec_{n}.json", "w"), ensure_ascii=False)
     print(f"B{n} seçildi {k['sure']} sn :: {d}")
-for f in ("_a.wav", "_b.wav"):
-    if os.path.exists(f): os.remove(f)
+if __name__ == "__main__":
+    for f in ("_a.wav", "_b.wav"):
+        if os.path.exists(f): os.remove(f)

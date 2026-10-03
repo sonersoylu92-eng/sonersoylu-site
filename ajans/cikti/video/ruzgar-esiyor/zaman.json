@@ -74,16 +74,17 @@
  {
   "ad": "kisit",
   "atempo": 1.0,
-  "puan": 1.492,
+  "puan": 1.5,
   "son_kelime": true,
-  "metin": "Bazen rüzgâr da makine de hazırdır, ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir.",
-  "duyulan": "Bazen rüzgarda makinede hazırdır ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir.",
-  "sure": 6.89,
+  "metin": "Bazen rüzgâr da makine de hazırdır, ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. Alarm varsa iş değişir: önce alarmı doğru okuyun.",
+  "duyulan": "Bazen rüzgarda makinede hazırdır ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. Alarm varsa iş değişir. Önce alarmı doğru okuyun. Alarmı doğru ok",
+  "sure": 10.04,
+  "secim": "ekle.py: doğrulanmış eski klip + 0.35 sn + yeni cümlenin tam eşleşen en kısa adayı",
   "beat": 6,
   "ses_bas": 27.39,
-  "ses_son": 34.27,
+  "ses_son": 37.43,
   "sahne_bas": 27.27,
-  "sahne_son": 34.4
+  "sahne_son": 37.55
  },
  {
   "ad": "ters",
@@ -94,10 +95,10 @@
   "duyulan": "Tersi de olur. Rüzgar yok ama rotor değil tepedeki makine dairesi dönüyor.",
   "sure": 4.04,
   "beat": 7,
-  "ses_bas": 34.52,
-  "ses_son": 38.56,
-  "sahne_bas": 34.4,
-  "sahne_son": 38.69
+  "ses_bas": 37.68,
+  "ses_son": 41.72,
+  "sahne_bas": 37.55,
+  "sahne_son": 41.84
  },
  {
   "ad": "kablo",
@@ -108,10 +109,10 @@
   "duyulan": "Kule içindeki güç kabloları makine dairesiyle birlikte döner ve burularak dolanır. Belirli bir tur sayısından sonra türbin, rüzgar olsun olmasın kabloları açmak için ters yöne döner.",
   "sure": 9.71,
   "beat": 8,
-  "ses_bas": 38.81,
-  "ses_son": 48.53,
-  "sahne_bas": 38.69,
-  "sahne_son": 48.66
+  "ses_bas": 41.97,
+  "ses_son": 51.69,
+  "sahne_bas": 41.84,
+  "sahne_son": 51.81
  },
  {
   "ad": "cta",
@@ -123,9 +124,9 @@
   "sure": 8.0,
   "secim": "aday.py: iki dolgulu geçişte tam eşleşen en kısa aday",
   "beat": 9,
-  "ses_bas": 48.78,
-  "ses_son": 56.77,
-  "sahne_bas": 48.66,
-  "sahne_son": 57.27
+  "ses_bas": 51.94,
+  "ses_son": 59.93,
+  "sahne_bas": 51.81,
+  "sahne_son": 60.43
  }
 ]

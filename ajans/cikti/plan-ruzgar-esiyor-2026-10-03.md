@@ -1,12 +1,12 @@
 # Plan · Short · "Rüzgâr esiyor, türbin duruyor. Arızalı mı?"
 
-- **PANO:** #7 · **Durum:** onay-bekliyor (K-040, render yok)
+- **PANO:** #7 · **Durum:** onaylandı (Soner "Onay", 2026-10-03) · üretildi (bkz. §7 Üretim notu)
 - **Biçim:** 9:16, 1080×1920, 30 fps, sesli (Piper fahrettin), müzik yok (MOTION B)
 - **Kaynak:** `ajans/cikti/arastirma-2026-10-02.md` Konu 1 · site: `egitim/turbin-nasil-calisir/`, `n90/`, `ruzgar/`, `ariza/`, `egitim/guvenlik/`, `sozluk/`
 - **Anlatım:** genel açıklayıcı ses. Birinci şahıs yok ("ölçtüm", "gördüm" yok), saha vakası değil. Üretici logosu yok, alarm kodu yok.
-- **Ölçülen süre:** **57,27 sn** (ffprobe, `anlatim.wav`) · konuşma toplamı 54,72 sn · **9 beat** · hedef 45–75 sn
+- **Ölçülen süre:** **60,43 sn** (ffprobe, `anlatim.wav`; onay sonrası B6'ya cümle eklendi, ilk plan 57,27 sn) · konuşma toplamı 57,88 sn · **9 beat** · hedef 45–75 sn
 - **Ses dosyası (depoda değil):** `/home/claude/video-edit/videos/ruzgar-esiyor/anlatim.wav` (48 kHz stereo, −15,1 LUFS, tepe −4,5 dBFS)
-- **Betikler (depoda):** `ajans/cikti/video/ruzgar-esiyor/`: `metin.py` (metin + telaffuz kararları), `anlatim.py` (aday üretimi, Whisper puanı, dizim), `aday.py` (çift dolgulu yazımla yeniden seçim, K-013), `normalize.sh`, `dogrula.py` (tam dosyada beat başına dolgulu geri yazım), `zaman.json` (ölçülmüş beat zamanları)
+- **Betikler (depoda):** `ajans/cikti/video/ruzgar-esiyor/`: `metin.py` (metin + telaffuz kararları), `anlatim.py` (aday üretimi, Whisper puanı, dizim), `aday.py` (çift dolgulu yazımla yeniden seçim, K-013), `ekle.py` (doğrulanmış beat sesine cümle ekleme, Whisper + CTC hakemli), `kelime.py` (CTC'ye zorunlu kelime hizalaması), `build.py` (index.html + .srt), `render.sh` (K-007 ayrık render), `normalize.sh`, `dogrula.py` (tam dosyada beat başına dolgulu geri yazım), `zaman.json` (ölçülmüş beat zamanları)
 
 ## 1 · Kanca
 
@@ -26,15 +26,15 @@ Renk: zemin #07090B, vurgu buz mavisi #6FDCEC, ikinci vurgu #7CC4FF, amber #F2B2
 | 3 | 9,60–15,84 | Aynı eğri; kamera sağ uca kayar (kesme, zoom yok). 11,8 sn'de 25 m/s'te dikey kesik çizgi **[amber]**, eğri orada sıfıra iner. 14,5 sn'de yan panel: kanat kesiti 0° → 90° döner (bayrak konumu, K-001: kendi dayanağında `<g>`). | 25 m/s üstünde: kanatlar bayrak konumuna · türbin durur · *değerler modele göre değişir* | Çok sert rüzgârda da durur. Saniyede yirmi beş metrenin üstünde, emniyet için kanatlar bayrak konumuna alınır. |
 | 4 | 15,84–20,86 | Eğrinin tamamı soluk; iki uç (0–3 ve 25+) buz mavisi yanar. Üstte alıntı kartı (Fraunces 600), "bu eğrinin bir ucudur" italik + buz mavisi. Amber yok. | "kule dibinde “makine niye durdu” sorusunun cevabı çoğu zaman arıza değil, *bu eğrinin bir ucudur*." — Eğitim, Bölüm 03 | Kule dibinde makine niye durdu sorusunun cevabı çoğu zaman arıza değil, bu eğrinin bir ucudur. |
 | 5 | 20,86–27,27 | Planlı bakım kartı. Üç adım sırayla yanar (23,3 / 23,7 / 24,3 sn): ŞALTER AÇILIR → KİLİTLENİR → ETİKETLENİR (asma kilit + etiket ikonu). 25,2 sn'de ayrı satır: rotor kilidi pimi ikonu + "gerekiyorsa" **[amber: "GEREKİYORSA" kelimesi]**. İnsan figürü yok; canlı panele uzanan el yok (MOTION C). | PLANLI BAKIM · LOTO: şalter açılır, kilitlenir, etiketlenir · GEREKİYORSA ROTOR KİLİDİ · "biri diğerinin yerini tutmaz" | Planlı bakımda da türbin durdurulur. Şalter açılır, kilitlenir ve etiketlenir. Gerekiyorsa rotor kilidi de takılır. |
-| 6 | 27,27–34,40 | Sol: rüzgâr çizgileri akıyor + türbin hazır (yeşil değil, buz mavisi durum noktası). Sağ: şebeke hattı ikonu (direk + hat), 31,1 sn'de hat üzerinde "KISIT" kilidi **[amber]**; rotor yavaşlayıp durur. 33,1 sn'de alt satır. | ALARM YOK AMA DURUYOR · Şebeke işletmecisinden gelen üretim kısıtı · *Bu bir arıza değildir.* | Bazen rüzgâr da makine de hazırdır, ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. |
-| 7 | 34,40–38,69 | Yön değişimi: rüzgâr çizgileri söner (rüzgâr yok). Üstten görünüş (plan) şeması: kule dairesi, üstünde nasel dikdörtgeni yavaşça döner (yaw); rotor kanatları sabit. 36,4 sn'de rotorun üstüne "✗ ROTOR" ve nasele "✓ NASEL" etiketi; dönüş oku **[amber]**. | Rüzgâr yok · dönen: NASEL (makine dairesi) · rotor değil | Tersi de olur: rüzgâr yok, ama rotor değil, tepedeki makine dairesi dönüyor. |
-| 8 | 38,69–48,66 | Kule kesiti: nasel altından inen güç kabloları, nasel döndükçe sarmal biçimde burulur (çizgi sayısı artar). Köşede tur sayacı **göstergesi** (rakamsız, yalnız dolan bir yay) 43,7 sn'de dolar **[amber]**. 44,9 sn'de nasel ters yöne döner, kablolar açılır. | KABLO AÇMA · kontrol sistemi turları sayar · eşikte: ters yöne döner · rüzgâr olsun olmasın | Kule içindeki güç kabloları, makine dairesiyle birlikte döner ve burularak dolanır. Belirli bir tur sayısından sonra türbin, rüzgâr olsun olmasın, kabloları açmak için ters yöne döner. |
-| 9 | 48,66–57,27 | Canlı rüzgâr sayfasının sadeleştirilmiş çizimi (ekran görüntüsü değil): sayfadaki gibi rüzgâr hızı zaman grafiği + 3 ve 25 m/s kesik çizgileri, yanında "N90/2500 · – kW" kutusu (sayfada kesik çizgiler güç eğrisinde değil, rüzgâr zaman grafiğindedir; güç eğrisi sayfada tablo ve anlık kW olarak geçer). 51,0 sn'de adres satırı maskeyle açılır. 54,1 sn'de "The Turbine Tech" ve imza. Son söz CTA (MOTION B). Amber yok. | sonersoylu.com/ruzgar · The Turbine Tech · Soner Soylu — Rüzgâr Türbini Saha Servis Teknisyeni · *Sıradaki soru için takip et* | Güç eğrisini canlı rüzgârla görmek için, Soner Soylu nokta kom sitesinde rüzgâr sayfası. Dı Törbayn Tek. Sıradaki soru için. Takip et. |
+| 6 | 27,27–37,55 | Sol: rüzgâr çizgileri akıyor + türbin hazır (yeşil değil, buz mavisi durum noktası). Sağ: şebeke hattı ikonu (direk + hat), 31,1 sn'de hat üzerinde "KISIT" kilidi **[amber]**; rotor yavaşlayıp durur. 33,1 sn'de alt satır; 34,7 sn'de "ALARM VARSA" satırı. | ALARM YOK AMA DURUYOR · Şebeke işletmecisinden gelen üretim kısıtı · *Bu bir arıza değildir.* · ALARM VARSA: ÖNCE ALARMI DOĞRU OKU | Bazen rüzgâr da makine de hazırdır, ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. Alarm varsa iş değişir: önce alarmı doğru okuyun. |
+| 7 | 37,55–41,84 | Yön değişimi: rüzgâr çizgileri söner (rüzgâr yok). Üstten görünüş (plan) şeması: kule dairesi, üstünde nasel dikdörtgeni yavaşça döner (yaw); rotor kanatları sabit. 39,5 sn'de rotorun üstüne "✗ ROTOR" ve nasele "✓ NASEL" etiketi; dönüş oku **[amber]**. | Rüzgâr yok · dönen: NASEL (makine dairesi) · rotor değil | Tersi de olur: rüzgâr yok, ama rotor değil, tepedeki makine dairesi dönüyor. |
+| 8 | 41,84–51,81 | Kule kesiti: nasel altından inen güç kabloları, nasel döndükçe sarmal biçimde burulur (çizgi sayısı artar). Köşede tur sayacı **göstergesi** (rakamsız, yalnız dolan bir yay) 46,9 sn'de dolar **[amber]**. 48,0 sn'de nasel ters yöne döner, kablolar açılır. | KABLO AÇMA · kontrol sistemi turları sayar · eşikte: ters yöne döner · rüzgâr olsun olmasın | Kule içindeki güç kabloları, makine dairesiyle birlikte döner ve burularak dolanır. Belirli bir tur sayısından sonra türbin, rüzgâr olsun olmasın, kabloları açmak için ters yöne döner. |
+| 9 | 51,81–60,43 | Canlı rüzgâr sayfasının sadeleştirilmiş çizimi (ekran görüntüsü değil): sayfadaki gibi rüzgâr hızı zaman grafiği + 3 ve 25 m/s kesik çizgileri, yanında "N90/2500 · – kW" kutusu (sayfada kesik çizgiler güç eğrisinde değil, rüzgâr zaman grafiğindedir; güç eğrisi sayfada tablo ve anlık kW olarak geçer). 54,1 sn'de adres satırı maskeyle açılır. 57,2 sn'de "The Turbine Tech" ve imza. Son söz CTA (MOTION B). Amber yok. | sonersoylu.com/ruzgar · The Turbine Tech · Soner Soylu — Rüzgâr Türbini Saha Servis Teknisyeni · *Sıradaki soru için takip et* | Güç eğrisini canlı rüzgârla görmek için, Soner Soylu nokta kom sitesinde rüzgâr sayfası. Dı Törbayn Tek. Sıradaki soru için. Takip et. |
 
 Güvenli alan (MOTION B): üst 220 px'te önemli yazı yok, alt 384 px ve sağ 160 px boş; panel yazıları %20–55 bandında.
 Geçişler kesme ya da 0,4 sn maske. Hareket power3/expo out 0,5–0,8 sn. Rotor ve nasel sakin döner. Doku: ızgara %4, gren %5.
 
-### Beat başına ölçülmüş süreler (ffprobe toplamı 57,27 sn)
+### Beat başına ölçülmüş süreler (ffprobe toplamı 60,43 sn, onay sonrası)
 
 | # | Sahne aralığı | Sahne süresi | Konuşma başı–sonu | Konuşma süresi | Whisper geri yazımı (son dosya, ±0,3 sn dolgulu, K-005/K-013) |
 |---|---|---|---|---|---|
@@ -43,10 +43,10 @@ Geçişler kesme ya da 0,4 sn maske. Hareket power3/expo out 0,5–0,8 sn. Rotor
 | 3 | 9,60–15,84 | 6,24 | 9,72–15,71 | 5,99 | Çok sert rüzgarda da durur. Saniyede 25 metrenin üstünde emniyet için kanatlar bayrak konumuna alınır. |
 | 4 | 15,84–20,86 | 5,02 | 15,96–20,73 | 4,77 | Kule dibinde makine niye durdu sorusunun cevabı çoğu zaman arıza değil, bu erinin bir ucudur. |
 | 5 | 20,86–27,27 | 6,41 | 20,98–27,14 | 6,16 | Planlı bakımda da türbin durdurulur. Şalter açılır, kilitlenir ve etiketlenir. Gerekiyorsa rotor kilidi de takılır |
-| 6 | 27,27–34,40 | 7,13 | 27,39–34,27 | 6,88 | Bazen rüzgarda makinede hazırdır ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. |
-| 7 | 34,40–38,69 | 4,29 | 34,52–38,56 | 4,04 | Tersi de olur. Rüzgar yok ama rotor değil tepedeki makine dairesi dönüyor. |
-| 8 | 38,69–48,66 | 9,97 | 38,81–48,53 | 9,72 | Kule içindeki güç kabloları makine dairesiyle birlikte döner ve burularak dolanır. Belirli bir tur sayısından sonra türbin, rüzgar olsun olmasın kabloları açmak için ters yöne döner. |
-| 9 | 48,66–57,27 | 8,61 | 48,78–56,77 | 7,99 | Güç eğrisini canlı rüzgarla görmek için sonersoylu.com sitesinde rüzgar sayfası The Turbine Tech. Sıradaki soru için takip et. |
+| 6 | 27,27–37,55 | 10,28 | 27,39–37,43 | 10,04 | Bazen rüzgarda makinede hazırdır ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. Alarm varsa iş değişir. Önce alarmı doğru okuyun. |
+| 7 | 37,55–41,84 | 4,29 | 37,68–41,72 | 4,04 | Tersi de olur. Rüzgar yok ama rotor değil tepedeki makine dairesi dönüyor. |
+| 8 | 41,84–51,81 | 9,97 | 41,97–51,69 | 9,72 | Kule içindeki güç kabloları makine dairesiyle birlikte döner ve burularak dolanır. Belirli bir tur sayısından sonra türbin, rüzgar olsun olmasın kabloları açmak için ters yöne döner. |
+| 9 | 51,81–60,43 | 8,62 | 51,94–59,93 | 7,99 | Güç eğrisini canlı rüzgarla görmek için sonersoylu.com sitesinde rüzgar sayfası The Turbine Tech. Sıradaki soru için takip et. |
 
 Kalan farklar yalnız yazım: B4 "erinin" = "eğrinin" (ğ uzatması, iki tanıma modelinde de aynı; doğal okunuş), B6 "rüzgarda makinede" = "rüzgâr da makine de" (ses aynı), B9 site ve kanal adı.
 Seçim: B3, B5, B9 `aday.py` ile iki ayrı dolguda (0,3 / 0,5 sn) kelime kelime eşleşen adaylardan; diğerleri `anlatim.py` (5 aday, Whisper puanı). Son karar tam dosyada `dogrula.py` ile verildi.
@@ -58,7 +58,7 @@ Seçim: B3, B5, B9 `aday.py` ile iki ayrı dolguda (0,3 / 0,5 sn) kelime kelime 
 > Çok sert rüzgârda da durur. Saniyede yirmi beş metrenin üstünde, emniyet için kanatlar bayrak konumuna alınır.
 > Kule dibinde makine niye durdu sorusunun cevabı çoğu zaman arıza değil, bu eğrinin bir ucudur.
 > Planlı bakımda da türbin durdurulur. Şalter açılır, kilitlenir ve etiketlenir. Gerekiyorsa rotor kilidi de takılır.
-> Bazen rüzgâr da makine de hazırdır, ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir.
+> Bazen rüzgâr da makine de hazırdır, ama şebeke işletmecisinden üretim kısıtı gelir ve türbin durdurulur. Bu bir arıza değildir. Alarm varsa iş değişir: önce alarmı doğru okuyun.
 > Tersi de olur: rüzgâr yok, ama rotor değil, tepedeki makine dairesi dönüyor.
 > Kule içindeki güç kabloları, makine dairesiyle birlikte döner ve burularak dolanır. Belirli bir tur sayısından sonra türbin, rüzgâr olsun olmasın, kabloları açmak için ters yöne döner.
 > Güç eğrisini canlı rüzgârla görmek için, Soner Soylu nokta kom sitesinde rüzgâr sayfası. Dı Törbayn Tek. Sıradaki soru için. Takip et.
@@ -101,7 +101,7 @@ Kullanılmayan rakamlar (bilerek dışarıda): Onedio'nun km/sa değerleri (kayn
 
 Üretici logosu yok; "Nordex N90/2500" yalnız düz yazı (saha vakasındaki "Vestas V126" ile aynı kural). Alarm kodu yok.
 
-## 5 · Soner'e açık noktalar
+## 5 · Soner'e açık noktalar (karara bağlandı, 2026-10-03: 1 ekle · 2 model adı düz yazı kalır, logo yok · 3 anlatımda "makine dairesi", ekranda NASEL)
 
 1. **Arıza olan durum:** Video "çoğu zaman arıza değil" diyor ama alarmlı duruşu hiç anmıyor. 6. beatin sonuna tek cümle ekleyelim mi: "Alarm varsa iş değişir: önce alarmı doğru okuyun." (İkinci yarısı `ariza/` sayfasındaki "Önce alarmı doğru okuyun" başlığı; "Alarm varsa iş değişir" yeni ifade. Süre tahmini ≈2,5 sn, ölçülmedi; toplam ≈60 sn olur. Evet denirse ses üretilip yeniden ölçülür.)
 2. **Model adı:** 2. beatte ekranda "Nordex N90/2500" yazsın mı, yoksa yalnız "örneğin bu modelde" ve model adı yazısız mı kalsın?
@@ -112,3 +112,14 @@ Kullanılmayan rakamlar (bilerek dışarıda): Onedio'nun km/sa değerleri (kayn
 - Görüntü zamanları `zaman.json` + `kelime.json`'dan (K-006). Ses bitti; onayda değişiklik olursa yalnız ilgili beat `aday.py N` ile yeniden üretilir, sonra `anlatim.py` (önbellekten dizer) → `normalize.sh` → `dogrula.py`.
 - K-001 (bayrak konumu kanat kesiti ve nasel dönüşü kendi dayanağında), K-012 `tasma_kontrol.mjs`, K-003 her beatten kare, K-008 `hyperframes@0.8.106`, K-007 ayrık render (57 sn, 2 dk altı olabilir; yine de ayrık başlatılır).
 - Teslim: `ajans/cikti/video/ruzgar-esiyor/` altına build betiği + .srt; MP4 (H.264+AAC, 1080×1920) `/home/claude/video-edit/videos/ruzgar-esiyor/` altında, depoya girmez.
+
+## 7 · Üretim notu (2026-10-03)
+
+- **Teslim:** `/home/claude/video-edit/videos/ruzgar-esiyor/Ruzgar-Esiyor-Turbin-Duruyor-Short.mp4` (depoda değil) · .srt depoda: `ajans/cikti/video/ruzgar-esiyor/Ruzgar-Esiyor-Turbin-Duruyor-Short.srt` · kareler: `/home/claude/video-edit/videos/ruzgar-esiyor/kareler/`
+- **B6 eki:** uzun B6'yı (≈10 sn) baştan üretmek 6 adayda da tam eşleşme vermedi (Whisper sonda tekrar uyduruyor, "Alan varsa", "tübin"). Doğrulanmış eski B6 klibi korunup 0,35 sn ara + yeni cümlenin seçilmiş adayı eklendi (`ekle.py`). Yeni cümle adaylarında Whisper 5/5 sona "Alarmı doğru okuyun" tekrarını uydurdu; harf düzeyli CTC ikinci hakem yapıldı, CTC'si birebir ("alarm varsa iş değişir önce alarmı doğru okuyun") aday seçildi.
+- **Ses:** 60,43 sn, −15,1 LUFS, tepe −4,5 dBFS. Tam dosyada dolgulu geri yazım 9/9 beat (fark yalnız yazım: "erinin", "rüzgarda makinede", site/kanal adı). Kelime hizalaması 154/154 çapa.
+- **Görüntü:** ekrandaki "13,5" ekseni Türkçe ondalıkla; B9 rüzgâr çizgisi "TEMSİLÎ ÇİZİM" etiketli (gerçek veri değil). Amber her sahnede tek öğe; B4 ve B9'da amber yok.
+- **MP4:** 1080×1920, 30 fps, H.264 High + AAC LC 48 kHz stereo, 60,43 sn, 7,3 MB (K-009 sıkıştırma gerekmedi). Son MP4'ün sesinden beat bazında dolgulu Whisper dökümü: 9/9 beat metne uyuyor (aynı yazım farkları).
+- **İkinci render:** ilk MP4'ün kanca karesinde zemin şeridi x≈1010 px'te keskin kenarla bitiyordu; şerit tam genişliğe uzatıldı, yeniden render alındı.
+- **Kontroller:** K-012 `tasma_kontrol.mjs` 0,25–60,25 sn (121 an) → 0 bulgu (aracın varsayılan zaman listesi 52 sn'de bittiği için anlar elle verildi). K-003 her beatten kare tam boyutta incelendi; düzeltilenler: B2 etiketi eğriyi kesiyordu, B3 kanat kesiti kart dışına taşıyordu, B8 sayaç yayı yanlış merkezdeydi ve kablolar kartın altına giriyordu, B3 alt yazısı kart kenarına 17 px idi.
+

@@ -1,0 +1,107 @@
+1
+00:00:00,100 --> 00:00:02,120
+Rüzgâr esiyor, türbin duruyor.
+
+2
+00:00:02,140 --> 00:00:02,860
+Arızalı mı?
+
+3
+00:00:02,880 --> 00:00:04,090
+Çoğu zaman, hayır.
+
+4
+00:00:04,310 --> 00:00:05,950
+Rüzgâr zayıfsa üretim olmaz.
+
+5
+00:00:05,970 --> 00:00:09,540
+Örneğin bu modelde, saniyede 3
+metrenin altında türbin durur.
+
+6
+00:00:09,750 --> 00:00:11,370
+Çok sert rüzgârda da durur.
+
+7
+00:00:11,390 --> 00:00:15,800
+Saniyede 25 metrenin üstünde, emniyet
+için kanatlar bayrak konumuna alınır.
+
+8
+00:00:15,970 --> 00:00:19,650
+Kule dibinde makine niye durdu
+sorusunun cevabı çoğu zaman arıza değil,
+
+9
+00:00:19,670 --> 00:00:20,920
+bu eğrinin bir ucudur.
+
+10
+00:00:20,990 --> 00:00:22,830
+Planlı bakımda da türbin durdurulur.
+
+11
+00:00:22,850 --> 00:00:25,120
+Şalter açılır, kilitlenir ve etiketlenir.
+
+12
+00:00:25,170 --> 00:00:27,220
+Gerekiyorsa rotor kilidi de takılır.
+
+13
+00:00:27,440 --> 00:00:29,300
+Bazen rüzgâr da makine de hazırdır,
+
+14
+00:00:29,320 --> 00:00:33,060
+ama şebeke işletmecisinden üretim
+kısıtı gelir ve türbin durdurulur.
+
+15
+00:00:33,080 --> 00:00:34,370
+Bu bir arıza değildir.
+
+16
+00:00:34,660 --> 00:00:36,060
+Alarm varsa iş değişir:
+
+17
+00:00:36,080 --> 00:00:37,570
+önce alarmı doğru okuyun.
+
+18
+00:00:37,710 --> 00:00:38,450
+Tersi de olur:
+
+19
+00:00:38,470 --> 00:00:41,860
+rüzgâr yok, ama rotor değil,
+tepedeki makine dairesi dönüyor.
+
+20
+00:00:41,980 --> 00:00:46,260
+Kule içindeki güç kabloları, makine dairesiyle
+birlikte döner ve burularak dolanır.
+
+21
+00:00:46,280 --> 00:00:48,480
+Belirli bir tur sayısından sonra türbin,
+
+22
+00:00:48,500 --> 00:00:51,790
+rüzgâr olsun olmasın, kabloları
+açmak için ters yöne döner.
+
+23
+00:00:52,010 --> 00:00:57,070
+Güç eğrisini canlı rüzgârla görmek için,
+sonersoylu.com sitesinde rüzgâr sayfası.
+
+24
+00:00:57,090 --> 00:00:58,120
+The Turbine Tech.
+
+25
+00:00:58,150 --> 00:01:00,080
+Sıradaki soru için takip et.

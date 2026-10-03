@@ -82,6 +82,7 @@ Ders biçimi:
 - **K-042** Her oturum (zamanlanmış ya da etkileşimli) PANO ve günlüğü kapanmadan günceller; üretilen MP4'ün nerede
   durduğu ve Soner'e gönderilip gönderilmediği PANO'ya yazılır. MP4 depoya girmez, o yüzden yeniden üretim betikleri
   (build/ses) depoda olmalı. (D-072)
+- **K-043** Soner hız/limit isterse: denetim tek kare sayfası (tüm beat kareleri tek görselde) + otomatik kontroller (taşma, Whisper) ile CEO'da yapılır; ayrı denetçi ajanı yalnız metin/rakam değişikliği varsa. (D-080)
 - **K-041** Soner'den komut çalıştırması ya da dosya yüklemesi istenmez; YouTube/LinkedIn'e erişim yoksa yükleme
   paketi kopyala-yapıştır hazır verilir. (D-041)
 
@@ -130,6 +131,11 @@ Ders biçimi:
 - [D-073 · 2026-10-03 · icerik-yazari] Olan: ikinci kez komut aracı olmadan teslim; sayım betikle yapılamadı (ilki D-058 dönemindeki saha paketi) · Neden: ajan tanımında Bash yok · Karar: K-032 genişledi (aynı hata iki kez → kural)
 - [D-074 · 2026-10-03 · CEO] Olan: bu turda sohbet arama aracı yoktu; geri bildirim yalnız hafıza dosyalarından okundu, yeni tepki bulunmadı · Karar: reddedildi (araç eksikliği, ajansın elinde değil; günlükte not edildi)
 - [D-075 · 2026-10-03 · video-yapimci] Olan: normalize.sh'deki `grep -E "I:|Peak:"` ebur128'in kare satırlarını da yakalayıp 98 KB çıktı üretti · Karar: reddedildi (kural gerekmez; yeni betiklerde `"^\s+(I|LRA|Peak):"` kullanılır, karara etkisi yok)
+- [D-076 · 2026-10-03 · video-yapimci] Olan: 0,4 sn kuyruk sessizliğinde Whisper son cümleyi 5/5 adayda tekrar uydurdu · Karar: K-013'e not — CTC (omni) ikinci hakem, seçim en yüksek CTC benzerliğiyle
+- [D-077 · 2026-10-03 · video-yapimci] Olan: uzun beat'e cümle eklerken baştan üretim yeni kaymalar getirdi · Karar: K-011'e not — doğrulanmış klip + 0,35 sn + yeni cümle (`ekle.py`)
+- [D-078 · 2026-10-03 · video-yapimci] Olan: tasma_kontrol.mjs varsayılan 0,25–51,75 sn tarıyor, 60 sn videonun sonu atlanırdı · Karar: K-012'ye not — anlar video süresine göre verilir
+- [D-079 · 2026-10-03 · video-yapimci] Olan: tam daire SVG yayı yanlış merkezde çizildi, yalnız gözle yakalandı · Karar: K-001'e not — tam daire iki yarım yayla
+- [D-080 · 2026-10-03 · CEO] Olan: Soner "hızlı ve en az limitle" dedi; denetçi ajanı yerine CEO 12 karelik tek sayfa + yapımcının otomatik kontrolleriyle (taşma 0, Whisper 9/9) denetledi · Karar: K-043 eklendi
 
 ## Emekli kurallar
 (yok)
