@@ -685,6 +685,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // Gölgelendirici derlemesi: görünmeyen iç sahneler (kule, nasel) de dahil hepsi ilk kareden önce derlenir.
   // KHR_parallel_shader_compile olan cihazlarda (Chrome, Android) derleme ana iş parçacığını kilitlemez;
   // olmayanlarda bile donma kule kapısına gelince değil, sahne ilk açılırken ve tek seferde olur.
+  // birak() çizim motorunu bu söz bitince kapatır: derleme sürerken dispose edilirse three.js'in
+  // compileAsync yoklaması kapatılmış programlara bakıp hata atıyordu ("reading 'isReady'").
+  let derlemeSozu = Promise.resolve();
   (function derleSonraBaslat() {
     let basladi = false;
     const git = () => { if (basladi) return; basladi = true; baslat(); };
@@ -727,6 +730,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
         ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; try { const e = bokeh.enabled; bokeh.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } });
       };
       geriAl();
+      derlemeSozu = Promise.race([Promise.all(sozler).catch(() => {}), new Promise(r => setTimeout(r, 10000))]);
       Promise.all(sozler).then(bitti, bitti);
       setTimeout(() => { if (!basladi) { geriAl(); git(); } }, mobil ? 16000 : 8000);   // hiçbir durumda sahne bekletilmesin
     } catch (e) { git(); }
@@ -737,7 +741,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     canvas.classList.remove('hazir');
     try { sessionStorage.removeItem('dny-kalite'); } catch (e) {}
     if (cb.hata) cb.hata(typeof neden === 'string' ? neden : 'bilinmiyor', { kalite, kare_ms: Math.round(ortKare * 10) / 10 });
-    try { renderer.dispose(); } catch (e) {}
+    derlemeSozu.then(() => { try { renderer.dispose(); } catch (e) {} });
   }
   S.birak = birak;
   S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi });

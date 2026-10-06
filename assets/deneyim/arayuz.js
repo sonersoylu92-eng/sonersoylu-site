@@ -30,16 +30,27 @@
   }
   // Zayıf cihaz: tanı kayıtlarında ilk karesi 18–22 sn süren ve 15 sn donan ekran kartları.
   // Bu cihazlarda canlı 3B hiç yüklenmez; kapak ve içerik akıcı kalır. ?uc=1 testte zorlar.
-  var ZAYIF_ANAHTAR = 'dny-zayif-v3';
+  // v4: işaret artık süreli (ZAYIF_SURE). Eski v3 işaretleri süresizdi; bir kez geç yüklenen cihaz 3B'yi
+  // bir daha hiç görmüyordu. Onlar burada temizlenir, her cihaz sahneye bir kez daha şans tanır.
+  var ZAYIF_ANAHTAR = 'dny-zayif-v4', ZAYIF_SURE = 7 * 24 * 3600 * 1000;
+  try { localStorage.removeItem('dny-zayif-v3'); } catch (e) {}
+  var kurulumT0 = 0;   // sahne dosyaları indikten sonraki an: ilk kare sınırı (8 sn) buradan sayılır, indirme süresi sayılmaz
   var hazirAni = 0;   // ilk karede geometri yüklemesi uzun sürer; açılış takılması donma sayılmaz
   // Sekme arka plandayken ya da bilgisayar uykudayken kare gelmez; bu boşluklar donma sayılmaz.
   var gizlendi = document.hidden;
   document.addEventListener('visibilitychange', function () { if (document.hidden) gizlendi = true; });
   addEventListener('blur', function () { gizlendi = true; });
-  function zayifIsaretle(neden) { try { localStorage.setItem(ZAYIF_ANAHTAR, String(neden).slice(0, 40)); } catch (e) {} }
+  function zayifIsaretle(neden) { try { localStorage.setItem(ZAYIF_ANAHTAR, JSON.stringify({ n: String(neden).slice(0, 40), t: Date.now() })); } catch (e) {} }
   function zayifCihaz() {
     if (/[?&]uc=1\b/.test(location.search)) return '';
-    try { var k = localStorage.getItem(ZAYIF_ANAHTAR); if (k) return 'onceki-' + k; } catch (e) {}
+    try {
+      var k = localStorage.getItem(ZAYIF_ANAHTAR);
+      if (k) {
+        var z = JSON.parse(k);
+        if (z && z.t && Date.now() - z.t < ZAYIF_SURE) return 'onceki-' + z.n;
+        localStorage.removeItem(ZAYIF_ANAHTAR);   // süresi doldu ya da bozuk: sahneye yeniden şans ver
+      }
+    } catch (e) { try { localStorage.removeItem(ZAYIF_ANAHTAR); } catch (e2) {} }
     var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     if (/SwiftShader|llvmpipe|softpipe|Basic Render/i.test(g)) return 'yazilim-gpu';
     if (/Intel/i.test(g) && !/Iris\(R\) Xe|Arc/i.test(g)) return 'intel-tumlesik';
@@ -51,7 +62,7 @@
   function tani(olay, ek) {
     if (taniSay++ > 22) return;
     try {
-      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici16', gpu: taniGpuOku(),
+      var v = { olay: olay, sayfa: location.pathname, oturum: taniOturum, surum: filmKip ? 'film1' : 'akici17', gpu: taniGpuOku(),
         ekran: innerWidth + 'x' + innerHeight, dpr: devicePixelRatio || 1 };
       for (var k in ek) v[k] = ek[k];
       var govde = JSON.stringify(v);
@@ -398,7 +409,8 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=41603a82').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=469969fd').then(function (mod) {
+      kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
@@ -408,7 +420,7 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0); tani('hazir', { sure_ms: hs }); if (hs > 8000 && !filmKip && !gizlendi) { zayifIsaretle('ilk-kare-' + hs); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
+        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0), ks = Math.round(performance.now() - (kurulumT0 || taniT0)); tani('hazir', { sure_ms: hs, kurulum_ms: ks }); if (ks > 8000 && !filmKip && !gizlendi) { zayifIsaretle('ilk-kare-' + ks); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
         takilma: function (d) { if (d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
         hata: function (neden, d) { d = d || {}; if (neden === 'yavas' && !filmKip) zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       });
@@ -416,13 +428,16 @@
     }).catch(function (e) { console.error('deneyim yüklenemedi:', e); tani('hata', { neden: 'yukleme: ' + String(e && e.message || e).slice(0, 120) }); statik(false); });
     // 15 sn içinde ilk kare gelmezse bekletme: kapağa dön. Süre yalnız sekme görünürken işler;
     // arka planda açılan sekmede tarayıcı çizim yapmaz, sahne bu yüzden yanlışlıkla kapanmasın.
-    var gorunurMs = 0, sonKontrol = performance.now();
+    var gorunurMs = 0, sonKontrol = performance.now(), indiBitti = false;
     var bekci = setInterval(function () {
       var simdi = performance.now();
       if (!document.hidden) gorunurMs += simdi - sonKontrol;
       sonKontrol = simdi;
       if (bolum.classList.contains('hazir') || bolum.classList.contains('statik')) { clearInterval(bekci); return; }
-      if (gorunurMs < 15000) return;
+      // İndirme sürerken 30 sn tanınır; dosyalar inince sayaç sıfırlanır ve sahneye kendi 15 sn'si verilir.
+      // Böylece yavaş internetteki sağlam bir cihaz, indirme yüzünden kapağa düşmez.
+      if (!kurulumT0) { if (gorunurMs < 30000) return; }
+      else { if (!indiBitti) { indiBitti = true; gorunurMs = Math.min(gorunurMs, simdi - kurulumT0); } if (gorunurMs < 15000) return; }
       clearInterval(bekci);
       if (sahneS && sahneS.birak) sahneS.birak('zaman-asimi'); else { tani('birak', { neden: 'zaman-asimi-yukleme', sure_ms: 15000 }); birak(); }
     }, 500);
