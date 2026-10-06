@@ -688,6 +688,39 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // birak() çizim motorunu bu söz bitince kapatır: derleme sürerken dispose edilirse three.js'in
   // compileAsync yoklaması kapatılmış programlara bakıp hata atıyordu ("reading 'isReady'").
   let derlemeSozu = Promise.resolve();
+  // Isınma raporu: arayuz.js 'hazir' tanısına ekler. iPhone'da ısınma sessizce atlanıyordu (tanı kayıtları: ilk
+  // karede geo+145, kule kapısında geo+236…547); artık ne yüklendiği ve hangi adımın hata verdiği görünür.
+  S.isinma = { once: 0, guvenli: 0, sonra: 0, hata: '' };
+  function isinmaHatasi(adim, e) {
+    if (!S.isinma.hata) S.isinma.hata = (adim + ':' + String(e && e.message || e)).replace(/\s+/g, ' ').slice(0, 90);
+  }
+  // Güvenli yükleme: bütün sahne, gölgelendiricisi başarısız olamayacak tek bir basit malzemeyle küçük, görünmez
+  // bir hedefe bir kez çizilir. Böylece tüm geometri tamponları ekran kartına çıkar; dokular da tek tek yüklenir.
+  // Işıklı ısınma bir cihazda hata verse bile kaydırırken parça yüklemesi (takılma) olmaz.
+  function guvenliYukle() {
+    const hedef = new THREE.WebGLRenderTarget(4, 4), basit = new THREE.MeshBasicMaterial();
+    const oncekiHedef = renderer.getRenderTarget(), golge = renderer.shadowMap.autoUpdate;
+    try {
+      renderer.shadowMap.autoUpdate = false;
+      scene.overrideMaterial = basit;
+      renderer.setRenderTarget(hedef);
+      renderer.render(scene, camera);
+    } catch (e) { isinmaHatasi('guvenli', e); }
+    finally {
+      scene.overrideMaterial = null;
+      renderer.setRenderTarget(oncekiHedef);
+      renderer.shadowMap.autoUpdate = golge;
+      hedef.dispose(); basit.dispose();
+    }
+    if (renderer.initTexture) {
+      const goruldu = new Set();
+      scene.traverse(o => {
+        const ml = !o.material ? [] : Array.isArray(o.material) ? o.material : [o.material];
+        ml.forEach(m => { for (const k in m) { const v = m[k]; if (v && v.isTexture && !goruldu.has(v)) { goruldu.add(v); try { renderer.initTexture(v); } catch (e) { isinmaHatasi('doku', e); } } } });
+      });
+    }
+    S.isinma.guvenli = renderer.info.memory.geometries;
+  }
   (function derleSonraBaslat() {
     let basladi = false;
     const git = () => { if (basladi) return; basladi = true; baslat(); };
@@ -717,14 +750,19 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
         if (basladi) return;
         // ısınma kareleri: her ışık düzeni bir kez gerçekten çizilir; geometri, dokular ve ekran kartının
         // çizim durumları şimdi hazırlanır (Safari/Metal bunları ilk çizimde kurar). Tuval henüz görünmez.
-        try {
-          gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
-          // gölge haritası da her düzende bir kez çizilir: derinlik gölgelendiricileri kaydırırken değil şimdi derlenir
-          DUZEN.forEach(d => { duzen(d); if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = true; renderer.render(scene, camera); });
-          duzen([true, true]);
-          cizimCiz(0.5);
-          renderer.clear();
-        } catch (e) { /* ısınma olmasa da sahne çalışır */ }
+        S.isinma.once = renderer.info.memory.geometries;
+        gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
+        guvenliYukle();
+        // gölge haritası da her düzende bir kez çizilir: derinlik gölgelendiricileri kaydırırken değil şimdi derlenir.
+        // Her düzen kendi korumasında: biri hata verirse diğerleri yine ısınır (eskiden tek hata hepsini atlatıyordu).
+        DUZEN.forEach(d => {
+          try { duzen(d); if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = true; renderer.render(scene, camera); }
+          catch (e) { isinmaHatasi('duzen' + DUZEN.indexOf(d), e); }
+        });
+        try { duzen([true, true]); } catch (e) { isinmaHatasi('duzen-son', e); }
+        try { cizimCiz(0.5); } catch (e) { isinmaHatasi('cizim', e); }
+        try { renderer.clear(); } catch (e) { /* temizlik olmasa da sahne çalışır */ }
+        S.isinma.sonra = renderer.info.memory.geometries;
         geriAl(); git();
         // masaüstü efektleri (alan derinliği, parlama) nasel içinde ilk açıldığında derlenip takılmasın
         ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; try { const e = bokeh.enabled; bokeh.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } });
@@ -732,8 +770,19 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       geriAl();
       derlemeSozu = Promise.race([Promise.all(sozler).catch(() => {}), new Promise(r => setTimeout(r, 10000))]);
       Promise.all(sozler).then(bitti, bitti);
-      setTimeout(() => { if (!basladi) { geriAl(); git(); } }, mobil ? 16000 : 8000);   // hiçbir durumda sahne bekletilmesin
-    } catch (e) { git(); }
+      setTimeout(() => {   // hiçbir durumda sahne bekletilmesin; derleme hiç bitmezse en azından parçalar yüklü başlasın
+        if (basladi) return;
+        isinmaHatasi('zaman-asimi', 'derleme bitmedi');
+        gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
+        guvenliYukle(); geriAl(); git();
+      }, mobil ? 16000 : 8000);
+    } catch (e) {
+      // derleme hazırlığı daha baştan hata verdiyse ısınmasız başlamak yerine güvenli yüklemeyi yine de yap
+      isinmaHatasi('hazirlik', e);
+      try { scene.traverse(o => { if (!o.visible) { o.visible = true; o.userData.__gizliIdi = true; } }); guvenliYukle(); }
+      finally { scene.traverse(o => { if (o.userData.__gizliIdi) { o.visible = false; delete o.userData.__gizliIdi; } }); }
+      git();
+    }
   })();
   function birak(neden) {
     if (birakildi) return; birakildi = true;
