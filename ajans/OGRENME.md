@@ -150,6 +150,7 @@ Ders biçimi:
 - [D-087 · 2026-10-07 · site-bakimci] Olan: #11 brifindeki "devreye giriş" sözlükte yok ("devreye girme hızı"); metindeki "kırmızı" çizgiler gerçekte mavi (`--beacon` :root'ta mavi) · Karar: K-026 eklendi
 - [D-088 · 2026-10-07 · video-yapimci] Olan: plan tahmini 2,3 kelime/sn, ölçülen Piper hızı 2,66 (%14 fark); ilk taslak 979 kelime = 7:29 · Karar: reddedildi (kural gerekmez; plan tahmini ölçülen hızla verilir, 5 dk ≈ 700 kelime — K-006 zaten sesi ölçüp süre kurar)
 - [D-089 · 2026-10-07 · CEO] Olan: Soner turu "en az kredi, çok hızlı" diye kısıtladı · Karar: K-043 genişledi — denetçi ajanı yalnız rakam/güvenlik metni ve site diff'i için; raporlama/kayıt CEO'da tek betikle
+- [D-090 · 2026-10-07 · CEO] Olan: Soner güvenlik ifadesinde koşulsuz "rotor kilidi takılır"ı seçti; site 3 sayfada farklıydı · Karar: K-031'e not — sitedeki güvenlik ifadesi çeliştiğinde Soner'e sorulur, cevabı tüm sayfalara ve planlara aynı turda işlenir
 
 ## Emekli kurallar
 (yok)
