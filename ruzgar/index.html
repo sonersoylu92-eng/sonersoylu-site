@@ -305,7 +305,7 @@ table.egri thead th{font-size:.625rem;letter-spacing:.12em;text-transform:upperc
 
 <section class="gsec"><div class="wrap">
  <div class="ghead"><p class="k">72 saat</p><h2>Önümüzdeki üç gün</h2>
-  <p class="ac">Çizgi göbek yüksekliğindeki rüzgâr hızı, taralı alan aynı saatte bir N117&#8217;nin vereceği güç. Gri bantlar geceyi, kırmızı kesik çizgiler kesme rüzgârlarını (3 ve 25 m/s) gösterir.</p></div>
+  <p class="ac">Çizgi göbek yüksekliğindeki rüzgâr hızı, taralı alan aynı saatte bir N117&#8217;nin vereceği güç. Gri bantlar geceyi, kesik çizgiler devreye girme (3 m/s) ve devreden çıkma (25 m/s) hızlarını gösterir.</p></div>
  <div class="grafik">
   <div class="grafik-ust">
    <span class="gk"><span><i style="background:var(--ink)"></i>Rüzgâr 120 m</span><span><i style="background:var(--beacon);opacity:.4;height:8px"></i>N117 gücü</span></span>
@@ -317,7 +317,7 @@ table.egri thead th{font-size:.625rem;letter-spacing:.12em;text-transform:upperc
   <div><p class="v"><span id="ozOrt">–</span> m/s</p><p class="n">72 s ortalama rüzgâr</p></div>
   <div><p class="v"><span id="ozMaks">–</span> m/s</p><p class="n">En yüksek</p></div>
   <div><p class="v">%<span id="ozKf">–</span></p><p class="n">N117 kapasite kullanımı</p></div>
-  <div><p class="v"><span id="ozDur">–</span> saat</p><p class="n">Kesme altında duruş</p></div>
+  <div><p class="v"><span id="ozDur">–</span> saat</p><p class="n">Rüzgâr sınırı dışında duruş</p></div>
  </div>
  <div class="uyari">
   <p><b>Bu bir üretim raporu değil.</b> Gerçek bir türbin; kısıtlama, sektör yönetimi, <a class="sz" href="/sozluk/#t-buzlanma" title="Buzlanma — sözlükte">buzlanma</a>, gürültü modu, <a class="sz" href="/sozluk/#t-i-z-etkisi" title="İz etkisi — sözlükte">iz etkisi</a>, bakım ve arıza duruşları yüzünden bu değerlerin altında kalır. Sayfadaki rakam, &#8220;bu rüzgârda makine ne verirdi&#8221; sorusunun teorik cevabı.</p>
@@ -418,7 +418,7 @@ var secili="aliaga", istek=0;
 
 function durumMetni(v,p){
  if(!(v>0))return["bekliyor","veri yok"];
- if(v<3)return["bekliyor","rüzgâr kesme altında — rotor duruyor"];
+ if(v<3)return["bekliyor","rüzgâr devreye girme hızının altında — rotor duruyor"];
  if(v>25)return["bekliyor","fırtına kesmesi — türbin durdurulur"];
  if(p>=0.98*(arguments[2]||3000))return["uretim","anma gücünde"];
  return["uretim","üretimde"];
