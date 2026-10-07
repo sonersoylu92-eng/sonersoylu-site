@@ -60,3 +60,15 @@ Ortak desen: ikisinde de açılışta p=0'da ~770–790 ms tek takılma (`geo+14
 Tur 1 ile neredeyse aynı (yeni gerçek masaüstü oturumu yok denecek kadar az); artış botlarda.
 S4b (bot hariç, telefonda uygulama içi tarayıcı korunarak): akici14 60 oturum %65 sahnede · akici16 3 oturum %33 (örneklem çok küçük).
 Sorgu değişikliği: S4 bot/test hariç tutacak şekilde S4b olarak eklendi, telefon ciddi ayrıştırması S6 olarak eklendi (`sorgular.sql`).
+
+## 2026-10-07 · tur 3 — CEO (S1, S2, S4, S5, S6 + yeni S8)
+Trafik 2 Eki'den sonra düştü: telefonda gerçek oturum 3 Eki 3 · 4 Eki 2 · 5 Eki 3 · 6 Eki 20 · 7 Eki 2.
+**H1 (S6, telefon, gerçek, akis1 hariç):** 3–5 Eki ciddi **5/8**, 6 Eki **4/20 (%20)**, 7 Eki 0/2. 2 Eki 0/41'e göre kötüleşme, ama örneklem küçük.
+**Neden (S8, açılışta p=0 takılma ≥1 sn, oturum):** akici14 **1/46** · akici16 **7/17 (%41)** · akici17 1/8 · akici18 **0/5**.
+akici16 iPhone'larında açılış donması 1,0–1,7 sn (`geo+145 tex+5`) — tur 2'de 0,8 sn görülen desen büyüdü, "ciddi"ye girdi.
+Soner'in 6–7 Eki oturumundaki 873f8b0 (akici18, iPhone güvenli yükleme) bunu hedefliyor; 5 oturumda 0. Karar ≥15 gerçek akici18 telefon oturumunda.
+Android 10 · K: açılışta 1,1 / 2,0 sn (geo+0) — ayrı, düşük donanım.
+**S4/S4b:** akici16 48 oturum %27,1 sahnede (bot dahil); akici17 9 · %55,6; akici18 7 · %14,3 (çok erken).
+**S5 masaüstü (7 gün):** bot/test 33 (11 ciddi — botlar artık "ciddi"ye giriyor) · Mac M1 29/23 (ciddi 12) · diğer 17/14 (ciddi 12) · kısa 10/2.
+**Ölçüm hatası:** yeni `akis1` kaydırma ölçümü `olay='takilma'` + ayrı oturum kimliği yazıyor → S1/S2 sorunlu ve oturum sayılarını şişiriyordu (6 Eki 21/7 → akis1 hariç 19/5). S2/S6'dan çıkarıldı, S7 (akis okuma) ve S8 eklendi (D-084).
+S7 ilk veri: 2 iPhone, 122 ve 215 kare; biri `makine` bölümünde 1 kare >50 ms (en 73 ms). Kaydırma takılması yok denecek kadar az.

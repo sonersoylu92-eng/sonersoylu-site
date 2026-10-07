@@ -53,13 +53,16 @@ Ders biçimi:
   ve kendisi takılma yapar. (D-022)
 - **K-023** CSS/JS değişince bağlantıdaki `?v=` damgasını içerik md5'iyle ve `sw.js` SURUM'u güncelle; Cloudflare
   dosyaları 4 saat önbellekte tutar. Dinamik `import()` edilen dosyanın damgası, onu çağıran dosyanın içindedir. (D-023)
+- **K-026** Metin düzeltmesinde terim ölçüsü sözlüktür (`sozluk/` DefinedTerm adı); iş tanımındaki terim önce sözlükle kıyaslanır.
+  Metinde renk/biçim tarifi tarayıcıda hesaplanan stille doğrulanır (CSS değişkeni bölüme göre değişir); mümkünse renk adı yazılmaz. (D-087)
 - **K-024** `/api/*` yolları robots ile kapalı: dışarıdan WebFetch ile okunamaz. Veriyi D1'den ya da Cloudflare
   bağlantısından oku. (D-024)
 
 - **K-025** Telemetri: rAF ile süre ölçen her kod `visibilitychange`'te zaman referansını sıfırlar; yoksa sekme arkadayken
   geçen süre "takılma" diye yazılır. H1 ölçüsü S5'teki "ciddi" sütunuyla, bot/test ve arka plan boşluğu hariç okunur.
   Bir varsayımı ("sorunlar botlardan") oran hedefine bağlamadan önce veriyle sına. Sürüm kohortları da bot/test
-  hariç okunur (S4b); telefonda `tarayici='diğer'` uygulama içi tarayıcıdır, bot sayılmaz. H1 ana ölçüsü S6. (D-054, D-055, D-063, D-064)
+  hariç okunur (S4b); telefonda `tarayici='diğer'` uygulama içi tarayıcıdır, bot sayılmaz. H1 ana ölçüsü S6. Yeni telemetri
+  sürümü/olayı eklendiğinde (ör. `akis1`) S1–S6 ona göre filtrelenir; tur başında `git log` ile tur dışı site commit'leri okunur. (D-054, D-055, D-063, D-064, D-084, D-085)
 
 ### İçerik ve doğruluk
 - **K-030** Rüzgârla güç ilişkisi her zaman nitelenir: "rüzgârdaki güç hızın küpüyle"; türbin gücü için "anma gücüne kadar". (D-056)
@@ -69,7 +72,8 @@ Ders biçimi:
   başka cümle kısaltılır. Telaffuz ya da uzunluk için metin değişince güvenlik adımları kaynakla yeniden sayılır.
   Kaynağın kendi aritmetiği de kontrol edilir; kaynak kendi içinde tutarsızsa aktarılmaz, Soner'e sorulur. Videoda
   gösterilecek sayfa çizimi de sayfadaki gerçek grafikle aynı türde olmalı; açık nokta önerilerinde kaynaktan gelen
-  kısım ile yeni yazılan ayrı gösterilir. (D-057, D-062, D-065, D-066, D-070, D-071)
+  kısım ile yeni yazılan ayrı gösterilir. Liste kısaltılırken düşen madde "bilerek dışarıda" diye yazılır; sağlık/güvenlik maddesi
+  düşmez; kısaltmada fiil kişi ekleri kaynakla kıyaslanır. Soner'e sorulan bir seçenek kural dışı rakam/ad getiriyorsa soruda yazılır. (D-086, D-057, D-062, D-065, D-066, D-070, D-071)
 - **K-032** Metin teslimleri betikle üretilir: karakter sayıları + metindeki **rakam listesi** otomatik çıkar; denetçi listeyi
   brifle kıyaslar. Paket başlığında teslim edilen dosya adı yazar. icerik-yazari'nın komut aracı yoktur: betiği CEO ya da
   denetçi çalıştırır, yazar sayımı fark hesabıyla verip "betik bekliyor" yazar; betik çalışmadan paket GEÇMEZ. (D-058, D-073)
@@ -82,7 +86,7 @@ Ders biçimi:
 - **K-042** Her oturum (zamanlanmış ya da etkileşimli) PANO ve günlüğü kapanmadan günceller; üretilen MP4'ün nerede
   durduğu ve Soner'e gönderilip gönderilmediği PANO'ya yazılır. MP4 depoya girmez, o yüzden yeniden üretim betikleri
   (build/ses) depoda olmalı. (D-072)
-- **K-043** Soner hız/limit isterse: denetim tek kare sayfası (tüm beat kareleri tek görselde) + otomatik kontroller (taşma, Whisper) ile CEO'da yapılır; ayrı denetçi ajanı yalnız metin/rakam değişikliği varsa. (D-080)
+- **K-043** Soner hız/limit isterse (D-089: varsayılan tutum — tur başına en çok 3 ajan çağrısı + denetim, kayıtlar tek betikle): denetim tek kare sayfası (tüm beat kareleri tek görselde) + otomatik kontroller (taşma, Whisper) ile CEO'da yapılır; ayrı denetçi ajanı yalnız metin/rakam değişikliği varsa. (D-080)
 - **K-044** Kanal izleyicisinin çoğu ABD'de: her Short'un İngilizce sürümü de üretilir (ABD İngilizcesi, m/s yanında mph, Türkçe alıntı tırnakla çevrilmez, CTA sonersoylu.com/en). (D-083)
 - **K-041** Soner'den komut çalıştırması ya da dosya yüklemesi istenmez; YouTube/LinkedIn'e erişim yoksa yükleme
   paketi kopyala-yapıştır hazır verilir. (D-041)
@@ -140,6 +144,12 @@ Ders biçimi:
 - [D-081 · 2026-10-03 · video-yapimci] Olan: İngilizce Piper "sonersoylu"yu "sonar solu", "opened, locked"ı "open, locked" okudu; cümle bölünce düzeldi · Karar: K-011'e not — çok dilli videoda özel adlar ayrı yazılır ("Soner Soylu dot com"), CTC ile ikinci kontrol
 - [D-082 · 2026-10-03 · video-yapimci] Olan: sed yol değişikliği "-en-en" üretti, render yanlış klasörde başladı; `pgrep -f` kabuğu öldürdü · Karar: K-002 ve K-007 zaten kapsıyor (yol değişikliğinden sonra grep; PID dosyası) — yeni kural yok
 - [D-083 · 2026-10-03 · CEO] Olan: Soner, izleyici çoğunluğu ABD olduğu için İngilizce sürüm istedi · Karar: K-044 eklendi
+- [D-084 · 2026-10-07 · CEO] Beklenen: S2 telefonda sorunlu oranı · Olan: 6 Eki 21/7 → `akis1` kaydırma ölçümü ayrı oturum + `takilma` yazıyordu, gerçek 19/5 · Neden: tur dışı eklenen telemetri sorguya işlenmemişti · Karar: K-025 genişledi, S2/S6 filtreli, S7/S8 eklendi
+- [D-085 · 2026-10-07 · CEO] Olan: 6–7 Eki'de 6 site commit'i (akici17/18, akis1, iletişim sayfası) ajans dışı oturumda yapılmış, PANO/günlükte yok · Neden: etkileşimli site oturumları ajans dosyalarına yazmıyor · Karar: K-025'e "tur başında git log" eklendi (K-042 ajans oturumları için kalır)
+- [D-086 · 2026-10-07 · denetçi] Olan: uzun video planında "kime uygun değil" listesinden sağlık maddesi sessizce düştü; B25'te kişi eki düşüp anlam kaydı; Soru 2'nin "aynen" seçeneği üretici adı + denetlenmemiş rakam getirecekti · Karar: K-031 genişledi
+- [D-087 · 2026-10-07 · site-bakimci] Olan: #11 brifindeki "devreye giriş" sözlükte yok ("devreye girme hızı"); metindeki "kırmızı" çizgiler gerçekte mavi (`--beacon` :root'ta mavi) · Karar: K-026 eklendi
+- [D-088 · 2026-10-07 · video-yapimci] Olan: plan tahmini 2,3 kelime/sn, ölçülen Piper hızı 2,66 (%14 fark); ilk taslak 979 kelime = 7:29 · Karar: reddedildi (kural gerekmez; plan tahmini ölçülen hızla verilir, 5 dk ≈ 700 kelime — K-006 zaten sesi ölçüp süre kurar)
+- [D-089 · 2026-10-07 · CEO] Olan: Soner turu "en az kredi, çok hızlı" diye kısıtladı · Karar: K-043 genişledi — denetçi ajanı yalnız rakam/güvenlik metni ve site diff'i için; raporlama/kayıt CEO'da tek betikle
 
 ## Emekli kurallar
 (yok)

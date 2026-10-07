@@ -7,11 +7,12 @@ SELECT CASE WHEN cihaz LIKE 'iPhone%' THEN 'iPhone' WHEN cihaz LIKE 'Android%' T
        olay, COUNT(*) n, COUNT(DISTINCT oturum) oturum, ROUND(AVG(kare_ms),1) ort_kare
 FROM olay WHERE t > strftime('%s','now','-7 days')*1000 GROUP BY tip, olay ORDER BY tip, n DESC;
 
+-- Not (D-084): surum='akis1' kaydırma ölçümüdür (assets/akis-olcum.js, ayrı oturum kimliği, olay='takilma' ama sorun değil); S2/S6 dışarıda tutar, S7 okur.
 -- S2: telefonda sorunlu oturum oranı, gün gün (sorunlu = birak, takilma ya da zayif-* statik)
 SELECT date(t/1000,'unixepoch') gun,
        COUNT(DISTINCT oturum) oturum,
        COUNT(DISTINCT CASE WHEN olay IN ('birak','takilma') OR (olay='statik' AND neden LIKE 'zayif%') THEN oturum END) sorunlu
-FROM olay WHERE (cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%') AND t > strftime('%s','now','-14 days')*1000
+FROM olay WHERE (cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%') AND surum<>'akis1' AND t > strftime('%s','now','-14 days')*1000
 GROUP BY gun ORDER BY gun;
 
 -- S3: son takılmalar (nerede, ne kadar)
@@ -58,10 +59,22 @@ GROUP BY surum ORDER BY oturum DESC;
 
 -- S6: H1 ana ölçüsü — telefonda gün gün gerçek oturum, ciddi sorun ve sahnede (K-025)
 WITH e AS (SELECT *, CASE WHEN olay='takilma' THEN CAST(substr(neden, instr(neden,'ms=')+3, instr(substr(neden, instr(neden,'ms=')+3),' ')-1) AS INTEGER) END tms
-  FROM olay WHERE (cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%') AND t > strftime('%s','now','-7 days')*1000),
+  FROM olay WHERE (cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%') AND surum<>'akis1' AND t > strftime('%s','now','-7 days')*1000),
 o AS (SELECT oturum, date(MIN(t)/1000,'unixepoch') gun, MIN(surum) surum, MIN(gpu) gpu,
   MAX(CASE WHEN olay='birak' OR (olay='statik' AND neden LIKE 'zayif%') OR (olay='takilma' AND tms BETWEEN 1000 AND 9999) THEN 1 ELSE 0 END) ciddi,
   MAX(CASE WHEN olay='ozet' AND neden='sahnede' THEN 1 ELSE 0 END) sahnede FROM e GROUP BY oturum)
 SELECT gun, CASE WHEN gpu='webgl-yok' OR gpu LIKE '%SwiftShader%' THEN 'bot/webglsiz' ELSE 'gercek' END sinif,
        COUNT(*) oturum, SUM(ciddi) ciddi, SUM(sahnede) sahnede, GROUP_CONCAT(DISTINCT surum) surumler
 FROM o GROUP BY gun, sinif ORDER BY gun, sinif;
+
+-- S7: ana sayfa kaydırma akıcılığı (akis1) — oturum başına kare ve 34/50/100 ms'yi aşan kare, en uzun kare, bölüm
+SELECT date(t/1000,'unixepoch') gun, CASE WHEN cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%' THEN 'telefon' ELSE 'masaustu' END tip,
+       cihaz, tarayici, neden
+FROM olay WHERE surum='akis1' AND t > strftime('%s','now','-7 days')*1000 ORDER BY t;
+
+-- S8: telefonda açılış takılması (p=0) sürüme göre — akici18 güvenli yüklemenin etkisi (geo+145 donması)
+SELECT surum, COUNT(DISTINCT oturum) oturum,
+       COUNT(DISTINCT CASE WHEN neden LIKE 'p=0 %' AND CAST(substr(neden, instr(neden,'ms=')+3, instr(substr(neden, instr(neden,'ms=')+3),' ')-1) AS INTEGER) >= 1000 THEN oturum END) acilis_1sn,
+       COUNT(DISTINCT CASE WHEN neden LIKE 'p=0 %' AND CAST(substr(neden, instr(neden,'ms=')+3, instr(substr(neden, instr(neden,'ms=')+3),' ')-1) AS INTEGER) BETWEEN 200 AND 999 THEN oturum END) acilis_200_999
+FROM olay WHERE (cihaz LIKE 'iPhone%' OR cihaz LIKE 'Android%') AND surum LIKE 'akici1%' AND (gpu IS NULL OR gpu<>'webgl-yok')
+  AND t > strftime('%s','now','-14 days')*1000 GROUP BY surum ORDER BY surum;
