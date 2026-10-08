@@ -75,7 +75,11 @@
       if (dest.indexOf(tur) < 0) return;
       try { new PerformanceObserver(function (l) { l.getEntries().forEach(f); }).observe(Object.assign({ type: tur, buffered: true }, ek || {})); } catch (e) {}
     }
-    izle('largest-contentful-paint', function (e) { lcp = e.startTime; });
+    var lcpBitti = false;
+    izle('largest-contentful-paint', function (e) { if (!lcpBitti) lcp = e.startTime; });
+    // LCP ilk gerçek etkileşimde ya da sayfa gizlenince sabitlenir; sonraki çizimler sayılmaz
+    ['keydown', 'pointerdown'].forEach(function (t) { addEventListener(t, function () { lcpBitti = true; }, { once: true, capture: true }); });
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') lcpBitti = true; }, { capture: true });
     izle('paint', function (e) { if (e.name === 'first-contentful-paint') fcp = e.startTime; });
     izle('layout-shift', function (e) {
       if (e.hadRecentInput) return;
@@ -96,7 +100,7 @@
           ';sw=' + (navigator.serviceWorker && navigator.serviceWorker.controller ? 1 : 0),
         sure_ms: lcp == null ? null : Math.round(lcp), kare_ms: inp == null ? null : Math.round(inp),
         ekran: innerWidth + 'x' + innerHeight, dpr: window.devicePixelRatio || 1,
-        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals1'
+        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals2'
       };
       try { navigator.sendBeacon('/api/tani', JSON.stringify(veri)); } catch (e) {}
     }
