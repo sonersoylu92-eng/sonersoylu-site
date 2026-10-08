@@ -27,8 +27,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/ana.css?v=caef819a">
-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=76b84b49">
-<link rel="stylesheet" href="/assets/vitrin.css?v=28a07c25">
+<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=b33ca8f3">
+<link rel="stylesheet" href="/assets/vitrin.css?v=5a79398d">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"VideoObject","name":"Türbin nasıl elektrik üretir?","description":"Rüzgâr kanattan şebekeye: kaldırma kuvveti, dişli kutusu, jeneratör ve trafo. Rüzgâr türbini saha servis teknisyeni Soner Soylu'dan 52 saniyelik anlatım.","thumbnailUrl":"https://sonersoylu.com/assets/video/turbin-elektrik.webp","contentUrl":"https://sonersoylu.com/assets/video/turbin-elektrik.mp4","uploadDate":"2026-10-02T07:30:00+03:00","duration":"PT52S","inLanguage":"tr","creator":{"@type":"Person","name":"Soner Soylu","url":"https://sonersoylu.com/"}}
@@ -83,7 +83,7 @@
     <p class="v-soz" id="vSoz" aria-hidden="true"><span>Sahada geçen yıllar</span> <span>makineye bakışını</span> <span>değiştirir.</span> <em><span>Türbine yalnızca bakmazsın.</span> <span>Nasıl hareket ettiğini</span> <span>öğrenirsin.</span></em></p>
 
     <div class="ralan" id="ralan" role="group" aria-label="Aliağa canlı rüzgâr alanı" hidden>
-      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr alanı<span class="ralan-rozet">Tahmin·model</span></p>
+      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr<span class="ralan-alani"> alanı</span><span class="ralan-rozet">Tahmin·model</span></p>
       <p class="ralan-yer">Aliağa<span>göbek 120 m</span></p>
       <dl class="ralan-dl">
         <div><dt>Rüzgâr</dt><dd><b id="rHiz">–</b><small>m/s</small></dd></div>
@@ -92,6 +92,7 @@
         <div><dt>Rotor</dt><dd><b id="rDevir">–</b><small>d/dk</small></dd></div>
         <div><dt>N117</dt><dd><b id="rGuc">–</b><small>MW</small></dd></div>
       </dl>
+      <p class="ralan-durum" id="rDurum" role="status" hidden><span class="ralan-durum-nokta" aria-hidden="true"></span><b id="rDurumAd"></b><span id="rDurumAc"></span></p>
       <div class="ralan-egri">
         <p><span>Güç eğrisi</span><b id="rYuk">–</b></p>
         <div class="ralan-bar" id="rBar" role="img" aria-label="Anlık güç, anma gücüne oranı hesaplanıyor"></div>
@@ -589,7 +590,7 @@
   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
  </div>
 </div>
-<script src="/assets/site.js?v=fastopen1" defer></script>
+<script src="/assets/site.js?v=vitals1" defer></script>
 <script src="/assets/ara.js?v=b6a27d00" defer></script>
 <script>
 (function () {
@@ -724,6 +725,18 @@
     [].forEach.call(bar.children, function (b, k) { b.className = k < yanan ? 'y' : ''; b.style.transitionDelay = az ? '0s' : (k * 0.035).toFixed(3) + 's'; });
     bar.setAttribute('aria-label', 'Anlık tahmini güç, anma gücünün yüzde ' + yuzde + '’i');
     kf(d.hourly);
+    /* türbin durumu: devreye girme 3 m/s, devreden çıkma 25 m/s (modelin sınırları) */
+    var durum = v < 3 ? 'beklemede' : v > 25 ? 'durdu' : 'uretimde';
+    var dEl = $('rDurum');
+    dEl.setAttribute('data-durum', durum);
+    if (durum === 'uretimde') dEl.hidden = true;
+    else {
+      $('rDurumAd').textContent = durum === 'beklemede' ? 'Rüzgâr yetersiz · türbin beklemede' : 'Fırtına · türbin güvenli duruşta';
+      $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok.' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
+      dEl.hidden = false;
+    }
+    window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now() };
+    try { window.dispatchEvent(new CustomEvent('ss:ruzgar', { detail: window.__sonerRuzgar })); } catch (e) {}
     cekilen = Date.now(); zamanYaz();
     $('ralan').hidden = false;
   }
@@ -758,7 +771,7 @@
   }, 10 * 60 * 1000);
 })();
 </script>
-<script src="/assets/deneyim/arayuz.js?v=bb098230" defer></script>
+<script src="/assets/deneyim/arayuz.js?v=d7d6ac44" defer></script>
 <script src="/assets/vitrin.js?v=sahakarari1" defer></script>
 <script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
 <script src="/assets/son-video.js?v=a9095007" defer></script>
