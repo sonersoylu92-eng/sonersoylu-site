@@ -323,7 +323,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   ];
   const nDunya = new THREE.Vector3(), nEkran = new THREE.Vector3(), nYon = new THREE.Vector3();
   const isin = new THREE.Raycaster();
-  const kapanan = {}; let sonIsin = 0;
+  const kapanan = {}; let sonIsin = 0, vurguNokta = null;
   function noktalariGuncelle(t, icerde) {
     if (!cb.noktalar) return;
     const w = canvas.clientWidth, h = canvas.clientHeight, liste = [];
@@ -331,18 +331,19 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     for (const n of NOKTALAR) {
       nDunya.copy(n.v); tilt.localToWorld(nDunya);
       const d = camera.position.distanceTo(nDunya);
-      let aday = n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.1 && p < 0.145);
+      const zor = n.id === vurguNokta;   // Parça kâşifinde seçilen parça: her açıdan işaretlensin
+      let aday = zor || (n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.1 && p < 0.145));
       if (aday) {
         nEkran.copy(nDunya).project(camera);
         aday = nEkran.z < 1 && Math.abs(nEkran.x) < 0.92 && Math.abs(nEkran.y) < 0.86;
       }
-      if (aday && isinZamani) {
+      if (aday && !zor && isinZamani) {
         nYon.subVectors(nDunya, camera.position).normalize();
         isin.set(camera.position, nYon); isin.far = d - 0.22;
         const hedefler = n.ic ? ic.grup.children : (parts.spin ? [parts.spin] : []);
         kapanan[n.id] = isin.intersectObjects(hedefler, true).some(o => o.object.visible !== false);
       }
-      liste.push({ id: n.id, gor: !!aday && !kapanan[n.id], x: (nEkran.x * 0.5 + 0.5) * w, y: (-nEkran.y * 0.5 + 0.5) * h, d });
+      liste.push({ id: n.id, gor: !!aday && (zor || !kapanan[n.id]), x: (nEkran.x * 0.5 + 0.5) * w, y: (-nEkran.y * 0.5 + 0.5) * h, d });
     }
     cb.noktalar(liste);
   }
@@ -802,6 +803,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi, duraklat });
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
+  S.noktaVurgula = id => { vurguNokta = id || null; baslat(); };
   S.bastanOynat = () => { mt = 0; duraklat = false; durgunT = performance.now(); baslat(); };
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak('baglam-kaybi'); }, false);
 

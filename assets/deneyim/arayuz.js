@@ -454,17 +454,17 @@
   var darEkran = matchMedia('(max-width: 820px)');
 
   /* ---- Parça kâşifi: parçayı seç, bilgisini oku, 3B'de o durağa git; işaret noktası vurgulanır ---- */
-  // p: parçanın anlatı durağı (duraklar.js); pitch göbekte, yaw nasel girişinde anlatılır
+  // p: önce parçanın anlatı durağı (duraklar.js); halka o açıdan görünmezse sıradaki konumlar denenir
   var PARCA = [
-    { id: 'pitch', p: 0.49 }, { id: 'yaw', p: 0.51 }, { id: 'anaYatak', p: 0.55 },
-    { id: 'disli', p: 0.635 }, { id: 'jenerator', p: 0.76 }, { id: 'konvertor', p: 0.845 }
+    { id: 'pitch', p: [0.49, 0.12] }, { id: 'yaw', p: [0.51, 0.52, 0.55] }, { id: 'anaYatak', p: [0.55, 0.66, 0.69, 0.49] },
+    { id: 'disli', p: [0.635, 0.66] }, { id: 'jenerator', p: [0.76, 0.79] }, { id: 'konvertor', p: [0.845, 0.88] }
   ];
   var parPanel = panelYap('vParca', 'Parça kâşifi', 'COMPONENT EXPLORER');
   var parIc = parPanel.querySelector('.v-panel-ic');
   parIc.innerHTML = '<div class="v-par-liste" role="tablist" aria-label="Parçalar">' + PARCA.map(function (o) {
       return '<button type="button" role="tab" id="vParT-' + o.id + '" aria-controls="vParKart" aria-selected="false" data-id="' + o.id + '">' + NOKTA[o.id].ad + '</button>';
     }).join('') + '</div><div class="v-par-kart" id="vParKart" role="tabpanel"></div>';
-  var parSecili = null, vurguZ = 0;
+  var parSecili = null, vurguZ = 0, aramaBitir = function () {};
   function parSec(id, odak) {
     var n = NOKTA[id]; parSecili = id;
     [].forEach.call(parIc.querySelectorAll('[role="tab"]'), function (t) {
@@ -480,11 +480,22 @@
   }
   function parGoster(id) {
     var o = PARCA.filter(function (x) { return x.id === id; })[0]; if (!o) return;
-    if (darEkran.matches) panelKapa(false);   // dar ekranda sahne görünsün
-    git(o.p);
+    panelKapa(true);   // panel sahnenin önünden çekilsin; halka görünür kalsın (odak Parçalar düğmesine döner)
     Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.toggle('secili', k === id); });
-    clearTimeout(vurguZ);   // işaret halkası kamera açısı uygun olduğunda görünür; vurgu 8 sn sürer
-    vurguZ = setTimeout(function () { if (noktaEl[id]) noktaEl[id].classList.remove('secili'); }, 8000);
+    if (sahneS && sahneS.noktaVurgula) sahneS.noktaVurgula(id);   // seçilen parçanın halkası örtülse de gösterilir
+    clearTimeout(vurguZ); aramaBitir();
+    var el = noktaEl[id], deneme = 0, iptal = false;
+    function kullanici() { iptal = true; }   // ziyaretçi kendisi kaydırırsa arama durur
+    aramaBitir = function () { iptal = true; ['wheel', 'touchstart', 'keydown'].forEach(function (t) { removeEventListener(t, kullanici, true); }); };
+    ['wheel', 'touchstart', 'keydown'].forEach(function (t) { addEventListener(t, kullanici, { capture: true, passive: true }); });
+    git(o.p[0]);
+    (function bak() {
+      vurguZ = setTimeout(function () {
+        if (iptal || !el || el.classList.contains('gor') || ++deneme >= o.p.length) { aramaBitir(); vurguZ = setTimeout(vurguBitir, 10000); return; }
+        git(o.p[deneme]); bak();
+      }, deneme === 0 ? 2200 : 1700);
+    })();
+    function vurguBitir() { if (el) el.classList.remove('secili'); if (sahneS && sahneS.noktaVurgula) sahneS.noktaVurgula(null); }
   }
   parIc.querySelector('.v-par-liste').addEventListener('click', function (e) {
     var t = e.target.closest('[role="tab"]'); if (t) parSec(t.getAttribute('data-id'));
@@ -592,7 +603,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=1430b920').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=5d097b74').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
