@@ -711,7 +711,9 @@
     if (!isFinite(v)) throw 0;
     var rho = isFinite(sic) && isFinite(bas) ? yogunluk(sic, bas) : 1.225;
     var dv = devir(v), kw = guc(v, rho), oran = kw / 3000;
-    kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s');
+    // beklemede (v < 3 m/s) kapaktaki rotor boşta yavaşça döner (2 d/dk, yalnız görsel); fırtınada (v > 25) durur
+    var BOSTA = 2;
+    kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : v < 3 ? (60 / BOSTA).toFixed(2) + 's' : '0s');
     yaz('rHiz', v, 1); yaz('rRho', rho, 2); yaz('rDevir', dv, 1); yaz('rGuc', kw / 1000, 2);
     if (isFinite(yon)) {
       $('rYon').textContent = Math.round(yon) + '°';
@@ -732,7 +734,7 @@
     if (durum === 'uretimde') dEl.hidden = true;
     else {
       $('rDurumAd').textContent = durum === 'beklemede' ? 'Rüzgâr yetersiz · türbin beklemede' : 'Fırtına · türbin güvenli duruşta';
-      $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok.' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
+      $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok. Kapakta rotor boşta yavaşça döner (görsel).' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
       dEl.hidden = false;
     }
     window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now() };
