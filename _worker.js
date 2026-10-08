@@ -708,7 +708,7 @@ async function workersAiSor(env, talimat, istem, tani) {
 // hangi kalite kademesinde, neden kapağa döndü. IP, çerez ya da kişisel veri tutulmaz.
 const TANI_OLAY = ['takilma', 'basla', 'hazir', 'birak', 'statik', 'hata', 'ozet', 'vitals'];
 function kisa(v, n) { return v == null ? null : String(v).replace(/[\u0000-\u001f]/g, ' ').slice(0, n); }
-function sayi(v, alt, ust) { const x = Number(v); return Number.isFinite(x) ? Math.max(alt, Math.min(ust, x)) : null; }
+function sayi(v, alt, ust) { if (v == null || v === '') return null; const x = Number(v); return Number.isFinite(x) ? Math.max(alt, Math.min(ust, x)) : null; }
 async function taniKaydet(request, env) {
   if (!env.TANI) return new Response(null, { status: 204 });
   const metin = await request.text().catch(() => '');
