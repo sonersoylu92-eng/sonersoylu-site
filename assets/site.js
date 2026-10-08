@@ -65,6 +65,45 @@
   window.addEventListener('offline', durum);
   if (!navigator.onLine) durum();
 
+  // Gerçek cihaz hız ölçüsü (Web Vitals): LCP, INP (yaklaşık), CLS, FCP, TTFB.
+  // Sayfa kapanırken tek kayıt /api/tani'ye gider. Çerez, IP ya da kişisel veri yok.
+  (function () {
+    if (location.protocol !== 'https:' || !('PerformanceObserver' in window) || !navigator.sendBeacon) return;
+    var dest = PerformanceObserver.supportedEntryTypes || [];
+    var lcp = null, fcp = null, cls = 0, pencere = 0, pBas = 0, pSon = 0, inp = null, gitti = false;
+    function izle(tur, f, ek) {
+      if (dest.indexOf(tur) < 0) return;
+      try { new PerformanceObserver(function (l) { l.getEntries().forEach(f); }).observe(Object.assign({ type: tur, buffered: true }, ek || {})); } catch (e) {}
+    }
+    izle('largest-contentful-paint', function (e) { lcp = e.startTime; });
+    izle('paint', function (e) { if (e.name === 'first-contentful-paint') fcp = e.startTime; });
+    izle('layout-shift', function (e) {
+      if (e.hadRecentInput) return;
+      // oturum penceresi: 1 sn boşluk ya da 5 sn üst sınır
+      if (pencere && e.startTime - pSon < 1000 && e.startTime - pBas < 5000) pencere += e.value;
+      else { pencere = e.value; pBas = e.startTime; }
+      pSon = e.startTime; if (pencere > cls) cls = pencere;
+    });
+    izle('event', function (e) { if (e.interactionId && (inp === null || e.duration > inp)) inp = e.duration; }, { durationThreshold: 40 });
+    izle('first-input', function (e) { var d = e.processingStart - e.startTime + (e.duration || 0); if (inp === null) inp = e.duration || d; });
+    function gonder() {
+      if (gitti) return; gitti = true;
+      var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+      var r = function (x) { return x == null ? 'yok' : Math.round(x); };
+      var veri = {
+        olay: 'vitals', sayfa: location.pathname.slice(0, 40),
+        neden: 'lcp=' + r(lcp) + ';inp=' + r(inp) + ';cls=' + cls.toFixed(3) + ';fcp=' + r(fcp) + ';ttfb=' + r(nav.responseStart) + ';tip=' + (nav.type || '?') +
+          ';sw=' + (navigator.serviceWorker && navigator.serviceWorker.controller ? 1 : 0),
+        sure_ms: lcp == null ? null : Math.round(lcp), kare_ms: inp == null ? null : Math.round(inp),
+        ekran: innerWidth + 'x' + innerHeight, dpr: window.devicePixelRatio || 1,
+        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals1'
+      };
+      try { navigator.sendBeacon('/api/tani', JSON.stringify(veri)); } catch (e) {}
+    }
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') gonder(); });
+    window.addEventListener('pagehide', gonder);
+  })();
+
   // "Telefona ekle" — sadece tarayıcı uygun bulursa görünür
   var istem = null;
   window.addEventListener('beforeinstallprompt', function (e) {
