@@ -247,7 +247,28 @@
     yaw:       { no: 'YAW', ad: 'Yaw sistemi', t: 'Naseli rüzgâra döndüren halka yatak ve motorlar. Güç kabloları bu açıklıktan kuleye iner.',
       k: 'Yaw dişlisi yağlaması, fren balataları ve basıncı, motor-redüktörler, kablo burulma sayacı.', b: 'Salınım (hunting), gıcırtı ya da vuruntu, kablo burulma uyarısı.', s: 'Nasel üstünde rüzgâr yönü ve hızı sensörleri, yaw konum ve kablo burulma sayacı, fren basıncı.', u: '/saha-notlari/yaw-salinimi/', ul: 'İlgili vaka' },
     pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.',
-      k: 'Kanat yatağı gresi, pitch motoru ve sürücü akımı, acil durum enerji kaynağı, açı enkoderi.', b: 'Kanatlar arası açı farkı, yüksek motor akımı, açı sapması hatası.', s: 'Kanat açı enkoderleri, pitch motoru akımı ve sıcaklığı, acil durum enerji kaynağının gerilimi.', u: '/saha-notlari/pitch-motor-yuksek-akim/', ul: 'İlgili vaka' }
+      k: 'Kanat yatağı gresi, pitch motoru ve sürücü akımı, acil durum enerji kaynağı, açı enkoderi.', b: 'Kanatlar arası açı farkı, yüksek motor akımı, açı sapması hatası.', s: 'Kanat açı enkoderleri, pitch motoru akımı ve sıcaklığı, acil durum enerji kaynağının gerilimi.', u: '/saha-notlari/pitch-motor-yuksek-akim/', ul: 'İlgili vaka' },
+    gobek:     { no: 'ROTOR & HUB', ad: 'Rotor ve göbek', t: 'Üç kanat göbeğe kanat yataklarıyla bağlanır. Ø 116,8 m rotor 7,9–14,1 d/dk aralığında döner; göbek pitch sistemini taşır.',
+      k: 'Kanat yatağı cıvata torkları, göbek dökümünde çatlak kontrolü, kanat kökü sızdırmazlığı, kanat yüzeyi (erozyon, yıldırım izi).', b: 'Rotor dengesizliğinden gelen dönme frekanslı (1P) titreşim, kanat kökünde gres izi, periyodik vuruntu sesi.',
+      s: 'Rotor devri sensörü, kanat açı enkoderleri, nasel ivmeölçerleri; bazı türbinlerde kanat yük sensörleri.', u: '/saha-notlari/kanat-titresimi/', ul: 'İlgili vaka' },
+    anaMil:    { no: 'MAIN SHAFT', ad: 'Ana mil', t: 'Göbekten gelen düşük devirli, yüksek torklu gücü dişli kutusuna taşır; büzme diskiyle dişli kutusu giriş miline kilitlenir.',
+      k: 'Büzme diski cıvata torkları, mil ile disk arasındaki işaret çizgisi (kayma kontrolü), rotor kilidi diski ve pimi.', b: 'İşaret çizgisinde kayma, rotor kilidinin zor girmesi, ana yatak tarafından gelen ses.',
+      s: 'Rotor devri sensörü (endüktif ya da enkoder), ana yatak sıcaklığı ve titreşimi.', u: '/n117/', ul: 'N117 turu' },
+    kaplin:    { no: 'COUPLING & BRAKE', ad: 'Kaplin ve fren', t: 'Dişli kutusunun hızlı milini jeneratöre bağlar; esnek disk paketleri küçük hizasızlıkları alır. Mekanik fren diski bu milin üzerindedir.',
+      k: 'Kaplin hizası (lazerle), disk paketlerinde çatlak, fren balatası kalınlığı, fren basıncı ve kaliper.', b: 'Hizasızlıkta titreşim ve ısınan kaplin, balata aşınma uyarısı, frenlemede yanık kokusu.',
+      s: 'Jeneratör tarafında devir enkoderi, fren basınç anahtarı, balata aşınma kontağı.', u: '/n117/', ul: 'N117 turu' },
+    sogutma:   { no: 'COOLING', ad: 'Soğutma', t: 'Dişli kutusu yağının, jeneratörün ve konvertörün ısısı sıvı ve hava devreleriyle eşanjörlere taşınır. Sahnedeki modelde eşanjörler naselin üstünde.',
+      k: 'Soğutma sıvısı seviyesi ve basıncı, pompa ve fanlar, eşanjör peteklerinde kir ve tıkanma, hortum bağlantıları.', b: 'Yazın yük altında yükselen sıcaklıklar, güç kısıtlama (derating), fan ya da pompa arızası uyarısı.',
+      s: 'Giriş ve çıkış sıvı sıcaklıkları, basınç anahtarları, fan durum kontakları, nasel içi ve dış ortam sıcaklığı.', u: '/saha-notlari/disli-kutusu-sicaklik/', ul: 'İlgili vaka' },
+    yaglama:   { no: 'LUBRICATION', ad: 'Yağlama', t: 'Dişli kutusu pompa, filtre ve soğutuculu basınçlı yağ devresiyle yağlanır. Ana yatak, kanat ve yaw yatakları gresle yağlanır; çoğu türbinde bunu otomatik gres üniteleri yapar.',
+      k: 'Yağ seviyesi, filtre fark basıncı, yağ numunesi (partikül, su, viskozite), gres pompası haznesi ve dağıtıcı bloklar.', b: 'Filtre alarmı, yağda metal partikül, gres haznesi boş uyarısı, conta çevresinde eski gres birikimi.',
+      s: 'Yağ basıncı ve sıcaklığı, fark basınç anahtarı, seviye sensörü; varsa yağda partikül sayacı.', u: '/saha-notlari/disli-kutusu-sicaklik/', ul: 'İlgili vaka' },
+    panolar:   { no: 'AUX CABINETS', ad: 'Elektrik panoları', t: 'Nasel içindeki yardımcı güç dağıtımı: soğutma pompaları ve fanları, aydınlatma, vinç ve priz devreleri.',
+      k: 'Bağlantı noktalarında termal kamera, kontaktör ve sigorta durumu, kaçak akım röleleri, pano filtreleri ve contaları.', b: 'Isınmış klemens, sık atan sigorta ya da şalter, nem ve yoğuşma izleri.',
+      s: 'Pano içi sıcaklık ve nem, sigorta ve kontaktör geri bildirim kontakları.', u: '/ariza/', ul: 'Arıza ağacı' },
+    kontrol:   { no: 'CONTROL SYSTEM', ad: 'Kontrol sistemi', t: 'Üst kutudaki (top box) kontrolör naseldeki sensörleri okur; pitch, yaw ve konvertöre komut verir. Güvenlik zinciri açılırsa türbin kontrolörden bağımsız olarak durdurulur.',
+      k: 'Haberleşme bağlantıları, giriş/çıkış modülleri, kesintisiz güç kaynağı, acil stop ve güvenlik zinciri testleri.', b: 'Haberleşme kopması, sensör sinyal hatası, güvenlik zinciri açık uyarısı.',
+      s: 'Bütün sensörlerin toplandığı yer: sıcaklık, titreşim, rüzgâr, pozisyon ve güvenlik zinciri girişleri.', u: '/kodlar/', ul: 'Alarm kodları' }
   };
   var katman = document.createElement('div'); katman.className = 'v-noktalar'; sahne.appendChild(katman);
   var pencere = document.createElement('div'); pencere.className = 'v-nokta-bilgi'; pencere.setAttribute('role', 'tooltip'); pencere.id = 'vNoktaBilgi'; sahne.appendChild(pencere);
@@ -456,12 +477,17 @@
   /* ---- Parça kâşifi: parçayı seç, bilgisini oku, 3B'de o durağa git; işaret noktası vurgulanır ---- */
   // p: önce parçanın anlatı durağı (duraklar.js); halka o açıdan görünmezse sıradaki konumlar denenir
   var PARCA = [
-    { id: 'pitch', p: [0.49, 0.12] }, { id: 'yaw', p: [0.51, 0.52, 0.55] }, { id: 'anaYatak', p: [0.55, 0.66, 0.69, 0.49] },
-    { id: 'disli', p: [0.635, 0.66] }, { id: 'jenerator', p: [0.76, 0.79] }, { id: 'konvertor', p: [0.845, 0.88] }
+    { id: 'gobek', p: [0.49, 0.125] }, { id: 'pitch', p: [0.49, 0.12] }, { id: 'anaYatak', p: [0.55, 0.66, 0.69, 0.49] },
+    { id: 'anaMil', p: [0.59, 0.57] }, { id: 'disli', p: [0.635, 0.66] }, { id: 'yaglama', p: [0.635, 0.66] },
+    { id: 'kaplin', p: [0.685, 0.7] }, { id: 'jenerator', p: [0.76, 0.79] }, { id: 'sogutma', p: [0.76, 0.79] },
+    { id: 'konvertor', p: [0.845, 0.88] }, { id: 'panolar', p: [0.905, 0.89] }, { id: 'kontrol', p: [0.875, 0.86] },
+    { id: 'yaw', p: [0.51, 0.52, 0.55] }
   ];
   var parPanel = panelYap('vParca', 'Parça kâşifi', 'COMPONENT EXPLORER');
   var parIc = parPanel.querySelector('.v-panel-ic');
-  parIc.innerHTML = '<div class="v-par-liste" role="tablist" aria-label="Parçalar">' + PARCA.map(function (o) {
+  parIc.innerHTML = '<div class="v-rt-ac"><button type="button" class="v-rt-dugme" aria-pressed="false" aria-controls="vRontgen">Röntgen görünümü</button>' +
+    '<span>Nasel kabuğu saydamlaşır, bileşenler ayrışır.</span></div>' +
+    '<div class="v-par-liste" role="tablist" aria-label="Parçalar">' + PARCA.map(function (o) {
       return '<button type="button" role="tab" id="vParT-' + o.id + '" aria-controls="vParKart" aria-selected="false" data-id="' + o.id + '">' + NOKTA[o.id].ad + '</button>';
     }).join('') + '</div><div class="v-par-kart" id="vParKart" role="tabpanel"></div>';
   var parSecili = null, vurguZ = 0, aramaBitir = function () {};
@@ -477,9 +503,20 @@
       '<div><dt>Tipik sensörler</dt><dd>' + n.s + '<small>Genel bilgi; sensör seti üreticiye ve modele göre değişir.</small></dd></div></dl>' +
       '<p class="v-par-alt"><button type="button" class="v-par-goster">3B’de göster</button><a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a></p>';
     kart.querySelector('.v-par-goster').addEventListener('click', function () { parGoster(id); });
+    kart.querySelector('.v-par-goster').textContent = rontgenAcik ? 'Röntgende işaretle' : '3B’de göster';
+    if (rontgenAcik && sahneS && sahneS.noktaVurgula) {   // röntgende seçim hemen vurgulanır
+      Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.toggle('secili', k === id); });
+      sahneS.noktaVurgula(id);
+    }
   }
   function parGoster(id) {
     var o = PARCA.filter(function (x) { return x.id === id; })[0]; if (!o) return;
+    if (rontgenAcik) {   // röntgende kamera yörüngede kalır; seçilen bileşen vurgulanır
+      Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.toggle('secili', k === id); });
+      if (sahneS && sahneS.noktaVurgula) sahneS.noktaVurgula(id);
+      if (darEkran.matches) panelKapa(false);
+      return;
+    }
     panelKapa(true);   // panel sahnenin önünden çekilsin; halka görünür kalsın (odak Parçalar düğmesine döner)
     Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.toggle('secili', k === id); });
     if (sahneS && sahneS.noktaVurgula) sahneS.noktaVurgula(id);   // seçilen parçanın halkası örtülse de gösterilir
@@ -506,6 +543,51 @@
     e.preventDefault(); parSec(PARCA[(i + y + PARCA.length) % PARCA.length].id, true);
   });
   parSec('anaYatak');
+
+  /* ---- Röntgen (dijital ikiz): saydam kabuk + patlatma; kaydırma engellenmez, kaydırınca normal görünüme döner ---- */
+  var rontgenAcik = false, rtCubuk = document.createElement('div');
+  rtCubuk.className = 'v-rontgen'; rtCubuk.id = 'vRontgen'; rtCubuk.hidden = true;
+  rtCubuk.setAttribute('role', 'group'); rtCubuk.setAttribute('aria-label', 'Röntgen görünümü denetimi');
+  rtCubuk.innerHTML = '<p class="v-rt-baslik"><b>Röntgen</b><span>Etkileşimli teknik model · sertifikalı dijital ikiz değildir</span></p>' +
+    '<label class="v-rt-k"><span>Kabuk saydamlığı</span><input type="range" min="0" max="100" value="80" id="vRtKabuk"></label>' +
+    '<label class="v-rt-k"><span>Patlatma</span><input type="range" min="0" max="100" value="0" id="vRtPatlat"></label>' +
+    '<p class="v-rt-ipucu">Sürükleyerek döndür · kaydırınca normal görünüme döner</p>' +
+    '<button type="button" class="v-rt-kapa">Röntgeni kapat</button>';
+  sahne.appendChild(rtCubuk);
+  var rtDugme = parIc.querySelector('.v-rt-dugme'), rtKabuk = rtCubuk.querySelector('#vRtKabuk'), rtPatlat = rtCubuk.querySelector('#vRtPatlat');
+  var rtScroll = 0;
+  function rontgen(acik) {
+    if (!sahneS || !sahneS.rontgen) return;
+    rontgenAcik = !!acik;
+    sahneS.rontgen({ acik: rontgenAcik, kabuk: rtKabuk.value / 100, patlat: rontgenAcik ? rtPatlat.value / 100 : 0, secili: rontgenAcik ? parSecili : null });
+    if (!rontgenAcik) rtPatlat.value = 0;
+    rtDugme.setAttribute('aria-pressed', rontgenAcik ? 'true' : 'false');
+    rtDugme.textContent = rontgenAcik ? 'Röntgeni kapat' : 'Röntgen görünümü';
+    rtCubuk.hidden = !rontgenAcik; bolum.classList.toggle('dny-rontgen', rontgenAcik);
+    rtScroll = scrollY;
+    if (rontgenAcik) { Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.toggle('secili', k === parSecili); }); if (sahneS.noktaVurgula) sahneS.noktaVurgula(parSecili); if (darEkran.matches) panelKapa(false); }
+    else { if (sahneS.noktaVurgula) sahneS.noktaVurgula(null); Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.remove('secili'); }); }
+  }
+  rtDugme.addEventListener('click', function () { rontgen(!rontgenAcik); });
+  rtCubuk.querySelector('.v-rt-kapa').addEventListener('click', function () { rontgen(false); parBtn.focus({ preventScroll: true }); });
+  rtKabuk.addEventListener('input', function () { if (sahneS && rontgenAcik) sahneS.rontgen({ kabuk: rtKabuk.value / 100 }); });
+  rtPatlat.addEventListener('input', function () { if (sahneS && rontgenAcik) sahneS.rontgen({ patlat: rtPatlat.value / 100 }); });
+  addEventListener('scroll', function () { if (rontgenAcik && Math.abs(scrollY - rtScroll) > 140) rontgen(false); }, { passive: true });
+  // sürükleyerek döndürme: yalnız yatay; dikey hareket sayfayı kaydırmaya devam eder (touch-action: pan-y)
+  (function () {
+    var basX = null, sonX = 0;
+    addEventListener('pointerdown', function (e) {
+      if (!rontgenAcik || e.target.closest('a,button,input,label,select,.v-panel,.v-rontgen,.ralan,header,nav')) return;
+      var r = sahne.getBoundingClientRect(); if (e.clientY < r.top || e.clientY > r.bottom) return;
+      basX = sonX = e.clientX;
+    }, { passive: true });
+    addEventListener('pointermove', function (e) {
+      if (basX === null || !rontgenAcik) return;
+      var dx = e.clientX - sonX; sonX = e.clientX;
+      if (dx) sahneS.rontgen({ aciEkle: dx * 0.006 });
+    }, { passive: true });
+    ['pointerup', 'pointercancel'].forEach(function (t) { addEventListener(t, function () { basX = null; }, { passive: true }); });
+  })();
   parBtn.addEventListener('click', function () { acikPanel && acikPanel.p === parPanel ? panelKapa(true) : panelAc(parPanel, parBtn); });
 
   /* ---- Enerji akışı: rüzgârdan şebekeye; mekanik bağlar çizgi, elektrik bağlar nokta akışıyla.
@@ -603,7 +685,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=5d097b74').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=556d089d').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {

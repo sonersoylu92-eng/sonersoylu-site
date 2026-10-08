@@ -220,9 +220,10 @@ export function naselIciKur(opts = {}) {
   const ustKutu = new THREE.Group(); ustKutu.name = 'ust-kutu'; g.add(ustKutu);
   // sol duvar arka: top box (nasel kontrol dolabı)
   dolap(SOL + 0.26, 4.75, 1.15, 1.7, 0.46, -1, ustKutu, true);
-  // sol duvar: yardımcı elektrik panoları
-  dolap(SOL + 0.22, 2.3, 0.9, 1.35, 0.38, -1, konv, false);
-  dolap(SOL + 0.22, 3.3, 0.9, 1.35, 0.38, -1, konv, false);
+  // sol duvar: yardımcı elektrik panoları (ayrı grup: röntgen/patlatma görünümünde kendi yönüne açılır)
+  const panolar = new THREE.Group(); panolar.name = 'panolar'; g.add(panolar);
+  dolap(SOL + 0.22, 2.3, 0.9, 1.35, 0.38, -1, panolar, false);
+  dolap(SOL + 0.22, 3.3, 0.9, 1.35, 0.38, -1, panolar, false);
 
   /* =================== kablo tavaları ve kuleye inen güç kabloları =================== */
   const kablolar = new THREE.Group(); kablolar.name = 'kablolar'; g.add(kablolar);
@@ -298,9 +299,11 @@ export function naselIciKur(opts = {}) {
   civ.castShadow = false; civ.receiveShadow = true;
   g.add(civ);
 
-  /* ---- sabit parçaları malzemeye göre birleştir: ~350 çizim çağrısı → ~20 ----
-   * Dönen gruplar (ana mil, kaplin) ve cıvatalar ayrı kalır. */
-  if (!(typeof window !== 'undefined' && window.__deneyimBirlestirme === false)) birlestir(g, [anaMil, kaplinPivot, civ]);
+  /* ---- sabit parçaları malzemeye göre birleştir: ~350 çizim çağrısı → ~45 ----
+   * Dönen gruplar (ana mil, kaplin) ve cıvatalar ayrı kalır. Bileşen grupları kendi içinde birleşir;
+   * böylece röntgen görünümünde her bileşen ayrı vurgulanır ve patlatma görünümünde yerinden kayar. */
+  const parcaGrup = { anaYatak: onGrup, anaMil, disli, kaplin: kaplinPivot, jenerator: jen, konvertor: konv, panolar, ustKutu, kablolar, kabuk };
+  if (!(typeof window !== 'undefined' && window.__deneyimBirlestirme === false)) birlestir(g, [anaMil, kaplinPivot, civ], [onGrup, disli, jen, konv, panolar, ustKutu, kablolar, kabuk]);
 
   /* ---- anlatı durakları: HUD'un bağlandığı parça merkezleri (nasel yerel) ---- */
   const duraklar = {
@@ -316,28 +319,31 @@ export function naselIciKur(opts = {}) {
     kapak:      new THREE.Vector3(0, TAVAN, (KZ0 + KZ1) / 2),
   };
 
-  return { grup: g, kabuk, lambalar, duraklar, anaMil, kaplinPivot, sinir: { TABAN, TAVAN, SOL, SAG, ON, ARKA, KZ0, KZ1, KX } };
+  return { grup: g, kabuk, lambalar, duraklar, anaMil, kaplinPivot, parcaGrup, civatalar: civ, sinir: { TABAN, TAVAN, SOL, SAG, ON, ARKA, KZ0, KZ1, KX } };
 }
 
-function birlestir(kok, haric) {
+function birlestir(kok, haric, gruplar = []) {
   kok.updateMatrixWorld(true);
-  const kokTers = new THREE.Matrix4().copy(kok.matrixWorld).invert();
+  const tersler = new Map([[kok, new THREE.Matrix4().copy(kok.matrixWorld).invert()]]);
+  gruplar.forEach(gr => tersler.set(gr, new THREE.Matrix4().copy(gr.matrixWorld).invert()));
   const disla = new Set();
   haric.forEach(h => h && h.traverse(o => disla.add(o)));
   const kovalar = new Map();
   const silinecek = [];
   kok.traverse(o => {
     if (!o.isMesh || o.isInstancedMesh || disla.has(o)) return;
-    const anahtar = o.material.uuid + (o.castShadow ? '|g' : '|-');
-    if (!kovalar.has(anahtar)) kovalar.set(anahtar, { mat: o.material, golge: o.castShadow, parcalar: [] });
-    const m = new THREE.Matrix4().multiplyMatrices(kokTers, o.matrixWorld);
+    let a = o; while (a.parent && a.parent !== kok) a = a.parent;   // kökün altındaki üst grup
+    const hedef = tersler.has(a) ? a : kok;
+    const anahtar = hedef.uuid + '|' + o.material.uuid + (o.castShadow ? '|g' : '|-');
+    if (!kovalar.has(anahtar)) kovalar.set(anahtar, { hedef, mat: o.material, golge: o.castShadow, parcalar: [] });
+    const m = new THREE.Matrix4().multiplyMatrices(tersler.get(hedef), o.matrixWorld);
     let geo = o.geometry.index ? o.geometry.toNonIndexed() : o.geometry.clone();
     geo.applyMatrix4(m);
     kovalar.get(anahtar).parcalar.push(geo);
     silinecek.push(o);
   });
   silinecek.forEach(o => { o.parent.remove(o); o.geometry.dispose(); });
-  for (const { mat, golge, parcalar } of kovalar.values()) {
+  for (const { hedef, mat, golge, parcalar } of kovalar.values()) {
     let n = 0; parcalar.forEach(p => { n += p.attributes.position.count; });
     const poz = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
     let k = 0;
@@ -355,6 +361,6 @@ function birlestir(kok, haric) {
     geo.computeBoundingSphere();
     const mesh = new THREE.Mesh(geo, mat);
     mesh.castShadow = golge; mesh.receiveShadow = true;
-    kok.add(mesh);
+    hedef.add(mesh);
   }
 }

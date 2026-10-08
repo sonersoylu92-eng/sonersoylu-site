@@ -10,7 +10,7 @@
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
-import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=d525e0e0';
+import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=63ecf9c8';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 
@@ -320,7 +320,43 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     { id: 'konvertor', v: v(1.40, -0.3, 2.7),   ic: true },
     { id: 'yaw',       v: v(-0.2, -1.55, 0.55), ic: true },
     { id: 'pitch',     v: v(0, 2.3, -7.95),     ic: false },
+    // dijital ikiz (Parça kâşifi): iç bileşenler yakından, dıştakiler yalnız seçilince ya da röntgende görünür
+    { id: 'anaMil',    v: v(0.55, 0.6, -3.55),  ic: true },
+    { id: 'kaplin',    v: v(0.45, 1.05, 0.62),  ic: true },
+    { id: 'yaglama',   v: v(-1.05, 1.45, 0.4),  ic: true },
+    { id: 'panolar',   v: v(-1.62, -0.75, 2.8), ic: true },
+    { id: 'kontrol',   v: v(-1.55, 0.05, 4.75), ic: true },
+    { id: 'gobek',     v: v(0.9, -0.6, -7.7),   ic: false, yalniz: true },
+    { id: 'sogutma',   v: v(1.48, 2.3, 5.3),    ic: false, yalniz: true },
   ];
+  /* ---------------- röntgen (X-ray) ve patlatma görünümü ----------------
+   * Kamera naselin çevresinde yavaş bir yörüngeye alınır, dış kabuk kademeli saydamlaşır, bileşenler isteğe göre
+   * kendi yönlerine açılır. Kaydırma hiçbir zaman engellenmez: sayfa tarafı kaydırınca röntgeni kapatır. */
+  const rt = { acik: false, kabuk: 0.8, patlat: 0, pY: 0, aci: 0, g: 0, secili: null, hazir: false, kirli: false };
+  const PATLAT = { anaYatak: v(0, 0, -1.4), anaMil: v(0, 0, -0.7), disli: v(0, 0.9, 0), kaplin: v(0, 0.8, 0.5), jenerator: v(0, 0.5, 1.6),
+    konvertor: v(1.4, 0, 0), panolar: v(-1.4, 0, 0), ustKutu: v(-1.2, 0.8, 0.6), kablolar: v(0, 1.0, 0) };
+  const NOKTA_PARCA = { anaYatak: 'anaYatak', anaMil: 'anaMil', disli: 'disli', yaglama: 'disli', kaplin: 'kaplin', jenerator: 'jenerator',
+    konvertor: 'konvertor', panolar: 'panolar', kontrol: 'ustKutu' };
+  const pg = ic.parcaGrup || {};
+  const ilkKonum = {}; Object.keys(pg).forEach(k => { ilkKonum[k] = pg[k].position.clone(); });
+  const kabukMat = [], rtSprite = [];   // ikaz lambası haleleri röntgende yakın plan parlamasın
+  const rMerkez = new THREE.Vector3(), rKonum = new THREE.Vector3();
+  function rontgenHazirla() {
+    if (rt.hazir) return; rt.hazir = true;
+    // malzemeler bu türbine kopyalanır: rüzgâr çiftliğindeki öbür türbinler ve ortak malzemeler etkilenmez
+    parts.nacelle.traverse(o => { if (o.isSprite) rtSprite.push(o); else if (o.isMesh && o.material && !Array.isArray(o.material) && !(o.material.emissive && o.material.emissive.getHex())) { o.material = o.material.clone(); kabukMat.push(o.material); } });   // yanıp sönen ikaz lambası malzemesi ortak kalır
+    Object.keys(pg).forEach(k => { if (k === 'kabuk') return; pg[k].traverse(o => {
+      if (!o.isMesh || !o.material || Array.isArray(o.material) || !o.material.emissive) return;
+      o.material = o.material.clone(); o.material.userData.e0 = o.material.emissive.getHex(); o.material.userData.ei0 = o.material.emissiveIntensity; }); });
+  }
+  function rontgenVurgu() {
+    if (!rt.hazir) return;
+    const sec = rt.acik && rt.secili ? NOKTA_PARCA[rt.secili] : null;
+    Object.keys(pg).forEach(k => { if (k === 'kabuk') return; pg[k].traverse(o => {
+      const m = o.isMesh && o.material; if (!m || !m.emissive || m.userData.e0 === undefined) return;
+      if (k === sec) { m.emissive.setHex(0x1f8597); m.emissiveIntensity = Math.max(m.userData.ei0, 0.45); }
+      else { m.emissive.setHex(m.userData.e0); m.emissiveIntensity = m.userData.ei0; } }); });
+  }
   const nDunya = new THREE.Vector3(), nEkran = new THREE.Vector3(), nYon = new THREE.Vector3();
   const isin = new THREE.Raycaster();
   const kapanan = {}; let sonIsin = 0, vurguNokta = null;
@@ -329,10 +365,13 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const w = canvas.clientWidth, h = canvas.clientHeight, liste = [];
     const isinZamani = t - sonIsin > 220; if (isinZamani) sonIsin = t;
     for (const n of NOKTALAR) {
-      nDunya.copy(n.v); tilt.localToWorld(nDunya);
+      nDunya.copy(n.v);
+      const pk = NOKTA_PARCA[n.id]; if (pk && PATLAT[pk] && rt.pY > 0) nDunya.addScaledVector(PATLAT[pk], rt.pY * rt.g);
+      tilt.localToWorld(nDunya);
       const d = camera.position.distanceTo(nDunya);
-      const zor = n.id === vurguNokta;   // Parça kâşifinde seçilen parça: her açıdan işaretlensin
-      let aday = zor || (n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.1 && p < 0.145));
+      const rontgen = rt.g > 0.6;
+      const zor = n.id === vurguNokta || rontgen;   // Parça kâşifinde seçilen parça ya da röntgen: her açıdan işaretlensin
+      let aday = zor || (n.yalniz ? false : n.ic ? (icerde && d < 5.2) : (!icerde && p > 0.1 && p < 0.145));
       if (aday) {
         nEkran.copy(nDunya).project(camera);
         aday = nEkran.z < 1 && Math.abs(nEkran.x) < 0.92 && Math.abs(nEkran.y) < 0.86;
@@ -532,7 +571,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const hedefP = ilerleme();
     // kaydırma durduğunda sahne yalnızca rotor ve hafif kamera nefesi için çizilir: kare seyreltilir,
     // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
-    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg) { sonHedefP = hedefP; durgunT = t; }
+    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat)) { sonHedefP = hedefP; durgunT = t; }
     const durgun = t - durgunT > 1200;
     // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
     const hareketAralik = KADEME_ARALIK[kalite] || 0;
@@ -579,6 +618,17 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
         kKonum.addScaledVector(tmp, fare.sx * uzak); kKonum.y -= fare.sy * uzak * 0.5;
       }
     }
+    // röntgen: kamera naselin sağ-önünden yavaş bir yörüngeye geçer; kapanınca kaydırma kamerasına süzülerek döner
+    const rHedefG = rt.acik ? 1 : 0;
+    rt.g += (rHedefG - rt.g) * (anlik ? 1 : 1 - Math.exp(-dt * 2.6)); if (Math.abs(rHedefG - rt.g) < 1e-3) rt.g = rHedefG;
+    rt.pY += (rt.patlat - rt.pY) * (anlik ? 1 : 1 - Math.exp(-dt * 3.5)); if (Math.abs(rt.patlat - rt.pY) < 1e-3) rt.pY = rt.patlat;
+    if (rt.g > 0) {
+      if (rt.acik && !az && !duraklat) rt.aci += dt * 0.05;
+      const R = mobil ? (innerWidth < innerHeight ? 24 : 18) : 16, a = -0.35 + rt.aci, e = yumusak(0, 1, rt.g);
+      rMerkez.set(0, 0.2, -0.4); tilt.localToWorld(rMerkez);
+      rKonum.set(Math.cos(a) * R, 4.6, Math.sin(a) * R); tilt.localToWorld(rKonum);
+      kKonum.lerp(rKonum, e); yumHedef.lerp(rMerkez, e);
+    }
     // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
     if (!sonIcerde && !sonKulede) { const yer = araziY(kKonum.x, kKonum.z) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
     camera.position.copy(kKonum); camera.lookAt(yumHedef);
@@ -598,6 +648,24 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const kulede = sonKulede = !icerde && tlKam.y > 3.6 && tlKam.y < towerTopY + 1.3 && Math.hypot(tlKam.x, tlKam.z) < KO.rIc(tlKam.y) - 0.01 ? 1 : 0;
     // Fiziksel çatı açıklığına yaklaşırken dış kabuk da görünür; geçişte yok olup geri gelmez.
     parts.nacelle.visible = (p >= 0.918 || !icerde) && !(kulede && tlKam.y > KO.ustY - 1);
+    if (rt.g > 0.001) {
+      rt.kirli = true;
+      ic.grup.visible = true; icIsik.visible = true; parts.nacelle.visible = true;
+      const op = 1 - rt.g * rt.kabuk * 0.92;
+      for (const m of kabukMat) { m.transparent = op < 0.999; m.opacity = op; m.depthWrite = op > 0.6; }
+      if (ic.kabuk) ic.kabuk.visible = op > 0.55;
+      const k = rt.pY * rt.g;
+      Object.keys(PATLAT).forEach(key => { if (pg[key]) pg[key].position.copy(ilkKonum[key]).addScaledVector(PATLAT[key], k); });
+      if (ic.civatalar) ic.civatalar.visible = k < 0.02;
+      for (const sp of rtSprite) sp.visible = rt.g < 0.5;
+    } else if (rt.kirli) {
+      for (const sp of rtSprite) sp.visible = true;
+      rt.kirli = false;
+      for (const m of kabukMat) { m.transparent = false; m.opacity = 1; m.depthWrite = true; }
+      if (ic.kabuk) ic.kabuk.visible = true;
+      Object.keys(PATLAT).forEach(key => { if (pg[key]) pg[key].position.copy(ilkKonum[key]); });
+      if (ic.civatalar) ic.civatalar.visible = true;
+    }
     const kuleBolum = p > 0.14 && p < 0.47;
     kule.ic.visible = kuleBolum;
     kule.kabinIsik.intensity = kuleBolum ? kabinIsikTaban : 0; kule.girisIsik.intensity = kuleBolum ? girisIsikTaban : 0; kule.ustIsik.intensity = kuleBolum ? ustIsikTaban : 0;
@@ -673,7 +741,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     }
 
     olcek();
-    const cz = yumusak(0.972, 0.993, p);
+    const cz = rt.g > 0.01 ? 0 : yumusak(0.972, 0.993, p);
     if (cz < 0.995) { if (composer && !performans && kalite < 2) composer.render(dt); else renderer.render(scene, camera); }
     else renderer.clear();
     if (cz > 0.002) cizimCiz(cz);
@@ -803,7 +871,18 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi, duraklat });
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
-  S.noktaVurgula = id => { vurguNokta = id || null; baslat(); };
+  S.noktaVurgula = id => { vurguNokta = id || null; if (rt.acik) { rt.secili = vurguNokta; rontgenVurgu(); } baslat(); };
+  // röntgen: { acik, kabuk 0–1, patlat 0–1, aciEkle (radyan, sürükleme), secili (nokta kimliği) }
+  S.rontgen = o => {
+    o = o || {};
+    if (o.acik !== undefined) { rt.acik = !!o.acik; if (rt.acik) rontgenHazirla(); else { rt.patlat = 0; rt.aci = 0; } }
+    if (o.kabuk != null) rt.kabuk = Math.max(0, Math.min(1, +o.kabuk));
+    if (o.patlat != null) rt.patlat = Math.max(0, Math.min(1, +o.patlat));
+    if (o.aciEkle) rt.aci += o.aciEkle;
+    if ('secili' in o) rt.secili = o.secili || null;
+    rontgenVurgu(); durgunT = performance.now(); baslat();
+    return { acik: rt.acik, kabuk: rt.kabuk, patlat: rt.patlat };
+  };
   S.bastanOynat = () => { mt = 0; duraklat = false; durgunT = performance.now(); baslat(); };
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak('baglam-kaybi'); }, false);
 
