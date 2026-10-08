@@ -467,3 +467,10 @@ button.ea-d:hover{border-color:#6fdcec}
 @media (min-width:821px) and (min-height:781px){
   .dny-bolum:not(.gecti) .ralan:not([hidden]) ~ .v-denetim{right:calc(var(--d-gut) + 18.75rem + .75rem)}
 }
+/* hava etiketi "Deneyimi geç" ile aynı satıra biniyordu: geniş ekranda denetim satırının altına */
+@media (min-width:821px){
+  .dny-hava-etiket{top:calc(4.4rem + env(safe-area-inset-top) + 6.3rem)}
+}
+@media (min-width:821px) and (min-height:781px){
+  .dny-bolum:not(.gecti) .ralan:not([hidden]) ~ .dny-hava-etiket{right:calc(var(--d-gut) + 18.75rem + .75rem)}
+}
