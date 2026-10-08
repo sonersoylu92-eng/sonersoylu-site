@@ -114,6 +114,8 @@
 .uyari b{color:var(--ink);font-weight:500}
 .hata{margin-top:1.5rem;border:1px solid var(--line);background:var(--raise);padding:1.1rem 1.2rem;font-size:.9375rem;line-height:1.7;color:var(--muted)}
 .hata[hidden]{display:none}
+.hata-yeniden{margin-left:.4rem;min-height:2.5rem;padding:0 1rem;font:inherit;font-size:.8125rem;cursor:pointer;color:var(--ink,#16191c);background:var(--raise);border:1px solid var(--line)}
+.hata-yeniden:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .yukleniyor{opacity:.45;transition:opacity .3s}
 
 table.egri{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:.8125rem}
@@ -254,6 +256,7 @@ table.egri thead th{font-size:.625rem;letter-spacing:.12em;text-transform:upperc
     <p class="v"><span id="v120">–</span> <small>m/s</small></p>
     <p class="n">120 m&#8217;de rüzgâr</p>
     <p class="x" id="v80x">80 m&#8217;de <span id="v80">–</span> m/s &#183; hamle <span id="vham">–</span> m/s</p>
+    <p class="x" id="kesmeX" title="Rüzgâr kesmesi üssü: α = ln(v120 / v80) / ln(120 / 80). Tipik açık arazide 0,10–0,20; büyük değer, rotor üst ve alt ucu arasında daha büyük hız farkı demektir.">Kesme (80→120 m) <span id="kesme">–</span></p>
    </div>
    <div class="hucre">
     <div class="pusula">
@@ -430,6 +433,8 @@ function ciz(d){
  var v120=c.wind_speed_120m, v80=c.wind_speed_80m, yon=c.wind_direction_120m;
  el("v120").textContent=say(v120,1); el("v80").textContent=say(v80,1);
  el("vham").textContent=say(c.wind_gusts_10m,1);
+ // rüzgâr kesmesi üssü (güç yasası): iki yükseklikteki tahmin hızından; hız çok düşükse anlamsız, gösterme
+ el("kesme").textContent=(v120>1&&v80>1)?"α "+say(Math.log(v120/v80)/Math.log(1.5),2):"–";
  el("yonD").textContent=Math.round(yon);
  el("yonAd").textContent=YON[Math.round(yon/22.5)%16]+" yönünden";
  el("okg").style.transform="rotate("+(yon+180)+"deg)";
@@ -512,7 +517,9 @@ function yukle(k){
   .catch(function(){ if(no!==istek)return;
     el("simdi").classList.remove("yukleniyor");
     var h=el("hata"); h.hidden=false;
-    h.textContent="Rüzgâr verisi şu an alınamadı. Bağlantınız yoksa sayfanın geri kalanı yine de açılır; birkaç dakika sonra tekrar deneyin.";});
+    h.textContent="Rüzgâr verisi şu an alınamadı (ağ ya da kaynak hatası). Sayfanın geri kalanı yine de açılır. ";
+    var yb=document.createElement("button"); yb.type="button"; yb.className="hata-yeniden"; yb.textContent="Yeniden dene";
+    yb.addEventListener("click",function(){ yukle(secili); }); h.appendChild(yb);});
 }
 
 document.getElementById("sahalar").addEventListener("click",function(ev){
