@@ -237,17 +237,17 @@
   /* ---- teknik işaret noktaları: sahnede parçanın üstünde küçük halka, üstüne gelince bilgi ---- */
   var NOKTA = {
     anaYatak:  { no: 'MAIN BEARING', ad: 'Ana yatak', t: 'Rotorun ağırlığını ve rüzgâr itkisini taşır; torku ana mile bırakır.',
-      k: 'Gres durumu ve kaçak, yatak sıcaklığı trendi, titreşim, sızdırmazlık.', b: 'Komşu türbinlere göre yükselen sıcaklık, titreşimde yatak frekansları, conta çevresinde gres.', u: '/n117/', ul: 'N117 turu' },
+      k: 'Gres durumu ve kaçak, yatak sıcaklığı trendi, titreşim, sızdırmazlık.', b: 'Komşu türbinlere göre yükselen sıcaklık, titreşimde yatak frekansları, conta çevresinde gres.', s: 'Yatak sıcaklığı (PT100), titreşim ivmeölçeri (durum izleme), rotor devri sensörü.', u: '/n117/', ul: 'N117 turu' },
     disli:     { no: 'GEARBOX', ad: 'Dişli kutusu', t: 'Üç kademe: iki planet, bir helisel. Rotor devrini jeneratörün istediği hıza çıkarır.',
-      k: 'Yağ seviyesi ve sıcaklığı, filtre fark basıncı, yağ numunesi, endoskopla dişli yüzeyleri.', b: 'Yavaş yükselen yağ sıcaklığı, filtre alarmı, yağda metal partikül, ses değişimi.', u: '/saha-notlari/disli-kutusu-sicaklik/', ul: 'İlgili vaka' },
+      k: 'Yağ seviyesi ve sıcaklığı, filtre fark basıncı, yağ numunesi, endoskopla dişli yüzeyleri.', b: 'Yavaş yükselen yağ sıcaklığı, filtre alarmı, yağda metal partikül, ses değişimi.', s: 'Yağ ve yatak sıcaklıkları (PT100), yağ basıncı, filtre fark basıncı, yağ seviyesi, titreşim ivmeölçerleri; bazı türbinlerde yağda partikül sayacı.', u: '/saha-notlari/disli-kutusu-sicaklik/', ul: 'İlgili vaka' },
     jenerator: { no: 'GENERATOR', ad: 'Jeneratör', t: '3.000 kW, çift beslemeli asenkron, 660 V.',
-      k: 'Sargı ve yatak sıcaklıkları, yalıtım direnci, bilezik ve kömürler, soğutma havası.', b: 'Sıcaklık alarmı (önce sensörü doğrula), kömür tozu birikimi, yatak sesi.', u: '/saha-notlari/jenerator-sicaklik/', ul: 'İlgili vaka' },
+      k: 'Sargı ve yatak sıcaklıkları, yalıtım direnci, bilezik ve kömürler, soğutma havası.', b: 'Sıcaklık alarmı (önce sensörü doğrula), kömür tozu birikimi, yatak sesi.', s: 'Sargı ve yatak sıcaklıkları (PT100), devir enkoderi, stator gerilim ve akımları, soğutma havası sıcaklığı.', u: '/saha-notlari/jenerator-sicaklik/', ul: 'İlgili vaka' },
     konvertor: { no: 'CONVERTER', ad: 'Konvertör', t: 'Jeneratörün rotor devresini besler; değişen rüzgârda şebekeye sabit frekans verir.',
-      k: 'Soğutma devresi, bara bağlantı torkları, yük altında termal görüntü, filtreler.', b: 'Belirli güçte atan aşırı akım, aşırı sıcaklık hataları, reset sonrası normal çalışma.', u: '/saha-notlari/converter-asiri-akim/', ul: 'İlgili vaka' },
+      k: 'Soğutma devresi, bara bağlantı torkları, yük altında termal görüntü, filtreler.', b: 'Belirli güçte atan aşırı akım, aşırı sıcaklık hataları, reset sonrası normal çalışma.', s: 'Güç modülü ve soğutucu sıcaklıkları, DC bara gerilimi, faz akımları, soğutma suyu basıncı ve sıcaklığı.', u: '/saha-notlari/converter-asiri-akim/', ul: 'İlgili vaka' },
     yaw:       { no: 'YAW', ad: 'Yaw sistemi', t: 'Naseli rüzgâra döndüren halka yatak ve motorlar. Güç kabloları bu açıklıktan kuleye iner.',
-      k: 'Yaw dişlisi yağlaması, fren balataları ve basıncı, motor-redüktörler, kablo burulma sayacı.', b: 'Salınım (hunting), gıcırtı ya da vuruntu, kablo burulma uyarısı.', u: '/saha-notlari/yaw-salinimi/', ul: 'İlgili vaka' },
+      k: 'Yaw dişlisi yağlaması, fren balataları ve basıncı, motor-redüktörler, kablo burulma sayacı.', b: 'Salınım (hunting), gıcırtı ya da vuruntu, kablo burulma uyarısı.', s: 'Nasel üstünde rüzgâr yönü ve hızı sensörleri, yaw konum ve kablo burulma sayacı, fren basıncı.', u: '/saha-notlari/yaw-salinimi/', ul: 'İlgili vaka' },
     pitch:     { no: 'PITCH', ad: 'Pitch sistemi', t: 'Her kanadın açısını ayrı ayarlar; anma hızına gelince gücü sınırlar.',
-      k: 'Kanat yatağı gresi, pitch motoru ve sürücü akımı, acil durum enerji kaynağı, açı enkoderi.', b: 'Kanatlar arası açı farkı, yüksek motor akımı, açı sapması hatası.', u: '/saha-notlari/pitch-motor-yuksek-akim/', ul: 'İlgili vaka' }
+      k: 'Kanat yatağı gresi, pitch motoru ve sürücü akımı, acil durum enerji kaynağı, açı enkoderi.', b: 'Kanatlar arası açı farkı, yüksek motor akımı, açı sapması hatası.', s: 'Kanat açı enkoderleri, pitch motoru akımı ve sıcaklığı, acil durum enerji kaynağının gerilimi.', u: '/saha-notlari/pitch-motor-yuksek-akim/', ul: 'İlgili vaka' }
   };
   var katman = document.createElement('div'); katman.className = 'v-noktalar'; sahne.appendChild(katman);
   var pencere = document.createElement('div'); pencere.className = 'v-nokta-bilgi'; pencere.setAttribute('role', 'tooltip'); pencere.id = 'vNoktaBilgi'; sahne.appendChild(pencere);
@@ -266,7 +266,8 @@
   function noktaAc(id) {
     var n = NOKTA[id]; acikNokta = id;
     pencere.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p>' +
-      '<dl class="v-nb-dl"><div><dt>Kontrol</dt><dd>' + n.k + '</dd></div><div><dt>Sahada belirti</dt><dd>' + n.b + '</dd></div></dl>' +
+      '<dl class="v-nb-dl"><div><dt>Kontrol</dt><dd>' + n.k + '</dd></div><div><dt>Sahada belirti</dt><dd>' + n.b + '</dd></div>' +
+      '<div><dt>Tipik sensörler</dt><dd>' + n.s + '</dd></div></dl>' +
       '<a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a>';
     pencere.classList.add('gor'); konumla();
   }
@@ -417,6 +418,161 @@
     try { localStorage.removeItem(DUR_ANAHTAR); } catch (e) {}
   });
   durGoster(kayitliDuraklat());
+
+  /* ---- panel ortak: Parça kâşifi ve Enerji akışı (sahnenin üstünde, Esc ile kapanır) ---- */
+  denetim.insertAdjacentHTML('beforeend',
+    '<button type="button" class="v-den-par" aria-haspopup="dialog" aria-controls="vParca" aria-expanded="false"><span aria-hidden="true"></span><b>Parçalar</b></button>' +
+    '<button type="button" class="v-den-ea" aria-haspopup="dialog" aria-controls="vEnerji" aria-expanded="false"><span aria-hidden="true"></span><b>Enerji akışı</b></button>');
+  var parBtn = denetim.querySelector('.v-den-par'), eaBtn = denetim.querySelector('.v-den-ea');
+  parBtn.setAttribute('aria-label', 'Parça kâşifi'); eaBtn.setAttribute('aria-label', 'Enerji akışı');
+  var acikPanel = null;
+  function panelYap(id, baslik, en) {
+    var p = document.createElement('div'); p.className = 'v-panel'; p.id = id; p.hidden = true;
+    p.setAttribute('role', 'dialog'); p.setAttribute('aria-modal', 'false'); p.setAttribute('aria-labelledby', id + 'B');
+    p.innerHTML = '<div class="v-panel-ust"><p class="v-panel-en">' + en + '</p><h2 class="v-panel-b" id="' + id + 'B">' + baslik + '</h2>' +
+      '<button type="button" class="v-panel-kapa" aria-label="' + baslik + ' panelini kapat"><span aria-hidden="true"></span></button></div><div class="v-panel-ic"></div>';
+    sahne.appendChild(p);
+    p.querySelector('.v-panel-kapa').addEventListener('click', function () { panelKapa(true); });
+    return p;
+  }
+  function panelAc(p, btn) {
+    if (acikPanel && acikPanel.p !== p) panelKapa(false);
+    acikPanel = { p: p, btn: btn };
+    p.hidden = false; btn.setAttribute('aria-expanded', 'true'); bolum.classList.add('dny-panel-acik');
+    requestAnimationFrame(function () { p.classList.add('gor'); });
+    var ilk = p.querySelector('.v-panel-kapa'); if (ilk) ilk.focus({ preventScroll: true });
+  }
+  function panelKapa(odak) {
+    if (!acikPanel) return;
+    var a = acikPanel; acikPanel = null;
+    a.p.classList.remove('gor'); a.p.hidden = true; a.btn.setAttribute('aria-expanded', 'false');
+    bolum.classList.remove('dny-panel-acik');
+    if (a.p === eaPanel) eaDur();
+    if (odak) a.btn.focus({ preventScroll: true });
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && acikPanel) { e.preventDefault(); panelKapa(true); } });
+  var darEkran = matchMedia('(max-width: 820px)');
+
+  /* ---- Parça kâşifi: parçayı seç, bilgisini oku, 3B'de o durağa git; işaret noktası vurgulanır ---- */
+  // p: parçanın anlatı durağı (duraklar.js); pitch göbekte, yaw nasel girişinde anlatılır
+  var PARCA = [
+    { id: 'pitch', p: 0.49 }, { id: 'yaw', p: 0.51 }, { id: 'anaYatak', p: 0.55 },
+    { id: 'disli', p: 0.635 }, { id: 'jenerator', p: 0.76 }, { id: 'konvertor', p: 0.845 }
+  ];
+  var parPanel = panelYap('vParca', 'Parça kâşifi', 'COMPONENT EXPLORER');
+  var parIc = parPanel.querySelector('.v-panel-ic');
+  parIc.innerHTML = '<div class="v-par-liste" role="tablist" aria-label="Parçalar">' + PARCA.map(function (o) {
+      return '<button type="button" role="tab" id="vParT-' + o.id + '" aria-controls="vParKart" aria-selected="false" data-id="' + o.id + '">' + NOKTA[o.id].ad + '</button>';
+    }).join('') + '</div><div class="v-par-kart" id="vParKart" role="tabpanel"></div>';
+  var parSecili = null, vurguZ = 0;
+  function parSec(id, odak) {
+    var n = NOKTA[id]; parSecili = id;
+    [].forEach.call(parIc.querySelectorAll('[role="tab"]'), function (t) {
+      var s = t.getAttribute('data-id') === id; t.setAttribute('aria-selected', s ? 'true' : 'false'); t.tabIndex = s ? 0 : -1;
+      if (s && odak) t.focus({ preventScroll: true });
+    });
+    var kart = parIc.querySelector('.v-par-kart'); kart.setAttribute('aria-labelledby', 'vParT-' + id);
+    kart.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p>' +
+      '<dl class="v-nb-dl"><div><dt>Kontrol</dt><dd>' + n.k + '</dd></div><div><dt>Sahada belirti</dt><dd>' + n.b + '</dd></div>' +
+      '<div><dt>Tipik sensörler</dt><dd>' + n.s + '<small>Genel bilgi; sensör seti üreticiye ve modele göre değişir.</small></dd></div></dl>' +
+      '<p class="v-par-alt"><button type="button" class="v-par-goster">3B’de göster</button><a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a></p>';
+    kart.querySelector('.v-par-goster').addEventListener('click', function () { parGoster(id); });
+  }
+  function parGoster(id) {
+    var o = PARCA.filter(function (x) { return x.id === id; })[0]; if (!o) return;
+    if (darEkran.matches) panelKapa(false);   // dar ekranda sahne görünsün
+    git(o.p);
+    Object.keys(noktaEl).forEach(function (k) { noktaEl[k].classList.toggle('secili', k === id); });
+    clearTimeout(vurguZ);   // işaret halkası kamera açısı uygun olduğunda görünür; vurgu 8 sn sürer
+    vurguZ = setTimeout(function () { if (noktaEl[id]) noktaEl[id].classList.remove('secili'); }, 8000);
+  }
+  parIc.querySelector('.v-par-liste').addEventListener('click', function (e) {
+    var t = e.target.closest('[role="tab"]'); if (t) parSec(t.getAttribute('data-id'));
+  });
+  parIc.querySelector('.v-par-liste').addEventListener('keydown', function (e) {
+    var i = PARCA.map(function (o) { return o.id; }).indexOf(parSecili), y = 0;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') y = 1; else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') y = -1; else return;
+    e.preventDefault(); parSec(PARCA[(i + y + PARCA.length) % PARCA.length].id, true);
+  });
+  parSec('anaYatak');
+  parBtn.addEventListener('click', function () { acikPanel && acikPanel.p === parPanel ? panelKapa(true) : panelAc(parPanel, parBtn); });
+
+  /* ---- Enerji akışı: rüzgârdan şebekeye; mekanik bağlar çizgi, elektrik bağlar nokta akışıyla.
+   * Değerler sayfadaki canlı rüzgâr panelinin tahmin+model çıktısıdır (ölçüm değil). ---- */
+  var eaPanel = panelYap('vEnerji', 'Enerji akışı', 'ENERGY FLOW');
+  eaPanel.classList.add('v-panel-genis');
+  var eaIc = eaPanel.querySelector('.v-panel-ic');
+  function dugum(cls, en, ad, deger, alt, p) {
+    var etiket = p != null ? 'button type="button" data-p="' + p + '" aria-label="' + ad + ': 3B sahnede göster"' : 'div';
+    return '<' + etiket + ' class="ea-d ' + cls + '"><span class="ea-en">' + en + '</span><b class="ea-ad">' + ad + '</b>' +
+      (deger ? '<span class="ea-v" data-ea="' + deger + '">–</span>' : '') + '<small>' + alt + '</small></' + (p != null ? 'button' : 'div') + '>';
+  }
+  function bag(tur, ad) { return '<span class="ea-b ea-' + tur + '" role="img" aria-label="' + ad + '"><i></i></span>'; }
+  eaIc.innerHTML =
+    '<p class="ea-durum" id="eaDurum" role="status"></p>' +
+    '<div class="ea-sema">' +
+      dugum('ea-ruzgar', 'WIND', 'Rüzgâr', 'v', 'göbek yüksekliği 120 m') + bag('hava', 'Hava akışı') +
+      dugum('', 'ROTOR', 'Rotor', 'devir', 'Ø 116,8 m · 3 kanat', 0.125) + bag('mek', 'Mekanik güç, düşük devir') +
+      dugum('', 'MAIN SHAFT', 'Ana mil', 'tork', 'düşük devir, yüksek tork', 0.59) + bag('mek', 'Mekanik güç, düşük devir') +
+      dugum('', 'GEARBOX', 'Dişli kutusu', '', '3 kademe · devri artırır', 0.635) + bag('mek ea-hizli', 'Mekanik güç, yüksek devir') +
+      dugum('', 'GENERATOR', 'Jeneratör', 'kw', 'çift beslemeli asenkron · 660 V', 0.76) +
+      '<div class="ea-catal">' +
+        '<div class="ea-kol"><span class="ea-kol-ad">Stator → doğrudan</span>' + bag('elk', 'Elektrik: stator doğrudan şebekeye') + '</div>' +
+        '<div class="ea-kol"><span class="ea-kol-ad">Rotor devresi</span>' + bag('elk', 'Elektrik: rotor devresi konvertöre') +
+          dugum('ea-kucuk', 'CONVERTER', 'Konvertör', '', 'rotor devresini besler', 0.845) + bag('elk', 'Elektrik: konvertörden şebekeye') + '</div>' +
+      '</div>' +
+      dugum('ea-sebeke', 'GRID', 'Şebeke', '', 'sabit frekans · trafo üzerinden') +
+    '</div>' +
+    '<p class="ea-acik"><span class="ea-lej ea-lej-mek" aria-hidden="true"></span>Mekanik güç <span class="ea-lej ea-lej-elk" aria-hidden="true"></span>Elektrik güç · ' +
+    'Değerler Open-Meteo tahmini ve güç eğrisi modelinden hesaplanır; türbin ölçümü değildir. Bir parçaya dokununca 3B sahnede oraya gidilir.</p>';
+  [].forEach.call(eaIc.querySelectorAll('button.ea-d'), function (b) {
+    b.addEventListener('click', function () { panelKapa(false); git(+b.getAttribute('data-p')); });
+  });
+  function vg(x, n) { return x.toFixed(n).replace('.', ','); }
+  // /deneyim/ sayfasında rüzgâr paneli yok: aynı kaynak ve aynı model formülleriyle yedek hesap
+  function yedekModel(d) {
+    var c = d && d.current; if (!c) return null;
+    var v = +c.wind_speed_120m, sic = +c.temperature_2m, bas = +c.pressure_msl; if (!isFinite(v)) return null;
+    var rho = isFinite(sic) && isFinite(bas) ? (bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)))) / (287.05 * (sic - 0.78 + 273.15)) : 1.225;
+    var A = Math.PI * 116.8 * 116.8 / 4, kw = 0, dv = 0;
+    if (v >= 3 && v <= 25) {
+      var cp = v >= 6.5 ? 0.452 : (function (x) { return 0.10 + (0.452 - 0.10) * (3 * x * x - 2 * x * x * x); })((v - 3) / 3.5);
+      var ham = 0.5 * rho * A * v * v * v * cp / 1000; kw = ham / Math.pow(1 + Math.pow(ham / 3000, 6), 1 / 6);
+      dv = Math.max(7.9, Math.min(14.1, (8 * v / 58.4) * 60 / (2 * Math.PI)));
+    }
+    return { v: v, rho: rho, devir: dv, kw: kw, durum: v < 3 ? 'beklemede' : v > 25 ? 'durdu' : 'uretimde', t: Date.now() };
+  }
+  var eaYedekIstendi = false;
+  function eaYaz() {
+    var r = window.__sonerRuzgar;
+    if (!r && !eaYedekIstendi) {
+      eaYedekIstendi = true;
+      fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } }).then(function (x) { if (!x.ok) throw 0; return x.json(); })
+        .then(function (d) { var m = yedekModel(d); if (m && !window.__sonerRuzgar) { window.__sonerRuzgar = m; eaYaz(); } }).catch(function () {});
+    }
+    var D = eaIc.querySelector('#eaDurum'), set = function (k, t) { var e = eaIc.querySelector('[data-ea="' + k + '"]'); if (e) e.textContent = t; };
+    if (!r) { set('v', '–'); set('devir', '–'); set('tork', '–'); set('kw', '–'); D.textContent = 'Canlı rüzgâr verisi bekleniyor; akış şeması genel çalışma ilkesini gösterir.'; eaPanel.setAttribute('data-durum', 'yok'); return; }
+    var omega = r.devir * 2 * Math.PI / 60, tork = omega > 0 ? r.kw / omega : 0;   // kW / (rad/s) = kN·m
+    set('v', vg(r.v, 1) + ' m/s'); set('devir', vg(r.devir, 1) + ' d/dk');
+    set('tork', tork > 0 ? '≈ ' + Math.round(tork).toLocaleString('tr-TR') + ' kN·m' : '0 kN·m');
+    set('kw', Math.round(r.kw).toLocaleString('tr-TR') + ' kW');
+    eaPanel.setAttribute('data-durum', r.durum);
+    D.textContent = r.durum === 'beklemede' ? 'Rüzgâr ' + vg(r.v, 1) + ' m/s: devreye girme hızının (3 m/s) altında. Türbin beklemede; mekanik ve elektrik akış yok.'
+      : r.durum === 'durdu' ? 'Rüzgâr ' + vg(r.v, 1) + ' m/s: devreden çıkma hızının (25 m/s) üstünde. Kanatlar yelkende, üretim durdu.'
+      : 'Üretimde · Aliağa, göbek 120 m · tahmin + model, anma gücünün %' + Math.round(r.kw / 30) + '’i.';
+    // akış hızı: mekanik bağlar rotor devriyle, elektrik bağlar güç oranıyla orantılı
+    var tur = r.devir > 0 ? 60 / r.devir : 0, oran = r.kw / 3000;
+    eaPanel.style.setProperty('--ea-mek', tur ? (tur / 4).toFixed(2) + 's' : '0s');
+    eaPanel.style.setProperty('--ea-hizli', tur ? (tur / 14).toFixed(2) + 's' : '0s');
+    eaPanel.style.setProperty('--ea-elk', oran > 0 ? (2.6 - 1.8 * oran).toFixed(2) + 's' : '0s');
+    eaPanel.style.setProperty('--ea-hava', Math.max(0.5, 6 / Math.max(r.v, 0.5)).toFixed(2) + 's');
+  }
+  function eaDur() {}
+  window.addEventListener('ss:ruzgar', function () { if (acikPanel && acikPanel.p === eaPanel) eaYaz(); });
+  eaBtn.addEventListener('click', function () {
+    if (acikPanel && acikPanel.p === eaPanel) { panelKapa(true); return; }
+    eaYaz(); panelAc(eaPanel, eaBtn);
+  });
   function statik(dugme) {
     bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'dny-akis', 'hazir');
     bolum.classList.add('statik');
