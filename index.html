@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/ana.css?v=caef819a">
 <link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=9ca213df">
-<link rel="stylesheet" href="/assets/vitrin.css?v=5a79398d">
+<link rel="stylesheet" href="/assets/vitrin.css?v=8ed1b39a">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"VideoObject","name":"Türbin nasıl elektrik üretir?","description":"Rüzgâr kanattan şebekeye: kaldırma kuvveti, dişli kutusu, jeneratör ve trafo. Rüzgâr türbini saha servis teknisyeni Soner Soylu'dan 52 saniyelik anlatım.","thumbnailUrl":"https://sonersoylu.com/assets/video/turbin-elektrik.webp","contentUrl":"https://sonersoylu.com/assets/video/turbin-elektrik.mp4","uploadDate":"2026-10-02T07:30:00+03:00","duration":"PT52S","inLanguage":"tr","creator":{"@type":"Person","name":"Soner Soylu","url":"https://sonersoylu.com/"}}
@@ -100,6 +100,7 @@
       </div>
       <p class="ralan-kf" id="rKfSatir" hidden><span class="ralan-kf-ad">Kapasite faktörü<small>önümüzdeki 24 sa</small></span><abbr class="ralan-kf-kisa" title="Kapasite faktörü, önümüzdeki 24 saat">KF 24 sa</abbr><b id="rKf">–</b></p>
       <p class="ralan-zaman"><span class="ralan-nokta" aria-hidden="true"></span><span id="rZaman">Güncellendi az önce</span></p>
+      <p class="ralan-hata" id="rHata" role="status" hidden><span id="rHataMetin">Canlı rüzgâr verisi alınamadı.</span> <button type="button" id="rYeniden">Yeniden dene</button></p>
       <p class="ralan-not"><span class="ralan-uzun">Open-Meteo tahmini; güç ve devir modelden hesaplanır, ölçüm değildir.</span><span class="ralan-kisa">Tahmin ve model, ölçüm değil.</span> <a href="/ruzgar/">Canlı rüzgâr &#8594;</a></p>
     </div>
 
@@ -667,7 +668,8 @@
   }
   vardiya(); setInterval(vardiya, 10 * 60 * 1000);
   kok.style.setProperty('--devir-sure', '4.76s');   // veri gelene kadar anma devri (12,6 d/dk)
-  /* canlı rüzgâr: Aliağa, göbek yüksekliği (Open-Meteo tahmini, /ruzgar/ ile aynı formüller) */
+  /* canlı rüzgâr: Aliağa, göbek yüksekliği (Open-Meteo tahmini). Güç: Cp yaklaşımı, /ruzgar/ sayfasındaki N117 güç eğrisiyle
+     yoğunluk düzeltmeli karşılaştırmada ±%1 içinde (8,4 m/s: 1.688 kW her ikisinde); anma gücü 3.000 kW'ı asla aşmaz. */
   var ALAN = Math.PI * 116.8 * 116.8 / 4, YARICAP = 58.4;
   var YONLER = ['K','KKD','KD','DKD','D','DGD','GD','GGD','G','GGB','GB','BGB','B','BKB','KB','KKB'];
   function guc(v, rho) {
@@ -699,11 +701,15 @@
   }
   var BOLUT = 19, bar = $('rBar');
   for (var i = 0; i < BOLUT; i++) bar.appendChild(document.createElement('i'));
-  var cekilen = 0;
+  var cekilen = 0, veriSaati = '', veriZamani = 0;
   function zamanYaz() {
     if (!cekilen) return;
     var sn = Math.max(0, Math.round((Date.now() - cekilen) / 1000));
-    $('rZaman').innerHTML = '<span class="ralan-g">Güncellendi </span>' + (sn < 5 ? 'az önce' : sn < 60 ? sn + ' sn önce' : Math.floor(sn / 60) + ' dk önce');
+    var eski = veriZamani && Date.now() - veriZamani > 2 * 3600 * 1000;   // tahmin adımı 2 saatten eskiyse uyar
+    $('ralan').classList.toggle('ralan-eski', !!eski);
+    $('rZaman').innerHTML = (veriSaati ? '<span class="ralan-g">Tahmin </span>' + veriSaati + (eski ? ' · eski veri' : '') + ' · ' : '<span class="ralan-g">Güncellendi </span>') +
+      (sn < 5 ? 'az önce' : sn < 60 ? sn + ' sn önce' : Math.floor(sn / 60) + ' dk önce') + '<span class="ralan-g"> alındı</span>';
+    $('rZaman').title = 'Kaynak: Open-Meteo model tahmini (ölçüm değil). Tahmin adımı ' + (veriSaati || '–') + ' (Türkiye saati); veri bu tarayıcıya ' + (sn < 60 ? sn + ' sn' : Math.floor(sn / 60) + ' dk') + ' önce alındı.';
   }
   function isle(d) {
     var c = d && d.current; if (!c) throw 0;
@@ -739,7 +745,10 @@
     }
     window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now() };
     try { window.dispatchEvent(new CustomEvent('ss:ruzgar', { detail: window.__sonerRuzgar })); } catch (e) {}
-    cekilen = Date.now(); zamanYaz();
+    var vz = c.time ? new Date(c.time + ':00+03:00') : null;   // Open-Meteo yerel saat (Europe/Istanbul) verir
+    veriZamani = vz && isFinite(vz.getTime()) ? vz.getTime() : 0;
+    veriSaati = veriZamani ? String(c.time).slice(11, 16) : '';
+    cekilen = Date.now(); hataSay = 0; hataGoster(false); zamanYaz();
     $('ralan').hidden = false;
   }
   /* kapasite faktörü: önümüzdeki 24 saatin saatlik tahmininden, aynı model ve saatlik yoğunlukla */
@@ -758,12 +767,32 @@
       $('rKfSatir').hidden = false;
     } catch (e) {}
   }
+  /* ağ ya da kaynak hatası: son değer varsa kalır ve "yenilenemedi" yazar; hiç veri yoksa yalnız durum satırı görünür.
+     Kendiliğinden 30 sn, 1 dk, 2 dk sonra yeniden dener; ziyaretçi "Yeniden dene" ile hemen deneyebilir. */
+  var hataSay = 0, tekrarZ = 0, cekiyor = false, elle = false;
+  function hataGoster(var_) {
+    var h = $('rHata'); h.hidden = !var_;
+    $('ralan').classList.toggle('ralan-yok', !!var_ && !cekilen);
+    if (var_) {
+      $('rHataMetin').textContent = cekilen ? 'Veri yenilenemedi; son değerler gösteriliyor.' : 'Canlı rüzgâr verisi alınamadı (ağ ya da kaynak hatası).';
+      $('ralan').hidden = false;
+    }
+  }
   function cek() {
+    if (cekiyor) return Promise.resolve();
+    cekiyor = true; clearTimeout(tekrarZ);
+    var b = $('rYeniden'); b.disabled = true; b.textContent = 'Deneniyor…';
     return fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(isle)
-      .catch(function () { /* veri yoksa gösterge hiç görünmez; varsa son değer kalır */ });
+      .catch(function () {
+        hataSay++;
+        if (hataSay >= 2 || cekilen || elle) hataGoster(true);   // ilk kendiliğinden hatada kapağa uyarı basma
+        if (hataSay <= 3) tekrarZ = setTimeout(cek, [0, 30, 60, 120][hataSay] * 1000);
+      })
+      .then(function () { cekiyor = false; elle = false; b.disabled = false; b.textContent = 'Yeniden dene'; });
   }
+  $('rYeniden').addEventListener('click', function () { hataSay = 0; elle = true; cek(); });
   cek();
   setInterval(zamanYaz, 1000);
   /* on dakikada bir, sayfa görünürken ve kapaktayken yenile (kaynak uçta 15 dk önbellekli) */
