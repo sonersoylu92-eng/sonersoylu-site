@@ -22,6 +22,7 @@ function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.document
 export function deneyimBaslat(canvas, bolum, cb = {}) {
   const mobil = matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches;
   const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const zorla = /[?&]uc=1\b/.test(location.search);   // tanı ve test: cihaz yetişemese de sahne açık kalır
   let performans = false;
   try { performans = new URLSearchParams(location.search).get('performance') === '1' || localStorage.getItem('ss-performance-mode') === '1'; } catch (e) {}
   const kok = document.documentElement;
@@ -452,6 +453,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }
 
   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
+  // Hareket saati: kendiliğinden olan hareketler (rotor, açılış kamera kayması, nefes, ikaz lambası) bununla ilerler.
+  // Duraklatınca durur; kaydırmayla gelen kamera hareketi her zaman çalışır.
+  let mt = 0, duraklat = false;
   let kareSay = 0, kareSakla = false, sonHedefP = null, durgunT = 0, sonAralik = 0;
   /* Uyarlanır kalite: kaydırma sırasında kare süresi ölçülür; cihaz yetişemiyorsa önce çözünürlük,
    * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
@@ -474,7 +478,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     ortKare += (araMs - ortKare) * 0.08;
     const hedef = KADEME_ARALIK[kalite] ? 1000 / 29 : 1000 / 58;
     // en düşük kademede bile kare 40 ms'yi (25 fps) sürekli aşıyorsa cihaz bu sahneyi taşıyamıyor: bırak
-    if (kalite >= 3 && ortKare > (mobil ? 60 : 40)) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
+    if (!zorla && kalite >= 3 && ortKare > (mobil ? 60 : 40)) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
     if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
     // kaliteyi geri yükseltmek tuvali yeniden boyutlandırır: kaydırma sırasında değil, parmak durunca yapılır
     else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { yukselt = true; iyiT = 0; } }
@@ -539,6 +543,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     // gölge haritası her karede değil: hareketteyken iki karede bir, boştayken dört karede bir
     if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = kareSay % (durgun ? 4 : 2) === 0;
     const dt = sonT ? Math.min(0.05, (t - sonT) / 1000) : 0.016; sonT = t;
+    if (!duraklat) mt += dt * 1000;
     if (t - sonIsik > 5000 && !icAyar) { isik(); sonIsik = t; }
 
     const anlik = az || window.__deneyimAnlik || window.__deneyimKes;
@@ -557,12 +562,12 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (hedefIlk) { yumHedef.copy(kHedef); hedefIlk = false; }
     yumHedef.lerp(kHedef, anlik ? 1 : 1 - Math.exp(-dt * (mobil ? 14 : 3.2)));   // bakış hafif geriden gelir: ağırlık hissi
     // çok hafif el-kamera nefesi (yalnız dışarıda belirgin)
-    if (!az) { kKonum.y += Math.sin(t / 2300) * 0.02; kKonum.x += Math.sin(t / 3100) * 0.02; }
+    if (!az) { kKonum.y += Math.sin(mt / 2300) * 0.02; kKonum.x += Math.sin(mt / 3100) * 0.02; }
     // açılışta kamera kendiliğinden, çok yavaş türbine doğru ilerler (kaydırınca devri kaydırmaya bırakır)
     const disAgirlik = (1 - yumusak(0.36, 0.43, p)) + yumusak(0.975, 0.995, p);
     if (!az) {
       if (!hazirT) hazirT = t;
-      const surun = (1 - Math.exp(-(t - hazirT) / 22000)) * 16 * (1 - yumusak(0, 0.05, p));
+      const surun = (1 - Math.exp(-mt / 22000)) * 16 * (1 - yumusak(0, 0.05, p));
       if (surun > 0.01) { tmp.subVectors(yumHedef, kKonum); tmp.y = 0; if (tmp.lengthSq() > 1) kKonum.addScaledVector(tmp.normalize(), surun); }
       // fareye çok hafif derinlik tepkisi (kamera 1–2 derecelik kayar)
       fare.sx += ((fare.var ? fare.x : 0) - fare.sx) * (1 - Math.exp(-dt * 1.8));
@@ -639,8 +644,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (hemi) hemi.intensity = THREE.MathUtils.lerp(hemi.intensity, hemiTaban * THREE.MathUtils.lerp(1, kulede ? 0.24 : 0.1, icPay), 1 - Math.exp(-dt * 6));
     if (dolgu) dolgu.intensity = dolguTaban * (1 - 0.9 * icPay);
     huzmeMat.uniforms.uGuc.value = THREE.MathUtils.lerp(huzmeMat.uniforms.uGuc.value, icerde ? 1 : 0, 1 - Math.exp(-dt * 4));
-    huzmeMat.uniforms.uZaman.value = t / 1000;
-    if (toz) { toz.rotation.y = Math.sin(t / 9000) * 0.02; toz.position.y = Math.sin(t / 4000) * 0.03; }
+    huzmeMat.uniforms.uZaman.value = mt / 1000;
+    if (toz) { toz.rotation.y = Math.sin(mt / 9000) * 0.02; toz.position.y = Math.sin(mt / 4000) * 0.03; }
     // Only the hub transition needs a brief occlusion; the open roof hatch stays visible.
     const dip = Math.abs(yerel.x) < 2.4 && Math.abs(yerel.y) < 2.4
       ? yumusak(-10.4, -9.5, yerel.z) * (1 - yumusak(-5.85, -5.2, yerel.z)) : 0;
@@ -648,13 +653,14 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
     // mekanik: rotor gerçek devirde, ana mil onunla, hızlı taraf ~×100 (görsel olarak yavaşlatılmış)
     const w = devirRad();
-    if (parts.spin) parts.spin.rotation.z -= w * dt;
-    if (ic.anaMil) ic.anaMil.rotation.z -= w * dt;
-    if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * dt;
+    const hdt = duraklat ? 0 : dt;
+    if (parts.spin) parts.spin.rotation.z -= w * hdt;
+    if (ic.anaMil) ic.anaMil.rotation.z -= w * hdt;
+    if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * hdt;
     yawGuncelle(dt);
     kuleDondur();
-    if (parts.farm && !az) parts.farm.children.forEach(k => { if (k.userData.spin) k.userData.spin.rotation.z -= k.userData.speed * dt; });
-    if (parts.ikaz) parts.ikaz.guncelle(t / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
+    if (parts.farm && !az && !duraklat) parts.farm.children.forEach(k => { if (k.userData.spin) k.userData.spin.rotation.z -= k.userData.speed * dt; });
+    if (parts.ikaz) parts.ikaz.guncelle(mt / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
 
     // alan derinliği: bakılan noktaya odak
     if (bokeh) bokeh.enabled = !!icerde && kalite < 2;
@@ -793,7 +799,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     derlemeSozu.then(() => { try { renderer.dispose(); } catch (e) {} });
   }
   S.birak = birak;
-  S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi });
+  S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi, duraklat });
+  // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
+  S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
+  S.bastanOynat = () => { mt = 0; duraklat = false; durgunT = performance.now(); baslat(); };
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak('baglam-kaybi'); }, false);
 
   // sayfa tarafı fare konumunu bildirir: nx, ny ∈ [-1, 1]; null → fare sahnede değil
