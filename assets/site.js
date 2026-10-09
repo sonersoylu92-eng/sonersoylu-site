@@ -75,7 +75,8 @@
       if (dest.indexOf(tur) < 0) return;
       try { new PerformanceObserver(function (l) { l.getEntries().forEach(f); }).observe(Object.assign({ type: tur, buffered: true }, ek || {})); } catch (e) {}
     }
-    var lcpBitti = false;
+    // sayfa arka planda açıldıysa LCP anlamsız (sekmeye dönüldüğü an sayılır): kaydedilmez
+    var gizliBasladi = document.visibilityState === 'hidden', lcpBitti = gizliBasladi;
     izle('largest-contentful-paint', function (e) { if (!lcpBitti) lcp = e.startTime; });
     // LCP ilk gerçek etkileşimde ya da sayfa gizlenince sabitlenir; sonraki çizimler sayılmaz
     ['keydown', 'pointerdown'].forEach(function (t) { addEventListener(t, function () { lcpBitti = true; }, { once: true, capture: true }); });
@@ -96,11 +97,11 @@
       var r = function (x) { return x == null ? 'yok' : Math.round(x); };
       var veri = {
         olay: 'vitals', sayfa: location.pathname.slice(0, 40),
-        neden: 'lcp=' + r(lcp) + ';inp=' + r(inp) + ';cls=' + cls.toFixed(3) + ';fcp=' + r(fcp) + ';ttfb=' + r(nav.responseStart) + ';tip=' + (nav.type || '?') +
+        neden: (gizliBasladi ? 'gizli;' : '') + 'lcp=' + r(lcp) + ';inp=' + r(inp) + ';cls=' + cls.toFixed(3) + ';fcp=' + r(fcp) + ';ttfb=' + r(nav.responseStart) + ';tip=' + (nav.type || '?') +
           ';sw=' + (navigator.serviceWorker && navigator.serviceWorker.controller ? 1 : 0),
         sure_ms: lcp == null ? null : Math.round(lcp), kare_ms: inp == null ? null : Math.round(inp),
         ekran: innerWidth + 'x' + innerHeight, dpr: window.devicePixelRatio || 1,
-        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals2'
+        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals3'
       };
       try { navigator.sendBeacon('/api/tani', JSON.stringify(veri)); } catch (e) {}
     }
