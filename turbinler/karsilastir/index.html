@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Türbin Karşılaştırma — N90, N117, E-82, V126 Yan Yana | Soner Soylu</title>
+<meta name="description" content="Nordex N90 ve N117, Enercon E-82, Vestas V126: rotor, güç, aktarma organı, jeneratör, konvertör, pitch ve yaw yan yana. Dişli kutulu ve doğrudan tahrikli mimari farkı şemayla.">
+<link rel="canonical" href="https://sonersoylu.com/turbinler/karsilastir/">
+<link rel="alternate" hreflang="tr" href="https://sonersoylu.com/turbinler/karsilastir/">
+<link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/turbinler/karsilastir/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Türbin karşılaştırma">
+<meta property="og:description" content="Dört türbin modeli yan yana: rotor ölçeği, aktarma organı ve teknik veriler.">
+<meta property="og:url" content="https://sonersoylu.com/turbinler/karsilastir/">
+<meta property="og:image" content="https://sonersoylu.com/assets/og/og-n117.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Anasayfa","item":"https://sonersoylu.com/"},{"@type":"ListItem","position":2,"name":"Türbinler","item":"https://sonersoylu.com/turbinler/"},{"@type":"ListItem","position":3,"name":"Karşılaştır","item":"https://sonersoylu.com/turbinler/karsilastir/"}]}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
+
+<link rel="stylesheet" href="/style.css?v=47d4c147">
+<link rel="stylesheet" href="/kb.css?v=445bc395">
+<style>
+.kr{--w:min(64rem,calc(100vw - 3rem));width:var(--w);margin:2rem 0 0 calc(50% - var(--w)/2)}
+.kr-sec{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.75rem;padding:1rem 1.1rem;border:1px solid var(--line);background:var(--surface)}
+.kr-sec label{display:grid;gap:.3rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.kr-sec select{min-height:2.75rem;min-width:14rem;padding:0 .7rem;background:var(--ground);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:.9375rem;text-transform:none;letter-spacing:0}
+.kr-sec label:first-child select{box-shadow:inset 3px 0 0 var(--beacon)}
+.kr-sec label:nth-child(3) select{box-shadow:inset 3px 0 0 #d69e2e}
+.kr-sec button{min-height:2.75rem;padding:0 .9rem;background:transparent;border:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}
+.kr-sec select:focus-visible,.kr-sec button:focus-visible{outline:2px solid var(--beacon);outline-offset:2px}
+.kr-blok{margin-top:1.5rem}
+.kb .kr-blok h2{font-size:1.125rem;margin:0 0 .6rem;border:0;padding:0}
+.kr-tablo{width:100%;border-collapse:collapse;font-size:.875rem}
+.kr-tablo th,.kr-tablo td{padding:.65rem .55rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.kr-tablo thead th{font-size:.9375rem}
+.kr-tablo thead th:nth-child(2){box-shadow:inset 0 -3px 0 var(--beacon)}
+.kr-tablo thead th:nth-child(3){box-shadow:inset 0 -3px 0 #d69e2e}
+.kr-tablo tbody th{width:11rem;font-weight:500;color:var(--muted);font-size:.8125rem}
+.kr-tablo td em{font-style:normal;font-family:var(--mono);font-size:.6875rem;color:var(--muted)}
+.kr-dog{color:var(--uyari,#b7791f);font-family:var(--mono);font-size:.75rem}
+.kr-dog small{display:block;margin-top:.2rem;font-family:var(--sans);font-size:.75rem;color:var(--muted)}
+.kr-kay td{font-size:.75rem;color:var(--muted)}
+.kr-blok svg{width:100%;height:auto;display:block}
+.kr-disk{fill:none;stroke-width:1.5;stroke-dasharray:4 4}
+.kr-kanat{stroke-width:3;stroke-linecap:round}
+.kr-a.kr-disk,.kr-a.kr-kanat{stroke:var(--beacon)}
+.kr-b.kr-disk,.kr-b.kr-kanat{stroke:#d69e2e}
+.kr-gobek{fill:var(--ink)}
+.kr-et{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.kr-ka{font-size:12px;font-weight:600;fill:var(--ink)}
+.kr-kutu{fill:var(--surface);stroke-width:1.5}
+.kr-kutu.kr-a{stroke:var(--beacon)}.kr-kutu.kr-b{stroke:#d69e2e}
+.kr-mil{stroke:var(--muted);stroke-width:6;stroke-dasharray:10 6;animation:krAkis 1.6s linear infinite}
+.kr-mil.kr-hizli{stroke-width:3;animation-duration:.45s}
+.kr-elk{stroke:#7cc4ff;stroke-width:4;stroke-dasharray:2 7;stroke-linecap:round;animation:krAkis .9s linear infinite}
+@keyframes krAkis{to{stroke-dashoffset:-32}}
+.kr-akt{margin:0 0 1rem}
+.kr-akt svg{max-width:36rem}
+#krRotor svg{max-width:44rem;margin:0 auto}
+.kr-akt figcaption{font-size:.875rem;color:var(--muted);margin-bottom:.3rem}
+.kr-akt figcaption b{color:var(--ink)}
+.kr-fark{margin:.4rem 0 0;color:var(--ink)}
+@media(max-width:40rem){.kr{--w:calc(100vw - 2rem)}.kr-sec select{min-width:0;width:100%}.kr-sec label{flex:1 1 100%}.kr-tablo tbody th{width:auto}.kr-tablo{font-size:.8125rem}}
+@media(prefers-reduced-motion:reduce){.kr-mil,.kr-elk{animation:none}}
+</style>
+</head><body>
+<a class="skip" href="#top">İçeriğe geç</a>
+
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="/">Soner Soylu</a>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/" aria-current="true">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <div class="hd-right">
+   <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
+   <a class="lang" href="/en/turbines/" hreflang="en" lang="en" title="English">EN</a>
+   <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
+   <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+  </div>
+ </div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/" aria-current="true">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+</header>
+<main class="kb" id="top">
+ <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/turbinler/">Türbinler</a> <i>/</i> <span aria-current="page">Karşılaştır</span></nav>
+ <p class="kb-kicker">Model rehberi · etkileşimli</p>
+ <h1>Türbin karşılaştırma</h1>
+ <p class="kb-lead">Sahada aynı gün iki farklı üreticinin makinesine çıkabilirsiniz. İki modeli seçin: rotorlar aynı ölçekte, aktarma organları şemada ve teknik veriler yan yana görünür.</p>
+ <div class="kb-callout"><p><strong>Veri kaynağı:</strong> Değerler sitedeki model sayfalarından alınır; onlar da üreticinin ve yayımlanmış teknik belgelerin verisine dayanır. Teknik değerler varyanta göre değişir. Sayfada bulunmayan bir bilgi uydurulmaz, <em>doğrulanacak</em> olarak gösterilir; <em>hesap</em> işaretli satırlar rotor çapından hesaplanmıştır.</p></div>
+<section class="kr" aria-label="Karşılaştırma">
+ <div class="kr-sec">
+  <label>Model A<select id="krA"></select></label>
+  <button type="button" id="krDegis" aria-label="Modellerin yerini değiştir">⇄</button>
+  <label>Model B<select id="krB"></select></label>
+ </div>
+ <div class="kr-blok"><h2>Rotorlar aynı ölçekte</h2><div id="krRotor"></div></div>
+ <div class="kr-blok"><h2>Güç aktarma</h2><div id="krAktarma"></div><p class="kr-fark" id="krFark"></p></div>
+ <div class="kr-blok"><h2>Teknik veriler</h2><div id="krTablo"><noscript><p>Karşılaştırma JavaScript gerektirir; modellerin sayfaları: <a href="/n90/">N90</a>, <a href="/n117/">N117</a>, <a href="/turbinler/enercon/e82/">E-82</a>, <a href="/turbinler/vestas/v126/">V126</a>.</p></noscript></div></div>
+</section>
+</main>
+
+<footer class="son">
+ <div class="wrap">
+  <p class="son-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → bugün</span></p>
+  <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
+  <div class="son-orta">
+   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknisyeni</p></div>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+  </div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/turbines/" hreflang="en" lang="en">English</a></p></div>
+ </div>
+</footer>
+<script src="/assets/karsilastir.js?v=b108d52d" defer></script>
+<script src="/assets/site.js?v=2083a619" defer></script>
+<script src="/assets/ara.js?v=b6a27d00" defer></script>
+<script>
+document.getElementById('burger').addEventListener('click', function () {
+  var open = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!open));
+  document.getElementById('mobmenu').classList.toggle('open', !open);
+});
+</script>
+<script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
+</body>
+</html>
