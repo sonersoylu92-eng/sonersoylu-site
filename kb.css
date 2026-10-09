@@ -136,3 +136,8 @@
   .kb h2{page-break-after:avoid}
   .kb table{page-break-inside:avoid}
 }
+
+/* ---- V11 Silent Wind: bilgi sayfalarında sakin etiketler (işlev aynı) ---- */
+.kb-crumb,.kb-kicker,.kb-meta,.kb h4,.kb th,.kb-note>p:first-child,.kb-field label,.kb-out .k,.kb-card .n,.kb-rel p.k,.kb-author .role{
+  font-family:var(--sans);text-transform:none;letter-spacing:.01em;font-size:.8125rem}
+.kb-kicker{color:var(--bronz,#b4a184)}

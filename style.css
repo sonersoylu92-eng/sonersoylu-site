@@ -1,4 +1,4 @@
-@import url('/assets/cinematic-v5.css?v=e6049687');
+@import url('/assets/cinematic-v5.css?v=d5096bfb');
 
 /* ---- yazı tipleri (kendi sunucumuzda) ---- */
 /* Fraunces Variable — başlık serifi, optik boy ekseni (opsz) ile
@@ -28,7 +28,7 @@
 @font-face{font-family:"Geist Mono";font-style:normal;font-display:swap;font-weight:500;
  src:url(/assets/font/mono-latinext-500.woff2) format("woff2");
  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-:root{color-scheme:dark;--ground:#0b0e10;--surface:#11161a;--raise:#171e24;--line:#262e35;--ink:#e9edf0;--muted:#9ea8b0;--beacon:#7cc4ff;--on-beacon:#0b0e10;--uyari:#f2b233;--hata:#ff7a6b;--shade:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.35);
+:root{color-scheme:dark;--ground:#0b0e10;--surface:#11161a;--raise:#171e24;--line:#262e35;--ink:#e9edf0;--muted:#9ea8b0;--beacon:#b4c9c8;--on-beacon:#0b0e10;--uyari:#f2b233;--hata:#ff7a6b;--shade:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.35);
 --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--ground);color:var(--ink);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -1179,9 +1179,9 @@ nav.desk .ddm{box-shadow:0 18px 50px -20px rgba(0,0,0,.45)}
 
 /* ===================== V4: sinematik kapanış (bütün sayfalar) ===================== */
 footer.son{position:relative;overflow:hidden;border-top:1px solid var(--line);background:
-  radial-gradient(90% 70% at 85% 110%,rgba(124,196,255,.08),transparent 60%),var(--ground)}
+  radial-gradient(90% 70% at 85% 110%,rgba(180,201,200,.08),transparent 60%),var(--ground)}
 footer.son::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background-image:linear-gradient(rgba(124,196,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(124,196,255,.045) 1px,transparent 1px);background-size:56px 56px;
+  background-image:linear-gradient(rgba(180,201,200,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(180,201,200,.045) 1px,transparent 1px);background-size:56px 56px;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 40%);mask-image:linear-gradient(180deg,transparent,#000 40%)}
 footer.son .wrap{position:relative;display:block;padding-top:clamp(4rem,10vw,7.5rem);padding-bottom:2rem}
 .son-koord{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
@@ -1211,3 +1211,36 @@ footer.son .wrap{position:relative;display:block;padding-top:clamp(4rem,10vw,7.5
 body.ana-body{--serif:"Fraunces",ui-serif,Georgia,"Times New Roman",serif}
 body:not(.ana-body) h1,body:not(.ana-body) h2,body:not(.ana-body) .big{font-weight:600;letter-spacing:-.04em;font-variation-settings:normal}
 body:not(.ana-body) h3{letter-spacing:-.02em}
+
+/* ===================== V11 · Silent Wind ortak kabuk =====================
+ * Bütün sayfalar aynı sakin dili konuşur: koyu kömür zemin, fildişi metin, taş grisi ikincil metin,
+ * sis mavisi vurgu, mat bronz etiket. Büyük harf ve aralıklı mono etiketler yerine sade cümle düzeni;
+ * menüde tekrar eden "İletişime geç" düğmesi yok (İletişim menüde var). Hiçbir işlev değişmez. */
+:root{--ground:#11181b;--surface:#162024;--raise:#1c282d;--line:#26333a;--ink:#f4f1ea;--muted:#a3aaa7;--beacon:#b4c9c8;--on-beacon:#172024;--bronz:#b4a184;
+  --shade:0 1px 2px rgba(0,0,0,.25),0 14px 34px rgba(0,0,0,.28)}
+::selection{background:#b4c9c8;color:#172024}
+header{background:rgba(17,24,27,.84);border-bottom-color:rgba(244,241,234,.07)}
+.brand{font-family:var(--sans);font-weight:600;font-size:.8125rem;letter-spacing:.24em;color:var(--ink)}
+nav.desk{gap:1.9rem}
+nav.desk a,.ddb{font-family:var(--sans);font-size:.875rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted)}
+nav.desk a::after{height:1px;background:var(--ink)}
+.ddm{border-color:rgba(244,241,234,.08);border-radius:6px;padding:.4rem}
+nav.desk .ddm a{border-radius:4px}
+.hd-cta{display:none!important}
+.hd-right{gap:.5rem}
+.ikon,.lang,#burger{border-color:transparent!important;background:transparent!important}
+.lang{font-family:var(--sans);font-size:.8125rem;letter-spacing:.06em}
+.ikon:hover,.lang:hover{border-color:rgba(244,241,234,.2)!important}
+#mobmenu{background:var(--ground)}
+#mobmenu a{font-family:var(--sans);font-size:1.0625rem;letter-spacing:0;text-transform:none;color:var(--ink);padding:.95rem 0;border-bottom-color:rgba(244,241,234,.07)}
+#mobmenu a:last-child{color:var(--beacon)}
+/* etiketler: büyük harf ve geniş harf aralığı yerine sakin küçük yazı */
+.mono,.rule,.cap,.stats dd.n,.roles .m,.posts .meta,.posts .foot,.gal figcaption,.sub,.card h4,.son-bas,.son-unvan{
+  font-family:var(--sans);text-transform:none;letter-spacing:.01em;font-size:.8125rem}
+h1{font-weight:500;letter-spacing:-.05em;color:var(--ink)}
+h2{font-weight:500;letter-spacing:-.04em}
+.lede,.intro{color:var(--muted)}
+.plate{border-radius:999px;border-color:rgba(244,241,234,.28);background:transparent}
+.plate::before{display:none}
+.plate:hover{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+section{border-top-color:rgba(244,241,234,.06)}
