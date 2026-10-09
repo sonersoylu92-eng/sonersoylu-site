@@ -562,7 +562,7 @@ body.ana-body:has(.dny-ana.v10:not(.gecti)) header,:root body.ana-body:has(.dny-
 .ana .v10 .ralan-not{flex:none;margin:0!important}
 .ana .v10 .ralan-uzun,.ana .v10 .ralan-kisa{display:none}
 /* durum ve hata satırı şeridi büyütmez: hemen üstünde küçük bir not olarak çıkar */
-.ana .v10 .ralan-durum,.ana .v10 .ralan-hata{position:absolute;left:-1px;bottom:calc(100% + .45rem);max-width:min(36rem,100%);margin:0!important;padding:.4rem .6rem;background:rgba(7,10,12,.9)}
+.ana .v10 .ralan-durum,.ana .v10 .ralan-hata{position:absolute;left:auto;right:-1px;bottom:calc(100% + .45rem);max-width:min(30rem,100%);margin:0!important;padding:.4rem .6rem;background:rgba(7,10,12,.9)}
 .ana .v10 .ralan-hata{border:1px solid rgba(255,120,90,.45)}
 .ana .v10 .ralan-durum[hidden],.ana .v10 .ralan-hata[hidden]{display:none}
 @media (max-width:1560px) and (min-width:821px){ .ana .v10 .ralan-dl > div:nth-child(3),.ana .v10 .ralan-not{display:none} .ana .v10 .ralan-alani{display:none} }
@@ -602,6 +602,8 @@ body.ana-body:has(.dny-ana.v10:not(.gecti)) header,:root body.ana-body:has(.dny-
   .ana .v10 .ralan-dl > div{flex-direction:column;align-items:flex-start;gap:.05rem}
   .ana .v10 .ralan-egri,.ana .v10 .ralan-not{display:none}
   .ana .v10 .ralan-durum,.ana .v10 .ralan-hata{left:-1px;right:-1px;max-width:none}
+  /* durum/hata notu görünürken metin bloğu notun üstünde kalır */
+  .ana .v10:has(.ralan-durum:not([hidden])) .kule-alt,.ana .v10:has(.ralan-hata:not([hidden])) .kule-alt{padding-bottom:calc(clamp(.6rem,1.6vh,.9rem) + 10.4rem)}
   /* denetim tek sıra, sağ üstte; "Deneyimi geç" sol üstte: kapağın altı yalnız metne kalır */
   .ana .v10:not(.gecti) .v-denetim{top:calc(72px + .7rem + env(safe-area-inset-top));bottom:auto;right:var(--d-gut);width:auto;flex-wrap:nowrap}
   .ana .v10:not(.gecti) .dny-atla{top:calc(72px + 1.3rem + env(safe-area-inset-top));bottom:auto;left:var(--d-gut);right:auto}
