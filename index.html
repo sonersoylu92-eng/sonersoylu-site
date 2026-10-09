@@ -100,7 +100,7 @@
       </div>
       <p class="ralan-kf" id="rKfSatir" hidden><span class="ralan-kf-ad">Kapasite faktörü<small>önümüzdeki 24 sa</small></span><abbr class="ralan-kf-kisa" title="Kapasite faktörü, önümüzdeki 24 saat">KF 24 sa</abbr><b id="rKf">–</b></p>
       <p class="ralan-zaman"><span class="ralan-nokta" aria-hidden="true"></span><span id="rZaman">Güncellendi az önce</span></p>
-      <p class="ralan-hata" id="rHata" role="status" hidden><span id="rHataMetin">Canlı rüzgâr verisi alınamadı.</span> <button type="button" id="rYeniden">Yeniden dene</button></p>
+      <p class="ralan-hata" id="rHata" role="status" hidden><span id="rHataMetin"></span> <button type="button" id="rYeniden">Yeniden dene</button></p>
       <p class="ralan-not"><span class="ralan-uzun">Open-Meteo tahmini; güç ve devir modelden hesaplanır, ölçüm değildir.</span><span class="ralan-kisa">Tahmin ve model, ölçüm değil.</span> <a href="/ruzgar/">Canlı rüzgâr &#8594;</a></p>
     </div>
 
@@ -706,8 +706,10 @@
     if (!cekilen) return;
     var sn = Math.max(0, Math.round((Date.now() - cekilen) / 1000));
     var eski = veriZamani && Date.now() - veriZamani > 2 * 3600 * 1000;   // tahmin adımı 2 saatten eskiyse uyar
-    $('ralan').classList.toggle('ralan-eski', !!eski);
-    $('rZaman').innerHTML = (veriSaati ? '<span class="ralan-g">Tahmin </span>' + veriSaati + (eski ? ' · eski veri' : '') + ' · ' : '<span class="ralan-g">Güncellendi </span>') +
+    if (eski && durum === 'basarili') durumYaz('eski', 'zaman');
+    $('ralan').classList.toggle('ralan-eski', !!eski || durum === 'eski');
+    $('rZaman').innerHTML = (durum === 'eski' ? '<span class="ralan-g">Son başarılı veri · </span>' : '') +
+      (veriSaati ? '<span class="ralan-g">Tahmin </span>' + veriSaati + (eski ? ' · eski veri' : '') + ' · ' : '<span class="ralan-g">Güncellendi </span>') +
       (sn < 5 ? 'az önce' : sn < 60 ? sn + ' sn önce' : Math.floor(sn / 60) + ' dk önce') + '<span class="ralan-g"> alındı</span>';
     $('rZaman').title = 'Kaynak: Open-Meteo model tahmini (ölçüm değil). Tahmin adımı ' + (veriSaati || '–') + ' (Türkiye saati); veri bu tarayıcıya ' + (sn < 60 ? sn + ' sn' : Math.floor(sn / 60) + ' dk') + ' önce alındı.';
   }
@@ -743,12 +745,12 @@
       $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok. Kapakta rotor boşta yavaşça döner (görsel).' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
       dEl.hidden = false;
     }
-    window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now() };
+    window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now(), veriSaati: c.time || null };   // bütün değerler aynı tahmin adımından
     try { window.dispatchEvent(new CustomEvent('ss:ruzgar', { detail: window.__sonerRuzgar })); } catch (e) {}
     var vz = c.time ? new Date(c.time + ':00+03:00') : null;   // Open-Meteo yerel saat (Europe/Istanbul) verir
     veriZamani = vz && isFinite(vz.getTime()) ? vz.getTime() : 0;
     veriSaati = veriZamani ? String(c.time).slice(11, 16) : '';
-    cekilen = Date.now(); hataSay = 0; hataGoster(false); zamanYaz();
+    cekilen = Date.now();
     $('ralan').hidden = false;
   }
   /* kapasite faktörü: önümüzdeki 24 saatin saatlik tahmininden, aynı model ve saatlik yoğunlukla */
@@ -767,30 +769,43 @@
       $('rKfSatir').hidden = false;
     } catch (e) {}
   }
-  /* ağ ya da kaynak hatası: son değer varsa kalır ve "yenilenemedi" yazar; hiç veri yoksa yalnız durum satırı görünür.
-     Kendiliğinden 30 sn, 1 dk, 2 dk sonra yeniden dener; ziyaretçi "Yeniden dene" ile hemen deneyebilir. */
-  var hataSay = 0, tekrarZ = 0, cekiyor = false, elle = false;
-  function hataGoster(var_) {
-    var h = $('rHata'); h.hidden = !var_;
-    $('ralan').classList.toggle('ralan-yok', !!var_ && !cekilen);
-    if (var_) {
-      $('rHataMetin').textContent = cekilen ? 'Veri yenilenemedi; son değerler gösteriliyor.' : 'Canlı rüzgâr verisi alınamadı (ağ ya da kaynak hatası).';
-      $('ralan').hidden = false;
-    }
+  /* Veri durum makinesi: bos → yukleniyor → basarili; basarili → eski (tahmin adımı 2 saatten eski ya da yenileme
+     başarısız) ; yukleniyor → hata (hiç veri yokken). Her isteğin bir numarası var: geç dönen eski bir istek yeni
+     sonucun üstüne yazamaz. Başarılı veride hata metni gösterilmez; 3 m/s altında üretimin sıfır olması hata değildir. */
+  var durum = 'bos', istekNo = 0, hataSay = 0, tekrarZ = 0, elle = false;
+  function durumYaz(d, neden) {
+    durum = d;
+    var r = $('ralan'), h = $('rHata');
+    r.setAttribute('data-veri', d);
+    window.__sonerRuzgarDurum = { durum: d, neden: neden || '', istek: istekNo, veriZamani: veriZamani || null };
+    var b = $('rYeniden'); b.disabled = d === 'yukleniyor'; b.textContent = d === 'yukleniyor' ? 'Deneniyor…' : 'Yeniden dene';
+    if (d === 'basarili' || d === 'yukleniyor' || d === 'bos') { if (d === 'basarili') { h.hidden = true; $('rHataMetin').textContent = ''; r.classList.remove('ralan-yok'); } return; }
+    // eski: son başarılı veri ekranda kalır, açıkça etiketlenir; hata: hiç veri yok
+    if (d === 'eski' && neden === 'yenilenemedi') { $('rHataMetin').textContent = 'Son başarılı veri gösteriliyor; yenileme başarısız.'; h.hidden = false; }
+    if (d === 'hata') { $('rHataMetin').textContent = 'Canlı rüzgâr verisi alınamadı (' + (neden === 'zaman-asimi' ? 'zaman aşımı' : neden === 'bos-veri' ? 'kaynak boş ya da eksik veri döndü' : 'ağ ya da kaynak hatası') + ').'; h.hidden = false; r.classList.add('ralan-yok'); r.hidden = false; }
   }
   function cek() {
-    if (cekiyor) return Promise.resolve();
-    cekiyor = true; clearTimeout(tekrarZ);
-    var b = $('rYeniden'); b.disabled = true; b.textContent = 'Deneniyor…';
-    return fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
-      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-      .then(isle)
-      .catch(function () {
+    var no = ++istekNo; clearTimeout(tekrarZ);
+    if (!cekilen) durumYaz('yukleniyor'); else { var b = $('rYeniden'); b.disabled = true; b.textContent = 'Deneniyor…'; }
+    var kesici = 'AbortController' in window ? new AbortController() : null;
+    var sure = setTimeout(function () { if (kesici) kesici.abort(); }, 12000);
+    return fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' }, signal: kesici ? kesici.signal : undefined })
+      .then(function (r) { if (!r.ok) throw new Error('kaynak'); return r.json(); })
+      .then(function (d) {
+        if (no !== istekNo) return;   // daha yeni bir istek var: bu yanıt yok sayılır
+        try { isle(d); } catch (e) { throw new Error('bos-veri'); }
+        hataSay = 0; durumYaz('basarili'); zamanYaz();
+      })
+      .catch(function (e) {
+        if (no !== istekNo) return;
+        var neden = e && e.name === 'AbortError' ? 'zaman-asimi' : (e && e.message === 'bos-veri' ? 'bos-veri' : 'ag');
         hataSay++;
-        if (hataSay >= 2 || cekilen || elle) hataGoster(true);   // ilk kendiliğinden hatada kapağa uyarı basma
+        if (cekilen) durumYaz('eski', 'yenilenemedi');
+        else if (hataSay >= 2 || elle) durumYaz('hata', neden);   // ilk kendiliğinden hatada kapağa uyarı basma
+        else durumYaz('bos');
         if (hataSay <= 3) tekrarZ = setTimeout(cek, [0, 30, 60, 120][hataSay] * 1000);
       })
-      .then(function () { cekiyor = false; elle = false; b.disabled = false; b.textContent = 'Yeniden dene'; });
+      .then(function () { clearTimeout(sure); if (no === istekNo) { elle = false; var b = $('rYeniden'); b.disabled = false; b.textContent = 'Yeniden dene'; } });
   }
   $('rYeniden').addEventListener('click', function () { hataSay = 0; elle = true; cek(); });
   cek();
