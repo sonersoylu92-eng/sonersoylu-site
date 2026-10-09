@@ -13,6 +13,7 @@ import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=63ecf9c8';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
+import { egeKur } from '/assets/deneyim/ege.js?v=5476505a';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
@@ -33,6 +34,9 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   controls.enabled = false;
   if (parts.crane) parts.crane.visible = false;
   if (parts.groundBlade) parts.groundBlade.visible = false;
+  // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
+  let ege = null;
+  try { ege = egeKur(S, { lite: mobil }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
 
   const normalDpr = mobil ? 1 : Math.min(devicePixelRatio || 1, 1.6);
   const normalShadow = renderer.shadowMap.enabled && !mobil;
@@ -151,7 +155,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const KARE = [
     // dış görünüm: Ege sırtında uzaktan
     // açılış: yere yakın, türbin uzakta ama dev; masaüstünde kadrajın sağında (sol taraf kimliğe kalır)
-    { p: 0.00, t: 'D', k: v(122, Z(1.8), 168), h: mobil ? v(0, Z(76), 0) : v(-27, Z(68), 20) },
+    { p: 0.00, t: 'D', k: v(132, Z(22), 182), h: mobil ? v(0, Z(60), 0) : v(-30, Z(74), 22) },
     { p: 0.08, t: 'D', k: v(92, Z(3), 128),    h: mobil ? v(0, Z(72), 0) : v(-12, Z(70), 9) },
     // kulenin dibinde: rotora bakış
     { p: 0.125,t: 'D', k: v(15, Z(1.8), 24),   h: v(0, Z(76), -3) },
@@ -240,9 +244,40 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   }
   let sonMod = null;
   let disPoz = renderer.toneMappingExposure, pozAnlik = disPoz;
+  /* Atmosfer geçişi: saat ya da hava değişince gök, sis, güneş ve ortam ışığı ~2,5 sn'de kayar (ani ışık sıçraması yok).
+   * İlk ayar ve iç mekân anlık uygulanır. */
+  const SKY_RENK = ['c0', 'c1', 'c2', 'c3', 'uIsima', 'uBulutR', 'uBulutK'];
+  function durumAl() {
+    const u = S.sky.material.uniforms;
+    return { bg: scene.background.clone(), fog: scene.fog.color.clone(), fn: scene.fog.near, ff: scene.fog.far,
+      sc: gunes.color.clone(), sp: gunes.position.clone(), hc: hemi.color.clone(), hg: hemi.groundColor.clone(), fc: dolgu.color.clone(),
+      sky: SKY_RENK.map(k => u[k].value.clone()), ig: u.uIsimaG.value, bu: u.uBulut.value, gv: u.uGunes.value.clone(),
+      gi: gunesTaban, hi: hemiTaban, di: dolguTaban, poz: disPoz };
+  }
+  function durumKoy(a, b, t) {
+    const u = S.sky.material.uniforms, L = THREE.MathUtils.lerp;
+    scene.background.copy(a.bg).lerp(b.bg, t); scene.fog.color.copy(a.fog).lerp(b.fog, t);
+    scene.fog.near = L(a.fn, b.fn, t); scene.fog.far = L(a.ff, b.ff, t);
+    gunes.color.copy(a.sc).lerp(b.sc, t); gunes.position.copy(a.sp).lerp(b.sp, t);
+    hemi.color.copy(a.hc).lerp(b.hc, t); hemi.groundColor.copy(a.hg).lerp(b.hg, t); dolgu.color.copy(a.fc).lerp(b.fc, t);
+    SKY_RENK.forEach((k, i) => u[k].value.copy(a.sky[i]).lerp(b.sky[i], t));
+    u.uIsimaG.value = L(a.ig, b.ig, t); u.uBulut.value = L(a.bu, b.bu, t); u.uGunes.value.copy(a.gv).lerp(b.gv, t).normalize();
+    gunesTaban = L(a.gi, b.gi, t); hemiTaban = L(a.hi, b.hi, t); dolguTaban = L(a.di, b.di, t); disPoz = L(a.poz, b.poz, t);
+  }
+  let gecis = null, isikIlk = true, sonAtmT = 0;
+  // süre duvar saatiyle ölçülür: yavaş cihazda ya da seyreltilmiş karede geçiş uzayıp yarım kalmaz
+  function gecisAdim(bitir) {
+    if (!gecis) return;
+    gecis.t = bitir ? 1 : Math.min(1, (performance.now() - gecis.t0) / 2500);
+    const e = gecis.t * gecis.t * (3 - 2 * gecis.t);
+    durumKoy(gecis.a, gecis.b, e);
+    if (gecis.t >= 1) gecis = null;
+  }
   function isik() {
     const m = isikModu();
     if (m === sonMod && havaSurum === sonSurum) return;
+    const yumusat = !isikIlk && !icAyar && !az;
+    const once = yumusat ? durumAl() : null;
     setLight(m); sonMod = m; sonSurum = havaSurum;
     const tur = hava && hava.tur;
     const u = S.sky.material.uniforms;
@@ -261,9 +296,25 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       }
     } else if (tur === 'acik' && m !== 'night') {
       u.uIsimaG.value = m === 'day' ? 0.5 : 0.8;
+    } else if (tur === 'parcali') {
+      // az/parçalı bulut: güneş görünür, ufukta dağınık bulut bandı
+      if (u.uBulut) u.uBulut.value = 0.55;
+      if (m !== 'night') u.uIsimaG.value = m === 'day' ? 0.35 : 0.65;
+      gunes.intensity *= 0.9;
+    }
+    // gök bandındaki bulutların tonu ışık moduna uysun (gündüz beyaz-gri, akşam sıcak kenarlı, gece koyu)
+    if (u.uBulutR && m !== 'safak') {
+      const kapali = tur === 'bulutlu' || tur === 'yagmur' || tur === 'firtina' || tur === 'kar' || tur === 'sis';
+      u.uBulutR.value.set(m === 'night' ? '#161c29' : m === 'sunset' ? '#5f5a69' : '#a9b4bf');
+      u.uBulutK.value.set(m === 'night' ? '#2a3244' : m === 'sunset' ? '#f2c08f' : '#f6f6f2');
+      if (kapali) { u.uBulutR.value.lerp(scene.fog.color, 0.5); u.uBulutK.value.lerp(scene.fog.color, 0.6); }
     }
     hemiTaban = hemi.intensity; dolguTaban = dolgu.intensity; gunesTaban = gunes.intensity;
     disPoz = renderer.toneMappingExposure;
+    if (ege) ege.ayarla(m, tur);
+    if (once) { gecis = { a: once, b: durumAl(), t: 0, t0: performance.now() }; durumKoy(once, gecis.b, 0); renderer.toneMappingExposure = pozAnlik; }
+    else { gecis = null; if (ege) ege.anlik(); }
+    isikIlk = false;
   }
   isik();
   // CSS değişkenleri (canlı rüzgâr) saniyede bir okunur; her karede getComputedStyle stil hesabını zorlar
@@ -696,6 +747,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     let fovHedef = THREE.MathUtils.lerp(FOV_DIS, FOV_IC, icPay);
     if (p > 0.15 && p < 0.47) fovHedef = THREE.MathUtils.lerp(FOV_DIS, FOV_IC, yumusak(0.158, 0.19, p));
     if (Math.abs(camera.fov - fovHedef) > 0.05) { camera.fov += (fovHedef - camera.fov) * (anlik || (p > 0.15 && p < 0.47) ? 1 : 1 - Math.exp(-dt * 5)); camera.updateProjectionMatrix(); }
+    // atmosfer geçişi (saat/hava): içeri girerken anında tamamlanır ki iç sis ayarı doğru değerden başlasın
+    gecisAdim(kIc);
+    const atmDt = sonAtmT ? Math.min(1, (t - sonAtmT) / 1000) : 0; sonAtmT = t;
+    if (ege) { ege.grup.visible = icPay < 0.999; if (ege.grup.visible) ege.adim(atmDt, mt / 1000, !az && !duraklat); }
     // içeride karanlık endüstriyel hava: yakın sis ve düşük pozlama
     if (kIc && !icAyar) { icAyar = { renk: scene.fog.color.getHex(), yakin: scene.fog.near, uzak: scene.fog.far, poz: disPoz }; }
     if (kIc) { const sy = anlik ? 1 : 1 - Math.exp(-dt * 3);

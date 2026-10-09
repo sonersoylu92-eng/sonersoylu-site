@@ -91,7 +91,8 @@
   havaEtiket.href = '/ruzgar/?s=aliaga'; havaEtiket.setAttribute('aria-live', 'polite'); sahne.appendChild(havaEtiket);
   function havaTuru(kod) {
     if (kod === 0) return ['acik', 'Açık'];
-    if (kod >= 1 && kod <= 3) return ['bulutlu', kod === 3 ? 'Kapalı' : 'Parçalı bulutlu'];
+    if (kod === 1 || kod === 2) return ['parcali', kod === 1 ? 'Az bulutlu' : 'Parçalı bulutlu'];   // güneş görünür: altın saat korunur
+    if (kod === 3) return ['bulutlu', 'Kapalı'];
     if (kod === 45 || kod === 48) return ['sis', 'Sisli'];
     if ((kod >= 71 && kod <= 77) || kod === 85 || kod === 86) return ['kar', 'Karlı'];
     if (kod >= 95 && kod <= 99) return ['firtina', 'Gök gürültülü'];
@@ -783,7 +784,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=556d089d').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=4dd84b24').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
