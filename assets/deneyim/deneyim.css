@@ -505,3 +505,38 @@ button.ea-d:hover{border-color:#6fdcec}
   .v-rt-k{grid-template-columns:6.5rem 1fr}
   .dny-rontgen .v-denetim{bottom:auto;top:calc(4.4rem + env(safe-area-inset-top) + 1rem)}
 }
+
+/* Yönlendirmeli tur çubuğu: kip seçimi, durak gezgini, kaldığın yerden devam */
+.v-rota{position:absolute;z-index:5;right:var(--d-gut);bottom:clamp(1.3rem,4vh,2.6rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:.4rem;
+  opacity:0;visibility:hidden;transition:opacity .4s ease,visibility 0s .4s;pointer-events:auto}
+.dny-bolum.hazir.gecti:not(.sonda):not(.dny-rontgen) .v-rota{opacity:1;visibility:visible;transition:opacity .4s ease}
+.dny-bolum.statik .v-rota,.dny-film .v-rota{display:none}
+/* kapakta yalnız "kaldığın yerden devam" görünür; kip ve gezgin kaydırmaya başlayınca gelir */
+.dny-bolum.hazir.dny-devam-var:not(.dny-rontgen) .v-rota{opacity:1;visibility:visible}
+.dny-bolum:not(.gecti) .v-rota-kip,.dny-bolum:not(.gecti) .v-rota-gez{display:none}
+.v-rota button{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:2.5rem;cursor:pointer;
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,242,245,.8);border:1px solid rgba(238,242,245,.22);background:rgba(7,9,11,.62)}
+.v-rota button:hover{color:#eef2f5;border-color:rgba(238,242,245,.5)}
+.v-rota button:focus-visible{outline:2px solid var(--d-cyan);outline-offset:3px}
+.v-rota button:disabled{opacity:.35;cursor:default}
+.v-rota-kip{display:flex}
+.v-rota-kip button{padding:0 .75rem;margin-left:-1px}
+.v-rota-kip button[aria-pressed="true"]{color:#0b0e11;background:#6fdcec;border-color:#6fdcec}
+.v-rota-gez{display:flex;align-items:center;gap:0;background:rgba(7,9,11,.62);border:1px solid rgba(238,242,245,.22)}
+.v-rota-gez button{width:2.5rem;border:0;background:transparent;font-size:1.125rem;letter-spacing:0}
+.v-rota-no{margin:0;padding:0 .5rem;min-width:9rem;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.v-rota-no b{font-family:var(--mono);font-size:.625rem;font-weight:500;letter-spacing:.16em;color:#6fdcec}
+.v-rota-no span{font-size:.75rem;color:#eef2f5;white-space:nowrap}
+.v-rota-devam{flex-basis:100%;justify-content:flex-end!important;padding:0 .8rem!important;color:#0b0e11!important;background:#f2b233!important;border-color:#f2b233!important;text-transform:none!important;letter-spacing:.02em!important;font-size:.75rem!important}
+.v-rota-devam[hidden]{display:none}
+.v-par-saha{margin:0 0 .7rem;padding:.55rem .7rem;font-size:.75rem;line-height:1.5;color:#f3ead6;border-left:2px solid #f2b233;background:rgba(242,178,51,.1)}
+.saha-kip .v-nb-dl div:nth-child(-n+2){border-top-color:rgba(242,178,51,.5)}
+.saha-kip .v-nb-dl div:nth-child(-n+2) dd{color:#eef2f5}
+@media (max-width:820px){
+  .v-rota{left:var(--d-gut);right:var(--d-gut);bottom:.6rem;justify-content:space-between}
+  .v-rota-kip button{padding:0 .55rem}
+  .v-rota-no{min-width:4.5rem}
+  .v-rota-no span{display:none}
+  .dny-bolum.gecti:not(.sonda) .dny-hud,.dny-bolum.gecti:not(.sonda) .dny-alt{bottom:calc(clamp(1.5rem,7vh,3rem) + 2.6rem)}
+}
+@media (prefers-reduced-motion:reduce){.v-rota{transition:none}}

@@ -498,7 +498,8 @@
       if (s && odak) t.focus({ preventScroll: true });
     });
     var kart = parIc.querySelector('.v-par-kart'); kart.setAttribute('aria-labelledby', 'vParT-' + id);
-    kart.innerHTML = '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p>' +
+    kart.innerHTML = (parPanel.classList.contains('saha-kip') ? '<p class="v-par-saha">Saha kipi: kontrol noktaları ve belirtiler. Gerçek müdahalede OEM prosedürü, LOTO ve rotor kilidi kuralları geçerlidir.</p>' : '') +
+      '<p class="v-nb-no">' + n.no + '</p><p class="v-nb-ad">' + n.ad + '</p><p class="v-nb-t">' + n.t + '</p>' +
       '<dl class="v-nb-dl"><div><dt>Kontrol</dt><dd>' + n.k + '</dd></div><div><dt>Sahada belirti</dt><dd>' + n.b + '</dd></div>' +
       '<div><dt>Tipik sensörler</dt><dd>' + n.s + '<small>Genel bilgi; sensör seti üreticiye ve modele göre değişir.</small></dd></div></dl>' +
       '<p class="v-par-alt"><button type="button" class="v-par-goster">3B’de göster</button><a class="v-nb-git" href="' + n.u + '">' + n.ul + '</a></p>';
@@ -589,6 +590,103 @@
     ['pointerup', 'pointercancel'].forEach(function (t) { addEventListener(t, function () { basX = null; }, { passive: true }); });
   })();
   parBtn.addEventListener('click', function () { acikPanel && acikPanel.p === parPanel ? panelKapa(true) : panelAc(parPanel, parBtn); });
+
+  /* ---- Yönlendirmeli tur (Guided Journey): mevcut durakları, Parça kâşifini ve saha bilgisini tek rota çubuğunda birleştirir.
+   * Sinematik: duraklar arasında kendiliğinden ilerler (kaydırınca durur). Keşif: Parça kâşifi. Saha: kontrol noktaları ve belirtiler öne çıkar.
+   * /deneyim/ sayfasında bulunulan durak adrese yazılır (#durak-disli) ve paylaşılabilir; kaldığın durak bu tarayıcıda hatırlanır. ---- */
+  var rotaSayfa = !bolum.classList.contains('dny-ana');   // adres ve "kaldığın yer" yalnız /deneyim/ sayfasında
+  var rota = document.createElement('div'); rota.className = 'v-rota'; rota.setAttribute('role', 'group'); rota.setAttribute('aria-label', 'Yönlendirmeli tur');
+  rota.innerHTML = '<div class="v-rota-kip" role="group" aria-label="Deneyim kipi">' +
+      '<button type="button" data-kip="sinema" aria-pressed="false">Sinematik</button><button type="button" data-kip="kesif" aria-pressed="false">Keşif</button><button type="button" data-kip="saha" aria-pressed="false">Saha</button></div>' +
+    '<div class="v-rota-gez"><button type="button" class="v-rota-onc" aria-label="Önceki durak">‹</button>' +
+      '<p class="v-rota-no"><b>–</b><span></span></p><button type="button" class="v-rota-son" aria-label="Sonraki durak">›</button></div>' +
+    '<button type="button" class="v-rota-devam" hidden></button>' +
+    '<p class="gorsel-gizli" aria-live="polite" id="vRotaDuyuru"></p>';
+  sahne.appendChild(rota);
+  var rotaNo = rota.querySelector('.v-rota-no b'), rotaAd = rota.querySelector('.v-rota-no span'), rotaDuyuru = rota.querySelector('#vRotaDuyuru');
+  var rotaDevam = rota.querySelector('.v-rota-devam'), turZ = 0, turAcik = false, sonRotaDurak = -1, hashIslendi = false;
+  // kaydırma konumu (kameranın ataletli konumu değil): çubuk ve adres parmakla aynı anda güncellenir
+  function kaydirmaP() { var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight); return yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0; }
+  var rotaRaf = 0; addEventListener('scroll', function () { if (!rotaRaf) rotaRaf = requestAnimationFrame(function () { rotaRaf = 0; rotaGuncelle(kaydirmaP()); }); }, { passive: true });
+  function enYakinDurak(p) { var en = 0, f = 9; DURAKLAR.forEach(function (d, i) { var x = Math.abs(p - d.p); if (x < f) { f = x; en = i; } }); return en; }
+  function durakGit(i, duyur) {
+    if (!DURAKLAR.length) return; i = Math.max(0, Math.min(DURAKLAR.length - 1, i));
+    git(DURAKLAR[i].p);
+    if (duyur) rotaDuyuru.textContent = 'Durak ' + (i + 1) + ' / ' + DURAKLAR.length + ': ' + DURAKLAR[i].ad + '. ' + DURAKLAR[i].bilgi;
+  }
+  function rotaGuncelle(p) {
+    if (!DURAKLAR.length) return;
+    var i = enYakinDurak(p);
+    if (i === sonRotaDurak) return; sonRotaDurak = i;
+    rotaNo.textContent = String(i + 1).padStart(2, '0') + ' / ' + DURAKLAR.length; rotaAd.textContent = DURAKLAR[i].ad;
+    rota.querySelector('.v-rota-onc').disabled = i === 0 && p <= DURAKLAR[0].p + 0.003;
+    rota.querySelector('.v-rota-son').disabled = i === DURAKLAR.length - 1 && p >= DURAKLAR[i].p - 0.003;
+    if (rotaSayfa && hashIslendi && p > 0.1) {
+      try { history.replaceState(null, '', '#durak-' + DURAKLAR[i].id); localStorage.setItem('dny-son-durak', DURAKLAR[i].id); } catch (e) {}
+    }
+  }
+  function sonrakiDurak(yon) {
+    var i = enYakinDurak(kaydirmaP()), d = DURAKLAR[i];
+    if (yon > 0 && kaydirmaP() < d.p - 0.004) return i; if (yon < 0 && kaydirmaP() > d.p + 0.004) return i;   // durağın önündeyse önce o durak
+    return i + yon;
+  }
+  rota.querySelector('.v-rota-onc').addEventListener('click', function () { turDurdur(); durakGit(sonrakiDurak(-1), true); });
+  rota.querySelector('.v-rota-son').addEventListener('click', function () { turDurdur(); durakGit(sonrakiDurak(1), true); });
+  // sinematik tur: her durakta okuma süresi kadar bekler; ziyaretçi kaydırır, dokunur ya da tuşa basarsa durur
+  function turKullanici(e) { if (e.type === 'keydown' && e.target.closest && e.target.closest('.v-rota')) return; turDurdur(); }
+  function turDurdur() {
+    if (!turAcik) return; turAcik = false; clearTimeout(turZ);
+    ['wheel', 'touchstart', 'keydown'].forEach(function (t) { removeEventListener(t, turKullanici, true); });
+    kipGoster(null); rotaDuyuru.textContent = 'Otomatik tur durdu.';
+  }
+  function turBaslat() {
+    if (!DURAKLAR.length) return;
+    turAcik = true; kipGoster('sinema');
+    ['wheel', 'touchstart', 'keydown'].forEach(function (t) { addEventListener(t, turKullanici, { capture: true, passive: true }); });
+    var i = kaydirmaP() < DURAKLAR[0].p - 0.01 ? 0 : enYakinDurak(kaydirmaP()) + 1;
+    (function adim() {
+      if (!turAcik) return;
+      if (i >= DURAKLAR.length) { turDurdur(); rotaDuyuru.textContent = 'Tur bitti.'; return; }
+      durakGit(i, true); i++;
+      turZ = setTimeout(adim, hareketAz ? 9000 : 7000);
+    })();
+  }
+  function kipGoster(k) { [].forEach.call(rota.querySelectorAll('[data-kip]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-kip') === k ? 'true' : 'false'); }); }
+  rota.querySelector('.v-rota-kip').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-kip]'); if (!b) return; var k = b.getAttribute('data-kip');
+    if (k === 'sinema') { if (turAcik) turDurdur(); else { panelKapa(false); turBaslat(); } return; }
+    turDurdur();
+    parPanel.classList.toggle('saha-kip', k === 'saha');
+    // bulunulan durağa en yakın parçayı seç (varsa)
+    var d = DURAKLAR[enYakinDurak(kaydirmaP())]; if (d && NOKTA[d.id]) parSec(d.id); else if (parSecili) parSec(parSecili);
+    if (!(acikPanel && acikPanel.p === parPanel)) panelAc(parPanel, parBtn);
+    kipGoster(k);
+  });
+  // panel kapanınca Keşif/Saha düğmesi bırakılır
+  new MutationObserver(function () { if (parPanel.hidden && !turAcik) kipGoster(null); }).observe(parPanel, { attributes: true, attributeFilter: ['hidden'] });
+  // adresle gelen durak (#durak-disli) ya da bu tarayıcıda kalınan durak
+  function devamKapat() { rotaDevam.hidden = true; bolum.classList.remove('dny-devam-var'); }
+  addEventListener('scroll', function () { if (!rotaDevam.hidden && kaydirmaP() > 0.06) devamKapat(); }, { passive: true });
+  function hashDurak() {
+    var m = /^#durak-([a-zA-Z]+)$/.exec(location.hash); if (!m) return -1;
+    for (var i = 0; i < DURAKLAR.length; i++) if (DURAKLAR[i].id === m[1]) return i; return -1;
+  }
+  function rotaHazir() {
+    if (hashIslendi || !DURAKLAR.length || !bolum.classList.contains('hazir')) return;
+    hashIslendi = true; rotaGuncelle(kaydirmaP());
+    if (!rotaSayfa) return;
+    var i = hashDurak();
+    if (i >= 0) { setTimeout(function () { durakGit(i, true); }, 400); return; }
+    var kayit = null; try { kayit = localStorage.getItem('dny-son-durak'); } catch (e) {}
+    for (var k = 1; k < DURAKLAR.length; k++) if (DURAKLAR[k].id === kayit) {
+      rotaDevam.textContent = 'Kaldığın yerden devam: ' + DURAKLAR[k].ad; rotaDevam.hidden = false; bolum.classList.add('dny-devam-var');
+      (function (k) { rotaDevam.onclick = function () { devamKapat(); durakGit(k, true); }; })(k);
+      setTimeout(devamKapat, 30000);
+    }
+  }
+  addEventListener('hashchange', function () { var i = hashDurak(); if (i >= 0) durakGit(i, true); });
+  new MutationObserver(rotaHazir).observe(bolum, { attributes: true, attributeFilter: ['class'] });
+  parBtn.addEventListener('click', function () { if (parPanel.classList.contains('saha-kip') && !rota.querySelector('[data-kip="saha"][aria-pressed="true"]')) { parPanel.classList.remove('saha-kip'); if (parSecili) parSec(parSecili); } });
 
   /* ---- Enerji akışı: rüzgârdan şebekeye; mekanik bağlar çizgi, elektrik bağlar nokta akışıyla.
    * Değerler sayfadaki canlı rüzgâr panelinin tahmin+model çıktısıdır (ölçüm değil). ---- */
