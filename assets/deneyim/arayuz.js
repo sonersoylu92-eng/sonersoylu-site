@@ -446,6 +446,12 @@
     '<button type="button" class="v-den-par" aria-haspopup="dialog" aria-controls="vParca" aria-expanded="false"><span aria-hidden="true"></span><b>Parçalar</b></button>' +
     '<button type="button" class="v-den-ea" aria-haspopup="dialog" aria-controls="vEnerji" aria-expanded="false"><span aria-hidden="true"></span><b>Enerji akışı</b></button>');
   var parBtn = denetim.querySelector('.v-den-par'), eaBtn = denetim.querySelector('.v-den-ea');
+  /* V11: denetim katlanır; tek "Kontroller" düğmesi açar, sahne sade kalır */
+  denetim.insertAdjacentHTML('afterbegin', '<button type="button" class="v-den-ac" aria-expanded="false" aria-label="Sahne kontrollerini aç"><span aria-hidden="true"></span><b>Kontroller</b></button>');
+  var denAc = denetim.querySelector('.v-den-ac');
+  function denetimAc(a) { denetim.classList.toggle('acik', a); denAc.setAttribute('aria-expanded', a ? 'true' : 'false'); denAc.setAttribute('aria-label', a ? 'Sahne kontrollerini kapat' : 'Sahne kontrollerini aç'); }
+  denAc.addEventListener('click', function () { denetimAc(!denetim.classList.contains('acik')); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && denetim.classList.contains('acik') && !bolum.classList.contains('dny-panel-acik')) { denetimAc(false); denAc.focus({ preventScroll: true }); } });
   parBtn.setAttribute('aria-label', 'Parça kâşifi'); eaBtn.setAttribute('aria-label', 'Enerji akışı');
   var acikPanel = null;
   function panelYap(id, baslik, en) {
