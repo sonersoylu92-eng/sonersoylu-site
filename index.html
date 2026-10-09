@@ -73,6 +73,11 @@
 <main id="icerik" class="ana">
 
 <section id="deneyim" class="dny dny-bolum dny-ana" aria-labelledby="kapak-b">
+<script>/* 3B yolunun yüksekliği ilk yerleşimde ayrılır: JS sonradan bölümü 1 ekrandan ~10 ekrana büyütünce, ortadan
+   yenilenen ya da geri dönülen sayfada bütün içerik kayıyordu (gerçek cihaz kaydında CLS 1,0). */
+(function(){try{var b=document.getElementById('deneyim'),c=navigator.connection;if(!b||(c&&c.saveData))return;
+var k=localStorage.getItem('dny-zayif-v4');if(k){var z=JSON.parse(k);if(z&&z.t&&Date.now()-z.t<6048e5)return;}
+b.classList.add('dny-hazirlaniyor');}catch(e){}})();</script>
   <div class="dny-sahne">
     <div class="dny-poster" aria-hidden="true"></div>
     <canvas id="dnyTuval" aria-hidden="true"></canvas>
@@ -591,7 +596,7 @@
   <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
  </div>
 </div>
-<script src="/assets/site.js?v=vitals2" defer></script>
+<script src="/assets/site.js?v=vitals3" defer></script>
 <script src="/assets/ara.js?v=b6a27d00" defer></script>
 <script>
 (function () {
@@ -691,7 +696,8 @@
   function yaz(id, x, n) {
     var el = $(id), bas = onceki[id], son = x;
     onceki[id] = x;
-    if (az || !isFinite(x)) { el.textContent = isFinite(x) ? virgul(x, n) : '–'; return; }
+    // arka plan sekmesinde kare gelmez: sayaç yarıda (0,0) kalmasın, değer doğrudan yazılır
+    if (az || !isFinite(x) || document.hidden) { el.textContent = isFinite(x) ? virgul(x, n) : '–'; return; }
     var ilk = bas === undefined ? 0 : bas, t0 = performance.now(), sure = bas === undefined ? 1100 : 700;
     (function adim(t) {
       var k = Math.min(1, (t - t0) / sure), e = 1 - Math.pow(1 - k, 3);
