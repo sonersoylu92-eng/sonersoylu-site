@@ -1,0 +1,277 @@
+/* ATLAS V12 — 10 Oct 2026
+   Original editorial redesign for the existing Soner Soylu homepage.
+   Deliberately scoped to homepage sections BELOW the working turbine.
+   It does not touch Three.js, camera, renderer, or tour controls.
+*/
+body.ana-body .ana{
+ --atlas-cream:#f4f0e6;--atlas-paper:#e9e2d5;--atlas-ink:#202722;
+ --atlas-earth:#a56544;--atlas-stone:#6b7069;--atlas-night:#111b1d;
+ --atlas-line:rgba(32,39,34,.19);--atlas-serif:"Fraunces",Georgia,serif;
+ background:var(--atlas-cream);color:var(--atlas-ink);
+}
+body.ana-body .ana .sw-bolum{border:0;overflow:clip}
+body.ana-body .ana .sw-ic{max-width:1480px;padding-inline:clamp(24px,6.2vw,108px)}
+body.ana-body .ana .sw-etiket{
+ margin:0 0 clamp(2rem,5vw,5rem);font:600 .72rem/1.25 var(--sans);
+ color:var(--atlas-earth);letter-spacing:.17em;text-transform:uppercase
+}
+body.ana-body .ana .sw-baslik{
+ font-family:var(--atlas-serif);font-weight:420;font-variation-settings:"opsz" 100;
+ font-size:clamp(3.6rem,7.4vw,9rem);line-height:.97;letter-spacing:-.065em;
+ max-width:12ch;text-wrap:balance
+}
+body.ana-body .ana .sw-bag{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.02em;border-color:currentColor}
+
+/* 01 / EDITORIAL OPENING — an asymmetric opening, not a stack of cards */
+body.ana-body .ana #giris{
+ background:var(--atlas-cream);color:var(--atlas-ink);
+ padding:clamp(7rem,14vw,15rem) 0 clamp(6rem,10vw,12rem)
+}
+body.ana-body .ana #giris .sw-giris{
+ display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+ column-gap:clamp(16px,2vw,36px);align-items:start
+}
+body.ana-body .ana #giris .sw-etiket{
+ grid-column:1 / span 2;margin-top:1rem;
+ display:flex;align-items:center;gap:1rem
+}
+body.ana-body .ana #giris .sw-etiket::before{
+ content:"01";color:var(--atlas-ink);font-size:.75rem;letter-spacing:0
+}
+body.ana-body .ana #giris .sw-cumle{
+ grid-column:3 / -1;max-width:16ch;margin:0;
+ color:var(--atlas-ink);font:400 clamp(3.1rem,6vw,7.4rem)/1.055 var(--atlas-serif);
+ font-variation-settings:"opsz" 110;letter-spacing:-.052em;text-wrap:pretty
+}
+body.ana-body .ana #giris .sw-giris-yan{
+ grid-column:7 / -1;margin:clamp(3rem,6vw,7.5rem) 0 0;
+ max-width:660px;padding-left:clamp(0px,2.5vw,42px);
+ border-left:1px solid var(--atlas-line)
+}
+body.ana-body .ana #giris .sw-giris-yan > p{
+ max-width:49ch;color:#454e48;font-size:clamp(1.03rem,1.4vw,1.3rem);line-height:1.78;
+}
+body.ana-body .ana #giris .rakam.sw-olgu{
+ grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(2rem,4vw,4rem);
+ border-top:1px solid var(--atlas-line);gap:0
+}
+body.ana-body .ana #giris .rakam.sw-olgu > div{padding:.9rem .3rem .75rem 0}
+body.ana-body .ana #giris .rakam.sw-olgu dd{
+ font:400 clamp(1.9rem,2.45vw,3.1rem)/1 var(--atlas-serif);
+ color:var(--atlas-ink);letter-spacing:-.05em
+}
+body.ana-body .ana #giris .rakam.sw-olgu dt{color:var(--atlas-stone);font-size:.72rem}
+body.ana-body .ana #giris .sw-model{margin-top:1.8rem;gap:.6rem 1.2rem;color:var(--atlas-stone)}
+body.ana-body .ana #giris .sw-model b{font:600 .8rem/1.6 var(--sans);color:var(--atlas-ink)}
+body.ana-body .ana #giris .sw-bag{margin-top:2.3rem;color:var(--atlas-ink)}
+body.ana-body .ana #giris .sw-ralan{grid-column:3 / -1;margin-top:clamp(4.5rem,8vw,9rem)!important;
+ padding:2rem clamp(1.4rem,3vw,3rem)!important;border:1px solid var(--atlas-line);
+ border-radius:2px;background:rgba(255,255,255,.42);color:var(--atlas-ink)}
+body.ana-body .ana #giris .sw-ralan *{color:inherit}
+body.ana-body .ana #giris .sw-ralan .ralan-not{color:var(--atlas-stone)}
+
+/* 02 / FEATURE SPREAD — main story left, two concise stories on right */
+body.ana-body .ana #secilmis{
+ background:var(--atlas-paper);color:var(--atlas-ink);
+ padding:clamp(7rem,13vw,13rem) 0
+}
+body.ana-body .ana #secilmis .sw-etiket{margin-bottom:2rem}
+body.ana-body .ana #secilmis .sw-baslik{max-width:9ch}
+body.ana-body .ana #secilmis .sw-kartlar{
+ margin-top:clamp(3rem,6vw,7rem);display:grid;
+ grid-template-columns:minmax(0,1.55fr) minmax(0,.68fr);
+ grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(1.7rem,3vw,4rem);
+ align-items:stretch
+}
+body.ana-body .ana #secilmis .sw-kart{
+ display:flex;flex-direction:column;gap:1.25rem;color:var(--atlas-ink);min-width:0
+}
+body.ana-body .ana #secilmis .sw-kart-genis{
+ grid-column:1;grid-row:1 / span 2;min-height:0
+}
+body.ana-body .ana #secilmis .sw-kart:not(.sw-kart-genis){grid-column:2}
+body.ana-body .ana #secilmis .sw-kart figure{
+ flex:1 0 auto;position:relative;min-height:220px;aspect-ratio:auto;
+ overflow:hidden;border-radius:0;background:#a7ada8
+}
+body.ana-body .ana #secilmis .sw-kart-genis figure{min-height:clamp(520px,58vw,820px)}
+body.ana-body .ana #secilmis .sw-kart:not(.sw-kart-genis) figure{min-height:clamp(180px,17vw,300px)}
+body.ana-body .ana #secilmis .sw-kart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.25,1)}
+body.ana-body .ana #secilmis .sw-kart:hover img{transform:scale(1.04)}
+body.ana-body .ana #secilmis .sw-kart > div{
+ display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.15rem 1rem;
+ padding-top:1rem;border-top:1px solid var(--atlas-line)
+}
+body.ana-body .ana #secilmis .sw-kart-ust{color:var(--atlas-earth);font-size:.73rem}
+body.ana-body .ana #secilmis .sw-kart b{
+ font:420 clamp(1.8rem,2.6vw,3.4rem)/1.08 var(--atlas-serif);
+ letter-spacing:-.04em;color:var(--atlas-ink)
+}
+body.ana-body .ana #secilmis .sw-kart b::after{color:var(--atlas-earth)}
+body.ana-body .ana #secilmis .sw-kart-a{font-size:.9rem;color:var(--atlas-stone)}
+body.ana-body .ana #secilmis .sw-kart figcaption{color:white;background:rgba(15,21,21,.48);padding:.2rem .5rem}
+
+/* 03 / PHOTOGRAPHIC INTERLUDE — full bleed and deliberate contrasts */
+body.ana-body .ana #sahadan{
+ background:var(--atlas-night);color:var(--atlas-cream);
+ padding:clamp(7rem,12vw,13rem) 0
+}
+body.ana-body .ana #sahadan .sw-etiket{color:#d0ad8d}
+body.ana-body .ana #sahadan .sw-baslik{
+ max-width:13ch;font-size:clamp(4rem,8vw,10rem);
+ color:var(--atlas-cream)
+}
+body.ana-body .ana #sahadan .sw-not{margin:2rem 0 0;color:#bac1ba;line-height:1.75}
+body.ana-body .ana #sahadan .sw-gal{
+ margin:clamp(4rem,8vw,8rem) calc(clamp(24px,6.2vw,108px) * -.6) 0;
+ gap:clamp(8px,1.1vw,18px);grid-auto-rows:clamp(130px,19vw,260px)
+}
+body.ana-body .ana #sahadan .sw-gal figure{border-radius:0;overflow:hidden}
+body.ana-body .ana #sahadan .sw-gal figure img{transition:transform .8s ease}
+body.ana-body .ana #sahadan .sw-gal figure:hover img{transform:scale(1.035)}
+body.ana-body .ana #sahadan .sw-gal figcaption{
+ opacity:1;background:linear-gradient(0deg,rgba(0,0,0,.45),transparent);padding:1.2rem;color:#fff
+}
+
+/* 04 / REFERENCE INDEX — sticky title with clean index instead of a card wall */
+body.ana-body .ana #bilgi{
+ background:#faf7f0;color:var(--atlas-ink);
+ padding:clamp(7rem,14vw,15rem) 0
+}
+body.ana-body .ana #bilgi .sw-ic{
+ display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+ gap:0 clamp(1rem,2vw,2.5rem);align-items:start
+}
+body.ana-body .ana #bilgi .sw-etiket{grid-column:1 / span 4;margin-bottom:2rem}
+body.ana-body .ana #bilgi .sw-baslik{
+ grid-column:1 / span 5;grid-row:2;position:sticky;top:8.5rem;
+ max-width:9ch;font-size:clamp(3.2rem,5.8vw,7rem)
+}
+body.ana-body .ana #bilgi .sw-dizin{
+ grid-column:6 / -1;grid-row:2;margin:0;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:3rem clamp(1.5rem,3vw,4rem)
+}
+body.ana-body .ana #bilgi .sw-dizin > div{min-width:0}
+body.ana-body .ana #bilgi .sw-dizin h3{
+ padding:0 0 1.1rem;margin:0 0 .4rem;
+ border-color:var(--atlas-ink);color:var(--atlas-earth);
+ font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase
+}
+body.ana-body .ana #bilgi .sw-dizin li{border-color:var(--atlas-line)}
+body.ana-body .ana #bilgi .sw-dizin li a{padding:1.12rem 0;color:var(--atlas-ink)}
+body.ana-body .ana #bilgi .sw-dizin li a:hover{padding-left:.55rem}
+body.ana-body .ana #bilgi .sw-dizin li b{
+ font:430 clamp(1.1rem,1.32vw,1.32rem)/1.25 var(--atlas-serif);letter-spacing:-.018em
+}
+body.ana-body .ana #bilgi .sw-dizin li span{color:var(--atlas-stone)}
+
+/* 05 / CLOSING — no promotional CTA, just direct channels */
+body.ana-body .ana #iletisim{
+ background:#ded7c9;color:var(--atlas-ink);
+ padding:clamp(5rem,9vw,10rem) 0
+}
+body.ana-body .ana #iletisim .sw-iletisim{position:relative}
+body.ana-body .ana #iletisim .sw-etiket{
+ margin-bottom:clamp(2rem,4vw,4rem);color:var(--atlas-earth)
+}
+body.ana-body .ana #iletisim .sw-kanal{
+ display:grid;grid-template-columns:2fr 1fr 1fr;
+ padding:clamp(1.5rem,2.5vw,3rem) 0;
+ margin:0 0 2rem;border-block:1px solid var(--atlas-line);gap:2rem
+}
+body.ana-body .ana #iletisim .sw-kanal > *{
+ border:0;padding:0;color:var(--atlas-ink)
+}
+body.ana-body .ana #iletisim .sw-kanal .k-ust{
+ display:block;margin-bottom:1.2rem;color:var(--atlas-stone);
+ font-size:.75rem;letter-spacing:.05em;text-transform:uppercase
+}
+body.ana-body .ana #iletisim .sw-kanal .d{
+ color:var(--atlas-ink);font:430 clamp(1.15rem,1.7vw,2rem)/1.15 var(--atlas-serif);
+ letter-spacing:-.04em;overflow-wrap:anywhere
+}
+body.ana-body .ana #iletisim .sw-kanal > a:hover .d{color:var(--atlas-earth)}
+body.ana-body .ana #iletisim .sw-kanal .kopya{
+ border:1px solid var(--atlas-line);color:var(--atlas-ink);
+ background:transparent;border-radius:2rem;font-size:.72rem
+}
+body.ana-body .ana #iletisim .sw-mesaj{color:var(--atlas-ink)}
+body.ana-body .ana #iletisim .sw-mesaj summary{
+ cursor:pointer;color:var(--atlas-ink);font-size:.96rem
+}
+body.ana-body .ana #iletisim .sw-bag{
+ margin-top:2rem;color:var(--atlas-ink)
+}
+body.ana-body .ana #iletisim .v-form{color:var(--atlas-ink)}
+body.ana-body .ana #iletisim .v-form label,body.ana-body .ana #iletisim .v-form legend{color:var(--atlas-ink)}
+
+/* Closing footer tuned to the editorial palette without changing navigation logic */
+body.ana-body footer.son{background:#10191a;color:#ece7dc;border-top:0}
+body.ana-body footer.son .son-nav a:hover{color:#e5b48e}
+
+/* cinematic hero is explicitly NOT modified: the working turbine remains untouched */
+
+/* Laptop / tablet */
+@media (max-width:1100px){
+ body.ana-body .ana #giris .sw-etiket{grid-column:1 / span 3}
+ body.ana-body .ana #giris .sw-cumle{grid-column:4 / -1;font-size:clamp(3rem,6vw,6rem)}
+ body.ana-body .ana #giris .sw-giris-yan{grid-column:5 / -1}
+ body.ana-body .ana #giris .sw-ralan{grid-column:1 / -1}
+ body.ana-body .ana #bilgi .sw-baslik{grid-column:1 / span 5}
+ body.ana-body .ana #bilgi .sw-dizin{grid-column:6 / -1;grid-template-columns:1fr}
+}
+@media (max-width:760px){
+ body.ana-body .ana .sw-ic{padding-inline:clamp(20px,6vw,34px)}
+ body.ana-body .ana .sw-etiket{margin-bottom:1.75rem}
+ body.ana-body .ana #giris{padding:6rem 0 7rem}
+ body.ana-body .ana #giris .sw-giris{display:block}
+ body.ana-body .ana #giris .sw-cumle{
+  font-size:clamp(2.8rem,9.4vw,5.3rem);line-height:1.07;max-width:15ch
+ }
+ body.ana-body .ana #giris .sw-giris-yan{
+  padding-left:0;border-left:0;margin:3rem 0 0
+ }
+ body.ana-body .ana #giris .rakam.sw-olgu{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.ana-body .ana #giris .rakam.sw-olgu > div:nth-child(n+3){margin-top:1rem}
+ body.ana-body .ana #giris .sw-ralan{width:100%;margin-top:4rem!important;padding:1.5rem!important}
+ body.ana-body .ana #secilmis{padding:6rem 0}
+ body.ana-body .ana #secilmis .sw-baslik{font-size:clamp(3.4rem,11vw,6rem)}
+ body.ana-body .ana #secilmis .sw-kartlar{
+  grid-template-columns:1fr;grid-template-rows:auto;gap:3.5rem
+ }
+ body.ana-body .ana #secilmis .sw-kart-genis,
+ body.ana-body .ana #secilmis .sw-kart:not(.sw-kart-genis){
+  grid-column:1;grid-row:auto
+ }
+ body.ana-body .ana #secilmis .sw-kart figure{min-height:0;aspect-ratio:4 / 3}
+ body.ana-body .ana #secilmis .sw-kart-genis figure{min-height:0;aspect-ratio:4 / 4.2}
+ body.ana-body .ana #secilmis .sw-kart b{font-size:clamp(2rem,6vw,2.8rem)}
+ body.ana-body .ana #sahadan{padding:6rem 0}
+ body.ana-body .ana #sahadan .sw-baslik{font-size:clamp(3.5rem,10vw,6rem)}
+ body.ana-body .ana #sahadan .sw-gal{
+  margin:3rem 0 0;gap:8px;grid-auto-rows:clamp(100px,26vw,180px)
+ }
+ body.ana-body .ana #bilgi{padding:6rem 0}
+ body.ana-body .ana #bilgi .sw-ic{display:block}
+ body.ana-body .ana #bilgi .sw-baslik{position:static;max-width:12ch;font-size:clamp(3.4rem,10vw,5.8rem)}
+ body.ana-body .ana #bilgi .sw-dizin{
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:2.5rem 1.8rem;margin-top:3.5rem
+ }
+ body.ana-body .ana #iletisim .sw-kanal{grid-template-columns:1fr;gap:1.5rem}
+ body.ana-body .ana #iletisim .sw-kanal > *+*{
+  border-top:1px solid var(--atlas-line);padding-top:1.5rem
+ }
+}
+@media (max-width:480px){
+ body.ana-body .ana #giris .sw-cumle{font-size:clamp(2.45rem,10vw,4rem)}
+ body.ana-body .ana #giris .rakam.sw-olgu dd{font-size:2.4rem}
+ body.ana-body .ana #giris .sw-ralan{display:block}
+ body.ana-body .ana #bilgi .sw-dizin{grid-template-columns:1fr;gap:2.5rem}
+ body.ana-body .ana #sahadan .sw-gal{grid-auto-rows:100px}
+ body.ana-body .ana #iletisim .sw-kanal .d{font-size:1.45rem}
+}
+@media (prefers-reduced-motion:reduce){
+ body.ana-body .ana #secilmis .sw-kart img,
+ body.ana-body .ana #sahadan .sw-gal img{transition:none!important;transform:none!important}
+}
