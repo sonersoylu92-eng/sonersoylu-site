@@ -1212,35 +1212,54 @@ body.ana-body{--serif:"Fraunces",ui-serif,Georgia,"Times New Roman",serif}
 body:not(.ana-body) h1,body:not(.ana-body) h2,body:not(.ana-body) .big{font-weight:600;letter-spacing:-.04em;font-variation-settings:normal}
 body:not(.ana-body) h3{letter-spacing:-.02em}
 
-/* ===================== V11 · Silent Wind ortak kabuk =====================
- * Bütün sayfalar aynı sakin dili konuşur: koyu kömür zemin, fildişi metin, taş grisi ikincil metin,
- * sis mavisi vurgu, mat bronz etiket. Büyük harf ve aralıklı mono etiketler yerine sade cümle düzeni;
- * menüde tekrar eden "İletişime geç" düğmesi yok (İletişim menüde var). Hiçbir işlev değişmez. */
-:root{--ground:#11181b;--surface:#162024;--raise:#1c282d;--line:#26333a;--ink:#f4f1ea;--muted:#a3aaa7;--beacon:#b4c9c8;--on-beacon:#172024;--bronz:#b4a184;
-  --shade:0 1px 2px rgba(0,0,0,.25),0 14px 34px rgba(0,0,0,.28)}
-::selection{background:#b4c9c8;color:#172024}
-header{background:rgba(17,24,27,.84);border-bottom-color:rgba(244,241,234,.07)}
+/* ===================== V13 · ELEMENTAL ortak kabuk =====================
+ * Bütün sayfaların tek tasarım dili. Koyu bazalt zemin (teknik sayfalar endüstriyel kalır), sıcak kemik rengi metin,
+ * taş grisi ikincil metin; tek vurgu: uçak ikaz lambasının sinyal turuncusu. Başlıklar büyük ve sade (Geist),
+ * ölçü, numara ve künye Geist Mono ile. Büyük harf aralıklı etiket yok; menüde tekrar eden "İletişime geç" yok.
+ * Sayfaların işlevine, adreslerine ve içeriğine dokunmaz. (V11 bloğunun yerine geçer.) */
+:root{--ground:#0f1415;--surface:#151c1e;--raise:#1b2427;--line:#263033;--ink:#f2ede3;--muted:#a3a49a;
+  --beacon:#d0592a;--on-beacon:#0f1415;--sinyal:#d0592a;--kemik:#f6f2ea;--kum:#ece5d7;--sis:#b4c9c8;
+  --shade:0 1px 2px rgba(0,0,0,.25),0 18px 40px rgba(0,0,0,.3)}
+::selection{background:#f2ede3;color:#0f1415}
+:focus-visible{outline-color:#f2ede3}
+body{font-feature-settings:"ss01" on}
+/* üst menü */
+header{background:rgba(15,20,21,.86);border-bottom-color:rgba(242,237,227,.07)}
 .brand{font-family:var(--sans);font-weight:600;font-size:.8125rem;letter-spacing:.24em;color:var(--ink)}
 nav.desk{gap:1.9rem}
 nav.desk a,.ddb{font-family:var(--sans);font-size:.875rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted)}
-nav.desk a::after{height:1px;background:var(--ink)}
-.ddm{border-color:rgba(244,241,234,.08);border-radius:6px;padding:.4rem}
+nav.desk a::after{height:1px;background:var(--sinyal)}
+.ddm{border-color:rgba(242,237,227,.08);border-radius:6px;padding:.4rem;background:#151c1e}
 nav.desk .ddm a{border-radius:4px}
+.ddm a span{color:var(--muted)}
 .hd-cta{display:none!important}
 .hd-right{gap:.5rem}
 .ikon,.lang,#burger{border-color:transparent!important;background:transparent!important}
 .lang{font-family:var(--sans);font-size:.8125rem;letter-spacing:.06em}
-.ikon:hover,.lang:hover{border-color:rgba(244,241,234,.2)!important}
+.ikon:hover,.lang:hover{border-color:rgba(242,237,227,.2)!important}
 #mobmenu{background:var(--ground)}
-#mobmenu a{font-family:var(--sans);font-size:1.0625rem;letter-spacing:0;text-transform:none;color:var(--ink);padding:.95rem 0;border-bottom-color:rgba(244,241,234,.07)}
-#mobmenu a:last-child{color:var(--beacon)}
-/* etiketler: büyük harf ve geniş harf aralığı yerine sakin küçük yazı */
+#mobmenu a{font-family:var(--sans);font-size:1.0625rem;letter-spacing:0;text-transform:none;color:var(--ink);padding:.95rem 0;border-bottom-color:rgba(242,237,227,.07)}
+#mobmenu a:last-child{color:var(--ink)}
+#mobmenu .mgrup{font:400 .75rem/1.3 var(--mono);letter-spacing:0;text-transform:none;color:var(--sinyal)}
+/* yazı düzeni: etiketler küçük ve sakin; numara ve künye mono */
 .mono,.rule,.cap,.stats dd.n,.roles .m,.posts .meta,.posts .foot,.gal figcaption,.sub,.card h4,.son-bas,.son-unvan{
-  font-family:var(--sans);text-transform:none;letter-spacing:.01em;font-size:.8125rem}
-h1{font-weight:500;letter-spacing:-.05em;color:var(--ink)}
-h2{font-weight:500;letter-spacing:-.04em}
+  font-family:var(--mono);text-transform:none;letter-spacing:0;font-size:.75rem}
+h1{font-weight:500;letter-spacing:-.05em;color:var(--ink);text-wrap:balance}
+h2{font-weight:500;letter-spacing:-.04em;text-wrap:balance}
+h3{letter-spacing:-.02em}
 .lede,.intro{color:var(--muted)}
-.plate{border-radius:999px;border-color:rgba(244,241,234,.28);background:transparent}
+p a:not([class]),li a:not([class]){text-decoration:underline;text-decoration-color:rgba(242,237,227,.3);text-underline-offset:.2em}
+p a:not([class]):hover,li a:not([class]):hover{text-decoration-color:var(--sinyal)}
+/* düğmeler: yuvarlak ve sakin; birincil düğme kemik rengi */
+.plate{border-radius:999px;border-color:rgba(242,237,227,.28);background:transparent}
 .plate::before{display:none}
 .plate:hover{background:var(--ink);color:var(--ground);border-color:var(--ink)}
-section{border-top-color:rgba(244,241,234,.06)}
+.beacon{background:var(--sinyal);border-radius:50%}
+section{border-top-color:rgba(242,237,227,.06)}
+/* alt bilgi */
+footer{border-top-color:rgba(242,237,227,.06)}
+footer .son-bas{color:var(--sinyal)}
+@media (prefers-reduced-motion:no-preference){
+  main > *:first-child{animation:elSayfa .7s cubic-bezier(.2,.75,.15,1) backwards}
+}
+@keyframes elSayfa{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:none}}
