@@ -552,3 +552,7 @@ button.ea-d:hover{border-color:#a9cbc9}
 /* V11: denetim düğmeleri sakin — küçük harf, ince çerçeve, yuvarlak */
 .v-denetim button{font-family:var(--sans,system-ui);text-transform:none;letter-spacing:.01em;font-size:.8125rem;border-radius:999px;background:rgba(14,20,23,.42);border-color:rgba(244,241,234,.22)}
 .v-denetim button:hover{border-color:rgba(244,241,234,.55)}
+/* V13 ELEMENTAL: /deneyim/ açılışı ana sayfayla aynı dilde — Geist başlık, sakin etiket, yuvarlak düğmeler */
+.dny-acilis .ust{font-family:var(--mono);letter-spacing:0;text-transform:none;color:#d0592a}
+.dny-acilis h1{font-family:var(--sans);font-weight:500;font-variation-settings:normal;font-size:clamp(2.8rem,7.5vw,6.4rem);line-height:.95;letter-spacing:-.055em}
+.dny-dg a,.dny-dg button{font-family:var(--sans)!important;text-transform:none!important;letter-spacing:.01em!important;border-radius:999px!important}
