@@ -13,7 +13,7 @@ import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=63ecf9c8';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
-import { egeKur } from '/assets/deneyim/ege.js?v=5476505a';
+import { egeKur } from '/assets/deneyim/ege.js?v=822e7a43';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
@@ -27,6 +27,11 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   let performans = false;
   try { performans = new URLSearchParams(location.search).get('performance') === '1' || localStorage.getItem('ss-performance-mode') === '1'; } catch (e) {}
   const kok = document.documentElement;
+  // ÖNİZLEME (V14 önerisi): saha fotoğrafındaki karşı ışıklı altın saat. Yalnız ?banner=gunbatimi ile açılır; canlı kapak değişmez.
+  const GB = /[?&]banner=gunbatimi\b/.test(location.search);
+  // V14 KAPAK (varsayılan): nasel çatısından bakış (saha fotoğrafı: maki kaplı Ege sırtları, toprak yollar, sırt boyunca türbinler).
+  // ?banner=eski önceki V13 kapağını, ?banner=gunbatimi altın saat önizlemesini açar.
+  const NC = !GB && !/[?&]banner=eski\b/.test(location.search);
 
   let S;
   try { S = createScene(canvas, { lite: mobil }); } catch (e) { console.error('deneyim sahne:', e); return null; }
@@ -37,13 +42,14 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
   let ege = null;
   try { ege = egeKur(S, { lite: mobil }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
+  if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC) ege.maki(araziY); }
 
   const normalDpr = mobil ? 1 : Math.min(devicePixelRatio || 1, 1.6);
   const normalShadow = renderer.shadowMap.enabled && !mobil;
   renderer.setPixelRatio(performans ? 1 : normalDpr);
   renderer.shadowMap.enabled = normalShadow && !performans;
   renderer.shadowMap.autoUpdate = false; renderer.shadowMap.needsUpdate = true;   // gölge haritasını döngü seyreltilmiş günceller
-  const FOV_DIS = mobil ? 58 : 42, FOV_IC = mobil ? 74 : 60;   // içeride geniş objektif: dar nasel, gerçek ölçek
+  const FOV_DIS = NC ? (mobil ? 70 : 62) : (mobil ? 58 : 42), FOV_IC = mobil ? 74 : 60;   // nasel çatısı önizlemesi: fotoğraftaki geniş açı   // içeride geniş objektif: dar nasel, gerçek ölçek
   camera.fov = FOV_DIS; camera.near = 0.05; camera.far = 6000; camera.updateProjectionMatrix();
 
   // sahnedeki mevcut ışıklar (n117.js): içeri girince dış ortam ışığı kısılır
@@ -155,7 +161,11 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const KARE = [
     // dış görünüm: Ege sırtında uzaktan
     // açılış: yere yakın, türbin uzakta ama dev; masaüstünde kadrajın sağında (sol taraf kimliğe kalır)
-    { p: 0.00, t: 'D', k: v(132, Z(22), 182), h: mobil ? v(0, Z(60), 0) : v(-30, Z(74), 22) },
+    NC ? { p: 0.00, t: 'D', k: v(5, 14, 16), h: mobil ? v(-110, -150, -250) : v(-140, -118, -244) }
+    : GB ? { p: 0.00, t: 'D', k: v(250, Z(1.6), 340), h: mobil ? v(0, Z(64), 0) : v(-57, Z(64), 41) }
+       : { p: 0.00, t: 'D', k: v(132, Z(22), 182), h: mobil ? v(0, Z(60), 0) : v(-30, Z(74), 22) },
+    // nasel çatısından inişte rotordan uzaklaşan ara nokta (kamera kanatların içinden geçmez)
+    ...(NC ? [{ p: 0.04, t: 'D', k: v(46, Z(150), 74), h: v(0, Z(95), 0) }] : []),
     { p: 0.08, t: 'D', k: v(92, Z(3), 128),    h: mobil ? v(0, Z(72), 0) : v(-12, Z(70), 9) },
     // kulenin dibinde: rotora bakış
     { p: 0.125,t: 'D', k: v(15, Z(1.8), 24),   h: v(0, Z(76), -3) },
@@ -229,7 +239,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     composer.addPass(new RP.RenderPass(scene, camera));
     bokeh = new BP.BokehPass(scene, camera, { focus: 20, aperture: 0.00004, maxblur: 0.006 });
     composer.addPass(bokeh);
-    composer.addPass(new UB.UnrealBloomPass(new THREE.Vector2(256, 256), 0.28, 0.5, 0.88));
+    // karşı ışıkta gök zaten parlak: ışıma yalnız güneş çekirdeğinde kalsın, bütün gök sütleşmesin
+    composer.addPass(new UB.UnrealBloomPass(new THREE.Vector2(256, 256), GB ? 0.22 : 0.28, GB ? 0.35 : 0.5, GB ? 0.985 : 0.88));
     composer.addPass(new OP.OutputPass());
     olcek(true);
   }).catch(e => { console.warn('post-processing yok:', e); composer = null; });
@@ -239,6 +250,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   let hava = window.__sonerHava || null, havaSurum = 0, sonSurum = -1;
   window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; kareSakla = true; if (!icAyar) isik(); });
   function isikModu() {
+    if (GB) return 'sunset';
+    if (NC) return 'day';
     const v = kok.dataset.vardiya;
     return v === 'gece' ? 'night' : v === 'aksam' || v === 'altin' ? 'sunset' : 'day';
   }
@@ -263,6 +276,18 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     SKY_RENK.forEach((k, i) => u[k].value.copy(a.sky[i]).lerp(b.sky[i], t));
     u.uIsimaG.value = L(a.ig, b.ig, t); u.uBulut.value = L(a.bu, b.bu, t); u.uGunes.value.copy(a.gv).lerp(b.gv, t).normalize();
     gunesTaban = L(a.gi, b.gi, t); hemiTaban = L(a.hi, b.hi, t); dolguTaban = L(a.di, b.di, t); disPoz = L(a.poz, b.poz, t);
+  }
+  // karşı ışık: güneş, kapak kamerasının türbine bakış yönünde, 11° solda ve ufkun 5,5° üstünde
+  const _ka = new THREE.Vector3(), _ileri = new THREE.Vector3(), _sag = new THREE.Vector3(), _gy = new THREE.Vector3();
+  function gunesKarsi() {
+    _ka.copy(KARE[0].k).applyMatrix4(yaw.matrixWorld);
+    _ileri.set(-_ka.x, 0, -_ka.z).normalize();
+    _sag.set(-_ileri.z, 0, _ileri.x);
+    const a = 11 * Math.PI / 180, e = 5.5 * Math.PI / 180;
+    _gy.copy(_ileri).multiplyScalar(Math.cos(a)).addScaledVector(_sag, -Math.sin(a)).normalize().multiplyScalar(Math.cos(e)); _gy.y = Math.sin(e);
+    gunes.position.copy(_gy).multiplyScalar(420);
+    S.sky.material.uniforms.uGunes.value.copy(_gy);
+    if (ege) ege.gunesBak(_gy);
   }
   let gecis = null, isikIlk = true, sonAtmT = 0;
   // süre duvar saatiyle ölçülür: yavaş cihazda ya da seyreltilmiş karede geçiş uzayıp yarım kalmaz
@@ -309,9 +334,28 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       u.uBulutK.value.set(m === 'night' ? '#2a3244' : m === 'sunset' ? '#f2c08f' : '#f6f6f2');
       if (kapali) { u.uBulutR.value.lerp(scene.fog.color, 0.5); u.uBulutK.value.lerp(scene.fog.color, 0.6); }
     }
+    if (GB) {
+      // saha fotoğrafından örneklenen tonlar: soluk mavi-gri zenit, güneş yanında açık sarı, sıcak ufuk pusu
+      u.c0.value.set('#7f97a4'); u.c1.value.set('#adbcb9'); u.c2.value.set('#e6d79f'); u.c3.value.set('#c9bb88');
+      u.uIsima.value.set('#ffeeb0'); u.uIsimaG.value = mobil ? 1.2 : 1.05;
+      if (u.uBulut) { u.uBulut.value = 0.45; u.uBulutR.value.set('#b3b8a8'); u.uBulutK.value.set('#fff6d6'); }
+      scene.background.set('#d4cca6'); scene.fog.color.set('#cfc69e'); scene.fog.near = 480; scene.fog.far = 3000;
+      gunes.color.set('#ffe0a0'); gunes.intensity = 3.1;
+      hemi.color.set('#a3afae'); hemi.groundColor.set('#2f2c21'); hemi.intensity = 0.46;
+      dolgu.intensity = 0.04; renderer.toneMappingExposure = 0.96;
+    }
+    if (NC) {
+      // fotoğraftaki açık sabah: koyu mavi zenit, ufukta açık pus; bulut yok
+      u.c0.value.set('#4e7fb6'); u.c1.value.set('#86abcd'); u.c2.value.set('#cad7df'); u.c3.value.set('#c4c6bd');
+      u.uIsima.value.set('#fff3dc'); u.uIsimaG.value = 0.18; if (u.uBulut) u.uBulut.value = 0;
+      scene.background.set('#c8d4dc'); scene.fog.color.set('#a9bccb'); scene.fog.near = 1200; scene.fog.far = 6500;
+      gunes.color.set('#fff6e8'); gunes.intensity = 2.6; gunes.position.set(-260, 190, -120);
+      hemi.color.set('#cfe0ee'); hemi.groundColor.set('#6d6a55'); hemi.intensity = 1.05;
+      dolgu.intensity = 0.3; renderer.toneMappingExposure = 1.02;
+    }
     hemiTaban = hemi.intensity; dolguTaban = dolgu.intensity; gunesTaban = gunes.intensity;
     disPoz = renderer.toneMappingExposure;
-    if (ege) ege.ayarla(m, tur);
+    if (ege) ege.ayarla(GB ? 'gunbatimi' : NC ? 'nasel' : m, GB || NC ? 'acik' : tur);
     if (once) { gecis = { a: once, b: durumAl(), t: 0, t0: performance.now() }; durumKoy(once, gecis.b, 0); renderer.toneMappingExposure = pozAnlik; }
     else { gecis = null; if (ege) ege.anlik(); }
     isikIlk = false;
@@ -658,7 +702,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const disAgirlik = (1 - yumusak(0.36, 0.43, p)) + yumusak(0.975, 0.995, p);
     if (!az) {
       if (!hazirT) hazirT = t;
-      const surun = (1 - Math.exp(-mt / 22000)) * 16 * (1 - yumusak(0, 0.05, p));
+      const surun = NC ? 0 : (1 - Math.exp(-mt / 22000)) * 16 * (1 - yumusak(0, 0.05, p));
       if (surun > 0.01) { tmp.subVectors(yumHedef, kKonum); tmp.y = 0; if (tmp.lengthSq() > 1) kKonum.addScaledVector(tmp.normalize(), surun); }
       // fareye çok hafif derinlik tepkisi (kamera 1–2 derecelik kayar)
       fare.sx += ((fare.var ? fare.x : 0) - fare.sx) * (1 - Math.exp(-dt * 1.8));
@@ -681,7 +725,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       kKonum.lerp(rKonum, e); yumHedef.lerp(rMerkez, e);
     }
     // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
-    if (!sonIcerde && !sonKulede) { const yer = araziY(kKonum.x, kKonum.z) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
+    if (!sonIcerde && !sonKulede) { const yer = (ege ? ege.yerY(araziY, kKonum.x, kKonum.z) : araziY(kKonum.x, kKonum.z)) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
     camera.position.copy(kKonum); camera.lookAt(yumHedef);
 
     // iç/dış geçişi
@@ -749,6 +793,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     if (Math.abs(camera.fov - fovHedef) > 0.05) { camera.fov += (fovHedef - camera.fov) * (anlik || (p > 0.15 && p < 0.47) ? 1 : 1 - Math.exp(-dt * 5)); camera.updateProjectionMatrix(); }
     // atmosfer geçişi (saat/hava): içeri girerken anında tamamlanır ki iç sis ayarı doğru değerden başlasın
     gecisAdim(kIc);
+    if (GB && !kIc) gunesKarsi();
     const atmDt = sonAtmT ? Math.min(1, (t - sonAtmT) / 1000) : 0; sonAtmT = t;
     if (ege) { ege.grup.visible = icPay < 0.999; if (ege.grup.visible) ege.adim(atmDt, mt / 1000, !az && !duraklat); }
     // içeride karanlık endüstriyel hava: yakın sis ve düşük pozlama

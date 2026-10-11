@@ -93,7 +93,7 @@ const sisFS = lite => `
   }`;
 
 const bulutFS = lite => `
-  uniform vec3 uGolge, uAcik, uIsik, uGunes, uPus; uniform float uOrt, uYog, uIsikG, uZaman;
+  uniform vec3 uGolge, uAcik, uIsik, uGunes, uPus; uniform float uOrt, uYog, uIsikG, uZaman, uSirrus;
   varying vec3 vW;
   float hs(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   float gr(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
@@ -101,9 +101,11 @@ const bulutFS = lite => `
   float fbm(vec2 p){ float t = 0.0, a = 0.5; for (int i = 0; i < ${lite ? 3 : 5}; i++){ t += a*gr(p); p = p*2.03 + 17.0; a *= 0.5; } return t; }
   void main(){
     vec2 p = vW.xz * ${lite ? '0.0016' : '0.00115'} + vec2(uZaman * 0.0035, uZaman * 0.0012);
+    // sirrus: rüzgârla taranmış ince tül bulutlar (bir eksende uzar, diğerinde incelir)
+    p = mix(p, vec2(p.x * 0.55 + p.y * 0.35, (p.y - p.x * 0.3) * 3.2), uSirrus);
     float n = fbm(p);
     float esik = mix(0.66, 0.36, uOrt);
-    float yog = smoothstep(esik, esik + 0.22, n);
+    float yog = smoothstep(esik, esik + mix(0.22, 0.42, uSirrus), n) * mix(1.0, 0.78, uSirrus);
     float d = length(vW.xz - cameraPosition.xz);
     float kenar = 1.0 - smoothstep(2600.0, 5200.0, d);
     vec3 V = normalize(vW - cameraPosition);
@@ -158,6 +160,10 @@ const PALET = {
   day:    { koyu: '#4d5747', acik: '#8a8f78', deniz: '#4f7f95', golge: '#aab4bd', bAcik: '#f4f3ee', sis: 0.42, ort: 0.30, yog: 0.85, isik: 0.25, yildiz: 0 },
   sunset: { koyu: '#2b2c2c', acik: '#5b5048', deniz: '#36495a', golge: '#6b6575', bAcik: '#f3c79a', sis: 0.55, ort: 0.42, yog: 0.92, isik: 1.0, yildiz: 0 },
   night:  { koyu: '#05070c', acik: '#0e1320', deniz: '#0a1220', golge: '#121826', bAcik: '#283246', sis: 0.30, ort: 0.30, yog: 0.55, isik: 0.0, yildiz: 1 },
+  // karşı ışıkta altın saat (saha fotoğrafından): sıcak pus, düşük kontrastlı uzak sırtlar, parlak tül bulut
+  gunbatimi: { koyu: '#4f5348', acik: '#9c9a82', deniz: '#a3a993', golge: '#c9cec0', bAcik: '#fffaea', sis: 0.28, ort: 0.64, yog: 0.92, isik: 1.15, yildiz: 0 },
+  // nasel çatısından açık sabah (saha fotoğrafı): pus yok denecek kadar az, uzak sırtlar maki yeşili
+  nasel: { koyu: '#33402c', acik: '#6f7c5e', deniz: '#6f93ad', golge: '#cfd8df', bAcik: '#ffffff', sis: 0, ort: 0.15, yog: 0.0, isik: 0.2, yildiz: 0 },
   safak:  { koyu: '#141a28', acik: '#3a3c4c', deniz: '#22304a', golge: '#3b4561', bAcik: '#f0a878', sis: 0.6, ort: 0.45, yog: 0.9, isik: 0.8, yildiz: 0.3 },
 };
 
@@ -171,7 +177,7 @@ export function egeKur(S, { lite = false } = {}) {
   };
 
   // sırtlar: uzaktan yakına çizilir (şeffaf değil; derinlik doğru sıralar)
-  const sirtMat = [];
+  const sirtMat = [], sirtlar = [];
   SIRTLAR.forEach((s, i) => {
     const mat = new THREE.ShaderMaterial({
       vertexShader: SIRT_VS, fragmentShader: SIRT_FS, fog: false, side: THREE.DoubleSide,
@@ -184,7 +190,7 @@ export function egeKur(S, { lite = false } = {}) {
     mat.userData.pus = s.pus;
     const m = new THREE.Mesh(sirtGeo(s, lite ? 180 : 420), mat);
     m.frustumCulled = false; m.renderOrder = -1 + i * 0.01;
-    grup.add(m); sirtMat.push(mat);
+    grup.add(m); sirtMat.push(mat); sirtlar.push(m);
   });
 
   // Ege kıyısı: batıda (-x) ufuk boyunca deniz şeridi; sırtların önünde, arazinin ardında
@@ -219,7 +225,7 @@ export function egeKur(S, { lite = false } = {}) {
     vertexShader: `varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position,1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`,
     fragmentShader: bulutFS(lite), fog: false, transparent: true, depthWrite: false, side: THREE.DoubleSide,
     uniforms: { uGolge: { value: new THREE.Color() }, uAcik: { value: new THREE.Color() }, uIsik: ortak.uIsik, uGunes: ortak.uGunes,
-      uPus: ortak.uPus, uOrt: { value: 0.3 }, uYog: { value: 0.8 }, uIsikG: ortak.uIsikG, uZaman: ortak.uZaman },
+      uPus: ortak.uPus, uOrt: { value: 0.3 }, uYog: { value: 0.8 }, uIsikG: ortak.uIsikG, uZaman: ortak.uZaman, uSirrus: { value: 0 } },
   });
   const bulut = new THREE.Mesh(new THREE.PlaneGeometry(11000, 11000, 1, 1), bulutMat);
   bulut.rotation.x = -Math.PI / 2; bulut.position.y = 720;
@@ -243,7 +249,149 @@ export function egeKur(S, { lite = false } = {}) {
     yildiz.frustumCulled = false; yildiz.renderOrder = -1;
     grup.add(yildiz);
   }
+  // güneş halesi: düşük güneşin çevresindeki ışıma (masaüstünde bloom ile birleşir, telefonda tek başına yeter)
+  const hale = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const g = c.getContext('2d'), r = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    r.addColorStop(0, 'rgba(255,250,228,1)'); r.addColorStop(0.08, 'rgba(255,244,205,.95)'); r.addColorStop(0.22, 'rgba(255,236,180,.42)');
+    r.addColorStop(0.5, 'rgba(255,226,160,.12)'); r.addColorStop(1, 'rgba(255,220,150,0)');
+    g.fillStyle = r; g.fillRect(0, 0, 128, 128);
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false, fog: false,
+      blending: THREE.AdditiveBlending, opacity: 0 }));
+    sp.renderOrder = 3; sp.frustumCulled = false; sp.visible = false;
+    return sp;
+  })();
+  grup.add(hale);
   scene.add(grup);
+  let haleG = 0, sirrusHedef = 0, sirrusSimdi = 0;
+  const _gv = new THREE.Vector3();
+  /* karşı ışık: güneşi kameranın baktığı yöne, türbinin biraz soluna ve ufka yakın yerleştirir */
+  function gunesBak(yon) { hedef.gunes.copy(yon); }
+  function haleAyarla(g) { haleG = g; }
+  function sirrus(v) { sirrusHedef = v; }
+  /* ova: türbinin çevresi fotoğraftaki gibi düz tarla; uzak tepeler ve sırtlar yerinde kalır.
+   * araziY yalnız kamera zemin denetimi için aynı katsayıyla düzeltilir. */
+  function ovaKatsayi(x, z) { const d = Math.hypot(x, z); const t = Math.min(1, Math.max(0, (d - 520) / 380)); return 0.1 + 0.9 * t * t * (3 - 2 * t); }
+  let ovaAcik = false;
+  function ova(araziY) {
+    if (ovaAcik) return; ovaAcik = true;
+    scene.traverse(o => {
+      if (!o.isMesh || !o.geometry || o.geometry.type !== 'PlaneGeometry') return;
+      const pr = o.geometry.parameters || {};
+      if (pr.width === 2600) {                       // arazi (geometri dünya ekseninde)
+        const pos = o.geometry.attributes.position;
+        for (let i = 0; i < pos.count; i++) pos.setY(i, pos.getY(i) * ovaKatsayi(pos.getX(i), pos.getZ(i)));
+        pos.needsUpdate = true; o.geometry.computeVertexNormals(); o.geometry.computeBoundingSphere();
+      } else if (pr.width === 11 && pr.height === 300) {   // saha yolu araziye otursun
+        o.updateMatrixWorld(true);
+        const pos = o.geometry.attributes.position, v = new THREE.Vector3();
+        for (let i = 0; i < pos.count; i++) {
+          v.fromBufferAttribute(pos, i); o.localToWorld(v);
+          v.y = araziY(v.x, v.z) * ovaKatsayi(v.x, v.z) + 0.08; o.worldToLocal(v);
+          pos.setXYZ(i, v.x, v.y, v.z);
+        }
+        pos.needsUpdate = true; o.geometry.computeVertexNormals();
+      }
+    });
+    if (S.parts && S.parts.farm) S.parts.farm.children.forEach(t => { t.position.y = araziY(t.position.x, t.position.z) * ovaKatsayi(t.position.x, t.position.z) - 1.5; });
+    sirtlar.forEach(m => { m.scale.y = 0.55; });    // fotoğraftaki gibi alçak, puslu uzak dağlar: düşük güneş görünür kalır
+  }
+  /* MAKİ (önizleme): nasel çatısından bakışta yakın arazi "HD" görünsün.
+   * Arazi gölgelendiricisine dünya koordinatlı ayrıntı: kireçtaşı açıklıklar üstünde koyu yeşil maki öbekleri;
+   * uzakta ortalama tona karışır (kıpırdama yok). Arazi üstüne serilmiş toprak yollar ve sırtlarda birleşik
+   * tek parça (tek çizim çağrısı) ek türbin dizileri. */
+  let makiAcik = false, pusCarpan = 1;
+  function maki(araziY, { lite: hafif = lite } = {}) {
+    if (makiAcik) return; makiAcik = true; pusCarpan = 0.35;
+    sirtlar.forEach(m => { m.scale.y = 0.45; });   // uzak sırtlar alçak: fotoğraftaki gibi tepe dizileri ufka iner
+    scene.traverse(o => {
+      if (!o.isMesh || !o.geometry || o.geometry.type !== 'PlaneGeometry' || (o.geometry.parameters || {}).width !== 2600) return;
+      o.material.onBeforeCompile = sh => {
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vMakiW;')
+          .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMakiW = (modelMatrix * vec4(position, 1.0)).xyz;');
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+varying vec3 vMakiW;
+float mkH(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float mkN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
+  return mix(mix(mkH(i), mkH(i+vec2(1,0)), f.x), mix(mkH(i+vec2(0,1)), mkH(i+vec2(1,1)), f.x), f.y); }`)
+          .replace('#include <color_fragment>', `#include <color_fragment>
+{
+  vec2 w = vMakiW.xz;
+  float alan = mkN(w * 0.0045) * 0.55 + mkN(w * 0.016 + 4.0) * 0.45 + 0.08;           // açıklık / sık maki bölgeleri
+  float yog = smoothstep(0.30, 0.66, alan);
+  float k = mkN(w * 0.20) * 0.52 + mkN(w * 0.52 + 7.0) * 0.32 + mkN(w * 1.3 + 3.0) * 0.16;   // 1–3 m'lik çalı öbekleri
+  float esik = 0.62 - yog * 0.40;
+  float cali = smoothstep(esik - 0.035, esik + 0.035, k);
+  float golgeli = smoothstep(esik, esik + 0.18, k);                         // öbeğin içi koyu, kenarı açık
+  vec3 toprak = mix(vec3(0.40, 0.33, 0.24), vec3(0.47, 0.42, 0.34), mkN(w * 0.04));
+  toprak *= 0.86 + 0.24 * mkN(w * 0.8 + 1.7);
+  vec3 yesil = mix(vec3(0.085, 0.12, 0.055), vec3(0.03, 0.05, 0.026), golgeli) * (0.85 + 0.3 * mkN(w * 0.27 + 11.0));
+  vec3 renk = mix(toprak, yesil, cali);
+  float uzak = smoothstep(220.0, 700.0, distance(vMakiW, cameraPosition));
+  renk = mix(renk, mix(toprak, yesil * 1.25, mix(0.80, 0.95, yog)), uzak);
+  float merkez = 1.0 - smoothstep(40.0, 75.0, length(w));                   // montaj platformu: mevcut çakıl tonu
+  diffuseColor.rgb = mix(renk, diffuseColor.rgb, merkez);
+}`);
+      };
+      o.material.needsUpdate = true;
+    });
+    // toprak yollar: arazinin 0,3 m üstünde serili şeritler
+    const yolMat = new THREE.MeshStandardMaterial({ color: 0xc2a27a, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+    const YOLLAR = [
+      [[0, 0], [-60, 110], [-40, 260], [-160, 420], [-330, 470], [-560, 430]],
+      [[0, 0], [120, -90], [300, -120], [470, -260], [690, -320]],
+      [[-60, 110], [80, 230], [260, 330], [420, 520], [560, 700]],
+      [[120, -90], [60, -280], [-120, -430], [-260, -640]],
+    ];
+    YOLLAR.forEach(noktalar => {
+      const egri = new THREE.CatmullRomCurve3(noktalar.map(([x, z]) => new THREE.Vector3(x, 0, z)));
+      const n = Math.ceil(egri.getLength() / (hafif ? 9 : 4)), poz = [], idx = [];
+      const a = new THREE.Vector3(), t = new THREE.Vector3();
+      for (let i = 0; i <= n; i++) {
+        egri.getPointAt(i / n, a); egri.getTangentAt(i / n, t);
+        const nx = -t.z, nz = t.x, l = Math.hypot(nx, nz) || 1, gen = 3.2;
+        for (const s of [-1, 1]) { const x = a.x + nx / l * gen * s, z = a.z + nz / l * gen * s; poz.push(x, araziY(x, z) + 0.3, z); }
+        if (i < n) { const b = i * 2; idx.push(b, b + 2, b + 1, b + 1, b + 2, b + 3); }
+      }
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(poz, 3)); g.setIndex(idx); g.computeVertexNormals();
+      const m = new THREE.Mesh(g, yolMat); m.receiveShadow = true; grup.add(m);
+    });
+    // sırtlardaki ek türbinler: tek birleşik geometri (çizim çağrısı: 1)
+    const adaylar = [];
+    for (let r = 330; r <= 1250; r += 55) for (let a = 0; a < Math.PI * 2; a += 55 / r) {
+      const x = Math.cos(a) * r, z = Math.sin(a) * r; adaylar.push([x, z, araziY(x, z) + 0.004 * r]);
+    }
+    adaylar.sort((p, q) => q[2] - p[2]);
+    const mevcut = S.parts && S.parts.farm ? S.parts.farm.children.map(c => [c.position.x, c.position.z]) : [];
+    const secilen = [];
+    for (const c of adaylar) {
+      if (secilen.length >= (hafif ? 18 : 40)) break;
+      if ([...secilen, ...mevcut].every(q => Math.hypot(q[0] - c[0], q[1] - c[1]) > 135) && Math.hypot(c[0], c[1]) > 300) secilen.push(c);
+    }
+    const parcalar = [];
+    const ekle = (geo, m) => { const g = geo.toNonIndexed(); g.applyMatrix4(m); parcalar.push(g); };
+    const M = new THREE.Matrix4(), R = new THREE.Matrix4(), T = new THREE.Matrix4();
+    secilen.forEach(([x, z], i) => {
+      const ol = 1.0 + h1(i * 1.7) * 0.15, yon = 0.4 + (h1(i * 3.1) - 0.5) * 0.25, aci = h1(i * 5.3) * 2.1;
+      const taban = new THREE.Matrix4().makeTranslation(x, araziY(x, z) - 1.2, z).multiply(new THREE.Matrix4().makeRotationY(yon)).multiply(new THREE.Matrix4().makeScale(ol, ol, ol));
+      ekle(new THREE.CylinderGeometry(1.0, 1.7, 76, 10), M.copy(taban).multiply(T.makeTranslation(0, 38, 0)));
+      ekle(new THREE.CapsuleGeometry(1.7, 5.5, 3, 8), M.copy(taban).multiply(T.makeTranslation(0, 77.5, 0.5)).multiply(R.makeRotationX(Math.PI / 2)));
+      for (let k = 0; k < 3; k++) {
+        const kanat = new THREE.BoxGeometry(1.1, 40, 0.28); kanat.translate(0, 21, 0);
+        ekle(kanat, M.copy(taban).multiply(T.makeTranslation(0, 77.5, -3.4)).multiply(R.makeRotationZ(aci + k * Math.PI * 2 / 3)));
+      }
+    });
+    if (parcalar.length) {
+      const say = parcalar.reduce((t, g) => t + g.attributes.position.count, 0);
+      const pz = new Float32Array(say * 3), nr = new Float32Array(say * 3); let o = 0;
+      parcalar.forEach(g => { pz.set(g.attributes.position.array, o * 3); nr.set(g.attributes.normal.array, o * 3); o += g.attributes.position.count; g.dispose(); });
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pz, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nr, 3)); g.computeBoundingSphere();
+      const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xf6f7f4, emissive: 0x3a3b38, roughness: 0.5, metalness: 0 }));
+      m.castShadow = false; m.receiveShadow = false; grup.add(m);
+    }
+    return secilen.length;
+  }
+  function yerY(araziY, x, z) { return araziY(x, z) * (ovaAcik ? ovaKatsayi(x, z) : 1); }
 
   /* hedef değerler ve yumuşak geçiş */
   const R = () => new THREE.Color();
@@ -262,7 +410,7 @@ export function egeKur(S, { lite = false } = {}) {
       const t = i / (sirtMat.length - 1);
       u.uKoyu.value.copy(simdi.koyu).lerp(simdi.pus, (1 - t) * 0.25);
       u.uAcik.value.copy(simdi.acik).lerp(simdi.pus, (1 - t) * 0.2);
-      u.uPusG.value = Math.min(0.97, m.userData.pus + simdi.pusEk * (0.6 + 0.4 * (1 - t)));
+      u.uPusG.value = Math.min(0.97, m.userData.pus * pusCarpan + simdi.pusEk * (0.6 + 0.4 * (1 - t)));
       u.uEtek.value = 0.25 + simdi.sis * 0.35;
     });
     denizMat.uniforms.uDeniz.value.copy(simdi.deniz);
@@ -306,7 +454,15 @@ export function egeKur(S, { lite = false } = {}) {
     simdi.gunes.lerp(hedef.gunes, a);
     ['isikG', 'sis', 'ort', 'yog', 'yildiz', 'pusEk'].forEach(k => { simdi[k] += (hedef[k] - simdi[k]) * a; });
     if (hareket) ortak.uZaman.value = mtSn;
+    sirrusSimdi += (sirrusHedef - sirrusSimdi) * a; bulutMat.uniforms.uSirrus.value = sirrusSimdi;
     uygula();
+    if (kamera) {
+      const op = haleG * Math.max(0, Math.min(1, simdi.gunes.y * 8 + 0.6));
+      hale.visible = op > 0.01; hale.material.opacity = op;
+      if (hale.visible) { _gv.copy(simdi.gunes).normalize().multiplyScalar(1500); hale.position.copy(kamera.position).add(_gv); const sc = lite ? 520 : 470; hale.scale.set(sc, sc, 1); }
+    }
   }
-  return { grup, ayarla, adim, anlik };
+  let kamera = null;
+  function kameraBagla(k) { kamera = k; }
+  return { grup, ayarla, adim, anlik, gunesBak, haleAyarla, sirrus, ova, maki, yerY, kameraBagla };
 }
