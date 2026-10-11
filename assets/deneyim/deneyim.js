@@ -42,6 +42,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
   let ege = null;
   try { ege = egeKur(S, { lite: mobil }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
+  // nasel çatısı kapağında kamera ikaz lambasının birkaç metre yanında: yakın hale küçülür, başlığın arkasında kırmızı leke olmasın
+  if (NC && parts.nacelle && parts.nacelle.userData.ikaz) parts.nacelle.userData.ikaz.forEach(k => k.children.forEach(o => { if (o.isSprite && o.scale.x > 1) o.scale.set(1.2, 1.2, 1); }));
   if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC) ege.maki(araziY); }
 
   const normalDpr = mobil ? 1 : Math.min(devicePixelRatio || 1, 1.6);
@@ -248,11 +250,12 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   /* ---------------- yardımcılar ---------------- */
   // Saat ve Aliağa hava kodu dış atmosferi belirler; iç mekân kendi ışığını korur.
   let hava = window.__sonerHava || null, havaSurum = 0, sonSurum = -1;
+  // önizleme ve test: ?vardiya=gunduz|altin|aksam|gece gerçek saatin yerine geçer
+  const zorVardiya = (location.search.match(/[?&]vardiya=(gunduz|safak|altin|aksam|gece)\b/) || [])[1] || null;
   window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; kareSakla = true; if (!icAyar) isik(); });
   function isikModu() {
     if (GB) return 'sunset';
-    if (NC) return 'day';
-    const v = kok.dataset.vardiya;
+    const v = zorVardiya || kok.dataset.vardiya;
     return v === 'gece' ? 'night' : v === 'aksam' || v === 'altin' ? 'sunset' : 'day';
   }
   let sonMod = null;
@@ -306,9 +309,11 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     setLight(m); sonMod = m; sonSurum = havaSurum;
     const tur = hava && hava.tur;
     const u = S.sky.material.uniforms;
+    // nasel kapağı: fotoğraftaki berrak gün ışığı yalnız gündüz ve açık/parçalı havada; akşam, gece, yağmur ve fırtınada gerçek koşul
+    const ncAcik = NC && m === 'day' && (!tur || tur === 'acik' || tur === 'parcali');
     if (tur === 'bulutlu' || tur === 'yagmur' || tur === 'firtina' || tur === 'kar' || tur === 'sis') {
       const koyu = tur === 'yagmur' || tur === 'firtina';
-      const renk = m === 'night' ? 0x26313c : tur === 'kar' ? 0xb2bbc2 : koyu ? 0x667380 : 0x909da7;
+      const renk = m === 'night' ? 0x26313c : tur === 'kar' ? 0xb2bbc2 : tur === 'firtina' ? 0x4d5864 : koyu ? 0x667380 : 0x909da7;
       scene.background.setHex(renk); scene.fog.color.setHex(renk);
       scene.fog.near = tur === 'sis' ? 90 : koyu ? 180 : tur === 'kar' ? 160 : 360;
       scene.fog.far = tur === 'sis' ? 670 : koyu ? 1100 : tur === 'kar' ? 1050 : 1700;
@@ -316,8 +321,8 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       hemi.intensity *= tur === 'firtina' ? 0.65 : 0.85;
       if (u && u.uBulut) u.uBulut.value = 1;
       if (u && u.c0 && m !== 'night') {
-        u.c0.value.setHex(koyu ? 0x525f70 : tur === 'kar' ? 0x8c9baa : 0x738695);
-        u.c1.value.setHex(koyu ? 0x75818c : tur === 'kar' ? 0xb3c1ca : 0x9aabb6);
+        u.c0.value.setHex(tur === 'firtina' ? 0x3c4654 : koyu ? 0x525f70 : tur === 'kar' ? 0x8c9baa : 0x738695);
+        u.c1.value.setHex(tur === 'firtina' ? 0x58636f : koyu ? 0x75818c : tur === 'kar' ? 0xb3c1ca : 0x9aabb6);
       }
     } else if (tur === 'acik' && m !== 'night') {
       u.uIsimaG.value = m === 'day' ? 0.5 : 0.8;
@@ -344,10 +349,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
       hemi.color.set('#a3afae'); hemi.groundColor.set('#2f2c21'); hemi.intensity = 0.46;
       dolgu.intensity = 0.04; renderer.toneMappingExposure = 0.96;
     }
-    if (NC) {
+    if (ncAcik) {
       // fotoğraftaki açık sabah: koyu mavi zenit, ufukta açık pus; bulut yok
       u.c0.value.set('#4e7fb6'); u.c1.value.set('#86abcd'); u.c2.value.set('#cad7df'); u.c3.value.set('#c4c6bd');
-      u.uIsima.value.set('#fff3dc'); u.uIsimaG.value = 0.18; if (u.uBulut) u.uBulut.value = 0;
+      u.uIsima.value.set('#fff3dc'); u.uIsimaG.value = 0.18; if (u.uBulut) u.uBulut.value = tur === 'parcali' ? 0.4 : 0;
       scene.background.set('#c8d4dc'); scene.fog.color.set('#a9bccb'); scene.fog.near = 1200; scene.fog.far = 6500;
       gunes.color.set('#fff6e8'); gunes.intensity = 2.6; gunes.position.set(-260, 190, -120);
       hemi.color.set('#cfe0ee'); hemi.groundColor.set('#6d6a55'); hemi.intensity = 1.05;
@@ -355,7 +360,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     }
     hemiTaban = hemi.intensity; dolguTaban = dolgu.intensity; gunesTaban = gunes.intensity;
     disPoz = renderer.toneMappingExposure;
-    if (ege) ege.ayarla(GB ? 'gunbatimi' : NC ? 'nasel' : m, GB || NC ? 'acik' : tur);
+    if (ege) ege.ayarla(GB ? 'gunbatimi' : ncAcik ? 'nasel' : m, GB || ncAcik ? 'acik' : tur);
     if (once) { gecis = { a: once, b: durumAl(), t: 0, t0: performance.now() }; durumKoy(once, gecis.b, 0); renderer.toneMappingExposure = pozAnlik; }
     else { gecis = null; if (ege) ege.anlik(); }
     isikIlk = false;
@@ -808,6 +813,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     kIcOnce = kIc;
     pozAnlik += (pozHedef - pozAnlik) * (anlik ? 1 : 1 - Math.exp(-dt * (kIc ? 1.15 : 1.7)));
     renderer.toneMappingExposure = pozAnlik;
+    simsekAdim(t, hava && hava.tur === 'firtina' && !az && !kIc && !duraklat && !performans);
     if (toz) toz.visible = !!icerde && yerel.y < ic.sinir.TAVAN - 0.3;
     if (gunes) gunes.intensity = gunesTaban * (1 - icPay);
     if (hemi) hemi.intensity = THREE.MathUtils.lerp(hemi.intensity, hemiTaban * THREE.MathUtils.lerp(1, kulede ? 0.24 : 0.1, icPay), 1 - Math.exp(-dt * 6));
@@ -857,6 +863,45 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     sonIsMs = performance.now() - isBas;
     rafId = requestAnimationFrame(kare);
   }
+  /* Şimşek (yalnız gök gürültülü havada, dışarıdayken): 6–16 sn'de bir, uzak ufukta zikzak bir çakma ve kısa bir
+   * pozlama parlaması. Çift çakma 0,3 sn içinde biter; saniyede 3 flaş sınırının altında kalır. Hareket azaltılmışsa hiç yok. */
+  let simsek = null, simsekT0 = 0, simsekSonraki = 0;
+  const simsekMat = new THREE.MeshBasicMaterial({ color: 0xe9f0ff, transparent: true, opacity: 0, fog: false, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
+  function simsekKur() {
+    if (simsek) { scene.remove(simsek); simsek.children.forEach(c => c.geometry.dispose()); }
+    simsek = new THREE.Group();
+    const serit = (noktalar, gen) => {
+      const poz = [], idx = [];
+      noktalar.forEach(([x, y], i) => { const g = gen * (1 - 0.6 * i / noktalar.length); poz.push(x - g, y, 0, x + g, y, 0);
+        if (i < noktalar.length - 1) { const b = i * 2; idx.push(b, b + 1, b + 2, b + 1, b + 3, b + 2); } });
+      const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(poz, 3)); geo.setIndex(idx);
+      simsek.add(new THREE.Mesh(geo, simsekMat));
+    };
+    const ana = []; let x = 0;
+    for (let i = 0, n = 16; i <= n; i++) { ana.push([x, 620 - i * 610 / n]); x += (Math.random() - 0.5) * 70; }
+    serit(ana, 3.2);
+    const k = 4 + Math.floor(Math.random() * 5), dal = [ana[k]]; let dx = ana[k][0];
+    for (let i = 1; i <= 6; i++) { dx += (Math.random() < 0.5 ? -1 : 1) * (15 + Math.random() * 30); dal.push([dx, ana[k][1] - i * 38]); }
+    serit(dal, 1.6);
+    // kameranın baktığı yönün ±50° içinde, sisin ardında ama görünür (sis kapalı malzeme)
+    const yon = Math.atan2(-camera.getWorldDirection(_sd).x, -_sd.z) + (Math.random() - 0.5) * 1.75, uz = 780 + Math.random() * 380;
+    simsek.position.set(camera.position.x - Math.sin(yon) * uz, 0, camera.position.z - Math.cos(yon) * uz);
+    simsek.rotation.y = Math.atan2(camera.position.x - simsek.position.x, camera.position.z - simsek.position.z);
+    scene.add(simsek);
+  }
+  const _sd = new THREE.Vector3();
+  function simsekAdim(t, acik) {
+    if (!acik) { simsekSonraki = 0; if (simsek && !simsekT0) simsek.visible = false; if (!simsekT0) return; }
+    else if (!simsekSonraki) simsekSonraki = t + 2500 + Math.random() * 4500;
+    else if (!simsekT0 && t >= simsekSonraki) { simsekT0 = t; simsekSonraki = t + 6000 + Math.random() * 10000; simsekKur(); }
+    if (!simsekT0) return;
+    const s = t - simsekT0;
+    const f = s < 80 ? 1 : s < 190 ? 0.12 : s < 290 ? 0.75 : 0.75 * Math.exp(-(s - 290) / 150);
+    if (s > 1400) { simsekT0 = 0; if (simsek) simsek.visible = false; return; }
+    simsekMat.opacity = f; if (simsek) simsek.visible = f > 0.03;
+    renderer.toneMappingExposure *= 1 + 0.9 * f;
+  }
+  window.__deneyimSimsek = () => { simsekSonraki = 1; };   // test kancası: bir sonraki karede çak
   // Gölgelendirici derlemesi: görünmeyen iç sahneler (kule, nasel) de dahil hepsi ilk kareden önce derlenir.
   // KHR_parallel_shader_compile olan cihazlarda (Chrome, Android) derleme ana iş parçacığını kilitlemez;
   // olmayanlarda bile donma kule kapısına gelince değil, sahne ilk açılırken ve tek seferde olur.

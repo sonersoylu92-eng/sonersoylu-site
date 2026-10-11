@@ -100,7 +100,11 @@
     return null;
   }
   function havaUygula(d) {
-    var c = d && d.current, kod = c && c.weather_code != null ? Number(c.weather_code) : NaN, tur = havaTuru(kod);
+    var c = d && d.current, kod = c && c.weather_code != null ? Number(c.weather_code) : NaN;
+    // önizleme: ?hava=yagmur|firtina|bulutlu|sis|kar|acik gerçek tahminin yerine geçer
+    var zor = { acik: 0, parcali: 2, bulutlu: 3, sis: 45, yagmur: 63, kar: 73, firtina: 95 }[(location.search.match(/[?&]hava=(\w+)/) || [])[1]];
+    if (zor != null) { kod = zor; c = c || { is_day: 1 }; }
+    var tur = havaTuru(kod);
     if (!tur) return;
     var h = { tur: tur[0], kod: kod, gece: Number(c.is_day) === 0 };
     bolum.dataset.hava = h.tur;
@@ -112,7 +116,7 @@
     if (document.hidden) return;
     fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' } })
       .then(function (r) { if (!r.ok) throw new Error('Hava verisi'); return r.json(); })
-      .then(havaUygula).catch(function () { /* ağ kesilirse son geçerli sahne korunur */ });
+      .then(havaUygula).catch(function () { /* ağ kesilirse son geçerli sahne korunur */ if (/[?&]hava=/.test(location.search)) havaUygula(null); });
   }
   havaCek();
   setInterval(havaCek, 10 * 60 * 1000);
@@ -790,7 +794,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=b4d974ff').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=02c88ae0').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
