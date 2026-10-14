@@ -42,35 +42,6 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
   let ege = null;
   try { ege = egeKur(S, { lite: mobil }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
-  /* Nasel kabuğunda marka yazısı: iki yan yüzde mavi "SOYLU ENERJİ". Kabuğun düz yan yüzü x = ±W/2;
-   * yazı tuvale çizilir (sitenin Geist yazı tipi yüklenince yeniden), kabuğa 1 cm mesafede ince bir düzlem.
-   * Saydamlık yerine alphaTest: röntgen kipinde kabuk malzemeleri saydamlaşıp geri döndüğünde yazı bozulmaz. */
-  if (parts.nacelle) {
-    const tv = document.createElement('canvas'); tv.width = 2048; tv.height = 256;
-    const doku = new THREE.CanvasTexture(tv); doku.colorSpace = THREE.SRGBColorSpace; doku.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-    const yaz = () => {
-      const x = tv.getContext('2d'); x.clearRect(0, 0, tv.width, tv.height);
-      x.fillStyle = '#1356c4'; x.textAlign = 'center'; x.textBaseline = 'middle';
-      const yazi = 'SOYLU ENERJİ';
-      let pt = 200; x.font = `800 ${pt}px Geist, "Helvetica Neue", Arial, sans-serif`;
-      if ('letterSpacing' in x) x.letterSpacing = '14px';
-      const gen = x.measureText(yazi).width; if (gen > tv.width * 0.94) { pt = Math.floor(pt * tv.width * 0.94 / gen); x.font = `800 ${pt}px Geist, "Helvetica Neue", Arial, sans-serif`; }
-      x.fillText(yazi, tv.width / 2, tv.height / 2 + pt * 0.04);
-      doku.needsUpdate = true;
-    };
-    yaz();
-    if (document.fonts && document.fonts.load) document.fonts.load('800 200px Geist').then(yaz).catch(() => {});
-    const yaziMat = new THREE.MeshStandardMaterial({ map: doku, alphaTest: 0.45, roughness: 0.55, metalness: 0, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
-    const yaziGeo = new THREE.PlaneGeometry(6.6, 6.6 / 8);
-    const yariGen = SPEC.nacelleWid / 2;
-    [1, -1].forEach(yan => {
-      const m = new THREE.Mesh(yaziGeo, yaziMat);
-      m.position.set(yan * (yariGen + 0.012), 0.35, 0.7);
-      m.rotation.y = yan * Math.PI / 2;
-      m.receiveShadow = true; m.name = 'marka-yazi';
-      parts.nacelle.add(m);
-    });
-  }
   // nasel çatısı kapağında kamera ikaz lambasının birkaç metre yanında: yakın hale küçülür, başlığın arkasında kırmızı leke olmasın
   if (NC && parts.nacelle && parts.nacelle.userData.ikaz) parts.nacelle.userData.ikaz.forEach(k => k.children.forEach(o => { if (o.isSprite && o.scale.x > 1) o.scale.set(1.2, 1.2, 1); }));
   if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC) ege.maki(araziY); }
