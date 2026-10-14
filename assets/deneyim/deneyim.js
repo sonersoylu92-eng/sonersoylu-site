@@ -646,6 +646,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const tlKam = new THREE.Vector3();
   const kabinIsikTaban = kule.kabinIsik.intensity, girisIsikTaban = kule.girisIsik.intensity, ustIsikTaban = kule.ustIsik.intensity;
   const kKonum = new THREE.Vector3(), kHedef = new THREE.Vector3(), yumHedef = new THREE.Vector3();
+  /* Serbest bakış: kamera nasel çatısındayken (açılış kapağı ve çatı kapağından çıkış) ziyaretçi sürükleyerek
+   * 360° etrafına bakar. Kaydırma başlayınca ya da çatıdan uzaklaşınca bakış yumuşakça senaryodaki yöne döner. */
+  const bak = { yaw: 0, pitch: 0, hYaw: 0, hPitch: 0, alan: false, surukle: false };
+  const _bakD = new THREE.Vector3(), _naselM = new THREE.Vector3();
   let hedefIlk = true, icAyar = null, kabinOnce = null, asnHizYum = 0, kIcOnce = 0;
   pozAnlik = disPoz;
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
@@ -671,7 +675,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     const hedefP = ilerleme();
     // kaydırma durduğunda sahne yalnızca rotor ve hafif kamera nefesi için çizilir: kare seyreltilir,
     // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
-    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat)) { sonHedefP = hedefP; durgunT = t; }
+    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat) || bak.surukle || Math.abs(bak.yaw) + Math.abs(bak.pitch) > 1e-3) { sonHedefP = hedefP; durgunT = t; }
     const durgun = t - durgunT > 1200;
     // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
     const hareketAralik = KADEME_ARALIK[kalite] || 0;
@@ -731,7 +735,21 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     }
     // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
     if (!sonIcerde && !sonKulede) { const yer = (ege ? ege.yerY(araziY, kKonum.x, kKonum.z) : araziY(kKonum.x, kKonum.z)) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
-    camera.position.copy(kKonum); camera.lookAt(yumHedef);
+    // serbest bakış alanı: dışarıda, röntgen kapalı, nasele 48 m'den yakın (çatıda ya da çatının hemen üstünde)
+    _naselM.setFromMatrixPosition(yaw.matrixWorld);
+    bak.alan = !sonIcerde && !sonKulede && rt.g < 0.01 && kKonum.distanceTo(_naselM) < 48;
+    if (!bak.surukle && (!bak.alan || Math.abs(hedefP - p) > 0.0015)) { const s = Math.exp(-dt * 2.4); bak.hYaw *= s; bak.hPitch *= s; }
+    const bakAdim = anlik ? 1 : 1 - Math.exp(-dt * 12);
+    bak.yaw += (bak.hYaw - bak.yaw) * bakAdim; bak.pitch += (bak.hPitch - bak.pitch) * bakAdim;
+    if (Math.abs(bak.yaw) + Math.abs(bak.pitch) < 1e-4 && !bak.surukle) { bak.yaw = bak.hYaw = 0; bak.pitch = bak.hPitch = 0; }
+    camera.position.copy(kKonum);
+    if (bak.yaw || bak.pitch) {
+      _bakD.subVectors(yumHedef, kKonum); const uz = _bakD.length() || 1;
+      const yA = Math.atan2(_bakD.x, _bakD.z) - bak.yaw;
+      const yE = THREE.MathUtils.clamp(Math.asin(THREE.MathUtils.clamp(_bakD.y / uz, -1, 1)) + bak.pitch, -1.38, 1.38);
+      _bakD.set(Math.sin(yA) * Math.cos(yE), Math.sin(yE), Math.cos(yA) * Math.cos(yE)).multiplyScalar(uz).add(kKonum);
+      camera.lookAt(_bakD);
+    } else camera.lookAt(yumHedef);
 
     // iç/dış geçişi
     naselYerel(camera.position, yerel);
@@ -1035,6 +1053,20 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   S.fare = (nx, ny) => {
     if (nx === null || nx === undefined) { fare.var = false; return; }
     fare.var = true; fare.x = nx; fare.y = ny; fare.deg = true;
+  };
+  // serbest bakış: sayfa tarafı sürüklemeyi piksel farkıyla bildirir
+  S.bak = {
+    alan: () => bak.alan,
+    basla: () => { bak.surukle = true; durgunT = performance.now(); baslat(); },
+    kaydir: (dx, dy) => {
+      bak.hYaw += dx * 0.0052;
+      bak.hPitch = THREE.MathUtils.clamp(bak.hPitch - dy * 0.0042, -1.25, 1.25);
+      durgunT = performance.now(); baslat();
+    },
+    bitir: () => {
+      bak.surukle = false;
+      const tur = Math.round(bak.hYaw / (Math.PI * 2)); bak.hYaw -= tur * Math.PI * 2; bak.yaw -= tur * Math.PI * 2;   // geri dönüşte tur atmasın
+    },
   };
   // test ve hata ayıklama için
   window.__deneyim = { S, ic, kule, KARE, egriU, kEgri, hEgri, yaw, tilt, get p() { return p; } };

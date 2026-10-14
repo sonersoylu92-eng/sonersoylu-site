@@ -556,3 +556,15 @@ button.ea-d:hover{border-color:#a9cbc9}
 .dny-acilis .ust{font-family:var(--mono);letter-spacing:0;text-transform:none;color:#d0592a}
 .dny-acilis h1{font-family:var(--sans);font-weight:500;font-variation-settings:normal;font-size:clamp(2.8rem,7.5vw,6.4rem);line-height:.95;letter-spacing:-.055em}
 .dny-dg a,.dny-dg button{font-family:var(--sans)!important;text-transform:none!important;letter-spacing:.01em!important;border-radius:999px!important}
+
+/* serbest bakış (nasel çatısı): imleç, dokunmada yatay sürükleme ve ipucu */
+.dny-bak-alan{cursor:grab;touch-action:pan-y pinch-zoom}
+.dny-bakiyor,.dny-bakiyor *{cursor:grabbing!important;user-select:none;-webkit-user-select:none}
+.v-bak{position:absolute;left:50%;bottom:calc(var(--d-gut,1.25rem) + 4.6rem);transform:translate(-50%,6px);z-index:6;margin:0;
+  display:inline-flex;align-items:center;gap:.55rem;padding:.5rem .95rem;border-radius:999px;pointer-events:none;
+  font:500 .78rem/1 Geist,system-ui,sans-serif;letter-spacing:.06em;color:#f4f2ec;background:rgba(14,18,22,.46);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);opacity:0;transition:opacity .5s ease,transform .5s ease}
+.v-bak.gor{opacity:1;transform:translate(-50%,0)}
+.v-bak-ok{font-size:1rem;line-height:1;animation:vBakOk 2.4s ease-in-out infinite}
+@keyframes vBakOk{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+@media (prefers-reduced-motion:reduce){.v-bak-ok{animation:none}}

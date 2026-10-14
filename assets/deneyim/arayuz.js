@@ -380,6 +380,47 @@
     document.addEventListener('pointerleave', function () { if (sahneS && sahneS.fare) sahneS.fare(null); ust.classList.remove('gor'); });
   }
 
+  /* ---- serbest bakış: nasel çatısındayken sürükleyerek 360° etrafa bak (fare ve dokunma) ---- */
+  var bakIpucu = document.createElement('p'); bakIpucu.className = 'v-bak'; bakIpucu.setAttribute('aria-hidden', 'true');
+  bakIpucu.innerHTML = '<span class="v-bak-ok">⟷</span>Sürükle · 360° bak';
+  sahne.appendChild(bakIpucu);
+  var bakS = null, bakKullanildi = false, bakAlan = false, bakAlanT = 0;
+  var BAK_HARIC = 'a,button,input,textarea,select,label,summary,details,header,[contenteditable],.ralan,.dugmeler,.dny-ray,.v-nokta-bilgi,.dny-hava-etiket';
+  function bakDurum() {
+    var alan = !!(sahneS && sahneS.bak && sahneS.bak.alan()) && bolum.getBoundingClientRect().bottom > innerHeight * 0.5;
+    if (alan !== bakAlan) { bakAlan = alan; bolum.classList.toggle('dny-bak-alan', alan); if (alan) bakAlanT = Date.now(); }
+    // ipucu kısa süre görünür (çatıya her gelişte ~6 sn), kapak sade kalsın
+    bakIpucu.classList.toggle('gor', alan && !bakKullanildi && !bakS && Date.now() - bakAlanT > 1200 && Date.now() - bakAlanT < 7200);
+  }
+  setInterval(bakDurum, 300);
+  addEventListener('pointerdown', function (e) {
+    if (!sahneS || !sahneS.bak || !sahneS.bak.alan() || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    var r = sahne.getBoundingClientRect();
+    if (e.clientY < r.top || e.clientY > r.bottom || bolum.getBoundingClientRect().bottom <= innerHeight * 0.5) return;
+    if (e.target && e.target.closest && e.target.closest(BAK_HARIC)) return;
+    bakS = { id: e.pointerId, x: e.clientX, y: e.clientY, tip: e.pointerType, yon: null };
+    if (e.pointerType === 'mouse') e.preventDefault();   // sürüklerken başlık metni seçilmesin
+  });
+  addEventListener('pointermove', function (e) {
+    if (!bakS || e.pointerId !== bakS.id) return;
+    var dx = e.clientX - bakS.x, dy = e.clientY - bakS.y;
+    if (!bakS.yon) {
+      if (Math.abs(dx) + Math.abs(dy) < 6) return;
+      // dokunmada dikey hareket sayfayı kaydırır; yatay hareket bakışı çevirir
+      bakS.yon = bakS.tip === 'touch' && Math.abs(dy) > Math.abs(dx) ? 'kaydir' : 'bak';
+      if (bakS.yon === 'bak') { sahneS.bak.basla(); bolum.classList.add('dny-bakiyor'); bakKullanildi = true; bakDurum(); }
+    }
+    if (bakS.yon !== 'bak') return;
+    sahneS.bak.kaydir(dx, dy);
+    bakS.x = e.clientX; bakS.y = e.clientY;
+  }, { passive: true });
+  function bakBitir(e) {
+    if (!bakS || (e && e.pointerId !== bakS.id)) return;
+    if (bakS.yon === 'bak' && sahneS && sahneS.bak) sahneS.bak.bitir();
+    bakS = null; bolum.classList.remove('dny-bakiyor');
+  }
+  addEventListener('pointerup', bakBitir); addEventListener('pointercancel', bakBitir);
+
   /* ---- kule kapısı: erişim işareti ---- */
   var erisim = document.createElement('div'); erisim.className = 'v-erisim';
   erisim.innerHTML = '<p class="v-er-ust"><span aria-hidden="true"></span>Erişim · saha servisi</p><p class="v-er-ad">Kule kapısı</p>';
@@ -794,7 +835,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=02c88ae0').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=b62884a2').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
