@@ -382,7 +382,7 @@
 
   /* ---- serbest bakış: nasel çatısındayken sürükleyerek 360° etrafa bak (fare ve dokunma) ---- */
   var bakIpucu = document.createElement('p'); bakIpucu.className = 'v-bak'; bakIpucu.setAttribute('aria-hidden', 'true');
-  bakIpucu.innerHTML = '<span class="v-bak-ok">⟷</span>Sürükle · 360° bak';
+  bakIpucu.innerHTML = '<span class="v-bak-ok">⟷</span>' + (matchMedia('(pointer: fine)').matches ? 'Sürükle ya da ← → · 360° bak' : 'Sürükle · 360° bak');
   sahne.appendChild(bakIpucu);
   var bakS = null, bakKullanildi = false, bakAlan = false, bakAlanT = 0;
   var BAK_HARIC = 'a,button,input,textarea,select,label,summary,details,header,[contenteditable],.ralan,.dugmeler,.dny-ray,.v-nokta-bilgi,.dny-hava-etiket';
@@ -420,6 +420,19 @@
     bakS = null; bolum.classList.remove('dny-bakiyor');
   }
   addEventListener('pointerup', bakBitir); addEventListener('pointercancel', bakBitir);
+  // klavye: çatıdayken ← → etrafa döner, Shift + ↑ ↓ yukarı-aşağı bakar (yazı alanlarında devre dışı)
+  addEventListener('keydown', function (e) {
+    if (!sahneS || !sahneS.bak || !sahneS.bak.alan() || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (bolum.getBoundingClientRect().bottom <= innerHeight * 0.5) return;
+    var dx = 0, dy = 0;
+    if (e.key === 'ArrowLeft') dx = -60; else if (e.key === 'ArrowRight') dx = 60;
+    else if (e.shiftKey && e.key === 'ArrowUp') dy = -45; else if (e.shiftKey && e.key === 'ArrowDown') dy = 45;
+    else return;
+    e.preventDefault();
+    sahneS.bak.basla(); sahneS.bak.kaydir(dx, dy); sahneS.bak.bitir();
+    bakKullanildi = true; bakDurum();
+  });
 
   /* ---- kule kapısı: erişim işareti ---- */
   var erisim = document.createElement('div'); erisim.className = 'v-erisim';
@@ -835,7 +848,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=b62884a2').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=5c057aad').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {

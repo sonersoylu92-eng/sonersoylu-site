@@ -13,7 +13,8 @@ import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=63ecf9c8';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
-import { egeKur } from '/assets/deneyim/ege.js?v=822e7a43';
+import { egeKur } from '/assets/deneyim/ege.js?v=eea1cb5d';
+import { gokKur } from '/assets/deneyim/gok.js?v=aacfa740';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
@@ -42,8 +43,39 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
   let ege = null;
   try { ege = egeKur(S, { lite: mobil }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
+  // gerçek gökyüzü: güneş ve ay konumu, ay evresi, parlak yıldızlar (önizleme: ?gokzaman=2026-10-20T21:00:00Z)
+  let gok = null;
+  try {
+    const zz = new URLSearchParams(location.search).get('gokzaman');
+    gok = gokKur(THREE, { lite: mobil, sabitZaman: zz && !isNaN(Date.parse(zz)) ? zz : null });
+    S.scene.add(gok.grup);
+  } catch (e) { console.warn('gök yok:', e); gok = null; }
   // nasel çatısı kapağında kamera ikaz lambasının birkaç metre yanında: yakın hale küçülür, başlığın arkasında kırmızı leke olmasın
   if (NC && parts.nacelle && parts.nacelle.userData.ikaz) parts.nacelle.userData.ikaz.forEach(k => k.children.forEach(o => { if (o.isSprite && o.scale.x > 1) o.scale.set(1.2, 1.2, 1); }));
+  // kanat uçlarında kırmızı ikaz şeridi (sahadaki türbinlerdeki gibi uçtaki son birkaç metre); renk kanat boyunca yerel y'ye göre
+  const ucMat = new Map();
+  const ucBoya = (mat, esik) => {
+    const anahtar = mat.uuid + ':' + esik.toFixed(1);
+    if (ucMat.has(anahtar)) return ucMat.get(anahtar);
+    const m = mat.clone();
+    m.onBeforeCompile = sh => {
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vKanatY;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvKanatY = position.y;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vKanatY;')
+        .replace('#include <color_fragment>', `#include <color_fragment>
+diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(esik - 0.05).toFixed(2)}, ${(esik + 0.05).toFixed(2)}, vKanatY));`);
+    };
+    m.customProgramCacheKey = () => 'kanat-uc-' + esik.toFixed(1);
+    ucMat.set(anahtar, m); return m;
+  };
+  const ucUygula = (kok, oran) => kok && kok.traverse(o => {
+    if (!o.isMesh || !o.geometry || !o.geometry.attributes.position) return;
+    if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+    const bb = o.geometry.boundingBox, boy = bb.max.y - bb.min.y;
+    if (boy > 30 && bb.max.x - bb.min.x < boy * 0.2) o.material = ucBoya(o.material, bb.max.y - boy * oran);
+  });
+  (parts.blades || []).forEach(k => ucUygula(k, 0.062));   // 57 m kanatta ~3,5 m
+  ucUygula(parts.farm, 0.065);
   if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC) ege.maki(araziY); }
 
   const normalDpr = mobil ? 1 : Math.min(devicePixelRatio || 1, 1.6);
@@ -279,6 +311,17 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     SKY_RENK.forEach((k, i) => u[k].value.copy(a.sky[i]).lerp(b.sky[i], t));
     u.uIsimaG.value = L(a.ig, b.ig, t); u.uBulut.value = L(a.bu, b.bu, t); u.uGunes.value.copy(a.gv).lerp(b.gv, t).normalize();
     gunesTaban = L(a.gi, b.gi, t); hemiTaban = L(a.hi, b.hi, t); dolguTaban = L(a.di, b.di, t); disPoz = L(a.poz, b.poz, t);
+  }
+  /* gerçek güneş/ay ışığı: gündüz ve akşam güneş Aliağa'daki gerçek yönünden vurur (ışık için en az 3° yükseklik);
+   * gece ay ufkun üstündeyse soluk ışık aydan gelir. */
+  const _gokY = new THREE.Vector3(), _gokMin = Math.sin(3 * Math.PI / 180);
+  function gokIsik() {
+    const d = gok.durum;
+    if (sonMod === 'night') { if (d.ayH > 3 * Math.PI / 180) gunes.position.copy(d.ayYon).multiplyScalar(420); return; }
+    _gokY.copy(d.gunesYon); if (_gokY.y < _gokMin) { _gokY.y = _gokMin; _gokY.normalize(); }
+    gunes.position.copy(_gokY).multiplyScalar(420);
+    const u = S.sky.material.uniforms; if (u.uGunes) u.uGunes.value.copy(_gokY);
+    if (ege) ege.gunesBak(_gokY);
   }
   // karşı ışık: güneş, kapak kamerasının türbine bakış yönünde, 11° solda ve ufkun 5,5° üstünde
   const _ka = new THREE.Vector3(), _ileri = new THREE.Vector3(), _sag = new THREE.Vector3(), _gy = new THREE.Vector3();
@@ -817,8 +860,18 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     // atmosfer geçişi (saat/hava): içeri girerken anında tamamlanır ki iç sis ayarı doğru değerden başlasın
     gecisAdim(kIc);
     if (GB && !kIc) gunesKarsi();
+    if (gok && !GB && !kIc) gokIsik();
     const atmDt = sonAtmT ? Math.min(1, (t - sonAtmT) / 1000) : 0; sonAtmT = t;
     if (ege) { ege.grup.visible = icPay < 0.999; if (ege.grup.visible) ege.adim(atmDt, mt / 1000, !az && !duraklat); }
+    if (gok) {
+      gok.grup.visible = icPay < 0.999;
+      if (gok.grup.visible) {
+        const vv = zorVardiya || kok.dataset.vardiya, ht = hava && hava.tur;
+        const gece = vv === 'gece' ? 1 : vv === 'aksam' ? 0.4 : vv === 'safak' ? 0.3 : 0;
+        const kapali = ht === 'bulutlu' || ht === 'yagmur' || ht === 'firtina' || ht === 'kar' || ht === 'sis' ? 1 : ht === 'parcali' ? 0.3 : 0;
+        gok.adim(camera, atmDt || 0.016, gece, kapali);
+      }
+    }
     // içeride karanlık endüstriyel hava: yakın sis ve düşük pozlama
     if (kIc && !icAyar) { icAyar = { renk: scene.fog.color.getHex(), yakin: scene.fog.near, uzak: scene.fog.far, poz: disPoz }; }
     if (kIc) { const sy = anlik ? 1 : 1 - Math.exp(-dt * 3);
@@ -1069,6 +1122,6 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
     },
   };
   // test ve hata ayıklama için
-  window.__deneyim = { S, ic, kule, KARE, egriU, kEgri, hEgri, yaw, tilt, get p() { return p; } };
+  window.__deneyim = { S, gok, ic, kule, KARE, egriU, kEgri, hEgri, yaw, tilt, get p() { return p; } };
   return S;
 }

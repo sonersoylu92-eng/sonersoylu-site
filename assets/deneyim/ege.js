@@ -418,7 +418,7 @@ float mkN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
     sisMat.forEach(m => { m.uniforms.uGuc.value = simdi.sis * m.userData.guc; });
     bulutMat.uniforms.uGolge.value.copy(simdi.golge); bulutMat.uniforms.uAcik.value.copy(simdi.bAcik);
     bulutMat.uniforms.uOrt.value = simdi.ort; bulutMat.uniforms.uYog.value = simdi.yog;
-    yildiz.material.opacity = simdi.yildiz * 0.85; yildiz.visible = simdi.yildiz > 0.01;
+    yildiz.material.opacity = simdi.yildiz * 0.5; yildiz.visible = simdi.yildiz > 0.01;
   }
 
   /* mod + hava: sahnenin son sis rengi ve güneşi okunur (setLight ve hava ayarı yapıldıktan sonra çağrılır) */
