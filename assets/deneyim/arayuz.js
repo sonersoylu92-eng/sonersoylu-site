@@ -34,8 +34,11 @@
   // Bu cihazlarda canlı 3B hiç yüklenmez; kapak ve içerik akıcı kalır. ?uc=1 testte zorlar.
   // v4: işaret artık süreli (ZAYIF_SURE). Eski v3 işaretleri süresizdi; bir kez geç yüklenen cihaz 3B'yi
   // bir daha hiç görmüyordu. Onlar burada temizlenir, her cihaz sahneye bir kez daha şans tanır.
-  var ZAYIF_ANAHTAR = 'dny-zayif-v4', ZAYIF_SURE = 7 * 24 * 3600 * 1000;
-  try { localStorage.removeItem('dny-zayif-v3'); } catch (e) {}
+  // v5 (17 Ekim): ısınma atlandığı için yolculuk ortasında donan sağlam cihazlar (M1 Mac dahil) yanlışlıkla zayıf
+  // işaretlenmişti; v4 işaretleri silinir. Tek bir kısa takılma artık sahneyi kapatmaz (aşağıda: takilma).
+  var ZAYIF_ANAHTAR = 'dny-zayif-v5', ZAYIF_SURE = 7 * 24 * 3600 * 1000;
+  try { localStorage.removeItem('dny-zayif-v3'); localStorage.removeItem('dny-zayif-v4'); } catch (e) {}
+  var donmaSay = 0;
   var kurulumT0 = 0;   // sahne dosyaları indikten sonraki an: ilk kare sınırı (8 sn) buradan sayılır, indirme süresi sayılmaz
   var hazirAni = 0;   // ilk karede geometri yüklemesi uzun sürer; açılış takılması donma sayılmaz
   // Sekme arka plandayken ya da bilgisayar uykudayken kare gelmez; bu boşluklar donma sayılmaz.
@@ -848,7 +851,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=5c057aad').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=cd9ac2f6').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
@@ -860,7 +863,7 @@
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
         hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0), ks = Math.round(performance.now() - (kurulumT0 || taniT0)); var iz = sahneS && sahneS.isinma; tani('hazir', { sure_ms: hs, kurulum_ms: ks, neden: iz ? ('isinma ' + iz.once + '>' + iz.guvenli + '>' + iz.sonra + (iz.hata ? ' ' + iz.hata : '')) : null }); if (ks > 8000 && !filmKip && !gizlendi && !zorla3B) { zayifIsaretle('ilk-kare-' + ks); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
-        takilma: function (d) { if (!zorla3B && d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
+        takilma: function (d) { if (!zorla3B && d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden && (d.ms > 4000 || ++donmaSay >= 3)) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
         hata: function (neden, d) { d = d || {}; if (neden === 'yavas' && !filmKip) zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       });
       if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else { sahneS = S; if (kayitliDuraklat() && S.duraklat) S.duraklat(true); }

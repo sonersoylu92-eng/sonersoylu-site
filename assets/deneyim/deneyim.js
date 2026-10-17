@@ -698,7 +698,11 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
   // sekme arkadayken geçen süre takılma sayılmasın: görünürlük değişince kare referansı sıfırlanır
   document.addEventListener('visibilitychange', () => { sonRaf = 0; sonT = 0; calisiyor = !document.hidden && !birakildi; if (calisiyor) baslat(); });
-  function baslat() { if (birakildi) return; if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
+  /* Çizim döngüsü gölgelendirici ısınması bitmeden başlamaz. Eskiden görünürlük gözlemcisi döngüyü hemen başlatıyordu;
+   * ısınma atlanıyor (tanı: "isinma 0>0>0"), kule kapısında ve nasel girişinde gölgelendiriciler kaydırırken derlenip
+   * sahne 1,5–5 sn donuyor, cihaz da "zayıf" işaretlenip kapak fotoğrafa düşüyordu (17 Ekim, M1 Mac: p=0,4 2,5 sn). */
+  let isindi = false;
+  function baslat() { if (birakildi || !isindi) return; if (!rafId) { sonT = 0; rafId = requestAnimationFrame(kare); } }
 
   // donma kaydı: iki kare arası 200 ms'yi aşarsa nerede ve neden olduğunu anonim tanıya bildir
   let sonRaf = 0, sonIsMs = 0, takilmaSay = 0, sonProg = 0, sonGeo = 0, sonTex = 0, sonVh = innerHeight;
@@ -1014,7 +1018,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   }
   (function derleSonraBaslat() {
     let basladi = false;
-    const git = () => { if (basladi) return; basladi = true; baslat(); };
+    const git = () => { if (basladi) return; basladi = true; isindi = true; baslat(); };
     try {
       /* Işık düzenleri: three.js'te görünen ışık sayısı gölgelendiricinin parçasıdır. Yolculukta dört düzen var
        * (dışarı · kule ışıkları · kule + nasel · nasel). Hepsi burada, kapak dururken derlenir; yoksa kule
