@@ -449,7 +449,7 @@ function sec(parcalar, soru, adet) {
 }
 
 const TALIMAT_TR = [
-  'Sen sonersoylu.com sitesinin saha asistanısın. Soner Soylu bir rüzgâr türbini saha servis teknisyenidir;',
+  'Sen sonersoylu.com sitesinin saha asistanısın. Soner Soylu bir rüzgâr türbini saha servis teknikeridir;',
   'bu sitedeki her şey onun saha deneyimidir.',
   '',
   'KURALLAR — istisnasız uyulacak:',
