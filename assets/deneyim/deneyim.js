@@ -23,6 +23,9 @@ function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.document
 
 export function deneyimBaslat(canvas, bolum, cb = {}) {
   const mobil = matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches;
+  /* hafif: telefonlar ve sayfa tarafının "orta güçte" bulduğu bilgisayarlar (eski Intel tümleşik ekran kartı, az bellek).
+   * Kadraj ve kamera masaüstündeki gibi kalır; yalnız yük azalır: sade geometri, gölge ve efekt zinciri yok, 1× piksel. */
+  const hafif = mobil || !!(cb && cb.hafif);
   const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const zorla = /[?&]uc=1\b/.test(location.search);   // tanı ve test: cihaz yetişemese de sahne açık kalır
   let performans = false;
@@ -35,19 +38,19 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   const NC = !GB && !/[?&]banner=eski\b/.test(location.search);
 
   let S;
-  try { S = createScene(canvas, { lite: mobil }); } catch (e) { console.error('deneyim sahne:', e); return null; }
+  try { S = createScene(canvas, { lite: hafif }); } catch (e) { console.error('deneyim sahne:', e); return null; }
   const { renderer, scene, camera, controls, parts, towerTopY, setLight } = S;
   controls.enabled = false;
   if (parts.crane) parts.crane.visible = false;
   if (parts.groundBlade) parts.groundBlade.visible = false;
   // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
   let ege = null;
-  try { ege = egeKur(S, { lite: mobil }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
+  try { ege = egeKur(S, { lite: hafif }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
   // gerçek gökyüzü: güneş ve ay konumu, ay evresi, parlak yıldızlar (önizleme: ?gokzaman=2026-10-20T21:00:00Z)
   let gok = null;
   try {
     const zz = new URLSearchParams(location.search).get('gokzaman');
-    gok = gokKur(THREE, { lite: mobil, sabitZaman: zz && !isNaN(Date.parse(zz)) ? zz : null });
+    gok = gokKur(THREE, { lite: hafif, sabitZaman: zz && !isNaN(Date.parse(zz)) ? zz : null });
     S.scene.add(gok.grup);
   } catch (e) { console.warn('gök yok:', e); gok = null; }
   // nasel çatısı kapağında kamera ikaz lambasının birkaç metre yanında: yakın hale küçülür, başlığın arkasında kırmızı leke olmasın
@@ -78,8 +81,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   ucUygula(parts.farm, 0.065);
   if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC) ege.maki(araziY); }
 
-  const normalDpr = mobil ? 1 : Math.min(devicePixelRatio || 1, 1.6);
-  const normalShadow = renderer.shadowMap.enabled && !mobil;
+  const normalDpr = hafif ? 1 : Math.min(devicePixelRatio || 1, 1.6);
+  const normalShadow = renderer.shadowMap.enabled && !hafif;
   renderer.setPixelRatio(performans ? 1 : normalDpr);
   renderer.shadowMap.enabled = normalShadow && !performans;
   renderer.shadowMap.autoUpdate = false; renderer.shadowMap.needsUpdate = true;   // gölge haritasını döngü seyreltilmiş günceller
@@ -93,7 +96,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
 
   // ortam yansıması: yalnız iç metal malzemelere
   let env = null;
-  if (!mobil) {
+  if (!hafif) {
     try { const pm = new THREE.PMREMGenerator(renderer); env = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); } catch (e) { env = null; }
   }
 
@@ -112,7 +115,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   const eksenN = tl2n(0, n2tl(0, TABAN_N, 0).y, 0);                  // kule ekseni, nasel tabanında
   const KAPAK_N = new THREE.Vector2(-0.55, 0.5);                        // erişim kapağı (nasel yerel x, z): yaw halkasının içinde, dişli kutusunun arkasında
   const yawN = [-30, 30, 90, 165, 210].map(d => new THREE.Vector2(eksenN.x + Math.cos(d * Math.PI / 180) * 1.08, eksenN.z + Math.sin(d * Math.PI / 180) * 1.08));
-  const ic = naselIciKur({ hafif: mobil, envMap: env, kapak: KAPAK_N, yawMerkez: new THREE.Vector2(eksenN.x, eksenN.z), yawSurucu: yawN });
+  const ic = naselIciKur({ hafif: hafif, envMap: env, kapak: KAPAK_N, yawMerkez: new THREE.Vector2(eksenN.x, eksenN.z), yawSurucu: yawN });
   tilt.add(ic.grup);
   ic.grup.visible = false;
 
@@ -122,7 +125,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   const kapakV = n2tl(KAPAK_N.x, TABAN_N, KAPAK_N.y), kapakTL = [kapakV.x, kapakV.z];
   const zTL = n2tl(0, 0, 1).sub(n2tl(0, 0, 0)), kapakYon = new THREE.Vector2(zTL.x, zTL.z).normalize();   // naselin +z'si kule yerelinde
   const KAPAK = new THREE.Vector2(...tl2yaw(kapakV.x, kapakV.z));   // kapak, yaw yerelinde
-  const kule = kuleIciKur({ SPEC, towerTopY, hafif: mobil, kapakXZ: new THREE.Vector2(kapakTL[0], kapakTL[1]), kapakYon, naselTabanY: kapakV.y,
+  const kule = kuleIciKur({ SPEC, towerTopY, hafif: hafif, kapakXZ: new THREE.Vector2(kapakTL[0], kapakTL[1]), kapakYon, naselTabanY: kapakV.y,
     yawSurucu: yawN.map(q => { const v = n2tl(q.x, TABAN_N, q.y); return new THREE.Vector2(v.x, v.z); }) });
   scene.add(kule.grup);
   kapiBosluguAc(parts.towerSegs[0]);
@@ -137,17 +140,17 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
 
   /* ---------------- iç aydınlatma ---------------- */
   const icIsik = new THREE.Group(); tilt.add(icIsik); icIsik.visible = false;
-  (mobil ? ic.lambalar.filter((_, i, a) => i === 0 || i === a.length - 1) : ic.lambalar).forEach(p => {
-    const l = new THREE.PointLight(0xdfe9ff, mobil ? 9 : 4, mobil ? 7 : 5.5, 1.6); l.position.set(...p); icIsik.add(l);
+  (hafif ? ic.lambalar.filter((_, i, a) => i === 0 || i === a.length - 1) : ic.lambalar).forEach(p => {
+    const l = new THREE.PointLight(0xdfe9ff, hafif ? 9 : 4, hafif ? 7 : 5.5, 1.6); l.position.set(...p); icIsik.add(l);
   });
-  if (!mobil) { const camgobegi = new THREE.PointLight(0x4fd6ea, 1.6, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi); }
+  if (!hafif) { const camgobegi = new THREE.PointLight(0x4fd6ea, 1.6, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi); }
   // tavan kapağından giren gün ışığı
   const { TAVAN, TABAN, KZ0, KZ1 } = ic.sinir;
   const kapakZ = (KZ0 + KZ1) / 2;
   const gunIsigi = new THREE.SpotLight(0xfff1dc, mobil ? 90 : 140, 14, 0.42, 0.75, 1.2);
   gunIsigi.position.set(-0.9, TAVAN + 4.2, kapakZ - 1.4);
   gunIsigi.target.position.set(0.35, TABAN, kapakZ + 1.0);
-  if (!mobil) { gunIsigi.castShadow = true; gunIsigi.shadow.mapSize.set(1024, 1024); gunIsigi.shadow.bias = -0.0008; gunIsigi.shadow.camera.near = 1; gunIsigi.shadow.camera.far = 12; }
+  if (!hafif) { gunIsigi.castShadow = true; gunIsigi.shadow.mapSize.set(1024, 1024); gunIsigi.shadow.bias = -0.0008; gunIsigi.shadow.camera.near = 1; gunIsigi.shadow.camera.far = 12; }
   icIsik.add(gunIsigi, gunIsigi.target);
 
   // hacimsel ışık huzmesi: yumuşak kenarlı, eklemeli koni (gerçek sis hesabı yerine ucuz ve inandırıcı)
@@ -172,7 +175,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
 
   // huzmede süzülen toz (yalnız masaüstü)
   let toz = null;
-  if (!mobil) {
+  if (!hafif) {
     const n = 420, pos = new Float32Array(n * 3), dir = new THREE.Vector3().subVectors(gunIsigi.target.position, gunIsigi.position);
     for (let i = 0; i < n; i++) {
       const t = 0.3 + Math.random() * 0.65, r = (0.2 + 0.9 * t) * Math.sqrt(Math.random()), a = Math.random() * Math.PI * 2;
@@ -265,7 +268,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
 
   /* ---------------- post-processing: alan derinliği + hafif parlama (masaüstü) ---------------- */
   let composer = null, bokeh = null;
-  const ppHazir = mobil ? Promise.resolve() : Promise.all([
+  const ppHazir = hafif ? Promise.resolve() : Promise.all([
     import('/assets/vendor/pp/EffectComposer.js'), import('/assets/vendor/pp/RenderPass.js'),
     import('/assets/vendor/pp/BokehPass.js'), import('/assets/vendor/pp/UnrealBloomPass.js'), import('/assets/vendor/pp/OutputPass.js'),
   ]).then(([EC, RP, BP, UB, OP]) => {
@@ -1058,7 +1061,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
          * renk dönüşümü ve ton eşleme farklıdır, three.js her malzeme için ayrı gölgelendirici kurar. Ekrana yapılan
          * ısınma bunları kapsamıyordu: kule tepesinde ve nasel girişinde 11–18 gölgelendirici kaydırırken derlenip
          * sahne 0,4–1,7 sn takılıyordu (17 Ekim tanı: p=0,4 prog+18, p=0,47 prog+11). Her ışık düzeni ara hedefe de çizilir. */
-        if (!mobil) {
+        if (!hafif) {
           let araHedef = null; const oncekiHedef = renderer.getRenderTarget();
           try {
             araHedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
@@ -1085,7 +1088,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
         isinmaHatasi('zaman-asimi', 'derleme bitmedi');
         gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
         guvenliYukle(); geriAl(); git();
-      }, mobil ? 16000 : 8000);
+      }, hafif ? 16000 : 8000);
     } catch (e) {
       // derleme hazırlığı daha baştan hata verdiyse ısınmasız başlamak yerine güvenli yüklemeyi yine de yap
       isinmaHatasi('hazirlik', e);

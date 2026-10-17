@@ -58,8 +58,20 @@
     } catch (e) { try { localStorage.removeItem(ZAYIF_ANAHTAR); } catch (e2) {} }
     var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     if (/SwiftShader|llvmpipe|softpipe|Basic Render/i.test(g)) return 'yazilim-gpu';
-    if (/Intel/i.test(g) && !/Iris\(R\) Xe|Arc/i.test(g)) return 'intel-tumlesik';
+    // Atom/Celeron sınıfı Intel (UHD 600/605, HD 400–505, numarasız HD): gerçekten zayıf, 3B açılmaz
+    if (/Intel/i.test(g) && (/UHD Graphics 60[05]\b|HD Graphics (40[05]|50[05])\b/i.test(g) || /HD Graphics( Direct3D|\)|,|$)/i.test(g))) return 'intel-atom';
     if (/Adreno \(TM\) [1-6]\d\d\b/.test(g) || /Mali-(T|G[0-6]\d\b)/.test(g) || /PowerVR/i.test(g)) return 'zayif-mobil-gpu';
+    if (!ios && navigator.deviceMemory && navigator.deviceMemory <= 2) return 'az-bellek';
+    return '';
+  }
+  /* Orta güç: 3B açılır ama hafif kipte (sade geometri, gölge ve efekt yok, 1× piksel). 17 Ekim tanı verisi:
+   * 7 günde 163 Windows oturumunun yalnız 4'ü 3B'yi görebildi; Intel tümleşik kartlar toptan engelliydi.
+   * Yetişemezlerse uyarlanır kalite ve ilk kare sınırı sahneyi yine kendiliğinden kapağa döndürür. */
+  function ortaCihaz() {
+    if (/[?&]hafif=1\b/.test(location.search)) return 'onizleme';
+    if (/[?&]hafif=0\b/.test(location.search)) return '';
+    var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (/Intel/i.test(g) && !/Iris\(R\) Xe|Arc|Intel\(R\) Graphics \(0x/i.test(g)) return 'intel-tumlesik';
     if (!ios && navigator.deviceMemory && navigator.deviceMemory <= 4) return 'az-bellek';
     if (!ios && navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return 'az-cekirdek';
     return '';
@@ -844,17 +856,19 @@
   function kur() {
     if (kuruluyor || sahneS) return;
     kuruluyor = true;
-    taniT0 = performance.now(); tani('basla', hareketAz ? { neden: 'hareket-azaltilmis' } : {});
+    var orta = filmKip ? '' : ortaCihaz();
+    taniT0 = performance.now(); tani('basla', hareketAz ? { neden: 'hareket-azaltilmis' + (orta ? ' hafif-' + orta : '') } : orta ? { neden: 'hafif-' + orta } : {});
     bolum.classList.remove('statik');
     bolum.classList.add('uc-boyut', 'dny-akis', 'dny-hazirlaniyor');
     bolum.setAttribute('aria-busy', 'true');
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=c0253b54').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=47e663af').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
+        hafif: !!orta,
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
         noktalar: noktalar,
         etiketler: etiketler,
