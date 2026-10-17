@@ -1054,6 +1054,21 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
           try { duzen(d); if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = true; renderer.render(scene, camera); }
           catch (e) { isinmaHatasi('duzen' + DUZEN.indexOf(d), e); }
         });
+        /* Masaüstünde sahne efekt zinciriyle (alan derinliği, parlama) bir ara hedefe çizilir. Ara hedefe çizimde
+         * renk dönüşümü ve ton eşleme farklıdır, three.js her malzeme için ayrı gölgelendirici kurar. Ekrana yapılan
+         * ısınma bunları kapsamıyordu: kule tepesinde ve nasel girişinde 11–18 gölgelendirici kaydırırken derlenip
+         * sahne 0,4–1,7 sn takılıyordu (17 Ekim tanı: p=0,4 prog+18, p=0,47 prog+11). Her ışık düzeni ara hedefe de çizilir. */
+        if (!mobil) {
+          let araHedef = null; const oncekiHedef = renderer.getRenderTarget();
+          try {
+            araHedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
+            DUZEN.forEach(d => {
+              try { duzen(d); renderer.setRenderTarget(araHedef); renderer.render(scene, camera); }
+              catch (e) { isinmaHatasi('ara' + DUZEN.indexOf(d), e); }
+            });
+          } catch (e) { isinmaHatasi('ara-hedef', e); }
+          finally { renderer.setRenderTarget(oncekiHedef); if (araHedef) araHedef.dispose(); }
+        }
         try { duzen([true, true]); } catch (e) { isinmaHatasi('duzen-son', e); }
         try { cizimCiz(0.5); } catch (e) { isinmaHatasi('cizim', e); }
         try { renderer.clear(); } catch (e) { /* temizlik olmasa da sahne çalışır */ }
