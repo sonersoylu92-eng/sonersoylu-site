@@ -21,6 +21,20 @@ Sitedeki bilgiler servis dokümanının yerine geçmez; türbin üzerinde çalı
 - [Nordex N90/2500 montajı](https://sonersoylu.com/n90/): 7 aşamalı 3B montaj.
 - [Sözlük](https://sonersoylu.com/sozluk/): 148 teknik terimin Türkçe–İngilizce karşılığı.
 - [Hesaplama araçları](https://sonersoylu.com/araclar/): Kanat ucu hızı, rüzgârdaki güç, kapasite faktörü, yıllık üretim, cıvata torku.
+- [Deniz üstü rüzgâr türbini](https://sonersoylu.com/deniz-ustu/): Monopile, jacket ve yüzer temeller; karadan farkları ve GWO Sea Survival.
+- [Türbin karşılaştırma](https://sonersoylu.com/turbinler/karsilastir/): Nordex N90 ve N117, Enercon E-82, Vestas V126 yan yana.
+- [Saha laboratuvarı](https://sonersoylu.com/lab/): Türbin sistemleri sekiz başlıkta; her başlıkta sistem sayfası ve gerçek vaka.
+
+## Etkileşimli araçlar
+- [Saha asistanı](https://sonersoylu.com/asistan/): Soruları bu sitenin kendi saha içeriğinden yanıtlar, cevabın hangi sayfadan geldiğini gösterir.
+- [Arıza teşhis simülatörü](https://sonersoylu.com/teshis/): Gerçek saha vakalarından kurulmuş, alarmdan kök nedene adım adım teşhis eğitimi.
+- [Vaka tekrarı](https://sonersoylu.com/saha-notlari/vaka-tekrari/): Üç saha vakasını belirti, ölçüm, trend, hipotez ve kök neden adımlarıyla yeniden oynatır.
+- [Canlı rüzgâr](https://sonersoylu.com/ruzgar/): Ege ve Marmara'daki yedi bölge için göbek yüksekliğinde rüzgâr ve N90/N117 güç eğrilerinden tahmini türbin çıkışı.
+- [Türbinin içine](https://sonersoylu.com/deneyim/): Kaydırarak bir Nordex N117'ye 3B yolculuk: kule kapısı, servis asansörü, yaw katı ve nasel içi.
+
+## Yazar ve soru-cevap
+- [Hakkımda](https://sonersoylu.com/hakkimda/): Soner Soylu, 2013'ten beri rüzgâr türbini saha servis teknikeri; görevleri ve yetkinlik haritası.
+- [Sahadan sor](https://sonersoylu.com/sor/): Sahadan gelen sorular ve herkese açık cevaplar.
 
 ## İletişim
 - E-posta: sonersoylu@yandex.com
