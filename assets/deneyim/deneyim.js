@@ -1078,8 +1078,35 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
         S.isinma.sonra = renderer.info.memory.geometries;
         geriAl(); git();
         // masaüstü efektleri (alan derinliği, parlama) nasel içinde ilk açıldığında derlenip takılmasın
-        ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; try { const e = bokeh.enabled; bokeh.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } });
+        ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; try { const e = bokeh.enabled; bokeh.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } derinlikIsit(); });
       };
+      /* Alan derinliği, sahneyi tek bir derinlik malzemesiyle (overrideMaterial) yeniden çizer. three.js bu malzemenin
+       * gölgelendiricisini de görünen ışık sayısına ve nesne türüne göre ayrı kurar. Kapakta yalnız dış düzen ve görünen
+       * nesneler derleniyordu; kule içinde (p≈0,14), nasel girişinde (p≈0,4) ve nasel içinde (p≈0,47) 8–18 gölgelendirici
+       * kaydırırken derlenip sahne 0,3–2,5 sn donuyordu (tanı 11–17 Ekim). Burada gizli parçalar dahil, her ışık
+       * düzeni için derinlik çizimi küçük bir ara hedefe yapılır; ekrana hiçbir şey çıkmaz. */
+      function derinlikIsit() {
+        if (!bokeh || !bokeh.materialDepth || birakildi) return 0;
+        const once = renderer.info.programs.length, onceki = renderer.getRenderTarget(), golgeIste = renderer.shadowMap.needsUpdate;
+        const gz = [], kz = []; let hedef = null;
+        try {
+          scene.traverse(o => { if (!o.visible) { o.visible = true; gz.push(o); } if (o.frustumCulled) { o.frustumCulled = false; kz.push(o); } });
+          hedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
+          renderer.shadowMap.needsUpdate = false;
+          scene.overrideMaterial = bokeh.materialDepth;
+          renderer.setRenderTarget(hedef);
+          DUZEN.forEach(d => { try { duzen(d); renderer.render(scene, camera); } catch (e) { isinmaHatasi('derinlik' + DUZEN.indexOf(d), e); } });
+        } catch (e) { isinmaHatasi('derinlik', e); }
+        finally {
+          scene.overrideMaterial = null; renderer.setRenderTarget(onceki); renderer.shadowMap.needsUpdate = golgeIste;
+          if (hedef) hedef.dispose();
+          try { duzen([true, true]); } catch (e) { /* döngü ışıkları her karede yeniden ayarlar */ }
+          gz.forEach(o => { o.visible = false; }); kz.forEach(o => { o.frustumCulled = true; });
+        }
+        S.isinma.derinlik = renderer.info.programs.length - once;
+        return S.isinma.derinlik;
+      }
+      S.derinlikIsit = derinlikIsit;   // tanı ve test: ikinci çağrı 0 yeni gölgelendirici vermeli
       geriAl();
       derlemeSozu = Promise.race([Promise.all(sozler).catch(() => {}), new Promise(r => setTimeout(r, 10000))]);
       Promise.all(sozler).then(bitti, bitti);
@@ -1107,6 +1134,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   }
   S.birak = birak;
   S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi, duraklat });
+  Object.defineProperty(S, 'bokeh', { get: () => bokeh });   // tanı ve test: alan derinliği geçişi
+  Object.defineProperty(S, 'composer', { get: () => composer });
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
   S.noktaVurgula = id => { vurguNokta = id || null; if (rt.acik) { rt.secili = vurguNokta; rontgenVurgu(); } baslat(); };
