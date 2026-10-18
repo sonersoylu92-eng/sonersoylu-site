@@ -15,8 +15,12 @@
 .dny-sahne canvas.hazir{opacity:1}
 .dny-poster{position:absolute;inset:0;z-index:-4;background:#0b0e11}
 /* fotoğraflı kapak yalnız canlı 3B açılmayan cihazlarda (durağan kip); 3B açılırken eski görüntü gösterilmez */
-.dny-bolum.statik .dny-poster{background:#263c52 url('/assets/saha/sahne-ilk-kare-wide.webp') center/cover no-repeat}
-@media(max-width:820px){.dny-bolum.statik .dny-poster{background-image:url('/assets/saha/sahne-ilk-kare-mobile.webp')}}
+.dny-bolum.statik .dny-poster{background:#8d9aa3 url('/assets/saha/kapak-nasel-genis-v1.webp') center/cover no-repeat}
+@media(orientation:portrait){.dny-bolum.statik .dny-poster{background-image:url('/assets/saha/kapak-nasel-dikey-v1.webp')}}
+/* yedek kapak döngüsü (arayuz.js donguKur): fotoğrafın üstünde, ilk kare oynayınca yumuşakça belirir */
+.dny-dongu{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease;pointer-events:none}
+.dny-dongu.oynuyor{opacity:1}
+.dny-bolum:not(.statik) .dny-dongu{display:none}
 :root[data-vardiya=gece] .dny-bolum.statik .dny-poster{filter:brightness(.52) saturate(.65)}
 .dny-poster.dny-anlik-kare{background-size:cover;background-position:center}
 .dny-bolum.dny-akis .dny-poster{transition:opacity .7s ease}

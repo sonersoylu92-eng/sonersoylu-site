@@ -844,6 +844,49 @@
     if (acikPanel && acikPanel.p === eaPanel) { panelKapa(true); return; }
     eaYaz(); panelAc(eaPanel, eaBtn);
   });
+  /* Yedek kapak döngüsü: 3B açılamayan cihazda sabit fotoğraf yerine nasel çatısından dönen rotor.
+   * Kareler sahnenin kendisinden çekildi; rotor tam 120° döndüğü için döngü dikişsizdir (3 kanat simetrisi).
+   * Yalnız durağan kipte indirilir; "hareketi azalt" ve veri tasarrufunda fotoğraf kalır. Ekran dışındayken
+   * ya da sekme gizliyken durur, pil ve işlemci boşa yorulmaz. */
+  var dongu = null, donguGozcu = null, donguGorunur = true;
+  function donguOynat() {
+    if (!dongu) return;
+    if (donguGorunur && !document.hidden) { var p = dongu.play(); if (p && p.catch) p.catch(function () {}); }
+    else dongu.pause();
+  }
+  function donguKur() {
+    if (dongu || hareketAz || filmKip || (navigator.connection && navigator.connection.saveData)) return;
+    var poster = bolum.querySelector('.dny-poster');
+    if (!poster || !document.createElement('video').canPlayType) return;
+    var v = document.createElement('video');
+    v.className = 'dny-dongu';
+    v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
+    ['muted', 'playsinline', 'autoplay', 'loop', 'disablepictureinpicture', 'disableremoteplayback'].forEach(function (a) { v.setAttribute(a, ''); });
+    v.setAttribute('aria-hidden', 'true'); v.setAttribute('tabindex', '-1'); v.preload = 'auto';
+    var ad = '/assets/video/kapak-' + (matchMedia('(orientation: portrait)').matches ? 'dikey' : 'genis') + '-v1';
+    // H.264 önce: zayıf cihazların neredeyse hepsinde donanım çözücüsü var; VP9 yalnız onu açamayan tarayıcıya
+    [['mp4', 'video/mp4; codecs="avc1.640028"'], ['webm', 'video/webm; codecs="vp9"']].forEach(function (s) {
+      var k = document.createElement('source'); k.src = ad + '.' + s[0]; k.type = s[1]; v.appendChild(k);
+    });
+    v.addEventListener('playing', function () { v.classList.add('oynuyor'); });
+    // son kaynak da açılamazsa (biçim yok, ağ hatası) fotoğraf kalır
+    v.lastChild.addEventListener('error', donguKaldir);
+    poster.appendChild(v);
+    dongu = v;
+    if ('IntersectionObserver' in window) {
+      donguGozcu = new IntersectionObserver(function (g) { donguGorunur = g[g.length - 1].isIntersecting; donguOynat(); });
+      donguGozcu.observe(bolum);
+    }
+    donguOynat();
+  }
+  function donguKaldir() {
+    if (!dongu) return;
+    var v = dongu; dongu = null;
+    if (donguGozcu) { donguGozcu.disconnect(); donguGozcu = null; }
+    try { v.pause(); while (v.firstChild) v.removeChild(v.firstChild); v.removeAttribute('src'); v.load(); } catch (e) {}
+    if (v.parentNode) v.parentNode.removeChild(v);
+  }
+  document.addEventListener('visibilitychange', donguOynat);
   function statik(dugme) {
     bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'dny-akis', 'hazir');
     bolum.classList.add('statik');
@@ -852,10 +895,12 @@
     acilabilir = !!dugme;
     if (basla && !sahaya) basla.hidden = false;
     if (baslaBtn) baslaBtn.hidden = !dugme;
+    donguKur();
   }
   function kur() {
     if (kuruluyor || sahneS) return;
     kuruluyor = true;
+    donguKaldir();
     var orta = filmKip ? '' : ortaCihaz();
     taniT0 = performance.now(); tani('basla', hareketAz ? { neden: 'hareket-azaltilmis' + (orta ? ' hafif-' + orta : '') } : orta ? { neden: 'hafif-' + orta } : {});
     bolum.classList.remove('statik');
