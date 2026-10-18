@@ -13,8 +13,9 @@ import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=63ecf9c8';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
-import { egeKur } from '/assets/deneyim/ege.js?v=eea1cb5d';
-import { gokKur } from '/assets/deneyim/gok.js?v=aacfa740';
+import { egeKur } from '/assets/deneyim/ege.js?v=ef6e542c';
+import { gokKur } from '/assets/deneyim/gok.js?v=d466d467';
+import { korfezKur } from '/assets/deneyim/korfez.js?v=af1ede38';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
@@ -36,6 +37,10 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // V14 KAPAK (varsayılan): nasel çatısından bakış (saha fotoğrafı: maki kaplı Ege sırtları, toprak yollar, sırt boyunca türbinler).
   // ?banner=eski önceki V13 kapağını, ?banner=gunbatimi altın saat önizlemesini açar.
   const NC = !GB && !/[?&]banner=eski\b/.test(location.search);
+  // V18 KAPAK (varsayılan): aynı nasel çatısı kadrajı; dünya Aliağa açığı, Çandarlı Körfezi'nin ağzında deniz üstü bir türbin
+  // (korfez.js). ?banner=ege V14–V17 maki kapağını açar. Güneş İzmir'in gerçek konumundan hesaplanır; gün batımında kapak
+  // kamerası denize, batan güneşe döner.
+  const KORFEZ = NC && !/[?&]banner=ege\b/.test(location.search);
 
   let S;
   try { S = createScene(canvas, { lite: hafif }); } catch (e) { console.error('deneyim sahne:', e); return null; }
@@ -50,7 +55,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   let gok = null;
   try {
     const zz = new URLSearchParams(location.search).get('gokzaman');
-    gok = gokKur(THREE, { lite: hafif, sabitZaman: zz && !isNaN(Date.parse(zz)) ? zz : null });
+    gok = gokKur(THREE, { lite: hafif, sabitZaman: zz && !isNaN(Date.parse(zz)) ? zz : null, ...(KORFEZ ? { enlem: 38.42, boylam: 27.14 } : {}) });   // körfez kapağı: İzmir
     S.scene.add(gok.grup);
   } catch (e) { console.warn('gök yok:', e); gok = null; }
   // nasel çatısı kapağında kamera ikaz lambasının birkaç metre yanında: yakın hale küçülür, başlığın arkasında kırmızı leke olmasın
@@ -79,7 +84,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   });
   (parts.blades || []).forEach(k => ucUygula(k, 0.062));   // 57 m kanatta ~3,5 m
   ucUygula(parts.farm, 0.065);
-  if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC) ege.maki(araziY); }
+  let korfez = null;
+  if (KORFEZ) { try { korfez = korfezKur(S, { lite: hafif }); } catch (e) { console.warn('körfez yok:', e); korfez = null; } }
+  if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC && !korfez) ege.maki(araziY); if (korfez) ege.acikDeniz(); }
 
   const normalDpr = hafif ? 1 : Math.min(devicePixelRatio || 1, 1.6);
   const normalShadow = renderer.shadowMap.enabled && !hafif;
@@ -288,9 +295,19 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   // önizleme ve test: ?vardiya=gunduz|altin|aksam|gece gerçek saatin yerine geçer
   const zorVardiya = (location.search.match(/[?&]vardiya=(gunduz|safak|altin|aksam|gece)\b/) || [])[1] || null;
   window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; kareSakla = true; if (!icAyar) isik(); });
+  /* körfez kapağında vardiya doğrudan İzmir'deki gerçek güneş yüksekliğinden (gok.js, 30 sn'de bir) okunur:
+   * gün batımı anı sayfanın 10 dakikalık etiket yenilemesini beklemez. */
+  function vardiyaSimdi() {
+    if (zorVardiya || !korfez || !gok) return zorVardiya || kok.dataset.vardiya;
+    const d = gok.durum, h = d.gunesH * 180 / Math.PI;
+    if (h < -6) return 'gece';
+    if (h < 0) return d.gunesYon.x > 0 ? 'safak' : 'aksam';   // güneş doğuda: sabah
+    return h < 8 ? 'altin' : 'gunduz';
+  }
   function isikModu() {
     if (GB) return 'sunset';
-    const v = zorVardiya || kok.dataset.vardiya;
+    const v = vardiyaSimdi();
+    if (korfez && v === 'safak') return 'safak';
     return v === 'gece' ? 'night' : v === 'aksam' || v === 'altin' ? 'sunset' : 'day';
   }
   let sonMod = null;
@@ -338,7 +355,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     S.sky.material.uniforms.uGunes.value.copy(_gy);
     if (ege) ege.gunesBak(_gy);
   }
-  let gecis = null, isikIlk = true, sonAtmT = 0;
+  let gecis = null, isikIlk = true, sonAtmT = 0, sonFaz = null;
   // süre duvar saatiyle ölçülür: yavaş cihazda ya da seyreltilmiş karede geçiş uzayıp yarım kalmaz
   function gecisAdim(bitir) {
     if (!gecis) return;
@@ -348,15 +365,15 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (gecis.t >= 1) gecis = null;
   }
   function isik() {
-    const m = isikModu();
-    if (m === sonMod && havaSurum === sonSurum) return;
+    const m = isikModu(), faz = korfez ? vardiyaSimdi() : null;
+    if (m === sonMod && havaSurum === sonSurum && faz === sonFaz) return;
     const yumusat = !isikIlk && !icAyar && !az;
     const once = yumusat ? durumAl() : null;
-    setLight(m); sonMod = m; sonSurum = havaSurum;
+    setLight(m); sonMod = m; sonSurum = havaSurum; sonFaz = faz;
     const tur = hava && hava.tur;
     const u = S.sky.material.uniforms;
     // nasel kapağı: fotoğraftaki berrak gün ışığı yalnız gündüz ve açık/parçalı havada; akşam, gece, yağmur ve fırtınada gerçek koşul
-    const ncAcik = NC && m === 'day' && (!tur || tur === 'acik' || tur === 'parcali');
+    const ncAcik = NC && !korfez && m === 'day' && (!tur || tur === 'acik' || tur === 'parcali');
     if (tur === 'bulutlu' || tur === 'yagmur' || tur === 'firtina' || tur === 'kar' || tur === 'sis') {
       const koyu = tur === 'yagmur' || tur === 'firtina';
       const renk = m === 'night' ? 0x26313c : tur === 'kar' ? 0xb2bbc2 : tur === 'firtina' ? 0x4d5864 : koyu ? 0x667380 : 0x909da7;
@@ -406,19 +423,22 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     }
     hemiTaban = hemi.intensity; dolguTaban = dolgu.intensity; gunesTaban = gunes.intensity;
     disPoz = renderer.toneMappingExposure;
-    if (ege) ege.ayarla(GB ? 'gunbatimi' : ncAcik ? 'nasel' : m, GB || ncAcik ? 'acik' : tur);
+    // körfez kapağında gök, ışık ve sis her karede korfez.js'ten gelir; burada yalnız bulut tonu seçilir
+    const egeMod = korfez ? (m === 'night' ? 'korfezGece' : faz === 'altin' ? 'korfezAltin' : faz === 'aksam' || faz === 'safak' ? 'korfezAksam' : 'korfez') : m;
+    if (ege) ege.ayarla(GB ? 'gunbatimi' : ncAcik ? 'nasel' : egeMod, GB || ncAcik ? 'acik' : tur);
     if (once) { gecis = { a: once, b: durumAl(), t: 0, t0: performance.now() }; durumKoy(once, gecis.b, 0); renderer.toneMappingExposure = pozAnlik; }
     else { gecis = null; if (ege) ege.anlik(); }
     isikIlk = false;
   }
   isik();
   // CSS değişkenleri (canlı rüzgâr) saniyede bir okunur; her karede getComputedStyle stil hesabını zorlar
-  let cssT = -1e9, cssDevir = 0, cssYon = null;
+  let cssT = -1e9, cssDevir = 0, cssYon = null, cssRz = null;
   function cssOku() {
     const n = performance.now(); if (n - cssT < 1000) return; cssT = n;
     const st = getComputedStyle(kok);
     const s = parseFloat(st.getPropertyValue('--devir-sure')); cssDevir = s > 0 ? 2 * Math.PI / s : 0;
     const d = parseFloat(st.getPropertyValue('--yon-derece')); cssYon = isFinite(d) ? -d * Math.PI / 180 : null;
+    const r = parseFloat(st.getPropertyValue('--rz')); cssRz = isFinite(r) ? r * 25 : null;   // canli.js: v / 25
   }
   function devirRad() { cssOku(); return cssDevir; }
   function yonHedef() { cssOku(); return cssYon; }
@@ -696,6 +716,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
    * 360° etrafına bakar. Kaydırma başlayınca ya da çatıdan uzaklaşınca bakış yumuşakça senaryodaki yöne döner. */
   const bak = { yaw: 0, pitch: 0, hYaw: 0, hPitch: 0, alan: false, surukle: false };
   const _bakD = new THREE.Vector3(), _naselM = new THREE.Vector3();
+  const _gbF = new THREE.Vector3(), _gbR = new THREE.Vector3(), _gbH = new THREE.Vector3(), _gbK = new THREE.Vector3(), _gbB = new THREE.Vector3(), _gbT = new THREE.Vector3();
+  const gobek = parts.blades && parts.blades[0] ? parts.blades[0].parent : tilt;   // rotor göbeği (dönen grup)
+  let gbE = 0;   // gün batımı kadrajının ağırlığı (0–1)
   let hedefIlk = true, icAyar = null, kabinOnce = null, asnHizYum = 0, kIcOnce = 0;
   pozAnlik = disPoz;
   new IntersectionObserver(es => { gorunur = es[0].isIntersecting; if (gorunur) baslat(); }, { rootMargin: '120px' }).observe(bolum);
@@ -784,7 +807,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       kKonum.lerp(rKonum, e); yumHedef.lerp(rMerkez, e);
     }
     // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
-    if (!sonIcerde && !sonKulede) { const yer = (ege ? ege.yerY(araziY, kKonum.x, kKonum.z) : araziY(kKonum.x, kKonum.z)) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
+    if (!sonIcerde && !sonKulede) { const yer = (korfez ? korfez.yerY(kKonum.x, kKonum.z) : ege ? ege.yerY(araziY, kKonum.x, kKonum.z) : araziY(kKonum.x, kKonum.z)) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
     // serbest bakış alanı: dışarıda, röntgen kapalı, nasele 48 m'den yakın (çatıda ya da çatının hemen üstünde)
     _naselM.setFromMatrixPosition(yaw.matrixWorld);
     bak.alan = !sonIcerde && !sonKulede && rt.g < 0.01 && kKonum.distanceTo(_naselM) < 48;
@@ -792,14 +815,32 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const bakAdim = anlik ? 1 : 1 - Math.exp(-dt * 12);
     bak.yaw += (bak.hYaw - bak.yaw) * bakAdim; bak.pitch += (bak.hPitch - bak.pitch) * bakAdim;
     if (Math.abs(bak.yaw) + Math.abs(bak.pitch) < 1e-4 && !bak.surukle) { bak.yaw = bak.hYaw = 0; bak.pitch = bak.hPitch = 0; }
+    /* V18 gün batımı kadrajı: güneş ufka yakınken (İzmir'deki gerçek yüksekliği 7°'nin altında, −4°'nin üstünde) kapak kamerası
+     * naselin çatısından türbinin güneşe göre karşı tarafına süzülür: rotor ve nasel batan (ya da doğan) güneşe karşı siluet,
+     * ufuk karenin ortasına yakın, güneş kadrajın solunda. Güneş saatle çok yavaş yürüdüğü için geçiş fark edilmez;
+     * kaydırma başlayınca kamera senaryodaki yoluna süzülür. */
+    let bakH = yumHedef; gbE = 0;
+    if (korfez && gok && rt.g < 0.01) {
+      const gd = gok.durum, hG = gd.gunesH * 180 / Math.PI;
+      const w = yumusak(13, 7, hG) * yumusak(-8, -4, hG) * (1 - yumusak(0, 0.035, p));
+      if (w > 0.001) {
+        _gbF.set(gd.gunesYon.x, 0, gd.gunesYon.z).normalize(); _gbR.set(-_gbF.z, 0, _gbF.x);
+        gobek.getWorldPosition(_gbH);
+        _gbK.copy(_gbH).addScaledVector(_gbF, mobil ? -138 : -112).addScaledVector(_gbR, mobil ? -24 : -52); _gbK.y += mobil ? 2 : 5;
+        const sap = (mobil ? 3 : 11) * Math.PI / 180, eg = (mobil ? -2.5 : -1.2) * Math.PI / 180;
+        _gbB.copy(_gbF).multiplyScalar(Math.cos(sap)).addScaledVector(_gbR, Math.sin(sap)); _gbB.y = Math.tan(eg); _gbB.normalize().multiplyScalar(400).add(_gbK);
+        const e = w * w * (3 - 2 * w);
+        kKonum.lerp(_gbK, e); bakH = _gbT.copy(yumHedef).lerp(_gbB, e); gbE = e;
+      }
+    }
     camera.position.copy(kKonum);
     if (bak.yaw || bak.pitch) {
-      _bakD.subVectors(yumHedef, kKonum); const uz = _bakD.length() || 1;
+      _bakD.subVectors(bakH, kKonum); const uz = _bakD.length() || 1;
       const yA = Math.atan2(_bakD.x, _bakD.z) - bak.yaw;
       const yE = THREE.MathUtils.clamp(Math.asin(THREE.MathUtils.clamp(_bakD.y / uz, -1, 1)) + bak.pitch, -1.38, 1.38);
       _bakD.set(Math.sin(yA) * Math.cos(yE), Math.sin(yE), Math.cos(yA) * Math.cos(yE)).multiplyScalar(uz).add(kKonum);
       camera.lookAt(_bakD);
-    } else camera.lookAt(yumHedef);
+    } else camera.lookAt(bakH);
 
     // iç/dış geçişi
     naselYerel(camera.position, yerel);
@@ -871,13 +912,24 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const atmDt = sonAtmT ? Math.min(1, (t - sonAtmT) / 1000) : 0; sonAtmT = t;
     if (ege) { ege.grup.visible = icPay < 0.999; if (ege.grup.visible) ege.adim(atmDt, mt / 1000, !az && !duraklat); }
     if (gok) {
-      gok.grup.visible = icPay < 0.999;
-      if (gok.grup.visible) {
-        const vv = zorVardiya || kok.dataset.vardiya, ht = hava && hava.tur;
-        const gece = vv === 'gece' ? 1 : vv === 'aksam' ? 0.4 : vv === 'safak' ? 0.3 : 0;
-        const kapali = ht === 'bulutlu' || ht === 'yagmur' || ht === 'firtina' || ht === 'kar' || ht === 'sis' ? 1 : ht === 'parcali' ? 0.3 : 0;
-        gok.adim(camera, atmDt || 0.016, gece, kapali);
+      const vv = vardiyaSimdi(), ht = hava && hava.tur;
+      const gece = vv === 'gece' ? 1 : vv === 'aksam' ? 0.4 : vv === 'safak' ? 0.3 : 0;
+      const kapali = ht === 'bulutlu' || ht === 'yagmur' || ht === 'firtina' || ht === 'kar' || ht === 'sis' ? 1 : ht === 'parcali' ? 0.3 : 0;
+      let ayCarpan = 1;
+      if (korfez) {
+        korfez.grup.visible = icPay < 0.999;
+        if (korfez.grup.visible && !kIc) {
+          // körfez kapağı: gök modeli güneşin, ortam ışığının, pozlamanın ve sisin değerini her karede verir
+          const g = gok.durum; cssOku();
+          const L = korfez.adim({ kamera: camera, gunesYon: g.gunesYon, ayYon: g.ayYon, ayH: g.ayH, ayKesir: g.ayKesir, kapali: ht === 'parcali' ? 0.35 : kapali,
+            yawY: yaw.rotation.y, zamanSn: mt / 1000, hareket: !az && !duraklat, ruzgar: cssRz, dogrudan: !composer });
+          gunes.color.copy(L.gunesRenk); gunesTaban = L.gunesG;
+          hemi.color.copy(L.hemiRenk); hemi.groundColor.copy(L.hemiZemin); hemiTaban = L.hemiG; dolguTaban = L.dolguG; disPoz = L.poz;
+          scene.fog.color.copy(L.sis); scene.background.copy(L.sis); scene.fog.near = L.sisYakin; scene.fog.far = L.sisUzak;
+          ayCarpan = L.ayGor;
+        }
       }
+      gok.grup.visible = icPay < 0.999; if (gok.grup.visible) gok.adim(camera, atmDt || 0.016, gece, kapali, ayCarpan);
     }
     // içeride karanlık endüstriyel hava: yakın sis ve düşük pozlama
     if (kIc && !icAyar) { icAyar = { renk: scene.fog.color.getHex(), yakin: scene.fog.near, uzak: scene.fog.far, poz: disPoz }; }
@@ -918,7 +970,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     // alan derinliği: bakılan noktaya odak
     if (bokeh) bokeh.enabled = !!icerde && kalite < 2;
     if (bokeh && bokeh.enabled) {
-      const odak = camera.position.distanceTo(yumHedef);
+      const odak = gbE > 0.5 ? camera.position.distanceTo(_gbH) : camera.position.distanceTo(yumHedef);   // gün batımı kadrajında odak türbinde
       bokeh.uniforms.focus.value = odak;
       bokeh.uniforms.aperture.value = icerde ? 0.0009 : 0.00003;
       bokeh.uniforms.maxblur.value = icerde ? 0.007 : 0.003;

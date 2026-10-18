@@ -856,6 +856,7 @@
   }
   function donguKur() {
     if (dongu || hareketAz || filmKip || (navigator.connection && navigator.connection.saveData)) return;
+    if (!/[?&]banner=ege\b/.test(location.search)) return;   // V18: döngü videoları Ege kapağından çekildi; körfez kapağında fotoğraf kalır
     var poster = bolum.querySelector('.dny-poster');
     if (!poster || !document.createElement('video').canPlayType) return;
     var v = document.createElement('video');
@@ -909,7 +910,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=9c80fc43').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=cad85a0d').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {

@@ -17,8 +17,11 @@
 /* Fotoğraflı kapak: 3B açılmayan cihazda (durağan kip) kalıcı, 3B yüklenirken geçici. Fotoğraf sahnenin kendi açılış
  * karesi (nasel çatısı); 3B hazır olunca .7 sn'lik geçişle aynı görüntüye oturur. Eskiden yükleme boyunca siyah ekran
  * kalıyordu; yavaş bağlantıda (18 Ekim tanı: Android, 27 sn) ziyaretçi hiçbir şey görmeden çıkıyordu. */
-.dny-bolum.statik .dny-poster,.dny-bolum.uc-boyut .dny-poster,.dny-bolum.dny-hazirlaniyor .dny-poster{background:#8d9aa3 url('/assets/saha/kapak-nasel-genis-v1.webp') center/cover no-repeat}
-@media(orientation:portrait){.dny-bolum.statik .dny-poster,.dny-bolum.uc-boyut .dny-poster,.dny-bolum.dny-hazirlaniyor .dny-poster{background-image:url('/assets/saha/kapak-nasel-dikey-v1.webp')}}
+.dny-bolum.statik .dny-poster,.dny-bolum.uc-boyut .dny-poster,.dny-bolum.dny-hazirlaniyor .dny-poster{background:#7d98ad url('/assets/saha/kapak-korfez-genis-v1.webp') center/cover no-repeat}
+@media(orientation:portrait){.dny-bolum.statik .dny-poster,.dny-bolum.uc-boyut .dny-poster,.dny-bolum.dny-hazirlaniyor .dny-poster{background-image:url('/assets/saha/kapak-korfez-dikey-v1.webp')}}
+/* V18 körfez kapağı: altın saatte ve alacakaranlıkta sahne türbini batan güneşe karşı siluet olarak açar; fotoğraf da o kare */
+:root:is([data-vardiya=altin],[data-vardiya=aksam],[data-vardiya=safak]) :is(.dny-bolum.statik,.dny-bolum.uc-boyut,.dny-bolum.dny-hazirlaniyor) .dny-poster{background-image:url('/assets/saha/kapak-korfez-batim-genis-v1.webp')}
+@media(orientation:portrait){:root:is([data-vardiya=altin],[data-vardiya=aksam],[data-vardiya=safak]) :is(.dny-bolum.statik,.dny-bolum.uc-boyut,.dny-bolum.dny-hazirlaniyor) .dny-poster{background-image:url('/assets/saha/kapak-korfez-batim-dikey-v1.webp')}}
 /* yedek kapak döngüsü (arayuz.js donguKur): fotoğrafın üstünde, ilk kare oynayınca yumuşakça belirir */
 .dny-dongu{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease;pointer-events:none}
 .dny-dongu.oynuyor{opacity:1}

@@ -165,6 +165,11 @@ const PALET = {
   // nasel çatısından açık sabah (saha fotoğrafı): pus yok denecek kadar az, uzak sırtlar maki yeşili
   nasel: { koyu: '#33402c', acik: '#6f7c5e', deniz: '#6f93ad', golge: '#cfd8df', bAcik: '#ffffff', sis: 0, ort: 0.15, yog: 0.0, isik: 0.2, yildiz: 0 },
   safak:  { koyu: '#141a28', acik: '#3a3c4c', deniz: '#22304a', golge: '#3b4561', bAcik: '#f0a878', sis: 0.6, ort: 0.45, yog: 0.9, isik: 0.8, yildiz: 0.3 },
+  // V18 körfez kapağı: açık havada bulut yok (gök Preetham modeliyle korfez.js'te); kapalı havada hava bloğu bulutu açar
+  korfez:      { koyu: '#33402c', acik: '#6f7c5e', deniz: '#2f8fb5', golge: '#c3d0da', bAcik: '#ffffff', sis: 0, ort: 0.05, yog: 0, yogKapali: 0, isik: 0.3, yildiz: 0 },
+  korfezAltin: { koyu: '#33402c', acik: '#6f7c5e', deniz: '#2f6f95', golge: '#8c7590', bAcik: '#ffd09a', sis: 0, ort: 0.1, yog: 0, yogKapali: 0, isik: 1.15, yildiz: 0 },
+  korfezAksam: { koyu: '#33402c', acik: '#6f7c5e', deniz: '#2a3f66', golge: '#4d4166', bAcik: '#ff9c80', sis: 0, ort: 0.12, yog: 0, yogKapali: 0, isik: 0.85, yildiz: 0.15 },
+  korfezGece:  { koyu: '#05070c', acik: '#0e1320', deniz: '#0a1220', golge: '#121826', bAcik: '#283246', sis: 0, ort: 0.3, yog: 0, yogKapali: 0, isik: 0.0, yildiz: 1 },
 };
 
 export function egeKur(S, { lite = false } = {}) {
@@ -206,7 +211,7 @@ export function egeKur(S, { lite = false } = {}) {
   grup.add(deniz);
 
   // alçak sis bantları: kameradan uzak üç halka, sırt eteklerini ve vadileri yumuşatır
-  const sisMat = [];
+  const sisMat = [], sisler = [];
   [[620, 46, 0.6], [980, 70, 0.8], [1300, 95, 1]].forEach(([r, yuk, guc], i) => {
     if (lite && i === 0) return;
     const mat = new THREE.ShaderMaterial({
@@ -217,7 +222,7 @@ export function egeKur(S, { lite = false } = {}) {
     mat.userData.guc = guc;
     const m = new THREE.Mesh(halkaGeo(r, yuk, lite ? 96 : 200, 0.04), mat);
     m.frustumCulled = false; m.renderOrder = 2;
-    grup.add(m); sisMat.push(mat);
+    grup.add(m); sisMat.push(mat); sisler.push(m);
   });
 
   // yüksek bulut katmanı
@@ -392,6 +397,9 @@ float mkN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
     return secilen.length;
   }
   function yerY(araziY, x, z) { return araziY(x, z) * (ovaAcik ? ovaKatsayi(x, z) : 1); }
+  /* AÇIK DENİZ (V18): sırtlar, eski kıyı şeridi ve sırt sisleri sahneden çıkar (korfez.js kendi gökünü, denizini ve
+   * kara siluetlerini kurar); bulut katmanı ve yıldızlar kalır. */
+  function acikDeniz() { [...sirtlar, deniz, ...sisler].forEach(m => { grup.remove(m); m.geometry.dispose(); }); }
 
   /* hedef değerler ve yumuşak geçiş */
   const R = () => new THREE.Color();
@@ -435,7 +443,7 @@ float mkN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
     hedef.isikG = kapali ? P.isik * 0.15 : parcali ? P.isik * 0.85 : P.isik;
     hedef.sis = Math.min(1, P.sis + (tur === 'sis' ? 0.55 : kapali ? 0.2 : 0));
     hedef.ort = kapali ? (koyuHava ? 0.95 : 0.8) : tur === 'acik' ? P.ort * 0.6 : parcali ? Math.min(0.75, P.ort + 0.22) : P.ort;
-    hedef.yog = kapali ? 0.97 : P.yog;
+    hedef.yog = kapali ? (P.yogKapali != null ? P.yogKapali : 0.97) : P.yog;   // körfez kapağında bulutu gök modeli çizer
     hedef.yildiz = kapali ? 0 : P.yildiz;
     hedef.pusEk = tur === 'sis' ? 0.5 : koyuHava ? 0.3 : kapali ? 0.15 : 0;
     if (kapali) { hedef.golge.lerp(scene.fog.color, 0.5).multiplyScalar(0.85); hedef.bAcik.lerp(scene.fog.color, 0.55); }
@@ -464,5 +472,5 @@ float mkN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
   }
   let kamera = null;
   function kameraBagla(k) { kamera = k; }
-  return { grup, ayarla, adim, anlik, gunesBak, haleAyarla, sirrus, ova, maki, yerY, kameraBagla };
+  return { grup, ayarla, adim, anlik, gunesBak, haleAyarla, sirrus, ova, maki, yerY, kameraBagla, acikDeniz };
 }

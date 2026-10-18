@@ -72,7 +72,8 @@ export function gokKur(THREE, { lite = false, enlem = 38.85, boylam = 27.0, sabi
   const ymat = new THREE.ShaderMaterial({
     uniforms: { uGor: { value: 0 }, uOlcek: { value: Math.min(2, window.devicePixelRatio || 1) } },
     vertexShader: `attribute float aBoy; attribute vec3 aRenk; varying vec3 vR; uniform float uOlcek;
-      void main(){ vR = aRenk; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); gl_PointSize = aBoy * uOlcek; }`,
+      void main(){ vR = aRenk * smoothstep(0.03, 0.09, normalize(position).y);   // ufka yakın yıldızlar söner (sönümlenme; uzak dağların önüne düşmez)
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); gl_PointSize = aBoy * uOlcek; }`,
     fragmentShader: `varying vec3 vR; uniform float uGor;
       void main(){ vec2 q = gl_PointCoord - 0.5; float d = length(q); float a = smoothstep(0.5, 0.0, d); a *= a;
         gl_FragColor = vec4(vR, a * uGor); }`,
@@ -142,13 +143,14 @@ export function gokKur(THREE, { lite = false, enlem = 38.85, boylam = 27.0, sabi
 
   /* gece: 0–1 (gece kipi 1, alacakaranlık arası), kapali: 0–1 (bulut/yağmur/sis örtüsü) */
   const gor = { y: 0, a: 0 };
-  function adim(kamera, dt, gece, kapali) {
+  /* ayCarpan: ay ufuktaki bir dağın ardındaysa 0 (kapak dünyası bildirir) */
+  function adim(kamera, dt, gece, kapali, ayCarpan = 1) {
     if (Date.now() - durum.t > 30000) hesapla();
     grup.position.copy(kamera.position);
     const k = 1 - Math.exp(-dt * 1.5);
     const yHedef = gece * (1 - kapali);
     const ufuk = THREE.MathUtils.smoothstep(durum.ayH / RAD, -0.6, 1.2);
-    const aHedef = ufuk * (1 - kapali) * (gece > 0.5 ? 1 : 0.55);
+    const aHedef = ufuk * ayCarpan * (1 - kapali) * (gece > 0.5 ? 1 : 0.55);
     gor.y += (yHedef - gor.y) * k; gor.a += (aHedef - gor.a) * k;
     ymat.uniforms.uGor.value = gor.y; yildizlar.visible = gor.y > 0.01;
     amat.uniforms.uGor.value = gor.a; amat.uniforms.uGece.value = gece; ay.visible = gor.a > 0.01;
