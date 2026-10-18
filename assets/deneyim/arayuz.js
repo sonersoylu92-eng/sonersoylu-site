@@ -856,7 +856,6 @@
   }
   function donguKur() {
     if (dongu || hareketAz || filmKip || (navigator.connection && navigator.connection.saveData)) return;
-    if (!/[?&]banner=ege\b/.test(location.search)) return;   // V18: döngü videoları Ege kapağından çekildi; körfez kapağında fotoğraf kalır
     var poster = bolum.querySelector('.dny-poster');
     if (!poster || !document.createElement('video').canPlayType) return;
     var v = document.createElement('video');
@@ -864,7 +863,11 @@
     v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
     ['muted', 'playsinline', 'autoplay', 'loop', 'disablepictureinpicture', 'disableremoteplayback'].forEach(function (a) { v.setAttribute(a, ''); });
     v.setAttribute('aria-hidden', 'true'); v.setAttribute('tabindex', '-1'); v.preload = 'auto';
-    var ad = '/assets/video/kapak-' + (matchMedia('(orientation: portrait)').matches ? 'dikey' : 'genis') + '-v1';
+    var yon = matchMedia('(orientation: portrait)').matches ? 'dikey' : 'genis', vrd = document.documentElement.dataset.vardiya;
+    // V18 körfez kapağı: gündüz nasel çatısından, altın saat ve alacakaranlıkta batan güneşe karşı siluet (fotoğrafla aynı kare);
+    // ?banner=ege|eski|gunbatimi eski Ege döngüsünü (v1) kullanır
+    var ad = /[?&]banner=(ege|eski|gunbatimi)\b/.test(location.search) ? '/assets/video/kapak-' + yon + '-v1'
+      : '/assets/video/kapak-korfez-' + yon + '-' + (vrd === 'altin' || vrd === 'aksam' || vrd === 'safak' ? 'batim' : 'gunduz') + '-v2';
     // H.264 önce: zayıf cihazların neredeyse hepsinde donanım çözücüsü var; VP9 yalnız onu açamayan tarayıcıya
     [['mp4', 'video/mp4; codecs="avc1.640028"'], ['webm', 'video/webm; codecs="vp9"']].forEach(function (s) {
       var k = document.createElement('source'); k.src = ad + '.' + s[0]; k.type = s[1]; v.appendChild(k);
