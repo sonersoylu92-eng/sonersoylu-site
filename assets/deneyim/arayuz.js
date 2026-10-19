@@ -25,7 +25,7 @@
     try {
       var c = document.createElement('canvas'), g = c.getContext('webgl2') || c.getContext('webgl');
       var e = g && g.getExtension('WEBGL_debug_renderer_info');
-      taniGpu = g ? String(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER)).slice(0, 80) : 'webgl-yok';
+      taniGpu = g ? String(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER)).slice(0, 120) : 'webgl-yok';
       var k = g && g.getExtension('WEBGL_lose_context'); if (k) k.loseContext();
     } catch (er) { taniGpu = 'okunamadi'; }
     return taniGpu;
@@ -46,6 +46,8 @@
   document.addEventListener('visibilitychange', function () { if (document.hidden) gizlendi = true; });
   addEventListener('blur', function () { gizlendi = true; });
   function zayifIsaretle(neden) { try { localStorage.setItem(ZAYIF_ANAHTAR, JSON.stringify({ n: String(neden).slice(0, 40), t: Date.now() })); } catch (e) {} }
+  // Firefox'un gizlediği ekran kartı adı: "ANGLE (Intel, Intel(R) HD Graphics Direct3D11 …), or similar"
+  function gpuGizli(g) { return /,\s*or similar\s*$/i.test(g); }
   function zayifCihaz() {
     if (/[?&]uc=1\b/.test(location.search)) return '';
     try {
@@ -58,8 +60,11 @@
     } catch (e) { try { localStorage.removeItem(ZAYIF_ANAHTAR); } catch (e2) {} }
     var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     if (/SwiftShader|llvmpipe|softpipe|Basic Render/i.test(g)) return 'yazilim-gpu';
-    // Atom/Celeron sınıfı Intel (UHD 600/605, HD 400–505, numarasız HD): gerçekten zayıf, 3B açılmaz
-    if (/Intel/i.test(g) && (/UHD Graphics 60[05]\b|HD Graphics (40[05]|50[05])\b/i.test(g) || /HD Graphics( Direct3D|\)|,|$)/i.test(g))) return 'intel-atom';
+    // Atom/Celeron sınıfı Intel (UHD 600/605, HD 400–505, numarasız HD): gerçekten zayıf, 3B açılmaz.
+    // Firefox ekran kartı adını gizler ("…, or similar"): her kuşak Intel aynı numarasız "HD Graphics" adını alır,
+    // Iris Xe bile. Bu adla karar verilemez; 19 Ekim tanı: Windows Firefox'ta 3B hiç denenmeden kapağa düşüyordu.
+    // Gizli adlı Intel hafif kipte denenir; yetişemezse uyarlanır kalite ve donma sınırı yine kapağa döndürür.
+    if (/Intel/i.test(g) && !gpuGizli(g) && (/UHD Graphics 60[05]\b|HD Graphics (40[05]|50[05])\b/i.test(g) || /HD Graphics( Direct3D|\)|,|$)/i.test(g))) return 'intel-atom';
     if (/Adreno \(TM\) [1-6]\d\d\b/.test(g) || /Mali-(T|G[0-6]\d\b)/.test(g) || /PowerVR/i.test(g)) return 'zayif-mobil-gpu';
     if (!ios && navigator.deviceMemory && navigator.deviceMemory <= 2) return 'az-bellek';
     return '';
@@ -71,6 +76,7 @@
     if (/[?&]hafif=1\b/.test(location.search)) return 'onizleme';
     if (/[?&]hafif=0\b/.test(location.search)) return '';
     var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (/Intel/i.test(g) && gpuGizli(g)) return 'intel-gizli';
     if (/Intel/i.test(g) && !/Iris\(R\) Xe|Arc|Intel\(R\) Graphics \(0x/i.test(g)) return 'intel-tumlesik';
     if (!ios && navigator.deviceMemory && navigator.deviceMemory <= 4) return 'az-bellek';
     if (!ios && navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return 'az-cekirdek';
