@@ -10,7 +10,7 @@
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
-import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=bf132c3e';
+import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=f0ed1943';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 import { egeKur } from '/assets/deneyim/ege.js?v=ef6e542c';
@@ -152,7 +152,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   });
   if (!hafif) { const camgobegi = new THREE.PointLight(0xffe2b8, 1.2, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi); }
   // açık renk kabuktan yansıyan dolgu ışığı: makine dairesi sahadaki gibi aydınlık kalsın (gölgelendirici sayısını değiştirmez)
-  icIsik.add(new THREE.AmbientLight(0xfff1dc, hafif ? 1.5 : 0.45));
+  const icAmb = new THREE.AmbientLight(0xfff1dc, hafif ? 1.5 : 0.45); icIsik.add(icAmb);
   // tavan kapağından giren gün ışığı
   const { TAVAN, TABAN, KZ0, KZ1 } = ic.sinir;
   const kapakZ = (KZ0 + KZ1) / 2;
@@ -250,7 +250,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     { p: 0.705,t: 'N', k: v(1.15, 1.5, 2.3),   h: v(0.2, 1.0, 4.2), akis: true },
     { p: 0.728,t: 'N', k: v(1.12, 0.95, 5.6),  h: v(-0.9, 0.6, 5.2), akis: true },
     { p: 0.745,t: 'N', k: v(-0.25, 0.55, 5.95), h: v(-0.9, 0.6, 3.0), akis: true },
-    { p: 0.76, t: 'N', k: v(-1.55, 0.4, 5.95), h: v(-0.3, 0.7, 1.0) },
+    // sahadaki karenin bakışı: sol arka köşede ayakta, hafif aşağı; önde döşeme ve dolaplar, sağda jeneratör boyunca
+    { p: 0.76, t: 'N', k: v(-1.45, 0.22, 5.9), h: v(-0.15, -0.15, 1.0) },
     { p: 0.80, t: 'N', k: v(0.1, 0.9, 5.85),   h: v(0.8, 0.4, 3.5), akis: true },
     { p: 0.845,t: 'N', k: v(0.9, 1.2, 5.7),    h: v(1.55, -0.1, 2.4) },
     { p: 0.875,t: 'N', k: v(-0.25, 0.8, 5.8),  h: v(-1.6, -0.1, 4.6) },
@@ -281,13 +282,35 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   }
 
   /* ---------------- post-processing: alan derinliği + hafif parlama (masaüstü) ---------------- */
-  let composer = null, bokeh = null;
+  let composer = null, bokeh = null, gtao = null;
   const ppHazir = hafif ? Promise.resolve() : Promise.all([
     import('/assets/vendor/pp/EffectComposer.js'), import('/assets/vendor/pp/RenderPass.js'),
     import('/assets/vendor/pp/BokehPass.js'), import('/assets/vendor/pp/UnrealBloomPass.js'), import('/assets/vendor/pp/OutputPass.js'),
-  ]).then(([EC, RP, BP, UB, OP]) => {
+    import('/assets/vendor/pp/GTAOPass.js').catch(() => null),
+  ]).then(([EC, RP, BP, UB, OP, GT]) => {
     composer = new EC.EffectComposer(renderer);
     composer.addPass(new RP.RenderPass(scene, camera));
+    /* Ortam örtmesi (GTAO), yalnız nasel içinde ve en yüksek kalitede: köşeler, makine dipleri, hortum ve kablo
+     * arkaları, dolap araları gerçek fotoğraftaki gibi yumuşakça kararır. Yarım çözünürlükte hesaplanır, gürültüsü
+     * Poisson süzgeciyle temizlenir; kalite düşerse kendiliğinden kapanır. */
+    if (GT && GT.GTAOPass) {
+      try {
+        gtao = new GT.GTAOPass(scene, camera, 256, 256, undefined,
+          { radius: 0.42, distanceExponent: 1.3, thickness: 1.4, scale: 1.2, samples: 12, distanceFallOff: 1, screenSpaceRadius: false },
+          { lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 7, rings: 2, samples: 12 });
+        gtao.blendIntensity = 0.92; gtao.enabled = false;
+        const boyut = gtao.setSize.bind(gtao);
+        gtao.setSize = (w, h) => boyut(Math.max(1, w >> 1), Math.max(1, h >> 1));
+        // sahnenin tamamını her karede dolaşmak yerine: nokta/çizgi nesneleri ve ışık huzmesi bir kez listelenir
+        let gizlenen = null;
+        gtao.overrideVisibility = () => {
+          if (!gizlenen) { gizlenen = []; scene.traverse(o => { if (o.isPoints || o.isLine || o === huzme) gizlenen.push(o); }); }
+          gizlenen.forEach(o => { o.userData.__gtaoG = o.visible; o.visible = false; });
+        };
+        gtao.restoreVisibility = () => { if (gizlenen) gizlenen.forEach(o => { o.visible = o.userData.__gtaoG; }); };
+        composer.addPass(gtao);
+      } catch (e) { console.warn('GTAO yok:', e); gtao = null; }
+    }
     bokeh = new BP.BokehPass(scene, camera, { focus: 20, aperture: 0.00004, maxblur: 0.006 });
     composer.addPass(bokeh);
     // karşı ışıkta gök zaten parlak: ışıma yalnız güneş çekirdeğinde kalsın, bütün gök sütleşmesin
@@ -686,7 +709,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   }
   function kaliteOlc(araMs, t) {
     // yalnızca hareket sırasında ve sekme önplandayken ölç
-    if (araMs <= 0 || araMs > 1500) return;   // sekme dönüşü gibi uzun aralar sayılmaz
+    if (kaliteSabit || araMs <= 0 || araMs > 1500) return;   // sekme dönüşü gibi uzun aralar sayılmaz
     araMs = Math.min(araMs, 100);
     ortKare += (araMs - ortKare) * 0.08;
     const hedef = KADEME_ARALIK[kalite] ? 1000 / 29 : 1000 / 58;
@@ -698,6 +721,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     else { kotuT = 0; iyiT = 0; }
   }
   if (kalite > 0) kaliteUygula();
+  // test ve tanı kancası: kalite kademesini sabitler (önizleme görüntüleri yazılım GPU'sunda da en yüksek kademede alınsın)
+  let kaliteSabit = false;
+  S.kaliteZorla = k => { kaliteSabit = k != null; if (kaliteSabit) { kalite = k; kaliteUygula(); } return kalite; };
   function ilkKareyiSakla() {
     if (p > .02 || !canvas.width || !canvas.height) return;
     try {
@@ -979,6 +1005,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
 
     // alan derinliği: bakılan noktaya odak
     if (bokeh) bokeh.enabled = !!icerde && kalite < 2;
+    if (gtao) gtao.enabled = !!icerde && kalite < 1 && rt.g < 0.01;
     if (bokeh && bokeh.enabled) {
       const odak = gbE > 0.5 ? camera.position.distanceTo(_gbH) : camera.position.distanceTo(yumHedef);   // gün batımı kadrajında odak türbinde
       bokeh.uniforms.focus.value = odak;
@@ -1138,9 +1165,11 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
         try { cizimCiz(0.5); } catch (e) { isinmaHatasi('cizim', e); }
         try { renderer.clear(); } catch (e) { /* temizlik olmasa da sahne çalışır */ }
         S.isinma.sonra = renderer.info.memory.geometries;
-        geriAl(); git();
+        geriAl();
+        try { icOrtamCek(); } catch (e) { isinmaHatasi('ortam', e); }
+        git();
         // masaüstü efektleri (alan derinliği, parlama) nasel içinde ilk açıldığında derlenip takılmasın
-        ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; try { const e = bokeh.enabled; bokeh.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } derinlikIsit(); });
+        ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; const ge = gtao ? gtao.enabled : false; try { const e = bokeh.enabled; bokeh.enabled = true; if (gtao) gtao.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } if (gtao) gtao.enabled = ge; derinlikIsit(); });
       };
       /* Alan derinliği, sahneyi tek bir derinlik malzemesiyle (overrideMaterial) yeniden çizer. three.js bu malzemenin
        * gölgelendiricisini de görünen ışık sayısına ve nesne türüne göre ayrı kurar. Kapakta yalnız dış düzen ve görünen
@@ -1155,9 +1184,12 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
           scene.traverse(o => { if (!o.visible) { o.visible = true; gz.push(o); } if (o.frustumCulled) { o.frustumCulled = false; kz.push(o); } });
           hedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
           renderer.shadowMap.needsUpdate = false;
-          scene.overrideMaterial = bokeh.materialDepth;
           renderer.setRenderTarget(hedef);
-          DUZEN.forEach(d => { try { duzen(d); renderer.render(scene, camera); } catch (e) { isinmaHatasi('derinlik' + DUZEN.indexOf(d), e); } });
+          // alan derinliğinin derinlik malzemesi ve ortam örtmesinin normal malzemesi: ikisi de her ışık düzeninde
+          [bokeh.materialDepth, gtao && gtao.normalMaterial].filter(Boolean).forEach(om => {
+            scene.overrideMaterial = om;
+            DUZEN.forEach(d => { try { duzen(d); renderer.render(scene, camera); } catch (e) { isinmaHatasi('derinlik' + DUZEN.indexOf(d), e); } });
+          });
         } catch (e) { isinmaHatasi('derinlik', e); }
         finally {
           scene.overrideMaterial = null; renderer.setRenderTarget(onceki); renderer.shadowMap.needsUpdate = golgeIste;
@@ -1168,6 +1200,51 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
         S.isinma.derinlik = renderer.info.programs.length - once;
         return S.isinma.derinlik;
       }
+      /* Makine dairesinin kendi ortam haritası: sahne sol yürüyüş yolunda göz hizasından küp kamerayla iki kez çekilir.
+       * İlk çekimde yüzeyler yalnız lambalarla, ikincide ilk çekimin sektirdiği ışıkla da aydınlanır (iki sekme).
+       * Sonuç her yüzeyin dolaylı ışığı ve yansımasıdır: krem kabuğun sıcak sekmesi mavi gövdeye, floresan tüplerin
+       * uzun parlamaları boyaya, tavanın parıltısı baklava saça düşer. Işıklar yolculuktaki nasel içi düzeninde
+       * (dış ışık kısık, kule ışıkları kapalı), sis içerideki değerinde: gölgelendirici anahtarları ısınmadakiyle aynı,
+       * yeni derleme olmaz. Yükleme ekranı dururken bir kez yapılır. */
+      function icOrtamCek() {
+        if (hafif || !env || !ic.ortamAyarla || birakildi) return;
+        const t0 = performance.now(), merkez = tilt.localToWorld(new THREE.Vector3(-1.25, 0.8, 1.5));
+        const kayit = { ig: ic.grup.visible, ii: icIsik.visible, nv: parts.nacelle.visible, poz: scene.position.clone(), hu: huzmeMat.uniforms.uGuc.value,
+          gu: gunes ? gunes.intensity : 0, he: hemi ? hemi.intensity : 0, do: dolgu ? dolgu.intensity : 0,
+          sis: scene.fog ? [scene.fog.color.getHex(), scene.fog.near, scene.fog.far] : null, golge: renderer.shadowMap.needsUpdate,
+          dis: [ege && ege.grup, gok && gok.grup, korfez && korfez.grup].filter(Boolean).map(o => [o, o.visible]) };
+        const pm = new THREE.PMREMGenerator(renderer);
+        let rt1 = null, rt2 = null;
+        try {
+          duzen([false, true]);
+          ic.grup.visible = icIsik.visible = true; parts.nacelle.visible = false; huzmeMat.uniforms.uGuc.value = 1;
+          if (gunes) gunes.intensity = 0; if (hemi) hemi.intensity *= 0.1; if (dolgu) dolgu.intensity *= 0.1;
+          if (scene.fog) { scene.fog.color.setHex(0x0b0e11); scene.fog.near = 6; scene.fog.far = 34; }
+          kayit.dis.forEach(([o]) => { o.visible = false; });
+          scene.position.sub(merkez); scene.updateMatrixWorld(true);
+          ic.ortamAyarla(null); envMalzemeSifir();
+          renderer.shadowMap.needsUpdate = true; rt1 = pm.fromScene(scene, 0, 0.06, 60);
+          ic.ortamAyarla(rt1.texture);
+          renderer.shadowMap.needsUpdate = true; rt2 = pm.fromScene(scene, 0, 0.06, 60);
+          ic.ortamAyarla(rt2.texture); rt1.dispose(); rt1 = null;
+          icAmb.intensity = 0.16;                // dolgu artık çoğunlukla sekmeden geliyor
+          S.isinma.ortam = Math.round(performance.now() - t0);
+        } catch (e) {
+          isinmaHatasi('ortam', e); ic.ortamAyarla(null); if (rt2) rt2.dispose();
+        } finally {
+          if (rt1) rt1.dispose(); pm.dispose();
+          scene.position.copy(kayit.poz); scene.updateMatrixWorld(true);
+          ic.grup.visible = kayit.ig; icIsik.visible = kayit.ii; parts.nacelle.visible = kayit.nv; huzmeMat.uniforms.uGuc.value = kayit.hu;
+          if (gunes) gunes.intensity = kayit.gu; if (hemi) hemi.intensity = kayit.he; if (dolgu) dolgu.intensity = kayit.do;
+          if (kayit.sis) { scene.fog.color.setHex(kayit.sis[0]); scene.fog.near = kayit.sis[1]; scene.fog.far = kayit.sis[2]; }
+          kayit.dis.forEach(([o, v]) => { o.visible = v; });
+          renderer.shadowMap.needsUpdate = true;
+          try { duzen([true, true]); } catch (e) { /* döngü ışıkları her karede yeniden ayarlar */ }
+        }
+      }
+      // ilk çekimde yüzeylerde stüdyo yansıması olmasın: yalnız lambaların doğrudan ışığı
+      function envMalzemeSifir() { ic.grup.traverse(o => { if (o.material && o.material.envMap) o.material.envMapIntensity = 0; }); }
+      S.icOrtamCek = icOrtamCek;
       S.derinlikIsit = derinlikIsit;   // tanı ve test: ikinci çağrı 0 yeni gölgelendirici vermeli
       geriAl();
       derlemeSozu = Promise.race([Promise.all(sozler).catch(() => {}), new Promise(r => setTimeout(r, 10000))]);
@@ -1198,6 +1275,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   S.durum = () => ({ kalite, kare_ms: Math.round(ortKare * 10) / 10, birakildi, duraklat });
   Object.defineProperty(S, 'bokeh', { get: () => bokeh });   // tanı ve test: alan derinliği geçişi
   Object.defineProperty(S, 'composer', { get: () => composer });
+  Object.defineProperty(S, 'gtao', { get: () => gtao });
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
   S.noktaVurgula = id => { vurguNokta = id || null; if (rt.acik) { rt.secili = vurguNokta; rontgenVurgu(); } baslat(); };
