@@ -10,7 +10,7 @@
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
-import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=63ecf9c8';
+import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=ea81e0a6';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 import { egeKur } from '/assets/deneyim/ege.js?v=ef6e542c';
@@ -148,9 +148,11 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   /* ---------------- iç aydınlatma ---------------- */
   const icIsik = new THREE.Group(); tilt.add(icIsik); icIsik.visible = false;
   (hafif ? ic.lambalar.filter((_, i, a) => i === 0 || i === a.length - 1) : ic.lambalar).forEach(p => {
-    const l = new THREE.PointLight(0xdfe9ff, hafif ? 9 : 4, hafif ? 7 : 5.5, 1.6); l.position.set(...p); icIsik.add(l);
+    const l = new THREE.PointLight(0xfff0dc, hafif ? 9 : 4, hafif ? 7 : 5.5, 1.6);   // sıcak floresan (sahadaki makine dairesi gibi) l.position.set(...p); icIsik.add(l);
   });
-  if (!hafif) { const camgobegi = new THREE.PointLight(0x4fd6ea, 1.6, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi); }
+  if (!hafif) { const camgobegi = new THREE.PointLight(0xffe2b8, 1.2, 3.2, 2); camgobegi.position.set(1.0, 0.4, 2.7); icIsik.add(camgobegi); }
+  // açık renk kabuktan yansıyan dolgu ışığı: makine dairesi sahadaki gibi aydınlık kalsın (gölgelendirici sayısını değiştirmez)
+  icIsik.add(new THREE.AmbientLight(0xfff1dc, hafif ? 1.5 : 0.45));
   // tavan kapağından giren gün ışığı
   const { TAVAN, TABAN, KZ0, KZ1 } = ic.sinir;
   const kapakZ = (KZ0 + KZ1) / 2;
@@ -243,8 +245,13 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     { p: 0.612,t: 'N', k: v(1.35, 1.35, -1.6), h: v(-0.2, 0.2, -0.6), akis: true },
     { p: 0.635,t: 'N', k: v(1.6, 1.3, 0.6),    h: v(0, 0.0, -1.7) },
     { p: 0.685,t: 'N', k: v(1.1, 0.62, 1.35),  h: v(0, 0.5, 1.2) },
-    { p: 0.76, t: 'N', k: v(1.15, 1.35, 1.45), h: v(-0.1, 0.45, 3.7) },
-    { p: 0.80, t: 'N', k: v(0.98, 1.45, 3.1),  h: v(0.4, 0.6, 4.8), akis: true },
+    // jeneratör: sahadaki kare gibi arkadan, ayakta durur yükseklikten; önde hortumlar ve gres pompası, ötede mavi gövde
+    // sağdan, kaputun yanından arkaya; jeneratörün arkasından (bilezik muhafazasıyla arka perde arasından) sola geç
+    { p: 0.705,t: 'N', k: v(1.17, 1.15, 2.3),  h: v(0.3, 0.9, 4.0), akis: true },
+    { p: 0.728,t: 'N', k: v(1.12, 0.95, 5.6),  h: v(-0.9, 0.6, 5.2), akis: true },
+    { p: 0.745,t: 'N', k: v(-0.25, 0.55, 5.95), h: v(-0.9, 0.6, 3.0), akis: true },
+    { p: 0.76, t: 'N', k: v(-1.55, 0.4, 5.95), h: v(-0.3, 0.7, 1.0) },
+    { p: 0.80, t: 'N', k: v(0.1, 0.9, 5.85),   h: v(0.8, 0.4, 3.5), akis: true },
     { p: 0.845,t: 'N', k: v(0.9, 1.2, 5.7),    h: v(1.55, -0.1, 2.4) },
     { p: 0.875,t: 'N', k: v(-0.25, 0.8, 5.8),  h: v(-1.6, -0.1, 4.6) },
     { p: 0.905,t: 'N', k: v(-1.0, 1.15, 5.2),  h: v(-1.75, -0.5, 2.8) },
@@ -904,6 +911,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     // kule kapısında görüş kademeli genişler (kapıya yaklaşan gözün alanı); kule ve nasel içi aynı objektifle
     let fovHedef = THREE.MathUtils.lerp(FOV_DIS, FOV_IC, icPay);
     if (p > 0.15 && p < 0.47) fovHedef = THREE.MathUtils.lerp(FOV_DIS, FOV_IC, yumusak(0.158, 0.19, p));
+    // jeneratör durağı: sahadaki kare gibi geniş objektif (dar nasel arkasından makinenin tamamı kadraja girsin)
+    { const gn = yumusak(0.735, 0.755, p) * (1 - yumusak(0.775, 0.80, p)); if (gn > 0) fovHedef = THREE.MathUtils.lerp(fovHedef, mobil ? 92 : 80, gn); }
     if (Math.abs(camera.fov - fovHedef) > 0.05) { camera.fov += (fovHedef - camera.fov) * (anlik || (p > 0.15 && p < 0.47) ? 1 : 1 - Math.exp(-dt * 5)); camera.updateProjectionMatrix(); }
     // atmosfer geçişi (saat/hava): içeri girerken anında tamamlanır ki iç sis ayarı doğru değerden başlasın
     gecisAdim(kIc);
@@ -935,8 +944,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (kIc && !icAyar) { icAyar = { renk: scene.fog.color.getHex(), yakin: scene.fog.near, uzak: scene.fog.far, poz: disPoz }; }
     if (kIc) { const sy = anlik ? 1 : 1 - Math.exp(-dt * 3);
       scene.fog.color.setHex(icAyar.renk).lerp(new THREE.Color(0x0b0e11), icPay);
-      scene.fog.near += (THREE.MathUtils.lerp(icAyar.yakin, kulede ? 3.5 : 2.5, icPay) - scene.fog.near) * sy;
-      scene.fog.far += (THREE.MathUtils.lerp(icAyar.uzak, kulede ? 42 : 19, icPay) - scene.fog.far) * sy; }
+      scene.fog.near += (THREE.MathUtils.lerp(icAyar.yakin, kulede ? 3.5 : 6, icPay) - scene.fog.near) * sy;
+      scene.fog.far += (THREE.MathUtils.lerp(icAyar.uzak, kulede ? 42 : 34, icPay) - scene.fog.far) * sy; }   // açık renk makine dairesi uzakta kararmasın
     else if (icAyar) { scene.fog.color.setHex(icAyar.renk); scene.fog.near = icAyar.yakin; scene.fog.far = icAyar.uzak; icAyar = null; isik(); }
     // göz uyumu: iç ve dış arasında pozlama sıçramaz, göz alışır gibi bir iki saniyede yerine oturur
     const pozHedef = THREE.MathUtils.lerp(disPoz, kulede ? 0.9 : 0.92, icPay);

@@ -205,48 +205,6 @@
   var basaDon = $('dnyBasaDon');
   if (basaDon) basaDon.addEventListener('click', function () { git(0); });
 
-  /* Sahadan kare: kamera nasel içindeyken (Nasel içi → Konvertör) sahnenin yanında Soner'in kendi çektiği makine dairesi
-   * fotoğrafı belirir. Kişi kadraj dışında, üretici yazıları silinmiş, sitenin tonu ve imzası işlenmiş. Dokununca büyür.
-   * Fotoğraf yalnız ilk göründüğünde indirilir; 3B'ye hiç girmeyen ziyaretçi için ağ yükü yok. */
-  var KARE_KUCUK = '/assets/saha/nasel-sahadan-v1-480.webp', KARE_BUYUK = '/assets/saha/nasel-sahadan-v1.webp';
-  var kare = null, kareGor = false, kareYuklendi = false, kareDiyalog = null;
-  function kareKur() {
-    var sahne = bolum.querySelector('.dny-sahne');
-    if (!sahne || filmKip || kare) return;
-    kare = document.createElement('button');
-    kare.type = 'button'; kare.className = 'v-kare'; kare.tabIndex = -1; kare.setAttribute('aria-hidden', 'true');
-    kare.setAttribute('aria-label', 'Sahadan kare: makine dairesinin gerçek hâli. Büyütmek için açın.');
-    kare.innerHTML = '<img alt="" width="480" height="640" decoding="async"><span class="v-kare-yazi"><b>Sahadan kare</b>Aynı bölümün gerçek hâli</span>';
-    kare.addEventListener('click', kareAc);
-    sahne.appendChild(kare);
-  }
-  function kareAc() {
-    if (!window.HTMLDialogElement) { window.open(KARE_BUYUK, '_blank', 'noopener'); return; }
-    if (!kareDiyalog) {
-      kareDiyalog = document.createElement('dialog');
-      kareDiyalog.className = 'v-kare-buyuk';
-      kareDiyalog.setAttribute('aria-label', 'Sahadan kare');
-      kareDiyalog.innerHTML = '<figure><img src="' + KARE_BUYUK + '" width="1200" height="1600" alt="Rüzgâr türbini makine dairesi: solda dar servis koridoru ve baklava desenli zemin, sağda mavi jeneratör gövdesi, hidrolik hortumlar ve otomatik gres pompası; tavanda aydınlatma ve vinç rayı.">' +
-        '<figcaption><b>Sahadan kare</b> Makine dairesinin gerçek hâli, kendi çekimim.</figcaption>' +
-        '<button type="button" class="v-kare-kapat" aria-label="Kapat">Kapat ✕</button></figure>';
-      kareDiyalog.querySelector('.v-kare-kapat').addEventListener('click', function () { kareDiyalog.close(); });
-      kareDiyalog.addEventListener('click', function (e) { if (e.target === kareDiyalog) kareDiyalog.close(); });
-      kareDiyalog.addEventListener('close', function () { document.documentElement.classList.remove('v-kare-acik'); if (kare) kare.focus({ preventScroll: true }); });
-      document.body.appendChild(kareDiyalog);
-    }
-    document.documentElement.classList.add('v-kare-acik');
-    kareDiyalog.showModal();
-  }
-  function kareGuncelle(p, icerde) {
-    if (!kare) return;
-    var g = !!icerde && p > 0.505 && p < 0.86;
-    if (g === kareGor) return;
-    kareGor = g;
-    if (g && !kareYuklendi) { kare.querySelector('img').src = KARE_KUCUK; kareYuklendi = true; }
-    kare.classList.toggle('gor', g); kare.tabIndex = g ? 0 : -1; kare.setAttribute('aria-hidden', g ? 'false' : 'true');
-  }
-  kareKur();
-
   var soz = $('vSoz'), sozSatir = soz ? [].slice.call(soz.querySelectorAll('span')) : [];
   var sonDurak = -2, sonRay = -1, sonAlt = -1, sonBolumAdi = '', sonKot = '';
   function ilerleme(p, y, icerde) {
@@ -269,7 +227,6 @@
       sonDurak = en;
     }
     hud.classList.toggle('gor', goster);
-    kareGuncelle(p, icerde);
 
     // dış altyazılar
     var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b && !(i === 0 && soz)) ai = i; });
@@ -962,7 +919,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=cad85a0d').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=66a612cc').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       var S = (filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
