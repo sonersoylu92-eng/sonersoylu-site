@@ -384,6 +384,74 @@ export function naselIciKur(opts = {}) {
     lambalar.push([x, TAVAN - 0.25, z]);
   }
 
+  /* =================== V22 saha ayrıntısı: boya dokusu, ikaz etiketleri, soğutma fanı, saha düzeni, temas gölgeleri ===================
+   * Hepsi prosedürel (dosya yok). Etiketler ISO 7010 genel işaretleri; hiçbir üretici adı ya da logo yok. */
+  const doku = (w, h, ciz, renkli = true) => {
+    const c = document.createElement('canvas'); c.width = w; c.height = h; ciz(c.getContext('2d'), w, h);
+    const t = new THREE.CanvasTexture(c); if (renkli) t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+  };
+  // boya ve GRP yüzeyi: hafif dalgalı pürüzlülük (ışık parlaması yüzeyde düzgün kayar, plastik görünmez)
+  const purus = doku(128, 128, (x, w, h) => {
+    x.fillStyle = '#9a9a9a'; x.fillRect(0, 0, w, h);
+    for (let i = 0; i < 700; i++) { const v = 110 + Math.random() * 90 | 0; x.fillStyle = 'rgba(' + v + ',' + v + ',' + v + ',0.35)'; x.beginPath(); x.arc(Math.random() * w, Math.random() * h, 1 + Math.random() * 5, 0, 7); x.fill(); }
+  }, false);
+  purus.wrapS = purus.wrapT = THREE.RepeatWrapping; purus.repeat.set(3, 3);
+  for (const k of ['mavi', 'maviK', 'dolap', 'duvar']) { M[k].roughnessMap = purus; }
+  // ikaz etiketleri: sarı üçgen elektrik tehlikesi (W012) ve sıcak yüzey (W017), mavi daire "kulak koruyucu tak" (M003)
+  const etiketMat = (ciz) => new THREE.MeshStandardMaterial({ map: doku(128, 128, ciz), alphaTest: 0.5, transparent: false, roughness: 0.5, metalness: 0, side: THREE.DoubleSide });
+  const ucgen = (x, w) => { x.beginPath(); x.moveTo(w / 2, 8); x.lineTo(w - 6, w - 14); x.lineTo(6, w - 14); x.closePath(); };
+  const etElektrik = etiketMat((x, w) => { ucgen(x, w); x.fillStyle = '#111'; x.fill(); x.save(); x.translate(w / 2, w / 2 + 6); x.scale(0.8, 0.8); x.translate(-w / 2, -w / 2 - 6); ucgen(x, w); x.fillStyle = '#f2c200'; x.fill(); x.restore();
+    x.fillStyle = '#111'; x.beginPath(); x.moveTo(70, 38); x.lineTo(50, 78); x.lineTo(64, 76); x.lineTo(56, 104); x.lineTo(80, 66); x.lineTo(66, 68); x.closePath(); x.fill(); });
+  const etSicak = etiketMat((x, w) => { ucgen(x, w); x.fillStyle = '#111'; x.fill(); x.save(); x.translate(w / 2, w / 2 + 6); x.scale(0.8, 0.8); x.translate(-w / 2, -w / 2 - 6); ucgen(x, w); x.fillStyle = '#f2c200'; x.fill(); x.restore();
+    x.strokeStyle = '#111'; x.lineWidth = 6; for (const dx of [-14, 0, 14]) { x.beginPath(); x.moveTo(64 + dx, 96); x.bezierCurveTo(56 + dx, 84, 72 + dx, 74, 64 + dx, 60); x.stroke(); } x.fillRect(40, 98, 48, 6); });
+  const etKulak = etiketMat((x, w) => { x.fillStyle = '#fff'; x.beginPath(); x.arc(w / 2, w / 2, 60, 0, 7); x.fill(); x.fillStyle = '#1f5fae'; x.beginPath(); x.arc(w / 2, w / 2, 55, 0, 7); x.fill();
+    x.strokeStyle = '#fff'; x.lineWidth = 9; x.beginPath(); x.arc(64, 62, 26, Math.PI, 0); x.stroke(); x.fillStyle = '#fff'; x.fillRect(30, 58, 16, 28); x.fillRect(82, 58, 16, 28); });
+  const etiket = (mat, bx, by, bz, ry, boy = 0.13) => { const m = ekle(new THREE.PlaneGeometry(boy, boy), mat, bx, by, bz, 0, ry, 0, jen); m.castShadow = false; return m; };
+  etiket(etElektrik, -1.215, HIZLI + 0.12, 3.35, -Math.PI / 2);            // sol bağlantı dolabı
+  etiket(etElektrik, -1.215, HIZLI - 0.58, 3.35, -Math.PI / 2);
+  etiket(etSicak, -0.945, HIZLI + 0.95, 3.0, -Math.PI / 2 - 0.4, 0.12);     // kaput yanı
+  etiket(etElektrik, 1.215, HIZLI + 0.2, 2.9, Math.PI / 2, 0.11);           // sağ klemens kutusu
+  etiket(etKulak, 0.2, HIZLI + 0.35, 5.18, 0, 0.12);                         // arka kapak: gürültü
+  for (const z of [1.85, 3.0]) { const m = ekle(new THREE.PlaneGeometry(0.12, 0.12), etElektrik, SOL + 0.42, TABAN + 1.15, z, 0, Math.PI / 2, 0, panolar); m.castShadow = false; }
+
+  // dişli kutusu yağ soğutucusu: sol duvarda yuvarlak fan ve ızgara (fan döner)
+  const fan = new THREE.Group(); fan.name = 'sogutucu-fan';
+  {
+    const fx = SOL + 0.36, fy = TABAN + 1.25, fz = 0.55;
+    ekle(kutu(0.42, 0.8, 0.8), M.dolap, fx - 0.12, fy, fz);                                         // soğutucu gövdesi
+    ekle(new THREE.TorusGeometry(0.3, 0.035, 10, 40), M.galv, fx + 0.1, fy, fz, 0, Math.PI / 2, 0);     // fan bileziği
+    for (let r = 0.08; r <= 0.27; r += 0.063) ekle(new THREE.TorusGeometry(r, 0.006, 6, 32), M.siyah, fx + 0.12, fy, fz, 0, Math.PI / 2, 0); // ızgara halkaları
+    ekle(kutu(0.01, 0.6, 0.012), M.siyah, fx + 0.12, fy, fz); ekle(kutu(0.01, 0.012, 0.6), M.siyah, fx + 0.12, fy, fz);
+    fan.position.set(fx + 0.07, fy, fz); g.add(fan);
+    for (let i = 0; i < 5; i++) { const k = ekle(kutu(0.012, 0.24, 0.08), M.siyah, 0, 0, 0, 0.5, 0, 0, fan); k.position.set(0, Math.cos(i / 5 * Math.PI * 2) * 0.13, Math.sin(i / 5 * Math.PI * 2) * 0.13); k.rotation.set(i / 5 * Math.PI * 2, 0, 0.35); }
+    ekle(silindirZ(0.05, 0.05, 0.06, 16), M.siyah, 0, 0, 0, 0, Math.PI / 2, 0, fan);
+  }
+
+  // saha düzeni: koridorda servis çantası, bez ve eldiven (bakım sürüyor)
+  if (!hafif) {
+    const kumas = new THREE.MeshStandardMaterial({ color: 0x4a2027, roughness: 0.95, metalness: 0 });
+    const eldiven = new THREE.MeshStandardMaterial({ color: 0x3b6fb8, roughness: 0.8, metalness: 0 });
+    const cz = 1.0;
+    ekle(kutu(0.42, 0.26, 0.26), M.siyah, -1.62, TABAN + 0.13, cz + 0.35, 0, 0.35, 0);                  // çanta
+    ekle(new THREE.TorusGeometry(0.1, 0.014, 6, 16, Math.PI), M.lastik, -1.62, TABAN + 0.26, cz + 0.35, 0, 0.35, 0);
+    ekle(kutu(0.05, 0.02, 0.16), M.sari, -1.5, TABAN + 0.28, cz + 0.4, 0, 0.9, 0.2);                    // çantadan taşan alet sapı
+    const bez = (x, z, ry, sx, sz) => { const q = new THREE.PlaneGeometry(sx, sz, 8, 8); const ps = q.attributes.position;
+      for (let i = 0; i < ps.count; i++) ps.setZ(i, Math.sin(ps.getX(i) * 17 + ps.getY(i) * 11) * 0.015 + Math.random() * 0.012); q.computeVertexNormals();
+      const m = ekle(q, kumas, x, TABAN + 0.012, z, -Math.PI / 2, 0, ry); m.castShadow = false; };
+    bez(-0.75, cz + 1.3, 0.6, 0.5, 0.32); bez(-0.95, cz + 0.6, -0.3, 0.36, 0.26); bez(-0.6, cz - 0.2, 1.2, 0.3, 0.22);
+    for (const [x, z, r] of [[-0.82, cz + 0.85, 0.3], [-0.7, cz + 0.95, 1.4]]) ekle(kutu(0.09, 0.02, 0.2), eldiven, x, TABAN + 0.012, z, 0, r, 0);
+  }
+
+  // temas gölgeleri: makinelerin altında yumuşak kararma (gölge haritası olmayan hafif kipte de derinlik verir)
+  {
+    const tg = doku(64, 64, (x, w) => { const gr = x.createRadialGradient(w / 2, w / 2, 2, w / 2, w / 2, w / 2); gr.addColorStop(0, 'rgba(0,0,0,0.75)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = gr; x.fillRect(0, 0, w, w); }, false);
+    const tgm = new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: tg, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 });
+    const golge = (x, z, sx, sz) => { const m = ekle(new THREE.PlaneGeometry(sx, sz), tgm, x, TABAN + 0.006, z, -Math.PI / 2, 0, 0); m.castShadow = false; m.receiveShadow = false; m.renderOrder = 1; };
+    golge(0, 3.4, 2.6, 3.4); golge(0, -0.6, 2.6, 2.2); golge(0, -3.6, 2.8, 5.0);
+    golge(SAG - 0.3, 2.7, 0.9, 3.6); golge(SOL + 0.25, 2.8, 0.8, 2.4); golge(SOL + 0.28, 4.75, 0.8, 1.5);
+    if (!hafif) golge(-1.62, 1.35, 0.7, 0.5);
+  }
+
   /* ---- dönen parçalar: ana mil rotorla, hızlı taraf daha hızlı ---- */
   const kaplinPivot = new THREE.Group(); kaplinPivot.position.set(0, HIZLI, 0); g.add(kaplinPivot);
   g.remove(kaplin); kaplin.position.y = -HIZLI; kaplinPivot.add(kaplin);
@@ -399,7 +467,7 @@ export function naselIciKur(opts = {}) {
    * Dönen gruplar (ana mil, kaplin) ve cıvatalar ayrı kalır. Bileşen grupları kendi içinde birleşir;
    * böylece röntgen görünümünde her bileşen ayrı vurgulanır ve patlatma görünümünde yerinden kayar. */
   const parcaGrup = { anaYatak: onGrup, anaMil, disli, kaplin: kaplinPivot, jenerator: jen, konvertor: konv, panolar, ustKutu, kablolar, kabuk };
-  if (!(typeof window !== 'undefined' && window.__deneyimBirlestirme === false)) birlestir(g, [anaMil, kaplinPivot, civ], [onGrup, disli, jen, konv, panolar, ustKutu, kablolar, kabuk]);
+  if (!(typeof window !== 'undefined' && window.__deneyimBirlestirme === false)) birlestir(g, [anaMil, kaplinPivot, civ, fan], [onGrup, disli, jen, konv, panolar, ustKutu, kablolar, kabuk]);
 
   /* ---- anlatı durakları: HUD'un bağlandığı parça merkezleri (nasel yerel) ---- */
   const duraklar = {
@@ -415,7 +483,7 @@ export function naselIciKur(opts = {}) {
     kapak:      new THREE.Vector3(0, TAVAN, (KZ0 + KZ1) / 2),
   };
 
-  return { grup: g, kabuk, lambalar, duraklar, anaMil, kaplinPivot, parcaGrup, civatalar: civ, sinir: { TABAN, TAVAN, SOL, SAG, ON, ARKA, KZ0, KZ1, KX } };
+  return { grup: g, kabuk, lambalar, duraklar, anaMil, kaplinPivot, fan, parcaGrup, civatalar: civ, sinir: { TABAN, TAVAN, SOL, SAG, ON, ARKA, KZ0, KZ1, KX } };
 }
 
 function birlestir(kok, haric, gruplar = []) {

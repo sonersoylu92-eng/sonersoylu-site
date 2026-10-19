@@ -10,7 +10,7 @@
  */
 import * as THREE from '/assets/vendor/three.module.min.js?v=3eb31ec4';
 import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
-import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=ea81e0a6';
+import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=bf132c3e';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 import { egeKur } from '/assets/deneyim/ege.js?v=ef6e542c';
@@ -247,7 +247,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     { p: 0.685,t: 'N', k: v(1.1, 0.62, 1.35),  h: v(0, 0.5, 1.2) },
     // jeneratör: sahadaki kare gibi arkadan, ayakta durur yükseklikten; önde hortumlar ve gres pompası, ötede mavi gövde
     // sağdan, kaputun yanından arkaya; jeneratörün arkasından (bilezik muhafazasıyla arka perde arasından) sola geç
-    { p: 0.705,t: 'N', k: v(1.17, 1.15, 2.3),  h: v(0.3, 0.9, 4.0), akis: true },
+    { p: 0.705,t: 'N', k: v(1.15, 1.5, 2.3),   h: v(0.2, 1.0, 4.2), akis: true },
     { p: 0.728,t: 'N', k: v(1.12, 0.95, 5.6),  h: v(-0.9, 0.6, 5.2), akis: true },
     { p: 0.745,t: 'N', k: v(-0.25, 0.55, 5.95), h: v(-0.9, 0.6, 3.0), akis: true },
     { p: 0.76, t: 'N', k: v(-1.55, 0.4, 5.95), h: v(-0.3, 0.7, 1.0) },
@@ -971,6 +971,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (parts.spin) parts.spin.rotation.z -= w * hdt;
     if (ic.anaMil) ic.anaMil.rotation.z -= w * hdt;
     if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * hdt;
+    if (ic.fan) ic.fan.rotation.x += 14 * hdt;   // yağ soğutucu fanı sürekli döner
     yawGuncelle(dt);
     kuleDondur();
     if (parts.farm && !az && !duraklat) parts.farm.children.forEach(k => { if (k.userData.spin) k.userData.spin.rotation.z -= k.userData.speed * dt; });
