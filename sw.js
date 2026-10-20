@@ -2,7 +2,7 @@
    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
 
-const SURUM = 'kule-20261020-v24rotor1';
+const SURUM = 'kule-20261020-v25hiz1';
 const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
 const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
 
@@ -40,6 +40,9 @@ self.addEventListener('activate', (e) => {
   e.waitUntil((async () => {
     const adlar = await caches.keys();
     await Promise.all(adlar.filter((n) => !n.endsWith(SURUM)).map((n) => caches.delete(n)));
+    // Gezinme ön yüklemesi: sayfa isteği servis çalışanı uyanmayı beklemeden ağa çıkar. Tanı: geri gelen ziyaretçide
+    // ana sayfanın ilk baytı %20 oturumda 0,8 sn'yi aşıyordu (telefonda çalışan uyanması + ağ, sırayla).
+    if (self.registration.navigationPreload) { try { await self.registration.navigationPreload.enable(); } catch (er) { /* desteklenmiyor */ } }
     await self.clients.claim();
   })());
 });
@@ -82,7 +85,7 @@ self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
       try {
         const y = await Promise.race([
-          fetch(istek),
+          Promise.resolve(e.preloadResponse).catch(() => null).then((on) => on || fetch(istek)),
           new Promise((_, red) => setTimeout(() => red(new Error('zaman-asimi')), 3500)),
         ]);
         if (y && y.ok) {
