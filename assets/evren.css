@@ -1,0 +1,35 @@
+/* evren.css — Rüzgârın yolculuğu (V26). Yalnız evren.js tuvali kurabildiğinde (html.evren-acik) devreye girer;
+   yoksa bölümler kendi düz renkleriyle kalır. */
+#evren{position:fixed;left:0;top:0;width:100%;height:100%;z-index:-1;pointer-events:none;visibility:hidden}
+.evren-gorunur #evren{visibility:visible}
+html.evren-acik{background:var(--evren-ilk,#f6f2ea)}
+html.evren-acik body.ana-body,html.evren-acik[data-vardiya] body.ana-body{background:transparent}
+.evren-acik .ana .el-giris,.evren-acik .ana .el-vitrin,.evren-acik .ana .el-hikaye,
+.evren-acik .ana .el-kutuphane,.evren-acik .ana .el-iletisim{background:transparent}
+html.evren-acik body.ana-body footer.son,html.evren-acik body.ana-body footer{background:transparent!important}
+
+/* yolculuk göstergesi: sağ kenarda dünyalar; şu anki dünya turuncu çizgiyle */
+.evren-yol{position:fixed;right:clamp(.4rem,.9vw,1rem);top:50%;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;
+  transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .45s,color .45s;color:#161b1c}
+.evren-yol.evren-yol-acik{opacity:1;pointer-events:auto}
+.evren-yol[data-zemin=koyu]{color:#ece7dc}
+.evren-yol a{display:flex;align-items:center;gap:.6rem;padding:.32rem 0;color:inherit;text-decoration:none;
+  font:400 .625rem/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase}
+.evren-yol a::after{content:"";width:14px;height:1px;background:currentColor;opacity:.35;transition:width .4s cubic-bezier(.2,.75,.15,1),opacity .4s,background-color .4s}
+.evren-yol-no{max-width:0;overflow:hidden;opacity:0;transition:max-width .45s cubic-bezier(.2,.75,.15,1),opacity .35s,color .4s}
+.evren-yol:hover .evren-yol-no,.evren-yol a:focus-visible .evren-yol-no{max-width:2rem;opacity:.6}
+.evren-yol-ad{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;transition:max-width .45s cubic-bezier(.2,.75,.15,1),opacity .35s}
+.evren-yol:hover .evren-yol-ad,.evren-yol a:focus-visible .evren-yol-ad{max-width:7rem;opacity:.92}
+.evren-yol{padding:.4rem .6rem;margin-right:-.6rem;border-radius:2px}
+.evren-yol:hover,.evren-yol:focus-within{background:var(--evren-yol-zemin,rgba(246,242,234,.94))}
+.evren-yol[data-zemin=koyu]{--evren-yol-zemin:rgba(15,20,21,.9)}
+.evren-yol:hover a[aria-current] .evren-yol-no{opacity:1;color:#d0592a}
+.evren-yol a[aria-current]::after{width:30px;opacity:1;background:#d0592a}
+.evren-yol a:hover::after{opacity:.8}
+@media (max-width:900px),(pointer:coarse){.evren-yol{display:none}}
+
+/* derinlik: saha karelerinin her biri kendi hızında kayar; proje kartları imlece doğru hafifçe eğilir */
+.evren-derin .el-kare{will-change:transform}
+.evren-derin .el-proje figure{transition:transform .6s cubic-bezier(.2,.75,.15,1);transform-origin:50% 60%}
+@media (prefers-reduced-motion:reduce){.evren-derin .el-kare{transform:none!important}}
+html.evren-acik body.ana-body main.ana{background:transparent}
