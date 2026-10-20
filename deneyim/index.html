@@ -174,13 +174,14 @@ b.classList.add('dny-hazirlaniyor');}catch(e){}})();</script>
     .then(function (d) {
       var c = d && d.current; if (!c) return;
       var v = +c.wind_speed_120m, yon = +c.wind_direction_120m;
-      if (isFinite(v)) { var dv = devir(v); kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s'); }
+      // rüzgâr devreye girme hızının (3 m/s) altındaysa rotor durmaz: en düşük işletme devrinde döner (yalnız görsel, ana sayfadaki gibi)
+      if (isFinite(v)) { var dv = devir(v) || (v < 3 ? 7.9 : 0); kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : '0s'); }
       if (isFinite(yon)) kok.style.setProperty('--yon-derece', String(yon));
     }).catch(function () {});
 
 })();
 </script>
-<script src="/assets/deneyim/arayuz.js?v=bd470c01" defer></script>
+<script src="/assets/deneyim/arayuz.js?v=fefee8c3" defer></script>
 <script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
 </body>
 </html>
