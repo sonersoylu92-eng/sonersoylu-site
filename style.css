@@ -1263,3 +1263,16 @@ footer .son-bas{color:var(--sinyal)}
   main > *:first-child{animation:elSayfa .7s cubic-bezier(.2,.75,.15,1) backwards}
 }
 @keyframes elSayfa{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:none}}
+
+/* V26 ortak görünüm ---------------------------------------------------------------
+   Sayfalar arası geçiş: destekleyen tarayıcıda (Chrome, Edge, Safari) bir sayfadan ötekine geçerken içerik
+   kısa bir solup belirmeyle değişir, üst şerit yerinde kalır. Desteklemeyen tarayıcıda hiçbir şey değişmez. */
+@view-transition{navigation:auto}
+body>header{view-transition-name:ust-serit}
+::view-transition-old(root){animation:ss-vt-cik .26s cubic-bezier(.4,0,1,1) both}
+::view-transition-new(root){animation:ss-vt-gir .48s cubic-bezier(.2,.75,.15,1) both}
+@keyframes ss-vt-cik{to{opacity:0;transform:translateY(-10px)}}
+@keyframes ss-vt-gir{from{opacity:0;transform:translateY(16px)}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+/* alt bilgi: ad sütunu olmayan sayfalarda menü tek sütuna sıkışıp üst üste biniyordu; bütün genişliği kullanır */
+.son-orta>.son-nav:only-child{grid-column:1/-1}
