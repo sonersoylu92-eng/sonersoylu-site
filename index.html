@@ -484,8 +484,9 @@ document.querySelectorAll('.el-proje figure,.el-kare').forEach(function(el){io.o
     if (!isFinite(v)) throw 0;
     var rho = isFinite(sic) && isFinite(bas) ? yogunluk(sic, bas) : 1.225;
     var dv = devir(v), kw = guc(v, rho), oran = kw / 3000;
-    // beklemede (v < 3 m/s) kapaktaki rotor boşta yavaşça döner (2 d/dk, yalnız görsel); fırtınada (v > 25) durur
-    var BOSTA = 2;
+    // beklemede (v < 3 m/s) kapak durgun görünmesin: rotor modelin en düşük işletme devrinde (7,9 d/dk) döner; bu yalnız
+    // görseldir ve durum satırında açıkça yazar (panelin devir ve güç değerleri gerçek kalır: 0). Fırtınada (v > 25) durur.
+    var BOSTA = 7.9;
     kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : v < 3 ? (60 / BOSTA).toFixed(2) + 's' : '0s');
     yaz('rHiz', v, 1); yaz('rRho', rho, 2); yaz('rDevir', dv, 1); yaz('rGuc', kw / 1000, 2);
     if (isFinite(yon)) {
@@ -507,7 +508,7 @@ document.querySelectorAll('.el-proje figure,.el-kare').forEach(function(el){io.o
     if (durum === 'uretimde') dEl.hidden = true;
     else {
       $('rDurumAd').textContent = durum === 'beklemede' ? 'Rüzgâr yetersiz · türbin beklemede' : 'Fırtına · türbin güvenli duruşta';
-      $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok. Kapakta rotor boşta yavaşça döner (görsel).' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
+      $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok. Kapaktaki rotor sahne durgun kalmasın diye en düşük işletme devrinde (7,9 d/dk) döner; bu bir gösterimdir, ölçüm değildir.' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
       dEl.hidden = false;
     }
     window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now(), veriSaati: c.time || null };   // bütün değerler aynı tahmin adımından
@@ -582,7 +583,7 @@ document.querySelectorAll('.el-proje figure,.el-kare').forEach(function(el){io.o
   }, 10 * 60 * 1000);
 })();
 </script>
-<script src="/assets/deneyim/arayuz.js?v=bd470c01" defer></script>
+<script src="/assets/deneyim/arayuz.js?v=fefee8c3" defer></script>
 <script src="/assets/vitrin.js?v=sahakarari1" defer></script>
 <script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
 <script src="/assets/son-video.js?v=a9095007" defer></script>
