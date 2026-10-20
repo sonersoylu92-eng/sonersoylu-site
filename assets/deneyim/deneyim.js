@@ -471,6 +471,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const r = parseFloat(st.getPropertyValue('--rz')); cssRz = isFinite(r) ? r * 25 : null;   // canli.js: v / 25
   }
   function devirRad() { cssOku(); return cssDevir; }
+  const ROTOR_TAU = 1.6;   // sn: kalkışta ~5 sn'de hedef devrin %95'i
+  let rotorW = 0;
   function yonHedef() { cssOku(); return cssYon; }
   let yawIlk = true;
   function yawGuncelle(dt) {
@@ -992,11 +994,13 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (cb.karartma) cb.karartma(Math.min(1, dip));
 
     // mekanik: rotor gerçek devirde, ana mil onunla, hızlı taraf ~×100 (görsel olarak yavaşlatılmış)
-    const w = devirRad();
+    /* rotor eylemsizliği: 57 m'lik kanatlar devir değişimine anında uymaz. Sahne açılırken rotor durgundan kalkar ve
+     * birkaç saniyede hedef devre oturur (kapak 'oynar'); canlı rüzgâr değişince de yumuşakça hızlanır ya da yavaşlar. */
+    const w = rotorW += (devirRad() - rotorW) * (1 - Math.exp(-dt / ROTOR_TAU));
     const hdt = duraklat ? 0 : dt;
     if (parts.spin) parts.spin.rotation.z -= w * hdt;
     if (ic.anaMil) ic.anaMil.rotation.z -= w * hdt;
-    if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= (w > 0 ? 9.0 : 0) * hdt;
+    if (ic.kaplinPivot) ic.kaplinPivot.rotation.z -= Math.min(9.0, w * 6.8) * hdt;   // hızlı mil rotorla birlikte kalkar
     if (ic.fan) ic.fan.rotation.x += 14 * hdt;   // yağ soğutucu fanı sürekli döner
     yawGuncelle(dt);
     kuleDondur();
@@ -1276,6 +1280,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   Object.defineProperty(S, 'bokeh', { get: () => bokeh });   // tanı ve test: alan derinliği geçişi
   Object.defineProperty(S, 'composer', { get: () => composer });
   Object.defineProperty(S, 'gtao', { get: () => gtao });
+  Object.defineProperty(S, 'rotor', { get: () => ({ dk: rotorW * 60 / (2 * Math.PI), hedef: cssDevir * 60 / (2 * Math.PI) }) });   // tanı ve test: anlık ve hedef devir (d/dk)
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
   S.noktaVurgula = id => { vurguNokta = id || null; if (rt.acik) { rt.secili = vurguNokta; rontgenVurgu(); } baslat(); };
