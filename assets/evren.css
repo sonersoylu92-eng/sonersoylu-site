@@ -33,3 +33,9 @@ html.evren-acik body.ana-body footer.son,html.evren-acik body.ana-body footer{ba
 .evren-derin .el-proje figure{transition:transform .6s cubic-bezier(.2,.75,.15,1);transform-origin:50% 60%}
 @media (prefers-reduced-motion:reduce){.evren-derin .el-kare{transform:none!important}}
 html.evren-acik body.ana-body main.ana{background:transparent}
+
+/* kinetik başlıklar: her kelime kendi maskesinin altından sırayla yükselir */
+.ev-kinetik .ev-k{display:inline-block;overflow:hidden;vertical-align:top;padding:.14em 0 .1em;margin:-.14em 0 -.1em}
+.ev-kinetik .ev-k>span{display:inline-block;transform:translate3d(0,108%,0);transition:transform 1.05s cubic-bezier(.2,.75,.15,1) calc(var(--i,0) * 60ms)}
+.ev-kinetik.ev-acik .ev-k>span{transform:none}
+@media (prefers-reduced-motion:reduce){.ev-kinetik .ev-k>span{transform:none;transition:none}}

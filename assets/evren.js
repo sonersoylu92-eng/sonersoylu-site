@@ -235,6 +235,8 @@
       if (fj > 0 && k1 !== k0) { var bb = konum(k1, j, t, P1); x = ax + (bb[0] - ax) * fj; y = ay + (bb[1] - ay) * fj; z = az + (bb[2] - az) * fj; }
       var dz = z + kz; if (dz < 0.15) continue;
       var sx = cx + x * odak / dz, sy = cy - y * odak / dz;
+      // imleç rüzgârı: imlecin çevresindeki noktalar yumuşakça kenara itilir (yakın olanlar daha çok: derinlik hissi)
+      if (fare.g > 0.01) { var fx = sx - fare.x, fy = sy - fare.y, f2 = fx * fx + fy * fy; if (f2 < FARE_R2) { var fk = 1 - f2 / FARE_R2, fd = Math.sqrt(f2) + 0.5; fk = fk * fk * fare.g * (2.6 / dz); sx += fx / fd * fk * 42; sy += fy / fd * fk * 42; } }
       if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
       if (giris < 1 && sy < dAlt) continue;
       if (engelde(sx, sy + kaydirY)) continue;
@@ -293,6 +295,41 @@
     a.addEventListener('pointerleave', function () { fig.style.transform = ''; });
   });
 
+  /* ---------------- imleç (masaüstü) ---------------- */
+  var fare = { x: -1e4, y: -1e4, g: 0, hx: -1e4, hy: -1e4 }, FARE_R2 = 150 * 150;
+  if (!azHareket && !mobil && matchMedia('(pointer: fine)').matches) {
+    addEventListener('pointermove', function (e) { fare.hx = e.clientX; fare.hy = e.clientY; if (fare.x < -1e3) { fare.x = fare.hx; fare.y = fare.hy; } fare.g = 1; sonKaydir = performance.now() - 200; iste(); }, { passive: true });
+    document.addEventListener('pointerleave', function () { fare.g = 0; }, { passive: true });
+  }
+  function fareAdim() { fare.x += (fare.hx - fare.x) * 0.18; fare.y += (fare.hy - fare.y) * 0.18; }
+
+  /* ---------------- başlıklar: kelime kelime maskenin altından yükselir (bir kez) ---------------- */
+  if (!azHareket && 'IntersectionObserver' in window) {
+    var bio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('ev-acik'); bio.unobserve(e.target); } }); }, { rootMargin: '0px 0px -12% 0px' });
+    document.querySelectorAll('.ana .el-baslik, .ana .el-giris-b').forEach(function (h) {
+      if (h.dataset.evK) return; h.dataset.evK = '1';
+      h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());   // ekran okuyucu bölünmemiş cümleyi okur
+      var sira = 0;
+      (function bol(n) {
+        [].slice.call(n.childNodes).forEach(function (c) {
+          if (c.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            c.textContent.split(/(\s+)/).forEach(function (p) {
+              if (!p) return;
+              if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+              var d = document.createElement('span'), i = document.createElement('span');
+              d.className = 'ev-k'; d.setAttribute('aria-hidden', 'true'); i.textContent = p; i.style.setProperty('--i', sira++);
+              d.appendChild(i); frag.appendChild(d);
+            });
+            n.replaceChild(frag, c);
+          } else if (c.nodeType === 1) bol(c);
+        });
+      })(h);
+      h.classList.add('ev-kinetik');
+      if (h.getBoundingClientRect().top < innerHeight * 0.85) h.classList.add('ev-acik'); else bio.observe(h);
+    });
+  }
+
   /* ---------------- döngü: kaydırırken her kare, dururken 30 fps, görünmüyorsa hiç ---------------- */
   function kare(t) {
     raf = 0;
@@ -300,6 +337,7 @@
     var kaydiriyor = t - sonKaydir < 260;
     if (!kaydiriyor && t - sonCiz < 32) { iste(); return; }
     sonCiz = t;
+    fareAdim();
     var cizdi = ciz(azHareket ? 0 : t / 1000);
     ust(t);
     if (cizdi && !azHareket) iste();
