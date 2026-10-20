@@ -22,7 +22,15 @@ export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
 
 function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--yon-derece')); return isFinite(d) ? -d * Math.PI / 180 : null; }
 
-export function deneyimBaslat(canvas, bolum, cb = {}) {
+/* Ana iş parçacığına nefes: kurulum tek parça uzun bir görev olunca (telefonda 0,5–1,5 sn) o sırada yapılan dokunuş
+ * bekliyordu (tanı: ana sayfada INP %11 kötü, 616–3680 ms). Ağır adımların arasında tarayıcıya dokunuşu işleme fırsatı
+ * verilir; scheduler.yield varsa sıranın önüne döner, yoksa setTimeout(0). */
+const nefes = () => new Promise(r => {
+  try { if (globalThis.scheduler && typeof scheduler.yield === 'function') { scheduler.yield().then(r, () => setTimeout(r, 0)); return; } } catch (e) { /* aşağıda */ }
+  setTimeout(r, 0);
+});
+
+export async function deneyimBaslat(canvas, bolum, cb = {}) {
   const mobil = matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches;
   /* hafif: telefonlar ve sayfa tarafının "orta güçte" bulduğu bilgisayarlar (eski Intel tümleşik ekran kartı, az bellek).
    * Kadraj ve kamera masaüstündeki gibi kalır; yalnız yük azalır: sade geometri, gölge ve efekt zinciri yok, 1× piksel. */
@@ -44,6 +52,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
 
   let S;
   try { S = createScene(canvas, { lite: hafif }); } catch (e) { console.error('deneyim sahne:', e); return null; }
+  await nefes();
   const { renderer, scene, camera, controls, parts, towerTopY, setLight } = S;
   controls.enabled = false;
   if (parts.crane) parts.crane.visible = false;
@@ -51,6 +60,7 @@ export function deneyimBaslat(canvas, bolum, cb = {}) {
   // V10: gerçek türbinin arkasına Ege dünyası (sırtlar, kıyı, sis, bulut, yıldız); türbin ve kamera aynı kalır
   let ege = null;
   try { ege = egeKur(S, { lite: hafif }); } catch (e) { console.warn('ege atmosferi yok:', e); ege = null; }
+  await nefes();
   // gerçek gökyüzü: güneş ve ay konumu, ay evresi, parlak yıldızlar (önizleme: ?gokzaman=2026-10-20T21:00:00Z)
   let gok = null;
   try {
@@ -86,6 +96,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   ucUygula(parts.farm, 0.065);
   let korfez = null;
   if (KORFEZ) { try { korfez = korfezKur(S, { lite: hafif }); } catch (e) { console.warn('körfez yok:', e); korfez = null; } }
+  await nefes();
   if (ege) { ege.kameraBagla(camera); if (GB) { ege.ova(araziY); ege.sirrus(1); ege.haleAyarla(1); } if (NC && !korfez) ege.maki(araziY); if (korfez) ege.acikDeniz(); }
 
   const normalDpr = hafif ? 1 : Math.min(devicePixelRatio || 1, 1.6);
@@ -122,7 +133,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   const eksenN = tl2n(0, n2tl(0, TABAN_N, 0).y, 0);                  // kule ekseni, nasel tabanında
   const KAPAK_N = new THREE.Vector2(-0.55, 0.5);                        // erişim kapağı (nasel yerel x, z): yaw halkasının içinde, dişli kutusunun arkasında
   const yawN = [-30, 30, 90, 165, 210].map(d => new THREE.Vector2(eksenN.x + Math.cos(d * Math.PI / 180) * 1.08, eksenN.z + Math.sin(d * Math.PI / 180) * 1.08));
+  await nefes();
   const ic = naselIciKur({ hafif: hafif, envMap: env, kapak: KAPAK_N, yawMerkez: new THREE.Vector2(eksenN.x, eksenN.z), yawSurucu: yawN });
+  await nefes();
   tilt.add(ic.grup);
   ic.grup.visible = false;
 
@@ -136,6 +149,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     yawSurucu: yawN.map(q => { const v = n2tl(q.x, TABAN_N, q.y); return new THREE.Vector2(v.x, v.z); }) });
   scene.add(kule.grup);
   kapiBosluguAc(parts.towerSegs[0]);
+  await nefes();
   function kuleDondur() {
     const r = yaw.rotation.y + dAz;
     kule.grup.rotation.y = r; parts.towerSegs.forEach(sg => { sg.rotation.y = r; });
@@ -1137,19 +1151,24 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       sozler.push(derle(cizimZemin, cizimKam));
       scene.overrideMaterial = cizimMat; sozler.push(derle(scene, camera)); scene.overrideMaterial = null;
       const geriAl = () => { gizli.forEach(o => { o.visible = false; }); kesilen.forEach(o => { o.frustumCulled = true; }); };
-      const bitti = () => {
-        if (basladi) return;
+      // Isınma kareleri ayrı görevlerde çizilir (her çizim gölgelendirici bağlayabilir); aralarda dokunuşlar işlenir.
+      let bitiyor = false;
+      const bitti = async () => {
+        if (basladi || bitiyor) return;
+        bitiyor = true;
         // ısınma kareleri: her ışık düzeni bir kez gerçekten çizilir; geometri, dokular ve ekran kartının
         // çizim durumları şimdi hazırlanır (Safari/Metal bunları ilk çizimde kurar). Tuval henüz görünmez.
         S.isinma.once = renderer.info.memory.geometries;
         gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
         guvenliYukle();
+        await nefes();
         // gölge haritası da her düzende bir kez çizilir: derinlik gölgelendiricileri kaydırırken değil şimdi derlenir.
         // Her düzen kendi korumasında: biri hata verirse diğerleri yine ısınır (eskiden tek hata hepsini atlatıyordu).
-        DUZEN.forEach(d => {
+        for (const d of DUZEN) {
           try { duzen(d); if (renderer.shadowMap.enabled) renderer.shadowMap.needsUpdate = true; renderer.render(scene, camera); }
           catch (e) { isinmaHatasi('duzen' + DUZEN.indexOf(d), e); }
-        });
+          await nefes();
+        }
         /* Masaüstünde sahne efekt zinciriyle (alan derinliği, parlama) bir ara hedefe çizilir. Ara hedefe çizimde
          * renk dönüşümü ve ton eşleme farklıdır, three.js her malzeme için ayrı gölgelendirici kurar. Ekrana yapılan
          * ısınma bunları kapsamıyordu: kule tepesinde ve nasel girişinde 11–18 gölgelendirici kaydırırken derlenip
@@ -1158,10 +1177,12 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
           let araHedef = null; const oncekiHedef = renderer.getRenderTarget();
           try {
             araHedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
-            DUZEN.forEach(d => {
+            for (const d of DUZEN) {
               try { duzen(d); renderer.setRenderTarget(araHedef); renderer.render(scene, camera); }
               catch (e) { isinmaHatasi('ara' + DUZEN.indexOf(d), e); }
-            });
+              finally { renderer.setRenderTarget(oncekiHedef); }
+              await nefes();
+            }
           } catch (e) { isinmaHatasi('ara-hedef', e); }
           finally { renderer.setRenderTarget(oncekiHedef); if (araHedef) araHedef.dispose(); }
         }
@@ -1170,7 +1191,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
         try { renderer.clear(); } catch (e) { /* temizlik olmasa da sahne çalışır */ }
         S.isinma.sonra = renderer.info.memory.geometries;
         geriAl();
-        try { icOrtamCek(); } catch (e) { isinmaHatasi('ortam', e); }
+        if (!hafif) { await nefes(); try { icOrtamCek(); } catch (e) { isinmaHatasi('ortam', e); } }
         git();
         // masaüstü efektleri (alan derinliği, parlama) nasel içinde ilk açıldığında derlenip takılmasın
         ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; const ge = gtao ? gtao.enabled : false; try { const e = bokeh.enabled; bokeh.enabled = true; if (gtao) gtao.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } if (gtao) gtao.enabled = ge; derinlikIsit(); });
@@ -1254,7 +1275,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       derlemeSozu = Promise.race([Promise.all(sozler).catch(() => {}), new Promise(r => setTimeout(r, 10000))]);
       Promise.all(sozler).then(bitti, bitti);
       setTimeout(() => {   // hiçbir durumda sahne bekletilmesin; derleme hiç bitmezse en azından parçalar yüklü başlasın
-        if (basladi) return;
+        if (basladi || bitiyor) return;   // ısınma sürüyorsa (parça parça) kendi sonunda başlatır
         isinmaHatasi('zaman-asimi', 'derleme bitmedi');
         gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
         guvenliYukle(); geriAl(); git();
