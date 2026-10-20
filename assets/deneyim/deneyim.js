@@ -26,6 +26,8 @@ function yonHedefIlk() { const d = parseFloat(getComputedStyle(document.document
  * bekliyordu (tanı: ana sayfada INP %11 kötü, 616–3680 ms). Ağır adımların arasında tarayıcıya dokunuşu işleme fırsatı
  * verilir; scheduler.yield varsa sıranın önüne döner, yoksa setTimeout(0). */
 const nefes = () => new Promise(r => {
+  // sekme arkadaysa bekleme yok: dokunuş da yok, setTimeout ise saniyelerce kısılır (ilk kare yanlışlıkla 'geç' sayılıyordu)
+  if (document.hidden) { r(); return; }
   try { if (globalThis.scheduler && typeof scheduler.yield === 'function') { scheduler.yield().then(r, () => setTimeout(r, 0)); return; } } catch (e) { /* aşağıda */ }
   setTimeout(r, 0);
 });
@@ -705,6 +707,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   }
 
   let p = ilerleme(), sonT = 0, rafId = 0, calisiyor = true, gorunur = true, ilk = true, sonIsik = 0, hazirT = 0, sonIcerde = 0, sonKulede = 0;
+  let acilisMt = -1;   // V28 açılış yaklaşmasının başladığı hareket saati
   // Hareket saati: kendiliğinden olan hareketler (rotor, açılış kamera kayması, nefes, ikaz lambası) bununla ilerler.
   // Duraklatınca durur; kaydırmayla gelen kamera hareketi her zaman çalışır.
   let mt = 0, duraklat = false;
@@ -854,6 +857,17 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       rMerkez.set(0, 0.2, -0.4); tilt.localToWorld(rMerkez);
       rKonum.set(Math.cos(a) * R, 4.6, Math.sin(a) * R); tilt.localToWorld(rKonum);
       kKonum.lerp(rKonum, e); yumHedef.lerp(rMerkez, e);
+    }
+    /* V28 açılış: sahne ilk açıldığında kamera geriden ve yukarıdan süzülerek kapak kadrajına oturur (sahaya yaklaşan
+     * bir drone gibi). Rotorun durgundan kalkışıyla aynı anda olur; kaydırma başlarsa hemen kaydırmaya bırakır. */
+    // saat hareket saatiyle (mt) işler: ilk kareler yavaş gelse de (gölgelendirici bağlama) yaklaşma atlanmaz
+    if (acilisMt < 0) acilisMt = mt;
+    if (!az && rt.g < 0.01) {
+      const ak = Math.min(1, (mt - acilisMt) / 4200);
+      if (ak < 1) {
+        const w = Math.pow(1 - ak, 3) * (1 - yumusak(0, 0.03, p));
+        if (w > 0.001) { tmp.subVectors(kKonum, yumHedef).normalize(); kKonum.addScaledVector(tmp, w * (mobil ? 10 : 16)); kKonum.y += w * (mobil ? 4 : 6); }
+      }
     }
     // kamera yere gömülmesin: arazinin 1,7 m üstünde kalır
     if (!sonIcerde && !sonKulede) { const yer = (korfez ? korfez.yerY(kKonum.x, kKonum.z) : ege ? ege.yerY(araziY, kKonum.x, kKonum.z) : araziY(kKonum.x, kKonum.z)) + 1.7; if (kKonum.y < yer) kKonum.y = yer; }
