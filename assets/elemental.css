@@ -329,3 +329,6 @@ body.ana-body footer.son .son-nav a:hover{color:#f6f2ea}
   .el-deneme .el-d5{grid-column:1/span 9}
   .el-deneme .el-d6 img{aspect-ratio:4/5}
 }
+/* V29 okunurluk: açık zeminli bölümlerde küçük turuncu yazılar (bölüm numaraları, kare numaraları) WCAG AA 4,5:1'in
+   altındaydı (3,65:1). Aynı turuncunun koyu tonu: krem zeminde 5,2:1, kum zeminde 4,6:1. Koyu bölümler eski tonda kalır. */
+.el-giris,.el-hikaye,.el-iletisim{--el-sinyal:#ad4419}
