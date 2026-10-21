@@ -332,3 +332,17 @@ body.ana-body footer.son .son-nav a:hover{color:#f6f2ea}
 /* V29 okunurluk: açık zeminli bölümlerde küçük turuncu yazılar (bölüm numaraları, kare numaraları) WCAG AA 4,5:1'in
    altındaydı (3,65:1). Aynı turuncunun koyu tonu: krem zeminde 5,2:1, kum zeminde 4,6:1. Koyu bölümler eski tonda kalır. */
 .el-giris,.el-hikaye,.el-iletisim{--el-sinyal:#ad4419}
+/* V30 final: ana sayfanın sonu "Gece" dünyası. Diğer sayfalardaki kapanış (koordinat, söz, künye) burada da var;
+   yıldızlı gökte yolculuk biter ve baştan başlatılabilir. */
+body.ana-body footer.son .wrap{padding-top:clamp(6rem,18vh,11rem)}
+body.ana-body footer.son .son-koord{color:rgba(246,242,234,.52)}
+body.ana-body footer.son .son-koord span+span::before{background:rgba(246,242,234,.25)}
+body.ana-body footer.son .son-soz{color:#f6f2ea;margin-top:1.4rem}
+body.ana-body footer.son .son-soz em{color:#d0592a}
+body.ana-body footer.son .son-ad{color:#f6f2ea}
+body.ana-body footer.son .son-unvan{color:rgba(246,242,234,.55)}
+.son-basa{display:inline-flex;align-items:center;gap:.65rem;margin-top:clamp(1.8rem,4vh,2.6rem);padding:.8rem 1.25rem;border:1px solid rgba(246,242,234,.28);border-radius:999px;
+  color:#f6f2ea;font:500 .875rem/1 var(--sans);text-decoration:none;transition:border-color .25s,background-color .25s,color .25s}
+.son-basa i{font-style:normal;transition:transform .35s cubic-bezier(.2,.75,.15,1)}
+.son-basa:hover,.son-basa:focus-visible{border-color:#d0592a;background:rgba(208,89,42,.12)}
+.son-basa:hover i{transform:translateY(-3px)}

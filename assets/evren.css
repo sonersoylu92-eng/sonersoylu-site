@@ -39,3 +39,9 @@ html.evren-acik body.ana-body main.ana{background:transparent}
 .ev-kinetik .ev-k>span{display:inline-block;transform:translate3d(0,108%,0);transition:transform 1.05s cubic-bezier(.2,.75,.15,1) calc(var(--i,0) * 60ms)}
 .ev-kinetik.ev-acik .ev-k>span{transform:none}
 @media (prefers-reduced-motion:reduce){.ev-kinetik .ev-k>span{transform:none;transition:none}}
+
+/* V30 kesintisiz geçiş: 3B yolculuğun son ekranı, giriş bölümünün kemik rengine sisle erir. Sınır çizgisi kalmaz;
+   akım çizgileri aynı yerde başlar. Yalnız 3B açıkken (kapak görselinde bölüm tek ekran, başlık orada durur). */
+.evren-acik .dny-ana.uc-boyut::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:min(70vh,640px);z-index:6;pointer-events:none;
+  background:linear-gradient(180deg,rgba(246,242,234,0) 0%,rgba(246,242,234,.18) 28%,rgba(246,242,234,.62) 62%,var(--evren-ilk,#f6f2ea) 100%)}
+@media (prefers-reduced-motion:reduce){.evren-acik .dny-ana.uc-boyut::after{height:min(36vh,320px)}}

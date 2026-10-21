@@ -330,12 +330,17 @@
     });
   }
 
+  // yolculuğa baştan başla: alt bilgiden kapağa (3B yolculuk geri sarılır gibi akar)
+  var basa = document.querySelector('.son-basa');
+  if (basa) basa.addEventListener('click', function (e) { e.preventDefault(); scrollTo({ top: 0, behavior: azHareket ? 'auto' : 'smooth' }); });
+
   /* ---------------- döngü: kaydırırken her kare, dururken 30 fps, görünmüyorsa hiç ---------------- */
   function kare(t) {
     raf = 0;
     if (gizli) return;
     var kaydiriyor = t - sonKaydir < 260;
-    if (!kaydiriyor && t - sonCiz < 32) { iste(); return; }
+    // dururken 30 fps; 15 sn hiç dokunulmazsa 12 fps (pil): dünya yavaşça yaşamaya devam eder
+    if (!kaydiriyor && t - sonCiz < (t - sonKaydir > 15000 ? 83 : 32)) { iste(); return; }
     sonCiz = t;
     fareAdim();
     var cizdi = ciz(azHareket ? 0 : t / 1000);
