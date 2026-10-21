@@ -137,6 +137,12 @@ html.el-ustte body.ana-body:has(.dny-ana.sw:not(.gecti)) header,:root.el-ustte b
 .el-proje-n90 figure{aspect-ratio:5/4}
 .el-proje-lab figure{aspect-ratio:3/4}
 .el-proje-ikili .el-proje-yazi{margin-top:1.4rem}
+/* V31: Rüzgârın evrimi tanıtım kartı — nokta bulutu dizilimi koyu zeminde, görsel kırpılmadan */
+.el-proje-evrim{margin-top:clamp(5rem,12vh,8rem)}
+.el-proje-evrim figure{background:#070a0b}
+.el-proje-evrim img{object-fit:contain;object-position:center bottom}
+.el-proje-evrim figure::after{background:linear-gradient(180deg,rgba(7,10,11,.0) 30%,rgba(7,10,11,.82))}
+@media (max-width:820px){.el-proje-evrim img{object-fit:cover;object-position:78% 100%}}
 
 /* ===================== 03 · sahadan: fotoğraf hikâyesi ===================== */
 .ana .el-hikaye{background:var(--el-kum);color:var(--el-murekkep)}
