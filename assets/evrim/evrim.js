@@ -206,7 +206,7 @@ const POZ = {
 const VS = `
 attribute vec3 pB; attribute vec3 hA; attribute vec3 hB; attribute float rA; attribute float rB; attribute float tohum;
 uniform float uMix, uZaman, uAciA, uAciB, uEksenA, uEksenB, uBoyut, uPR, uPatlama, uGiris, uMesafe, uFareG, uEn, uNefes;
-uniform vec2 uFare; uniform vec4 uMaske; uniform vec3 uRenkY, uRenkR, uRenkZ;
+uniform vec2 uFare; uniform vec4 uMaske; uniform float uAlfa; uniform vec3 uRenkY, uRenkR, uRenkZ;
 varying vec3 vRenk; varying float vAlfa;
 vec3 dondur(vec3 p, vec3 h, float a, float e) {
   vec3 q = p - h; float c = cos(a), s = sin(a);
@@ -252,7 +252,7 @@ void main() {
   vRenk = mix(mix(uRenkY, uRenkR, wR), uRenkZ, wZ);
   float gor = mix(gA, gB, m);
   float derin = clamp(1.35 - (-mv.z - uMesafe) / (uMesafe * 0.8), 0.2, 1.0);
-  vAlfa = gor * derin * (0.55 + 0.3 * wR) * (1.0 - wZ * 0.5) * (1.0 + yay * 0.9) * min(1.0, uGiris * 1.4 + 0.15) * mix(1.0, mix(0.4, 0.06, wZ), 1.0 - mk);
+  vAlfa = gor * derin * uAlfa * (1.0 + 0.4 * wR) * (1.0 - wZ * 0.5) * (1.0 + yay * 0.9) * min(1.0, uGiris * 1.4 + 0.15) * mix(1.0, mix(0.4, 0.06, wZ), 1.0 - mk);
   gl_PointSize = uBoyut * uPR * clamp(uMesafe / -mv.z, 0.35, 2.4) * (1.0 + wR * 0.25);
 }`;
 const FS = `
@@ -311,7 +311,7 @@ async function sahneKur() {
   const U = {
     uMix: { value: 0 }, uZaman: { value: 0 }, uAciA: { value: 0 }, uAciB: { value: 0 }, uEksenA: { value: 0 }, uEksenB: { value: 0 },
     uBoyut: { value: mobil ? 2.1 : 2.0 }, uPR: { value: pr }, uPatlama: { value: hareketAz ? 0 : 0.55 }, uGiris: { value: hareketAz ? 1 : 0 },
-    uMesafe: { value: 7 }, uFareG: { value: 0 }, uMaske: { value: new THREE.Vector4(1, 0, -2, -1.9) }, uFare: { value: new THREE.Vector2(9, 9) }, uEn: { value: 1 }, uNefes: { value: hareketAz ? 0 : 0.004 },
+    uMesafe: { value: 7 }, uFareG: { value: 0 }, uAlfa: { value: Number(prm.get('alfa')) || (mobil ? 0.5 : 0.42) }, uMaske: { value: new THREE.Vector4(1, 0, -2, -1.9) }, uFare: { value: new THREE.Vector2(9, 9) }, uEn: { value: 1 }, uNefes: { value: hareketAz ? 0 : 0.004 },
     uRenkY: { value: new THREE.Color(0xd2e2e0) }, uRenkR: { value: new THREE.Color(0xff9a62) }, uRenkZ: { value: new THREE.Color(0x5b8287) },
   };
   const mat = new THREE.ShaderMaterial({ uniforms: U, vertexShader: VS, fragmentShader: FS, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending });
@@ -332,7 +332,9 @@ async function sahneKur() {
         import('/assets/vendor/pp/EffectComposer.js'), import('/assets/vendor/pp/RenderPass.js'), import('/assets/vendor/pp/UnrealBloomPass.js')]);
       besteci = new EffectComposer(renderer);
       besteci.addPass(new RenderPass(sh, kamera));
-      isima = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.6, 0.45, 0.2);
+      // ışıma ayarı: güç, yarıçap, eşik (?isima=g,y,e ile sahada denenebilir)
+      const ia = (prm.get('isima') || '').split(',').map(Number);
+      isima = new UnrealBloomPass(new THREE.Vector2(256, 256), ia[0] >= 0 && prm.get('isima') ? ia[0] : 0.4, ia[1] || 0.4, ia[2] || 0.42);
       besteci.addPass(isima);
     } catch (h) { besteci = null; }
   }
