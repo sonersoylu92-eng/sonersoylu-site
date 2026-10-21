@@ -1,0 +1,225 @@
+/* evrim.css — Rüzgârın evrimi: karanlık sahne, sabit anlatı kartları, yıl sayacı, zaman çizelgesi.
+ * Sitenin dili korunur (Geist, Geist Mono, kemik rengi metin, ikaz turuncusu); sahne bazalttan daha koyu. */
+.evrim-sayfa{--ev-zemin:#070a0b;--ev-ink:#f2ede3;--ev-soluk:#aeb0a6;--ev-cizgi:rgba(242,237,227,.12);--ev-sicak:#ef7a45;--ev-sis:#b4c9c8;
+  --ev-sol:max(1.25rem,calc((100vw - 72rem) / 2 + 1.5rem));--yil-boy:clamp(3.6rem,8vw,8.5rem);
+  --ground:#070a0b;background:var(--ev-zemin);color:var(--ev-ink)}
+html:has(body.evrim-sayfa){background:#070a0b}
+.evrim-sayfa main.ev-ana{position:relative;z-index:2;padding-top:0}
+.evrim-sayfa main.ev-ana>section{border-top:0}
+.evrim-sayfa footer.son{position:relative;z-index:2}
+
+/* ---------------------------------------------------------------- sahne */
+#evrimSahne{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;z-index:0;display:block;pointer-events:none;
+  opacity:0;transition:opacity 1.2s cubic-bezier(.2,.7,.2,1)}
+.ev-uc #evrimSahne{opacity:1}
+.ev-uc.ev-los #evrimSahne{opacity:.13}
+.ev-uc.ev-bitti #evrimSahne{opacity:0}
+.ev-uc-yok #evrimSahne{display:none}
+/* WebGL yoksa: sahnenin yerine dizilim görseli */
+.ev-uc-yok .ev-vinyet{background:url(/assets/evrim/evrim-dizilim-v1.webp) right 3vw bottom 9vh/min(62vw,1100px) auto no-repeat}
+@media not all and (min-width:900px) and (min-aspect-ratio:21/20){.ev-uc-yok .ev-vinyet{background-position:center calc(72px + 5rem);background-size:100vw auto}}
+.ev-vinyet{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(60% 55% at 64% 46%,rgba(239,122,69,.05),transparent 70%),
+             radial-gradient(130% 95% at 62% 48%,transparent 45%,rgba(7,10,11,.5) 78%,rgba(7,10,11,.9) 100%)}
+
+/* ---------------------------------------------------------------- HUD */
+.ev-hud{position:fixed;inset:0;z-index:3;pointer-events:none}
+.ev-hud-sol{position:absolute;left:var(--ev-sol);top:calc(72px + 1.6rem);transition:opacity .6s}
+.ev-hud-ust{display:flex;align-items:baseline;gap:.45rem;font:500 .75rem/1 var(--mono);color:var(--ev-soluk);font-variant-numeric:tabular-nums}
+.ev-hud-ust b{font-weight:500;color:var(--ev-ink)}
+.ev-hud-yil{margin-top:.5rem;font:600 var(--yil-boy)/.92 var(--sans);letter-spacing:-.06em;font-variant-numeric:tabular-nums;white-space:nowrap;
+  background:linear-gradient(180deg,#ffd9bf 0%,#f39062 55%,#d0592a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  min-height:calc(var(--yil-boy) * .92)}
+.ev-hud-yil.uzun{font-size:calc(var(--yil-boy) * .62);line-height:1.48}
+.ev-girista .ev-hud-sol,.ev-los .ev-hud-sol,.ev-bitti .ev-hud-sol{opacity:0}
+.ev-hud-sag{position:absolute;right:var(--ev-sol);bottom:5.25rem;display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;text-align:right;transition:opacity .6s}
+.ev-bitti .ev-hud-sag,.ev-los .ev-hud-sag,.ev-girista .ev-hud-sag{opacity:0}
+.ev-olcek{display:flex;flex-direction:column;align-items:flex-end;gap:.45rem;font:500 .75rem/1 var(--mono);color:var(--ev-ink);opacity:0;transition:opacity .5s}
+.ev-olcek i{display:block;width:var(--olcek,80px);height:8px;border:1px solid rgba(242,237,227,.75);border-top:0;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.ev-olcek.gor{opacity:1}
+.ev-uc-yok .ev-olcek{display:none}
+.ev-temsili{max-width:17rem;font:400 .6875rem/1.5 var(--mono);color:var(--ev-soluk)}
+
+/* ---------------------------------------------------------------- giriş */
+.ev-giris{position:relative;min-height:100vh;min-height:100svh;display:grid;align-items:center;padding:calc(72px + 3rem) var(--ev-sol) 5rem}
+.ev-giris-ic{max-width:40rem}
+.ev-ust{display:flex;align-items:center;gap:.7rem;font:500 .8125rem/1.3 var(--mono);color:var(--ev-soluk)}
+.ev-nokta{width:.5rem;height:.5rem;border-radius:50%;background:var(--ev-sicak);box-shadow:0 0 0 0 rgba(239,122,69,.5);animation:evNabiz 2.4s ease-out infinite}
+@keyframes evNabiz{70%{box-shadow:0 0 0 .7rem rgba(239,122,69,0)}100%{box-shadow:0 0 0 0 rgba(239,122,69,0)}}
+.ev-giris h1{margin-top:1.3rem;font-size:clamp(2.75rem,6.1vw,6.1rem);line-height:.97;letter-spacing:-.055em;font-weight:600;max-width:14ch;text-wrap:balance}
+.ev-giris h1 em{font-style:normal;background:linear-gradient(90deg,#f2ede3 0%,#f6b48e 45%,#e8683a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ev-lede{margin-top:1.75rem;max-width:36rem;font-size:clamp(1.0625rem,1rem + .3vw,1.25rem);line-height:1.65;color:var(--ev-soluk)}
+.ev-meta{margin-top:1.75rem;display:flex;flex-wrap:wrap;gap:.5rem}
+.ev-meta li{padding:.45rem .8rem;border:1px solid var(--ev-cizgi);border-radius:999px;font:400 .75rem/1 var(--mono);color:var(--ev-soluk);background:rgba(7,10,11,.4)}
+.ev-giris-cta{margin-top:2.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.75rem}
+.ev-oto{gap:.7rem;padding:.8rem 1.35rem .8rem 1.15rem}
+.ev-oto .i-dur,.ev-kb .i-dur{display:none}
+.ev-oynuyor .ev-oto .i-dur,.ev-oynuyor .ev-kb .i-dur{display:block}
+.ev-oynuyor .ev-oto .i-oynat,.ev-oynuyor .ev-kb .i-oynat{display:none}
+.ev-ipucu{margin-top:1.4rem;font:400 .75rem/1.5 var(--mono);color:var(--ev-soluk)}
+@media (hover:none){.ev-ipucu{display:none}}
+html:not(.js-evrim) [data-oynat],html:not(.js-evrim) .ev-ipucu{display:none}
+.ev-gizli{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ev-asagi{display:inline-flex;align-items:center;gap:1rem;min-height:44px;font-size:.9375rem;font-weight:500;color:var(--ev-ink)}
+.ev-asagi i{position:relative;display:block;width:1px;height:2.75rem;background:var(--ev-cizgi);overflow:hidden}
+.ev-asagi i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--ev-sicak);animation:evAkis 2s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes evAkis{to{top:100%}}
+.ev-asagi:hover span{color:#fff}
+
+/* ---------------------------------------------------------------- bölümler ve kartlar */
+.ev-bolum{position:relative;padding:4rem var(--ev-sol)}
+.ev-kart{max-width:30rem}
+.ev-etiket{display:flex;align-items:baseline;gap:.75rem;font:400 .8125rem/1.4 var(--mono);color:var(--ev-soluk)}
+.ev-etiket b{font-weight:500;color:var(--ev-sicak)}
+.ev-kart h2{margin-top:.85rem;font-size:clamp(2rem,1.2rem + 2.2vw,3.25rem);line-height:1.02;letter-spacing:-.045em;font-weight:600;color:var(--ev-ink);text-wrap:balance}
+.ev-kart>p:not([class]){margin-top:1.1rem;font-size:1.0625rem;line-height:1.62;color:#d9d6cc;text-wrap:pretty}
+.ev-saha{margin-top:1.1rem;padding-left:1rem;border-left:1px solid var(--ev-sicak);font-size:.9375rem;line-height:1.6;color:var(--ev-soluk)}
+.ev-saha span{display:block;margin-bottom:.25rem;font:500 .6875rem/1.3 var(--mono);color:var(--ev-sicak)}
+.ev-not{margin-top:.9rem;font:400 .75rem/1.5 var(--mono);color:var(--ev-soluk)}
+.ev-cip{margin-top:1.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(5.6rem,1fr));gap:1px;background:var(--ev-cizgi);border:1px solid var(--ev-cizgi);border-radius:10px;overflow:hidden}
+.ev-cip li{display:flex;flex-direction:column;gap:.3rem;padding:.75rem .85rem;background:rgba(7,10,11,.72)}
+.ev-cip b{font:600 1.375rem/1.05 var(--sans);letter-spacing:-.03em;color:var(--ev-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ev-cip span{font:400 .6875rem/1.3 var(--mono);color:var(--ev-soluk)}
+.ev-cta{margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.6rem}
+.ev-dugme{display:inline-flex;align-items:center;gap:.6rem;min-height:44px;padding:.7rem 1.2rem;border-radius:999px;background:var(--ev-ink);color:#0f1415;font-size:.9375rem;font-weight:500;transition:background .2s,color .2s,border-color .2s}
+.ev-dugme i{font-style:normal;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.ev-dugme:hover i{transform:translateX(3px)}
+.ev-dugme:hover{background:#fff}
+.ev-dugme.ikincil{background:transparent;color:var(--ev-ink);border:1px solid rgba(242,237,227,.3)}
+.ev-dugme.ikincil:hover{border-color:var(--ev-ink)}
+
+/* betik + sahne: kartlar sabit, yalnız etkin dönemin kartı görünür; bölümler kaydırma mesafesi olur */
+.js-evrim .ev-bolum{min-height:170vh;padding:0}
+.js-evrim.ev-uc-yok .ev-bolum{min-height:115vh}
+.js-evrim .ev-kart{position:fixed;z-index:3;left:var(--ev-sol);top:calc(72px + 2.9rem + var(--yil-boy) * .92 + 1.4rem);width:min(30rem,38vw);
+  opacity:0;transition:opacity .35s ease;pointer-events:none}
+.js-evrim .ev-bolum.etkin .ev-kart{opacity:1;transition:opacity .5s ease .12s;pointer-events:auto}
+/* ekran okuyucu bütün kartları okur (görünmeyenler yalnız saydam); klavyeyle odak gelirse kart görünür */
+.js-evrim .ev-kart:focus-within,.js-evrim .ev-kart:focus-within>*{opacity:1!important;transform:none!important;pointer-events:auto}
+.js-evrim .ev-kart>*{opacity:0;transform:translate3d(0,16px,0);transition:opacity .5s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+.js-evrim .etkin .ev-kart>*{opacity:1;transform:none}
+.js-evrim .etkin .ev-kart>:nth-child(2){transition-delay:.05s}
+.js-evrim .etkin .ev-kart>:nth-child(3){transition-delay:.11s}
+.js-evrim .etkin .ev-kart>:nth-child(4){transition-delay:.17s}
+.js-evrim .etkin .ev-kart>:nth-child(5){transition-delay:.23s}
+.js-evrim .etkin .ev-kart>:nth-child(n+6){transition-delay:.29s}
+.ev-los .ev-bolum .ev-kart:not(:focus-within),.ev-bitti .ev-bolum .ev-kart:not(:focus-within){opacity:0!important;pointer-events:none!important}
+.js-evrim .ev-kart h2{scroll-margin-top:50vh}
+@media (min-width:900px) and (max-height:820px){
+  .evrim-sayfa{--yil-boy:clamp(3rem,6vw,5.4rem)}
+  .ev-kart h2{font-size:clamp(1.85rem,1rem + 2vw,2.6rem)}
+  .ev-kart>p:not([class]){font-size:1rem;line-height:1.55}
+  .ev-saha{font-size:.875rem}
+}
+
+/* ---------------------------------------------------------------- ölçek arası */
+.ev-olcek-bolum{position:relative;padding:clamp(8rem,22vh,14rem) var(--ev-sol) clamp(8rem,22vh,14rem)}
+.ev-olcek-ic{max-width:72rem;margin:0 auto}
+.ev-olcek-bolum h2{margin-top:1.1rem;font-size:clamp(2.4rem,1.4rem + 3.6vw,4.75rem);line-height:1;letter-spacing:-.05em;font-weight:600}
+.ev-olcek-lede{margin-top:1.25rem;max-width:40rem;font-size:1.125rem;line-height:1.65;color:var(--ev-soluk)}
+.ev-olcek-izge{margin-top:3rem;display:grid;gap:2.5rem;align-items:center}
+@media (min-width:900px){.ev-olcek-izge{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}}
+.ev-daire{width:100%;max-width:34rem;height:auto;margin:0 auto;display:block;overflow:visible}
+.ev-daire .d-izgara line{stroke:rgba(242,237,227,.08);stroke-width:1}
+.ev-daire .d{fill:none;stroke:rgba(180,201,200,.7);stroke-width:1.1;stroke-dasharray:1;stroke-dashoffset:1}
+.ev-daire .d.benim{stroke:var(--ev-sicak);stroke-width:2}
+.ev-daire .d-yazi{font:500 9px var(--mono);fill:var(--ev-soluk);text-anchor:middle;paint-order:stroke;stroke:#070a0b;stroke-width:4px}
+.ev-daire .d-yazi.benim{fill:var(--ev-sicak)}
+.ev-daire .saha rect,.ev-daire .saha line,.ev-daire .saha circle{fill:none;stroke:rgba(242,237,227,.35);stroke-width:1}
+.ev-daire .saha rect{fill:rgba(180,201,200,.05)}
+.ev-daire .d-ok{stroke:rgba(242,237,227,.25);stroke-dasharray:2 3}
+.ev-olcek-liste{display:grid;gap:1px;background:var(--ev-cizgi);border:1px solid var(--ev-cizgi);border-radius:12px;overflow:hidden}
+.ev-olcek-liste li{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:.85rem 1.1rem;background:rgba(7,10,11,.9)}
+.ev-olcek-liste b{font:600 1.25rem/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ev-olcek-liste span{font:400 .75rem/1.3 var(--mono);color:var(--ev-soluk);text-align:right}
+.ev-olcek-liste .benim b,.ev-olcek-liste .benim span{color:var(--ev-sicak)}
+.ev-kiyas{margin-top:3rem;display:grid;gap:1px;background:var(--ev-cizgi);border-top:1px solid var(--ev-cizgi);border-bottom:1px solid var(--ev-cizgi)}
+@media (min-width:760px){.ev-kiyas{grid-template-columns:repeat(3,1fr)}}
+.ev-kiyas li{display:flex;flex-direction:column;gap:.7rem;padding:1.6rem 1.25rem 1.6rem 0;background:var(--ev-zemin)}
+@media (min-width:760px){.ev-kiyas li+li{padding-left:1.5rem}}
+.ev-kiyas b{font:600 clamp(2.4rem,1.6rem + 2.4vw,3.5rem)/1 var(--sans);letter-spacing:-.05em;color:var(--ev-ink)}
+.ev-kiyas span{font-size:.9375rem;line-height:1.6;color:var(--ev-soluk);max-width:30ch}
+@media (prefers-reduced-motion:no-preference){
+  .js-evrim .ev-olcek-bolum .d{transition:stroke-dashoffset 1.4s cubic-bezier(.6,0,.2,1) calc(var(--i) * .16s)}
+  .js-evrim .ev-olcek-bolum .saha,.js-evrim .ev-olcek-bolum .d-yazi,.js-evrim .ev-olcek-liste li{opacity:0;transition:opacity .6s ease calc(var(--i, 7) * .16s + .3s)}
+  .js-evrim .ev-olcek-bolum.gor .saha,.js-evrim .ev-olcek-bolum.gor .d-yazi,.js-evrim .ev-olcek-bolum.gor .ev-olcek-liste li{opacity:1}
+  .js-evrim .ev-olcek-bolum.gor .d{stroke-dashoffset:0}
+}
+html:not(.js-evrim) .ev-daire .d,.ev-olcek-bolum.gor .d{stroke-dashoffset:0}
+@media (prefers-reduced-motion:reduce){.ev-daire .d{stroke-dashoffset:0}}
+
+/* ---------------------------------------------------------------- kaynaklar */
+.ev-kaynak{position:relative;padding-top:clamp(6rem,14vh,9rem);padding-bottom:5rem}
+.ev-kaynak h2{font-size:clamp(1.9rem,1.4rem + 1.6vw,2.6rem);letter-spacing:-.045em;font-weight:600}
+.ev-kaynak>p{margin-top:1.1rem;max-width:62ch;font-size:1rem;line-height:1.7;color:var(--ev-soluk)}
+.ev-kaynak .kaynakca{margin-top:1.75rem;display:grid;gap:.15rem;max-width:62rem;counter-reset:k}
+.ev-kaynak .kaynakca li{counter-increment:k;display:grid;grid-template-columns:2.2rem 1fr;padding:.7rem 0;border-top:1px solid var(--ev-cizgi);font-size:.9375rem;line-height:1.6;color:#d9d6cc}
+.ev-kaynak .kaynakca li::before{content:counter(k,decimal-leading-zero);font:400 .75rem/1.9 var(--mono);color:var(--ev-soluk)}
+.ev-kaynak .kaynakca a{color:var(--ev-ink);text-decoration:underline;text-decoration-color:rgba(242,237,227,.3);text-underline-offset:.2em}
+.ev-kaynak .kaynakca a:hover{text-decoration-color:var(--ev-sicak)}
+.ev-kaynak .komsu{margin-top:3.5rem;display:grid;gap:1px;background:var(--ev-cizgi);border:1px solid var(--ev-cizgi);border-radius:12px;overflow:hidden}
+@media (min-width:760px){.ev-kaynak .komsu{grid-template-columns:repeat(3,1fr)}}
+.ev-kaynak .komsu a{display:flex;flex-direction:column;gap:.4rem;padding:1.4rem 1.5rem;background:var(--ev-zemin);transition:background .2s}
+.ev-kaynak .komsu a:hover{background:#11181a}
+.ev-kaynak .komsu .et{font:400 .6875rem/1.3 var(--mono);color:var(--ev-sicak)}
+.ev-kaynak .komsu b{font-size:1.125rem;font-weight:600;letter-spacing:-.02em;color:var(--ev-ink)}
+
+/* ---------------------------------------------------------------- zaman çizelgesi */
+.ev-zaman{position:fixed;left:0;right:0;bottom:0;z-index:4;display:flex;align-items:flex-start;gap:1.5rem;padding:0 var(--ev-sol) .35rem;background:linear-gradient(180deg,rgba(7,10,11,0),rgba(7,10,11,.82) 55%);transition:opacity .6s,transform .6s}
+.ev-zaman ol{flex:1;position:relative;display:grid;grid-template-columns:repeat(13,minmax(0,1fr));border-top:1px solid var(--ev-cizgi)}
+.ev-zaman ol::before{content:"";position:absolute;left:0;top:-1px;height:1px;width:calc(var(--ilerleme,0) * 100%);background:var(--ev-sicak);box-shadow:0 0 12px rgba(239,122,69,.6)}
+.ev-zaman a{position:relative;display:block;min-height:44px;padding:.95rem 0 .4rem;font:500 .6875rem/1 var(--mono);color:var(--ev-soluk);transition:color .25s}
+.ev-zaman a::before{content:"";position:absolute;left:0;top:-4px;width:7px;height:7px;border-radius:50%;background:var(--ev-zemin);border:1px solid rgba(242,237,227,.45);transition:background .25s,border-color .25s,transform .25s}
+.ev-zaman a:hover,.ev-zaman a[aria-current]{color:var(--ev-ink)}
+.ev-zaman a[aria-current]::before{background:var(--ev-sicak);border-color:var(--ev-sicak);transform:scale(1.35)}
+.ev-zaman a:focus-visible{outline:1px solid var(--ev-ink);outline-offset:2px}
+.ev-kumanda{display:flex;gap:.4rem;padding-top:.3rem}
+.ev-kb{width:44px;height:44px;border-radius:50%;border:1px solid rgba(242,237,227,.22);display:grid;place-items:center;color:var(--ev-ink);background:rgba(7,10,11,.55);cursor:pointer;transition:border-color .2s,background .2s}
+.ev-kb:hover{border-color:var(--ev-ink)}
+.ev-kb[aria-pressed=true]{border-color:var(--ev-sicak);color:var(--ev-sicak)}
+.ev-kb[hidden]{display:none}
+.ev-girista .ev-zaman,.ev-bitti .ev-zaman{opacity:0;transform:translateY(12px);pointer-events:none}
+html:not(.js-evrim) .ev-zaman{display:none}
+
+/* ---------------------------------------------------------------- telefon ve dar ekran */
+@media not all and (min-width:900px) and (min-aspect-ratio:21/20){
+  .evrim-sayfa{--yil-boy:2.9rem}
+  .ev-hud-sol{top:calc(72px + .9rem)}
+  .ev-hud-yil{margin-top:.35rem}
+  .ev-hud-yil.uzun{line-height:1.5}
+  .ev-hud-sag{top:calc(72px + 4.1rem);bottom:auto;right:1.25rem}
+  .ev-temsili{display:none}
+  .ev-zaman{left:auto;right:1rem;top:calc(72px + .7rem);bottom:auto;padding:0;background:none}
+  .ev-zaman ol{display:none}
+  .ev-kumanda{padding-top:0}
+  #evTamEkran{display:none}
+  .ev-giris{align-items:end;padding-bottom:2.5rem}
+  .ev-giris h1{font-size:clamp(2.4rem,11vw,3.4rem)}
+  .ev-lede{margin-top:1.1rem;font-size:1rem;line-height:1.6}
+  .ev-meta{display:none}
+  .ev-giris-cta{margin-top:1.6rem;gap:.75rem 1.25rem}
+  .ev-asagi i{height:2rem}
+  .ev-giris-ic{text-shadow:0 1px 18px rgba(7,10,11,.85)}
+  .ev-lede{color:#cfccc2}
+  .js-evrim .ev-kart{left:0;right:0;top:auto;bottom:0;width:auto;max-width:none;
+    padding:3.25rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(7,10,11,0) 0,rgba(7,10,11,.86) 3rem,rgba(7,10,11,.95) 100%)}
+  .ev-kart h2{font-size:clamp(1.6rem,6.8vw,2.1rem);margin-top:.6rem}
+  .ev-kart>p:not([class]){font-size:.96875rem;line-height:1.55;margin-top:.75rem}
+  .ev-saha{font-size:.875rem;margin-top:.8rem}
+  .ev-cip{margin-top:1rem;grid-template-columns:repeat(auto-fit,minmax(4.6rem,1fr))}
+  .ev-cip li{padding:.6rem .65rem}
+  .ev-cip b{font-size:1.125rem}
+  .ev-not{display:none}
+  .ev-cta{margin-top:1.1rem}
+}
+@media not all and (min-width:900px) and (min-aspect-ratio:21/20){
+  @media (max-height:700px){.js-evrim .ev-saha{display:none}}
+}
+
+/* hareket azaltılmışsa: kaymalar yok, yalnız solma */
+@media (prefers-reduced-motion:reduce){
+  .ev-nokta,.ev-asagi i::after{animation:none}
+  .js-evrim .ev-kart>*{transform:none!important;transition:opacity .2s!important}
+  .ev-zaman,.ev-zaman a::before{transition:none}
+}
