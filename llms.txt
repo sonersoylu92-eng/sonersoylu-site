@@ -22,6 +22,7 @@ Sitedeki bilgiler servis dokümanının yerine geçmez; türbin üzerinde çalı
 - [Sözlük](https://sonersoylu.com/sozluk/): 148 teknik terimin Türkçe–İngilizce karşılığı.
 - [Hesaplama araçları](https://sonersoylu.com/araclar/): Kanat ucu hızı, rüzgârdaki güç, kapasite faktörü, yıllık üretim, cıvata torku.
 - [Deniz üstü rüzgâr türbini](https://sonersoylu.com/deniz-ustu/): Monopile, jacket ve yüzer temeller; karadan farkları ve GWO Sea Survival.
+- [Rüzgârın evrimi](https://sonersoylu.com/evrim/): 9. yüzyıl Sistan değirmeninden 2025’in 310 m rotorlu 26 MW türbinine 13 makine; kaynaklı ölçüler, ölçekli rotor karşılaştırması, 3B sahne gösterisi.
 - [Türbin karşılaştırma](https://sonersoylu.com/turbinler/karsilastir/): Nordex N90 ve N117, Enercon E-82, Vestas V126 yan yana.
 - [Saha laboratuvarı](https://sonersoylu.com/lab/): Türbin sistemleri sekiz başlıkta; her başlıkta sistem sayfası ve gerçek vaka.
 
