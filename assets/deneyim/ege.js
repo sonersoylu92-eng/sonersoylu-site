@@ -63,7 +63,7 @@ const DENIZ_FS = `
     vec3 V = normalize(vW - cameraPosition);
     float d = length(vW.xz);
     vec2 yon = vW.xz / d;
-    float g = max(dot(normalize(vec2(V.x, V.z)), normalize(uGunes.xz)), 0.0);
+    float g = max(dot(normalize(vec2(V.x, V.z) + vec2(1e-5)), normalize(uGunes.xz + vec2(1e-5))), 0.0);
     // güneşe bakan yönde ışıltı yolu: ince kırpışan şeritler
     float parilti = pow(g, 40.0) * (0.55 + 0.45 * hs(floor(vW.xz * vec2(0.08, 0.5)) + floor(uZaman * 1.3)));
     vec3 c = uDeniz + uIsik * uIsikG * parilti * 0.9 + uIsik * uIsikG * pow(g, 6.0) * 0.12;

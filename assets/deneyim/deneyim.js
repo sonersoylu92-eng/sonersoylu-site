@@ -13,9 +13,9 @@ import { createScene, SPEC, araziY } from '/n117/n117.js?v=weather2';
 import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=f0ed1943';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
-import { egeKur } from '/assets/deneyim/ege.js?v=ef6e542c';
+import { egeKur } from '/assets/deneyim/ege.js?v=843f70dd';
 import { gokKur } from '/assets/deneyim/gok.js?v=d466d467';
-import { korfezKur } from '/assets/deneyim/korfez.js?v=af1ede38';
+import { korfezKur } from '/assets/deneyim/korfez.js?v=5694f789';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
@@ -302,10 +302,33 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   const ppHazir = hafif ? Promise.resolve() : Promise.all([
     import('/assets/vendor/pp/EffectComposer.js'), import('/assets/vendor/pp/RenderPass.js'),
     import('/assets/vendor/pp/BokehPass.js'), import('/assets/vendor/pp/UnrealBloomPass.js'), import('/assets/vendor/pp/OutputPass.js'),
-    import('/assets/vendor/pp/GTAOPass.js').catch(() => null),
-  ]).then(([EC, RP, BP, UB, OP, GT]) => {
+    import('/assets/vendor/pp/GTAOPass.js').catch(() => null), import('/assets/vendor/pp/ShaderPass.js'),
+  ]).then(([EC, RP, BP, UB, OP, GT, SP]) => {
     composer = new EC.EffectComposer(renderer);
     composer.addPass(new RP.RenderPass(scene, camera));
+    /* V32 · NaN süzgeci: bir gölgelendirici tek bir pikselde NaN/sonsuz üretirse (sürücüye göre değişen hassasiyet
+     * hataları), ışıma o pikseli bulanıklaştırırken kapakta büyük siyah kareler oluşuyordu. Bozuk piksel komşularının
+     * ortalamasıyla değiştirilir, aşırı parlak değerler sınırlanır; geçerli piksellere dokunulmaz. */
+    const suzgec = new SP.ShaderPass({
+      uniforms: { tDiffuse: { value: null }, uPiksel: { value: new THREE.Vector2(1 / 1024, 1 / 1024) } },
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: `uniform sampler2D tDiffuse; uniform vec2 uPiksel; varying vec2 vUv;
+        bool gecerli(vec4 c){ return all(lessThan(abs(c), vec4(6.0e4))); }
+        void main(){
+          vec4 c = texture2D(tDiffuse, vUv);
+          if (!gecerli(c)) {
+            vec4 t = vec4(0.0); float n = 0.0;
+            vec4 k1 = texture2D(tDiffuse, vUv + vec2(uPiksel.x, 0.0)); if (gecerli(k1)) { t += k1; n += 1.0; }
+            vec4 k2 = texture2D(tDiffuse, vUv - vec2(uPiksel.x, 0.0)); if (gecerli(k2)) { t += k2; n += 1.0; }
+            vec4 k3 = texture2D(tDiffuse, vUv + vec2(0.0, uPiksel.y)); if (gecerli(k3)) { t += k3; n += 1.0; }
+            vec4 k4 = texture2D(tDiffuse, vUv - vec2(0.0, uPiksel.y)); if (gecerli(k4)) { t += k4; n += 1.0; }
+            c = n > 0.0 ? t / n : vec4(0.0, 0.0, 0.0, 1.0);
+          }
+          gl_FragColor = min(c, vec4(512.0));
+        }`,
+    });
+    suzgec.setSize = (w, h) => suzgec.uniforms.uPiksel.value.set(1 / Math.max(1, w), 1 / Math.max(1, h));
+    composer.addPass(suzgec);
     /* Ortam örtmesi (GTAO), yalnız nasel içinde ve en yüksek kalitede: köşeler, makine dipleri, hortum ve kablo
      * arkaları, dolap araları gerçek fotoğraftaki gibi yumuşakça kararır. Yarım çözünürlükte hesaplanır, gürültüsü
      * Poisson süzgeciyle temizlenir; kalite düşerse kendiliğinden kapanır. */

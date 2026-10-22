@@ -41,29 +41,31 @@ const GOK_GLSL = `
   uniform vec3 uGunesYon, uBetaR, uBetaM;
   uniform float uSunE, uMieG, uParlak, uAlaca, uGeceT, uBulutK, uBulutT;
   uniform vec3 uBulutRenk, uBulutIsik;
-  float gkHg(float c, float g){ float g2 = g*g; return 0.07957747154594767 * (1.0 - g2) / pow(1.0 - 2.0*g*c + g2, 1.5); }
+  float gkHg(float c, float g){ float g2 = g*g; return 0.07957747154594767 * (1.0 - g2) / pow(max(1.0 - 2.0*g*c + g2, 1e-6), 1.5); }
   float gkH(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   float gkN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
     return mix(mix(gkH(i), gkH(i+vec2(1,0)), f.x), mix(gkH(i+vec2(0,1)), gkH(i+vec2(1,1)), f.x), f.y); }
   vec3 gokIsigi(vec3 d, float disk){
-    float zen = acos(max(0.0, d.y));
+    // acos'a 1'i aşan değer girerse (yansıma yönü normalize hatasıyla 1,0000001) piksel NaN olur;
+    // tek bir NaN piksel ışımada büyüyüp kapakta siyah kareler bırakıyordu (V32)
+    float zen = acos(clamp(d.y, 0.0, 1.0));
     float inv = 1.0 / (cos(zen) + 0.15 * pow(93.885 - zen * 57.29577951308232, -1.253));
     vec3 Fex = exp(-(uBetaR * (8.4E3 * inv) + uBetaM * (1.25E3 * inv)));
     float ct = dot(d, uGunesYon);
-    vec3 bT = uBetaR * (0.05968310365946075 * (1.0 + pow(ct * 0.5 + 0.5, 2.0))) + uBetaM * gkHg(ct, uMieG);
+    vec3 bT = uBetaR * (0.05968310365946075 * (1.0 + (ct * 0.5 + 0.5) * (ct * 0.5 + 0.5))) + uBetaM * gkHg(ct, uMieG);
     vec3 oran = bT / (uBetaR + uBetaM);
-    vec3 Lin = pow(uSunE * oran * (1.0 - Fex), vec3(1.5));
-    Lin *= mix(vec3(1.0), pow(uSunE * oran * Fex, vec3(0.5)), clamp(pow(1.0 - uGunesYon.y, 5.0), 0.0, 1.0));
+    vec3 Lin = pow(max(uSunE * oran * (1.0 - Fex), vec3(0.0)), vec3(1.5));
+    Lin *= mix(vec3(1.0), pow(max(uSunE * oran * Fex, vec3(0.0)), vec3(0.5)), clamp(pow(max(1.0 - uGunesYon.y, 0.0), 5.0), 0.0, 1.0));
     vec3 L0 = vec3(0.1) * Fex;
     L0 += uSunE * 19000.0 * Fex * smoothstep(0.999956676946448, 0.999976676946448, ct) * disk;
-    vec3 c = pow((Lin + L0) * 0.04 + vec3(0.0, 0.0003, 0.00075), vec3(1.0 / 2.4));
+    vec3 c = pow(max((Lin + L0) * 0.04 + vec3(0.0, 0.0003, 0.00075), vec3(0.0)), vec3(1.0 / 2.4));
     // alacakaranlık: güneş −10°…+3° arası; ufukta güneş yönünde turuncu-kızıl, karşıda Venüs kuşağı ve dünya gölgesi
     if (uAlaca > 0.0) {
       vec2 sh = normalize(uGunesYon.xz + vec2(1e-5)), dh = normalize(d.xz + vec2(1e-5));
-      float yon = dot(dh, sh) * 0.5 + 0.5, y = max(d.y, 0.0);
+      float yon = clamp(dot(dh, sh) * 0.5 + 0.5, 0.0, 1.0), y = max(d.y, 0.0), vy = (y - 0.07) / 0.05, ty = 1.0 - yon;
       vec3 parilti = mix(vec3(0.20, 0.07, 0.16), vec3(1.0, 0.40, 0.12), pow(yon, 2.5)) * exp(-y * mix(5.0, 11.0, yon)) * (0.35 + 0.65 * pow(yon, 4.0));
-      vec3 venus = vec3(0.30, 0.16, 0.24) * exp(-pow((y - 0.07) / 0.05, 2.0)) * pow(1.0 - yon, 2.0);
-      vec3 golge = vec3(0.05, 0.07, 0.14) * exp(-y * 6.0) * pow(1.0 - yon, 2.0);
+      vec3 venus = vec3(0.30, 0.16, 0.24) * exp(-vy * vy) * ty * ty;
+      vec3 golge = vec3(0.05, 0.07, 0.14) * exp(-y * 6.0) * ty * ty;
       vec3 ust = vec3(0.07, 0.10, 0.22) * smoothstep(0.0, 0.7, y);
       c += (parilti + venus + golge + ust) * uAlaca;
     }
@@ -143,7 +145,8 @@ const denizFS = lite => `
     vec3 col = mix(su, yans, F) + parla * (1.0 - uKapali);
     // köpük: kazık çevresi ve rüzgâr arttıkça beyaz köpüklü dalga başları
     float r0 = length(vW.xz);
-    float kazik = exp(-pow((r0 - 3.3) / 1.6, 2.0)) * (0.55 + 0.45 * gr(vW.xz * 1.3 + t * 0.7));
+    float kz = (r0 - 3.3) / 1.6;
+    float kazik = exp(-kz * kz) * (0.55 + 0.45 * gr(vW.xz * 1.3 + t * 0.7));
     float bas = smoothstep(0.80, 0.93, gr(p / 7.0 + vec2(t * 0.12, 0.0)) * 0.6 + gr(p / 2.3 - t * 0.2) * 0.4) * uKopuk * (1.0 - smoothstep(300.0, 1600.0, uz));
     col = mix(col, uOrtam * 0.9 + uGunesRenk * 0.25, clamp(kazik * 0.75 + bas * 0.8, 0.0, 1.0));
     col = mix(col, uPus, uKapali * 0.55);
