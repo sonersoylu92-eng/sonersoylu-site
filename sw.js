@@ -2,7 +2,7 @@
    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
 
-const SURUM = 'kule-20261023-v33duzen1';
+const SURUM = 'kule-20261023-v34muzik1';
 const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
 const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
 
@@ -22,7 +22,7 @@ const ONBELLEGE = [
   '/assets/ara.js?v=b6a27d00',
   '/assets/kaydirma.js?v=23cd28e6',
   '/style.css?v=47d4c147',
-  '/assets/site.js?v=vitals3',
+  '/assets/site.js?v=7f65a25b',
   '/favicon.svg',
   '/cevrimdisi.html',
 ];
@@ -80,23 +80,25 @@ self.addEventListener('fetch', (e) => {
   // Video/ses parça istekleri (Range) servis çalışanından geçmez; Safari'de oynatma bozulmasın
   if (istek.headers.has('range') || istek.destination === 'video' || istek.destination === 'audio') return;
 
-  // Sayfa gezinmeleri: önce ağ (3,5 sn), olmazsa önbellek, o da yoksa çevrimdışı sayfası
+  /* Sayfa gezinmeleri: önce ağ. V34 · Ağ 1 sn içinde yanıt vermezse ve bu sayfanın bu sürümde kaydedilmiş kopyası varsa
+   * kopya açılır; ağdan gelen yanıt arka planda kaydedilir, bir sonraki açılış onu kullanır. Tanı: geri gelen ziyaretçide
+   * ana sayfanın ilk baytı zaman zaman 1,6–1,9 sn sürüyordu (sunucu kodu değil, bağlantı). Kopya yoksa ağ beklenir;
+   * eskiden 3,5 sn'de kesilip bağlantı varken bile "çevrimdışı" sayfası açılabiliyordu. */
   if (istek.mode === 'navigate') {
     e.respondWith((async () => {
+      const c = await caches.open(KABUK);
+      const bekle = (ms) => new Promise((r) => setTimeout(r, ms));
+      const ag = Promise.resolve(e.preloadResponse).catch(() => null).then((on) => on || fetch(istek));
+      e.waitUntil(ag.then((y) => { if (y && y.ok) return c.put(istek, y.clone()); }).catch(() => {}));
+      const kayitli = async () => (await c.match(istek)) || (await c.match(u.pathname));
       try {
-        const y = await Promise.race([
-          Promise.resolve(e.preloadResponse).catch(() => null).then((on) => on || fetch(istek)),
-          new Promise((_, red) => setTimeout(() => red(new Error('zaman-asimi')), 3500)),
-        ]);
-        if (y && y.ok) {
-          const c = await caches.open(KABUK);
-          e.waitUntil(c.put(istek, y.clone()).catch(() => {}));
-        }
-        return y;
+        const hizli = await Promise.race([ag.then((y) => ({ y }), () => null), bekle(1000).then(() => null)]);
+        if (hizli) return hizli.y;
+        const v = await kayitli();
+        if (v) return v;
+        return await Promise.race([ag, bekle(20000).then(() => { throw new Error('zaman-asimi'); })]);
       } catch {
-        const c = await caches.open(KABUK);
-        return (await c.match(istek)) || (await c.match(u.pathname)) ||
-               (await c.match('/cevrimdisi.html')) ||
+        return (await kayitli()) || (await c.match('/cevrimdisi.html')) ||
                new Response('Çevrimdışısınız', { status: 503, headers: { 'content-type': 'text/plain; charset=utf-8' } });
       }
     })());
@@ -110,7 +112,9 @@ self.addEventListener('fetch', (e) => {
     const v = await c.match(istek);
     if (v) return v;
     try {
-      const y = await fetch(istek);
+      // V34 · yeni sürümün ilk isteği tarayıcı önbelleğini doğrulatır (ETag, çoğu zaman 304): Cloudflare dosyalara 4 saatlik
+      // önbellek veriyor; damgası değişmeyen ortak bir dosya (ör. site.js) eski sürümde kalmasın.
+      const y = await fetch(istek, { cache: 'no-cache' });
       if (y.ok) e.waitUntil(c.put(istek, y.clone()).catch(() => {}));
       return y;
     } catch {
