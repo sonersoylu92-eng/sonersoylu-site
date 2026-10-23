@@ -476,12 +476,14 @@
   var sesBtn = document.createElement('button'); sesBtn.type = 'button'; sesBtn.className = 'v-ses'; sesBtn.setAttribute('aria-pressed', 'false');
   sesBtn.innerHTML = '<span aria-hidden="true"></span>Ses kapalı';
   var sesMotor = null, sesYukleniyor = false;
+  // V34 · müzik çalar (assets/muzik.js) saha sesi açıkken kendini kısar, kapanınca eski düzeyine döner
+  function sahaSesDuyur(acik) { try { window.dispatchEvent(new CustomEvent('ss:saha-ses', { detail: { acik: acik } })); } catch (e) {} }
   sesBtn.addEventListener('click', function () {
-    if (sesMotor) { sesMotor.kapat(); sesMotor = null; sesBtn.setAttribute('aria-pressed', 'false'); sesBtn.lastChild.textContent = 'Ses kapalı'; return; }
+    if (sesMotor) { sesMotor.kapat(); sesMotor = null; sesBtn.setAttribute('aria-pressed', 'false'); sesBtn.lastChild.textContent = 'Ses kapalı'; sahaSesDuyur(false); return; }
     if (sesYukleniyor) return; sesYukleniyor = true;
     import('/assets/deneyim/ses.js?v=9dd49f08').then(function (m) {
       sesMotor = m.sesKur(); sesYukleniyor = false;
-      if (sesMotor) { sesBtn.setAttribute('aria-pressed', 'true'); sesBtn.lastChild.textContent = 'Ses açık'; }
+      if (sesMotor) { sesBtn.setAttribute('aria-pressed', 'true'); sesBtn.lastChild.textContent = 'Ses açık'; sahaSesDuyur(true); }
     }).catch(function () { sesYukleniyor = false; });
   });
   sahne.appendChild(sesBtn);
@@ -703,14 +705,24 @@
     git(DURAKLAR[i].p);
     if (duyur) rotaDuyuru.textContent = 'Durak ' + (i + 1) + ' / ' + DURAKLAR.length + ': ' + DURAKLAR[i].ad + '. ' + DURAKLAR[i].bilgi;
   }
+  /* V34 · Gezgin yalnız bir durağın üstündeyken o durağı gösterir. Duraklar arasında (kule içi tırmanış gibi uzun yollar)
+   * en yakın durak yerine sıradaki durak "Sıradaki" etiketiyle yazılır: kulede "02 / 12 Göbek" görünmesi kafa karıştırıyordu. */
+  var DURAK_YAKIN = 0.02;
   function rotaGuncelle(p) {
     if (!DURAKLAR.length) return;
-    var i = enYakinDurak(p);
-    if (i === sonRotaDurak) return; sonRotaDurak = i;
-    rotaNo.textContent = String(i + 1).padStart(2, '0') + ' / ' + DURAKLAR.length; rotaAd.textContent = DURAKLAR[i].ad;
+    var i = enYakinDurak(p), ustunde = Math.abs(p - DURAKLAR[i].p) <= DURAK_YAKIN;
+    if (!ustunde) {
+      var s = -1; for (var k = 0; k < DURAKLAR.length; k++) if (DURAKLAR[k].p > p) { s = k; break; }
+      if (s >= 0) i = s; else ustunde = true;   // son duraktan sonra: son durak
+    }
+    var anahtar = i + (ustunde ? 'u' : 's');
+    if (anahtar === sonRotaDurak) return; sonRotaDurak = anahtar;
+    var no = String(i + 1).padStart(2, '0') + ' / ' + DURAKLAR.length;
+    rotaNo.innerHTML = ustunde ? no : '<i>Sıradaki</i>' + no; rotaAd.textContent = DURAKLAR[i].ad;
+    rota.classList.toggle('v-rota-arada', !ustunde);
     rota.querySelector('.v-rota-onc').disabled = i === 0 && p <= DURAKLAR[0].p + 0.003;
     rota.querySelector('.v-rota-son').disabled = i === DURAKLAR.length - 1 && p >= DURAKLAR[i].p - 0.003;
-    if (rotaSayfa && hashIslendi && p > 0.1) {
+    if (rotaSayfa && hashIslendi && p > 0.1 && ustunde) {
       try { history.replaceState(null, '', '#durak-' + DURAKLAR[i].id); localStorage.setItem('dny-son-durak', DURAKLAR[i].id); } catch (e) {}
     }
   }
@@ -922,7 +934,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=a5f04ecf').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=6b729a48').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
@@ -935,7 +947,7 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0), ks = Math.round(performance.now() - (kurulumT0 || taniT0)); var iz = sahneS && sahneS.isinma; tani('hazir', { sure_ms: hs, kurulum_ms: ks, neden: iz ? ('isinma ' + iz.once + '>' + iz.guvenli + '>' + iz.sonra + (iz.hata ? ' ' + iz.hata : '')) : null }); if (ks > 8000 && !filmKip && !gizlendi && !zorla3B) { var ikinci = false; try { var ik = JSON.parse(localStorage.getItem('dny-ilkkare-v1') || 'null'); ikinci = !!(ik && Date.now() - ik.t < ZAYIF_SURE); localStorage.setItem('dny-ilkkare-v1', JSON.stringify({ ms: ks, t: Date.now() })); } catch (e) {} tani('takilma', { neden: 'ilk-kare-gec ' + ks + (ikinci ? ' ikinci' : ' ilk') }); if (ikinci) { zayifIsaretle('ilk-kare-' + ks); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
+        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0), ks = Math.round(performance.now() - (kurulumT0 || taniT0)); var iz = sahneS && sahneS.isinma; tani('hazir', { sure_ms: hs, kurulum_ms: ks, neden: iz ? ('isinma ' + iz.once + '>' + iz.guvenli + '>' + iz.sonra + ' k=' + ks + (iz.d != null ? ' d=' + iz.d : '') + (iz.e != null ? ' e=' + (iz.eg ? 'g' : '') + iz.e : '') + (iz.hata ? ' ' + iz.hata : '')) : null }); if (ks > 8000 && !filmKip && !gizlendi && !zorla3B) { var ikinci = false; try { var ik = JSON.parse(localStorage.getItem('dny-ilkkare-v1') || 'null'); ikinci = !!(ik && Date.now() - ik.t < ZAYIF_SURE); localStorage.setItem('dny-ilkkare-v1', JSON.stringify({ ms: ks, t: Date.now() })); } catch (e) {} tani('takilma', { neden: 'ilk-kare-gec ' + ks + (ikinci ? ' ikinci' : ' ilk') }); if (ikinci) { zayifIsaretle('ilk-kare-' + ks); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
         takilma: function (d) { if (!zorla3B && d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden && (d.ms > 4000 || ++donmaSay >= 3)) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
         hata: function (neden, d) { d = d || {}; if (neden === 'yavas' && !filmKip) zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       })).then(function (S) {
@@ -984,5 +996,18 @@
   // yer ayırmaz; yoksa yol ayrılıp sonra kapağa düşülünce ortadan yenilenen sayfada bütün içerik kayıyordu (tanı: masaüstü CLS 0,42–0,50).
   try { if (zayif && !/^onceki/.test(zayif)) localStorage.setItem('dny-gpu-zayif', zayif); else if (!zayif) localStorage.removeItem('dny-gpu-zayif'); } catch (e) {}
   if (zayif) { taniT0 = 1; tani('statik', { neden: 'zayif-' + zayif }); bolum.classList.remove('dny-hazirlaniyor'); return statik(false); }
+  /* V34 · Sahne dosyaları beklemeden ve aynı anda inmeye başlar. Modül zinciri (deneyim → three, model, iç mekân → …)
+   * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
+   * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
+   * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=6b729a48","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  if (!filmKip) try {
+    var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
+    ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {
+      var l = document.createElement('link'); l.rel = 'modulepreload'; l.href = u;
+      if (i >= ONYUKLE.a.length) l.setAttribute('fetchpriority', 'low');   // efekt zinciri sahne kurulurken gerekir, sonra
+      document.head.appendChild(l);
+    });
+  } catch (e) { /* ön yükleme yoksa modüller yine sırayla iner */ }
   if ('requestIdleCallback' in window) requestIdleCallback(kur, { timeout: 1200 }); else setTimeout(kur, 300);
 })();

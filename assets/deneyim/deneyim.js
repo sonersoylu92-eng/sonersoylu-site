@@ -33,6 +33,7 @@ const nefes = () => new Promise(r => {
 });
 
 export async function deneyimBaslat(canvas, bolum, cb = {}) {
+  const kurBas = performance.now();   // V34: efekt ısınması yükleme perdesi altında mı yapılsın kararı için
   const mobil = matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches;
   /* hafif: telefonlar ve sayfa tarafının "orta güçte" bulduğu bilgisayarlar (eski Intel tümleşik ekran kartı, az bellek).
    * Kadraj ve kamera masaüstündeki gibi kalır; yalnız yük azalır: sade geometri, gölge ve efekt zinciri yok, 1× piksel. */
@@ -1181,8 +1182,23 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       const derle = (sc, kam) => renderer.compileAsync ? renderer.compileAsync(sc, kam) : Promise.resolve(renderer.compile(sc, kam));
       const DUZEN = [[false, false], [true, false], [true, true], [false, true]];
       const duzen = ([k, n]) => { kuleI.forEach(l => { l.visible = k; }); icI.forEach(l => { l.visible = n; }); };
-      const sozler = [];
+      const sozler = [], tDerle = performance.now();
       DUZEN.forEach(d => { duzen(d); sozler.push(derle(scene, camera)); });
+      /* V34 · Ara hedef (efekt zinciri) türevleri de burada, ekran türevleriyle aynı anda istenir. Paralel derleme olan
+       * cihazlarda (Windows'ta ANGLE/Direct3D dahil) sürücü bunları arka planda birlikte derler; eskiden ısınmanın sonunda
+       * tek tek ve ana iş parçacığını kilitleyerek derleniyordu (Windows Intel ilk ziyaret: kapak 15,6 sn). three.js
+       * gölgelendirici türevini o anki çizim hedefine göre seçtiği için derleme çağrısı ara hedef bağlıyken yapılır. */
+      let araHedef = null;
+      const paralel = !!(renderer.extensions && renderer.extensions.has && renderer.extensions.has('KHR_parallel_shader_compile'));
+      if (!hafif && paralel) {
+        const onceki = renderer.getRenderTarget();
+        try {
+          araHedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
+          renderer.setRenderTarget(araHedef);
+          DUZEN.forEach(d => { duzen(d); sozler.push(derle(scene, camera)); });
+        } catch (e) { isinmaHatasi('ara-derle', e); }
+        finally { renderer.setRenderTarget(onceki); }
+      }
       duzen([true, true]);
       // yolculuğun sonundaki teknik çizim geçişi de (ayrı zemin sahnesi + tek malzemeyle çizim)
       sozler.push(derle(cizimZemin, cizimKam));
@@ -1211,9 +1227,10 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
          * ısınma bunları kapsamıyordu: kule tepesinde ve nasel girişinde 11–18 gölgelendirici kaydırırken derlenip
          * sahne 0,4–1,7 sn takılıyordu (17 Ekim tanı: p=0,4 prog+18, p=0,47 prog+11). Her ışık düzeni ara hedefe de çizilir. */
         if (!hafif) {
-          let araHedef = null; const oncekiHedef = renderer.getRenderTarget();
+          // V34: paralel derlemede türevler zaten hazır; bu çizimler yalnız ekran kartının çizim durumlarını kurar (hızlı)
+          const oncekiHedef = renderer.getRenderTarget();
           try {
-            araHedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
+            if (!araHedef) araHedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
             for (const d of DUZEN) {
               try { duzen(d); renderer.setRenderTarget(araHedef); renderer.render(scene, camera); }
               catch (e) { isinmaHatasi('ara' + DUZEN.indexOf(d), e); }
@@ -1221,7 +1238,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
               await nefes();
             }
           } catch (e) { isinmaHatasi('ara-hedef', e); }
-          finally { renderer.setRenderTarget(oncekiHedef); if (araHedef) araHedef.dispose(); }
+          finally { renderer.setRenderTarget(oncekiHedef); if (araHedef) { araHedef.dispose(); araHedef = null; } }
         }
         try { duzen([true, true]); } catch (e) { isinmaHatasi('duzen-son', e); }
         try { cizimCiz(0.5); } catch (e) { isinmaHatasi('cizim', e); }
@@ -1229,10 +1246,85 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
         S.isinma.sonra = renderer.info.memory.geometries;
         geriAl();
         if (!hafif) { await nefes(); try { icOrtamCek(); } catch (e) { isinmaHatasi('ortam', e); } }
+        /* V34 · Masaüstü efektleri (alan derinliği, ortam örtmesi, ışıma) ilk kez kullanıldığında derlenip ekran kartında
+         * kuruluyordu ve bu, sahne açıldıktan hemen sonra yaşanıyordu (23 Ekim tanı, Windows Intel: açılıştan hemen sonra
+         * 1,2 sn donma, prog+0 · iş 14 ms: bekleme ekran kartındaydı). Efekt dosyaları zamanında indiyse bu hazırlık artık
+         * yükleme perdesi kalkmadan yapılır; inmediyse eskisi gibi sahne açıldıktan sonra, ama yine paralel derlemeyle. */
+        // perde süresi sınırlı: kurulum 8 sn'yi aşarsa cihaz "ilk kare geç" sayılır; bütçe aşılacaksa iş sahne açılınca biter
+        const kalan = () => 7000 - (performance.now() - kurBas);
+        if (!hafif && !birakildi && kalan() > 1500) {
+          await Promise.race([ppHazir, new Promise(r => setTimeout(r, Math.min(2000, kalan() - 1200)))]).catch(() => {});
+          if (composer && kalan() > 1000) await efektIsit(true, Math.max(500, kalan() - 800));
+        }
         git();
-        // masaüstü efektleri (alan derinliği, parlama) nasel içinde ilk açıldığında derlenip takılmasın
-        ppHazir.then(() => { if (!composer || !bokeh || birakildi) return; const ge = gtao ? gtao.enabled : false; try { const e = bokeh.enabled; bokeh.enabled = true; if (gtao) gtao.enabled = true; composer.render(0); bokeh.enabled = e; } catch (er) { /* efektsiz de çalışır */ } if (gtao) gtao.enabled = ge; derinlikIsit(); });
+        if (!hafif) ppHazir.then(() => efektIsit(false));
       };
+      let efektDurum = 0, efektSozu = null;   // durum 0: yapılmadı · 1: sürüyor · 2: bitti
+      async function efektIsit(perdeAltinda, sinir = 6000) {
+        if (efektDurum || !composer || !bokeh || birakildi) return; efektDurum = 1;
+        const t0 = performance.now();
+        if (!efektSozu) efektSozu = efektDerle();
+        let yetisti = false;
+        await Promise.race([efektSozu.then(() => { yetisti = true; }), new Promise(r => setTimeout(r, sinir))]).catch(e => isinmaHatasi('efekt-derle', e));
+        if (birakildi) return;
+        if (!yetisti && perdeAltinda) { efektDurum = 0; return; }   // derleme sürüyor: perde bekletilmez, sahne açılınca biter
+        const ge = gtao ? gtao.enabled : false, be = bokeh.enabled;
+        try { bokeh.enabled = true; if (gtao) gtao.enabled = true; composer.render(0); } catch (er) { /* efektsiz de çalışır */ }
+        bokeh.enabled = be; if (gtao) gtao.enabled = ge;
+        derinlikIsit();
+        // ekran kartının ilk kullanımda yaptığı işler (sürücüdeki son derleme, hedef ayırma) perde kalkmadan bitsin
+        if (perdeAltinda) { try { renderer.getContext().finish(); } catch (e) { /* desteklenmiyorsa ilk karede biter */ } }
+        S.isinma.e = Math.round(performance.now() - t0); if (!perdeAltinda) S.isinma.eg = 1; efektDurum = 2;
+      }
+      /* Efekt zincirinin bütün gölgelendiricileri tek seferde, paralel derlemeyle istenir:
+       *  · geçişlerin tam ekran malzemeleri (son geçiş ekrana, diğerleri ara hedefe çizer),
+       *  · alan derinliğinin derinlik ve ortam örtmesinin normal malzemesi, her ışık düzeninde ve her nesne türünde.
+       * three.js'in derleme çağrısı sahnenin kendi malzemelerine baktığı için ikincisinde malzemeler bir anlığına bu
+       * malzemeyle değiştirilir ve aynı görev içinde geri konur (arada çizim yok). */
+      function efektDerle() {
+        const sozler = [], onceki = renderer.getRenderTarget(), gz = [], kz = [], asil = new Map();
+        const gecici = new THREE.Scene(), duz = new THREE.PlaneGeometry(2, 2);
+        let hedef = null;
+        try {
+          hedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType });
+          const oms = [bokeh.materialDepth, gtao && gtao.normalMaterial].filter(Boolean);
+          const son = composer.passes[composer.passes.length - 1], araM = new Set(), ekranM = new Set();
+          const topla = (ps, kume) => {
+            for (const k in ps) {
+              const v = ps[k];
+              if (v && v.isMaterial) kume.add(v);
+              else if (Array.isArray(v)) v.forEach(x => { if (x && x.isMaterial) kume.add(x); });
+            }
+            if (ps.fsQuad && ps.fsQuad.material) kume.add(ps.fsQuad.material);
+          };
+          composer.passes.forEach(ps => topla(ps, ps === son ? ekranM : araM));
+          oms.forEach(m => { araM.delete(m); ekranM.delete(m); });
+          [[araM, hedef], [ekranM, null]].forEach(([kume, rt]) => {
+            if (!kume.size) return;
+            gecici.clear(); kume.forEach(m => gecici.add(new THREE.Mesh(duz, m)));
+            renderer.setRenderTarget(rt); sozler.push(derle(gecici, camera));
+          });
+          if (oms.length) {
+            scene.traverse(o => {
+              if (!o.visible) { o.visible = true; gz.push(o); }
+              if (o.frustumCulled) { o.frustumCulled = false; kz.push(o); }
+              if ((o.isMesh || o.isPoints || o.isLine || o.isSprite) && o.material) asil.set(o, o.material);
+            });
+            renderer.setRenderTarget(hedef);
+            oms.forEach(om => {
+              asil.forEach((m, o) => { o.material = om; });
+              DUZEN.forEach(d => { duzen(d); sozler.push(derle(scene, camera)); });
+            });
+          }
+        } catch (e) { isinmaHatasi('efekt-derle', e); }
+        finally {
+          asil.forEach((m, o) => { o.material = m; });
+          renderer.setRenderTarget(onceki);
+          gz.forEach(o => { o.visible = false; }); kz.forEach(o => { o.frustumCulled = true; });
+          try { duzen([true, true]); } catch (e) { /* döngü ışıkları her karede yeniden ayarlar */ }
+        }
+        return Promise.all(sozler).catch(() => {}).then(() => { gecici.clear(); duz.dispose(); if (hedef) hedef.dispose(); });
+      }
       /* Alan derinliği, sahneyi tek bir derinlik malzemesiyle (overrideMaterial) yeniden çizer. three.js bu malzemenin
        * gölgelendiricisini de görünen ışık sayısına ve nesne türüne göre ayrı kurar. Kapakta yalnız dış düzen ve görünen
        * nesneler derleniyordu; kule içinde (p≈0,14), nasel girişinde (p≈0,4) ve nasel içinde (p≈0,47) 8–18 gölgelendirici
@@ -1310,12 +1402,14 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       S.derinlikIsit = derinlikIsit;   // tanı ve test: ikinci çağrı 0 yeni gölgelendirici vermeli
       geriAl();
       derlemeSozu = Promise.race([Promise.all(sozler).catch(() => {}), new Promise(r => setTimeout(r, 10000))]);
-      Promise.all(sozler).then(bitti, bitti);
+      Promise.all(sozler).then(() => { S.isinma.d = Math.round(performance.now() - tDerle); bitti(); }, bitti);
       setTimeout(() => {   // hiçbir durumda sahne bekletilmesin; derleme hiç bitmezse en azından parçalar yüklü başlasın
         if (basladi || bitiyor) return;   // ısınma sürüyorsa (parça parça) kendi sonunda başlatır
         isinmaHatasi('zaman-asimi', 'derleme bitmedi');
         gizli.forEach(o => { o.visible = true; }); kesilen.forEach(o => { o.frustumCulled = false; });
         guvenliYukle(); geriAl(); git();
+        if (araHedef) { araHedef.dispose(); araHedef = null; }
+        if (!hafif) ppHazir.then(() => efektIsit(false));
       }, hafif ? 16000 : 8000);
     } catch (e) {
       // derleme hazırlığı daha baştan hata verdiyse ısınmasız başlamak yerine güvenli yüklemeyi yine de yap

@@ -591,3 +591,13 @@ button.ea-d:hover{border-color:#a9cbc9}
   .dny-bolum.gecti .v-denetim{right:calc(var(--d-gut) + 8rem)}
   .dny-bolum.hazir.gecti:not(.sonda):not(.dny-rontgen) .v-temsil{bottom:calc(.6rem + 2.75rem + .5rem)}
 }
+/* V34 · Durak gezgini duraklar arasında "Sıradaki" der (kule içi tırmanışta en yakın durak "Göbek" yazıyordu).
+ * Durağın üstündeyken yalnız numara ve ad; arada soluk "Sıradaki" etiketi ve kesik çizgili çerçeve. */
+.v-rota-no i{font-style:normal;color:#8d9aa3}
+.v-rota-no i::after{content:' · '}
+.v-rota-arada .v-rota-gez{border-style:dashed}
+.v-rota-arada .v-rota-no span{color:#c6d0d6}
+@media (max-width:820px){
+  .v-rota-no i{display:block;font-size:.5625rem;letter-spacing:.12em}
+  .v-rota-no i::after{content:none}
+}
