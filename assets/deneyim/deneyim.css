@@ -577,3 +577,17 @@ button.ea-d:hover{border-color:#a9cbc9}
 .v-bak-ok{font-size:1rem;line-height:1;animation:vBakOk 2.4s ease-in-out infinite}
 @keyframes vBakOk{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
 @media (prefers-reduced-motion:reduce){.v-bak-ok{animation:none}}
+
+/* V33 · kapak denetimlerinde çakışmalar giderildi
+ * Masaüstü: "Ses kapalı" düğmesi durak gezginiyle (Sinematik · Keşif · Saha · 02/12) üst üste biniyordu; durak
+ * gezgini göründüğü sürece sağ üstte "Kontroller"in soluna geçer. Turun sonunda (gezgin gizliyken) eski yerinde kalır.
+ * Telefon: ses düğmesi "Kontroller" dairesine 4 piksel biniyordu; aralık açıldı.
+ * "Temsili yerleşim" notu gezginin altına (masaüstü) ya da üstüne (telefon) taşındı; düğme yazılarının içinden geçmiyor. */
+@media (min-width:821px){
+  .dny-bolum.gecti:not(.sonda) .v-ses{bottom:auto;top:calc(4.4rem + env(safe-area-inset-top) + 3.5rem);right:calc(var(--d-gut) + 7.3rem)}
+  .dny-bolum.hazir.gecti:not(.sonda):not(.dny-rontgen) .v-temsil{bottom:.35rem}
+}
+@media (max-width:820px){
+  .dny-bolum.gecti .v-denetim{right:calc(var(--d-gut) + 8rem)}
+  .dny-bolum.hazir.gecti:not(.sonda):not(.dny-rontgen) .v-temsil{bottom:calc(.6rem + 2.75rem + .5rem)}
+}
