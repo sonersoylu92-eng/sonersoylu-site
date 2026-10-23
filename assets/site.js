@@ -95,18 +95,31 @@
       if (gitti) return; gitti = true;
       var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
       var r = function (x) { return x == null ? 'yok' : Math.round(x); };
+      var ara = function (a, b) { return nav[a] > 0 && nav[b] > 0 ? Math.max(0, Math.round(nav[b] - nav[a])) : 0; };
       var veri = {
         olay: 'vitals', sayfa: location.pathname.slice(0, 40),
         neden: (gizliBasladi ? 'gizli;' : '') + 'lcp=' + r(lcp) + ';inp=' + r(inp) + ';cls=' + cls.toFixed(3) + ';fcp=' + r(fcp) + ';ttfb=' + r(nav.responseStart) + ';tip=' + (nav.type || '?') +
-          ';sw=' + (navigator.serviceWorker && navigator.serviceWorker.controller ? 1 : 0),
+          ';sw=' + (navigator.serviceWorker && navigator.serviceWorker.controller ? 1 : 0) +
+          // V34 · ilk baytın dökümü: yönlendirme, servis çalışanı açılışı, DNS, bağlantı (TLS dahil), sunucu bekleme, protokol
+          ';yon=' + ara('redirectStart', 'redirectEnd') + ';swb=' + (nav.workerStart ? ara('workerStart', 'fetchStart') : 0) +
+          ';dns=' + ara('domainLookupStart', 'domainLookupEnd') + ';bag=' + ara('connectStart', 'connectEnd') +
+          ';bek=' + ara('requestStart', 'responseStart') + ';p=' + String(nav.nextHopProtocol || '?').slice(0, 6),
         sure_ms: lcp == null ? null : Math.round(lcp), kare_ms: inp == null ? null : Math.round(inp),
         ekran: innerWidth + 'x' + innerHeight, dpr: window.devicePixelRatio || 1,
-        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals3'
+        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals4'
       };
       try { navigator.sendBeacon('/api/tani', JSON.stringify(veri)); } catch (e) {}
     }
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') gonder(); });
     window.addEventListener('pagehide', gonder);
+  })();
+
+  // V34 · "Rüzgâr dinlencesi": üst çubuktaki nota düğmesi (Beethoven, kamu malı kayıtlar). Müzik kendiliğinden
+  // başlamaz; ziyaretçi açınca çalar ve sayfalar arasında kaldığı yerden sürer. Betik sayfa çizildikten sonra iner.
+  (function () {
+    if (!document.querySelector('header .hd-right')) return;
+    function yukle() { var b = document.createElement('script'); b.src = '/assets/muzik.js?v=a90d5be9'; b.async = true; document.head.appendChild(b); }
+    if (document.readyState === 'complete') yukle(); else window.addEventListener('load', yukle);
   })();
 
   // "Telefona ekle" — sadece tarayıcı uygun bulursa görünür
