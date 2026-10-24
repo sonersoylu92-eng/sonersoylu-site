@@ -91,7 +91,7 @@ setTimeout(function(){'requestIdleCallback' in window?requestIdleCallback(f,{tim
 <script>/* 3B yolunun yüksekliği ilk yerleşimde ayrılır: JS sonradan bölümü 1 ekrandan ~10 ekrana büyütünce, ortadan
    yenilenen ya da geri dönülen sayfada bütün içerik kayıyordu (gerçek cihaz kaydında CLS 1,0). */
 (function(){try{var b=document.getElementById('deneyim'),c=navigator.connection;if(!b||(c&&c.saveData))return;
-var k=localStorage.getItem('dny-zayif-v7');if(k){var z=JSON.parse(k);if(z&&z.t&&(z.s||1)>=2&&Date.now()-z.t<6048e5)return;}if(localStorage.getItem('dny-gpu-zayif')&&!/[?&]uc=1\b/.test(location.search))return;
+var k=localStorage.getItem('dny-zayif-v7');if(k){var z=JSON.parse(k);if(z&&z.t&&(z.s||1)>=2&&Date.now()-z.t<6048e5)return;}var gz=localStorage.getItem('dny-gpu-zayif');if(gz&&gz!=='zayif-mobil-gpu'&&!/[?&]uc=1\b/.test(location.search))return;
 b.classList.add('dny-hazirlaniyor');}catch(e){}})();</script>
   <div class="dny-sahne">
     <div class="dny-poster" aria-hidden="true"></div>
@@ -602,7 +602,7 @@ document.querySelectorAll('.el-proje figure,.el-kare').forEach(function(el){io.o
   }, 10 * 60 * 1000);
 })();
 </script>
-<script src="/assets/deneyim/arayuz.js?v=47c599c6" defer></script>
+<script src="/assets/deneyim/arayuz.js?v=0bd2c96f" defer></script>
 <script src="/assets/vitrin.js?v=sahakarari1" defer></script>
 <script src="/assets/cinematic-v5.js?v=1379405b" defer></script>
 <script src="/assets/evren.js?v=bf5ee8f7" defer></script>
