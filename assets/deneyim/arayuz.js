@@ -75,7 +75,12 @@
     // Iris Xe bile. Bu adla karar verilemez; 19 Ekim tanı: Windows Firefox'ta 3B hiç denenmeden kapağa düşüyordu.
     // Gizli adlı Intel hafif kipte denenir; yetişemezse uyarlanır kalite ve donma sınırı yine kapağa döndürür.
     if (/Intel/i.test(g) && !gpuGizli(g) && (/UHD Graphics 60[05]\b|HD Graphics (40[05]|50[05])\b/i.test(g) || /HD Graphics( Direct3D|\)|,|$)/i.test(g))) return 'intel-atom';
-    if (/Adreno \(TM\) [1-6]\d\d\b/.test(g) || /Mali-(T|G[0-6]\d\b)/.test(g) || /PowerVR/i.test(g)) return 'zayif-mobil-gpu';
+    /* V37 · Mobil kart engeli yalnız gerçekten eski kartlarda. Eski kural Adreno 6xx'in tamamını (Snapdragon 865/888'deki
+     * 650/660 dahil) ve Mali-G57/G68'i de dışarıda bırakıyordu. Tanı (45 gün): Adreno 618 açıkken kapak 17 ms/kare çalıştı;
+     * kural gelince aynı kartlar 12, Mali-G68 9, Mali-G57 4 oturumda yalnız fotoğraf gördü. Artık bu telefonlar hafif 3B ile
+     * açılır; yetişemezlerse V35'in basamakları (düşük çözünürlük, sonra fotoğraf) devreye girer. Engel adı değişti: eski
+     * 'zayif-mobil-gpu' kaydı sayfa başındaki yer ayırmayı artık engellemez (yeni izin alan telefonda kayma olmasın). */
+    if (/Adreno \(TM\) [1-5]\d\d\b/.test(g) || /Mali-(T\d|G(31|51|52)\b)/.test(g) || /PowerVR/i.test(g)) return 'eski-mobil-gpu';
     if (!ios && navigator.deviceMemory && navigator.deviceMemory <= 2) return 'az-bellek';
     return '';
   }
