@@ -601,3 +601,17 @@ button.ea-d:hover{border-color:#a9cbc9}
   .v-rota-no i{display:block;font-size:.5625rem;letter-spacing:.12em}
   .v-rota-no i::after{content:none}
 }
+/* V38 · Yolculuk sonu kartında içerik kapıları: türbinin içinden çıkan ziyaretçi doğrudan gerçek vakalara, arıza ağacına
+ * ya da mesleğe giriş rehberine geçebilir. Birincil eylem "Devam et" olarak kalır; kapılar sakin, küçük bir satır. */
+.dny-kapilar{display:flex;flex-wrap:wrap;align-items:center;gap:.2rem 1.15rem;margin-top:1.15rem;font-size:.875rem}
+.dny-kapilar span{flex-basis:100%;margin-bottom:.1rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:var(--d-cyan)}
+.dny-kapilar a{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--d-ink);text-decoration:underline;text-decoration-color:rgba(238,242,245,.35);text-underline-offset:.3em;transition:text-decoration-color .2s}
+.dny-kapilar a::after{content:"→";display:inline-block;margin-left:.4rem;color:var(--d-muted)}
+.dny-kapilar a:hover{text-decoration-color:var(--d-ink)}
+.dny-kapilar a:focus-visible{outline:2px solid var(--d-cyan);outline-offset:3px}
+@media (max-width:820px){ .dny-kapilar{gap:0 .9rem;font-size:.8125rem;margin-top:.7rem} .dny-kapilar a{min-height:2.5rem} }
+/* V38 · Onarım: yolculuk sonundaki birincil düğme ("Devam et ↓", /deneyim/'de "Saha deneyimim") okunmuyordu. Bulanık cam
+ * kaldırılırken tüm .dny-dg düğmelerine zorunlu koyu zemin verilmiş, birincil düğmenin koyu yazısı koyu zeminde kaybolmuştu
+ * (yazı #0b0e10, zemin rgba(7,9,11,.82)). Birincil düğme kendi açık, opak zeminine döner; cam gerektirmez. */
+.dny-dg a.birincil,.dny-dg button.birincil{background:var(--d-accent)!important;border-color:var(--d-accent)!important;color:#0b0e10!important}
+.dny-dg a.birincil:hover,.dny-dg button.birincil:hover{background:#d6e2e1!important;border-color:#d6e2e1!important}
