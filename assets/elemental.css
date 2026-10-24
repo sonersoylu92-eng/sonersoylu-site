@@ -352,3 +352,8 @@ body.ana-body footer.son .son-unvan{color:rgba(246,242,234,.55)}
 .son-basa i{font-style:normal;transition:transform .35s cubic-bezier(.2,.75,.15,1)}
 .son-basa:hover,.son-basa:focus-visible{border-color:#d0592a;background:rgba(208,89,42,.12)}
 .son-basa:hover i{transform:translateY(-3px)}
+/* V35 · Okunabilirlik (gerçek görüntüden ölçüldü): koyu kütüphane bölümündeki küçük turuncu raf numaraları ve etiketler
+ * #d0592a ile 4,27:1 kalıyordu (en az 4,5:1 gerekir); bu bölümde turuncu bir ton açıldı (5,2:1). Fotoğraf üstündeki küçük
+ * künye yazısı açık tonlu karelerde 4,3:1'e iniyordu; yazıya hafif gölge ve daha yüksek örtücülük verildi. */
+.el-kutuphane{--el-sinyal:#e06a3a}
+.el-proje figcaption{color:rgba(246,242,234,.88);text-shadow:0 1px 3px rgba(0,0,0,.65)}
