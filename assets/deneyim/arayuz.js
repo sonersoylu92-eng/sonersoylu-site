@@ -39,8 +39,13 @@
   /* v6 (20 Ekim): tek bir geç ilk kare artık 3B kapağı 7 gün kapatmıyor. Bilgisayar uykudan dönerken, sekme arkadayken ya da
    * pencere örtülüyken ilk kare gecikebiliyordu; sağlam cihazlar (Soner'in M1'i dahil) yanlışlıkla kapağa düşüyordu.
    * Anahtar sürümü değişti: eski yanlış işaretlerin hepsi silinir, 3B herkese yeniden açılır. */
-  var ZAYIF_ANAHTAR = 'dny-zayif-v6', ZAYIF_SURE = 7 * 24 * 3600 * 1000;
-  try { ['dny-zayif-v3', 'dny-zayif-v4', 'dny-zayif-v5'].forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+  /* v7 (24 Ekim): işaret iki basamaklı. Kapak bir oturumda yetişemezse (yavaşlık, donma, iki kez geç ilk kare) cihaz
+   * fotoğrafa düşmez: sonraki girişlerde 3 gün hafif 3B ile açılır (basamak 1). Fotoğraf yalnız hafif 3B de yetişemezse
+   * gelir (basamak 2, 7 gün). Tanı: 24 Ekim gecesi geçici yük altındaki bir Mac (Soner'in) 7 gün fotoğrafa düşmüştü.
+   * Anahtar değişti: v6 işaretlerinin hepsi silinir. */
+  var ZAYIF_ANAHTAR = 'dny-zayif-v7', ZAYIF_SURE = 7 * 24 * 3600 * 1000, HAFIF_SURE = 3 * 24 * 3600 * 1000;
+  try { ['dny-zayif-v3', 'dny-zayif-v4', 'dny-zayif-v5', 'dny-zayif-v6'].forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+  var oturumHafif = false;   // bu oturumda sahne hafif kipte mi açıldı (işaret basamağı buna göre artar)
   var donmaSay = 0;
   var kurulumT0 = 0;   // sahne dosyaları indikten sonraki an: ilk kare sınırı (8 sn) buradan sayılır, indirme süresi sayılmaz
   var hazirAni = 0;   // ilk karede geometri yüklemesi uzun sürer; açılış takılması donma sayılmaz
@@ -48,19 +53,21 @@
   var gizlendi = document.hidden;
   document.addEventListener('visibilitychange', function () { if (document.hidden) gizlendi = true; });
   addEventListener('blur', function () { gizlendi = true; });
-  function zayifIsaretle(neden) { try { localStorage.setItem(ZAYIF_ANAHTAR, JSON.stringify({ n: String(neden).slice(0, 40), t: Date.now() })); } catch (e) {} }
+  function zayifIsaretle(neden) { try { localStorage.setItem(ZAYIF_ANAHTAR, JSON.stringify({ n: String(neden).slice(0, 40), t: Date.now(), s: oturumHafif ? 2 : 1 })); } catch (e) {} }
+  function zayifIsaret() {   // geçerli işaret: { n, t, s } ya da null (süresi dolan silinir)
+    try {
+      var z = JSON.parse(localStorage.getItem(ZAYIF_ANAHTAR) || 'null');
+      if (z && z.t && Date.now() - z.t < ((z.s || 1) >= 2 ? ZAYIF_SURE : HAFIF_SURE)) return z;
+      localStorage.removeItem(ZAYIF_ANAHTAR);
+    } catch (e) { try { localStorage.removeItem(ZAYIF_ANAHTAR); } catch (e2) {} }
+    return null;
+  }
   // Firefox'un gizlediği ekran kartı adı: "ANGLE (Intel, Intel(R) HD Graphics Direct3D11 …), or similar"
   function gpuGizli(g) { return /,\s*or similar\s*$/i.test(g); }
   function zayifCihaz() {
     if (/[?&]uc=1\b/.test(location.search)) return '';
-    try {
-      var k = localStorage.getItem(ZAYIF_ANAHTAR);
-      if (k) {
-        var z = JSON.parse(k);
-        if (z && z.t && Date.now() - z.t < ZAYIF_SURE) return 'onceki-' + z.n;
-        localStorage.removeItem(ZAYIF_ANAHTAR);   // süresi doldu ya da bozuk: sahneye yeniden şans ver
-      }
-    } catch (e) { try { localStorage.removeItem(ZAYIF_ANAHTAR); } catch (e2) {} }
+    var z = zayifIsaret();
+    if (z && z.s >= 2) return 'onceki-' + z.n;   // hafif 3B de yetişemedi: fotoğraf
     var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     if (/SwiftShader|llvmpipe|softpipe|Basic Render/i.test(g)) return 'yazilim-gpu';
     // Atom/Celeron sınıfı Intel (UHD 600/605, HD 400–505, numarasız HD): gerçekten zayıf, 3B açılmaz.
@@ -78,6 +85,8 @@
   function ortaCihaz() {
     if (/[?&]hafif=1\b/.test(location.search)) return 'onizleme';
     if (/[?&]hafif=0\b/.test(location.search)) return '';
+    var z = zayifIsaret();
+    if (z && z.s === 1) return 'onceki-' + z.n;   // geçen sefer yetişemedi: bu kez hafif 3B
     var g = taniGpuOku() || '', ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     if (/Intel/i.test(g) && gpuGizli(g)) return 'intel-gizli';
     if (/Intel/i.test(g) && !/Iris\(R\) Xe|Arc|Intel\(R\) Graphics \(0x/i.test(g)) return 'intel-tumlesik';
@@ -926,7 +935,7 @@
     if (kuruluyor || sahneS) return;
     kuruluyor = true;
     donguKaldir();
-    var orta = filmKip ? '' : ortaCihaz();
+    var orta = filmKip ? '' : ortaCihaz(); oturumHafif = !!orta;
     taniT0 = performance.now(); tani('basla', hareketAz ? { neden: 'hareket-azaltilmis' + (orta ? ' hafif-' + orta : '') } : orta ? { neden: 'hafif-' + orta } : {});
     bolum.classList.remove('statik');
     bolum.classList.add('uc-boyut', 'dny-akis', 'dny-hazirlaniyor');
@@ -934,7 +943,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=6b729a48').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=52fbd097').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
@@ -947,7 +956,7 @@
         ses: function (d) { if (sesMotor) sesMotor.guncelle(d); },
         cizim: function (c) { bolum.classList.toggle('cizimde', c > 0.5); bolum.style.setProperty('--cizim', c.toFixed(3)); },
         karartma: function (k) { if (!kesiyor) kararti.style.opacity = k.toFixed(3); },
-        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0), ks = Math.round(performance.now() - (kurulumT0 || taniT0)); var iz = sahneS && sahneS.isinma; tani('hazir', { sure_ms: hs, kurulum_ms: ks, neden: iz ? ('isinma ' + iz.once + '>' + iz.guvenli + '>' + iz.sonra + ' k=' + ks + (iz.d != null ? ' d=' + iz.d : '') + (iz.e != null ? ' e=' + (iz.eg ? 'g' : '') + iz.e : '') + (iz.hata ? ' ' + iz.hata : '')) : null }); if (ks > 8000 && !filmKip && !gizlendi && !zorla3B) { var ikinci = false; try { var ik = JSON.parse(localStorage.getItem('dny-ilkkare-v1') || 'null'); ikinci = !!(ik && Date.now() - ik.t < ZAYIF_SURE); localStorage.setItem('dny-ilkkare-v1', JSON.stringify({ ms: ks, t: Date.now() })); } catch (e) {} tani('takilma', { neden: 'ilk-kare-gec ' + ks + (ikinci ? ' ikinci' : ' ilk') }); if (ikinci) { zayifIsaretle('ilk-kare-' + ks); if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
+        hazir: function () { hazirAni = performance.now(); var hs = Math.round(performance.now() - taniT0), ks = Math.round(performance.now() - (kurulumT0 || taniT0)); var iz = sahneS && sahneS.isinma; tani('hazir', { sure_ms: hs, kurulum_ms: ks, neden: iz ? ('isinma ' + iz.once + '>' + iz.guvenli + '>' + iz.sonra + ' k=' + ks + (iz.d != null ? ' d=' + iz.d : '') + (iz.e != null ? ' e=' + (iz.eg ? 'g' : '') + iz.e : '') + (iz.hata ? ' ' + iz.hata : '')) : null }); if (ks > 8000 && !filmKip && !gizlendi && !zorla3B) { var ikinci = false; try { var ik = JSON.parse(localStorage.getItem('dny-ilkkare-v1') || 'null'); ikinci = !!(ik && Date.now() - ik.t < ZAYIF_SURE); localStorage.setItem('dny-ilkkare-v1', JSON.stringify({ ms: ks, t: Date.now() })); } catch (e) {} tani('takilma', { neden: 'ilk-kare-gec ' + ks + (ikinci ? ' ikinci' : ' ilk') }); if (ikinci) { zayifIsaretle('ilk-kare-' + ks); if (oturumHafif) { if (sahneS && sahneS.birak) sahneS.birak('ilk-kare-gec'); else birak(); return; } } } bolum.classList.remove('dny-hazirlaniyor'); bolum.classList.add('hazir'); bolum.removeAttribute('aria-busy'); },
         takilma: function (d) { if (!zorla3B && d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden && (d.ms > 4000 || ++donmaSay >= 3)) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
         hata: function (neden, d) { d = d || {}; if (neden === 'yavas' && !filmKip) zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       })).then(function (S) {
@@ -1000,7 +1009,7 @@
    * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
    * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
    * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
-  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=6b729a48","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=52fbd097","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
   if (!filmKip) try {
     var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
     ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {

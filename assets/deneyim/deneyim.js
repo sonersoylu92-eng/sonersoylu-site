@@ -739,11 +739,15 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   /* Uyarlanır kalite: kaydırma sırasında kare süresi ölçülür; cihaz yetişemiyorsa önce çözünürlük,
    * sonra efektler kademeli düşürülür, rahatladığında geri alınır. Hedef: her cihazda takılmadan kaydırma.
    * Kademe 0 tam kalite · 1 çözünürlük −%20 · 2 alan derinliği ve parlama kapalı · 3 çözünürlük −%40 */
-  const KADEME_PR = mobil ? [0.9, 0.9, 0.75, 0.62] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8];
+  /* V35 · Kademe 4 ve 5: çözünürlük −%36 ve −%50. Kapak fotoğrafa düşmeden önce iki basamak daha iner; görüntü yumuşar
+   * ama sahne yaşar (tanı 24 Ekim: Intel UHD'de kademe 3'te bile kare ~1 sn sürüyordu, bir Mac geçici yükte fotoğrafa düştü). */
+  const KADEME_PR = mobil ? [0.9, 0.9, 0.75, 0.62, 0.5, 0.42] : [normalDpr, Math.max(1, normalDpr * 0.8), 1, 0.8, 0.64, 0.5];
   // telefonda hareket sırasında kare aralığı (ms): kademe 1'den itibaren 30 fps. Sabit 30, dalgalı 60'tan akıcı görünür.
-  const KADEME_ARALIK = mobil ? [0, 32, 32, 32] : [0, 0, 0, 0];
+  const KADEME_ARALIK = mobil ? [0, 32, 32, 32, 32, 32] : [0, 0, 0, 0, 0, 0];
+  const EN_DUSUK = KADEME_PR.length - 1;
   let kalite = 0, ortKare = 16.7, kotuT = 0, iyiT = 0, cokKotuT = 0, birakildi = false, yukselt = false;
-  try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= 3) kalite = k; } catch (e) {}
+  let durgunKotu = [], yukseltYasak = 0;   // V35: sahne dururken de ölçülür (aşağıda durgunOlc)
+  try { const k = parseInt(sessionStorage.getItem('dny-kalite'), 10); if (k >= 0 && k <= EN_DUSUK) kalite = k; } catch (e) {}
   function kaliteUygula() {
     if (performans) return;
     // yalnız çözünürlük değişiyorsa tuval yeniden boyutlanır; kare hızı kademesi takılma üretmez
@@ -757,11 +761,21 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     ortKare += (araMs - ortKare) * 0.08;
     const hedef = KADEME_ARALIK[kalite] ? 1000 / 29 : 1000 / 58;
     // en düşük kademede bile kare 40 ms'yi (25 fps) sürekli aşıyorsa cihaz bu sahneyi taşıyamıyor: bırak
-    if (!zorla && kalite >= 3 && ortKare > (mobil ? 60 : 40)) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 2500) { birak('yavas'); return; } } else cokKotuT = 0;
-    if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < 3) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
+    if (!zorla && kalite >= EN_DUSUK && ortKare > (mobil ? 60 : 40)) { if (!cokKotuT) cokKotuT = t; if (t - cokKotuT > 4000) { birak('yavas'); return; } } else cokKotuT = 0;
+    if (ortKare > hedef * 1.3) { iyiT = 0; if (!kotuT) kotuT = t; if (t - kotuT > 700 && kalite < EN_DUSUK) { kalite++; kaliteUygula(); kotuT = 0; ortKare = hedef; } }
     // kaliteyi geri yükseltmek tuvali yeniden boyutlandırır: kaydırma sırasında değil, parmak durunca yapılır
-    else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0) { yukselt = true; iyiT = 0; } }
+    else if (ortKare < hedef * 1.08) { kotuT = 0; if (!iyiT) iyiT = t; if (t - iyiT > 6000 && kalite > 0 && t > yukseltYasak) { yukselt = true; iyiT = 0; } }
     else { kotuT = 0; iyiT = 0; }
+  }
+  /* V35 · Sahne dururken de ölçüm: kaydırılmadan bakılan kapakta (yalnız rotor dönerken) kare ~1 sn sürebiliyordu ve kalite
+   * hiç düşmüyordu; ölçüm yalnız kaydırma sırasında yapılıyordu (tanı 24 Ekim, Windows Intel UHD: p=0'da art arda 0,5–2 sn
+   * kareler, kademe 0). 4 sn içinde istenen aralığı 150 ms'den fazla aşan 3 kare olursa kalite bir kademe iner; ardından
+   * 60 sn geri yükseltilmez (in-çık titremesi olmasın). Dururken sahne asla bırakılmaz. */
+  function durgunOlc(araMs, aralik, t) {
+    if (kaliteSabit || document.hidden || araMs > 5000) return;
+    if (araMs < aralik + 150) return;
+    durgunKotu = durgunKotu.filter(z => t - z < 4000); durgunKotu.push(t);
+    if (durgunKotu.length >= 3 && kalite < EN_DUSUK) { kalite++; kaliteUygula(); durgunKotu = []; yukselt = false; yukseltYasak = t + 60000; }
   }
   if (kalite > 0) kaliteUygula();
   // test ve tanı kancası: kalite kademesini sabitler (önizleme görüntüleri yazılım GPU'sunda da en yüksek kademede alınsın)
@@ -831,6 +845,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const aralik = durgun ? (mobil ? 90 : (fare.var ? 0 : 33)) : hareketAralik;
     if (sonT && t - sonT < aralik) { rafId = requestAnimationFrame(kare); return; }
     if (!durgun && sonT && sonAralik === hareketAralik) kaliteOlc(t - sonT, t);
+    else if (durgun && sonT && sonAralik === aralik) durgunOlc(t - sonT, aralik, t);
     if (durgun && yukselt) { yukselt = false; if (kalite > 0) { kalite--; kaliteUygula(); } }
     sonAralik = aralik;
     // gölge haritası her karede değil: hareketteyken iki karede bir, boştayken dört karede bir
