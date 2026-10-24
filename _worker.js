@@ -706,7 +706,7 @@ async function workersAiSor(env, talimat, istem, tani) {
 // ---------------------------------------------------------------- tanı
 // 3B deneyimin gerçek telefonlarda nasıl çalıştığını görmek için: açıldı mı, kaç ms'de,
 // hangi kalite kademesinde, neden kapağa döndü. IP, çerez ya da kişisel veri tutulmaz.
-const TANI_OLAY = ['takilma', 'basla', 'hazir', 'birak', 'statik', 'hata', 'ozet', 'vitals'];
+const TANI_OLAY = ['takilma', 'basla', 'hazir', 'birak', 'statik', 'hata', 'ozet', 'vitals', 'gezinti'];   // V38: gezinti (bölüm ve iç bağlantı)
 function kisa(v, n) { return v == null ? null : String(v).replace(/[\u0000-\u001f]/g, ' ').slice(0, n); }
 function sayi(v, alt, ust) { if (v == null || v === '') return null; const x = Number(v); return Number.isFinite(x) ? Math.max(alt, Math.min(ust, x)) : null; }
 async function taniKaydet(request, env) {
@@ -731,7 +731,7 @@ async function taniKaydet(request, env) {
       'INSERT INTO olay (t, sayfa, olay, neden, cihaz, tarayici, gpu, ekran, dpr, kalite, kare_ms, sure_ms, oturum, ulke, surum) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15)'
     ).bind(
       Date.now(), kisa(b.sayfa, 40), b.olay, kisa(b.neden, 160), kisa(cihaz, 80), kisa(tarayici, 40),
-      kisa(b.gpu, 80), kisa(b.ekran, 20), sayi(b.dpr, 0, 5), sayi(b.kalite, 0, 3), sayi(b.kare_ms, 0, 5000),
+      kisa(b.gpu, 80), kisa(b.ekran, 20), sayi(b.dpr, 0, 5), sayi(b.kalite, 0, 5), sayi(b.kare_ms, 0, 5000),
       sayi(b.sure_ms, 0, 3600000), kisa(b.oturum, 12), kisa(request.cf && request.cf.country, 4), kisa(b.surum, 20)
     ).run();
   } catch { /* tanı kaydı hiçbir zaman sayfayı etkilemez */ }
