@@ -357,3 +357,11 @@ body.ana-body footer.son .son-unvan{color:rgba(246,242,234,.55)}
  * künye yazısı açık tonlu karelerde 4,3:1'e iniyordu; yazıya hafif gölge ve daha yüksek örtücülük verildi. */
 .el-kutuphane{--el-sinyal:#e06a3a}
 .el-proje figcaption{color:rgba(246,242,234,.88);text-shadow:0 1px 3px rgba(0,0,0,.65)}
+/* V36 · Sahadan bölümü iki kareye indi (Soner'in seçimi: Ege makiliği ve Sahada). Büyük açılış karesi solda, portre
+ * sağda ve biraz aşağıda: dergi düzeninin asimetrisi korunur. Telefonda alt alta, portre hafif içeriden. */
+.el-deneme.el-iki .el-d1{grid-column:1/span 7}
+.el-deneme.el-iki .el-d4{grid-column:8/-1;margin-top:clamp(4rem,14vh,9rem)}
+@media (max-width:820px){
+  .el-deneme.el-iki .el-d1{grid-column:1/-1}
+  .el-deneme.el-iki .el-d4{grid-column:3/-1;margin-top:0}
+}
