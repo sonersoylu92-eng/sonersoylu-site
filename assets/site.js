@@ -70,7 +70,7 @@
   (function () {
     if (location.protocol !== 'https:' || !('PerformanceObserver' in window) || !navigator.sendBeacon) return;
     var dest = PerformanceObserver.supportedEntryTypes || [];
-    var lcp = null, fcp = null, cls = 0, pencere = 0, pBas = 0, pSon = 0, inp = null, gitti = false;
+    var lcp = null, fcp = null, cls = 0, pencere = 0, pBas = 0, pSon = 0, inp = null, gitti = false, kayMax = 0, kayKaynak = '';
     function izle(tur, f, ek) {
       if (dest.indexOf(tur) < 0) return;
       try { new PerformanceObserver(function (l) { l.getEntries().forEach(f); }).observe(Object.assign({ type: tur, buffered: true }, ek || {})); } catch (e) {}
@@ -84,6 +84,13 @@
     izle('paint', function (e) { if (e.name === 'first-contentful-paint') fcp = e.startTime; });
     izle('layout-shift', function (e) {
       if (e.hadRecentInput) return;
+      // V38 · en büyük tekil kaymanın kaynağı (yenilemede 0,4–0,96'lık kaymaların nedeni bulunsun)
+      if (e.value > kayMax) {
+        kayMax = e.value;
+        var kn = e.sources && e.sources[0] && e.sources[0].node, ad = '';
+        if (kn && kn.nodeType === 1) ad = kn.id ? '#' + kn.id : (kn.tagName.toLowerCase() + (typeof kn.className === 'string' && kn.className ? '.' + kn.className.split(' ')[0] : ''));
+        kayKaynak = ad.slice(0, 22) + '@' + Math.round(e.startTime);
+      }
       // oturum penceresi: 1 sn boşluk ya da 5 sn üst sınır
       if (pencere && e.startTime - pSon < 1000 && e.startTime - pBas < 5000) pencere += e.value;
       else { pencere = e.value; pBas = e.startTime; }
@@ -103,15 +110,68 @@
           // V34 · ilk baytın dökümü: yönlendirme, servis çalışanı açılışı, DNS, bağlantı (TLS dahil), sunucu bekleme, protokol
           ';yon=' + ara('redirectStart', 'redirectEnd') + ';swb=' + (nav.workerStart ? ara('workerStart', 'fetchStart') : 0) +
           ';dns=' + ara('domainLookupStart', 'domainLookupEnd') + ';bag=' + ara('connectStart', 'connectEnd') +
-          ';bek=' + ara('requestStart', 'responseStart') + ';p=' + String(nav.nextHopProtocol || '?').slice(0, 6),
+          ';bek=' + ara('requestStart', 'responseStart') + ';p=' + String(nav.nextHopProtocol || '?').slice(0, 6) +
+          (kayMax > 0.05 ? ';kay=' + kayKaynak : ''),
         sure_ms: lcp == null ? null : Math.round(lcp), kare_ms: inp == null ? null : Math.round(inp),
         ekran: innerWidth + 'x' + innerHeight, dpr: window.devicePixelRatio || 1,
-        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals4'
+        oturum: Math.random().toString(36).slice(2, 10), surum: 'vitals5'
       };
       try { navigator.sendBeacon('/api/tani', JSON.stringify(veri)); } catch (e) {}
     }
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') gonder(); });
     window.addEventListener('pagehide', gonder);
+  })();
+
+  /* V38 · Gezinti ölçümü (anonim): sayfanın hangi bölümüne kadar inildi ve hangi bölümden hangi iç bağlantıya
+   * tıklandı. Editör kararı için: ziyaretçilerin çoğu ana sayfada kalıyor, kim nereye geçiyor bilinmiyordu.
+   * Çerez, kimlik, IP yok; sayfa kapanırken tek kayıt. "İzlenmek istemiyorum" (DNT) açıksa hiç çalışmaz. */
+  (function () {
+    if (location.protocol !== 'https:' || !navigator.sendBeacon) return;
+    if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
+    var basT = Date.now(), tik = [], en = '', enSira = -1, gitti = false, raf = 0;
+    var bolumler = [].slice.call(document.querySelectorAll('section[id]'));
+    function bolumAdi(el) {
+      if (el.closest('header')) return 'ust';
+      if (el.closest('footer')) return 'alt';
+      var s = el.closest('section[id]');
+      return s ? s.id.slice(0, 12) : 'icerik';
+    }
+    function hedefAdi(a) {
+      var h = a.getAttribute('href') || '';
+      if (/^mailto:/.test(h)) return 'eposta';
+      if (h.charAt(0) === '#') return h.slice(0, 16);
+      try {
+        var u = new URL(h, location.href);
+        if (u.origin !== location.origin) return 'dis:' + u.hostname.replace(/^www\./, '').slice(0, 18);
+        return (u.pathname + u.hash).slice(0, 30);
+      } catch (e) { return '?'; }
+    }
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      tik.push(bolumAdi(a) + '>' + hedefAdi(a));
+      if (tik.length > 3) tik.shift();
+    }, true);
+    function olc() {
+      raf = 0;
+      for (var i = enSira + 1; i < bolumler.length; i++) {
+        if (bolumler[i].getBoundingClientRect().top < innerHeight * 0.6) { enSira = i; en = bolumler[i].id; }
+      }
+    }
+    addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(olc); }, { passive: true });
+    olc();
+    function gonder() {
+      if (gitti) return; gitti = true; olc();
+      var veri = {
+        olay: 'gezinti', sayfa: location.pathname.slice(0, 40),
+        neden: ('en=' + (en || '-').slice(0, 16) + ' tik=' + (tik.join(',') || '-')).slice(0, 160),
+        sure_ms: Date.now() - basT, ekran: innerWidth + 'x' + innerHeight, dpr: window.devicePixelRatio || 1,
+        oturum: Math.random().toString(36).slice(2, 10), surum: 'gezinti1'
+      };
+      try { navigator.sendBeacon('/api/tani', JSON.stringify(veri)); } catch (e) {}
+    }
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') gonder(); });
+    addEventListener('pagehide', gonder);
   })();
 
   // V34 · "Rüzgâr dinlencesi": üst çubuktaki nota düğmesi (Beethoven, kamu malı kayıtlar). Müzik kendiliğinden
