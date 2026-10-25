@@ -603,7 +603,37 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
    * devirde dönen büyük bir halka jeneratör yükselir; güç tavandaki kablo tavasından converter'a akar ve converter, bütün
    * gücü taşıdığı için parlar. Gerçek N117 dişlilidir: bu yalnız kavramsal bir karşılaştırma (sayfada öyle etiketlenir).
    * Görünüm ilk istendiğinde kurulur; iç mekânın kendi malzemeleri ve düz Mesh kullanılır, yeni gölgelendirici derlenmez. */
-  const ds = { acik: false, g: 0, kirli: false, grup: null, halka: null, donen: null, dolap: null, kablo: null, yol: null, nokta: [] };
+  const ds = { acik: false, g: 0, kirli: false, grup: null, halka: null, donen: null, dolap: null, neon: [], zaman: 0, bekle: false, derlendi: false };
+  /* V40 · Neon güç akışı. Kablolar ışık tüpüne döner: ince, çok parlak bir çekirdek ve çevresinde yumuşak bir hale.
+   * Çekirdekte darbeler akar (keskin ön, uzayan kuyruk). Renkler fiziği anlatır: jeneratörden converter'a amber
+   * (değişken frekans, akış hızı rotor devriyle değişir), converter'dan kuleye camgöbeği (50 Hz, sabit ritim).
+   * Değerler HDR: masaüstündeki ışıma (bloom) bunları gerçek neon gibi yayar; telefonda hale bu işi görür. */
+  const NEON_VS = `varying vec2 vUv; varying vec3 vN; varying vec3 vV;
+    void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`;
+  const NEON_FS = `uniform vec3 uRenk; uniform float uFaz, uAralik, uIlerle, uGuc, uKatman, uTaban, uParlak;
+    varying vec2 vUv; varying vec3 vN; varying vec3 vV;
+    void main(){
+      float u = vUv.x;
+      if (u > uIlerle || uGuc < 0.002) discard;
+      float f = fract(u * uAralik - uFaz);
+      float darbe = exp(-(1.0 - f) * 7.0);
+      float on = uIlerle < 0.999 ? exp(-(uIlerle - u) * 70.0) : 0.0;
+      float k = uTaban + 1.6 * darbe + 3.2 * on;
+      vec3 renk = uRenk; float a;
+      if (uKatman < 0.5) { a = 1.0; renk = mix(uRenk, vec3(1.0), clamp(0.55 * darbe + 0.7 * on, 0.0, 0.8)); }   // çekirdek: darbenin tepesi beyaza kızarır
+      else if (uKatman < 1.5) { float yuz = abs(dot(normalize(vN), normalize(vV))); a = pow(yuz, 2.4) * 0.42; }   // hale
+      else { float y = 1.0 - abs(vUv.y * 2.0 - 1.0); a = y * y * 0.2; }   // yansıma: tüpün ışığının döşemeye/duvara düşen izi
+      gl_FragColor = vec4(renk * k * a * uGuc * uParlak, 1.0);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+    }`;
+  function neonMalz(renk, katman, o) {
+    return new THREE.ShaderMaterial({
+      uniforms: { uRenk: { value: new THREE.Color(renk) }, uFaz: { value: 0 }, uAralik: { value: o.aralik || 8 }, uIlerle: { value: 0 }, uGuc: { value: 0 },
+        uKatman: { value: katman }, uTaban: { value: o.taban != null ? o.taban : 0.32 }, uParlak: { value: katman ? 1 : (o.parlak || 2.4) } },
+      vertexShader: NEON_VS, fragmentShader: NEON_FS, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false,
+    });
+  }
   function dislisizKur() {
     if (ds.grup) return;
     const m = h => icMalz[h] || icMalz[0x7f888f] || new THREE.MeshStandardMaterial({ color: h });
@@ -652,16 +682,82 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const kol = []; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + 0.26, L = RI - 0.62; const k = new THREE.BoxGeometry(L, 0.13, 0.2); k.translate(L / 2 + 0.4, 0, -0.12); k.rotateZ(a); kol.push(k); }
     kol.push(silZ(0.46, 0.46, 0.46, 40), (() => { const u = silZ(0.4, 0.42, 0.95, 32); u.translate(0, 0, -0.62); return u; })());   // göbek bileziği ve ana milin uzantısı
     ekle(birles(kol), DOKUM, 0, 0, 0, donen);
-    // güç kabloları: stator klemens kutusundan tavandaki kablo tavasına, oradan converter'a
-    const yolN = [[0.42, RD + 0.2, Z], [0.95, TAVAN - 0.42, Z + 0.25], [1.5, TAVAN - 0.2, Z + 0.95], [1.5, TAVAN - 0.2, 0.6], [1.5, TAVAN - 0.2, 1.9],
-      [SAG - 0.36, TAVAN - 0.55, 2.35], [SAG - 0.32, TABAN + 2.15, 2.62]].map(q => new THREE.Vector3(...q));
-    ds.yol = new THREE.CatmullRomCurve3(yolN, false, 'centripetal');
-    const kb = [];
-    for (let i = 0; i < 3; i++) { const o = (i - 1) * 0.07; kb.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(yolN.map(q => q.clone().add(new THREE.Vector3(0, 0, o))), false, 'centripetal'), hafif ? 48 : 120, 0.032, 6, false)); }
-    ds.kablo = ekle(birles(kb), KABLO, 0, 0, 0);
-    // enerji akışı: kabloların üstünde ilerleyen ışık parçacıkları
-    const ng = new THREE.BoxGeometry(0.12, 0.12, 0.12);
-    for (let i = 0; i < (hafif ? 14 : 22); i++) { const n = ekle(ng, LED, 0, 0, 0); n.castShadow = false; n.visible = false; ds.nokta.push(n); }
+    // V40 · fren diski (dönen, kaliperlerin arasından geçer) ve statoru ana şasiye bağlayan iki ayak
+    const fd = new THREE.Shape(); fd.absarc(0, 0, RI - 0.1, 0, Math.PI * 2, false);
+    const fdd = new THREE.Path(); fdd.absarc(0, 0, RI - 0.34, 0, Math.PI * 2, true); fd.holes.push(fdd);
+    const fdg = new THREE.ExtrudeGeometry(fd, { depth: 0.035, bevelEnabled: false, curveSegments: SEG }); fdg.translate(0, 0, -DER / 2 - 0.1);
+    ekle(fdg, CELIK, 0, 0, 0, donen);
+    for (const sx of [-1, 1]) ekle(new THREE.BoxGeometry(0.42, 0.4, DER - 0.12), DOKUM, sx * 1.16, -0.98, 0, halka);
+    // V40 · neon güç yolları: çekirdekler (3 faz) + hale; jeneratör → converter amber, converter → kule camgöbeği
+    const AMBER = 0xffa83a, CAMGOBEGI = 0x3ff0ff, BEYAZ = 0xd9f4ff;
+    const neonYol = (tip, noktalar, renk, o) => {
+      const v = noktalar.map(q => new THREE.Vector3(...q)), egri = new THREE.CatmullRomCurve3(v, false, 'centripetal'), uz = egri.getLength();
+      const aralik = Math.max(1, Math.round(uz / (o.adim || 0.6)));
+      const cm = neonMalz(renk, 0, { aralik, taban: o.taban, parlak: o.parlak }), hm = neonMalz(renk, 1, { aralik, taban: o.taban });
+      const cek = [], kac = o.faz || 3;
+      for (let i = 0; i < kac; i++) {
+        const off = new THREE.Vector3(...(o.kay || [0, 0, 0.065])).multiplyScalar(i - (kac - 1) / 2);
+        cek.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(v.map(q => q.clone().add(off)), false, 'centripetal'), hafif ? 64 : 160, o.r || 0.02, 6, false));
+      }
+      const c = ekle(birles(cek), cm, 0, 0, 0, o.gel), h = ekle(new THREE.TubeGeometry(egri, hafif ? 64 : 160, o.hr || 0.12, 10, false), hm, 0, 0, 0, o.gel);
+      c.castShadow = h.castShadow = false; c.receiveShadow = h.receiveShadow = false; c.renderOrder = h.renderOrder = 2;
+      ds.neon.push({ tip, mats: [cm, hm], mesh: [c, h], faz: 0 });
+    };
+    const isiksiz = o => { o.castShadow = false; o.receiveShadow = false; o.renderOrder = 2; return o; };
+    /* V40 · yansıma: tüpün ışığının yakınındaki yüzeye düştüğü yumuşak iz (yalnız masaüstü; telefonda dolgu maliyeti).
+     * Yüzeyin normali (n) ve yol verilir; şerit yüzeye 1 cm yakın, enine yumuşak sönümlü. Gerçek ışık eklenmez: ışık sayısı
+     * değişirse bütün malzemeler yeniden derlenir, bu yüzden "ışık" boyalı bir şerittir. */
+    const yansima = (tip, noktalar, n, gen, renk, o) => {
+      if (hafif) return;
+      const egri = new THREE.CatmullRomCurve3(noktalar.map(q => new THREE.Vector3(...q)), false, 'centripetal'), N = 48;
+      const nv = new THREE.Vector3(...n).normalize(), poz = [], uv = [], nor = [], idx = [], t = new THREE.Vector3(), yan = new THREE.Vector3();
+      for (let i = 0; i <= N; i++) {
+        const u = i / N, p = egri.getPointAt(u); egri.getTangentAt(u, t); yan.crossVectors(t, nv).normalize().multiplyScalar(gen / 2);
+        p.addScaledVector(nv, 0.012);
+        poz.push(p.x - yan.x, p.y - yan.y, p.z - yan.z, p.x + yan.x, p.y + yan.y, p.z + yan.z);
+        uv.push(u, 0, u, 1); nor.push(nv.x, nv.y, nv.z, nv.x, nv.y, nv.z);
+        if (i < N) { const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(poz, 3)); geo.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
+      geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); geo.setIndex(idx);
+      const mm = neonMalz(renk, 2, { aralik: o.aralik || 1, taban: o.taban != null ? o.taban : 0.9 });
+      mm.polygonOffset = true;   // ön yüz n'e bakar (tek yüz: çift yüz ayrı gölgelendirici ister)
+      mm.polygonOffsetFactor = -2; mm.polygonOffsetUnits = -4;
+      ds.neon.push({ tip, mats: [mm], mesh: [isiksiz(ekle(geo, mm, 0, 0, 0, o.gel))], faz: 0 });
+    };
+    // stator toplama baraları: üç faz, statorun dış yüzünü iki yandan sarıp klemens kutusunda birleşir (akış kutuya doğru)
+    {
+      const RB = RD + 0.1, yay = (a0, a1, son) => { const p = []; const n = Math.max(4, Math.round(Math.abs(a1 - a0) / 8)); for (let i = 0; i <= n; i++) { const a = (a0 + (a1 - a0) * i / n) * Math.PI / 180; p.push([Math.cos(a) * RB, Math.sin(a) * RB, 0]); } p.push(son); return p; };
+      neonYol('R', yay(-24, 61, [0.58, RD + 0.12, 0]), AMBER, { adim: 0.42, kay: [0, 0, 0.085], r: 0.016, hr: 0.075, parlak: 1.9, taban: 0.22, gel: halka });
+      neonYol('R', yay(204, 87, [0.26, RD + 0.12, 0]), AMBER, { adim: 0.42, kay: [0, 0, 0.085], r: 0.016, hr: 0.075, parlak: 1.9, taban: 0.22, gel: halka });
+    }
+    neonYol('A', [[0.42, RD + 0.2, Z], [0.95, TAVAN - 0.42, Z + 0.25], [1.5, TAVAN - 0.2, Z + 0.95], [1.5, TAVAN - 0.2, 0.6], [1.5, TAVAN - 0.2, 1.9],
+      [SAG - 0.36, TAVAN - 0.55, 2.35], [SAG - 0.32, TABAN + 2.15, 2.62]], AMBER, { adim: 0.62 });
+    const ex = eksenN.x, ez = eksenN.z;
+    neonYol('B', [[SAG - 0.32, TABAN + 2.12, 1.75], [1.42, TAVAN - 0.35, 1.3], [1.5, TAVAN - 0.7, 0.98], [1.48, TABAN + 0.55, 0.9], [1.05, TABAN + 0.2, 0.78],
+      [ex + 0.32, TABAN + 0.16, ez + 0.3], [ex, TABAN - 0.1, ez], [ex, TABAN - 1.5, ez]], CAMGOBEGI, { adim: 0.32 });
+    // converter'ın üstünde DC bara: dolapların boyunca uzanan beyaz ışık şeridi
+    neonYol('D', [[SAG - 0.3, TABAN + 2.09, 1.12], [SAG - 0.3, TABAN + 2.09, 5.35]], BEYAZ, { adim: 0.5, faz: 2, kay: [0, 0.05, 0], taban: 0.6, parlak: 1.8, hr: 0.09 });
+    // hava aralığında dönen manyetik alan: kutup sayısınca ışık, rotorla birlikte döner
+    {
+      const cm = neonMalz(AMBER, 0, { aralik: hafif ? 20 : 32, taban: 0.25, parlak: 2.0 }), hm = neonMalz(AMBER, 1, { aralik: hafif ? 20 : 32, taban: 0.25 });
+      const c = ekle(new THREE.TorusGeometry(RI - 0.035, 0.016, 6, SEG * 2), cm, 0, 0, -DER / 2 + 0.06, donen);
+      const c2 = ekle(new THREE.TorusGeometry(RI - 0.035, 0.016, 6, SEG * 2), cm, 0, 0, DER / 2 - 0.06, donen);
+      const h = ekle(new THREE.TorusGeometry(RI - 0.035, 0.06, 8, SEG * 2), hm, 0, 0, -DER / 2 + 0.06, donen);
+      [c, c2, h].forEach(isiksiz);
+      ds.neon.push({ tip: 'H', mats: [cm, hm], mesh: [c, c2, h], faz: 0 });
+    }
+    // kuleye iniş: kablo ilmeğinin lastik bileziğinin çevresinde camgöbeği halka, darbeler halkada döner
+    {
+      const cm = neonMalz(CAMGOBEGI, 0, { aralik: 6, taban: 0.35, parlak: 2.2 }), hm = neonMalz(CAMGOBEGI, 1, { aralik: 6, taban: 0.35 });
+      const tc = new THREE.TorusGeometry(0.37, 0.016, 6, 64), th = new THREE.TorusGeometry(0.37, 0.07, 8, 64); tc.rotateX(Math.PI / 2); th.rotateX(Math.PI / 2);
+      ds.neon.push({ tip: 'K', mats: [cm, hm], mesh: [isiksiz(ekle(tc, cm, ex, TABAN + 0.035, ez)), isiksiz(ekle(th, hm, ex, TABAN + 0.035, ez))], faz: 0 });
+    }
+    // yansımalar: halkanın altındaki döşemeye amber, kuleye inen kablonun döşemesine camgöbeği, DC baranın arkasındaki duvara beyaz
+    yansima('YH', [[-1.3, TABAN, Z], [1.3, TABAN, Z]], [0, 1, 0], 1.5, AMBER, { taban: 0.7 });
+    yansima('YB', [[1.05, TABAN, 0.78], [ex + 0.32, TABAN, ez + 0.3], [ex, TABAN, ez]], [0, 1, 0], 0.9, CAMGOBEGI, {});
+    yansima('YD', [[SAG, TABAN + 2.12, 1.12], [SAG, TABAN + 2.12, 5.35]], [-1, 0, 0], 0.9, BEYAZ, { taban: 0.8 });
     // bütün gücü taşıyan converter büyür: sağ duvara bir dolap daha (duvardan dışarı kayar)
     const dolap = new THREE.Group(); g.add(dolap); ds.dolap = dolap;
     const dz = 4.86, dy = TABAN + 1.05, dx = SAG - 0.28;
@@ -672,6 +768,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     ekle(new THREE.BoxGeometry(0.02, 0.2, 0.3), EKRAN, dx - 0.26, dy + 0.25, dz - 0.15, dolap);
   }
   const DS_PARCA = [['disli', 0], ['kaplin', 0.1], ['jenerator', 0.18]];
+  // neon zamanlaması (açılıştan sn): [yürüyen mü (1) / yalnız parlayan mı (0), başla, bitir, darbe hızı (−1: rotor devriyle)]
+  const DS_ZAMAN = { H: [0, 1.1, 1.9, 0], YH: [0, 1.1, 1.9, 0.12], R: [1, 1.5, 2.3, -1], A: [1, 2.1, 3.2, -1], D: [1, 3.1, 3.6, 0.7], YD: [0, 3.1, 3.7, 0.15],
+    B: [1, 3.5, 4.6, 6.0], YB: [1, 3.9, 4.6, 0.3], K: [0, 4.4, 4.9, 2.0] };
   function dsVurgu(gl) {
     if (!rt.hazir || !pg.konvertor || (rt.acik && rt.secili)) return;
     const nb = gl > 0.01 ? gl * (0.78 + 0.22 * Math.sin(mt / 360)) : 0;
@@ -689,16 +788,25 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       o.position.copy(ilkKonum[k]); o.position.y -= c * 3.6; o.scale.setScalar(1 - 0.2 * c); o.visible = c < 0.995;
     }
     if (ds.grup) {
-      const c = yumusak(0.3, 0.95, gg), ak = yumusak(0.82, 1, gg);
+      const c = yumusak(0.3, 0.95, gg);
       ds.grup.visible = c > 0.002;
       ds.halka.position.y = -(1 - c) * 3.4;
       if (ic.anaMil) ds.donen.rotation.z = ic.anaMil.rotation.z;
       ds.dolap.position.x = (1 - yumusak(0.5, 1, gg)) * 0.62;
-      ds.kablo.visible = c > 0.7;
-      const N = ds.nokta.length;
-      ds.nokta.forEach((n, i) => { n.visible = ak > 0.02; if (n.visible) { ds.yol.getPointAt((mt / 2400 + i / N) % 1, n.position); n.scale.setScalar(ak); } });
+      // akım dalgası: halka yükselince hava aralığı ışır, sonra güç jeneratörden converter'a, converter dolunca kuleye akar
+      const z = ds.zaman, dkOran = Math.min(1, Math.abs(rotorW) * 60 / (2 * Math.PI) / 14.1), adt = Math.min(0.05, ds.sonDt || 0.016);
+      for (const n of ds.neon) {
+        // sıra: hava aralığı ışır → baralar statoru sarıp klemense akar → tavandan converter'a → DC bara → kuleye 50 Hz
+        const zm = DS_ZAMAN[n.tip] || DS_ZAMAN.H;
+        let ilerle = zm[0] ? yumusak(zm[1], zm[2], z) : 1, parl = zm[0] ? 1 : yumusak(zm[1], zm[2], z), hiz = zm[3] < 0 ? 0.5 + 1.9 * dkOran : zm[3];
+        if (az) { ilerle = 1; parl = 1; hiz = 0; }
+        n.faz = (n.faz + adt * hiz) % 1000;
+        const gc = gg * parl;
+        for (const mm of n.mats) { const u = mm.uniforms; u.uFaz.value = n.faz; u.uIlerle.value = ilerle; u.uGuc.value = gc; }
+        for (const o of n.mesh) o.visible = ilerle > 0.002 && gc > 0.01;
+      }
     }
-    dsVurgu(yumusak(0.75, 1, gg));
+    dsVurgu(gg * (az ? 1 : yumusak(3.0, 3.6, ds.zaman)));
     if (ic.civatalar) ic.civatalar.visible = gg < 0.02 && !(rt.g > 0.001 && rt.pY * rt.g >= 0.02);
     if (gg === 0) {
       for (const [k] of DS_PARCA) if (pg[k]) { pg[k].position.copy(ilkKonum[k]); pg[k].scale.setScalar(1); pg[k].visible = true; }
@@ -950,7 +1058,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const hedefP = ilerleme();
     // kaydırma durduğunda sahne yalnızca rotor ve hafif kamera nefesi için çizilir: kare seyreltilir,
     // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
-    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || (ds.g > 0 && ds.g < 1) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat) || bak.surukle || Math.abs(bak.yaw) + Math.abs(bak.pitch) > 1e-3) { sonHedefP = hedefP; durgunT = t; }
+    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || (ds.g > 0 && ds.g < 1) || (ds.acik && !az && !duraklat) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat) || bak.surukle || Math.abs(bak.yaw) + Math.abs(bak.pitch) > 1e-3) { sonHedefP = hedefP; durgunT = t; }
     const durgun = t - durgunT > 1200;
     // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
     const hareketAralik = KADEME_ARALIK[kalite] || 0;
@@ -1090,8 +1198,10 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       if (ic.civatalar) ic.civatalar.visible = true;
     }
     // V39 · dişlisiz görünüm geçişi (~2 sn)
-    const dsHedef = ds.acik ? 1 : 0;
+    const dsHedef = ds.acik && !ds.bekle ? 1 : 0;
     ds.g += (dsHedef - ds.g) * (anlik ? 1 : 1 - Math.exp(-dt * 1.5)); if (Math.abs(dsHedef - ds.g) < 1e-3) ds.g = dsHedef;
+    ds.sonDt = dt;
+    if (ds.acik && !ds.bekle) ds.zaman += anlik ? 10 : dt; else if (ds.g === 0) ds.zaman = 0;
     if (ds.g > 0 || ds.kirli) dislisizUygula();
     const kuleBolum = p > 0.14 && p < 0.47;
     kule.ic.visible = kuleBolum;
@@ -1580,12 +1690,29 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   };
   // V39 · dişlisiz görünüm (temsili): S.dislisiz(true|false); argümansız çağrı durumu döndürür
   S.dislisiz = acik => {
-    if (acik === undefined) return { acik: ds.acik, g: ds.g };
+    if (acik === undefined) return { acik: ds.acik, g: ds.g, hazir: !ds.bekle, zaman: ds.zaman };
     acik = !!acik;
-    if (acik) { if (rt.acik) { rt.acik = false; rt.patlat = 0; rt.aci = 0; } dislisizKur(); rontgenHazirla(); }
+    if (acik) {
+      if (rt.acik) { rt.acik = false; rt.patlat = 0; rt.aci = 0; }
+      dislisizKur(); rontgenHazirla();
+      if (!ds.derlendi) { ds.derlendi = true; ds.bekle = true; dsDerle().then(() => { ds.bekle = false; durgunT = performance.now(); baslat(); }); }
+    }
     ds.acik = acik; durgunT = performance.now(); baslat();
     return { acik: ds.acik, g: ds.g };
   };
+  /* V40 · Neon gölgelendiricileri (iki tür: çekirdek ve hale aynı programı paylaşır) yalnız görünüm ilk açıldığında,
+   * o anki ışık düzeninde (nasel içi) ekran ve ara hedef için paralel derlenir. Görünüm yalnız nasel içinde açık kalır;
+   * ışık düzeni orada değişmediği için kaydırırken yeni derleme olmaz. En fazla 2,5 sn beklenir. */
+  function dsDerle() {
+    const derleN = o => renderer.compileAsync ? renderer.compileAsync(o, camera, scene) : Promise.resolve(renderer.compile(o, camera, scene));
+    const sozler = [], onceki = renderer.getRenderTarget(); let hedef = null;
+    try {
+      sozler.push(derleN(ds.grup));
+      if (!hafif) { hedef = new THREE.WebGLRenderTarget(8, 8, { type: THREE.HalfFloatType }); renderer.setRenderTarget(hedef); sozler.push(derleN(ds.grup)); }
+    } catch (e) { /* derlenemezse ilk çizimde derlenir */ }
+    finally { renderer.setRenderTarget(onceki); }
+    return Promise.race([Promise.all(sozler), new Promise(r => setTimeout(r, 2500))]).catch(() => {}).then(() => { if (hedef) hedef.dispose(); });
+  }
   S.bastanOynat = () => { mt = 0; duraklat = false; durgunT = performance.now(); baslat(); };
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak('baglam-kaybi'); }, false);
 

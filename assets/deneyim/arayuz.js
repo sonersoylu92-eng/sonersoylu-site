@@ -670,11 +670,14 @@
   dszDugme.setAttribute('aria-controls', 'vDsz'); dszDugme.setAttribute('aria-expanded', 'false');
   dszDugme.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.2 1.5 3.5 9h3.6l-.8 5.5L12.5 7H8.8z" fill="currentColor"/></svg>Ya dişli olmasaydı?';
   hud.appendChild(dszDugme);
-  var dszKart = document.createElement('section'); dszKart.className = 'v-dsz-kart'; dszKart.id = 'vDsz'; dszKart.tabIndex = -1;
-  dszKart.setAttribute('aria-label', 'Dişli kutusu olmasaydı: temsili karşılaştırma');
+  // V40 · section değil div: ana sayfanın ".ana section" kuralı (7rem iç boşluk) kartın üstünü ve altını boş bırakıyordu
+  var dszKart = document.createElement('div'); dszKart.className = 'v-dsz-kart'; dszKart.id = 'vDsz'; dszKart.tabIndex = -1;
+  dszKart.setAttribute('role', 'region'); dszKart.setAttribute('aria-label','Dişli kutusu olmasaydı: temsili karşılaştırma');
   dszKart.innerHTML = '<p class="v-dsz-etiket">Temsili kavram · N117 dişlidir</p>' +
     '<h3>Dişli kutusu olmasaydı</h3>' +
     '<p class="v-dsz-ozet">Rotor, büyük çaplı bir halka jeneratörü doğrudan döndürür. Devri dişli yükseltmez: jeneratörün düşük ve değişken frekanslı akımını converter önce doğru akıma, sonra 50&nbsp;Hz’e çevirir.</p>' +
+    '<p class="v-dsz-akis"><span class="v-dsz-a">Değişken frekans</span><span class="v-dsz-ok" aria-hidden="true">→</span><span class="v-dsz-d">Converter · DC</span><span class="v-dsz-ok" aria-hidden="true">→</span><span class="v-dsz-c">50&nbsp;Hz şebeke</span></p>' +
+    '<p class="v-dsz-canli"><b>Şu an</b> rotor = jeneratör: <span class="v-dsz-dk">–</span>&nbsp;d/dk<span class="v-dsz-durgun"> · rüzgâr şu an zayıf; akış temsili</span></p>' +
     '<details class="v-dsz-detay"><summary>Neler değişiyor? · 4 fark</summary>' +
     '<table class="v-dsz-tablo"><thead><tr><th scope="col"><span class="gizli">Özellik</span></th><th scope="col">Bugün · N117</th><th scope="col">Dişlisiz</th></tr></thead><tbody>' +
     '<tr><th scope="row">Jeneratör devri</th><td>≈1.000 d/dk sınıfı<small>tahmini</small></td><td>Rotorla aynı: 7,9–14,1 d/dk</td></tr>' +
@@ -687,9 +690,15 @@
   sahne.appendChild(dszKart);
   // telefonda kart kısa açılır (sahne görünsün), karşılaştırma isteyene; masaüstünde açık
   if (!matchMedia('(max-width: 820px)').matches) dszKart.querySelector('.v-dsz-detay').open = true;
+  // V40 · canlı devir: sahnedeki rotor Aliağa'nın canlı rüzgârıyla döner; dişlisizde jeneratör aynı devirdedir
+  var dszDk = dszKart.querySelector('.v-dsz-dk'), dszCanli = dszKart.querySelector('.v-dsz-canli'), dszSaat = 0;
+  function dszDevir() { try { var r = sahneS && sahneS.rotor; if (r && isFinite(r.dk)) { dszDk.textContent = (Math.round(r.dk * 10) / 10).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    // rüzgâr üretim eşiğinin altındaysa rotor durur: neon akış o an gerçek değil, kavramı gösterir (dürüstçe söyle)
+    dszCanli.classList.toggle('durgun', !(r.hedef > 0)); } } catch (e) {} }
   function dsz(acik) {
     acik = !!acik;
     if (!sahneS || !sahneS.dislisiz || acik === dszAcik) return;
+    clearInterval(dszSaat); if (acik) { dszDevir(); dszSaat = setInterval(dszDevir, 600); }
     if (acik && rontgenAcik) rontgen(false);
     dszAcik = acik; sahneS.dislisiz(acik);
     bolum.classList.toggle('dny-dislisiz', acik);
@@ -991,7 +1000,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=0ad0d43f').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=e23bc187').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
@@ -1057,7 +1066,7 @@
    * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
    * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
    * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
-  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=0ad0d43f","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=e23bc187","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
   if (!filmKip) try {
     var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
     ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {
