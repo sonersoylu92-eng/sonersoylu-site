@@ -244,6 +244,8 @@
       sonDurak = en;
     }
     hud.classList.toggle('gor', goster);
+    hud.classList.toggle('dsz-var', goster && DURAKLAR[en] && DURAKLAR[en].id === 'disli' && !dszAcik);
+    if (dszAcik && (p < 0.57 || p > 0.885)) dsz(false);   // dişlisiz görünüm ana milden converter'a kadar açık kalır
 
     // dış altyazılar
     var ai = -1; DIS.forEach(function (d, i) { if (p > d.a && p < d.b && !(i === 0 && soz)) ai = i; });
@@ -660,11 +662,52 @@
     '<p class="v-rt-ipucu">Sürükleyerek döndür · kaydırınca normal görünüme döner</p>' +
     '<button type="button" class="v-rt-kapa">Röntgeni kapat</button>';
   sahne.appendChild(rtCubuk);
+  /* ---- V39 · "Ya dişli olmasaydı?": dişli kutusu durağında isteğe bağlı, temsili dişlisiz görünüm ----
+   * Sahne tarafı (deneyim.js) dişli kutusunu, kaplini ve hızlı jeneratörü indirir, halka jeneratörü ve converter'a akan
+   * gücü gösterir. Bu kart neyin değiştiğini anlatır; değerlerden tahmini olan işaretlidir. N117'nin kendisi dişlilidir. */
+  var dszAcik = false;
+  var dszDugme = document.createElement('button'); dszDugme.type = 'button'; dszDugme.className = 'v-dsz-ac';
+  dszDugme.setAttribute('aria-controls', 'vDsz'); dszDugme.setAttribute('aria-expanded', 'false');
+  dszDugme.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.2 1.5 3.5 9h3.6l-.8 5.5L12.5 7H8.8z" fill="currentColor"/></svg>Ya dişli olmasaydı?';
+  hud.appendChild(dszDugme);
+  var dszKart = document.createElement('section'); dszKart.className = 'v-dsz-kart'; dszKart.id = 'vDsz'; dszKart.tabIndex = -1;
+  dszKart.setAttribute('aria-label', 'Dişli kutusu olmasaydı: temsili karşılaştırma');
+  dszKart.innerHTML = '<p class="v-dsz-etiket">Temsili kavram · N117 dişlidir</p>' +
+    '<h3>Dişli kutusu olmasaydı</h3>' +
+    '<p class="v-dsz-ozet">Rotor, büyük çaplı bir halka jeneratörü doğrudan döndürür. Devri dişli yükseltmez: jeneratörün düşük ve değişken frekanslı akımını converter önce doğru akıma, sonra 50&nbsp;Hz’e çevirir.</p>' +
+    '<details class="v-dsz-detay"><summary>Neler değişiyor? · 4 fark</summary>' +
+    '<table class="v-dsz-tablo"><thead><tr><th scope="col"><span class="gizli">Özellik</span></th><th scope="col">Bugün · N117</th><th scope="col">Dişlisiz</th></tr></thead><tbody>' +
+    '<tr><th scope="row">Jeneratör devri</th><td>≈1.000 d/dk sınıfı<small>tahmini</small></td><td>Rotorla aynı: 7,9–14,1 d/dk</td></tr>' +
+    '<tr><th scope="row">Dişli yağı ve soğutucusu</th><td>Var</td><td>Yok</td></tr>' +
+    '<tr><th scope="row">Hızlı mil ve kaplin</th><td>Var</td><td>Yok</td></tr>' +
+    '<tr><th scope="row">Converter’dan geçen güç</th><td>Yaklaşık üçte biri</td><td>Tamamı</td></tr>' +
+    '</tbody></table>' +
+    '<p class="v-dsz-not">Sahadaki dişlisiz türbinler (Enercon gibi) bu mantıkla çalışır; jeneratörleri çok daha büyük ve ağırdır. Kaydırarak converter’a kadar ilerleyebilirsin.</p></details>' +
+    '<button type="button" class="v-dsz-kapa">Dişli kutusuna dön</button>';
+  sahne.appendChild(dszKart);
+  // telefonda kart kısa açılır (sahne görünsün), karşılaştırma isteyene; masaüstünde açık
+  if (!matchMedia('(max-width: 820px)').matches) dszKart.querySelector('.v-dsz-detay').open = true;
+  function dsz(acik) {
+    acik = !!acik;
+    if (!sahneS || !sahneS.dislisiz || acik === dszAcik) return;
+    if (acik && rontgenAcik) rontgen(false);
+    dszAcik = acik; sahneS.dislisiz(acik);
+    bolum.classList.toggle('dny-dislisiz', acik);
+    dszDugme.setAttribute('aria-expanded', acik ? 'true' : 'false');
+    if (acik) { hud.classList.remove('dsz-var'); setTimeout(function () { try { dszKart.focus({ preventScroll: true }); } catch (e) {} }, 60); }
+  }
+  dszDugme.addEventListener('click', function () { dsz(true); });
+  dszKart.querySelector('.v-dsz-kapa').addEventListener('click', function () {
+    dsz(false); var i = -1; DURAKLAR.forEach(function (d, k) { if (d.id === 'disli') i = k; }); if (i >= 0) durakGit(i, false);
+  });
+  dszKart.addEventListener('keydown', function (e) { if (e.key === 'Escape') dsz(false); });
+
   var rtDugme = parIc.querySelector('.v-rt-dugme'), rtKabuk = rtCubuk.querySelector('#vRtKabuk'), rtPatlat = rtCubuk.querySelector('#vRtPatlat');
   var rtScroll = 0;
   function rontgen(acik) {
     if (!sahneS || !sahneS.rontgen) return;
     rontgenAcik = !!acik;
+    if (rontgenAcik && dszAcik) dsz(false);
     sahneS.rontgen({ acik: rontgenAcik, kabuk: rtKabuk.value / 100, patlat: rontgenAcik ? rtPatlat.value / 100 : 0, secili: rontgenAcik ? parSecili : null });
     if (!rontgenAcik) rtPatlat.value = 0;
     rtDugme.setAttribute('aria-pressed', rontgenAcik ? 'true' : 'false');
@@ -948,7 +991,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=52fbd097').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=0ad0d43f').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
@@ -1014,7 +1057,7 @@
    * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
    * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
    * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
-  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=52fbd097","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=0ad0d43f","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
   if (!filmKip) try {
     var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
     ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {

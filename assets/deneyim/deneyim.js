@@ -141,6 +141,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   await nefes();
   tilt.add(ic.grup);
   ic.grup.visible = false;
+  // V39 · dişlisiz görünüm iç mekânın kendi malzemelerini kullanır (renge göre): yeni gölgelendirici derlenmez
+  const icMalz = {};
+  ic.grup.traverse(o => { if (o.isMesh && o.material && !Array.isArray(o.material) && o.material.color) { const h = o.material.color.getHex(); if (!icMalz[h]) icMalz[h] = o.material; } });
 
   /* ---------------- kule: kapı, kule içi, servis asansörü ----------------
    * Kule yereli: kapı +z yönünde. Kule, kapı ve kule içi naselin yaw açısıyla birlikte döner;
@@ -595,6 +598,114 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       if (k === sec) { m.emissive.setHex(0x1f8597); m.emissiveIntensity = Math.max(m.userData.ei0, 0.45); }
       else { m.emissive.setHex(m.userData.e0); m.emissiveIntensity = m.userData.ei0; } }); });
   }
+  /* ---------------- V39 · "Ya dişli olmasaydı?" — dişlisiz (temsili) görünüm ----------------
+   * Dişli kutusu, hızlı mil–kaplin–fren ve hızlı jeneratör döşemenin altına iner; dişli kutusunun yerinde, rotorla aynı
+   * devirde dönen büyük bir halka jeneratör yükselir; güç tavandaki kablo tavasından converter'a akar ve converter, bütün
+   * gücü taşıdığı için parlar. Gerçek N117 dişlilidir: bu yalnız kavramsal bir karşılaştırma (sayfada öyle etiketlenir).
+   * Görünüm ilk istendiğinde kurulur; iç mekânın kendi malzemeleri ve düz Mesh kullanılır, yeni gölgelendirici derlenmez. */
+  const ds = { acik: false, g: 0, kirli: false, grup: null, halka: null, donen: null, dolap: null, kablo: null, yol: null, nokta: [] };
+  function dislisizKur() {
+    if (ds.grup) return;
+    const m = h => icMalz[h] || icMalz[0x7f888f] || new THREE.MeshStandardMaterial({ color: h });
+    const MAVI = m(0x31639a), MAVIK = m(0x26517e), DOKUM = m(0x5a6268), CELIK = m(0x7f888f), PIRINC = m(0xb48f4c), KABLO = m(0x1b1d20),
+      LED = m(0x0b0f12), DOLAP = m(0xd3cfc4), DOLAPK = m(0x6c757c), SIYAH = m(0x16181b), EKRAN = m(0x0a1418);
+    const b = ic.sinir, TAVAN = b.TAVAN, TABAN = b.TABAN, SAG = b.SAG;
+    const g = new THREE.Group(); g.name = 'dislisiz'; g.visible = false; ic.grup.add(g); ds.grup = g;
+    const ekle = (geo, mat, x, y, z, gel) => { const o = new THREE.Mesh(geo, mat); o.position.set(x, y, z); o.castShadow = !hafif; o.receiveShadow = true; (gel || g).add(o); return o; };
+    const birles = geos => {
+      const pr = geos.map(q => q.index ? q.toNonIndexed() : q); let n = 0; pr.forEach(q => { n += q.attributes.position.count; });
+      const out = new THREE.BufferGeometry();
+      ['position', 'normal', 'uv'].forEach(ad => {
+        if (!pr.every(q => q.attributes[ad])) return;
+        const boy = pr[0].attributes[ad].itemSize, dz = new Float32Array(n * boy); let o = 0;
+        pr.forEach(q => { dz.set(q.attributes[ad].array, o); o += q.attributes[ad].array.length; });
+        out.setAttribute(ad, new THREE.BufferAttribute(dz, boy));
+      });
+      return out;
+    };
+    const silZ = (r0, r1, u, seg) => { const c = new THREE.CylinderGeometry(r0, r1, u, seg || 40); c.rotateX(Math.PI / 2); return c; };
+    const SEG = hafif ? 48 : 96, Z = -1.75, RD = 1.42, RI = 1.1, DER = 0.9;   // halka: dişli kutusunun yerinde; dış/iç yarıçap, derinlik (temsili)
+    const halka = new THREE.Group(); halka.position.set(0, 0, Z); g.add(halka); ds.halka = halka;
+    // stator: kalın halka gövde, dış yüzde soğutma kanatçıkları, iç kenarlarda bakır sargı başları
+    const sk = new THREE.Shape(); sk.absarc(0, 0, RD, 0, Math.PI * 2, false);
+    const dl = new THREE.Path(); dl.absarc(0, 0, RI, 0, Math.PI * 2, true); sk.holes.push(dl);
+    const sg = new THREE.ExtrudeGeometry(sk, { depth: DER, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 2, curveSegments: SEG });
+    sg.translate(0, 0, -DER / 2); ekle(sg, MAVI, 0, 0, 0, halka);
+    const kan = []; for (let i = 0; i < 5; i++) { const t = new THREE.TorusGeometry(RD + 0.03, 0.022, 6, SEG); t.translate(0, 0, -DER / 2 + 0.1 + i * (DER - 0.2) / 4); kan.push(t); }
+    ekle(birles(kan), MAVIK, 0, 0, 0, halka);
+    const sargi = []; for (const sx of [-1, 1]) { const t = new THREE.TorusGeometry(RI + 0.01, 0.05, 8, SEG); t.translate(0, 0, sx * (DER / 2 - 0.02)); sargi.push(t); }
+    ekle(birles(sargi), PIRINC, 0, 0, 0, halka);
+    // klemens kutusu: stator üstünde, güç kabloları buradan çıkar
+    ekle(new THREE.BoxGeometry(0.5, 0.26, 0.42), MAVIK, 0.42, RD + 0.08, 0, halka);
+    // fren: dişlisizde de mekanik fren vardır; kaliperler halkanın ön yüzünde, dönen sırta basar
+    const SARI = m(0xc9a227);
+    for (const a of [-2.6, -0.55]) ekle(new THREE.BoxGeometry(0.26, 0.2, 0.22), SARI, Math.cos(a) * (RI - 0.21), Math.sin(a) * (RI - 0.21), -DER / 2 - 0.08, halka);
+    // dönen kısım: kutup pabuçları, onları taşıyan sırt, ana mile oturan yıldız kollar (ana mille aynı devirde)
+    const donen = new THREE.Group(); halka.add(donen); ds.donen = donen;
+    const NK = hafif ? 40 : 64, kutup = [];
+    for (let i = 0; i < NK; i++) { const a = i / NK * Math.PI * 2, k = new THREE.BoxGeometry(0.12, 0.09, DER - 0.16); k.rotateZ(a); k.translate(Math.cos(a) * (RI - 0.1), Math.sin(a) * (RI - 0.1), 0); kutup.push(k); }
+    ekle(birles(kutup), CELIK, 0, 0, 0, donen);
+    const sirt = new THREE.Shape(); sirt.absarc(0, 0, RI - 0.16, 0, Math.PI * 2, false);
+    const sd = new THREE.Path(); sd.absarc(0, 0, RI - 0.26, 0, Math.PI * 2, true); sirt.holes.push(sd);
+    const srg = new THREE.ExtrudeGeometry(sirt, { depth: DER - 0.2, bevelEnabled: false, curveSegments: SEG }); srg.translate(0, 0, -(DER - 0.2) / 2);
+    ekle(srg, DOKUM, 0, 0, 0, donen);
+    const kol = []; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + 0.26, L = RI - 0.62; const k = new THREE.BoxGeometry(L, 0.13, 0.2); k.translate(L / 2 + 0.4, 0, -0.12); k.rotateZ(a); kol.push(k); }
+    kol.push(silZ(0.46, 0.46, 0.46, 40), (() => { const u = silZ(0.4, 0.42, 0.95, 32); u.translate(0, 0, -0.62); return u; })());   // göbek bileziği ve ana milin uzantısı
+    ekle(birles(kol), DOKUM, 0, 0, 0, donen);
+    // güç kabloları: stator klemens kutusundan tavandaki kablo tavasına, oradan converter'a
+    const yolN = [[0.42, RD + 0.2, Z], [0.95, TAVAN - 0.42, Z + 0.25], [1.5, TAVAN - 0.2, Z + 0.95], [1.5, TAVAN - 0.2, 0.6], [1.5, TAVAN - 0.2, 1.9],
+      [SAG - 0.36, TAVAN - 0.55, 2.35], [SAG - 0.32, TABAN + 2.15, 2.62]].map(q => new THREE.Vector3(...q));
+    ds.yol = new THREE.CatmullRomCurve3(yolN, false, 'centripetal');
+    const kb = [];
+    for (let i = 0; i < 3; i++) { const o = (i - 1) * 0.07; kb.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(yolN.map(q => q.clone().add(new THREE.Vector3(0, 0, o))), false, 'centripetal'), hafif ? 48 : 120, 0.032, 6, false)); }
+    ds.kablo = ekle(birles(kb), KABLO, 0, 0, 0);
+    // enerji akışı: kabloların üstünde ilerleyen ışık parçacıkları
+    const ng = new THREE.BoxGeometry(0.12, 0.12, 0.12);
+    for (let i = 0; i < (hafif ? 14 : 22); i++) { const n = ekle(ng, LED, 0, 0, 0); n.castShadow = false; n.visible = false; ds.nokta.push(n); }
+    // bütün gücü taşıyan converter büyür: sağ duvara bir dolap daha (duvardan dışarı kayar)
+    const dolap = new THREE.Group(); g.add(dolap); ds.dolap = dolap;
+    const dz = 4.86, dy = TABAN + 1.05, dx = SAG - 0.28;
+    ekle(new THREE.BoxGeometry(0.5, 2.0, 1.02), DOLAP, dx, dy, dz, dolap);
+    ekle(new THREE.BoxGeometry(0.012, 1.94, 0.01), DOLAPK, dx - 0.256, dy, dz, dolap);
+    ekle(new THREE.BoxGeometry(0.03, 0.22, 0.03), SIYAH, dx - 0.27, dy + 0.1, dz + 0.32, dolap);
+    for (let k = 0; k < 3; k++) ekle(new THREE.BoxGeometry(0.02, 0.03, 0.03), LED, dx - 0.26, dy + 0.72, dz - 0.3 + k * 0.08, dolap);
+    ekle(new THREE.BoxGeometry(0.02, 0.2, 0.3), EKRAN, dx - 0.26, dy + 0.25, dz - 0.15, dolap);
+  }
+  const DS_PARCA = [['disli', 0], ['kaplin', 0.1], ['jenerator', 0.18]];
+  function dsVurgu(gl) {
+    if (!rt.hazir || !pg.konvertor || (rt.acik && rt.secili)) return;
+    const nb = gl > 0.01 ? gl * (0.78 + 0.22 * Math.sin(mt / 360)) : 0;
+    pg.konvertor.traverse(o => {
+      const mm = o.isMesh && o.material; if (!mm || !mm.emissive || mm.userData.e0 === undefined) return;
+      if (nb > 0) { mm.emissive.setHex(0x1f8597); mm.emissiveIntensity = Math.max(mm.userData.ei0 * 0.6, 0.55 * nb); }
+      else { mm.emissive.setHex(mm.userData.e0); mm.emissiveIntensity = mm.userData.ei0; }
+    });
+  }
+  function dislisizUygula() {
+    const gg = ds.g;
+    for (const [k, gecik] of DS_PARCA) {
+      const o = pg[k]; if (!o) continue;
+      const c = yumusak(gecik, 0.55 + gecik, gg);
+      o.position.copy(ilkKonum[k]); o.position.y -= c * 3.6; o.scale.setScalar(1 - 0.2 * c); o.visible = c < 0.995;
+    }
+    if (ds.grup) {
+      const c = yumusak(0.3, 0.95, gg), ak = yumusak(0.82, 1, gg);
+      ds.grup.visible = c > 0.002;
+      ds.halka.position.y = -(1 - c) * 3.4;
+      if (ic.anaMil) ds.donen.rotation.z = ic.anaMil.rotation.z;
+      ds.dolap.position.x = (1 - yumusak(0.5, 1, gg)) * 0.62;
+      ds.kablo.visible = c > 0.7;
+      const N = ds.nokta.length;
+      ds.nokta.forEach((n, i) => { n.visible = ak > 0.02; if (n.visible) { ds.yol.getPointAt((mt / 2400 + i / N) % 1, n.position); n.scale.setScalar(ak); } });
+    }
+    dsVurgu(yumusak(0.75, 1, gg));
+    if (ic.civatalar) ic.civatalar.visible = gg < 0.02 && !(rt.g > 0.001 && rt.pY * rt.g >= 0.02);
+    if (gg === 0) {
+      for (const [k] of DS_PARCA) if (pg[k]) { pg[k].position.copy(ilkKonum[k]); pg[k].scale.setScalar(1); pg[k].visible = true; }
+      if (ds.grup) ds.grup.visible = false;
+      ds.kirli = false;
+    } else ds.kirli = true;
+  }
   const nDunya = new THREE.Vector3(), nEkran = new THREE.Vector3(), nYon = new THREE.Vector3();
   const isin = new THREE.Raycaster();
   const kapanan = {}; let sonIsin = 0, vurguNokta = null;
@@ -605,6 +716,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     for (const n of NOKTALAR) {
       nDunya.copy(n.v);
       const pk = NOKTA_PARCA[n.id]; if (pk && PATLAT[pk] && rt.pY > 0) nDunya.addScaledVector(PATLAT[pk], rt.pY * rt.g);
+      if (ds.g > 0.3 && (pk === 'disli' || pk === 'kaplin' || pk === 'jenerator')) { liste.push({ id: n.id, gor: false, x: 0, y: 0, d: 99 }); continue; }
       tilt.localToWorld(nDunya);
       const d = camera.position.distanceTo(nDunya);
       const rontgen = rt.g > 0.6;
@@ -838,7 +950,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const hedefP = ilerleme();
     // kaydırma durduğunda sahne yalnızca rotor ve hafif kamera nefesi için çizilir: kare seyreltilir,
     // GPU ve pil boşa yorulmaz; parmak ya da tekerlek oynayınca hemen tam hıza döner.
-    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat) || bak.surukle || Math.abs(bak.yaw) + Math.abs(bak.pitch) > 1e-3) { sonHedefP = hedefP; durgunT = t; }
+    if (hedefP !== sonHedefP || Math.abs(hedefP - p) > 1e-4 || fare.deg || (rt.g > 0 && rt.g < 1) || (ds.g > 0 && ds.g < 1) || Math.abs(rt.patlat - rt.pY) > 1e-3 || (rt.acik && !az && !duraklat) || bak.surukle || Math.abs(bak.yaw) + Math.abs(bak.pitch) > 1e-3) { sonHedefP = hedefP; durgunT = t; }
     const durgun = t - durgunT > 1200;
     // hareket varken ekranın kendi hızında (60/120 Hz) çizilir; boşta kare seyreltilir
     const hareketAralik = KADEME_ARALIK[kalite] || 0;
@@ -977,6 +1089,10 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       Object.keys(PATLAT).forEach(key => { if (pg[key]) pg[key].position.copy(ilkKonum[key]); });
       if (ic.civatalar) ic.civatalar.visible = true;
     }
+    // V39 · dişlisiz görünüm geçişi (~2 sn)
+    const dsHedef = ds.acik ? 1 : 0;
+    ds.g += (dsHedef - ds.g) * (anlik ? 1 : 1 - Math.exp(-dt * 1.5)); if (Math.abs(dsHedef - ds.g) < 1e-3) ds.g = dsHedef;
+    if (ds.g > 0 || ds.kirli) dislisizUygula();
     const kuleBolum = p > 0.14 && p < 0.47;
     kule.ic.visible = kuleBolum;
     kule.kabinIsik.intensity = kuleBolum ? kabinIsikTaban : 0; kule.girisIsik.intensity = kuleBolum ? girisIsikTaban : 0; kule.ustIsik.intensity = kuleBolum ? ustIsikTaban : 0;
@@ -1461,6 +1577,14 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if ('secili' in o) rt.secili = o.secili || null;
     rontgenVurgu(); durgunT = performance.now(); baslat();
     return { acik: rt.acik, kabuk: rt.kabuk, patlat: rt.patlat };
+  };
+  // V39 · dişlisiz görünüm (temsili): S.dislisiz(true|false); argümansız çağrı durumu döndürür
+  S.dislisiz = acik => {
+    if (acik === undefined) return { acik: ds.acik, g: ds.g };
+    acik = !!acik;
+    if (acik) { if (rt.acik) { rt.acik = false; rt.patlat = 0; rt.aci = 0; } dislisizKur(); rontgenHazirla(); }
+    ds.acik = acik; durgunT = performance.now(); baslat();
+    return { acik: ds.acik, g: ds.g };
   };
   S.bastanOynat = () => { mt = 0; duraklat = false; durgunT = performance.now(); baslat(); };
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); birak('baglam-kaybi'); }, false);
