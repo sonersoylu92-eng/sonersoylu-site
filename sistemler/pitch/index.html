@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pitch Sistemi — Kanat Açı Kontrolü, Motor ve Arızalar | Soner Soylu</title>
-<meta name="description" content="Rüzgâr türbinlerinde pitch sistemi: Kanat açısı kontrolü, motor, redüktör, sensor. Ortak arızalar ve saha teşhisi.">
+<title>Pitch Sistemi — Kanat Açısı, Sürücü, Acil Besleme ve Arızalar | Soner Soylu</title>
+<meta name="description" content="Pitch sistemi nasıl çalışır: kanat açısıyla güç kontrolü ve aerodinamik fren, elektrikli ve hidrolik sürücüler, acil besleme, tipik arızalar ve bakım.">
 <link rel="canonical" href="https://sonersoylu.com/sistemler/pitch/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/pitch/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/pitch/">
@@ -10,24 +10,13 @@
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pitch Sistemi — Kanat Ayar Mekanizması">
-<meta property="og:description" content="Rüzgâr türbinleri pitch sistemi: Motor, redüktör, kontrol, sensör, arıza teşhisi.">
+<meta property="og:description" content="Pitch sistemi nasıl çalışır: kanat açısıyla güç kontrolü ve aerodinamik fren, elektrikli ve hidrolik sürücüler, acil besleme, tipik arızalar ve bakım.">
 <meta property="og:url" content="https://sonersoylu.com/sistemler/pitch/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Pitch Sistemi — Kanat Ayar, Kontrol ve Arıza Giderme",
-  "description": "Rüzgâr türbinlerinde pitch sistemi detaylı rehberi. Motor, redüktör, kontrol elektronikleri, ortak arızalar ve saha teşhisi.",
-  "datePublished": "2024-01-01T00:00:00Z",
-  "dateModified": "2024-09-21T00:00:00Z",
-  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri"},
-  "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Pitch sistemi", "description": "Pitch sistemi nasıl çalışır: kanat açısıyla güç kontrolü ve aerodinamik fren, elektrikli ve hidrolik sürücüler, acil besleme, tipik arızalar ve bakım.", "inLanguage": "tr-TR", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "dateModified": "2026-10-27"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -37,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/systems/pitch/" hreflang="en" lang="en" title="English">EN</a>
@@ -51,119 +42,18 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Pitch Sistemi</span></nav>
-  <p class="kb-kicker">Teknik Referans</p>
-  <h1>Pitch Sistemi</h1>
-  <p class="kb-lead">Rüzgâr hızını algılayarak kanatların rüzgâra yaklaşma açısını otomatik olarak ayarlayan sistem. Bu kontrol, türbinin güvenli ve verimli çalışmasının anahtarıdır.</p>
-
-  <h2>Pitch Sistemi Nedir?</h2>
-  <p>Pitch (kanat ayar) sistemi, üç kanatın simetrik bir şekilde dönüşünü sağlar. Rüzgâr hızı arttıkça kanatlar "feather" konumuna (rüzgâra paralel) geçerek aerodinamik kuvveti azaltır ve üretilen gücü sınırlar.</p>
-
-  <h2>Temel Bileşenler</h2>
-
-  <h3>1. Pitch Motor (Aktuatör)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> AC elektrik motor (Asenkron) veya Hidroliktir</li>
-   <li><strong>Gücü:</strong> N90'da ~11-15 kW, N117'de ~18-22 kW</li>
-   <li><strong>Voltaj:</strong> 400V, 3-faz</li>
-   <li><strong>Maksimum Hız:</strong> Genellikle redüktörle sınırlanır</li>
-  </ul>
-
-  <h3>2. Pitch Redüktörü (Dişli kutusu)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Spur gear veya spiral gear</li>
-   <li><strong>Oran:</strong> 1:500 (Tipik), çok yavaş ama güçlü</li>
-   <li><strong>Çıkış Hızı:</strong> 3-4 derece/saniye</li>
-   <li><strong>Torque:</strong> 1500+ Nm</li>
-  </ul>
-
-  <h3>3. Pitch Sensörü</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Potansiyometrik veya Hall sensör</li>
-   <li><strong>Çıkış:</strong> 0-10V analog sinyal veya digitalsignal</li>
-   <li><strong>Doğruluk:</strong> ±0,5°</li>
-  </ul>
-
-  <h3>4. Kontrol Elektronikleri (PLC/SCADA)</h3>
-  <ul>
-   <li>Rüzgâr hızı ölçümü</li>
-   <li>Pitch açısı hedef hesaplaması</li>
-   <li>Servo kontrol (motor yönü + hız)</li>
-   <li>Alarm ve güvenlik mantığı</li>
-  </ul>
-
-  <h2>Pitch Kontrol Algoritması</h2>
-  <p>Moderno türbin kontrol sistemleri şu mantıkla çalışır:</p>
-  <ol>
-   <li><strong>Rüzgâr hızını ölç</strong> (Anemometre)</li>
-   <li><strong>Hedef pitch açısını hesapla</strong> (Kontrol algoritması, genellikle PI-kontrolör)</li>
-   <li><strong>Mevcut pitch açısı ile karşılaştır</strong></li>
-   <li><strong>Motor hareketi emret</strong> (Saat yönü veya ters yön)</li>
-   <li><strong>Sensör geri bildirimini bekle</strong></li>
-   <li><strong>Hedef açısına ulaştığında motoru kapat</strong></li>
-  </ol>
-
-  <h2>Ortak Pitch Arızaları</h2>
-
-  <h3>1. Pitch Motor Yüksek Akım (High Current)</h3>
-  <p><strong>Belirti:</strong> Kontrol sisteminde "Pitch motor phase current high" aları</p>
-  <p><strong>Olası Nedenler:</strong></p>
-  <ul>
-   <li>Redüktörde mekanik tutuşma (Yağ eksikliği, mil kilitlenmesi)</li>
-   <li>Motor arızası (Sarım kısası, mekanik blokaj)</li>
-   <li>Kanat mekanik blokkajı (Buz, yabancı cisim)</li>
-  </ul>
-  <p><strong>Saha Teşhisi:</strong></p>
-  <ol>
-   <li>Motor kapatıp kanatları elle döndürmeyi dene (Hafif mi, sıkı mı?)</li>
-   <li>Redüktör yağını kontrol et (Seviye, renk, koku)</li>
-   <li>Motor bobinlerini ölç (Direnç, izolasyon direnci)</li>
-   <li>Kanat yüzeyini görsel kontrol (Buzlanma, çatılma)</li>
-  </ol>
-
-  <h3>2. Asimetrik Pitch (Asymmetric Pitch)</h3>
-  <p><strong>Belirti:</strong> Üç kanatın açıları farklı</p>
-  <p><strong>Sebep:</strong> Bir kanatın sensörü veya motoru arızalı</p>
-  <p><strong>Etki:</strong> Rotor dengesizliği, titreşim, yapısal stres</p>
-
-  <h3>3. Pitch Sensor Arızası</h3>
-  <p><strong>Belirti:</strong> Pitch açı sensör signal error</p>
-  <p><strong>Test:</strong> Sensörün 0-10V çıkış sinyalini multimetre ile ölç</p>
-
-  <h3>4. Pitch Motor Hareketsiz Kalma</h3>
-  <p><strong>Sebep:</strong> Kontrol sinyali yoksa, motor kontaktörü bozuksa</p>
-  <p><strong>Test:</strong> Motor uçlarına direkt 400V uygulanırsa dönmeli</p>
-
-  <h2>Pitch Sisteminin İşletim Noktaları</h2>
-  <div class="kb-table-scroll"><table class="operating-points">
-   <tr><th>Rüzgâr Hızı</th><th>Pitch Açısı</th><th>Güç Çıkışı</th></tr>
-   <tr><td>0-3 m/s</td><td>Kütüphaneleri (Stow)</td><td>0 kW</td></tr>
-   <tr><td>3-6 m/s</td><td>Kısmi pitch</td><td>%0-30</td></tr>
-   <tr><td>6-12 m/s</td><td>Feather'a doğru</td><td>%30-95</td></tr>
-   <tr><td>12+ m/s</td><td>Tam pitch (feather)</td><td>Sabit 2500 kW</td></tr>
-   <tr><td>25 m/s</td><td>Durdurma (Safety pitch)</td><td>0 kW</td></tr>
-  </table></div>
-
-  <h2>Periyodik Bakım</h2>
-  <ul>
-   <li><strong>Aylık:</strong> Pitch açı sensor kontrolü</li>
-   <li><strong>3 Aylık:</strong> Redüktör yağı kontrolü, renk ve viscosity</li>
-   <li><strong>6 Aylık:</strong> Motor elektrik ölçümleri (Ohm, megohm)</li>
-   <li><strong>12 Aylık:</strong> Filtre değişimi, kanat mekanik kontrolü</li>
-  </ul>
-
-  <h2>İlgili Kaynaklar</h2>
-  <ul>
-   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
-   <li><a href="/n90/">Nordex N90 Pitch Sistemi</a></li>
-   <li><a href="/ariza/">Arıza Teşhis Ağacı</a></li>
-   <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Pitch Motor Yüksek Akım — Saha Çözüm</a></li>
-  </ul>
-
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Pitch sistemi</span></nav>
+  <p class="kb-kicker">Teknik referans</p>
+  <h1>Pitch sistemi</h1>
+  <p class="kb-lead">Pitch sistemi her kanadı kendi ekseni etrafında döndürür. Rüzgâr az iken kanadı enerjiyi en iyi yakalayacağı açıda tutar, rüzgâr arttıkça açıyı değiştirerek gücü sınırlar, durdurmada kanatları rüzgârdan çıkarır. Bu yüzden pitch hem güç kontrolü hem de türbinin ana aerodinamik frenidir.</p>
+  <div class="kb-callout"><p><strong>Genel referans.</strong> Bu sayfa sistemin nasıl çalıştığını ve sahada nelere bakıldığını genel olarak anlatır. Değerler, eşikler, periyotlar ve tork değerleri türbin tipine göre değişir; her zaman üreticinin (OEM) dokümanı esastır.</p></div>
+  <section><h2>Ne işe yarar</h2><p>Anma rüzgâr hızının altında kanatlar en verimli açıya yakın çalışır. Anma hızının üstünde kontrol sistemi açıyı artırarak rotorun aldığı gücü sınırlar. Durdurmada kanatlar “bayrak” konumuna, yani rüzgâra neredeyse paralel duruma getirilir. Her kanadın kendi sürücüsü olduğu için sistem yedeklidir: bir kanat bile rotoru yavaşlatmaya katkı verir.</p></section><section><h2>Ana parçalar</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Parça</th><th scope="col">Görevi</th><th scope="col">Sahada neye bakılır</th></tr></thead><tbody><tr><th scope="row">Pitch yatağı</th><td>Kanat kökünü göbeğe bağlar, kanadın dönmesini sağlar</td><td>Yağlama, tahliye gresi, ses, bağlantı cıvataları</td></tr><tr><th scope="row">Sürücü (elektrikli)</th><td>Motor, redüktör ve pinyon kanadı döndürür</td><td>Motor akımı, redüktör yağı ve sızıntı, pinyon ve dişli</td></tr><tr><th scope="row">Sürücü (hidrolik)</th><td>Silindir kanadı döndürür</td><td>Basınç, sızıntı, hortum ve rakorlar, akümülatör</td></tr><tr><th scope="row">Motor freni</th><td>Durunca kanadı yerinde tutar</td><td>Tam açılması, hava aralığı, fren doğrultucusu</td></tr><tr><th scope="row">Konum geri bildirimi</th><td>Kanadın açısını kontrol sistemine bildirir</td><td>Üç kanadın tutarlılığı, kalibrasyon</td></tr><tr><th scope="row">Acil besleme</th><td>Şebeke kesilince kanatları güvenli konuma getirir</td><td>Batarya ya da kondansatör testleri; hidrolikte akümülatör</td></tr><tr><th scope="row">Pitch kabini ve kayar halka</th><td>Kontrol, besleme ve haberleşme</td><td>Bağlantılar, haberleşme hataları</td></tr></tbody></table></div></section><section><h2>Nasıl çalışır</h2><p>Kontrol sistemi rüzgâr ve rotor devrine göre bir hedef açı hesaplar ve her eksene gönderir. Eksen sürücüsü kanadı hedefe getirir, konum geri bildirimi gerçekleşen açıyı bildirir. Kanatlar arasında açı farkı olmaması gerekir; fark rotorda aerodinamik dengesizlik ve titreşim yaratır. Şebeke kesildiğinde ya da güvenlik zinciri açıldığında acil besleme kanatları kendi başına güvenli konuma götürür.</p></section><section><h2>Sık arızalar ve ilk bakılacak yer</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Belirti</th><th scope="col">Önce neye bakılır</th></tr></thead><tbody><tr><th scope="row">Tek eksende yüksek motor akımı</th><td>Eksenler arası akım karşılaştırması, motor freni, redüktör yağı, yatak yağlaması</td></tr><tr><th scope="row">Kanatlar arası açı farkı, 1P titreşim</th><td>Konum geri bildiriminin kalibrasyonu, fiziksel açı ölçümü</td></tr><tr><th scope="row">Acil besleme testi başarısız</th><td>Batarya ya da kondansatör durumu, şarj devresi, hidrolikte akümülatör</td></tr><tr><th scope="row">Haberleşme ya da besleme kesintileri</th><td>Kayar halka, konnektörler, kabin bağlantıları</td></tr><tr><th scope="row">Hidrolik basınç kaybı</th><td>Sızıntı, pompa, akümülatör ön dolumu</td></tr></tbody></table></div></section><section><h2>Periyodik bakımda</h2><ul><li>Acil besleme testleri ve kayıtları.</li><li>Fren kontrolü, redüktör yağ seviyesi ve sızıntı.</li><li>Pitch yatağı ve dişli yağlaması, tahliye gresinin gözlenmesi.</li><li>Bağlantı cıvatalarının OEM periyodu ve yöntemiyle kontrolü.</li><li>Pitch kabininde bağlantılar ve konum geri bildiriminin doğrulanması.</li></ul></section><section><h2>Güvenlik</h2><p>Göbeğe yalnız rotor kilitliyken girilir. Kanatlar yalnız OEM talimatına uygun servis modunda hareket ettirilir. Pitch kabinlerinde batarya ya da kondansatörlerde depolanmış enerji bulunur: LOTO uygulanır, deşarj beklenir ve sıfır gerilim ölçülerek doğrulanır. Motor uçlarına doğrudan gerilim uygulamak gibi test yöntemleri kullanılmaz.</p></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Temsili vaka 01 — pitch motoru yüksek akım</a></li><li><a href="/saha-notlari/kanat-titresimi/">Temsili vaka 07 — kanat titreşimi</a></li><li><a href="/teshis/#pitch">Teşhis simülatörü</a></li><li><a href="/sistemler/">Bütün sistemler</a></li></ul></div>
  </article>
 </main>
 
@@ -173,9 +63,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/pitch/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/pitch/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
