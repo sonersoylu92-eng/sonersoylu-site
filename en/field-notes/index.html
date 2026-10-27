@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Field Fault Cases — Step-by-Step Diagnosis Notes | Soner Soylu</title>
-<meta name="description" content="Step-by-step notes from real wind turbine faults: pitch motor current, gearbox temperature, yaw hunting, converter overcurrent, blade vibration and more.">
+<meta name="description" content="Step-by-step notes from representative wind turbine faults: pitch motor current, gearbox temperature, yaw hunting, converter overcurrent, blade vibration and more.">
 <link rel="canonical" href="https://sonersoylu.com/en/field-notes/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/">
@@ -10,7 +10,7 @@
 <meta property="og:locale" content="en_GB">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Field Notes">
-<meta property="og:description" content="Step-by-step diagnosis notes from real wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.">
+<meta property="og:description" content="Step-by-step diagnosis notes from representative wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.">
 <meta property="og:url" content="https://sonersoylu.com/en/field-notes/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
  "@context": "https://schema.org",
  "@type": "CollectionPage",
  "name": "Field Notes",
- "description": "Step-by-step diagnosis notes from real wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.",
+ "description": "Step-by-step diagnosis notes from representative wind turbine faults: pitch motor high current, gearbox temperature, yaw hunting, generator temperature alarm, converter overcurrent, yaw bearing wear, blade vibration.",
  "url": "https://sonersoylu.com/en/field-notes/",
  "inLanguage": "en",
  "author": {
@@ -113,7 +113,7 @@
    "name": "Why does a SCADA value differ from what you measure on site?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "The most common reason is sensor calibration drift. RTD temperature sensors in particular change resistance over the years and SCADA then reports a value that does not exist. That is why the first move on a temperature alarm is to take a physical reading with an IR thermometer and compare: a large gap tells you the fault is in the sensor."
+    "text": "Usually the measuring chain: a loose or oxidised terminal, a damaged cable or a drifting sensor. On a temperature alarm, first compare with the other channels on the same machine; on a stopped, cooled machine all channels should read close to each other. Measuring the surface with an infrared thermometer is not proof on its own, because the inside of a winding is hotter than the housing."
    }
   }
  ]
@@ -199,6 +199,8 @@
 }
 @media(prefers-reduced-motion:reduce){.vdb-kart,.vdb-f{transition:none}}
 </style>
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -221,37 +223,30 @@
 
   <p class="kb-kicker">From the field</p>
   <h1>Field Notes</h1>
-  <p class="kb-lead">These are not from a book; they came out of the tower. Each one follows a single fault from start to finish: what the alarm said, what I thought it was, which measurement I took, which possibilities it ruled out, what the root cause turned out to be and how we closed it. The point is not the answer — it is the order of the diagnosis.</p>
+  <p class="kb-lead">These are <strong>representative cases</strong> built from fault patterns that are common in the field. Each one follows a single fault from start to finish: what the alarm said, what was measured, which possibilities were ruled out, what the root cause was and how it was closed. No specific wind farm, turbine or date is described; numbers are examples. The aim is the diagnostic sequence, not the result.</p>
  <p>A fault tree gives you a fast route from symptom to cause; these pages show you what it is like inside one case. The two complement each other: narrow it down with the <a href="/ariza/">tree</a> first, then read the closest case here.</p>
  <div class="kb-callout"><p><strong>Note:</strong> these are field experience, not a substitute for the manufacturer's service documentation. Your own turbine's OEM instructions, LOTO procedure and site safety rules govern every intervention.</p></div>
 <section class="vdb" aria-labelledby="vdb-b">
  <div class="vdb-ust">
   <div>
    <p class="vdb-kic">Case database</p>
-   <h2 id="vdb-b" class="vdb-bb">Real faults, filterable</h2>
+   <h2 id="vdb-b" class="vdb-bb">Representative cases, filterable</h2>
   </div>
-  <dl class="vdb-sayi">
-   <div><dt>Cases</dt><dd>7</dd></div>
-   <div><dt>OEMs</dt><dd>3</dd></div>
-   <div><dt>Models</dt><dd>4</dd></div>
-   <div><dt>Systems</dt><dd>5</dd></div>
-  </dl>
+  <dl class="vdb-sayi"><div><dt>Cases</dt><dd>7</dd></div><div><dt>Systems</dt><dd>5</dd></div><div><dt>Fault types</dt><dd>3</dd></div><div><dt>Caught by</dt><dd>3</dd></div></dl>
  </div>
  <div class="vdb-panel">
   <label class="vdb-ara"><span class="gorsel-gizli">Search cases</span><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg><input id="vdbAra" type="search" autocomplete="off" placeholder="Search symptom, measurement, part — e.g. current, oil, encoder"></label>
-  <div class="vdb-grup" role="group" aria-label="OEM"><p class="vdb-gb">OEM</p><div class="vdb-fler"><button type="button" class="vdb-f" data-k="ure" data-v="Nordex" aria-pressed="false">Nordex<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="ure" data-v="Vestas" aria-pressed="false">Vestas<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="ure" data-v="Enercon" aria-pressed="false">Enercon<span class="vdb-say"></span></button></div></div>
-  <div class="vdb-grup" role="group" aria-label="Model"><p class="vdb-gb">Model</p><div class="vdb-fler"><button type="button" class="vdb-f" data-k="mdl" data-v="Enercon E92" aria-pressed="false">Enercon E92<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="mdl" data-v="Nordex N117" aria-pressed="false">Nordex N117<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="mdl" data-v="Vestas V110" aria-pressed="false">Vestas V110<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="mdl" data-v="Vestas V126" aria-pressed="false">Vestas V126<span class="vdb-say"></span></button></div></div>
   <div class="vdb-grup" role="group" aria-label="System"><p class="vdb-gb">System</p><div class="vdb-fler"><button type="button" class="vdb-f" data-k="sis" data-v="Pitch" aria-pressed="false">Pitch<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="sis" data-v="Yaw" aria-pressed="false">Yaw<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="sis" data-v="Gearbox" aria-pressed="false">Gearbox<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="sis" data-v="Generator" aria-pressed="false">Generator<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="sis" data-v="Converter" aria-pressed="false">Converter<span class="vdb-say"></span></button></div></div>
   <div class="vdb-grup" role="group" aria-label="Fault type"><p class="vdb-gb">Fault type</p><div class="vdb-fler"><button type="button" class="vdb-f" data-k="tur" data-v="Mechanical" aria-pressed="false">Mechanical<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="tur" data-v="Electrical" aria-pressed="false">Electrical<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="tur" data-v="Sensor" aria-pressed="false">Sensor<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="tur" data-v="Control" aria-pressed="false">Control<span class="vdb-say"></span></button></div></div>
   <div class="vdb-grup" role="group" aria-label="How it was caught"><p class="vdb-gb">How it was caught</p><div class="vdb-fler"><button type="button" class="vdb-f" data-k="yak" data-v="Alarm" aria-pressed="false">Alarm<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="yak" data-v="SCADA warning" aria-pressed="false">SCADA warning<span class="vdb-say"></span></button><button type="button" class="vdb-f" data-k="yak" data-v="Field observation" aria-pressed="false">Field observation<span class="vdb-say"></span></button></div></div>
   <div class="vdb-durum"><p id="vdbSonuc" role="status" aria-live="polite">7 cases shown</p><button type="button" id="vdbTemizle" class="vdb-temizle" hidden>Clear filters</button></div>
  </div>
  <div class="vdb-liste" id="vdbListe">
-  <article class="vdb-kart" id="vaka-01" data-ure="Nordex" data-mdl="Nordex N117" data-sis="Pitch" data-tur="Mechanical" data-yak="Alarm" data-ara="pitch motor high current nordex n117 pitch pitch gearbox mechanical alarm “pitch motor phase current high” alarm. the turbine cannot start in the morning; the pitch system never becomes ready. blades moved by hand: one blade stiffer than the others. motor phase resistances 8.1–8.3 ω — the motor is healthy. a 2 mm crack in the gearbox housing. after months of oil loss the gears had been running dry. gearbox drained, crack welded and checked by ndt, gears inspected; filter and oil renewed. the oil level had not been checked at the last service. the current rise was visible in the scada trend 8 months earlier.">
+  <article class="vdb-kart" id="vaka-01" data-sis="Pitch" data-tur="Mechanical" data-yak="Alarm" data-ara="pitch motor draws high current pitch pitch gearbox mechanical alarm a “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up. axes moved one by one in service mode: one axis is stiff. winding balanced, motor brake releases fully. a slow oil leak at the output shaft seal; the gearbox ran short of oil for months and wore. gearbox replaced to the oem procedure; the other two gearboxes checked for level and leaks. watch the slope, not the threshold: the current rise was visible in the scada trend months earlier.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 01<span>Nordex N117</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/pitch-motor-high-current/">Pitch motor high current</a></h2>
-    <p class="vdb-deger"><b>12 A → 18 A</b><small>Motor current · alarm threshold 15 A</small></p>
+    <p class="vdb-no">Case 01<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/pitch-motor-high-current/">Pitch motor draws high current</a></h2>
+    <p class="vdb-deger"><b>12 A → 18 A</b><small>Example value · one axis</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Pitch</dd></div>
@@ -259,116 +254,116 @@
     <div><dt>How it was caught</dt><dd>Alarm</dd></div>
     <div><dt>Component</dt><dd>Pitch gearbox</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>“Pitch motor phase current high” alarm. The turbine cannot start in the morning; the pitch system never becomes ready.</p><p><b>Root cause</b>A 2 mm crack in the gearbox housing. After months of oil loss the gears had been running dry.</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>“Pitch motor phase current high” alarm. The turbine cannot start in the morning; the pitch system never becomes ready.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Blades moved by hand: one blade stiffer than the others. Motor phase resistances 8.1–8.3 Ω — the motor is healthy.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A 2 mm crack in the gearbox housing. After months of oil loss the gears had been running dry.</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>Gearbox drained, crack welded and checked by NDT, gears inspected; filter and oil renewed.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>The oil level had not been checked at the last service. The current rise was visible in the SCADA trend 8 months earlier.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up.</p><p><b>Root cause</b>A slow oil leak at the output shaft seal; the gearbox ran short of oil for months and wore.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Axes moved one by one in service mode: one axis is stiff. Winding balanced, motor brake releases fully.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A slow oil leak at the output shaft seal; the gearbox ran short of oil for months and wore.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>Gearbox replaced to the OEM procedure; the other two gearboxes checked for level and leaks.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Watch the slope, not the threshold: the current rise was visible in the SCADA trend months earlier.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/pitch-motor-high-current/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
-  <article class="vdb-kart" id="vaka-02" data-ure="Vestas" data-mdl="Vestas V126" data-sis="Gearbox" data-tur="Mechanical" data-yak="SCADA warning" data-ara="gearbox temperature rise vestas v126 gearbox shaft seal mechanical scada warning abnormal temperature trend for three days in 11–15 m/s wind. scada warns but the turbine keeps running. oil level below the dipstick minimum. oily dust around the breather filter. the shaft seal has failed; oil is leaking to the outer surface. oil topped up; the leak watched and measured for 24 hours. seal replacement and oil analysis scheduled for planned service. the monthly checklist should include oil level, leak traces and the last 24 hours&#x27; peak temperature.">
+  <article class="vdb-kart" id="vaka-02" data-sis="Gearbox" data-tur="Mechanical" data-yak="SCADA warning" data-ara="gearbox temperature rises with wind gearbox shaft seal · oil level mechanical scada warning gearbox temperature warning for three windy days; the turbine keeps running. on a temperature-versus-power plot the turbine sits in its own band above its neighbours. oil level below minimum, oily dust around the breather. a leaking shaft seal; with the level low, less oil passed through the cooler. oil topped up with the oem-approved type, leak monitored; seal replacement and oil analysis scheduled. read temperature against power, and next to the neighbours — not against time.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 02<span>Vestas V126</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/gearbox-temperature/">Gearbox temperature rise</a></h2>
-    <p class="vdb-deger"><b>60–65 → 78–82 °C</b><small>Neighbouring turbines → this turbine · alarm 85 °C</small></p>
+    <p class="vdb-no">Case 02<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/gearbox-temperature/">Gearbox temperature rises with wind</a></h2>
+    <p class="vdb-deger"><b>60–65 → 78–82 °C</b><small>Example · neighbours → this turbine</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Gearbox</dd></div>
     <div><dt>Fault type</dt><dd>Mechanical</dd></div>
     <div><dt>How it was caught</dt><dd>SCADA warning</dd></div>
-    <div><dt>Component</dt><dd>Shaft seal</dd></div>
+    <div><dt>Component</dt><dd>Shaft seal · oil level</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>Abnormal temperature trend for three days in 11–15 m/s wind. SCADA warns but the turbine keeps running.</p><p><b>Root cause</b>The shaft seal has failed; oil is leaking to the outer surface.</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>Abnormal temperature trend for three days in 11–15 m/s wind. SCADA warns but the turbine keeps running.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Oil level below the dipstick minimum. Oily dust around the breather filter.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>The shaft seal has failed; oil is leaking to the outer surface.</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>Oil topped up; the leak watched and measured for 24 hours. Seal replacement and oil analysis scheduled for planned service.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>The monthly checklist should include oil level, leak traces and the last 24 hours' peak temperature.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>Gearbox temperature warning for three windy days; the turbine keeps running.</p><p><b>Root cause</b>A leaking shaft seal; with the level low, less oil passed through the cooler.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>Gearbox temperature warning for three windy days; the turbine keeps running.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>On a temperature-versus-power plot the turbine sits in its own band above its neighbours. Oil level below minimum, oily dust around the breather.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A leaking shaft seal; with the level low, less oil passed through the cooler.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>Oil topped up with the OEM-approved type, leak monitored; seal replacement and oil analysis scheduled.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Read temperature against power, and next to the neighbours — not against time.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/gearbox-temperature/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
-  <article class="vdb-kart" id="vaka-03" data-ure="Enercon" data-mdl="Enercon E92" data-sis="Yaw" data-tur="Control Sensor Mechanical" data-yak="SCADA warning" data-ara="yaw hunting enercon e92 yaw yaw bearing · wind vane · plc control sensor mechanical scada warning in 14 m/s wind the nacelle swings back and forth; the yaw angle in scada keeps changing, with a rhythmic knocking sound. one-hour yaw angle trend: ±18°, 0.5–1 hz. yaw motor and angle feedback tested in test mode. three factors together: reduced bearing lubrication, a loose wind direction sensor and a plc p gain above normal (1.5). p gain set to 0.6, sensor tightened and calibrated, bearing greased. two weeks later the oscillation was ±2–3°. hunting is rarely a single cause: software, sensor and lubrication are checked together.">
+  <article class="vdb-kart" id="vaka-03" data-sis="Yaw" data-tur="Sensor Mechanical" data-yak="SCADA warning" data-ara="yaw hunting: the nacelle swings back and forth yaw wind vane · yaw brake sensor mechanical scada warning in gusty wind the nacelle keeps reversing; rhythmic knocking, hourly yaw count far above neighbours. wind direction signal offset and noisy compared with neighbours; yaw brake residual pressure below its lower limit. a loose wind vane, weak brake holding and late bearing lubrication — together. vane tightened and realigned, brake leak fixed and pressure set, bearing lubricated. hunting rarely has a single cause; check sensors and mechanics before suspecting parameters.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 03<span>Enercon E92</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/yaw-hunting/">Yaw hunting</a></h2>
-    <p class="vdb-deger"><b>±18°</b><small>Yaw angle · 0.5–1 Hz oscillation</small></p>
+    <p class="vdb-no">Case 03<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/yaw-hunting/">Yaw hunting: the nacelle swings back and forth</a></h2>
+    <p class="vdb-deger"><b>Yaw count ×3</b><small>Example · versus neighbours</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Yaw</dd></div>
-    <div><dt>Fault type</dt><dd>Control · Sensor · Mechanical</dd></div>
+    <div><dt>Fault type</dt><dd>Sensor · Mechanical</dd></div>
     <div><dt>How it was caught</dt><dd>SCADA warning</dd></div>
-    <div><dt>Component</dt><dd>Yaw bearing · wind vane · PLC</dd></div>
+    <div><dt>Component</dt><dd>Wind vane · yaw brake</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>In 14 m/s wind the nacelle swings back and forth; the yaw angle in SCADA keeps changing, with a rhythmic knocking sound.</p><p><b>Root cause</b>Three factors together: reduced bearing lubrication, a loose wind direction sensor and a PLC P gain above normal (1.5).</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>In 14 m/s wind the nacelle swings back and forth; the yaw angle in SCADA keeps changing, with a rhythmic knocking sound.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>One-hour yaw angle trend: ±18°, 0.5–1 Hz. Yaw motor and angle feedback tested in test mode.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>Three factors together: reduced bearing lubrication, a loose wind direction sensor and a PLC P gain above normal (1.5).</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>P gain set to 0.6, sensor tightened and calibrated, bearing greased. Two weeks later the oscillation was ±2–3°.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Hunting is rarely a single cause: software, sensor and lubrication are checked together.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>In gusty wind the nacelle keeps reversing; rhythmic knocking, hourly yaw count far above neighbours.</p><p><b>Root cause</b>A loose wind vane, weak brake holding and late bearing lubrication — together.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>In gusty wind the nacelle keeps reversing; rhythmic knocking, hourly yaw count far above neighbours.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Wind direction signal offset and noisy compared with neighbours; yaw brake residual pressure below its lower limit.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A loose wind vane, weak brake holding and late bearing lubrication — together.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>Vane tightened and realigned, brake leak fixed and pressure set, bearing lubricated.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Hunting rarely has a single cause; check sensors and mechanics before suspecting parameters.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/yaw-hunting/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
-  <article class="vdb-kart" id="vaka-04" data-ure="Vestas" data-mdl="Vestas V126" data-sis="Generator" data-tur="Sensor" data-yak="Alarm" data-ara="generator temperature alarm vestas v126 generator rtd temperature sensor sensor alarm 116 °c alarm (threshold 115 °c). the turbine stops and returns to normal after a reset; the alarm keeps repeating. on the stopped generator the ir thermometer reads 62 °c and scada 103 °c. the cooling fan is running. calibration drift in the rtd sensor. the generator is not actually overheating. temporary correction on the scada side; sensor calibration or replacement scheduled. when the control system reading and a physical measurement disagree, verify the sensor first.">
+  <article class="vdb-kart" id="vaka-04" data-sis="Generator" data-tur="Sensor" data-yak="Alarm" data-ara="generator temperature alarm: sensor or real heat? generator pt100 terminal sensor alarm at high power one winding channel crosses the threshold and the turbine stops; after reset the alarm returns. the same channel still reads high on a cooled machine. resistance correct at the sensor, a few ohms higher at the controller input. an oxidised, loose terminal connection adding resistance and pushing the reading up. terminal renewed and tightened; the channel returned to the band of the others. the alarm limit was not changed. never raise the alarm limit or bypass a channel; verify the measuring chain first.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 04<span>Vestas V126</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/generator-temperature/">Generator temperature alarm</a></h2>
-    <p class="vdb-deger"><b>Δ 41 °C</b><small>IR 62 °C · SCADA 103 °C</small></p>
+    <p class="vdb-no">Case 04<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/generator-temperature/">Generator temperature alarm: sensor or real heat?</a></h2>
+    <p class="vdb-deger"><b>+15–20 °C</b><small>Example · one channel, constant offset</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Generator</dd></div>
     <div><dt>Fault type</dt><dd>Sensor</dd></div>
     <div><dt>How it was caught</dt><dd>Alarm</dd></div>
-    <div><dt>Component</dt><dd>RTD temperature sensor</dd></div>
+    <div><dt>Component</dt><dd>PT100 terminal</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>116 °C alarm (threshold 115 °C). The turbine stops and returns to normal after a reset; the alarm keeps repeating.</p><p><b>Root cause</b>Calibration drift in the RTD sensor. The generator is not actually overheating.</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>116 °C alarm (threshold 115 °C). The turbine stops and returns to normal after a reset; the alarm keeps repeating.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>On the stopped generator the IR thermometer reads 62 °C and SCADA 103 °C. The cooling fan is running.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>Calibration drift in the RTD sensor. The generator is not actually overheating.</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>Temporary correction on the SCADA side; sensor calibration or replacement scheduled.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>When the control system reading and a physical measurement disagree, verify the sensor first.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>At high power one winding channel crosses the threshold and the turbine stops; after reset the alarm returns.</p><p><b>Root cause</b>An oxidised, loose terminal connection adding resistance and pushing the reading up.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>At high power one winding channel crosses the threshold and the turbine stops; after reset the alarm returns.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>The same channel still reads high on a cooled machine. Resistance correct at the sensor, a few ohms higher at the controller input.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>An oxidised, loose terminal connection adding resistance and pushing the reading up.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>Terminal renewed and tightened; the channel returned to the band of the others. The alarm limit was not changed.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Never raise the alarm limit or bypass a channel; verify the measuring chain first.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/generator-temperature/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
-  <article class="vdb-kart" id="vaka-05" data-ure="Vestas" data-mdl="Vestas V110" data-sis="Converter" data-tur="Electrical" data-yak="Alarm" data-ara="converter overcurrent vestas v110 converter dc busbar · igbt electrical alarm intermittent converter overcurrent fault. normal after a reset; every measurement on the stopped turbine is normal. fault log matched with power data. a thermal scan under load showed a dc busbar joint ~30 °c hotter than its neighbours; bolt torque below the oem value. a loosened dc busbar joint. it heats up at high current and also stresses the neighbouring igbt module. joint cleaned and tightened to oem torque, every joint in the cabinet checked, the stressed igbt replaced. production continued meanwhile with a 2.2 mw limit. with an intermittent fault, look for the condition it appears in, not the fault itself. do thermal scans while the turbine is producing.">
+  <article class="vdb-kart" id="vaka-05" data-sis="Converter" data-tur="Electrical" data-yak="Alarm" data-ara="converter overcurrent only at high power converter dc busbar joint electrical alarm intermittent converter overcurrent trips; every check on the stopped turbine is clean. events matched high power. a thermal scan done with an oem-approved method showed a hot dc busbar joint. a dc busbar joint that had lost its torque, heating at high current and stressing the neighbouring module. after loto, discharge and a verified zero-voltage test, the joint was renewed and torqued to oem value; the stressed module was replaced. with intermittent faults, look for the condition that triggers them — not the fault message.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 05<span>Vestas V110</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/converter-overcurrent/">Converter overcurrent</a></h2>
-    <p class="vdb-deger"><b>17 / 19 events</b><small>Share of faults above 2.4 MW</small></p>
+    <p class="vdb-no">Case 05<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/converter-overcurrent/">Converter overcurrent only at high power</a></h2>
+    <p class="vdb-deger"><b>17 / 19 events</b><small>Example · near rated power</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Converter</dd></div>
     <div><dt>Fault type</dt><dd>Electrical</dd></div>
     <div><dt>How it was caught</dt><dd>Alarm</dd></div>
-    <div><dt>Component</dt><dd>DC busbar · IGBT</dd></div>
+    <div><dt>Component</dt><dd>DC busbar joint</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>Intermittent converter overcurrent fault. Normal after a reset; every measurement on the stopped turbine is normal.</p><p><b>Root cause</b>A loosened DC busbar joint. It heats up at high current and also stresses the neighbouring IGBT module.</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>Intermittent converter overcurrent fault. Normal after a reset; every measurement on the stopped turbine is normal.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Fault log matched with power data. A thermal scan under load showed a DC busbar joint ~30 °C hotter than its neighbours; bolt torque below the OEM value.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A loosened DC busbar joint. It heats up at high current and also stresses the neighbouring IGBT module.</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>Joint cleaned and tightened to OEM torque, every joint in the cabinet checked, the stressed IGBT replaced. Production continued meanwhile with a 2.2 MW limit.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>With an intermittent fault, look for the condition it appears in, not the fault itself. Do thermal scans while the turbine is producing.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>Intermittent converter overcurrent trips; every check on the stopped turbine is clean.</p><p><b>Root cause</b>A DC busbar joint that had lost its torque, heating at high current and stressing the neighbouring module.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>Intermittent converter overcurrent trips; every check on the stopped turbine is clean.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Events matched high power. A thermal scan done with an OEM-approved method showed a hot DC busbar joint.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A DC busbar joint that had lost its torque, heating at high current and stressing the neighbouring module.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>After LOTO, discharge and a verified zero-voltage test, the joint was renewed and torqued to OEM value; the stressed module was replaced.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>With intermittent faults, look for the condition that triggers them — not the fault message.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/converter-overcurrent/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
-  <article class="vdb-kart" id="vaka-06" data-ure="Enercon" data-mdl="Enercon E92" data-sis="Yaw" data-tur="Mechanical" data-yak="Field observation" data-ara="yaw bearing wear enercon e92 yaw yaw bearing lubrication line mechanical field observation the turbine is producing normally. during greasing, dark grey metallic grease comes out of some points; a rubbing sound at one position. grease from each point collected separately. metal concentrated at three neighbouring points (a sector map); a magnet test confirmed steel particles. the automatic lubrication line is blocked; one sector of the bearing went without grease and wore. line cleared, the sector greased until clean grease came out, three months of short-interval follow-up. no bearing replacement needed. collect purged grease point by point. a running pump does not mean grease reaches every point.">
+  <article class="vdb-kart" id="vaka-06" data-sis="Yaw" data-tur="Mechanical" data-yak="Field observation" data-ara="yaw bearing wear: metal in the purged grease yaw yaw lubrication line mechanical field observation the turbine is producing. dark, metallic grease from some purge points; a rubbing noise at one nacelle position. grease collected point by point; metal concentrated at three neighbouring points, a magnet test confirmed steel particles. a blocked lubrication line left one sector of the bearing without grease. line cleared, distributor replaced, sector greased; close follow-up at short intervals. a running pump does not mean grease reaches every point.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 06<span>Enercon E92</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/yaw-bearing-wear/">Yaw bearing wear</a></h2>
+    <p class="vdb-no">Case 06<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/yaw-bearing-wear/">Yaw bearing wear: metal in the purged grease</a></h2>
     <p class="vdb-deger"><b>No alarm</b><small>Caught during routine greasing</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Yaw</dd></div>
     <div><dt>Fault type</dt><dd>Mechanical</dd></div>
     <div><dt>How it was caught</dt><dd>Field observation</dd></div>
-    <div><dt>Component</dt><dd>Yaw bearing lubrication line</dd></div>
+    <div><dt>Component</dt><dd>Yaw lubrication line</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>The turbine is producing normally. During greasing, dark grey metallic grease comes out of some points; a rubbing sound at one position.</p><p><b>Root cause</b>The automatic lubrication line is blocked; one sector of the bearing went without grease and wore.</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>The turbine is producing normally. During greasing, dark grey metallic grease comes out of some points; a rubbing sound at one position.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Grease from each point collected separately. Metal concentrated at three neighbouring points (a sector map); a magnet test confirmed steel particles.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>The automatic lubrication line is blocked; one sector of the bearing went without grease and wore.</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>Line cleared, the sector greased until clean grease came out, three months of short-interval follow-up. No bearing replacement needed.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Collect purged grease point by point. A running pump does not mean grease reaches every point.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>The turbine is producing. Dark, metallic grease from some purge points; a rubbing noise at one nacelle position.</p><p><b>Root cause</b>A blocked lubrication line left one sector of the bearing without grease.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>The turbine is producing. Dark, metallic grease from some purge points; a rubbing noise at one nacelle position.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Grease collected point by point; metal concentrated at three neighbouring points, a magnet test confirmed steel particles.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>A blocked lubrication line left one sector of the bearing without grease.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>Line cleared, distributor replaced, sector greased; close follow-up at short intervals.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>A running pump does not mean grease reaches every point.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/yaw-bearing-wear/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
-  <article class="vdb-kart" id="vaka-07" data-ure="Vestas" data-mdl="Vestas V126" data-sis="Pitch" data-tur="Sensor" data-yak="Field observation" data-ara="blade vibration vestas v126 pitch pitch encoder sensor field observation nacelle vibration felt only in the 7–9 m/s band. no visible damage on the blades. vibration recorded against rotor speed: dominant component 1p, 3p normal. rotor imbalance. calibration drift in one blade&#x27;s pitch encoder; the blade was running about 2.5° off. the encoder zero points of all three blades were reset against a physical reference. 1p dropped and production in that band returned to normal. look at the spectrum before deciding on a blade inspection; measure the pitch angle physically.">
+  <article class="vdb-kart" id="vaka-07" data-sis="Pitch" data-tur="Sensor" data-yak="Field observation" data-ara="blade vibration: 1p or 3p? pitch pitch angle reference sensor field observation nacelle vibration only in one wind band; no visible blade damage. spectrum dominated by 1p with normal 3p; a physical measurement found one blade at a different angle. after an earlier encoder replacement the blade angle reference had not been calibrated correctly. all three blade angle references reset to the physical marks with the oem method; 1p dropped. look at the spectrum before calling a blade inspection.">
    <div class="vdb-bas">
-    <p class="vdb-no">Case 07<span>Vestas V126</span></p>
-    <h2 class="vdb-ad"><a href="/en/field-notes/blade-vibration/">Blade vibration</a></h2>
-    <p class="vdb-deger"><b>1P · 2.5°</b><small>In the 7–9 m/s band</small></p>
+    <p class="vdb-no">Case 07<span>Representative</span></p>
+    <h2 class="vdb-ad"><a href="/en/field-notes/blade-vibration/">Blade vibration: 1P or 3P?</a></h2>
+    <p class="vdb-deger"><b>1P · ~2.5°</b><small>Example · angle difference</small></p>
    </div>
    <dl class="vdb-etiket">
     <div><dt>System</dt><dd>Pitch</dd></div>
     <div><dt>Fault type</dt><dd>Sensor</dd></div>
     <div><dt>How it was caught</dt><dd>Field observation</dd></div>
-    <div><dt>Component</dt><dd>Pitch encoder</dd></div>
+    <div><dt>Component</dt><dd>Pitch angle reference</dd></div>
    </dl>
-   <div class="vdb-ozet"><p><b>Symptom</b>Nacelle vibration felt only in the 7–9 m/s band. No visible damage on the blades.</p><p><b>Root cause</b>Calibration drift in one blade's pitch encoder; the blade was running about 2.5° off.</p></div>
-   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>Nacelle vibration felt only in the 7–9 m/s band. No visible damage on the blades.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Vibration recorded against rotor speed: dominant component 1P, 3P normal. Rotor imbalance.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>Calibration drift in one blade's pitch encoder; the blade was running about 2.5° off.</p></li><li><span class="vdb-ak-e"><b>Solution</b></span><p>The encoder zero points of all three blades were reset against a physical reference. 1P dropped and production in that band returned to normal.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Look at the spectrum before deciding on a blade inspection; measure the pitch angle physically.</p></li></ol></details>
+   <div class="vdb-ozet"><p><b>Symptom</b>Nacelle vibration only in one wind band; no visible blade damage.</p><p><b>Root cause</b>After an earlier encoder replacement the blade angle reference had not been calibrated correctly.</p></div>
+   <details class="vdb-yol"><summary>Show the diagnostic path</summary><ol class="vdb-akis"><li><span class="vdb-ak-e"><b>Symptom</b></span><p>Nacelle vibration only in one wind band; no visible blade damage.</p></li><li><span class="vdb-ak-e"><b>Measurement</b></span><p>Spectrum dominated by 1P with normal 3P; a physical measurement found one blade at a different angle.</p></li><li><span class="vdb-ak-e"><b>Root cause</b></span><p>After an earlier encoder replacement the blade angle reference had not been calibrated correctly.</p></li><li><span class="vdb-ak-e"><b>Fix</b></span><p>All three blade angle references reset to the physical marks with the OEM method; 1P dropped.</p></li><li><span class="vdb-ak-e"><b>Lesson</b></span><p>Look at the spectrum before calling a blade inspection.</p></li></ol></details>
    <a class="vdb-git" href="/en/field-notes/blade-vibration/">Full case <span aria-hidden="true">&#8594;</span></a>
   </article>
  </div>
  <div class="vdb-bos" id="vdbBos" hidden><p class="vdb-bos-b">No case matches these filters.</p><p>Remove one of the filters, or try the <a href="/en/diagnostics/">diagnosis simulator</a>.</p></div>
- <p class="vdb-not">Case dates are not published; the filters only use information that is actually in the cases.</p>
+ <p class="vdb-not">The cases are representative: built from common field patterns, values are examples. OEM and model names are deliberately not given.</p>
 </section>
 
   <h2>Frequently asked</h2>
   <h3>What should you do first when a turbine faults?</h3>
   <p>Before you read the alarm, make it safe: stop the turbine, apply LOTO, isolate the system you are going to touch. Then pull the OEM fault log and the SCADA trend. The trend tells you far more than a single instantaneous reading: did this start today, or has it been growing for weeks?</p>
   <h3>Why does a SCADA value differ from what you measure on site?</h3>
-  <p>The most common reason is sensor calibration drift. RTD temperature sensors in particular change resistance over the years and SCADA then reports a value that does not exist. That is why the first move on a temperature alarm is to take a physical reading with an IR thermometer and compare: a large gap tells you the fault is in the sensor.</p>
+  <p>Usually the measuring chain: a loose or oxidised terminal, a damaged cable or a drifting sensor. On a temperature alarm, first compare with the other channels on the same machine; on a stopped, cooled machine all channels should read close to each other. Measuring the surface with an infrared thermometer is not proof on its own, because the inside of a winding is hotter than the housing.</p>
  </article>
 </main>
 
