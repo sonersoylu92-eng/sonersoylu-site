@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yaw Sistemi — Halka Yatak, Kontrol, Arızalar | Soner Soylu</title>
-<meta name="description" content="Rüzgâr türbininde yaw sistemi: Motor, yatak, sensör, kontrol. Yaw hunting, asimetri, sensor arızası teşhisi.">
+<title>Yaw Sistemi — Yatak, Sürücüler, Fren ve Arızalar | Soner Soylu</title>
+<meta name="description" content="Yaw sistemi naseli rüzgâra nasıl çevirir: yaw yatağı, halka dişli, sürücüler, fren, rüzgâr yönü sensörü, kablo çözme; tipik arızalar ve bakım.">
 <link rel="canonical" href="https://sonersoylu.com/sistemler/yaw/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/">
@@ -10,24 +10,13 @@
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Yaw Sistemi — Rotor Rüzgâr Yöneliş">
-<meta property="og:description" content="Rüzgâr türbininde yaw sistemi: Motor, yatak, sensör, kontrol. Yaw hunting, asimetri, sensor arızası teşhisi.">
+<meta property="og:description" content="Yaw sistemi naseli rüzgâra nasıl çevirir: yaw yatağı, halka dişli, sürücüler, fren, rüzgâr yönü sensörü, kablo çözme; tipik arızalar ve bakım.">
 <meta property="og:url" content="https://sonersoylu.com/sistemler/yaw/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Yaw Sistemi — Rotor Rüzgâr Yöneliş Mekanizması",
-  "description": "Rüzgâr türbini yaw sistemi detaylı rehberi. Motor, halka yatak, vane sensörü, kontrol elektroniği, ortak arızalar.",
-  "datePublished": "2024-01-01T00:00:00Z",
-  "dateModified": "2024-10-22T00:00:00Z",
-  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri"},
-  "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Yaw sistemi", "description": "Yaw sistemi naseli rüzgâra nasıl çevirir: yaw yatağı, halka dişli, sürücüler, fren, rüzgâr yönü sensörü, kablo çözme; tipik arızalar ve bakım.", "inLanguage": "tr-TR", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "dateModified": "2026-10-27"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -37,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/systems/yaw/" hreflang="en" lang="en" title="English">EN</a>
@@ -51,160 +42,18 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Yaw Sistemi</span></nav>
-  <p class="kb-kicker">Teknik Referans</p>
-  <h1>Yaw Sistemi</h1>
-  <p class="kb-lead">Rüzgâr yönü değiştikçe rotor (kanat grubu + nacelle) otomatik olarak rüzgâra yöneliş yapan sistem. Türbinin maksimum çıkış gücü sağlayan mekanizmalarından biridir.</p>
-
-  <h2>Yaw Nedir?</h2>
-  <p>Yaw: Rotor ve nacelle'ın yatay ekseni etrafında (Z-axis) dönmesi. Rüzgâr yönü değişebilir, türbin yöneliş sabit kalamazsa güç kaybı ciddi hale gelir.</p>
-
-  <h2>Temel Bileşenler</h2>
-
-  <h3>1. Yaw Motor (Aktuatör)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> AC asenkron motor, çoğunlukla 1-phase veya 3-phase</li>
-   <li><strong>Gücü:</strong> N90: 3-5 kW, N117: 5-7 kW, V136: 10-15 kW</li>
-   <li><strong>Voltaj:</strong> 400V veya 230V (model'e göre)</li>
-   <li><strong>Hız:</strong> ~1400-1500 rpm motor, fakat dişli kutusuyla ~1.5-2.5°/sn çıkış hızı</li>
-   <li><strong>Torque:</strong> Kinetic energy'i güç dönüştürmek için yeterince güçlü (Ring gear döndürme)</li>
-  </ul>
-
-  <h3>2. Yaw Yatağı (Halka Yatak)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Büyük çaplı (3000-5000 mm) halka yatak (slewing bearing)</li>
-   <li><strong>Konstrüksiyon:</strong> Sabit outer ring (kule üzerine) + döner inner ring (nacelle tabanına)</li>
-   <li><strong>Taşıma Kapasitesi:</strong> 400+ ton (N90) - 800+ ton (N117) radyal yük</li>
-   <li><strong>Yağlama:</strong> Grease, periyodik yağlama gerekli (12 aylık aralık)</li>
-   <li><strong>Ömür Tahmini:</strong> 20-25 yıl (doğru bakım ile), 10-15 yıl (bakımsız)</li>
-  </ul>
-
-  <h3>3. Ring Gear (Halka Dişli)</h3>
-  <ul>
-   <li><strong>Konumu:</strong> Nacelle tabanının çevresine yapışmış (bolted), çapı 3-5 metre</li>
-   <li><strong>Dişli Profili:</strong> Spiral veya spur, büyük modül (~5-8 mm)</li>
-   <li><strong>Yaw Pinion:</strong> Motor tarafından dönen küçük dişli (20-40 diş), ring gear üzerine mesh</li>
-   <li><strong>Oran:</strong> ~1:50 - 1:100 (Yaw motor hızı → Nacelle yöneliş hızı)</li>
-  </ul>
-
-  <h3>4. Yaw Wind Vane Sensörü</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Potansiyometrik (pot) veya magnetik (Hall)</li>
-   <li><strong>Konumu:</strong> Nacelle tepesinde, rotor arkası</li>
-   <li><strong>Fonksiyon:</strong> Rüzgâr yönünü 0-360° ölçer, 0-10V (analog) veya CAN sinyal</li>
-   <li><strong>Doğruluk:</strong> ±2-3° (magnetik tipler daha kötü, pot'lar daha iyi)</li>
-   <li><strong>Kalibrasyonu:</strong> 0° = kuzeye doğru (TÜRKİYE'de, batı rüzgârlar geliyor ise -90° offset)</li>
-  </ul>
-
-  <h3>5. Yaw Kontrol Elektronikleri</h3>
-  <ul>
-   <li><strong>PLC/SCADA Algoritma:</strong> Proportional-Integral-Derivative (PID) kontrolcü</li>
-   <li><strong>Parametre:</strong> P (Orantı), I (İntegral), D (Türev)</li>
-   <li><strong>Hedef:</strong> Rotor ekseni rüzgâr vektörüne paralel (±2° tolerans)</li>
-   <li><strong>Güvenlik:</strong> Rüzgâr alarmında (25+ m/s) yaw motorunu disable et, mekanik fren uygula (eski modeller)</li>
-  </ul>
-
-  <h2>Yaw Kontrol Algoritması</h2>
-  <p><strong>Basit PID Loop:</strong></p>
-  <ol>
-   <li>Rüzgâr vane sensörü rüzgâr yönünü ölç → 0-10V analog</li>
-   <li>Mevcut nacelle yönü SCADA IMU veya optik konum sensöründen oku</li>
-   <li>Hata hesapla: Hedef açı - Mevcut açı</li>
-   <li>Eğer hata > Deadzone (±3°), yaw motor start</li>
-   <li>Motor hızı: Error magnitude'e orantılı</li>
-   <li>Hedef açısına yaklaştıkça motor yavaşlat (P ve D terimleri)</li>
-   <li>Hedef açıda motor stop</li>
-  </ol>
-
-  <h2>Yaw Sistemi İşletim Modları</h2>
-
-  <h3>1. Normal Yöneliş (Normal Yaw)</h3>
-  <p><strong>Koşul:</strong> Rüzgâr 3-25 m/s, türbin açık ve güç üretiyor</p>
-  <p><strong>Hedef:</strong> Rotor ekseni rüzgâr yönüne paralel (± 2-3°)</p>
-  <p><strong>Motor Dönemesi:</strong> Sadece error > deadzone ise (örnek her 30 saniye)</p>
-
-  <h3>2. Yaw Stop Modu (Park Position)</h3>
-  <p><strong>Koşul:</strong> Türbin durmuş (pitch safe veya shutdown)</p>
-  <p><strong>Hedef:</strong> Rotoru "stow" konumuna yönelit (rüzgârın karşısına, 0°)</p>
-  <p><strong>Güvenlik:</strong> Motor güç kaybı halinde fren uygulanır (genellikle friction brake nacelle'da), yaw motor OFF</p>
-
-  <h3>3. Yaw Hold Modu (Manual/Emergency)</h3>
-  <p><strong>Kullanım:</strong> Servis zamanı, manuel konum gerekli</p>
-  <p><strong>Mekanizm:</strong> Yaw motor brake aktivasyonu, rotor sabitlenir</p>
-
-  <h2>Ortak Yaw Arızaları</h2>
-
-  <h3>1. Yaw Salınımı (Tutarsız Yöneliş)</h3>
-  <p><strong>Belirti:</strong> Nacelle ±10-20° aralığında sallanıyor, stabil konuma gelemiyor</p>
-  <p><strong>Sebep:</strong> Yatak sürüklenmesi, sensör titremesi, PLC parametre hatalı</p>
-  <p><strong>Detaylı Teşhis:</strong> <a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Salınımı</a></p>
-
-  <h3>2. Yaw Motor Arızası</h3>
-  <p><strong>Belirti:</strong> Motor alarmı, yaw hiç hareket etmiyor veya çok yavaş</p>
-  <p><strong>Test:</strong> Motor bobinlerine direkt 400V uygulanırsa dönmeli</p>
-
-  <h3>3. Yaw Yatağı Aşınması</h3>
-  <p><strong>Belirti:</strong> Yaw yöneliş sırasında gürültü, takırtı, veya takılma</p>
-  <p><strong>Sebep:</strong> Periyodik grease yağlaması yapılmamış, pitting başlamış</p>
-  <p><strong>Kontrol:</strong> Nacelle'ı manuel döndürmeyi dene — sıkı veya pürüzlü mu?</p>
-
-  <h3>4. Vane Sensor Arızası</h3>
-  <p><strong>Belirti:</strong> Yaw açı hızlı değişiyor (±15°/sn), sonra stabilleşiyor (sensor resets)</p>
-  <p><strong>Test:</strong> Manüel döndürmede sensor voltajı anlık mı değişiyor?</p>
-
-  <h3>5. Ring Gear Dişli Hasarı</h3>
-  <p><strong>Belirti:</strong> Yaw hareket etmiyor veya sadece bir yöne dönüyor, takırtı sesi</p>
-  <p><strong>Neden:</strong> Diş kırılması, pitting, mekanik contact hatalı</p>
-
-  <h2>Periyodik Bakım</h2>
-
-  <div class="kb-table-scroll"><table>
-   <tr><th>Bakım Tipi</th><th>Aralık</th><th>Süresi</th><th>Not</th></tr>
-   <tr><td>Vane Sensor Kontrol</td><td>Aylık</td><td>5 min</td><td>Voltaj stabilitesi, calibration drift</td></tr>
-   <tr><td>Yaw Motor Akımı Kontrol</td><td>3 Aylık</td><td>2 min</td><td>SCADA'dan okut: Normal 8-10A, yüksek 12A+ = yatak sürüklenmesi</td></tr>
-   <tr><td>Yaw Yatağı Greslemesi</td><td>12 Aylık</td><td>2 saat</td><td>Özel yaw bearing greaser, NLGI 2 grade</td></tr>
-   <tr><td>Ring Gear Görsel Kontrol</td><td>24 Aylık</td><td>30 min</td><td>Pitting, çatlak, oyulma</td></tr>
-   <tr><td>Yaw Motor Direnç Ölçümü</td><td>24 Aylık</td><td>10 min</td><td>Bobinler başına ~10-15Ω normal</td></tr>
-   <tr><td>PLC Parametre Revizyonu</td><td>24 Aylık</td><td>1 saat</td><td>P, I, D değerleri güncel mi?</td></tr>
-  </table></div>
-
-  <h2>Saha Teşhis Hızlı Yönerge</h2>
-
-  <h3>İlk 5 Dakika</h3>
-  <ul>
-   <li>Türbini çalışırken yaw hareketi izle (normal, yavaş, hiç hareket yok?)</li>
-   <li>Motor sesini dinle (normal elektrik sesi, dönem titreşim, gürültü?)</li>
-   <li>Nacelle hareket ederken tilrem veya "sürükleme" hissettir mi?</li>
-  </ul>
-
-  <h3>10-15 Dakika (Teşhis)</h3>
-  <ul>
-   <li>SCADA yaw açı trendi çek (1 saat)</li>
-   <li>Rüzgâr yönü vs nacelle yönü farkı hesapla (ideal: <2-3°)</li>
-   <li>Motor akımı ölç (normal: 8-10A, yüksek: 12A+)</li>
-   <li>Vane sensor voltajı kontrol (0-10V smoothly mı değişiyor)</li>
-  </ul>
-
-  <h3>Varsa Sorun İçin</h3>
-  <ul>
-   <li>Türbini STOP et, bearingi manuel döndürmeyi dene (Easy smooth or Hard/pitting?)</li>
-   <li>Ring gear dişlerini aydınlatıp kontrol et (Pitting var mı? Diş kırık mı?)</li>
-   <li>Motor bobinlerine multimetre direnç ölçümü (Open circuit yoksa normal)</li>
-   <li>Yaw kontrol sistemi logu kontrol et (OEM spesifik fault codes)</li>
-  </ul>
-
-  <h2>İlgili Kaynaklar</h2>
-  <ul>
-   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
-   <li><a href="/saha-notlari/yaw-salinimi/">Sahadan #3: Yaw Salınımı — Dönerken Titreşim</a></li>
-   <li><a href="/sistemler/pitch/">Pitch Sistemi — Kanat Ayar</a></li>
-   <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
-  </ul>
-
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Yaw sistemi</span></nav>
+  <p class="kb-kicker">Teknik referans</p>
+  <h1>Yaw sistemi</h1>
+  <p class="kb-lead">Yaw sistemi bütün naseli yatay düzlemde döndürerek rotoru rüzgâra karşı tutar. Yön hatası ne kadar küçükse üretim o kadar yüksek, yükler o kadar düşüktür. Sistem aynı zamanda kuleye inen kabloların fazla bükülmesini önlemek için naseli belirli aralıklarla ters yöne çevirip kabloyu çözer.</p>
+  <div class="kb-callout"><p><strong>Genel referans.</strong> Bu sayfa sistemin nasıl çalıştığını ve sahada nelere bakıldığını genel olarak anlatır. Değerler, eşikler, periyotlar ve tork değerleri türbin tipine göre değişir; her zaman üreticinin (OEM) dokümanı esastır.</p></div>
+  <section><h2>Ana parçalar</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Parça</th><th scope="col">Görevi</th><th scope="col">Sahada neye bakılır</th></tr></thead><tbody><tr><th scope="row">Yaw yatağı</th><td>Naseli kuleye bağlar ve dönmesini sağlar (yuvarlanmalı ya da kayar tip)</td><td>Yağlama, tahliye gresi, ses, bağlantı cıvataları</td></tr><tr><th scope="row">Halka dişli ve pinyonlar</th><td>Sürücülerin torkunu naseli döndürmeye aktarır</td><td>Diş yüzeyleri, aşınma, yağlama</td></tr><tr><th scope="row">Yaw sürücüleri</th><td>Motor, redüktör ve pinyon; birden çok sürücü birlikte çalışır</td><td>Akım dengesi, redüktör yağı, motor freni</td></tr><tr><th scope="row">Yaw freni</th><td>Nasel dururken yerinde tutar; tasarıma göre hidrolik kaliper ya da sürtünme elemanları</td><td>Basınç, balata ve disk yüzeyi, gres bulaşması</td></tr><tr><th scope="row">Rüzgâr yönü sensörü</th><td>Rüzgâr yönünü ölçer (rüzgâr gülü ya da ultrasonik)</td><td>Montaj sağlamlığı, hizalama, komşu türbinle karşılaştırma</td></tr><tr><th scope="row">Kablo bükülme takibi</th><td>Kablonun kaç tur döndüğünü izler</td><td>Sayaç ve sınır anahtarlarının doğruluğu</td></tr></tbody></table></div></section><section><h2>Nasıl çalışır</h2><p>Kontrol sistemi rüzgâr yönü ile nasel yönü arasındaki farkı bir süre boyunca ortalar. Fark belirlenen sınırı aşınca frenler tasarıma göre kısmen ya da tamamen bırakılır, sürücüler naseli döndürür, hedefe ulaşınca frenler yeniden tutar. Kısmen bırakılan frenlerde kalan artık basınç hareketi yumuşatır; bu basınç doğru değilse nasel ya savrulur ya da sıçramalı döner.</p></section><section><h2>Sık arızalar ve ilk bakılacak yer</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Belirti</th><th scope="col">Önce neye bakılır</th></tr></thead><tbody><tr><th scope="row">Nasel ileri geri dönüyor (hunting)</th><td>Rüzgâr yönü sensörü montajı ve hizası, fren basıncı, dişli boşluğu</td></tr><tr><th scope="row">Yaw sırasında ses, vuruntu</th><td>Dişli ve pinyon, fren yüzeyleri, yatak yağlaması</td></tr><tr><th scope="row">Tahliye gresinde metal</th><td>Nokta nokta gres numunesi, yağlama hattı ve dağıtıcı</td></tr><tr><th scope="row">Sürücü akımları dengesiz</th><td>İlgili sürücünün motoru, freni ve redüktörü</td></tr><tr><th scope="row">Sürekli yön hatası, düşük üretim</th><td>Sensör hizası; komşu türbinlerle yön karşılaştırması</td></tr><tr><th scope="row">Kablo çözme hataları</th><td>Kablo sayacı ve sınır anahtarları</td></tr></tbody></table></div></section><section><h2>Periyodik bakımda</h2><ul><li>Fren basıncı ve fren yüzeylerinin kontrolü.</li><li>Yatak ve dişli yağlaması; tahliye gresinin gözlenmesi.</li><li>Sürücü redüktörlerinde yağ seviyesi ve sızıntı.</li><li>Rüzgâr yönü sensörünün montajı ve hizası.</li><li>Bağlantı cıvatalarının OEM periyodu ve yöntemiyle kontrolü.</li></ul></section><section><h2>Güvenlik</h2><p>Yaw hareketi sırasında dişli ve pinyon çevresinde ezilme riski vardır; bakım için yaw OEM talimatına göre kilitlenir. Nasel tepesindeki sensör işleri yalnız uygun hava koşullarında ve yüksekte çalışma ekipmanıyla yapılır.</p></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/saha-notlari/yaw-salinimi/">Temsili vaka 03 — yaw salınımı</a></li><li><a href="/saha-notlari/yaw-yatak-asinmasi/">Temsili vaka 06 — yaw yatağı aşınması</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/sistemler/">Bütün sistemler</a></li></ul></div>
  </article>
 </main>
 
@@ -214,9 +63,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/yaw/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/yaw/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
