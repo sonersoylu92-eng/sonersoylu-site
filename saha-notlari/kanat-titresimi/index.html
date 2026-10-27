@@ -1,33 +1,22 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kanat Titreşimi ve Rezonans — 1P/3P Harmonik Okuma | Sahadan #7</title>
-<meta name="description" content="Vestas V126'da 7–9 m/s bandında titreşim. 1P harmoniği, 2,5°'lik pitch asimetrisi ve enkoder kalibrasyon kayması.">
+<title>Kanat Titreşimi — 1P mi 3P mi? Dengesizliği Okumak | Temsili Vaka 07</title>
+<meta name="description" content="Nasel titreşiminde 1P ve 3P ayrımı: rotor dengesizliği, pitch açısı farkı, buzlanma ve kanat hasarı nasıl ayrılır. Temsili vaka.">
 <link rel="canonical" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu">
-<meta property="og:description" content="Vestas V126'da 7–9 m/s bandında titreşim. 1P harmoniği, 2,5°'lik pitch asimetrisi ve enkoder kalibrasyon kayması.">
+<meta property="og:title" content="Kanat titreşimi: 1P mi, 3P mi? — temsili vaka">
+<meta property="og:description" content="Nasel titreşiminde 1P ve 3P ayrımı: rotor dengesizliği, pitch açısı farkı, buzlanma ve kanat hasarı nasıl ayrılır. Temsili vaka.">
 <meta property="og:url" content="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "Article",
- "headline": "Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu",
- "description": "Vestas V126'da dar rüzgâr bandında yükselen titreşimin saha teşhisi: 1P/3P harmonik okuma, pitch açısı fiziksel doğrulama, enkoder kalibrasyonu.",
- "datePublished": "2026-09-22T00:00:00Z",
- "dateModified": "2026-09-22T00:00:00Z",
- "author": {"@type":"Person","name":"Soner Soylu","jobTitle":"Rüzgâr Türbini Saha Servis Teknikeri"},
- "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Kanat titreşimi: 1P mi, 3P mi?", "description": "Nasel titreşiminde 1P ve 3P ayrımı: rotor dengesizliği, pitch açısı farkı, buzlanma ve kanat hasarı nasıl ayrılır. Temsili vaka.", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "datePublished": "2026-09-22", "dateModified": "2026-10-27", "inLanguage": "tr-TR", "mainEntityOfPage": "https://sonersoylu.com/saha-notlari/kanat-titresimi/"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -37,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" aria-current="true">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" aria-current="true">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/field-notes/blade-vibration/" hreflang="en" lang="en" title="English">EN</a>
@@ -51,100 +42,19 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" aria-current="true">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" aria-current="true">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb">
-   <a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Kanat Titreşimi</span>
-  </nav>
-
-  <p class="kb-kicker">Sahadan · Vaka 07</p>
-  <h1>Kanat Titreşimi — Suçlu Kanat Değil, Kalibrasyondu</h1>
-  <p class="kb-lead">Vestas V126. İşletmeci &quot;kanatlardan biri hasarlı olmalı&quot; diyerek aradı; titreşim belirli bir rüzgârda hissedilir hâle geliyordu. Kanat incelemesi pahalı bir iştir, bu yüzden kanata dokunmadan önce titreşimin kendisine bakmak istedim. İyi ki de bakmışım — kanatlarda hiçbir sorun yoktu.</p>
-
-  <h2>Belirti</h2>
-  <ul>
-   <li><strong>Şikâyet:</strong> Nasel'de hissedilir titreşim, kule tabanından da duyulabiliyor</li>
-   <li><strong>Koşul:</strong> Sadece 7–9 m/s rüzgâr bandında. Altında ve üstünde titreşim normal.</li>
-   <li><strong>SCADA:</strong> Titreşim değeri o bantta yükseliyor ama alarm eşiğine ulaşmıyor</li>
-   <li><strong>Üretim:</strong> Güç eğrisi o bantta beklenenin bir miktar altında</li>
-   <li><strong>Görsel:</strong> Yerden dürbünle bakıldığında kanatlarda görünür hasar, çatlak veya yüzey bozukluğu yok</li>
-  </ul>
-
-  <h2>İlk Değerlendirme</h2>
-  <p>Titreşimin dar bir rüzgâr bandına sıkışmış olması en önemli ipucuydu. Kanatta yapısal bir hasar olsaydı, etkisinin sadece o bantta ortaya çıkması beklenmezdi; hasarlı bir kanat rüzgâr arttıkça daha çok sorun çıkarır.</p>
-  <p>Dar bantta ortaya çıkan titreşim ise rezonansın imzasıdır: rotor belirli bir devirde dönerken oluşan zorlama frekansı, yapının kendi doğal frekansına yaklaşır ve titreşim büyür. Ama rezonans tek başına bir sebep değildir — onu besleyen bir zorlama olmalıdır. Aradığım şey, rotoru her turda bir kez dürten bir dengesizlikti.</p>
-  <div class="kb-callout">
-   <p><strong>1P ve 3P nedir?</strong> Rotor devrinin kendisine 1P denir: rotor saniyede kaç tur atıyorsa, o frekans. Üç kanatlı bir rotorda kanatların kuleden geçişi ise devrin üç katı frekansta olur, buna 3P denir. Bu ayrım teşhisin merkezindedir: <strong>3P</strong> yükselmesi kule etkileşimi ve aerodinamik kaynaklıdır, <strong>1P</strong> yükselmesi ise rotorun dengesiz olduğunu söyler — üç kanattan biri diğerlerinden farklı davranıyordur.</p>
-  </div>
-
-  <h2>Adım Adım Teşhis</h2>
-  <ol class="kb-steps">
-   <li><strong>Titreşim verisini rotor deviriyle birlikte kaydettim.</strong> Titreşimin sadece genliğine bakmak yetersizdir. Aynı anda rotor devrini de kaydettim ki frekansı 1P ve 3P cinsinden okuyabileyim.</li>
-   <li><strong>Spektrumu çıkardım ve baskın bileşeni buldum.</strong> Titreşimin ezici çoğunluğu <strong>1P</strong> frekansındaydı; 3P bileşeni normal seviyedeydi. Bu tek ölçüm, vakanın yönünü tamamen değiştirdi: sorun aerodinamik veya kule etkileşimi değil, <strong>rotor dengesizliğiydi</strong>.</li>
-   <li><strong>Dengesizliğin kütle mi yoksa aerodinamik mi olduğunu ayırdım.</strong> Kütle dengesizliği (kanadın içinde su birikmesi, onarım malzemesi) rotor dönerken her devirde sabit etki yapar ve rüzgâr hızından görece bağımsızdır. Aerodinamik dengesizlik ise rüzgâra bağlıdır — çünkü kuvvet rüzgârdan gelir. Titreşim rüzgâra sıkı biçimde bağlı olduğu için aerodinamik dengesizliğe yöneldim.</li>
-   <li><strong>SCADA'da üç kanadın pitch açısını karşılaştırdım.</strong> Kontrol sistemi üç kanadı da aynı açıda gösteriyordu. Kâğıt üzerinde sorun yoktu. Ama bu değer enkoderden geliyordu — yani sistemin kanadın nerede olduğuna dair <em>inancıydı</em>, kanadın gerçekte nerede olduğu değil.</li>
-   <li><strong>Pitch açısını fiziksel olarak ölçtüm.</strong> Türbin durdurulup emniyete alındıktan sonra, göbeğe çıkıp üç kanadın açısını referans yüzeye göre tek tek ölçtüm. Sonuç: bir kanat, diğer ikisinden <strong>yaklaşık 2.5° farklı</strong> duruyordu. Enkoder ise üçünü de aynı gösteriyordu.</li>
-   <li><strong>Kanat–kule açıklığını kontrol ettim.</strong> Titreşimin kanadı kuleye tehlikeli biçimde yaklaştırıp yaklaştırmadığını görmek için. Açıklık kabul edilebilir sınırlardaydı — acil bir risk yoktu, planlı müdahale yapılabilirdi.</li>
-   <li><strong>Kanat köklerini ve pitch yataklarını inceledim.</strong> Yapısal bir sorun olmadığını doğrulamak için. Çatlak, delaminasyon veya yatak boşluğu bulunmadı. Kanatlar sağlamdı.</li>
-  </ol>
-
-  <h2>Kök Neden</h2>
-  <p>Bir kanadın pitch enkoderinde kalibrasyon kayması vardı. Kontrol sistemi o kanadı diğerleriyle aynı açıda sandığı için hepsine aynı komutu veriyordu; gerçekte ise o kanat yaklaşık 2.5° farklı bir açıda çalışıyordu.</p>
-  <p>Bunun sonucu, o kanadın rüzgârdan diğerlerinden farklı bir kuvvet üretmesidir. Rotor her turda bir kez asimetrik zorlanır — tam olarak 1P frekansında bir tahrik. 7–9 m/s bandında rotor devri, bu tahrikin yapının doğal frekansına yaklaştığı noktaya denk geliyordu ve titreşim orada büyüyordu. Bandın dışında aynı asimetri vardı ama rezonans olmadığı için hissedilmiyordu.</p>
-  <p>Güç eğrisindeki düşüş de aynı nedenden: bir kanat optimum açının dışında çalışınca rotorun toplam verimi düşer.</p>
-
-  <h2>Çözüm</h2>
-  <ol>
-   <li><strong>Pitch enkoder kalibrasyonu (4 saat):</strong> Üç kanat fiziksel referans konumuna alındı, enkoder sıfır noktaları yeniden tanımlandı ve kontrol sisteminin okuduğu değerlerle fiziksel ölçüm eşitlendi.</li>
-   <li><strong>Doğrulama ölçümü (1 saat):</strong> Kalibrasyon sonrası üç kanat birkaç farklı açıya sürülüp her konumda fiziksel ölçümle karşılaştırıldı. Sapma tolerans içine girdi.</li>
-   <li><strong>Devreye alma ve titreşim takibi (2 hafta):</strong> Türbin çalıştırıldı, özellikle 7–9 m/s bandında titreşim yeniden ölçüldü. 1P bileşeni belirgin biçimde düştü; hissedilir titreşim ortadan kalktı.</li>
-   <li><strong>Güç eğrisi kontrolü (4 hafta):</strong> O banttaki üretim beklenen seviyeye döndü.</li>
-  </ol>
-
-  <h2>Titreşim Spektrumunu Okuma Rehberi</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Baskın bileşen</th><th>Ne anlatır</th><th>İlk bakılacak yer</th></tr>
-   <tr><td><strong>1P</strong> (rotor devri)</td><td>Rotor dengesizliği — bir kanat diğerlerinden farklı davranıyor</td><td>Pitch açısı asimetrisi, kanat kütle dengesi</td></tr>
-   <tr><td><strong>3P</strong> (devir × kanat sayısı)</td><td>Kanatların kuleden geçiş etkisi</td><td>Kule gölgesi, rüzgâr profili, yaw hizası</td></tr>
-   <tr><td>Yüksek frekans, dar tepe</td><td>Dönen bir elemanda lokal hasar</td><td>Yatak, dişli kutusu, jeneratör</td></tr>
-   <tr><td>Geniş bantta genel artış</td><td>Yapısal gevşeme</td><td>Cıvata torkları, kule flanşı, mesnetler</td></tr>
-   <tr><td>Belirli rüzgâr bandında büyüme</td><td>Rezonans — ama bir tahrik kaynağı var</td><td>Önce tahriki bul; rezonans sadece büyütür</td></tr>
-  </table></div>
-
-  <h2>Önleyici Bakım</h2>
-  <ul>
-   <li><strong>Pitch açısını periyodik olarak fiziksel ölçün.</strong> Enkoder değerine güvenmek yeterli değildir; kalibrasyon zamanla kayar. Fiziksel ölçümle karşılaştırma, bu tür sorunları ortaya çıkmadan yakalar.</li>
-   <li><strong>Titreşimi her zaman rotor deviriyle birlikte kaydedin.</strong> Devir bilgisi olmayan bir titreşim ölçümü, 1P mi 3P mi olduğunu söyleyemez — yani en değerli bilgisini kaybetmiş olur.</li>
-   <li><strong>Şikâyette rüzgâr bandını sorun.</strong> &quot;Titreşim var&quot; ile &quot;7–9 m/s arasında titreşim var&quot; arasında teşhis açısından uçurum vardır. Bandın darlığı doğrudan rezonansa işaret eder.</li>
-   <li><strong>Kanat incelemesine karar vermeden önce spektruma bakın.</strong> Kanat incelemesi pahalı ve zaman alıcıdır. 1P baskınsa sorun büyük olasılıkla kanatta değil, kanadın <em>açısındadır</em>.</li>
-   <li><strong>Güç eğrisi sapmasını titreşimle birlikte değerlendirin.</strong> İkisi aynı bantta bozuluyorsa ortak bir sebep arayın; bu vakada ortak sebep tek bir kalibrasyon hatasıydı.</li>
-  </ul>
-
-  <aside class="kb-note">
-   <p>Saha Notu</p>
-   <p>Bu vakayı severim çünkü sahada en pahalı hatayı göstermeye çok yakındık. &quot;Titreşim var, kanat hasarlıdır&quot; sezgisi güçlüdür ve doğrudan kanat incelemesine, hatta kanat sökümüne gidebilir. Oysa çözüm dört saatlik bir kalibrasyondu.</p>
-   <p>Buradan çıkan kural bende şu şekilde yerleşti: <strong>enkoder ne gösteriyorsa onu değil, kanadın gerçekte nerede olduğunu ölç.</strong> Kontrol sistemi asla yalan söylemez, sadece kendisine söylenene inanır. Kalibrasyon kaydığında sistem sorunsuz görünür, çünkü kendi ölçüsüne göre her şey yolundadır. Fiziksel ölçüm bu kör noktayı kapatan tek şeydir.</p>
-   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr Türbini Saha Servis Teknikeri — Enercon, Nordex, Vestas · GWO sertifikalı</span></p>
-  </aside>
-
-  <div class="kb-callout">
-   <p><strong>Uyarı:</strong> Göbekte yapılan her işlem rotor kilitli, türbin durdurulmuş ve LOTO uygulanmış durumda yapılır. Pitch sistemi üzerinde çalışırken yedek besleme de devre dışı bırakılmalıdır. Bu not saha deneyimidir, üretici servis dokümanının yerine geçmez.</p>
-  </div>
-
-  <div class="kb-rel">
-   <p class="k">İlgili kaynaklar</p>
-   <ul>
-    <li><a href="/sistemler/pitch/">Pitch Sistemi — motor, redüktör, sensör ve kontrol</a></li>
-    <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Sahadan #1: Pitch Motor Yüksek Akım</a></li>
-    <li><a href="/turbinler/vestas/v126/">Vestas V126 — model rehberi</a></li>
-    <li><a href="/turbinler/vestas/v136/">Vestas V136 — uzun kanatta titreşim yönetimi</a></li>
-    <li><a href="/saha-notlari/">Tüm saha notları</a></li>
-    <li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li>
-   </ul>
-  </div>
-
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Kanat titreşimi</span></nav>
+  <p class="kb-kicker">Temsili vaka · 07</p>
+  <h1>Kanat titreşimi: 1P mi, 3P mi?</h1>
+  <p class="kb-lead">Nasel titriyor ama kanatlarda görünür hasar yok. Titreşimin hangi frekansta olduğunu bilmeden kanat muayenesine karar vermek pahalıya patlar. Bu vaka, titreşimi rotor deviriyle birlikte okumanın neden ilk adım olduğunu anlatır.</p>
+  <p class="kb-meta"><span>Sistem: Pitch · Rotor</span><span>Arıza türü: Sensör</span><span>Nasıl yakalanır: Saha gözlemi</span></p>
+  <div class="kb-callout"><p><strong>Temsili vaka.</strong> Bu sayfa sahada sık görülen bir arıza örüntüsünü, bir teşhis sırası olarak anlatır. Belirli bir santral, türbin ya da tarih anlatılmıyor; sayılar yalnız örnektir ve eşikler türbin tipine göre değişir. Kendi türbininizde üreticinin (OEM) talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir; enerjili ekipmana yakın çalışma yalnız yetkili personelle yapılır.</p></div>
+  <section><h2>1P ve 3P ne demek</h2><p><strong>1P</strong>, rotorun dönüş frekansıdır: rotor dakikada 12 tur atıyorsa 1P = 0,2 Hz. Titreşimde 1P baskınsa rotorda bir dengesizlik vardır: kütle dengesizliği (buz, kanat içinde biriken su ya da kalıntı) ya da aerodinamik dengesizlik (kanatlar arasında pitch açısı farkı, profil hasarı).</p><p><strong>3P</strong>, kanat geçiş frekansıdır (aynı örnekte 0,6 Hz). Kule gölgesi, rüzgâr kesmesi ve yaw hatası gibi akış etkileri 3P’de görünür ve bir miktar 3P normaldir. Ayrıca 1P ya da 3P’nin kulenin doğal frekansına denk geldiği devirlerde titreşim büyür; kontrol sistemleri bu yüzden bazı devir aralıklarından kaçınır.</p></section><section><h2>Belirti</h2><p>Yalnız belirli bir rüzgâr bandında (örnek: 7–9 m/s) nasel içinde hissedilen titreşim; o bantta üretim komşu türbinlerden biraz düşük. Kanatlarda yerden bakıldığında görünür hasar yok.</p></section><section><h2>Teşhis sırası</h2><ol class="kb-steps"><li><strong>Titreşimi devirle birlikte kaydet.</strong> Durum izleme sistemi (CMS) ya da ivme kaydıyla; spektrumda 1P ve 3P bileşenlerine bakılır.</li><li><strong>1P baskınsa önce koşulları ele.</strong> Buzlanma koşulu var mı? Kanat drenaj delikleri açık mı? Titreşim sıcaklık ya da yağışla değişiyor mu?</li><li><strong>Pitch açısını fiziksel olarak doğrula.</strong> Kontrol sisteminin söylediği açı ile kanadın gerçek açısı aynı mı? Kanat kökündeki sıfır işaretleri ya da OEM’in onayladığı ölçüm yöntemiyle üç kanat karşılaştırılır.</li><li><strong>Kanat yüzeyine bak.</strong> Ön kenar erozyonu, çatlak, yıldırım hasarı: dürbün, kamera ya da drone ile.</li><li><strong>Kule frekansıyla ilişki.</strong> Titreşim belirli bir devirde mi büyüyor?</li></ol></section><section><h2>Bu vakada ne çıktı</h2><p>Spektrumda 1P baskın, 3P normal seviyedeydi. Buzlanma koşulu yoktu, kanat yüzeyleri temizdi. Fiziksel ölçümde bir kanadın pitch açısı diğer ikisinden yaklaşık 2,5° farklı çıktı (örnek değer): o kanadın açı referansı, önceki bir enkoder değişiminden sonra doğru kalibre edilmemişti.</p></section><section><h2>Kalıcı çözüm ve doğrulama</h2><p>Üç kanadın açı referansı OEM yöntemiyle fiziksel işaretlere göre yeniden ayarlandı. 1P bileşeni düştü ve o rüzgâr bandında üretim komşu türbinlerle aynı seviyeye geldi.</p></section><section><h2>Bakımda bunu yakalamak</h2><ul><li>Enkoder ya da pitch bileşeni değişiminden sonra açı kalibrasyonunun yapıldığını kayda geçirmek.</li><li>CMS raporlarında 1P eğilimini izlemek.</li><li>Belirli bir rüzgâr bandında komşulardan düşük üreten türbinleri ayrıca incelemek.</li></ul></section><section><h2>Sık yapılan hatalar</h2><ul><li>Spektruma bakmadan kanat muayene ekibi çağırmak.</li><li>Yalnız şüphelenilen kanadın açısını ölçüp diğer ikisine bakmamak.</li><li>Bileşen değişiminden sonra kalibrasyonu atlamak.</li></ul></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/sistemler/pitch/">Pitch sistemi</a></li><li><a href="/araclar/">Saha hesaplayıcıları — kanat ucu hızı ve devir</a></li><li><a href="/sozluk/">Sözlük — 1P, 3P ve diğer terimler</a></li><li><a href="/saha-notlari/">Bütün temsili vakalar</a></li></ul></div>
  </article>
 </main>
 
@@ -154,9 +64,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/blade-vibration/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/blade-vibration/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
