@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jeneratör ve Converter — DFIG, Direct-Drive | Soner Soylu</title>
-<meta name="description" content="Rüzgâr türbini jeneratör sistemi: Asenkron jeneratör, DFIG, converter, soğutma, arıza teşhisi.">
+<title>Jeneratör ve Converter — DFIG, Tam Güç Converter, Dişlisiz | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbini jeneratörü ve converter: DFIG, tam güç converter ve dişlisiz halka jeneratör farkı, parçalar, sıcaklık izleme, tipik arızalar ve güvenlik.">
 <link rel="canonical" href="https://sonersoylu.com/sistemler/jenerator/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/">
@@ -10,24 +10,13 @@
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jeneratör Sistemi — Elektrik Üretim Mekanizması">
-<meta property="og:description" content="Rüzgâr türbini jeneratör sistemi: Asenkron jeneratör, DFIG, converter, soğutma, arıza teşhisi.">
+<meta property="og:description" content="Rüzgâr türbini jeneratörü ve converter: DFIG, tam güç converter ve dişlisiz halka jeneratör farkı, parçalar, sıcaklık izleme, tipik arızalar ve güvenlik.">
 <meta property="og:url" content="https://sonersoylu.com/sistemler/jenerator/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Jeneratör Sistemi — Rüzgâr Türbini Elektrik Üretimi",
-  "description": "Rüzgâr türbini jeneratör sistemi teknik rehberi. Asenkron motor, DFIG, converter, soğutma, kontrol.",
-  "datePublished": "2024-01-01T00:00:00Z",
-  "dateModified": "2026-09-22T00:00:00Z",
-  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri"},
-  "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Jeneratör ve converter", "description": "Rüzgâr türbini jeneratörü ve converter: DFIG, tam güç converter ve dişlisiz halka jeneratör farkı, parçalar, sıcaklık izleme, tipik arızalar ve güvenlik.", "inLanguage": "tr-TR", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "dateModified": "2026-10-27"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -37,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/systems/generator/" hreflang="en" lang="en" title="English">EN</a>
@@ -51,175 +42,18 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Jeneratör ve Converter Sistemi</span></nav>
-  <p class="kb-kicker">Teknik Referans</p>
-  <h1>Jeneratör ve Converter Sistemi</h1>
-  <p class="kb-lead">Rüzgâr enerjisini mekanik torque → elektrik akımı dönüştüren sistem. Türbinin "kalbi"dir. Asenkron jeneratör, DFIG (Doubly-Fed Induction Jeneratör), converter, soğutma ve kontrol elektronikleri türün tasarımına göre değişir.</p>
-
-  <h2>Jeneratör Tipleri</h2>
-
-  <h3>1. Squirrel-Cage Asenkron (Sabit Hız, Eski Tasarım)</h3>
-  <p><strong>Kullanım:</strong> 1980-2000'ler, eski Nordex N80, Vestas V47</p>
-  <p><strong>Özellikleri:</strong></p>
-  <ul>
-   <li>Sabit hızda çalışır (şebeke frekansı ile sinkron, ±3% slip)</li>
-   <li>Basit, dayanıklı, ucuz</li>
-   <li>Dişli kutusu gerekli (düşük rpm → yüksek rpm)</li>
-   <li>Yüksek başlangıç akımı (inrush), şebeke stres</li>
-   <li>Verim: ~92-94%</li>
-  </ul>
-
-  <h3>2. Doubly-Fed Induction Jeneratör (DFIG) — Modern Standard</h3>
-  <p><strong>Kullanım:</strong> 2000-2020, Vestas V110-V136, Nordex N90-N117, Siemens</p>
-  <p><strong>Özellikleri:</strong></p>
-  <ul>
-   <li><strong>Yapısı:</strong> Stator → şebeke bağlı (direk), Rotor → converter bağlı (electronic control)</li>
-   <li><strong>İşletim:</strong> Değişken hız (±30% slip), maksimum güç noktası takip (MPPT)</li>
-   <li><strong>Converter:</strong> AC-DC-AC, şebeke sinkronizasyonunu kontrol eder</li>
-   <li><strong>Avantajlar:</strong> Tam hız denetimi, verim %98+, soft-start (inrush kontrol)</li>
-   <li><strong>Dezavantajlar:</strong> Converter kompleks, hata teşhisi zor, EMI/harmonik sensibilitesi</li>
-  </ul>
-
-  <h3>3. Direct-Drive (Dişli kutusu Yok) — Enercon Tasarımı</h3>
-  <p><strong>Kullanım:</strong> Enercon E70, E82, E92</p>
-  <p><strong>Özellikleri:</strong></p>
-  <ul>
-   <li><strong>Yapısı:</strong> Rotor hub motor, rotor → şaftı doğrudan → stator</li>
-   <li><strong>Hava Aralığı:</strong> Çok geniş (5-6 metre), çok düşük rpm (6-16 rpm)</li>
-   <li><strong>Avantajlar:</strong> Dişli kutusu yok (arıza/bakım minimum), aktarma kaybı yok, bakım kalemi az</li>
-   <li><strong>Dezavantajlar:</strong> Halka jeneratör çok ağır ve büyük çaplı; nakliye ile montaj özel planlama ister, ilk yatırım maliyeti yüksektir</li>
-  </ul>
-
-  <h2>Temel Bileşenler (DFIG Örneği)</h2>
-
-  <h3>Stator (Sabit Çekirdeği)</h3>
-  <ul>
-   <li><strong>Yapısı:</strong> Demir nüve laminasyonları, sarılı bakır sargılar</li>
-   <li><strong>Voltaj:</strong> 690V (3-faz)</li>
-   <li><strong>Soğutma:</strong> Hava veya likid (fan/radiator ile)</li>
-   <li><strong>Koruma:</strong> Termik RTD sensör (sıcaklık kontrol), overcurrent (SCADA aktarma)</li>
-  </ul>
-
-  <h3>Rotor (Dönen Çekirdek)</h3>
-  <ul>
-   <li><strong>Yapısı:</strong> Squirrel-cage (aluminum bar rods) veya wound rotor (bakır sarılı, DFIG'de)</li>
-   <li><strong>DFIG'de:</strong> Bakır sargılar, bilezik (slip ring) ile converter'e bağlı</li>
-   <li><strong>Hız:</strong> 1000-1200 rpm nominal şebeke frekansında</li>
-  </ul>
-
-  <h3>Converter (DFIG'de Rotor Devresi)</h3>
-  <ul>
-   <li><strong>Tür:</strong> AC-DC-AC iki yönlü (bidirectional)</li>
-   <li><strong>Güç Elektronikleri:</strong> IGBT (Insulated Gate Bipolar Transistor) transistörler</li>
-   <li><strong>Fonksiyon:</strong> Rotor akım voltaj'ını kontrol → stator güç çıkış optimize</li>
-   <li><strong>Soğutma:</strong> Likid (glycol-water), 5-10 kW fan motor</li>
-   <li><strong>Güvenlik:</strong> Over-current protection, grid fault detection, soft-start</li>
-  </ul>
-
-  <h3>Trafo (Jeneratör Transformer)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Yükseltme trafosu</li>
-   <li><strong>Giriş:</strong> 690V (jeneratör)</li>
-   <li><strong>Çıkış:</strong> 30kV veya 110kV (şebeke)</li>
-   <li><strong>Soğutma:</strong> Yağ soğutması, fan motor ile</li>
-  </ul>
-
-  <h2>Jeneratör Soğutma Sistemi</h2>
-
-  <h3>Pasif Soğutma (Enercon, eski tasarımlar)</h3>
-  <ul>
-   <li><strong>Yöntem:</strong> Natural convection, aluminum finli radyatör</li>
-   <li><strong>Kapasite:</strong> Nominal işletim için yeterli, ama sınırlı</li>
-   <li><strong>Periyodik Bakım:</strong> Toz temizliği (finler tıkalı mı?)</li>
-  </ul>
-
-  <h3>Aktif Soğutma (Modern DFIG, Vestas, Nordex)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Likid soğutma (jeneratör + converter)</li>
-   <li><strong>Fan Motor:</strong> 5-10 kW elektrik motor, termostat kontrol</li>
-   <li><strong>Radyatör:</strong> Alüminyum plaka (plate-fin), high surface area</li>
-   <li><strong>Pompa:</strong> Elektrik pompa, debi kontrol (variable flow)</li>
-   <li><strong>Sıcaklık Hedefi:</strong> 50-65°C nominal, alarm >80°C, shutdown >95°C</li>
-  </ul>
-
-  <h2>Ortak Jeneratör Arızaları</h2>
-
-  <h3>1. Yüksek Sıcaklık (Temperature High)</h3>
-  <p><strong>Belirti:</strong> Jeneratör sıcaklık alarmı, power kısıtlı</p>
-  <p><strong>Olası Nedenler:</strong></p>
-  <ul>
-   <li>Soğutma radyatörü tuz ve kirle tıkalı (tuz kristalleri, kir)</li>
-   <li>Fan motor arızası (hava akışı yok)</li>
-   <li>Sensor RTD arızalı (yanlış okuma, jeneratör sıcaklık vakasına bakın)</li>
-  </ul>
-  <p><strong>Teşhis:</strong> <a href="/saha-notlari/jenerator-sicaklik/">Jeneratör sıcaklık alarmı vakası</a></p>
-
-  <h3>2. Overcurrent / Fault Codes</h3>
-  <p><strong>Belirti:</strong> "Grid Fault", "Rotor Over-current", "Converter Fault"</p>
-  <p><strong>Sebep:</strong> Şebeke kısa devre, harmonik yüksek, converter IGBT arızası</p>
-  <p><strong>Ön Kontrol:</strong> OEM fault code log ve şebeke voltaj/frekans ölçümü</p>
-
-  <h3>3. Yağlama Sorunu (Yaşlılık)</h3>
-  <p><strong>Belirti:</strong> Motor sesi değişti (hışıltı, tıslama), vibration artan</p>
-  <p><strong>Sebep:</strong> Yatak grease eski, viskozitesini kaybetmiş</p>
-  <p><strong>Periyodik Kontrol:</strong> 5-7 yıl sonra yatak grease değişimi (jeneratör seviyelendirme alanında)</p>
-
-  <h3>4. Elektriksel Yalıtım Bozulması</h3>
-  <p><strong>Belirti:</strong> Megohm ölçümü düşük (&lt;10 MΩ), sızıntı akımı artmış.</p>
-  <ul>
-   <li><strong>Sebep:</strong> Nem, yaşlanma, sargı yalıtımının zayıflaması</li>
-   <li><strong>Risk:</strong> Faz-toprak kaçağı, hatalı sinyaller, ilerleyen aşamada sargı arızası</li>
-   <li><strong>Kontrol:</strong> Megohm (izolasyon direnci) testi; hedef &gt;10 MΩ. Ölçüm öncesi sargının nemden arındırılmış olması gerekir.</li>
-  </ul>
-
-  <h2>Periyodik Bakım</h2>
-
-  <div class="kb-table-scroll"><table>
-   <tr><th>Bakım Tipi</th><th>Aralık</th><th>Süresi</th><th>Not</th></tr>
-   <tr><td>Soğutma Radyatörü Temizliği</td><td>6 Aylık</td><td>1 saat</td><td>Tuz temizliği (deniz yakını), toz filtesi kontrol</td></tr>
-   <tr><td>Fan Motor Kontrol</td><td>3 Aylık</td><td>5 min</td><td>Ses, akım normal mi?</td></tr>
-   <tr><td>Jeneratör Sıcaklık Trend</td><td>Aylık</td><td>2 min</td><td>SCADA log, anomali işareti?</td></tr>
-   <tr><td>Jeneratör Vibration Check</td><td>6 Aylık</td><td>2 min</td><td>Yaşlı jeneratörlerde (<2 Hz)</td></tr>
-   <tr><td>Megohm Yalıtım Testi</td><td>24 Aylık</td><td>30 min</td><td>Stator sargı, >10 MΩ hedef</td></tr>
-   <tr><td>Yatak Grease Değişimi</td><td>60 Aylık</td><td>2-3 saat</td><td>5-7 yıl ömür sonrası</td></tr>
-   <tr><td>Converter IGBT Health Check</td><td>24 Aylık</td><td>1 saat</td><td>OEM diagnostic tool gerektir</td></tr>
-  </table></div>
-
-  <h2>Saha Teşhis Hızlı Yönerge</h2>
-
-  <h3>İlk 2 Dakika (Görsel)</h3>
-  <ul>
-   <li>Jeneratör ve converter soğutma radyatörü: Toz/tuz birikmiş mi?</li>
-   <li>Fan motor: Çalışıyor mu? (Akustik check)</li>
-   <li>Kanat kırıkları var mı? (jeneratör birliği stres göstergesi)</li>
-  </ul>
-
-  <h3>5 Dakika (Elektriksel)</h3>
-  <ul>
-   <li>Jeneratör akımı: SCADA'dan oku (nominal rüzgârında nominal akım beklenir)</li>
-   <li>Jeneratör sıcaklık: SCADA trend (rüzgâr ve sıcaklık correlation)</li>
-   <li>Converter output: Voltaj/frekans stabil mi? (harmonik kontrol)</li>
-  </ul>
-
-  <h3>10+ Dakika (Detaylı)</h3>
-  <ul>
-   <li>IR termometre: Gerçek jeneratör sıcaklığı (SCADA karşılaştırması)</li>
-   <li>Multimetre: Megohm yalıtım test (10 MΩ+ normal)</li>
-   <li>OEM Fault Log: Kontrol sistemi error codes kontrol</li>
-  </ul>
-
-  <h2>İlgili Kaynaklar</h2>
-  <ul>
-   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
-   <li><a href="/saha-notlari/jenerator-sicaklik/">Jeneratör sıcaklık alarmı vakası</a></li>
-   <li><a href="/turbinler/">← Türbin Modelleri (DFIG vs Direct-Drive)</a></li>
-   <li><a href="/araclar/">Saha Hesaplayıcıları</a></li>
-  </ul>
-
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Jeneratör ve converter</span></nav>
+  <p class="kb-kicker">Teknik referans</p>
+  <h1>Jeneratör ve converter</h1>
+  <p class="kb-lead">Jeneratör rotorun mekanik gücünü elektriğe çevirir; converter ise bu elektriği şebekenin istediği frekans ve gerilime uydurur. Hangi jeneratör–converter düzeninin kullanıldığı, sahada nelere bakılacağını da belirler.</p>
+  <div class="kb-callout"><p><strong>Genel referans.</strong> Bu sayfa sistemin nasıl çalıştığını ve sahada nelere bakıldığını genel olarak anlatır. Değerler, eşikler, periyotlar ve tork değerleri türbin tipine göre değişir; her zaman üreticinin (OEM) dokümanı esastır.</p></div>
+  <section><h2>Üç yaygın düzen</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Düzen</th><th scope="col">Nasıl çalışır</th><th scope="col">Sahada öne çıkan</th></tr></thead><tbody><tr><th scope="row">DFIG (çift beslemeli asenkron)</th><td>Dişli kutusu devri yükseltir; stator doğrudan şebekeye, rotor converter üzerinden bağlanır. Converter toplam gücün yalnız bir bölümünü (çoğu zaman üçte biri civarı) taşır.</td><td>Kayar halka ve fırçalar, rotor tarafı converter, dişli kutusu</td></tr><tr><th scope="row">Tam güç converter’lı</th><td>Jeneratörün bütün gücü converter’dan geçer; jeneratör senkron ya da asenkron olabilir, arada dişli kutusu bulunabilir.</td><td>Converter soğutması ve güç modülleri</td></tr><tr><th scope="row">Dişlisiz (doğrudan tahrikli)</th><td>Rotor, çok kutuplu büyük çaplı halka jeneratörü doğrudan döndürür; bütün güç converter’dan geçer.</td><td>Jeneratör soğutması, hava aralığı, converter</td></tr></tbody></table></div></section><section><h2>Ana parçalar</h2><ul><li><strong>Stator ve rotor sargıları</strong> ile sargı sıcaklık sensörleri (çoğunlukla PT100).</li><li><strong>Rulmanlar</strong> ve yağlaması; rulman sıcaklıkları.</li><li><strong>Soğutma</strong>: hava ya da sıvı; filtreler ve fanlar.</li><li><strong>Kayar halka ve fırçalar</strong> (DFIG).</li><li><strong>Hız ve konum algılama</strong> (enkoder).</li><li><strong>Converter</strong>: şebeke ve makine tarafı güç modülleri, DC ara devre, filtreler, şalterler ve kendi soğutması.</li></ul></section><section><h2>Sık arızalar ve ilk bakılacak yer</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Belirti</th><th scope="col">Önce neye bakılır</th></tr></thead><tbody><tr><th scope="row">Sargı sıcaklık alarmı</th><td>Kanallar arası karşılaştırma, ölçüm zinciri, sonra soğutma</td></tr><tr><th scope="row">Rulman sıcaklığı ya da sesi</th><td>Yağlama, CMS eğilimi</td></tr><tr><th scope="row">Fırça aşınması, kayar halkada iz</th><td>Fırça boyu ve basıncı, halka yüzeyi, toz</td></tr><tr><th scope="row">İzolasyon düşmesi</th><td>Nem, kirlilik; OEM yöntemiyle izolasyon ölçümü</td></tr><tr><th scope="row">Converter aşırı akım ya da gerilim</th><td>Olay–koşul eşleştirmesi, soğutma, bağlantılar, şebeke olayları</td></tr></tbody></table></div></section><section><h2>Periyodik bakımda</h2><ul><li>Soğutma havası filtreleri ve fanlar; sıvı soğutmada debi ve basınç.</li><li>Fırça ve kayar halka kontrolü (DFIG).</li><li>Klemens kutuları ve güç bağlantıları; tork işaretleri.</li><li>Rulman yağlaması.</li><li>Converter’da onaylı yöntemle termal tarama.</li></ul></section><section><h2>Güvenlik</h2><p>Converter içinde DC ara devrede depolanmış enerji bulunur ve ark riski vardır. Kabinler yük altında açılmaz; çalışma öncesi LOTO uygulanır, deşarj süresi beklenir ve sıfır gerilim ölçülerek doğrulanır. Bu işler yalnız yetkili personelle yapılır.</p></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/saha-notlari/jenerator-sicaklik/">Temsili vaka 04 — jeneratör sıcaklık alarmı</a></li><li><a href="/saha-notlari/converter-asiri-akim/">Temsili vaka 05 — converter aşırı akım</a></li><li><a href="/deneyim/">Türbinin içine — “Ya dişli olmasaydı?”</a></li><li><a href="/sistemler/">Bütün sistemler</a></li></ul></div>
  </article>
 </main>
 
@@ -229,9 +63,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/generator/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/generator/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
