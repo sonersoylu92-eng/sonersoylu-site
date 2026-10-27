@@ -3,32 +3,32 @@
   'use strict';
   var VAKA = {
     pitch: {
-      no: 'Vaka 01', ad: 'Pitch motor yüksek akım', model: 'Nordex N117/3000', yer: 'Bergama', sistem: 'Pitch', u: '/saha-notlari/pitch-motor-yuksek-akim/',
-      belirti: 'Sabah açılışta pitch sistemi devreye giremiyor. Kontrol sisteminde "Pitch motor phase current high" alarmı; A kanadının motoru çalışmaya çalışıyor ama kanadı zor hareket ettiriyor.',
+      no: 'Vaka 01', ad: 'Pitch motor yüksek akım', model: 'Temsili senaryo', yer: 'değerler örnektir', sistem: 'Pitch', u: '/saha-notlari/pitch-motor-yuksek-akim/',
+      belirti: 'Sabah açılışta pitch sistemi devreye giremiyor. Kontrol sisteminde "Pitch motor phase current high" alarmı; sorunlu eksenin motoru çalışmaya çalışıyor ama kanadı zor hareket ettiriyor; diğer iki eksen normal.',
       olcum: [
         ['Motor akımı', '18 A', 'Normal 12 A, alarm eşiği 15 A'],
         ['Sargı direnci (faz-faz)', '8,1 – 8,3 Ω', 'Üç faz dengeli'],
         ['Kanat konum sensörleri', 'Beklenen değerde', 'Üç kanatta da aynı'],
-        ['Elle döndürme', 'A kanadı sıkı', 'B ve C kanadı rahat'],
-        ['Redüktör yağı', 'Minimumda', 'Koyu, yanık kokulu, metal partikül']
+        ['Servis modunda eksen testi', 'Bir eksen zor hareket ediyor', 'Diğer iki eksen rahat'],
+        ['Redüktör yağı', 'Alt sınırın altında', 'Koyu, metal parçacıklı; keçe çevresinde sızıntı izi']
       ],
       trend: { tur: 'olcu', baslik: 'Pitch motor akımı, yaklaşık son 8 ay', birim: 'A', x: ['1', '2', '3', '4', '5'], xAd: 'Okuma sırası (eşit aralık varsayıldı)',
         seri: [{ ad: 'Motor akımı', d: [11, 12.5, 14, 16, 18] }], esik: [{ d: 15, ad: 'Alarm 15 A' }, { d: 12, ad: 'Normal 12 A' }],
-        not: 'Vaka sayfasında verilen beş değer (11 → 12,5 → 14 → 16 → 18 A). Okumalar arası süre sayfada belirtilmediği için eşit aralıkla çizildi.' },
+        not: 'Örnek değerler (11 → 12,5 → 14 → 16 → 18 A); temsili vaka, kayıtlı bir SCADA verisi değildir. Okumalar eşit aralıkla çizildi.' },
       soru: { s: 'Bu ölçümlere göre ilk hangi olasılık elenir?', c: [
         ['Motor sargısında kısa devre', true, 'Doğru. Üç faz arası direnç 8,1–8,3 Ω ile dengeli; sargı arızası bu tabloyu vermez.'],
-        ['Redüktörde mekanik sıkışma', false, 'Henüz elenmez: A kanadının elle sıkı dönmesi ve yağ bulguları tam da bunu destekliyor.'],
+        ['Redüktörde mekanik sıkışma', false, 'Henüz elenmez: servis modunda bir eksenin zor dönmesi ve yağ bulguları tam da bunu destekliyor.'],
         ['Yüksek akım yüke bağlı', false, 'Elenmez: akım gerçekten yüksek ve aylardır artıyor; yük artışı en güçlü açıklama.']] },
       hipotez: [
         ['Sargı arızası', 'elendi', 'Faz dirençleri dengeli.'],
         ['Konum sensörü hatası', 'elendi', 'Üç kanatta da beklenen çıkış.'],
         ['Kontrol / sürücü hatası', 'zayıf', 'Akım ölçümle de yüksek; sorun yükte.'],
-        ['Redüktörde yağlama ve aşınma', 'güçlü', 'Elle sıkı dönen kanat, eksik ve yanık yağ, metal partikül, aylarca artan akım.']],
-      kok: 'Redüktör gövdesindeki küçük bir sızıntı yağı aylar içinde eksiltmiş; dişliler yetersiz yağla çalışıp aşınmış, sürtünme arttıkça motor akımı yükselmiş ve sonunda motor kanadı çeviremez olmuş.',
-      ders: ['Periyodik bakımda yağ seviyesi kontrolü atlanmış; prosedürde yazan adım yapılmamış.', 'Akım trendi aylar önce sinyal veriyordu: eşiğe değil eğime bakmak gerekir.', 'Ölçümden önce elle döndürme testi, sorunun hangi kanatta olduğunu dakikalar içinde gösterdi.']
+        ['Redüktörde yağlama ve aşınma', 'güçlü', 'Zor hareket eden eksen, eksik ve parçacıklı yağ, keçede sızıntı izi, aylarca artan akım.']],
+      kok: 'Çıkış mili keçesinden süren küçük bir sızıntı yağı aylar içinde eksiltmiş; dişliler yetersiz yağla çalışıp aşınmış, sürtünme arttıkça motor akımı yükselmiş ve sonunda motor kanadı çeviremez olmuş.',
+      ders: ['Periyodik bakımda yağ seviyesi kontrolü atlanmış; prosedürde yazan adım yapılmamış.', 'Akım trendi aylar önce sinyal veriyordu: eşiğe değil eğime bakmak gerekir.', 'Servis modunda eksenleri tek tek denemek, sorunun hangi kanatta olduğunu dakikalar içinde gösterdi.']
     },
     disli: {
-      no: 'Vaka 02', ad: 'Dişli kutusu sıcaklığı rüzgârla artıyor', model: 'Vestas V126', yer: 'Aliağa', sistem: 'Dişli kutusu', u: '/saha-notlari/disli-kutusu-sicaklik/',
+      no: 'Vaka 02', ad: 'Dişli kutusu sıcaklığı rüzgârla artıyor', model: 'Temsili senaryo', yer: 'değerler örnektir', sistem: 'Dişli kutusu', u: '/saha-notlari/disli-kutusu-sicaklik/',
       belirti: '10 m/s üstünde dişli kutusu sıcaklığı 75 °C\'yi aşıyor; uyarı geliyor ama türbin durmuyor. Aynı sahadaki türbinler 60–65 °C\'de, bu türbin 78–82 °C\'de. Alarm eşiği 85 °C.',
       olcum: [
         ['Yağ seviyesi', 'Minimumun altında', 'Dipstick ile, durdurup bekledikten sonra'],
@@ -52,28 +52,28 @@
       ders: ['Sıcaklığı tek başına değil, aynı rüzgârdaki komşu türbinlerle birlikte okumak.', 'Seviye kadar yağın kendisine bakmak: numune ve laboratuvar analizi.', 'Sızıntı izini hava filtresi ve keçe çevresinde aramak.']
     },
     yaw: {
-      no: 'Vaka 03', ad: 'Yaw salınımı (hunting)', model: 'Enercon E92', yer: 'Bergama', sistem: 'Yaw', u: '/saha-notlari/yaw-salinimi/',
+      no: 'Vaka 03', ad: 'Yaw salınımı (hunting)', model: 'Temsili senaryo', yer: 'değerler örnektir', sistem: 'Yaw', u: '/saha-notlari/yaw-salinimi/',
       belirti: 'Nasel rüzgâra dönerken ileri geri salınıyor; rotor üretiyor ama yaw açısı sürekli değişiyor ve ritmik bir "tak tak" sesi var.',
       olcum: [
-        ['Yaw açısı', '±18° salınım', '1–2 saniyelik periyot'],
+        ['Saatlik yaw sayısı', 'Komşuların birkaç katı', 'Örnek değer'],
         ['Test komutu', 'Hedef 45°, durdu 38°', 'Motor çalışıyor ama zorlanıyor'],
-        ['Yaw motor akımı', '12 A', 'Normal 8 A'],
+        ['Yaw fren artık basıncı', 'Alt sınırın altında', 'OEM tablosuyla karşılaştırıldı'],
         ['Durdurma sonrası', '2 sn içinde +5° kayma', 'Mekanik sürüklenme belirtisi'],
         ['Rüzgâr yönü sensörü', '±0,5 V dalgalanma', 'Sensör başı gevşek olabilir'],
         ['Motor sargısı ve kontaktörler', 'Normal', 'Fazlar ~10 Ω dengeli']
       ],
       trend: { tur: 'temsili', baslik: 'Yaw açısı salınımı', birim: '°', x: [], xAd: 'Zaman (s)',
-        not: 'Temsili eğitim grafiği: vaka sayfasındaki "±18°, 1–2 sn periyot" tarifinden çizildi; kayıtlı bir SCADA verisi değildir.' },
+        not: 'Temsili eğitim grafiği; kayıtlı bir SCADA verisi değildir.' },
       soru: { s: 'Ölçümlere göre hangisi tek başına kök neden olamaz?', c: [
         ['Motor veya kontaktör arızası', true, 'Doğru. Sargılar dengeli, kontaktörler normal; motor tarafı salınımı açıklamıyor.'],
         ['Sensör gürültüsü', false, 'Katkısı var: ±0,5 V dalgalanma kontrolcünün sürekli düzeltme yapmasına yol açar.'],
-        ['Yatak sürtünmesi ve yağlama', false, 'Katkısı var: yüksek akım ve durdurma sonrası kayma bunu gösteriyor.']] },
+        ['Yatak sürtünmesi ve yağlama', false, 'Katkısı var: düşük fren tutuşu ve durdurma sonrası kayma bunu gösteriyor.']] },
       hipotez: [
         ['Motor / kontaktör', 'elendi', 'Ölçümler normal.'],
         ['Rüzgâr yönü sensörü', 'güçlü', 'Gevşek montaj, gürültülü sinyal.'],
-        ['Yaw yatağı yağlaması', 'güçlü', 'Yüksek akım, sürüklenme.'],
-        ['Kontrol ayarı', 'olası', 'Vaka sayfası ayarın normalden yüksek bulunduğunu yazıyor; değişiklik yalnız üretici prosedürüyle yapılır.']],
-      kok: 'Tek bir neden değil: azalmış yatak yağlaması, gevşek rüzgâr yönü sensörünün gürültülü sinyali ve kontrol ayarındaki sapma birleşince sistem hedef yönde duramayıp salınıma girmiş.',
+        ['Yaw freni ve yağlama', 'güçlü', 'Düşük artık basınç, durdurma sonrası sürüklenme, gecikmiş yağlama.'],
+        ['Kontrol ayarı', 'zayıf', 'Mekanik ve sensör nedenleri açıklıyor; parametreye yalnız üretici bakar.']],
+      kok: 'Tek bir neden değil: gevşek rüzgâr yönü sensörünün gürültülü sinyali, yaw frenindeki düşük artık basınç ve gecikmiş yatak yağlaması birleşince sistem hedef yönde duramayıp salınıma girmiş.',
       ders: ['Salınımda tek nedene kilitlenmemek: mekanik, sensör ve kontrol birlikte incelenir.', 'Sensör montajı ve kablo bağlantısı, parametreden önce kontrol edilir.', 'Kontrol parametreleri yalnız üretici yetkisiyle ve kayıt altında değiştirilir; bu sayfa ayar değeri önermez.']
     }
   };
