@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pitch System — Blade Angle Control, Motor and Faults | Soner Soylu</title>
-<meta name="description" content="Wind turbine pitch system technical reference: motor, gearbox, sensors, PID control, operating points, typical faults and maintenance intervals.">
+<meta charset="utf-8"><meta name="robots" content="noindex,follow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pitch system — How It Works, Faults, Safety | Soner Soylu</title>
+<meta name="description" content="The pitch system turns each blade about its own axis. In low wind it holds the blade at the angle that captures energy best; as wind rises it changes…">
 <link rel="canonical" href="https://sonersoylu.com/en/systems/pitch/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/pitch/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/pitch/">
@@ -65,6 +65,8 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -84,70 +86,14 @@
 <main class="kb" id="top">
  <article>
   <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/systems/">Systems</a> <i>/</i> <span aria-current="page">Pitch system</span></nav>
-
   <p class="kb-kicker">Technical reference</p>
-  <h1>Pitch System</h1>
-  <p class="kb-lead">The mechanism that turns each blade about its own axis to set how much power the rotor takes from the wind. It is also the turbine's primary brake: feathering the blades is what stops a machine safely when everything else has failed.</p>
-  <h2>What the pitch system does</h2>
-  <p>Below rated wind the blades sit at a small angle to extract as much energy as possible. Above rated wind the controller turns them progressively into the wind — towards the &quot;feather&quot; position parallel to the flow — so the rotor sheds power and the machine stays within its design loads. The same movement, driven to full feather, is the aerodynamic brake.</p>
-  <p>This is why the pitch system is safety-critical rather than merely operational. A turbine that cannot pitch cannot protect itself.</p>
-
-  <h2>Components</h2>
-  <ul>
-   <li><strong>Pitch motor:</strong> electric, one per blade on independent-pitch machines. Typical ratings run from 11–15 kW on smaller rotors to 22–25 kW on heavy 3 MW-class blades.</li>
-   <li><strong>Pitch gearbox:</strong> a high-ratio reduction (commonly in the 1:200 to 1:500 range) between motor and blade bearing, because the blade turns slowly against very large moments.</li>
-   <li><strong>Blade bearing:</strong> the slewing bearing the blade rotates on, carrying the full root moment.</li>
-   <li><strong>Position sensor:</strong> an encoder reporting actual blade angle back to the controller.</li>
-   <li><strong>Backup supply:</strong> battery or capacitor storage able to drive the blades to feather on loss of grid. This is the element that makes the aerodynamic brake dependable.</li>
-  </ul>
-
-  <h2>How the control works</h2>
-  <p>The controller compares the measured output or rotor speed against target, computes an error, and commands a blade angle. The loop is usually PID: the proportional term reacts to the present error, the integral term removes steady offset, the derivative term damps the response. On modern machines each blade can be commanded separately, which lets the controller reduce asymmetric loading as well as regulate power.</p>
-  <p>The practical consequence is that the controller only knows what the encoder tells it. If calibration drifts, the machine behaves confidently and incorrectly — which is exactly the failure described in <a href="/en/field-notes/blade-vibration/">Case 07</a>.</p>
-
-  <h2>Normal operating values</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Wind condition</th><th>Typical blade angle</th><th>What the system is doing</th></tr>
-   <tr><td>Below cut-in</td><td>~90° (feather)</td><td>Parked, no torque</td></tr>
-   <tr><td>Cut-in to rated</td><td>0–3°</td><td>Maximising energy capture</td></tr>
-   <tr><td>At rated</td><td>3–10°</td><td>Starting to shed power</td></tr>
-   <tr><td>Above rated</td><td>10–30°</td><td>Holding rated output</td></tr>
-   <tr><td>Near cut-out</td><td>Increasing toward feather</td><td>Preparing to stop</td></tr>
-   <tr><td>Emergency stop</td><td>90° as fast as the drive allows</td><td>Aerodynamic braking</td></tr>
-  </table></div>
-  <p><small>Pitch rate matters as much as angle: typical maximum rates run 3–4°/s on lighter machines and 8–10°/s on larger ones.</small></p>
-
-  <h2>Typical faults</h2>
-  <ul>
-   <li><strong>High motor current:</strong> the motor working against mechanical resistance — poor lubrication, bearing drag, or gearbox trouble. Worked through in <a href="/en/field-notes/pitch-motor-high-current/">Case 01</a>.</li>
-   <li><strong>Pitch asymmetry:</strong> one blade at a different angle from the others. Causes rotor imbalance, 1P vibration and lost production. Often a calibration problem rather than a mechanical one.</li>
-   <li><strong>Encoder drift:</strong> the reported angle and the real angle diverge. The system looks healthy because it believes its own measurement.</li>
-   <li><strong>Backup supply degradation:</strong> the most dangerous fault on the list, because it is silent until the moment it is needed. This is why backup capacity testing is not optional.</li>
-   <li><strong>Blade bearing wear:</strong> increasing play or friction at the root; shows up as rising motor current and, eventually, as noise.</li>
-  </ul>
-
-  <h2>Maintenance schedule</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Task</th><th>Interval</th><th>Note</th></tr>
-   <tr><td>Motor current comparison across the three blades</td><td>Monthly (from SCADA)</td><td>Compare blades against each other, not against the alarm limit</td></tr>
-   <tr><td>Visual check for oil traces on the pitch gearbox</td><td>Monthly</td><td>The cheapest early warning available</td></tr>
-   <tr><td>Blade bearing lubrication</td><td>12 months</td><td>Check purged grease for metal</td></tr>
-   <tr><td>Backup supply capacity test</td><td>12 months</td><td>Safety function — never skipped</td></tr>
-   <tr><td>Physical verification of pitch angle against encoder</td><td>12–24 months</td><td>Catches calibration drift before it causes vibration</td></tr>
-   <tr><td>Pitch gearbox oil check or change</td><td>24 months</td><td>Per OEM specification</td></tr>
-  </table></div>
-
-  <div class="kb-rel">
-   <p class="k">Related</p>
-   <ul>
-    <li><a href="/en/systems/">All systems</a></li>
-    <li><a href="/en/field-notes/pitch-motor-high-current/">Case 01: Pitch Motor High Current</a></li>
-    <li><a href="/en/field-notes/blade-vibration/">Case 07: Blade Vibration</a></li>
-    <li><a href="/en/turbines/">Turbine model guide</a></li>
-    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
-   </ul>
-  </div>
-
+  <h1>Pitch system</h1>
+  <p class="kb-lead">The pitch system turns each blade about its own axis. In low wind it holds the blade at the angle that captures energy best; as wind rises it changes the angle to limit power; when stopping it turns the blades out of the wind. Pitch is both power control and the turbine’s main aerodynamic brake.</p>
+  <div class="kb-callout"><p><strong>General reference.</strong> Values, limits, intervals and torques vary by turbine type; the OEM documentation always governs.</p></div>
+  <section><h2>Main parts</h2><ul><li>Pitch bearing — connects the blade root to the hub</li><li>Drive — electric (motor, gearbox, pinion) or hydraulic (cylinder)</li><li>Motor brake — holds the blade when stopped</li><li>Position feedback — reports the blade angle</li><li>Emergency supply — batteries, capacitors or hydraulic accumulators that feather the blades when the grid is lost</li><li>Pitch cabinet and slip ring — control, supply and communication</li></ul></section>
+  <section><h2>Common faults and where to look first</h2><ul><li>High motor current on one axis: compare axes, check the motor brake, gearbox oil and bearing lubrication</li><li>Angle difference between blades, 1P vibration: position feedback calibration, physical angle measurement</li><li>Failed emergency supply test: battery or capacitor condition, charging circuit, accumulator pre-charge</li></ul></section>
+  <section><h2>Safety</h2><p>Enter the hub only with the rotor locked. Move blades only in the OEM service mode. Pitch cabinets store energy in batteries or capacitors: apply LOTO, wait for discharge and verify zero voltage. Never test a motor by applying voltage directly to its terminals.</p></section>
+  <div class="kb-note"><p>Full version</p><p>Parts tables, maintenance checklist and diagnostic tools are in the <a href="/sistemler/pitch/" hreflang="tr" lang="tr">Turkish version of this page</a>.</p></div>
  </article>
 </main>
 
