@@ -1,61 +1,22 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pitch Motor High Current — Field Diagnosis and Fix | Case 01</title>
-<meta name="description" content="Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step field diagnosis, root cause in the pitch gearbox, and the permanent fix.">
+<meta charset="utf-8"><meta name="robots" content="noindex,follow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pitch motor draws high current — Representative Case 01 | Soner Soylu</title>
+<meta name="description" content="A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up. Diagnostic sequence, root cause and fix in a representative case.">
 <link rel="canonical" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
 <meta property="og:locale" content="en_GB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pitch Motor High Current — Field Diagnosis and Fix">
-<meta property="og:description" content="Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step field diagnosis, root cause in the pitch gearbox, and the permanent fix.">
+<meta property="og:title" content="Pitch motor draws high current — representative case">
+<meta property="og:description" content="A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up. Diagnostic sequence, root cause and fix in a representative case.">
 <meta property="og:url" content="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "Article",
- "headline": "Pitch Motor High Current — Field Diagnosis and Fix",
- "description": "Pitch motor drawing 18 A instead of 12 A on a Nordex N117. Six-step field diagnosis, root cause in the pitch gearbox, and the permanent fix.",
- "url": "https://sonersoylu.com/en/field-notes/pitch-motor-high-current/",
- "inLanguage": "en",
- "author": {
-  "@type": "Person",
-  "name": "Soner Soylu",
-  "jobTitle": "Wind Turbine Field Service Technician"
- },
- "datePublished": "2026-09-22T00:00:00Z",
- "dateModified": "2026-09-22T00:00:00Z",
- "breadcrumb": {
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-   {
-    "@type": "ListItem",
-    "position": 1,
-    "name": "Home",
-    "item": "https://sonersoylu.com/en/"
-   },
-   {
-    "@type": "ListItem",
-    "position": 2,
-    "name": "Field notes",
-    "item": "https://sonersoylu.com/en/field-notes/"
-   },
-   {
-    "@type": "ListItem",
-    "position": 3,
-    "name": "Pitch motor high current",
-    "item": "https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"
-   }
-  ]
- }
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Pitch motor draws high current", "description": "A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up. Diagnostic sequence, root cause and fix in a representative case.", "inLanguage": "en", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Wind Turbine Field Service Technician", "url": "https://sonersoylu.com/en/about/"}, "datePublished": "2026-09-22", "dateModified": "2026-10-27"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -65,6 +26,8 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -83,73 +46,19 @@
 
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Pitch motor high current</span></nav>
-
-  <p class="kb-kicker">From the field · Case 01</p>
-  <h1>Pitch Motor High Current — Field Diagnosis and Fix</h1>
-  <p class="kb-lead">A Nordex N117. The pitch motor on one blade was pulling around 18 A where the other two sat at 12 A. Nothing had failed yet and the turbine was still producing — which is exactly the kind of fault worth catching, because the machine is telling you something before it breaks.</p>
-  <h2>Symptom</h2>
-  <ul>
-   <li><strong>SCADA:</strong> pitch motor current on blade 2 at 17–18 A; blades 1 and 3 at 11–12 A under the same conditions</li>
-   <li><strong>Behaviour:</strong> pitch movement completes, but more slowly than the other two blades</li>
-   <li><strong>Alarm:</strong> intermittent &quot;pitch motor current high&quot; warning, no shutdown yet</li>
-   <li><strong>Trend:</strong> looking back through SCADA, the current had been climbing gradually for about two months</li>
-  </ul>
-
-  <h2>First assessment</h2>
-  <p>A motor pulling more current is doing more work. On a pitch axis that means one of three things: the electrical side has a problem (winding, connection, drive), something mechanical is resisting the movement, or the blade itself has become harder to turn. The fact that the rise was <strong>gradual</strong> pushed me away from an electrical fault — electrical faults tend to appear suddenly. A slow climb over two months is the signature of something mechanical getting worse.</p>
-
-  <h2>Step-by-step diagnosis</h2>
-  <ol class="kb-steps">
-   <li><strong>Turned the blade by hand at the gearbox output.</strong> With the turbine stopped, rotor locked and the pitch drive isolated. The resistance on blade 2 was noticeably higher than on the other two. That single check moved the fault from &quot;electrical&quot; to &quot;mechanical&quot; and saved a lot of time.</li>
-   <li><strong>Measured motor winding resistance.</strong> To rule out the motor itself. All three phases were balanced and matched the other two motors. The motor was healthy; it was simply working against something.</li>
-   <li><strong>Checked the pitch gearbox oil.</strong> This is where it was found. The level was below the mark, the oil was dark, and there was a metallic sheen in it. The gearbox was running short of lubrication.</li>
-   <li><strong>Looked for the leak path.</strong> Oil does not disappear. There was a trace of oil on the gearbox housing and, following it up, a hairline crack roughly 2 mm long on the casing near the mounting face.</li>
-   <li><strong>Checked the sensors.</strong> The pitch encoder and limit switches read correctly and matched the physical position, so the control side was not commanding anything unusual.</li>
-   <li><strong>Went back to the SCADA trend.</strong> Comparing the current climb against the estimated oil loss lined up: as the level fell, the current rose. The story was consistent from both ends.</li>
-  </ol>
-
-  <h2>Root cause</h2>
-  <p>A hairline crack in the pitch gearbox casing had been leaking oil slowly over roughly two to three months. As the level dropped, the gear set ran with progressively poorer lubrication, friction rose, and the motor compensated by drawing more current. The metallic sheen in the oil showed wear had already begun inside.</p>
-  <p>Nothing here happened suddenly. The turbine had been signalling for two months through a number in SCADA that nobody had plotted as a trend.</p>
-
-  <h2>Fix</h2>
-  <ol>
-   <li><strong>Containment (1 hour):</strong> the leak was temporarily sealed and the oil topped up so the machine could be brought to a safe state without running the gears dry.</li>
-   <li><strong>Permanent repair (3 hours):</strong> the crack was TIG welded and the repair checked by non-destructive testing before the gearbox was put back into service.</li>
-   <li><strong>Oil replacement (2 hours):</strong> the contaminated oil was drained completely and replaced with fresh oil to the correct level, since the old charge already carried wear metal.</li>
-   <li><strong>Total downtime:</strong> about six hours. Caught later, this would have been a gearbox replacement.</li>
-  </ol>
-
-  <h2>Preventive maintenance</h2>
-  <ul>
-   <li><strong>Compare the three pitch motor currents against each other, not against a threshold.</strong> An 18 A reading may sit below the alarm limit and still be wrong if its two siblings are at 12 A. The asymmetry is the signal.</li>
-   <li><strong>Plot the trend, not the value.</strong> A single reading says almost nothing. The same number over eight weeks says everything.</li>
-   <li><strong>Include the pitch gearbox in visual inspections.</strong> An oil trace on the casing is the cheapest early warning you will ever get.</li>
-   <li><strong>Turn the blade by hand when you suspect a pitch fault.</strong> It takes two minutes and separates mechanical from electrical faster than any instrument.</li>
-  </ul>
-
-  <aside class="kb-note">
-   <p>Field note</p>
-   <p>The habit that pays here is boring: look at the three blades side by side. A pitch fault almost never starts as a failure — it starts as one axis behaving slightly differently from the other two. If you read each value against the alarm threshold instead of against its siblings, you will miss it every time.</p>
-   <p>The second thing is that a six-hour repair and a gearbox replacement were separated only by the two months of trend data nobody had looked at.</p>
-   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
-  </aside>
-  <div class="kb-callout">
-   <p><strong>Warning:</strong> All work in the hub is done with the rotor locked, the turbine stopped, the pitch drive and its backup supply isolated, and LOTO applied. This note is field experience and does not replace the manufacturer's service documentation.</p>
-  </div>
-
-  <div class="kb-rel">
-   <p class="k">Related</p>
-   <ul>
-    <li><a href="/en/systems/pitch/">Pitch System — motor, gearbox, sensor and control</a></li>
-    <li><a href="/en/turbines/">Turbine model guide</a></li>
-    <li><a href="/en/field-notes/blade-vibration/">Case 07: Blade Vibration — the same system, a different fault</a></li>
-    <li><a href="/en/field-notes/">All field notes</a></li>
-    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
-   </ul>
-  </div>
-
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Pitch motor draws high current</span></nav>
+  <p class="kb-kicker">Representative case · 01</p>
+  <h1>Pitch motor draws high current</h1>
+  <p class="kb-lead">A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up.</p>
+  <p class="kb-meta"><span>System: Pitch</span><span>Fault type: Mechanical</span><span>Caught by: Alarm</span><span>Component: Pitch gearbox</span></p>
+  <div class="kb-callout"><p><strong>Representative case.</strong> This page describes a fault pattern that is common in the field, as a diagnostic sequence. It does not describe a specific wind farm, turbine or date; numbers are examples only and limits vary by turbine type. On your own turbine the OEM instructions, LOTO procedure and safety rules apply; work near energised equipment is for authorised personnel only.</p></div>
+  <section><h2>Symptom</h2><p>A “pitch motor current high” alarm on one axis; the pitch system is not ready at morning start-up.</p></section>
+  <section><h2>What was measured</h2><p>Axes moved one by one in service mode: one axis is stiff. Winding balanced, motor brake releases fully.</p></section>
+  <section><h2>Root cause</h2><p>A slow oil leak at the output shaft seal; the gearbox ran short of oil for months and wore.</p></section>
+  <section><h2>Fix and verification</h2><p>Gearbox replaced to the OEM procedure; the other two gearboxes checked for level and leaks.</p></section>
+  <section><h2>Lesson</h2><p>Watch the slope, not the threshold: the current rise was visible in the SCADA trend months earlier.</p></section>
+  <div class="kb-note"><p>Full version</p><p>The complete diagnostic sequence — possible causes table, step-by-step checks, maintenance checklist and common mistakes — is in the <a href="/saha-notlari/pitch-motor-yuksek-akim/" hreflang="tr" lang="tr">Turkish version of this case</a>.</p></div>
+  <div class="kb-rel"><p class="k">Related</p><ul><li><a href="/en/field-notes/">All representative cases</a></li><li><a href="/en/diagnostics/">Fault diagnosis simulator</a></li><li><a href="/en/glossary/">Glossary</a></li></ul></div>
  </article>
 </main>
 
