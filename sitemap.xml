@@ -90,10 +90,6 @@
     <lastmod>2026-09-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sonersoylu.com/egitim/belge/</loc>
-    <lastmod>2026-09-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://sonersoylu.com/egitim/bu-is-ne-is/</loc>
     <lastmod>2026-09-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
@@ -174,35 +170,30 @@
   <url>
     <loc>https://sonersoylu.com/sistemler/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/pitch/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/pitch/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/pitch/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/pitch/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/yaw/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/yaw/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/disli-kutusu/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/sistemler/jenerator/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/jenerator/"/>
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
@@ -272,30 +263,26 @@
   <url>
     <loc>https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/gearbox-temperature/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/yaw-salinimi/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-hunting/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/jenerator-sicaklik/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/generator-temperature/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/araclar/civata-germe/</loc>
@@ -314,58 +301,20 @@
   <url>
     <loc>https://sonersoylu.com/saha-notlari/converter-asiri-akim/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/converter-overcurrent/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-bearing-wear/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/saha-notlari/kanat-titresimi/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/systems/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/systems/pitch/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/pitch/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/pitch/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/pitch/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/systems/yaw/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/yaw/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/systems/gearbox/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/disli-kutusu/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/systems/generator/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/jenerator/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/generator/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/sistemler/jenerator/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
   </url>
   <url>
     <loc>https://sonersoylu.com/en/turbines/</loc>
@@ -438,55 +387,6 @@
     <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
   </url>
   <url>
-    <loc>https://sonersoylu.com/en/field-notes/pitch-motor-high-current/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/field-notes/gearbox-temperature/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/gearbox-temperature/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/disli-kutusu-sicaklik/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/field-notes/yaw-hunting/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-hunting/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-salinimi/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/field-notes/generator-temperature/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/generator-temperature/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/field-notes/converter-overcurrent/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/converter-overcurrent/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/converter-asiri-akim/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/field-notes/yaw-bearing-wear/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/yaw-bearing-wear/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/yaw-yatak-asinmasi/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sonersoylu.com/en/field-notes/blade-vibration/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/"/>
-    <lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://sonersoylu.com/en/tools/bolt-tension/</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://sonersoylu.com/araclar/civata-germe/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/tools/bolt-tension/"/>
@@ -556,5 +456,17 @@
   <url>
     <loc>https://sonersoylu.com/turbinler/karsilastir/</loc>
     <lastmod>2026-10-09</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/mentorluk/</loc>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/hazirlik-paketi/</loc>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sonersoylu.com/sponsorluk/</loc>
+    <lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq><priority>0.3</priority>
   </url>
 </urlset>
