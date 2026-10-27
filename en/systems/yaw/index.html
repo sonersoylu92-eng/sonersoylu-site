@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yaw System — Slewing Bearing, Control, Faults | Soner Soylu</title>
-<meta name="description" content="Wind turbine yaw system technical reference: motors, slewing bearing, ring gear, vane sensor, control loop, typical faults and maintenance.">
+<meta charset="utf-8"><meta name="robots" content="noindex,follow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yaw system — How It Works, Faults, Safety | Soner Soylu</title>
+<meta name="description" content="The yaw system turns the whole nacelle in the horizontal plane to keep the rotor facing the wind. It also unwinds the cables running down the tower…">
 <link rel="canonical" href="https://sonersoylu.com/en/systems/yaw/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/yaw/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/yaw/">
@@ -65,6 +65,8 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -84,68 +86,14 @@
 <main class="kb" id="top">
  <article>
   <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/systems/">Systems</a> <i>/</i> <span aria-current="page">Yaw system</span></nav>
-
   <p class="kb-kicker">Technical reference</p>
-  <h1>Yaw System</h1>
-  <p class="kb-lead">The system that rotates the whole nacelle horizontally to keep the rotor facing the wind. It moves rarely and slowly, which is exactly why its problems tend to go unnoticed for months.</p>
-  <h2>What the yaw system does</h2>
-  <p>A rotor that is not facing the wind loses power roughly with the cosine of the misalignment angle, and it picks up asymmetric loading at the same time. The yaw system exists to keep that error small. It also manages cable twist: the nacelle can only rotate so many turns in one direction before the power cables below must be untwisted.</p>
-
-  <h2>Components</h2>
-  <ul>
-   <li><strong>Yaw motors:</strong> several electric drives working together, typically 3–5 kW each on smaller machines and 10–15 kW on large ones.</li>
-   <li><strong>Slewing bearing:</strong> a large-diameter ring bearing (roughly 3000–5000 mm) between tower top and nacelle, carrying several hundred tonnes of radial and moment load.</li>
-   <li><strong>Ring gear:</strong> the toothed ring the drive pinions engage, with a high overall reduction.</li>
-   <li><strong>Yaw brakes:</strong> hold the nacelle in position between movements so the drive is not fighting the wind continuously.</li>
-   <li><strong>Vane sensor:</strong> the wind direction sensor on the nacelle roof, typically accurate to a few degrees.</li>
-   <li><strong>Lubrication system:</strong> often automatic, feeding grease to distributed points around the bearing.</li>
-  </ul>
-
-  <h2>How the control works</h2>
-  <p>The controller does not chase every gust. It averages wind direction over a window, and only commands a movement when the error exceeds a threshold and persists. That deliberate sluggishness is a design feature: a yaw system that reacted quickly would wear itself out and would never settle.</p>
-  <p>When that balance is upset — by a noisy sensor, a dragging bearing, or a controller gain that is too high — the loop becomes unstable and the nacelle hunts. That combination is the subject of <a href="/en/field-notes/yaw-hunting/">Case 03</a>.</p>
-
-  <h2>Normal operating values</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Parameter</th><th>Typical value</th><th>Comment</th></tr>
-   <tr><td>Yaw rate</td><td>0.3–0.8 °/s</td><td>Deliberately slow</td></tr>
-   <tr><td>Alignment tolerance</td><td>±1° to ±5°</td><td>Tighter on newer machines</td></tr>
-   <tr><td>Movements per day</td><td>Tens, site dependent</td><td>A sharp rise suggests instability</td></tr>
-   <tr><td>Cable twist limit</td><td>±2 to ±3 turns</td><td>Triggers an untwist cycle</td></tr>
-   <tr><td>Motor current</td><td>Steady, position independent</td><td>Variation with position means drag</td></tr>
-  </table></div>
-
-  <h2>Typical faults</h2>
-  <ul>
-   <li><strong>Yaw hunting:</strong> the nacelle oscillates instead of settling. Almost always a combination of sensor noise, mechanical drag and controller gain — see <a href="/en/field-notes/yaw-hunting/">Case 03</a>.</li>
-   <li><strong>Bearing wear:</strong> often starts in one sector rather than around the whole ring, and the usual reason is a blocked lubrication line. Caught without an alarm in <a href="/en/field-notes/yaw-bearing-wear/">Case 06</a>.</li>
-   <li><strong>Vane sensor faults:</strong> loose mounting, icing or drift. Everything downstream inherits the error.</li>
-   <li><strong>Brake problems:</strong> worn pads or residual pressure make the drives work against the brake continuously, raising current and heat.</li>
-   <li><strong>Ring gear damage:</strong> usually a consequence of prolonged bearing trouble rather than a primary fault.</li>
-  </ul>
-
-  <h2>Maintenance schedule</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Task</th><th>Interval</th><th>Note</th></tr>
-   <tr><td>Yaw motor current trend (peaks, not just averages)</td><td>Monthly (from SCADA)</td><td>Rising peaks are the earliest sign of drag</td></tr>
-   <tr><td>Vane sensor mounting and alignment</td><td>6 months</td><td>One minute; poisons everything if loose</td></tr>
-   <tr><td>Slewing bearing lubrication</td><td>12 months</td><td>Collect purged grease point by point and inspect for metal</td></tr>
-   <tr><td>Automatic lubrication line verification</td><td>12 months</td><td>A running pump is not proof of delivery</td></tr>
-   <tr><td>Ring gear backlash measurement</td><td>12–24 months</td><td>Shows whether wear has spread from bearing to gear</td></tr>
-   <tr><td>Yaw brake inspection</td><td>12–24 months</td><td>Pad thickness and residual pressure</td></tr>
-  </table></div>
-
-  <div class="kb-rel">
-   <p class="k">Related</p>
-   <ul>
-    <li><a href="/en/systems/">All systems</a></li>
-    <li><a href="/en/field-notes/yaw-hunting/">Case 03: Yaw Hunting</a></li>
-    <li><a href="/en/field-notes/yaw-bearing-wear/">Case 06: Yaw Bearing Wear</a></li>
-    <li><a href="/en/turbines/enercon/">Enercon series</a></li>
-    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
-   </ul>
-  </div>
-
+  <h1>Yaw system</h1>
+  <p class="kb-lead">The yaw system turns the whole nacelle in the horizontal plane to keep the rotor facing the wind. It also unwinds the cables running down the tower after a set number of turns.</p>
+  <div class="kb-callout"><p><strong>General reference.</strong> Values, limits, intervals and torques vary by turbine type; the OEM documentation always governs.</p></div>
+  <section><h2>Main parts</h2><ul><li>Yaw bearing — rolling or sliding type</li><li>Ring gear and pinions</li><li>Yaw drives — motor, gearbox and pinion, several working together</li><li>Yaw brake — hydraulic callipers or friction elements, depending on design</li><li>Wind direction sensor — vane or ultrasonic</li><li>Cable twist monitoring</li></ul></section>
+  <section><h2>Common faults and where to look first</h2><ul><li>Yaw hunting: wind vane mounting and alignment, brake pressure, gear backlash</li><li>Noise during yaw: gear and pinion, brake surfaces, bearing lubrication</li><li>Metal in purged grease: point-by-point samples, lubrication line and distributor</li></ul></section>
+  <section><h2>Safety</h2><p>Gears and pinions are a crushing hazard while yawing; lock the yaw to the OEM instructions before maintenance. Sensor work on the nacelle roof only in suitable weather and with fall-protection equipment.</p></section>
+  <div class="kb-note"><p>Full version</p><p>Parts tables, maintenance checklist and diagnostic tools are in the <a href="/sistemler/yaw/" hreflang="tr" lang="tr">Turkish version of this page</a>.</p></div>
  </article>
 </main>
 
