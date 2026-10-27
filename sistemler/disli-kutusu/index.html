@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dişli Kutusu — Redüktör, Yağ ve Arıza Teşhisi | Soner Soylu</title>
-<meta name="description" content="Rüzgâr türbinlerinde dişli kutusu (redüktör): Tasarım, yağlama, sıcaklık yönetimi, ortak arızalar ve saha teşhisi.">
+<title>Dişli Kutusu — Kademeler, Yağlama, Soğutma ve Teşhis | Soner Soylu</title>
+<meta name="description" content="Rüzgâr türbini dişli kutusu nasıl çalışır: planet ve helisel kademeler, yağlama ve soğutma devresi, sensörler, tipik arızalar, yağ analizi ve endoskop.">
 <link rel="canonical" href="https://sonersoylu.com/sistemler/disli-kutusu/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/sistemler/disli-kutusu/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/systems/gearbox/">
@@ -10,24 +10,13 @@
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dişli kutusu Sistemi — Redüktör Teknik Rehberi">
-<meta property="og:description" content="Rüzgâr türbinlerinde dişli kutusu (redüktör): Tasarım, yağlama, sıcaklık yönetimi, ortak arızalar ve saha teşhisi.">
+<meta property="og:description" content="Rüzgâr türbini dişli kutusu nasıl çalışır: planet ve helisel kademeler, yağlama ve soğutma devresi, sensörler, tipik arızalar, yağ analizi ve endoskop.">
 <meta property="og:url" content="https://sonersoylu.com/sistemler/disli-kutusu/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-varsayilan.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Dişli kutusu Sistemi — Redüktör Teknolojisi, Yağlama ve Teşhis",
-  "description": "Rüzgâr türbini dişli kutusu sisteminin derinlemesine rehberi. Dişli tipi, yağlama, sıcaklık kontrolü, ortak arızalar.",
-  "datePublished": "2024-01-01T00:00:00Z",
-  "dateModified": "2024-10-15T00:00:00Z",
-  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri"},
-  "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Dişli kutusu", "description": "Rüzgâr türbini dişli kutusu nasıl çalışır: planet ve helisel kademeler, yağlama ve soğutma devresi, sensörler, tipik arızalar, yağ analizi ve endoskop.", "inLanguage": "tr-TR", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "dateModified": "2026-10-27"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -37,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/" aria-current="true">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/systems/gearbox/" hreflang="en" lang="en" title="English">EN</a>
@@ -51,180 +42,18 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/" aria-current="true">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Dişli Kutusu Sistemi</span></nav>
-  <p class="kb-kicker">Teknik Referans</p>
-  <h1>Dişli Kutusu Sistemi</h1>
-  <p class="kb-lead">Türbin rotoru çok yavaş (10 rpm) dönerken, jeneratör 1200+ rpm hızında elektrik üretmeli. Bu dönüşümü sağlayan dişli kutusu (redüktör), türbinin en kritik mekanik sistemidir.</p>
-
-  <h2>Dişli kutusu Nedir?</h2>
-  <p>Rüzgâr türbininin ana şaftından gelen yavaş, yüksek-torque hareketi; bir dizi dişli sistemi (gear stages) kullanarak hızlı, düşük-torque harekete dönüştürür. Bu oran genellikle 1:50 ile 1:100 arasındadır.</p>
-
-  <h2>Tasarım Tipi</h2>
-
-  <h3>Paralel Eksenli (Parallel-Axis) Dişli kutusu</h3>
-  <p><strong>Kullanım:</strong> Nordex, Enercon, eski Vestas modelleri</p>
-  <p><strong>Özellik:</strong> Dişli eksenleri paralel, spur ve/veya helical dişli kombinasyonu</p>
-  <p><strong>Avantajlar:</strong> Basit tasarım, yüksek verim (~98%), hızlı onarım</p>
-  <p><strong>Dezavantajlar:</strong> Daha gürültülü, dişli boyutu büyük</p>
-
-  <h3>Spiral Eksenli (Epicyclic/Planetary) Dişli kutusu</h3>
-  <p><strong>Kullanım:</strong> Modern Vestas V126/V136, yeni Siemens modelleri</p>
-  <p><strong>Özellik:</strong> Merkezi güneş dişlisinin etrafında uydu dişlileri dönmesi</p>
-  <p><strong>Avantajlar:</strong> Daha küçük, daha hafif, daha sessiz, yüksek oranlar (1:100+)</p>
-  <p><strong>Dezavantajlar:</strong> Karmaşık tasarım, onarım daha zor, özel bilgi gerekli</p>
-
-  <h2>Temel Bileşenler</h2>
-
-  <h3>Giriş Şaftı (Low-Speed Shaft)</h3>
-  <ul>
-   <li><strong>Kaynağı:</strong> Ana yataktan (main bearing) gelir</li>
-   <li><strong>Hız:</strong> 10-12 rpm (rotor hızı ile eşit)</li>
-   <li><strong>Torque:</strong> 7000+ kN·m (N90'da), 10000+ kN·m (N117'de)</li>
-   <li><strong>Malzeme:</strong> Alaşımlı çelik, dinamik yüke dayanıklı</li>
-  </ul>
-
-  <h3>Dişli Sistemi (Gear Stages)</h3>
-  <ul>
-   <li><strong>Kademeler:</strong> Genellikle 3-4 aşamalı (her aşama oran ~3-4x)</li>
-   <li><strong>Taş (Pinion/Gear):</strong> Açık ve kapalı tipler</li>
-   <li><strong>Soğutma:</strong> Dişlilerin temas yüzeyinde yağ filmi (film bearing)</li>
-   <li><strong>Gürültü Yönetimi:</strong> Spiral (helical) dişliler daha sessiz</li>
-  </ul>
-
-  <h3>Çıkış Şaftı (High-Speed Shaft)</h3>
-  <ul>
-   <li><strong>Hedef:</strong> Jeneratör birliği</li>
-   <li><strong>Hız:</strong> 1000-1500 rpm (jeneratör tasarımına göre)</li>
-   <li><strong>Torque:</strong> Giriş'ten ~100 kat düşük (yüksek hız, düşük torque)</li>
-  </ul>
-
-  <h3>Yatak Sistemi (Bearings)</h3>
-  <ul>
-   <li><strong>Tür:</strong> Silindirik makaralı yataklar (cylindrical roller bearings), koniler</li>
-   <li><strong>Adet:</strong> 4-6 yatak, aşama başına 1-2</li>
-   <li><strong>Görevi:</strong> Şaft sapmaları tutmak, radyal ve eksenel yükleri taşımak</li>
-   <li><strong>Yağlama:</strong> Dişli kutusu yağ akışıyla lubricate edilir (splash + pump)</li>
-  </ul>
-
-  <h3>Yağlama Sistemi (Lubrication)</h3>
-  <ul>
-   <li><strong>Kapasite:</strong> N90: 500-600 L, N117: 700-800 L, V136: 900-1000 L</li>
-   <li><strong>Grade:</strong> ISO VG 220 veya VG 320 (ısıl indeks yüksek)</li>
-   <li><strong>Döngü:</strong> Dişlilerin alt kısmı yağa batır (splash), pompa ile üst kısma pompalanır (sprey)</li>
-   <li><strong>Sıcaklık Kontrolü:</strong> Soğutucudan geçerek 50-70°C'de tutulur</li>
-   <li><strong>Filtrasyon:</strong> Yağ filtreleri, 3-10 μm geçmişlik (piston elemanı)</li>
-  </ul>
-
-  <h3>Soğutma Sistemi (Cooling)</h3>
-  <ul>
-   <li><strong>Tipi:</strong> Passive (radyatör) veya Active (fan)</li>
-   <li><strong>Passive:</strong> Alüminyum finli soğutucu, doğal konveksiyon (N90)</li>
-   <li><strong>Active:</strong> Elektrik fan, termostat kontrollü (N117, V126)</li>
-   <li><strong>Hedef Sıcaklık:</strong> 50-65°C nominal, alarm >80°C, shutdown >90°C</li>
-  </ul>
-
-  <h2>Dişli kutusu Sıcaklık Yönetimi</h2>
-
-  <h3>Enerji Akışı ve Isı Kaynaklari</h3>
-  <div class="kb-table-scroll"><table class="heat-sources">
-   <tr><th>Kaynak</th><th>Güç Durumu</th><th>Isı Kontribüsyonu</th><th>Kontrol Yöntemi</th></tr>
-   <tr><td>Mekanik Güç Kaybı (Gear Friction)</td><td>Yüklü (Rüzgâr)</td><td>~1-2% güç (dominant)</td><td>Yağ kalitesi + seviyen</td></tr>
-   <tr><td>Yatak Friksiyonu</td><td>Sürekli</td><td>Orta</td><td>Yağ akışı + soğutucu</td></tr>
-   <tr><td>Conta ve Seal Friksiyonu</td><td>Sürekli</td><td>Küçük</td><td>Seal tasarımı</td></tr>
-   <tr><td>Pompa Motoru (Circulation)</td><td>Sürekli</td><td>Çok küçük</td><td>Pump efficiency</td></tr>
-  </table></div>
-
-  <h3>Sıcaklık Arttığında Neler Olur?</h3>
-  <ol>
-   <li><strong>Viskositet Düşer</strong> — Yağ ince hale gelir, dişli aralarında hava boşluğu oluşur</li>
-   <li><strong>Dişli Temas Yüksekliği Düşer</strong> — Metalik temas riski artar (half-fluid lubrication)</li>
-   <li><strong>Isı Oluşumu Artar</strong> — Daha fazla metal-metal friction</li>
-   <li><strong>Oksidasyon Hızlanır</strong> — Yağ kimyası bozulur, TAN (Total Acid Number) yükselir</li>
-   <li><strong>Yağ Kabuğunun Bağlantısı Kopabilir</strong> — Viskositet Index çöküyor, peroksit oluşumu</li>
-   <li><strong>Aşınma Hızlanır</strong> — Metal partikülü üretim 10x artar (>75°C)</li>
-  </ol>
-
-  <h2>Ortak Dişli kutusu Arızaları</h2>
-
-  <h3>1. Yüksek Sıcaklık (Temperature High)</h3>
-  <p><strong>Belirti:</strong> dişli kutusu sıcaklığı normal rüzgâr koşullarında 75-80°C+ (normal: 60-68°C)</p>
-  <p><strong>Olası Nedenler:</strong></p>
-  <ul>
-   <li>Yağ seviyesi düşük (→ soğutma alanı azalmış)</li>
-   <li>Yağ kalitesi kötü (oksidasyon, viskozitet shift)</li>
-   <li>Soğutucunun finleri toz tıkalı (→ radyasyon kötü)</li>
-   <li>Fan motor arızası (aktif soğutma sistemi çalışmıyor)</li>
-   <li>Dişli aşınması aşırı (metal-metal temas artan)</li>
-  </ul>
-  <p><strong>Saha Kontrolü:</strong> <a href="/saha-notlari/disli-kutusu-sicaklik/">Sahadan #2: Dişli Kutusu Sıcaklığı Rüzgâr Hızıyla Artıyor</a></p>
-
-  <h3>2. Yağ Sızıntısı (Oil Leak)</h3>
-  <p><strong>Belirti:</strong> Dişli kutusu altında yağlı lekeler, dipstick seviyesi haftada 10+ cm düşüş</p>
-  <p><strong>Olası Nedenler:</strong></p>
-  <ul>
-   <li>Mil seal bozulması (elastomer çatlamış, kabarmış)</li>
-   <li>Dişli kutusu kasa çatlağı (önceki Sahadan #1)</li>
-   <li>Pluglar veya kapaklar gevşek</li>
-  </ul>
-  <p><strong>Test Yöntemi:</strong> 50 mL/saat kuralı — Haftada 350 mL+ kaybı = servis gerekli</p>
-
-  <h3>3. Anormal Gürültü veya Titreşim</h3>
-  <p><strong>Ses Karakteri:</strong> Çıtırtı (clicking), tıkırtı (knocking), veya kesintili gürültü</p>
-  <p><strong>Sebepler:</strong></p>
-  <ul>
-   <li>Dişli diş eksikliği veya çatlağı (yaşlanmış dişli kutusu)</li>
-   <li>Yatak pitting (yüzey hasarı, lokal çökmeler)</li>
-   <li>Mil sapması (misalignment)</li>
-  </ul>
-  <p><strong>Ölçüm:</strong> Steteskop veya vibration meter (Hz, amplitude)</p>
-
-  <h3>4. Yağ Renk/Koku Anormallikleri</h3>
-  <p><strong>Renk Değişimi:</strong> Açık altın → koyu kahve → siyah (oksidasyon seviyeleri)</p>
-  <p><strong>Koku:</strong> Yanmış kokusu (burn odor) = sıcaklık >120°C, acil durum</p>
-  <p><strong>Lab Analizi Önerileri:</strong></p>
-  <ul>
-   <li>6 ayda bir: TAN (Acid Number), viscosity, Fe (iron) konsantrasyonu</li>
-   <li>Anormal semptom: Peroxide number, oksidation stability ASTM D2272</li>
-  </ul>
-
-  <h3>5. Bakteri/Su Bulaşması</h3>
-  <p><strong>Sebep:</strong> Hava filtresi hasarlı, kapaklar açık, yağ depolama kötü</p>
-  <p><strong>Etki:</strong> Mikrobiyel korrozyon (MIC), asitleşme, metal korozyonu</p>
-  <p><strong>Kontrol:</strong> Yağ örneğinde Karl Fischer su analizi (%<0.3 normal)</p>
-
-  <h2>Periyodik Bakım</h2>
-
-  <div class="kb-table-scroll"><table>
-   <tr><th>Bakım Tipi</th><th>Aralık</th><th>Süresi</th><th>Not</th></tr>
-   <tr><td>Yağ Seviyesi Kontrolü</td><td>Aylık</td><td>5 min</td><td>Visual + dipstick</td></tr>
-   <tr><td>Yağ Renk/Koku Kontrolü</td><td>Aylık</td><td>2 min</td><td>Anomali işareti</td></tr>
-   <tr><td>Soğutucusu Temizliği</td><td>3 Aylık</td><td>30 min</td><td>Finler toz tıkalı mı?</td></tr>
-   <tr><td>Yağ Örneği Alma</td><td>6 Aylık</td><td>15 min</td><td>Lab analiz gerekli</td></tr>
-   <tr><td>Yağ Filtresi Değişimi</td><td>12 Aylık</td><td>1 saat</td><td>Aşınma partikülü kontrolü</td></tr>
-   <tr><td>Seal Muayenesi</td><td>12 Aylık</td><td>30 min</td><td>Çatlak, sızıntı izi</td></tr>
-   <tr><td>Redüktör Kapağı Açma (Servis)</td><td>24-36 Aylık</td><td>4-6 saat</td><td>Dişli pitting, yatak durumu</td></tr>
-  </table></div>
-
-  <h2>Saha Teşhis Rehberi</h2>
-  <ul>
-   <li><strong>İlk Kontrol (5 dakika):</strong> Yağ seviyesi, renk, koku, sızıntı izi, soğutucunun temizliği</li>
-   <li><strong>İkinci Seviye (10 dakika):</strong> Sıcaklık ölçümü (SCADA + IR termometre), gürültü (steteskop)</li>
-   <li><strong>Üçüncü Seviye (1 saat):</strong> Yağ örneği, SCADA trend verisi, geçmiş onarım kayıtları</li>
-   <li><strong>Derin Teşhis (Servis):</strong> Dişli kutusu açılması, dişli muayenesi, yatak kontrolü</li>
-  </ul>
-
-  <h2>İlgili Kaynaklar</h2>
-  <ul>
-   <li><a href="/sistemler/">← Tüm Sistemler</a></li>
-   <li><a href="/saha-notlari/disli-kutusu-sicaklik/">Sahadan #2: Dişli Kutusu Sıcaklığı Kontrolü</a></li>
-   <li><a href="/saha-notlari/pitch-motor-yuksek-akim/">Sahadan #1: Pitch Motor Yüksek Akım</a></li>
-   <li><a href="/araclar/">Torque Hesaplayıcı</a></li>
-  </ul>
-
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/sistemler/">Sistemler</a> <i>/</i> <span aria-current="page">Dişli kutusu</span></nav>
+  <p class="kb-kicker">Teknik referans</p>
+  <h1>Dişli kutusu</h1>
+  <p class="kb-lead">Dişli kutusu, dakikada birkaç ile birkaç on tur arasında dönen rotoru, jeneratörün ihtiyaç duyduğu çok daha yüksek devire çıkarır. Dişli kutulu türbinlerde en pahalı ve en uzun duruşa yol açabilen bileşenlerden biridir; bu yüzden erken uyarıları okumak çok değerlidir.</p>
+  <div class="kb-callout"><p><strong>Genel referans.</strong> Bu sayfa sistemin nasıl çalıştığını ve sahada nelere bakıldığını genel olarak anlatır. Değerler, eşikler, periyotlar ve tork değerleri türbin tipine göre değişir; her zaman üreticinin (OEM) dokümanı esastır.</p></div>
+  <section><h2>Yapı</h2><p>MW sınıfı türbinlerde dişli kutusu çoğunlukla bir ya da iki planet kademesi ile bir ya da iki helisel kademeden oluşur. Planet kademeler büyük torku küçük hacimde taşır, helisel kademe devri yükseltip çıkış milini jeneratör hizasına getirir. Gövde, tork kolları ve elastik destekler üzerinden ana şasiye bağlanır.</p></section><section><h2>Yağlama ve soğutma devresi</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Parça</th><th scope="col">Görevi</th><th scope="col">Sahada neye bakılır</th></tr></thead><tbody><tr><th scope="row">Pompa</th><td>Yağı dişlilere ve rulmanlara basar</td><td>Basınç sinyali, ses</td></tr><tr><th scope="row">Filtreler</th><td>Parçacıkları tutar</td><td>Fark basıncı, değişim periyodu</td></tr><tr><th scope="row">Termostatik vana</th><td>Yağ soğukken soğutucuyu atlatır, ısınınca soğutucuya yollar</td><td>Soğutucu giriş ve çıkışı arasında sıcaklık farkı</td></tr><tr><th scope="row">Yağ–hava soğutucusu ve fan</th><td>Isıyı dışarı atar</td><td>Yüzey temizliği, fanın çalışması</td></tr><tr><th scope="row">Isıtıcı</th><td>Soğuk havada yağı çalışma sıcaklığına getirir</td><td>Soğuk iklimde çalışması</td></tr><tr><th scope="row">Havalandırma (breather) filtresi</th><td>Gövdeyi nefes aldırırken nemi ve tozu tutar</td><td>Doygunluk, çevresinde yağ izi</td></tr></tbody></table></div></section><section><h2>Sensörler ve izleme</h2><p>Yağ sıcaklığı, rulman sıcaklıkları, yağ basıncı ve filtre fark basıncı en sık bulunan sinyallerdir. Birçok türbinde durum izleme sistemi (CMS) titreşimi sürekli kaydeder; bazılarında yağdaki parçacıkları sayan sensör vardır. Sıcaklık tek başına değil, güçle ve komşu türbinlerle birlikte okunur.</p></section><section><h2>Sık arızalar ve ilk bakılacak yer</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Belirti</th><th scope="col">Önce neye bakılır</th></tr></thead><tbody><tr><th scope="row">Aynı güçte komşulardan sıcak</th><td>Yağ seviyesi ve sızıntı, soğutucu, termostatik vana, filtre</td></tr><tr><th scope="row">Tek rulman sıcaklığı ayrışıyor</th><td>CMS spektrumu, yağda metal, endoskop</td></tr><tr><th scope="row">Yağ sızıntısı</th><td>Mil keçeleri, rakorlar, tapa ve contalar, havalandırma filtresi</td></tr><tr><th scope="row">Yağda su ya da bozulma</th><td>Yağ analizi, havalandırma filtresi, soğutucu</td></tr><tr><th scope="row">Yeni bir ses ya da titreşim</th><td>CMS eğilimi, endoskop muayenesi</td></tr></tbody></table></div></section><section><h2>Teşhis araçları</h2><ul><li><strong>Sıcaklık–güç karşılaştırması:</strong> aynı güçte komşu türbinlerle.</li><li><strong>Durum izleme (CMS):</strong> dişli ve rulman frekanslarındaki eğilim.</li><li><strong>Yağ analizi:</strong> metal, su, viskozite ve katkı durumu.</li><li><strong>Endoskop:</strong> dişli yüzeyleri ve rulman yolları; OEM ya da uzman ekip.</li></ul></section><section><h2>Periyodik bakımda</h2><ul><li>Yağ seviyesi ve sızıntı turu.</li><li>Filtre değişimi ve fark basıncının takibi.</li><li>Yağ numunesi OEM periyodunda.</li><li>Soğutucu temizliği ve fan kontrolü.</li><li>Tork kolları ve elastik desteklerin kontrolü.</li></ul></section><section><h2>Güvenlik</h2><p>Dönen miller, sıcak yağ ve sıcak yüzeyler başlıca risklerdir. Muayene ve numune işlemleri OEM talimatına göre türbin uygun moda alındıktan sonra yapılır; dönen ekipmanın kapakları çalışma sırasında açılmaz.</p></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/saha-notlari/disli-kutusu-sicaklik/">Temsili vaka 02 — dişli kutusu sıcaklığı</a></li><li><a href="/deneyim/">Türbinin içine — 3B nasel yolculuğu</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/sistemler/">Bütün sistemler</a></li></ul></div>
  </article>
 </main>
 
@@ -234,9 +63,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/gearbox/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/systems/gearbox/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
