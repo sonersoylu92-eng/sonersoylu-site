@@ -1,32 +1,22 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi? | Sahadan #4</title>
-<meta name="description" content="116 °C alarm, sağlıklı makine. IR termometre ile SCADA arasında 41 °C fark: RTD sensör kalibrasyon kayması nasıl ayırt edilir.">
+<title>Jeneratör Sıcaklık Alarmı — Sensör mü, Gerçek Isınma mı? | Temsili Vaka 04</title>
+<meta name="description" content="Jeneratör sargı sıcaklık alarmında önce ölçüm zincirini doğrulamak: kanal karşılaştırması, PT100 direnci, klemens ve soğutma. Temsili vaka.">
 <link rel="canonical" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/generator-temperature/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?">
-<meta property="og:description" content="116 °C alarm, sağlıklı makine. IR termometre ile SCADA arasında 41 °C fark: RTD sensör kalibrasyon kayması nasıl ayırt edilir.">
+<meta property="og:title" content="Jeneratör sıcaklık alarmı: sensör mü, gerçek ısınma mı? — temsili vaka">
+<meta property="og:description" content="Jeneratör sargı sıcaklık alarmında önce ölçüm zincirini doğrulamak: kanal karşılaştırması, PT100 direnci, klemens ve soğutma. Temsili vaka.">
 <meta property="og:url" content="https://sonersoylu.com/saha-notlari/jenerator-sicaklik/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?",
-  "description": "116 °C jeneratör sıcaklık alarmı: IR termometre ve PT100 direnç ölçümüyle gerçek ısınma ile sensör kayması nasıl ayırt edilir.",
-  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri"},
-  "datePublished": "2026-09-22T00:00:00Z",
-  "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Jeneratör sıcaklık alarmı: sensör mü, gerçek ısınma mı?", "description": "Jeneratör sargı sıcaklık alarmında önce ölçüm zincirini doğrulamak: kanal karşılaştırması, PT100 direnci, klemens ve soğutma. Temsili vaka.", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "datePublished": "2026-09-22", "dateModified": "2026-10-27", "inLanguage": "tr-TR", "mainEntityOfPage": "https://sonersoylu.com/saha-notlari/jenerator-sicaklik/"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -36,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" aria-current="true">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" aria-current="true">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/field-notes/generator-temperature/" hreflang="en" lang="en" title="English">EN</a>
@@ -50,116 +42,19 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" aria-current="true">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" aria-current="true">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
   <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Jeneratör sıcaklık alarmı</span></nav>
-
-  <p class="kb-kicker">Sahadan · Vaka 04</p>
-  <h1>Jeneratör Sıcaklık Alarmı — Arıza Sensörde mi?</h1>
-  <p class="kb-lead">Vestas V126. Jeneratör sargı sıcaklığı 116 °C'ye çıkınca türbin alarmla duruyor, reset atınca normale dönüyor, aynı gün yine duruyor. Ama makinenin geri kalanı sağlıklı görünüyor: ses normal, titreşim yok, soğutma çalışıyor. Okunan değerle makinenin davranışı birbirini tutmuyorsa ikisinden biri yanlıştır. Hangisi olduğunu bulmadan jeneratöre el sürmemek gerekir.</p>
-
-  <h2>Belirti</h2>
-  <ul>
-   <li><strong>Alarm:</strong> Generator temperature high, 116 °C (eşik 115 °C). Türbin duruyor.</li>
-   <li><strong>Reset sonrası:</strong> Türbin normal devreye giriyor; alarm aynı rüzgârda günde 2–3 kez tekrar ediyor.</li>
-   <li><strong>Zaman:</strong> Alarmlar öğleden sonra, nominal güçte (13–15 m/s rüzgârda) geliyor.</li>
-   <li><strong>Trend:</strong> Son üç günde okunan en yüksek değer 110 → 112 → 116 °C. Günde yaklaşık 2 °C'lik düzenli bir tırmanış.</li>
-   <li><strong>Diğer veriler:</strong> Güç, akım ve devir normal. Olağandışı ses, titreşim ya da koku yok.</li>
-  </ul>
-
-  <h2>İlk Değerlendirme</h2>
-  <p>Gerçekten aşırı ısınan bir jeneratör sessiz kalmaz. Sesi değişir, kokusu çıkar, soğutma devresinde bir yerde yükün izi görünür. Burada bunların hiçbiri yoktu. Ciddi bir sayı ama o sayının hiçbir sonucu yok: bu tablo çoğu zaman makine arızasına değil, ölçüm arızasına işaret eder.</p>
-  <p>İkinci ipucu trenddi. Gerçek bir ısınma sorunu yükü ve havayı izler; her gün düzenli olarak 2 °C tırmanmaz. Yükten bağımsız, düzenli bir sürüklenme, makinenin değil ölçüm zincirinin bir yerinin kaydığını düşündürür.</p>
-
-  <h2>Adım Adım Teşhis</h2>
-  <ol class="kb-steps">
-   <li><strong>SCADA kayıtlarını yük verisiyle birlikte inceledim.</strong> Alarm anlarında güç, akım ve devir nominal değerlerdeydi; jeneratör aşırı yüklenmemişti. Sıcaklık yükle birlikte değil, günden güne düzenli olarak yükseliyordu.</li>
-   <li><strong>Türbini durdurup IR termometreyle fiziksel ölçüm aldım.</strong> Vakayı çözen adım bu. Durdurulan jeneratörün gövdesi yaklaşık <strong>62 °C</strong> ölçtü; aynı anda SCADA <strong>103 °C</strong> gösteriyordu. Arada <strong>41 °C</strong> fark vardı. Sargının içindeki sensör gövde yüzeyinden bir miktar sıcak okur; birkaç derecelik fark normaldir, 41 derece değildir.</li>
-   <li><strong>Gövdenin birkaç noktasından ölçüm aldım.</strong> IR ölçümünün yerel bir yanıltma olmadığından emin olmak için. Dağılım düzenliydi; yerel bir sıcak nokta yoktu.</li>
-   <li><strong>Soğutma devresini kontrol ettim.</strong> Fan çalışıyordu (3,2 A), hava akışı normaldi, filtre temizdi. Gerçek bir 116 °C'yi açıklayacak bir şey yoktu; bu da ölçüm hipotezini güçlendirdi.</li>
-   <li><strong>Sensörün direncini ölçtüm.</strong> PT100 sensör 0 °C'de 100 Ω'dur ve her derecede yaklaşık 0,385 Ω artar. Jeneratörün ölçülen 62 °C'si için beklenen değer yaklaşık <strong>124 Ω</strong>. Sensör ise yaklaşık <strong>140 Ω</strong> ölçtü; bu, PT100 tablosunda yaklaşık 103 °C'ye karşılık gelir. Yani SCADA direnci doğru çeviriyordu; yanlış olan direncin kendisiydi.</li>
-   <li><strong>Kablo ve klemens bağlantılarını kontrol ettim.</strong> Gevşek ya da oksitlenmiş bir klemens devreye seri direnç ekler ve tam olarak bu tabloyu üretir. Bağlantılar sağlamdı; sapma sensör elemanının kendisindeydi.</li>
-   <li><strong>Sensörün servis süresine baktım.</strong> Yaklaşık dört yıldır görevdeydi.</li>
-  </ol>
-
-  <div class="kb-callout">
-   <p><strong>Kanıt zinciri:</strong> yükten bağımsız, düzenli tırmanan bir sıcaklık → IR ile SCADA arasında 41 °C fark → soğutmada sorun yok → PT100 direnci gerçek sıcaklığa değil, SCADA'nın gösterdiği sıcaklığa karşılık geliyor → bağlantılar sağlam. Her adım bir öncekini doğruluyor.</p>
-  </div>
-
-  <h2>Kök Neden</h2>
-  <p>Sargı sıcaklık sensöründe (PT100) kayma. Eleman yaklaşık 16 Ω fazla direnç gösteriyordu; bu da okumayı yaklaşık 41 °C yukarı taşıyordu. SCADA bu yanlış direnci doğru şekilde sıcaklığa çevirdi, kontrol sistemi de tasarlandığı işi yaptı: makineyi korumak için sağlıklı bir jeneratörü durdurdu.</p>
-  <p>Bu arızanın maliyeti hasar değildi. Maliyet, kaybedilen üretim ve bir sayının peşinden gidip sağlam bir jeneratörü sökme riskiydi.</p>
-
-  <h2>Çözüm</h2>
-  <ol>
-   <li><strong>Geçici düzeltme:</strong> SCADA'da, fiziksel ölçümle doğrulanmış farka göre geçici bir düzeltme girildi ve türbin üretime döndü. Bu, sahanın ve üreticinin prosedürüne göre, yetkili onayıyla, kayıt altına alınarak ve bitiş tarihi konarak yapılır. Düzeltme süresince okuma düzenli olarak IR ölçümüyle karşılaştırılır; kayma sürüyorsa fark değişir. Jeneratörde yedek sargı sensörü varsa, ona geçmek düzeltme girmekten daha güvenlidir.</li>
-   <li><strong>Alarm eşiği değiştirilmedi:</strong> Düzeltme ile eşik yükseltme birlikte yapılırsa gerçek bir ısınma iki kez gizlenir. Eşik, sebebi bilinmeden ve düzeltme varken değiştirilmez.</li>
-   <li><strong>Sensör değişimi planlandı:</strong> Yeni sensör takıldıktan sonra okuma birkaç yük noktasında IR ölçümüyle doğrulanır.</li>
-   <li><strong>Geçici düzeltme kaldırılır:</strong> Yeni sensör doğrulandığında düzeltme sistemden çıkarılır. Bu adım onarımın parçasıdır; unutulan bir düzeltme bir gün gerçek bir arızayı gizler.</li>
-  </ol>
-
-  <h2>Gerçek Isınma mı, Sensör Kayması mı?</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Kontrol</th><th>Gerçek aşırı ısınma</th><th>Sensör kayması</th></tr>
-   <tr><td>IR termometre ve SCADA</td><td>Birkaç derece içinde uyuşur</td><td>Büyük ve sabit bir fark</td></tr>
-   <tr><td>Yükle ilişkisi</td><td>Yükle birlikte artar, azalır</td><td>Yükten büyük ölçüde bağımsız</td></tr>
-   <tr><td>Trendin şekli</td><td>Düzensiz, havaya bağlı</td><td>Günden güne düzenli tırmanış</td></tr>
-   <tr><td>Ses ve koku</td><td>Genellikle değişir</td><td>Normal</td></tr>
-   <tr><td>Soğutma devresi</td><td>Çoğu zaman bir sebep gösterir</td><td>Bulunacak bir şey yok</td></tr>
-   <tr><td>PT100 direnci</td><td>Ölçülen sıcaklığa karşılık gelir</td><td>Karşılık gelmez</td></tr>
-  </table></div>
-
-  <h2>PT100 Direnç Tablosu</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Sıcaklık</th><th>Direnç</th></tr>
-   <tr><td>0 °C</td><td>100,0 Ω</td></tr><tr><td>20 °C</td><td>107,8 Ω</td></tr><tr><td>40 °C</td><td>115,5 Ω</td></tr><tr><td>60 °C</td><td>123,2 Ω</td></tr><tr><td>80 °C</td><td>130,9 Ω</td></tr><tr><td>100 °C</td><td>138,5 Ω</td></tr><tr><td>120 °C</td><td>146,1 Ω</td></tr>
-  </table></div>
-  <p><small>IEC 60751 standart PT100 değerleri. İki telli bağlantıda kablo direnci de okumaya eklenir; ölçümü mümkünse sensöre en yakın klemensten yapın ve kablo direncini ayrıca not edin.</small></p>
-
-  <h2>Önleyici Bakım</h2>
-  <ul>
-   <li><strong>Her sıcaklık alarmında önce fiziksel ölçüm:</strong> IR termometre birkaç dakika sürer ve sorunun makinede mi ölçümde mi olduğunu hemen ayırır.</li>
-   <li><strong>RTD sensörleri sarf malzemesi gibi düşünün:</strong> Zamanla kayabilirler. Saçma bir okuma beklemek yerine periyodik bakıma direnç kontrolünü ekleyin.</li>
-   <li><strong>Geçici düzeltmeleri kaydedin ve bitiş tarihi koyun:</strong> Kalıcı hale gelen bir düzeltme bir gün gerçek bir arızayı gizler.</li>
-   <li><strong>Yalnız değere değil, trendin şekline bakın:</strong> Yükten bağımsız, düzenli bir günlük tırmanış neredeyse hiçbir zaman gerçek bir ısınma sorunu değildir.</li>
-  </ul>
-
-  <h2>Hızlı Kontrol Listesi</h2>
-  <ul>
-   <li>IR termometreyle jeneratör gövdesini ölç, aynı anda SCADA değerini oku. Fark 10 °C'den büyük mü?</li>
-   <li>Alarm anlarındaki güç, akım ve devir normal mi?</li>
-   <li>Soğutma fanı çalışıyor mu, akımı normal mi, filtre temiz mi?</li>
-   <li>PT100 direncini ölç ve tabloya göre sıcaklığa çevir. Ölçtüğün sıcaklıkla uyuşuyor mu?</li>
-   <li>Klemens ve kablo bağlantıları sıkı ve temiz mi?</li>
-   <li>Aynı jeneratördeki diğer sargı sensörleri ne gösteriyor?</li>
-   <li>Trend yükü mü izliyor, yoksa günden güne düzenli mi tırmanıyor?</li>
-  </ul>
-
-  <aside class="kb-note">
-   <p>Saha Notu</p>
-   <p>Bu vakadan çıkardığım kural şu: bir sayı ile makinenin davranışı birbirini tutmuyorsa, sayıyı kanıtlayana kadar makineye inan. Gerçekten 116 °C'de olan bir jeneratör kendini belli eder. Bu makine sessizdi; sessizliği de kanıtın kendisiydi.</p>
-   <p>Disiplin isteyen kısım geçici düzeltme. Sensör beklerken türbini üretimde tutmak için doğru hamle; ama kimse yazmazsa kalıcı hale gelen türden bir çözüm. Değişimden sonra onu kaldırmak onarımın parçası, sonradan akla gelen bir iş değil.</p>
-   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr Türbini Saha Servis Teknikeri — Enercon, Nordex, Vestas · GWO sertifikalı</span></p>
-  </aside>
-
-  <div class="kb-callout">
-   <p><strong>Uyarı:</strong> Jeneratör terminal kutusunda yüksek gerilim bulunur. Sensör ölçümü ve değişimi türbin durdurulup devre ayrıldıktan, gerilim yokluğu ölçümle doğrulandıktan ve kilitleme-etiketleme (LOTO) uygulandıktan sonra yapılır. SCADA'da düzeltme ya da parametre değişikliği yalnızca yetkili onayıyla ve üretici prosedürüne göre yapılır. Bu not saha deneyimidir, servis dokümanının yerine geçmez.</p>
-  </div>
-
-  <div class="kb-rel">
-   <p class="k">İlgili kaynaklar</p>
-   <ul>
-    <li><a href="/teshis/#jenerator">Bu vakayı simülatörde çöz</a></li>
-    <li><a href="/sistemler/jenerator/">Jeneratör ve Converter Sistemi</a></li>
-    <li><a href="/saha-notlari/converter-asiri-akim/">Sahadan #5: Converter Aşırı Akım</a></li>
-    <li><a href="/turbinler/vestas/v126/">Vestas V126 — model rehberi</a></li>
-    <li><a href="/saha-notlari/">Tüm saha notları</a></li>
-    <li><a href="/ariza/">Arıza teşhis ağacı — belirtiden nedene</a></li>
-   </ul>
-  </div>
-
+  <p class="kb-kicker">Temsili vaka · 04</p>
+  <h1>Jeneratör sıcaklık alarmı: sensör mü, gerçek ısınma mı?</h1>
+  <p class="kb-lead">Jeneratör sargı sıcaklığı alarmı türbini durdurur. Önce şu soru sorulur: jeneratör gerçekten mi ısınıyor, yoksa onu ölçen zincir mi yanlış söylüyor? Bu ayrım hem gereksiz parça değişimini hem de gerçek bir ısınmayı gözden kaçırmayı önler.</p>
+  <p class="kb-meta"><span>Sistem: Jeneratör</span><span>Arıza türü: Sensör</span><span>Nasıl yakalanır: Alarm</span></p>
+  <div class="kb-callout"><p><strong>Temsili vaka.</strong> Bu sayfa sahada sık görülen bir arıza örüntüsünü, bir teşhis sırası olarak anlatır. Belirli bir santral, türbin ya da tarih anlatılmıyor; sayılar yalnız örnektir ve eşikler türbin tipine göre değişir. Kendi türbininizde üreticinin (OEM) talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir; enerjili ekipmana yakın çalışma yalnız yetkili personelle yapılır.</p></div>
+  <section><h2>Belirti</h2><p>Yüksek güçte tek bir sargı sıcaklık kanalı alarm eşiğini aşıyor ve türbin duruyor. Reset sonrası türbin çalışıyor, alarm birkaç gün içinde tekrar ediyor. Örnek değerler: diğer sargı kanalları 95–98 °C civarında, alarm veren kanal 116 °C, eşik 115 °C.</p></section><section><h2>Kuleye çıkmadan önce</h2><p>Bütün sargı ve rulman sıcaklıklarını, güç ve akımla birlikte aynı grafikte açın; varsa soğutma havasının giriş ve çıkış sıcaklıklarını da ekleyin. Bütün kanallar birlikte yükseliyorsa gerçek ısınma ya da soğutma sorunu öne çıkar. Tek kanal diğerlerinden sürekli ayrışıyorsa önce ölçüm zinciri şüphelidir.</p><p>Bu vakada alarm veren kanal, aynı sargının diğer kanallarından her yükte 15–20 °C yüksek okuyordu. Fark yükle değil, sabit bir kaymayla davranıyordu.</p></section><section><h2>PT100 hakkında bilinmesi gereken</h2><p>Sargı sıcaklıkları çoğunlukla PT100 sensörlerle ölçülür: 0 °C’de 100 Ω, her derecede yaklaşık 0,385 Ω artar (100 °C’de yaklaşık 138,5 Ω). İki telli bağlantıda kablonun ve klemensin her fazla ohmu sıcaklığı yüksek gösterir: kabaca 0,4 Ω, 1 °C demektir. Gevşek ya da oksitlenmiş bir klemens, makine soğukken bile sıcaklığı olduğundan yüksek gösterebilir.</p><p>Yüzeyi kızılötesi termometreyle ölçüp sensörle karşılaştırmak tek başına kanıt değildir: sargının içi gövde yüzeyinden sıcaktır. Daha güvenilir karşılaştırma, durmuş ve soğumuş makinede bütün kanalların birbirine yakın okuyup okumadığıdır.</p></section><section><h2>Olası nedenler</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Olası neden</th><th scope="col">Ne düşündürür</th><th scope="col">Nasıl ayrılır</th></tr></thead><tbody><tr><th scope="row">Gevşek ya da oksitli klemens, konnektör</th><td>Tek kanal sabit farkla yüksek</td><td>Sensör ucunda ve kontrol girişinde direnç ölçümü</td></tr><tr><th scope="row">Kablo hasarı</th><td>Kanal oynak, sıçramalı</td><td>Kablo boyunca görsel kontrol, direnç ve izolasyon</td></tr><tr><th scope="row">Sensörün kendisi</th><td>Soğuk makinede de ayrışıyor, bağlantılar sağlam</td><td>Sensör ucunda ölçülen direncin sıcaklık tablosuyla karşılaştırılması</td></tr><tr><th scope="row">Kontrol sistemi giriş kartı</th><td>Aynı karttaki başka kanallarda da tuhaflık</td><td>Kanalı bilinen bir dirençle sınamak (OEM yöntemiyle)</td></tr><tr><th scope="row">Gerçek ısınma</th><td>Bütün kanallar birlikte yüksek</td><td>Soğutma fanı, hava filtresi, hava yolu, yük ve akım dengesi</td></tr></tbody></table></div></section><section><h2>Teşhis sırası</h2><ol class="kb-steps"><li><strong>Kanalları karşılaştır.</strong> SCADA’da bütün sargı kanalları, aynı yükte.</li><li><strong>Soğuk makine testi.</strong> Türbin durup jeneratör soğuduğunda bütün kanallar birbirine ve ortam sıcaklığına yaklaşmalı. Hâlâ ayrışan kanal ölçüm zincirini gösterir.</li><li><strong>Direnci iki noktada ölç.</strong> LOTO uygulandıktan sonra sensörün direnci önce sensör ucunda, sonra kontrol girişinde ölçülür. Aradaki fark kablo ya da klemensten gelir.</li><li><strong>Bağlantıları kontrol et.</strong> Klemens bloğu, konnektörler, ekranlama; oksit, ısınma izi ve sıkılık.</li><li><strong>Yedek sensör.</strong> Birçok jeneratörde yedek sensör bulunur; OEM izniyle yedek kanala geçilebilir.</li><li><strong>Gerçek ısınmayı dışla.</strong> Fan, hava filtresi ve hava yolunu yine de kontrol et; bir arıza diğerini gizleyebilir.</li></ol></section><section><h2>Bu vakada ne çıktı</h2><p>Soğumuş makinede de aynı kanal diğerlerinden yüksek okuyordu. Sensör ucunda ölçülen direnç ortam sıcaklığına uygundu; kontrol girişinde ölçülen direnç ise birkaç ohm daha yüksekti. Klemens bloğundaki bağlantı oksitlenmiş ve gevşemişti. Ek direnç okumayı yaklaşık 15–20 °C yukarı taşıyordu; yüksek yükte bu kayma eşiği aştırıyordu.</p></section><section><h2>Kalıcı çözüm ve doğrulama</h2><p>Klemens temizlenip yenilendi, bağlantı sıkıldı, kablonun geri kalanı kontrol edildi. Kanal diğer kanallarla aynı banda döndü. Doğrulama için türbin bir hafta boyunca yüksek güçte izlendi.</p></section><section><h2>Bakımda bunu yakalamak</h2><ul><li>Aylık raporda aynı sargının kanalları arasındaki fark; büyüyen fark erken uyarıdır.</li><li>Klemens kutularında periyodik görsel kontrol ve sıkılık.</li><li>Soğutma havası filtrelerinin ve fanın takvime uygun bakımı.</li></ul></section><section><h2>Sık yapılan hatalar</h2><ul><li>Alarm eşiğini yükseltmek ya da kanalı devreden çıkarmak. Bu, korumayı kaldırmaktır; asla yapılmaz.</li><li>Klemensi kontrol etmeden sensörü değiştirmek.</li><li>Yüzey sıcaklığını ölçüp sargı sıcaklığı hakkında karar vermek.</li></ul></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/sistemler/jenerator/">Jeneratör ve converter — nasıl çalışır</a></li><li><a href="/teshis/#jenerator">Teşhis simülatörü — bu vakayı kendin çöz</a></li><li><a href="/kodlar/">Durum ve alarm kodlarını okumak</a></li><li><a href="/saha-notlari/">Bütün temsili vakalar</a></li></ul></div>
  </article>
 </main>
 
@@ -169,9 +64,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/generator-temperature/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/generator-temperature/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
