@@ -1,32 +1,22 @@
 <!doctype html>
 <html lang="tr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pitch Motor Yüksek Akım — Nordex N117'de Saha Teşhisi | Sahadan #1</title>
-<meta name="description" content="Pitch motor akımı 12 A yerine 18 A. Altı adımlık saha teşhisi, kök neden redüktör yağ kaçağı, altı saatte kalıcı çözüm.">
+<title>Pitch Motoru Yüksek Akım Çekiyor — Teşhis Sırası | Temsili Vaka 01</title>
+<meta name="description" content="Pitch motoru tek eksende yüksek akım çekiyorsa sıra nasıl kurulur: SCADA trendi, eksen karşılaştırması, fren, sargı ve redüktör kontrolleri. Temsili vaka.">
 <link rel="canonical" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/pitch-motor-high-current/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pitch Motor Yüksek Akım — Saha Teşhisi ve Çözüm">
-<meta property="og:description" content="Pitch motor akımı 12 A yerine 18 A. Altı adımlık saha teşhisi, kök neden redüktör yağ kaçağı, altı saatte kalıcı çözüm.">
+<meta property="og:title" content="Pitch motoru yüksek akım çekiyor — temsili vaka">
+<meta property="og:description" content="Pitch motoru tek eksende yüksek akım çekiyorsa sıra nasıl kurulur: SCADA trendi, eksen karşılaştırması, fren, sargı ve redüktör kontrolleri. Temsili vaka.">
 <meta property="og:url" content="https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Pitch Motor Yüksek Akım — Saha Teşhisi ve Çözüm",
-  "description": "Rüzgâr türbinlerinde pitch motor akımı yüksek geldiğinde adım adım teşhis ve çözüm süreci.",
-  "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri"},
-  "datePublished": "2024-09-22T00:00:00Z",
-  "inLanguage": "tr-TR"
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Pitch motoru yüksek akım çekiyor", "description": "Pitch motoru tek eksende yüksek akım çekiyorsa sıra nasıl kurulur: SCADA trendi, eksen karşılaştırması, fren, sargı ve redüktör kontrolleri. Temsili vaka.", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Rüzgâr Türbini Saha Servis Teknikeri", "url": "https://sonersoylu.com/hakkimda/"}, "datePublished": "2026-09-22", "dateModified": "2026-10-27", "inLanguage": "tr-TR", "mainEntityOfPage": "https://sonersoylu.com/saha-notlari/pitch-motor-yuksek-akim/"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -36,13 +26,15 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">İçeriğe geç</a>
 
 <header>
  <div class="wrap bar">
   <a class="brand" href="/">Soner Soylu</a>
-  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" aria-current="true">Saha notları<span>Gerçek arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
+  <nav class="desk"><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/" aria-current="true">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a></nav>
   <div class="hd-right">
    <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
    <a class="lang" href="/en/field-notes/pitch-motor-high-current/" hreflang="en" lang="en" title="English">EN</a>
@@ -50,217 +42,19 @@
    <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
   </div>
  </div>
- <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" aria-current="true">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
+ <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/" aria-current="true">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#saha">Saha geçmişi</a><a href="/#sahadan">Sahadan</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Sahadan #1: Pitch Motor Yüksek Akım</span></nav>
-  <p class="kb-kicker">Sahadan · Vaka 01</p>
-  <h1>Pitch Motor Yüksek Akım — Saha Teşhisi ve Çözüm</h1>
-  <p class="kb-lead"><strong>Belirti:</strong> Kontrol sisteminde "Pitch motor phase current high" veya "Phase A overcurrent" alarmı. Motor çalışmaya çalışıyor ama hareket etmiyor veya çok zor hareket ediyor.</p>
-
-  <section id="background">
-   <h2>Olayın Sırası</h2>
-   <p>Bergama'da, Nordex N117 sitesi. Türbin sabah açılmaya çalışıyor ama pitch sistem devreye giremiyor. SCADA'da <code>Pitch motor phase current high (Motor A)</code> alarmı gelmiş. Teknikyen çağrıldı.</p>
-
-   <p><strong>Durum:</strong></p>
-   <ul>
-    <li>Türbin: Nordex N117/3000</li>
-    <li>Yaş: 7 yıl</li>
-    <li>Son bakım: 8 ay önce</li>
-    <li>Motor akımı: 18A (Normal: 12A, Alarm: >15A)</li>
-   </ul>
-  </section>
-
-  <section id="diagnosis">
-   <h2>Saha Teşhisi (Step by Step)</h2>
-
-   <h3>Adım 1: Kanatları Elle Döndürme Testi (2 dakika)</h3>
-   <p><strong>Amaç:</strong> Mekanik blokaj var mı?</p>
-   <p><strong>Protokol:</strong></p>
-   <ol>
-    <li>Kontrol sistemini OFF koy (Main breaker)</li>
-    <li>Bir kanatı kanat ucu seviyesinden hafifçe ittir</li>
-    <li>Tüm üç kanatı sırayla dönmeyi dene</li>
-   </ol>
-   <p><strong>Bulgu:</strong> Bir kanat (A kanatı) normalden daha sıkı hareket ediyor. Diğer iki kanat rahat.</p>
-   <p><strong>İlk İçgörü:</strong> A kanatının pitch motor redüktöründe mekanik tutuşma var olabilir.</p>
-
-   <h3>Adım 2: Motor Bobinleri Dirençlerini Ölçme (5 dakika)</h3>
-   <p><strong>Amaç:</strong> Motor sarımında açık devreye, kısaya var mı?</p>
-   <p><strong>Ölçüm:</strong> Çok metreyle (Multimeter), 2 kΩ aralığında:</p>
-   <ul>
-    <li>Faz A — Faz B: 8.2 Ω ✓ (Normal)</li>
-    <li>Faz B — Faz C: 8.1 Ω ✓ (Normal)</li>
-    <li>Faz C — Faz A: 8.3 Ω ✓ (Normal)</li>
-   </ul>
-   <p><strong>Sonuç:</strong> Motor sağlam, sarım açık değil.</p>
-
-   <h3>Adım 3: Redüktör Yağı Kontrolü (3 dakika)</h3>
-   <p><strong>Amaç:</strong> Yağ seviyeleri normal mi? Yağ dokulu mi?</p>
-   <p><strong>Kontrolü:</strong></p>
-   <ul>
-    <li><strong>Seviye:</strong> Dipstick ile minimum seviyede (Düşük!)</li>
-    <li><strong>Renk:</strong> Koyu kahve (Normal: açık altın)</li>
-    <li><strong>Koku:</strong> Yanmış koku var (⚠️ Sorun işareti)</li>
-    <li><strong>Parçacık:</strong> Metalik parçacık görülüyor</li>
-   </ul>
-   <p><strong>Tanı:</strong> Redüktör yağı aşırı ısınmış, aşınma başlamış.</p>
-
-   <h3>Adım 4: Redüktör İçinden Ses + Titreşim (2 dakika)</h3>
-   <p><strong>Yöntem:</strong> Stetoskop veya teskopi soketinin kulak ucunu redüktör konturuna koy.</p>
-   <p><strong>Bulgular:</strong></p>
-   <ul>
-    <li>Normal çalışmada: Düşük gürültü (50-60 dB)</li>
-    <li>Bu vakada: Şekil değişen gürültü, "çıtırtı" (Gear teeth uyumsuzluğu işareti)</li>
-    <li>Titreşim: 3-4 mm/s (Normal: <2 mm/s)</li>
-   </ul>
-
-   <h3>Adım 5: Kanat Pozisyon Sensörlerini Ölçme (3 dakika)</h3>
-   <p><strong>Amaç:</strong> Sensor çıkışı doğru mu?</p>
-   <div class="kb-table-scroll"><table class="sensor-table">
-    <tr><th>Kanat</th><th>Beklenen (V)</th><th>Ölçülen (V)</th><th>Durumu</th></tr>
-    <tr><td>A</td><td>2.5</td><td>2.5</td><td>✓</td></tr>
-    <tr><td>B</td><td>2.5</td><td>2.5</td><td>✓</td></tr>
-    <tr><td>C</td><td>2.5</td><td>2.5</td><td>✓</td></tr>
-   </table></div>
-   <p><strong>Sonuç:</strong> Sensorler tamam. Sorun motor veya redüktörde.</p>
-
-   <h3>Adım 6: SCADA Veri Kaydı Kontrol Etme</h3>
-   <p><strong>Sorgu:</strong> Son 30 günde pitch motor akımı trendi nedir?</p>
-   <p><strong>Bulgu:</strong> Akım, 8 ay önceki 11A'dan kademeli olarak 18A'ya çıkmış:</p>
-   <ul>
-    <li>Aylar: 11A → 12.5A → 14A → 16A → 18A</li>
-    <li>Çıkış: Doğrusal artış (Aşınma işareti)</li>
-   </ul>
-   <p><strong>İçgörü:</strong> Birdenbire olmayan, kademeli kötüleşme = redüktör iç aşınması</p>
-
-  </section>
-
-  <section id="root-cause">
-   <h2>Kök Neden: Redüktör Yağ Boşluğu</h2>
-   <p>Tüm bulgular bir sonuca işaret ediyor:</p>
-   <blockquote>
-    <strong>Pitch motor redüktöründe yağ eksikliği var. Redüktör dişlileri yağsız çalışmış, aşınmış.</strong>
-   </blockquote>
-
-   <h3>Neden Yağ Eksildi?</h3>
-   <p>İncelemede bulundu:</p>
-   <ul>
-    <li><strong>Sızıntı Noktası:</strong> Redüktör konturunda ufak çatlak (2mm)</li>
-    <li><strong>Zaman Tahmini:</strong> 2-3 aydır sızıyor</li>
-    <li><strong>Kaybedilen Yağ:</strong> Tahmini 40-50 litre (Kapasite: 120 litre)</li>
-   </ul>
-
-   <h3>Neden Alarm Son Adımda Çalıştı?</h3>
-   <p>Redüktör yağı 30 litreden az kaldığında:</p>
-   <ul>
-    <li>Dişli temas yüzeyindeki film kalınlığı azalır</li>
-    <li>Friksyon artarsa, motor akımı artar</li>
-    <li>Sıcaklık yükselir (Viskositeyi azaltır → Daha fazla akım)</li>
-    <li>Son noktada motor hiç hareket edemiyor (Motor locked rotor current)</li>
-   </ul>
-
-  </section>
-
-  <section id="solution">
-   <h2>Çözüm ve Tamir</h2>
-
-   <h3>Faz 1: Acil Tedbir (30 dakika)</h3>
-   <ol>
-    <li><strong>Türbini Durdur</strong> — Güvenlik</li>
-    <li><strong>Çatlağın Altına Hazne Koy</strong> — Kalanını kurtara</li>
-    <li><strong>Yağı Takip Et</strong> — Sonraki 4 saat hiç damla yağ yoksa kapak geçişi</li>
-   </ol>
-
-   <h3>Faz 2: Tamir (2-3 saat)</h3>
-   <ol>
-    <li><strong>Redüktörü Boşalt</strong> — 80 litre kuveti</li>
-    <li><strong>Kapağı Kaldır</strong> — Çatlağı görselleştir</li>
-    <li><strong>Çatlak Kaynak</strong> — Steel TIG weld, sonra NDT (X-ray veya UT)</li>
-    <li><strong>Dişlileri Kontrol Et</strong> — Işık altında, magnetik parçacık kontrolü</li>
-    <li><strong>Filtre Değiştir</strong> — Aşınma parçacıkları için</li>
-    <li><strong>Yeni Yağ Dol</strong> — 100 litre, doğru grade (Tipik: ISO 220, Sinteti)</li>
-   </ol>
-
-   <h3>Faz 3: Test (1 saat)</h3>
-   <ol>
-    <li><strong>Motor Devreye Al</strong> — Boş çalışma, akım ölç (Hedef: <12A)</li>
-    <li><strong>Kanat Hareketi Test Et</strong> — Pitch senkodan tüm 120° hareket</li>
-    <li><strong>Sıcaklık Takip Et</strong> — İlk 20 dakika, 45°C'de stabil olmalı</li>
-    <li><strong>Sızıntı Yoklaması</strong> — Redüktör konturunun altında hiç damla yok</li>
-   </ol>
-
-  </section>
-
-  <section id="learning">
-   <h2>Çıkarılan Dersler</h2>
-
-   <p><strong>1. Periyodik Bakımdaki Hata</strong></p>
-   <p>Son bakımda yağ seviyesi kontrol edilmemişti. Prosedürde yazılı ama yapılmamış. Sonuç: 2-3 ay aşınma.</p>
-
-   <p><strong>2. Trend Verilerine Bakmanın Önemi</strong></p>
-   <p>SCADA kütüğünde akım artışı 8 ay öncesinden başlamıştı. Bir kez bakım yapılırken "motor akımı 11A olsun" diye alarm eşiğini değiştirmiş birileri? Olmayan kütük yok, ama tarihte fark görülüyordu.</p>
-
-   <p><strong>3. Kanatları Elle Döndürmenin Gücü</strong></p>
-   <p>Dijital ölçümlerden önce, mekanik hisse başladık. Basit bir hareket, sorunun konumunu hemen ortaya koydu.</p>
-
-   <p><strong>4. Malzeme Bilgisi</strong></p>
-   <p>Yağın "yanmış koku"su = yağ sıcaklığının 120°C'yi aştığı anlamı. Redüktörün "güvenli" sıcaklık aralığı 50-70°C'dir. Uyarı işareti gözden kaçırılmış.</p>
-
-  </section>
-
-  <section id="timeline">
-   <h2>Saha İşleminin Kronolojisi</h2>
-   <p><strong>08:00</strong> — Teknisyen site'ye varış<br>
-   <strong>08:15</strong> — Elle döndürme testi<br>
-   <strong>08:25</strong> — Motor direnci ölçme<br>
-   <strong>08:35</strong> — Redüktör yağı kontrolü (Hemen fark edildi)<br>
-   <strong>09:15</strong> — Redüktörü boşaltma başladı<br>
-   <strong>11:30</strong> — Çatlak kaynak tamamlandı<br>
-   <strong>12:45</strong> — Yeni yağ doldurma ve sızıntı kontrolü<br>
-   <strong>13:30</strong> — Motor testleri, akım ölçümü (12A ✓)<br>
-   <strong>14:00</strong> — Türbin devreye girer<br></p>
-   <p><strong>Toplam Downtime: 6 saat</strong></p>
-  </section>
-
-  <section id="prevention">
-   <h2>Benzer Sorunları Nasıl Önlerim?</h2>
-
-   <p><strong>Kontrol Listesi (Her 3 Aylık Bakımda):</strong></p>
-   <ul>
-    <li>☐ Pitch motor akımı trend oku (SCADA)</li>
-    <li>☐ Redüktör yağ seviyesini ölç (Dipstick)</li>
-    <li>☐ Yağ renk ve kokusunu kontrol et</li>
-    <li>☐ Redüktör konturunda sızıntı ara (Redüktörün alt kısmında aydınlatma ile)</li>
-    <li>☐ Elle kanat dönme testini yap (Aşırı direnç?)</li>
-    <li>☐ Motor akımı normalse (< 12A), belge yaz ve arşivle</li>
-   </ul>
-
-   <p><strong>Alarm Eşikleri:</strong></p>
-   <ul>
-    <li>Motor akımı > 14A → Kontrol listesi çalıştır</li>
-    <li>Motor akımı > 16A ve artan → Servise al</li>
-    <li>Yağ sıcaklığı > 75°C → Redüktör analizi yap</li>
-   </ul>
-
-  </section>
-
-  <section id="related">
-   <h2>İlgili İçerikler</h2>
-   <ul>
-    <li><a href="/sistemler/pitch/">Pitch Sistemi — Teknik Rehber</a></li>
-    <li><a href="/ariza/">Arıza Teşhis Ağacı — Pitch Motor Koluyı</a></li>
-    <li><a href="/araclar/">Torque Hesaplayıcı</a></li>
-    <li><a href="/saha-notlari/">← Tüm Saha Teşhisleri</a></li>
-   </ul>
-  </section>
-
-  <footer class="field-note-footer">
-   <p><strong>⚠️ Saha Notu</strong></p>
-   <p>Bu hikaye, Bergama RES'inde 2023 yılında yaşadığım gerçek bir olaydır. Teknikyen adını koruması için değiştirildi. Protokoller ve ölçüm değerleri industri standartlarına göre yazılmıştır. Kendi sitenizde benzer belirti görürseniz, aynı adımları izleyin — ama emniyetli çalışmayı unutmayın. Her saha işi unique'dir.</p>
-  </footer>
-
+  <nav class="kb-crumb"><a href="/">Anasayfa</a> <i>/</i> <a href="/saha-notlari/">Saha Notları</a> <i>/</i> <span aria-current="page">Pitch motoru yüksek akım</span></nav>
+  <p class="kb-kicker">Temsili vaka · 01</p>
+  <h1>Pitch motoru yüksek akım çekiyor</h1>
+  <p class="kb-lead">Elektrikli pitch sistemlerinde “motor akımı yüksek” alarmı çoğu zaman motorun değil, motorun çevirdiği yükün habercisidir. Bu vaka, tek bir eksende aylar içinde yükselen akımın kök nedenine adım adım nasıl inildiğini anlatır.</p>
+  <p class="kb-meta"><span>Sistem: Pitch</span><span>Arıza türü: Mekanik</span><span>Nasıl yakalanır: Alarm</span></p>
+  <div class="kb-callout"><p><strong>Temsili vaka.</strong> Bu sayfa sahada sık görülen bir arıza örüntüsünü, bir teşhis sırası olarak anlatır. Belirli bir santral, türbin ya da tarih anlatılmıyor; sayılar yalnız örnektir ve eşikler türbin tipine göre değişir. Kendi türbininizde üreticinin (OEM) talimatı, LOTO prosedürü ve iş güvenliği kuralları geçerlidir; enerjili ekipmana yakın çalışma yalnız yetkili personelle yapılır.</p></div>
+  <section><h2>Belirti</h2><p>Türbin sabah devreye girerken pitch sistemi hazır olmuyor ve kontrol sistemi tek bir eksen için “pitch motor akımı yüksek” alarmı veriyor. Diğer iki eksen normal. Örnek değerler: sağlam eksenler aynı harekette yaklaşık 12 A çekerken sorunlu eksen 18 A çekiyor, alarm eşiği 15 A. Bu sayılar yalnız örnektir; motor tipi ve eşikler türbinden türbine değişir.</p></section><section><h2>Kuleye çıkmadan önce</h2><p>En ucuz bilgi masada. SCADA’dan alarm geçmişini ve üç eksenin motor akımını aynı grafikte açın. İki şeye bakılır: akım bir gün aniden mi sıçradı, yoksa aylar içinde yavaş yavaş mı arttı? Ve bu artış tek eksende mi, üçünde birden mi?</p><p>Ani sıçrama daha çok elektriksel bir kopmayı (faz kaybı, sürücü, bağlantı) düşündürür. Yavaş ve düzenli artış ise büyüyen bir mekanik direnci düşündürür. Tek eksende görülen artış o eksenin kendi zincirini (motor, fren, redüktör, pinyon) işaret eder; üç eksende birden artış ise ortak bir nedeni: soğuk hava, yatak yağlaması, besleme ya da kontrol.</p><p>Bu vakada akım tek eksende ve aylar içinde kademeli olarak yükselmiş. Soğuk sabahlarda tepe yapıp gün içinde biraz düşüyor ama her ay bir öncekinden yüksek.</p></section><section><h2>Olası nedenler</h2><div class="kb-table-scroll"><table><thead><tr><th scope="col">Olası neden</th><th scope="col">Ne düşündürür</th><th scope="col">Nasıl ayrılır</th></tr></thead><tbody><tr><th scope="row">Motor freni tam açmıyor</th><td>Akım hareketin başından yüksek, motor ve fren ısınır</td><td>Fren açma geriliminin bobine gelmesi, fren hava aralığının OEM değeri, fren doğrultucusu</td></tr><tr><th scope="row">Redüktörde yağ eksikliği ya da aşınma</th><td>Aylar içinde kademeli artış, redüktörden ses</td><td>Yağ seviyesi, keçe çevresinde sızıntı izi, yağın rengi ve içindeki parçacık</td></tr><tr><th scope="row">Pitch yatağında yağlama yetersizliği</th><td>Belirli açılarda zorlanma, çoğu zaman birden çok eksende</td><td>Yağlama pompası ve dağıtıcının çalışması, tahliye gresinin durumu</td></tr><tr><th scope="row">Motor sargısı ya da izolasyon</th><td>Faz dengesizliği, motor gövdesi sıcak</td><td>LOTO sonrası faz–faz direnç dengesi ve izolasyon direnci</td></tr><tr><th scope="row">Sürücü ya da besleme</th><td>Ani değişim, sürücü olay kaydında hata</td><td>Sürücünün kendi kaydı, pens ampermetreyle bağımsız akım ölçümü</td></tr><tr><th scope="row">Soğuk hava</th><td>Sabah ilk hareketlerde yüksek, ısınınca düşüyor</td><td>Akımın ortam sıcaklığıyla birlikte değişmesi</td></tr></tbody></table></div></section><section><h2>Teşhis sırası</h2><ol class="kb-steps"><li><strong>Trendi oku, eksenleri karşılaştır.</strong> Üç eksenin akımını aynı harekette yan yana koy. Aynı türbinin sağlam eksenleri, sorunlu eksen için en iyi referanstır.</li><li><strong>Güvenli başla.</strong> Türbini durdur, rotoru kilitle ve pitch sistemini OEM talimatına uygun servis moduna al. Kanatları elle itmek ya da servis modu dışında hareket ettirmek yok; pitch aynı zamanda türbinin ana fren sistemidir.</li><li><strong>Eksenleri tek tek, düşük hızda hareket ettir.</strong> Servis modunda her ekseni aynı açı aralığında oynat; akımı, süreyi ve sesi karşılaştır. Zorlanma belirli bir açıda mı, bütün aralıkta mı?</li><li><strong>Freni kontrol et.</strong> Fren açma komutu geldiğinde bobine gerilim geliyor mu, fren tam açılıyor mu, hava aralığı OEM değerinde mi? Kısmen açık kalan bir fren, motorun her harekette frene karşı çalışması demektir.</li><li><strong>Motoru içeri al ya da listeden çıkar.</strong> LOTO uygulayıp faz–faz sargı dirençlerini ve izolasyon direncini (OEM’in belirttiği test gerilimiyle) ölç. Üç faz birbirine yakın ve izolasyon iyiyse yük mekanik taraftan geliyordur.</li><li><strong>Redüktöre bak.</strong> Yağ seviyesini (gözetleme camı ya da seviye çubuğu) kontrol et, keçe ve tapa çevresinde sızıntı izi ara. Yağın rengi, kokusu ve içindeki parçacık çok şey söyler; gerekirse numune al.</li><li><strong>Yatağı ve dişliyi kontrol et.</strong> Yağlama pompası ve dağıtıcı çalışıyor mu, pinyon ile yatak dişlisi arasında aşınma ya da çapak var mı?</li></ol></section><section><h2>Bu vakada ne çıktı</h2><p>Sargı dirençleri dengeli, izolasyon iyi; fren açma gerilimi geliyor ve fren tam açılıyor. Motor ve fren listeden çıktı. Sorunlu eksenin redüktöründe ise yağ seviyesi alt sınırın altındaydı. Çıkış mili keçesinin çevresinde aylardır süren küçük bir sızıntının izi vardı; yağ koyulaşmış ve içinde metal parçacık görülüyordu.</p><p>Kök neden: yavaş bir yağ kaçağı redüktörü aylar içinde yetersiz yağla bıraktı. Dişliler aşındıkça sürtünme arttı, motor aynı hareket için daha çok akım çekti ve sonunda alarm eşiği aşıldı.</p></section><section><h2>Kalıcı çözüm ve doğrulama</h2><p>Yalnız keçeyi yenileyip yağı tamamlamak sızıntıyı durdurur ama aşınmış dişliyi geri getirmez. Yağdaki parçacık ve aşınma bulgusu nedeniyle redüktör OEM prosedürüyle değiştirildi. Aynı türbinin diğer iki redüktöründe de seviye ve sızıntı kontrolü yapıldı.</p><p>Doğrulama: üç eksenin akımı aynı harekette yeniden birbirine yaklaştı. Trend iki hafta boyunca, soğuk sabahlar dahil izlendi.</p></section><section><h2>Bakımda bunu yakalamak</h2><ul><li>Her periyodik bakımda redüktör yağ seviyesi ve keçe çevresi kontrolü; prosedürde yazan adımın gerçekten yapıldığını kayda geçirin.</li><li>Ayda bir, üç eksenin akımını karşılaştıran kısa bir SCADA bakışı. Eşiğe değil eğime bakın: eşik aşıldığında hasar çoktan oluşmuştur.</li><li>Fren hava aralığı ve fren doğrultucusu OEM periyodunda.</li><li>Soğuk dönemde sabah ilk hareket akımının ayrıca izlenmesi.</li></ul></section><section><h2>Sık yapılan hatalar</h2><ul><li>Alarmı resetleyip tekrar tekrar denemek. Zorlanan bir ekseni zorlamak hasarı büyütür.</li><li>Kanıt olmadan motoru değiştirmek. Yüksek akım çoğu zaman yükün belirtisidir.</li><li>Nedeni bulmadan yatağı greslemek ya da yağ eklemek: elinizdeki kanıtı değiştirir.</li><li>Tek bir ölçüme güvenmek. Karar, trend ve eksen karşılaştırmasıyla birlikte verilir.</li></ul></section>
+  <div class="kb-author"><span class="who">Soner Soylu</span><span class="role">Rüzgâr türbini saha servis teknikeri</span></div>
+  <div class="kb-rel"><p class="k">İlgili</p><ul><li><a href="/sistemler/pitch/">Pitch sistemi — nasıl çalışır, ne arızalanır</a></li><li><a href="/teshis/#pitch">Teşhis simülatörü — bu vakayı adım adım kendin çöz</a></li><li><a href="/ariza/">Arıza teşhis ağacı — belirtiden nedene</a></li><li><a href="/saha-notlari/">Bütün temsili vakalar</a></li></ul></div>
  </article>
 </main>
 
@@ -270,9 +64,9 @@
   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
   <div class="son-orta">
    <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr türbini saha servis teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
+   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
   </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/pitch-motor-high-current/" hreflang="en" lang="en">English</a></p></div>
+  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/field-notes/pitch-motor-high-current/" hreflang="en" lang="en">English</a></p></div>
  </div>
 </footer>
 
