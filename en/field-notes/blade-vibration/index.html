@@ -1,61 +1,22 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Blade Vibration — 1P/3P Harmonics and Pitch Asymmetry | Case 07</title>
-<meta name="description" content="Nacelle vibration rising in a narrow wind band on a Vestas V126. 1P harmonic, pitch angle asymmetry and encoder drift: a step-by-step diagnosis.">
+<meta charset="utf-8"><meta name="robots" content="noindex,follow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blade vibration: 1P or 3P? — Representative Case 07 | Soner Soylu</title>
+<meta name="description" content="Nacelle vibration only in one wind band; no visible blade damage. Diagnostic sequence, root cause and fix in a representative case.">
 <link rel="canonical" href="https://sonersoylu.com/en/field-notes/blade-vibration/">
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/field-notes/blade-vibration/">
 <link rel="alternate" hreflang="tr" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/saha-notlari/kanat-titresimi/">
 <meta property="og:locale" content="en_GB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Blade Vibration — It Was the Calibration, Not the Blade">
-<meta property="og:description" content="Nacelle vibration rising in a narrow wind band on a Vestas V126. 1P harmonic, pitch angle asymmetry and encoder drift: a step-by-step diagnosis.">
+<meta property="og:title" content="Blade vibration: 1P or 3P? — representative case">
+<meta property="og:description" content="Nacelle vibration only in one wind band; no visible blade damage. Diagnostic sequence, root cause and fix in a representative case.">
 <meta property="og:url" content="https://sonersoylu.com/en/field-notes/blade-vibration/">
 <meta property="og:image" content="https://sonersoylu.com/assets/og/og-ariza.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "Article",
- "headline": "Blade Vibration — It Was the Calibration, Not the Blade",
- "description": "Nacelle vibration rising in a narrow wind band on a Vestas V126. 1P harmonic, pitch angle asymmetry and encoder drift: a step-by-step diagnosis.",
- "url": "https://sonersoylu.com/en/field-notes/blade-vibration/",
- "inLanguage": "en",
- "author": {
-  "@type": "Person",
-  "name": "Soner Soylu",
-  "jobTitle": "Wind Turbine Field Service Technician"
- },
- "datePublished": "2026-09-22T00:00:00Z",
- "dateModified": "2026-09-22T00:00:00Z",
- "breadcrumb": {
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-   {
-    "@type": "ListItem",
-    "position": 1,
-    "name": "Home",
-    "item": "https://sonersoylu.com/en/"
-   },
-   {
-    "@type": "ListItem",
-    "position": 2,
-    "name": "Field notes",
-    "item": "https://sonersoylu.com/en/field-notes/"
-   },
-   {
-    "@type": "ListItem",
-    "position": 3,
-    "name": "Blade vibration",
-    "item": "https://sonersoylu.com/en/field-notes/blade-vibration/"
-   }
-  ]
- }
-}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Blade vibration: 1P or 3P?", "description": "Nacelle vibration only in one wind band; no visible blade damage. Diagnostic sequence, root cause and fix in a representative case.", "inLanguage": "en", "author": {"@type": "Person", "name": "Soner Soylu", "jobTitle": "Wind Turbine Field Service Technician", "url": "https://sonersoylu.com/en/about/"}, "datePublished": "2026-09-22", "dateModified": "2026-10-27"}</script>
 <meta name="theme-color" content="#0b0e10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -65,6 +26,8 @@
 
 <link rel="stylesheet" href="/style.css?v=47d4c147">
 <link rel="stylesheet" href="/kb.css?v=445bc395">
+<script async fetchpriority="low" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424"
+     crossorigin="anonymous"></script>
 </head><body>
 <a class="skip" href="#top">Skip to content</a>
 
@@ -83,93 +46,19 @@
 
 <main class="kb" id="top">
  <article>
-  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Blade vibration</span></nav>
-
-  <p class="kb-kicker">From the field · Case 07</p>
-  <h1>Blade Vibration — It Was the Calibration, Not the Blade</h1>
-  <p class="kb-lead">A Vestas V126. The operator called saying &quot;one of the blades must be damaged&quot;; the vibration became noticeable at a particular wind speed. A blade inspection is an expensive job, so before touching the blade I wanted to look at the vibration itself. Just as well — there was nothing wrong with the blades.</p>
-  <h2>Symptom</h2>
-  <ul>
-   <li><strong>Complaint:</strong> noticeable vibration in the nacelle, audible from the tower base as well</li>
-   <li><strong>Condition:</strong> only in the 7–9 m/s wind band. Below and above it, vibration is normal.</li>
-   <li><strong>SCADA:</strong> the vibration value rises in that band but does not reach the alarm threshold</li>
-   <li><strong>Production:</strong> the power curve sits slightly below expectation in that band</li>
-   <li><strong>Visual:</strong> no visible damage, cracking or surface defect on the blades through binoculars from the ground</li>
-  </ul>
-
-  <h2>First assessment</h2>
-  <p>The single most important clue was that the vibration was confined to a narrow wind band. If there were structural damage in a blade, you would not expect its effect to appear only in that band; a damaged blade causes more trouble as the wind rises.</p>
-  <p>Vibration that appears in a narrow band is the signature of resonance: at a particular rotor speed the forcing frequency approaches a natural frequency of the structure and the vibration grows. But resonance is not a cause on its own — something has to be feeding it. What I was looking for was an imbalance giving the rotor one push per revolution.</p>
-  <div class="kb-callout">
-   <p><strong>What are 1P and 3P?</strong> The rotor's own rotational frequency is called 1P: however many turns per second the rotor makes, that is the frequency. On a three-bladed rotor the blades pass the tower at three times that rate, which is 3P. The distinction is central to the diagnosis: a rise in <strong>3P</strong> points to tower interaction and aerodynamics, while a rise in <strong>1P</strong> says the rotor is unbalanced — one of the three blades is behaving differently from the others.</p>
-  </div>
-
-  <h2>Step-by-step diagnosis</h2>
-  <ol class="kb-steps">
-   <li><strong>Recorded the vibration data together with rotor speed.</strong> Looking only at the amplitude of the vibration is not enough. I recorded rotor speed at the same time so that I could read the frequency in terms of 1P and 3P.</li>
-   <li><strong>Produced the spectrum and found the dominant component.</strong> The overwhelming majority of the vibration sat at <strong>1P</strong>; the 3P component was at a normal level. That single measurement turned the case around completely: the problem was not aerodynamic or tower interaction, it was <strong>rotor imbalance</strong>.</li>
-   <li><strong>Separated mass imbalance from aerodynamic imbalance.</strong> This distinction matters. Mass imbalance (water collected inside a blade, repair material) acts identically every revolution and is relatively independent of wind speed. Aerodynamic imbalance depends on the wind, because the force comes from the wind. Since the vibration tracked the wind closely, I moved toward aerodynamic imbalance.</li>
-   <li><strong>Compared the pitch angles of the three blades in SCADA.</strong> The control system showed all three at the same angle. On paper there was no problem. But that value came from the encoder — it was the system's <em>belief</em> about where the blade was, not where the blade actually was.</li>
-   <li><strong>Measured the pitch angle physically.</strong> After the turbine was stopped and secured, I went into the hub and measured each of the three blade angles against a reference surface, one by one. Result: one blade sat roughly <strong>2.5° away</strong> from the other two. The encoder was showing all three as identical.</li>
-   <li><strong>Checked blade–tower clearance.</strong> To see whether the vibration was bringing a blade dangerously close to the tower. Clearance was within acceptable limits — there was no immediate risk and the work could be planned rather than rushed.</li>
-   <li><strong>Inspected the blade roots and pitch bearings.</strong> To confirm there was no structural problem. No cracking, delamination or bearing play was found. The blades were sound.</li>
-  </ol>
-
-  <h2>Root cause</h2>
-  <p>Calibration drift in one blade's pitch encoder. Because the control system believed that blade was at the same angle as the others, it was giving all three the same command; in reality that blade was operating at an angle roughly 2.5° different.</p>
-  <p>The consequence is that the blade produces a different force from the wind than its neighbours. The rotor is loaded asymmetrically once per revolution — forcing at exactly 1P. In the 7–9 m/s band the rotor speed coincided with the point where that forcing approached a natural frequency of the structure, and the vibration grew there. Outside the band the same asymmetry existed, but without resonance it was not noticeable.</p>
-  <p>The drop in the power curve came from the same cause: when one blade works outside the optimum angle, the total efficiency of the rotor falls.</p>
-
-  <h2>Fix</h2>
-  <ol>
-   <li><strong>Pitch encoder calibration (4 hours):</strong> all three blades were brought to the physical reference position, encoder zero points redefined, and the values read by the control system matched to the physical measurement.</li>
-   <li><strong>Verification measurement (1 hour):</strong> after calibration the three blades were driven to several different angles and compared against physical measurement at each. The deviation came within tolerance.</li>
-   <li><strong>Restart and vibration monitoring (2 weeks):</strong> the turbine was restarted and vibration re-measured, particularly in the 7–9 m/s band. The 1P component dropped markedly; the perceptible vibration disappeared.</li>
-   <li><strong>Power curve check (4 weeks):</strong> production in that band returned to the expected level.</li>
-  </ol>
-
-  <h2>Reading a vibration spectrum</h2>
-  <div class="kb-table-scroll"><table>
-   <tr><th>Dominant component</th><th>What it tells you</th><th>Where to look first</th></tr>
-   <tr><td><strong>1P</strong> (rotor speed)</td><td>Rotor imbalance — one blade is behaving differently</td><td>Pitch angle asymmetry, blade mass balance</td></tr>
-   <tr><td><strong>3P</strong> (speed × blade count)</td><td>Blades passing the tower</td><td>Tower shadow, wind profile, yaw alignment</td></tr>
-   <tr><td>High frequency, narrow peak</td><td>Local damage in a rotating element</td><td>Bearing, gearbox, generator</td></tr>
-   <tr><td>Broadband rise</td><td>Structural loosening</td><td>Bolt torques, tower flange, mounts</td></tr>
-   <tr><td>Growth in a specific wind band</td><td>Resonance — but there is a forcing source</td><td>Find the forcing first; resonance only amplifies</td></tr>
-  </table></div>
-
-  <h2>Preventive maintenance</h2>
-  <ul>
-   <li><strong>Measure pitch angle physically at intervals.</strong> Trusting the encoder value is not enough; calibration drifts over time. Comparing against a physical measurement catches this kind of problem before it surfaces.</li>
-   <li><strong>Always record vibration together with rotor speed.</strong> A vibration measurement without the speed cannot tell you whether it is 1P or 3P — that is, it has lost its most valuable information.</li>
-   <li><strong>Ask for the wind band when a complaint comes in.</strong> There is a gulf, diagnostically, between &quot;there is vibration&quot; and &quot;there is vibration between 7 and 9 m/s&quot;. The narrowness of the band points directly at resonance.</li>
-   <li><strong>Look at the spectrum before deciding on a blade inspection.</strong> Blade inspection is expensive and slow. If 1P dominates, the problem is most likely not in the blade but in the blade's <em>angle</em>.</li>
-   <li><strong>Assess power curve deviation together with vibration.</strong> If both degrade in the same band, look for a common cause; in this case the common cause was a single calibration error.</li>
-  </ul>
-
-  <aside class="kb-note">
-   <p>Field note</p>
-   <p>I like this case because we came very close to making the most expensive mistake on site. The instinct &quot;there is vibration, so the blade is damaged&quot; is strong, and it leads straight to a blade inspection or even a blade removal. The fix was a four-hour calibration.</p>
-   <p>The rule that settled in me from it: <strong>do not measure what the encoder shows, measure where the blade actually is.</strong> A control system never lies; it simply believes what it has been told. When the calibration drifts the system looks perfectly healthy, because by its own measure everything is in order. A physical measurement is the only thing that closes that blind spot.</p>
-   <p class="kb-author"><span class="who">Soner Soylu</span><span class="role">Wind Turbine Field Service Technician — Enercon, Nordex, Vestas · GWO certified</span></p>
-  </aside>
-
-  <div class="kb-callout">
-   <p><strong>Warning:</strong> all work in the hub is done with the rotor locked, the turbine stopped and LOTO applied. When working on the pitch system the backup supply must also be isolated. This note is field experience and does not replace the manufacturer's service documentation.</p>
-  </div>
-
-  <div class="kb-rel">
-   <p class="k">Related</p>
-   <ul>
-    <li><a href="/en/systems/pitch/">Pitch System — motor, gearbox, sensor and control</a></li>
-    <li><a href="/en/field-notes/pitch-motor-high-current/">Case 01: Pitch Motor High Current</a></li>
-    <li><a href="/en/turbines/vestas/v126/">Vestas V126 — model guide</a></li>
-    <li><a href="/en/turbines/vestas/v136/">Vestas V136 — vibration management on long blades</a></li>
-    <li><a href="/en/field-notes/">All field notes</a></li>
-    <li><a href="/ariza/">Fault diagnosis tree (Turkish)</a></li>
-   </ul>
-  </div>
-
+  <nav class="kb-crumb"><a href="/en/">Home</a> <i>/</i> <a href="/en/field-notes/">Field notes</a> <i>/</i> <span aria-current="page">Blade vibration: 1P or 3P?</span></nav>
+  <p class="kb-kicker">Representative case · 07</p>
+  <h1>Blade vibration: 1P or 3P?</h1>
+  <p class="kb-lead">Nacelle vibration only in one wind band; no visible blade damage.</p>
+  <p class="kb-meta"><span>System: Pitch</span><span>Fault type: Sensor</span><span>Caught by: Field observation</span><span>Component: Pitch angle reference</span></p>
+  <div class="kb-callout"><p><strong>Representative case.</strong> This page describes a fault pattern that is common in the field, as a diagnostic sequence. It does not describe a specific wind farm, turbine or date; numbers are examples only and limits vary by turbine type. On your own turbine the OEM instructions, LOTO procedure and safety rules apply; work near energised equipment is for authorised personnel only.</p></div>
+  <section><h2>Symptom</h2><p>Nacelle vibration only in one wind band; no visible blade damage.</p></section>
+  <section><h2>What was measured</h2><p>Spectrum dominated by 1P with normal 3P; a physical measurement found one blade at a different angle.</p></section>
+  <section><h2>Root cause</h2><p>After an earlier encoder replacement the blade angle reference had not been calibrated correctly.</p></section>
+  <section><h2>Fix and verification</h2><p>All three blade angle references reset to the physical marks with the OEM method; 1P dropped.</p></section>
+  <section><h2>Lesson</h2><p>Look at the spectrum before calling a blade inspection.</p></section>
+  <div class="kb-note"><p>Full version</p><p>The complete diagnostic sequence — possible causes table, step-by-step checks, maintenance checklist and common mistakes — is in the <a href="/saha-notlari/kanat-titresimi/" hreflang="tr" lang="tr">Turkish version of this case</a>.</p></div>
+  <div class="kb-rel"><p class="k">Related</p><ul><li><a href="/en/field-notes/">All representative cases</a></li><li><a href="/en/diagnostics/">Fault diagnosis simulator</a></li><li><a href="/en/glossary/">Glossary</a></li></ul></div>
  </article>
 </main>
 
