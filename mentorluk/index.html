@@ -43,6 +43,7 @@
 .gl-form label{display:grid;gap:.35rem;font-size:.875rem;color:var(--ink)}
 .gl-form input,.gl-form select,.gl-form textarea{font:inherit;font-size:1rem;padding:.7rem .8rem;border:1px solid var(--line);border-radius:6px;background:var(--ground,#fff);color:var(--ink)}
 .gl-form textarea{min-height:7rem;resize:vertical}
+.gl-form label,.gl-form input:not([type=checkbox]),.gl-form select,.gl-form textarea{min-width:0}.gl-form input:not([type=checkbox]),.gl-form select,.gl-form textarea{width:100%}
 .gl-form .onay{display:flex;gap:.6rem;align-items:flex-start;font-size:.8125rem;color:var(--muted)}
 .gl-form .onay input{margin-top:.2rem}
 .gl-form .gizli{position:absolute;left:-9999px}
@@ -112,7 +113,7 @@
    </select></label>
    <label>Kısaca anlat: neyi konuşmak istiyorsun?<textarea name="mesaj" required maxlength="2000"></textarea></label>
    <label class="gizli" aria-hidden="true">Web sitesi<input name="website" tabindex="-1" autocomplete="off"></label>
-   <label class="onay"><input type="checkbox" name="onay" required> Bilgilerimin yalnız bu talebe dönüş için kullanılmasını kabul ediyorum (<a href="/gizlilik/">gizlilik</a>).</label>
+   <label class="onay"><input type="checkbox" name="onay" required> <span>Bilgilerimin yalnız bu talebe dönüş için kullanılmasını kabul ediyorum (<a href="/gizlilik/">gizlilik</a>).</span></label>
    <div><button class="gl-btn" type="submit">Talebi gönder</button></div>
    <p class="gl-durum" role="status" aria-live="polite"></p>
   </form>
