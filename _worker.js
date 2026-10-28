@@ -82,9 +82,22 @@ export default {
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
     }
 
-    return env.ASSETS.fetch(request);
+    return guvenlikle(await env.ASSETS.fetch(request));
   },
 };
+
+// Statik yanıtlara güvenlik başlıkları ekler (clickjacking, HTTPS zorlaması,
+// yetki kısıtı). İçeriği değiştirmez; CSP bilinçli olarak eklenmedi (3B sahne,
+// gömülü video ve API çağrılarını bozmadan ayrı ve testli yapılmalı).
+function guvenlikle(res) {
+  const h = new Headers(res.headers);
+  h.set('X-Frame-Options', 'SAMEORIGIN');
+  h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  h.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), browsing-topics=()');
+  if (!h.has('Referrer-Policy')) h.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  if (!h.has('X-Content-Type-Options')) h.set('X-Content-Type-Options', 'nosniff');
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
+}
 
 // ---------------------------------------------------------------- rüzgâr
 async function ruzgar(url) {
