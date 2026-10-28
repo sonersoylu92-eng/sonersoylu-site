@@ -1,0 +1,4 @@
+Contact: mailto:sonersoylu@yandex.com
+Preferred-Languages: tr, en
+Canonical: https://sonersoylu.com/.well-known/security.txt
+Expires: 2027-10-28T00:00:00.000Z
