@@ -35,7 +35,10 @@
 .kr-sec select:focus-visible,.kr-sec button:focus-visible{outline:2px solid var(--beacon);outline-offset:2px}
 .kr-blok{margin-top:1.5rem}
 .kb .kr-blok h2{font-size:1.125rem;margin:0 0 .6rem;border:0;padding:0}
+#krTablo{overflow-x:auto}
 .kr-tablo{width:100%;border-collapse:collapse;font-size:.875rem}
+.kr-tablo th,.kr-tablo td{overflow-wrap:break-word}
+@media(max-width:40rem){.kr-tablo th{white-space:normal}}
 .kr-tablo th,.kr-tablo td{padding:.65rem .55rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .kr-tablo thead th{font-size:.9375rem}
 .kr-tablo thead th:nth-child(2){box-shadow:inset 0 -3px 0 var(--beacon)}
