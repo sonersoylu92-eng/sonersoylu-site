@@ -1,0 +1,123 @@
+1
+00:00:00,060 --> 00:00:03,940
+The world's tallest wind
+turbine is 365 meters tall.
+
+2
+00:00:03,960 --> 00:00:06,670
+If its generator failed up
+there, how would you get it down?
+
+3
+00:00:06,820 --> 00:00:07,960
+Schipkau, Germany.
+
+4
+00:00:07,980 --> 00:00:09,560
+Hub height, 300 meters.
+
+5
+00:00:09,580 --> 00:00:11,480
+Blade tip, 365.
+
+6
+00:00:11,500 --> 00:00:13,170
+Taller than the Eiffel Tower.
+
+7
+00:00:13,220 --> 00:00:14,400
+Here's what caught my eye:
+
+8
+00:00:14,420 --> 00:00:17,100
+the rotor is 126 meters across.
+
+9
+00:00:17,120 --> 00:00:19,660
+Same as the Vestas V126 I service.
+
+10
+00:00:19,680 --> 00:00:24,690
+But its hub sits between 87 and
+166 meters, depending on version.
+
+11
+00:00:24,730 --> 00:00:25,470
+Why so tall?
+
+12
+00:00:25,490 --> 00:00:27,710
+Winds higher up are stronger
+and more consistent.
+
+13
+00:00:27,730 --> 00:00:31,470
+The developer expects about twice the
+energy of a turbine with the same rotor.
+
+14
+00:00:31,490 --> 00:00:32,760
+That's still a projection.
+
+15
+00:00:32,820 --> 00:00:35,340
+My first question as a
+technician is different:
+
+16
+00:00:35,360 --> 00:00:35,920
+maintenance.
+
+17
+00:00:35,940 --> 00:00:38,350
+No crane today can lift
+the nacelle that high.
+
+18
+00:00:38,390 --> 00:00:38,930
+The fix:
+
+19
+00:00:38,950 --> 00:00:40,090
+a telescoping tower.
+
+20
+00:00:40,110 --> 00:00:42,590
+The inner tower slides
+down inside the lattice.
+
+21
+00:00:42,610 --> 00:00:44,070
+The crane reaches the machine.
+
+22
+00:00:44,090 --> 00:00:45,620
+Then the tower goes back up.
+
+23
+00:00:45,650 --> 00:00:46,630
+The tower changes.
+
+24
+00:00:46,650 --> 00:00:47,550
+The rule doesn't:
+
+25
+00:00:47,570 --> 00:00:48,990
+never climb a tower alone.
+
+26
+00:00:49,010 --> 00:00:50,080
+Always at least two.
+
+27
+00:00:50,300 --> 00:00:53,280
+Full V126 specs at sonersoylu.com/en.
+
+28
+00:00:53,300 --> 00:00:54,260
+The Turbine Tech.
+
+29
+00:00:54,280 --> 00:00:55,830
+Follow for the next question.

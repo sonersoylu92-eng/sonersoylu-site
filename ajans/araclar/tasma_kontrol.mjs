@@ -7,9 +7,11 @@
 //      Yazı bir dolu şeklin tamamen içindeyse (şekil üstü etiket) sayılmaz.
 //      Yazının koyu halesi (stroke + paint-order:stroke) varsa "haleli" diye ayrı işaretlenir.
 // HyperFrames çalışma zamanı olmadan açar: .clip öğelerini data-start/duration'a göre kendisi gizler.
-import pw from '/opt/npm-tools/node_modules/playwright/index.js';
 import http from 'node:http';
 import fs from 'node:fs';
+// Playwright yolu ortama göre değişir (D-093)
+const PW = ['/opt/npm-tools/node_modules/playwright/index.js', '/opt/node-tools/node_modules/playwright/index.js'].find(f => fs.existsSync(f));
+const { default: pw } = await import(PW);
 import path from 'node:path';
 
 const dizin = path.resolve(process.argv[2] || path.join(path.dirname(new URL(import.meta.url).pathname), '..'));

@@ -9,7 +9,8 @@ V=/home/claude/video-edit; M=/home/claude/models; R=https://github.com/k2-fsa/sh
 mkdir -p "$V/tools" "$V/shared/font" "$V/videos" "$M"
 
 echo "· Python paketleri"
-pip install --break-system-packages -q sherpa-onnx soundfile numpy 2>&1 | grep -v WARNING || true
+# sherpa-onnx sabit: 2.x Piper espeak ön ucunu yüklemiyor (D-092)
+pip install --break-system-packages -q "sherpa-onnx==1.13.8" soundfile numpy 2>&1 | grep -v WARNING || true
 
 indir() { # $1 sürüm $2 ad $3 hedef klasör adı
   [ -d "$M/$3" ] && return 0
@@ -35,7 +36,7 @@ if [ ! -d "$V/.claude/skills/hyperframes" ]; then
 fi
 
 echo "· Tarayıcı yolu"
-HS=$(ls -d /opt/pw-browsers/chromium_headless_shell-*/chrome-linux/headless_shell 2>/dev/null | head -1)
+HS=$(ls -d /opt/pw-browsers/chromium_headless_shell-*/chrome-linux/headless_shell /opt/pw-browsers/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell 2>/dev/null | head -1)   # klasör adı Playwright sürümüne göre değişir (D-091)
 cat > "$V/env.sh" <<ENV
 export HYPERFRAMES_BROWSER_PATH=$HS
 export HYPERFRAMES_SKIP_SKILLS=1
