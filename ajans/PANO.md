@@ -24,6 +24,7 @@ Durum: `bekliyor` · `yapiliyor` · `onay-bekliyor` (Soner'e soruldu) · `bitti`
 | 16 | rehber:282 "Rotor kilidi takılır" koşulsuz; diğer sayfalar "gerekiyorsa" | site-bakimci → Soner | P1 | bitti (2026-10-07: Soner "rotor kilidi takılır" dedi; egitim/bu-is-ne-is + #6 planı B05 güncellendi. Yayındaki "Rüzgâr esiyor" Short'u "gerekiyorsa" diyor — yeniden üretilmedi) | Soner hangi ifadenin doğru olduğunu söyledi; sayfa ona göre | H4, K-031. Güvenlik metni Soner onayı olmadan değişmez |
 | 17 | nasil-olunur:384 "teknik İngilizce öğrenilemez" ↔ :523 "iki ayda öğrenilir" çelişkisi | site-bakimci | P2 | bekliyor | Soner'e tek cümlelik soru + düzeltme | Video planında bu çerçeve kullanılmadı |
 | 18 | MOTION.md'ye 16:9 bölümü (güvenli alan, altyazı boyu, bitiş ekranı) | video-yapimci | P2 | bekliyor | #6 üretiminden önce | |
+| 19 | Short planı: "365 metrelik türbin: rotoru V126 ile aynı" (gündem konusu) | video-yapimci | P1 | onay-bekliyor (2026-10-29: plan Soner'e sunuldu; soru: "bakımını yaptığım V126" doğru mu) | Beat sheet + kaynaklar + EN sürüm → `cikti/plan-365-metre-2026-10-29.md` | 8 beat, ~72 sn, kanca 62 (hookscore). Onay gelince ses + render (TR + EN) |
 
 ## Hazır ürünler (Soner'e teslim edildi)
 - 2026-10-02 · Short · Türbin nasıl elektrik üretir (sessiz, 52 sn) — sitede "Son paylaşım"
