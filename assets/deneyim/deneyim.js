@@ -377,8 +377,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
    * (şafak, kıyı, alacakaranlık, gece; sonda fırtına canlandırması) ve kapağa döner; iç yolculuk eski temposuyla sürer.
    * Güneş, ay ve yıldızlar o saatlerin Aliağa'daki gerçek konumunda (gok.js). */
   const ONSOZ = 1 / 3;
-  const hikayeVar = !!(gok && !GB);
-  let hikayeHam = 1, hg = 1, hikayeZamanda = false, hikayeHava = null, HK = null, hikayeKartOnce = null;
+  // V44 · telefonda ve tablette kapalı: gök hesabı ve ışık geçişleri zayıf işlemcide kareyi donduruyordu
+  const hikayeVar = !!(gok && !GB && !mobil);
+  let hikayeHam = 1, hg = 1, hikayeZamanda = false, hikayeHava = null, HK = null, hikayeKartOnce = null, sonHikayeZ = 0;
   if (hikayeVar) { bolum.classList.add('dny-onsozlu'); window.__dnyOnsoz = ONSOZ; }
   function vardiyaSimdi() {
     if (!gunAkisi && !hikayeZamanda && (zorVardiya || !korfez || !gok)) return zorVardiya || kok.dataset.vardiya;
@@ -1738,7 +1739,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (!aktif) {
       if (hikayeZamanda || hikayeHava) {
         hikayeZamanda = false; if (hikayeHava) { hikayeHava = null; havaSurum++; bolum.dataset.hava = hava ? hava.tur : ''; }
-        if (!gunAkisi) gok.hesapla(); isik(); HK = null;
+        if (!gunAkisi) gok.hesapla(); isik(); sonHikayeZ = 0;
       }
       if (hikayeKartOnce !== null) { hikayeKartOnce = null; if (cb.hikaye) cb.hikaye({ g: hg, kart: null }); }
       return;
@@ -1765,7 +1766,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     camera.position.copy(_hP); camera.lookAt(_hT);
     // zaman: anahtar kareler arasında aynı yumuşatmayla akar
     const zaman = HK[i].z + (HK[c].z - HK[i].z) * u;
-    gok.hesapla(new Date(zaman)); hikayeZamanda = true;
+    // gök yalnız benzetim saati 2 dakikadan fazla ilerleyince yeniden hesaplanır (her karede değil)
+    if (Math.abs(zaman - sonHikayeZ) > 12e4) { gok.hesapla(new Date(zaman)); sonHikayeZ = zaman; }
+    hikayeZamanda = true;
     // fırtına canlandırması: bölümün çevresinde
     let firt = false;
     HK.forEach(k => { if (k.hava && Math.abs(hg - k.g) < 0.075) firt = true; });
@@ -1784,7 +1787,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const f = Math.min(1, (t - gunAkisi.t0) / gunAkisi.sure);
     gunAkisi.oran = f;
     gunAkisi.saat = new Date(gunAkisi.bas + f * 864e5);
-    gok.hesapla(gunAkisi.saat);
+    if (Math.abs(+gunAkisi.saat - sonHikayeZ) > 12e4 || f >= 1) { gok.hesapla(gunAkisi.saat); sonHikayeZ = +gunAkisi.saat; }
     isik();
     durgunT = t;
     if (f >= 1) gunAkisiBitir();
@@ -1806,6 +1809,9 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     return { acik: true };
   };
   S.gunAkisiDurum = () => gunAkisi ? { acik: true, oran: gunAkisi.oran, saat: gunAkisi.saat } : { acik: false };
+  if (mobil) S.gunAkisi = undefined;   // V44: telefonda "Bir gün" yok
+  // hikâye saatleri ilk kaydırmada değil, sahne boştayken bir kez hesaplanır (kaydırma başında takılma olmasın)
+  if (hikayeVar) (window.requestIdleCallback || ((f) => setTimeout(f, 1500)))(() => { if (!HK) HK = hikayeHazirla(); }, { timeout: 5000 });
   S.noktaVurgula = id => { vurguNokta = id || null; if (rt.acik) { rt.secili = vurguNokta; rontgenVurgu(); } baslat(); };
   // röntgen: { acik, kabuk 0–1, patlat 0–1, aciEkle (radyan, sürükleme), secili (nokta kimliği) }
   S.rontgen = o => {
