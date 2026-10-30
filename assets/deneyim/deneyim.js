@@ -14,7 +14,7 @@ import { naselIciKur } from '/assets/deneyim/nasel-ic.js?v=f0ed1943';
 import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53';
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 import { egeKur } from '/assets/deneyim/ege.js?v=843f70dd';
-import { gokKur } from '/assets/deneyim/gok.js?v=d466d467';
+import { gokKur } from '/assets/deneyim/gok.js?v=26534ba9';
 import { korfezKur } from '/assets/deneyim/korfez.js?v=5694f789';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
