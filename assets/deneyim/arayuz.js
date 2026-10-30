@@ -194,7 +194,7 @@
     { ad: 'ALTIN SAAT', et: 'Güneş batıya alçalırken · 6°', m: 'Işık alçalır ve ısınır; türbin doğudaki Aliağa kıyısının önünde altına boyanır.' },
     { ad: 'ALACAKARANLIK', et: 'Bergama yönü · güneş ufkun 4° altında', m: 'Güneş battı ama gök hâlâ aydınlık: doğu ufkunda pembe bir kuşak, altında dünyanın gölgesi. Kıyıda ışıklar yanar.' },
     { ad: 'GECE', et: 'İkaz lambaları', m: 'Rüzgâr gece de eser, üretim durmaz. Naselin üstündeki kırmızı lambalar kuleyi pilotlara gösterir.' },
-    { ad: 'ERTESİ SABAH', et: 'Vardiya · kule kapısı', m: 'Her bakım günü kule kapısında başlar: iş izni, kilitleme ve kişisel koruyucu donanım. Kaydırmaya devam et, türbinin içine gir.' }
+    { ad: 'ERTESİ SABAH', et: 'Vardiya başlıyor', m: 'Yeni gün, yeni iş emri. Her bakım günü kule kapısında başlar: iş izni, kilitleme ve kişisel koruyucu donanım. Kaydırmaya devam et: önce kule kapısına, sonra türbinin içine.' }
   ];
   var GUN_NOT = 'Gökyüzü hesaplı: güneş ve ay bu saatteki gerçek yerinde', GUN_CANL = 'Canlandırma · gerçek hava değil';
   var gunKart = null, gunBantU = null, gunBantA = null, gunYag = null, gunGolge = null, gunRay = null, gunRayLi = [];

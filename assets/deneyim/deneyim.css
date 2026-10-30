@@ -705,7 +705,7 @@ button.ea-d:hover{border-color:#a9cbc9}
   transition:opacity .55s ease,transform .9s cubic-bezier(.22,1,.36,1),visibility 0s linear .55s}
 .dny-gun .gun-kart.gor{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .9s cubic-bezier(.22,1,.36,1)}
 .dny-gun .gun-kart::before{content:"";position:absolute;inset:-35% -30% -30% -25%;z-index:-1;pointer-events:none;
-  background:radial-gradient(closest-side,rgba(4,7,9,.3),rgba(4,7,9,.12) 55%,rgba(4,7,9,0))}
+  background:radial-gradient(closest-side,rgba(4,7,9,.46),rgba(4,7,9,.22) 55%,rgba(4,7,9,0))}
 .dny-gun .gun-ust{display:flex;align-items:center;flex-wrap:wrap;gap:.7rem;margin:0;font-family:var(--mono);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,242,245,.82)}
 .dny-gun .gun-saat{padding:.18rem .48rem;border-radius:3px;background:rgba(238,242,245,.14);color:var(--d-ink);letter-spacing:.08em;font-variant-numeric:tabular-nums}
 .dny-gun .gun-ad{margin:.55rem 0 0;font-family:var(--sans);font-weight:600;font-size:clamp(2.2rem,9.2vw,6.2rem);line-height:.95;letter-spacing:-.045em;color:#f4f6f7;
@@ -715,7 +715,7 @@ button.ea-d:hover{border-color:#a9cbc9}
 .dny-gun .gun-kart.gor .gun-hf>span{transform:none}
 .dny-gun .gun-bos{display:inline-block;width:.28em}
 .dny-gun .gun-metin{margin:.85rem 0 0;max-width:34rem;font-size:clamp(.9375rem,1.15vw,1.0625rem);line-height:1.55;color:rgba(238,242,245,.88);text-shadow:0 1px 14px rgba(0,0,0,.55)}
-.dny-gun .gun-not{margin:.7rem 0 0;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,242,245,.6)}
+.dny-gun .gun-not{margin:.7rem 0 0;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,242,245,.8);text-shadow:0 1px 10px rgba(0,0,0,.7)}
 .dny-gun .gun-not.gun-canl{color:#f2c08f}
 .dny-gun .gun-not.gun-canl::before{content:"";display:inline-block;width:.42rem;height:.42rem;margin-right:.5rem;border-radius:50%;background:#f2c08f;vertical-align:.05em}
 /* gün rayı (masaüstü): bölümler, bulunulan bölüm dolu nokta */
@@ -739,4 +739,10 @@ button.ea-d:hover{border-color:#a9cbc9}
 @media (prefers-reduced-motion:reduce){
   .dny-gun .gun-hf>span{transition:none;transform:none}
   .dny-gun .gun-yagmur{animation:none}
+}
+/* V46 · telefonda kapak: "Sürükle · 360° bak" ipucu Keşfet düğmesinin üstüne biniyordu; kapaktayken başlığın üstüne alınır.
+ * Parlak sahnelerde (şafak, altın saat) bölüm kartı denizin üstünde zor okunuyordu: telefonda alt kısma koyu bir geçiş. */
+@media (max-width:820px){
+ .dny-bolum:not(.gecti):not(.dny-gun-ici) .v-bak{bottom:calc(var(--d-gut,1.25rem) + 15.5rem)}
+ .dny-gun .gun-kart::before{inset:-40% -12% -30% -12%;background:linear-gradient(180deg,rgba(4,7,9,0),rgba(4,7,9,.52) 28%,rgba(4,7,9,.56) 68%,rgba(4,7,9,0))}
 }
