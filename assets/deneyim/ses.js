@@ -49,18 +49,6 @@ export function sesKur() {
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.12, t + 0.06); g.gain.linearRampToValueAtTime(0.08, t + sure - 0.1); g.gain.linearRampToValueAtTime(0, t + sure); s.stop(t + sure + 0.05);
   }
 
-  // V42 · kanat vuuşu (kanat başına bir nabız: devir × 3 / 60 Hz), yağmur hışırtısı, şimşekten sonra gecikmeli gök gürültüsü
-  const vuusG = kazanc(0); zincir(kaynak(), suzgec('lowpass', 240, 0.7), vuusG, ana);
-  const yagmurG = kazanc(0); zincir(kaynak(), suzgec('highpass', 1800, 0.5), yagmurG, ana);
-  function gurle() {
-    const t = ctx.currentTime + 0.6 + Math.random() * 2.4, s = kaynak(), f = suzgec('lowpass', 900, 0.6), g = kazanc(0);
-    zincir(s, f, g, ana);
-    f.frequency.setValueAtTime(900, t); f.frequency.exponentialRampToValueAtTime(70, t + 2.6);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.55, t + 0.06); g.gain.exponentialRampToValueAtTime(0.22, t + 0.7); g.gain.exponentialRampToValueAtTime(0.0001, t + 3.6);
-    s.stop(t + 3.8);
-  }
-  let vuusFaz = 0, onceT = 0, onceSimsek = 0;
-
   let onceKapi = 0, onceKabin = 1, ruzgarlik = 0;
   const hedef = (p, v, tc = 0.25) => p.setTargetAtTime(v, ctx.currentTime, tc);
   return {
@@ -68,7 +56,8 @@ export function sesKur() {
       if (ctx.state === 'suspended') ctx.resume();
       ruzgarlik += (Math.random() - 0.5) * 0.08; ruzgarlik = Math.max(-0.3, Math.min(0.3, ruzgarlik * 0.995));
       const disari = s.disari * (1 - 0.6 * s.kule);
-      hedef(ruzG.gain, disari * (0.28 + ruzgarlik * 0.25), 0.6); hedef(ruzF.frequency, 360 + ruzgarlik * 260, 0.8);
+      const firt = s.firtina || 0;   // V42: kapak senaryosundaki fırtına (canlandırma): rüzgâr sesi güçlenir ve tizleşir
+      hedef(ruzG.gain, disari * (0.28 + ruzgarlik * 0.25) * (1 + 1.3 * firt), 0.6); hedef(ruzF.frequency, 360 + ruzgarlik * 260 + 380 * firt, 0.8);
       hedef(kuleG.gain, s.kule * 0.22, 0.8); hedef(ugulG.gain, s.kule * 0.035, 0.8);
       const m = Math.min(1, s.asnHiz / 2.2);
       hedef(motorG.gain, m * 0.16, 0.35); hedef(motor.frequency, 46 + m * 12, 0.5);
@@ -80,15 +69,6 @@ export function sesKur() {
       if (s.kabinKapi <= 0.01 && onceKabin > 0.01) vurus(1);
       if (s.kabinKapi > 0.01 && onceKabin <= 0.01) { vurus(0.7); setTimeout(() => surgu(0.5), 180); }
       onceKapi = s.kapi; onceKabin = s.kabinKapi;
-      // dışarıda, rotorun yakınında (kapak ve kule dibi, nasel çatısı): kanat geçişleri duyulur
-      const t = ctx.currentTime, dt = onceT ? Math.min(0.1, t - onceT) : 0; onceT = t;
-      const yakin = s.disari && (s.p < 0.16 || s.p > 0.95) ? 1 : 0;
-      vuusFaz += (s.rpm || 0) * 3 / 60 * dt;
-      const nabiz = Math.pow(0.5 + 0.5 * Math.sin(vuusFaz * Math.PI * 2), 4);
-      hedef(vuusG.gain, yakin * Math.min(1, (s.rpm || 0) / 10) * nabiz * 0.16, 0.04);
-      hedef(yagmurG.gain, (s.yagmur || 0) * s.disari * 0.05, 0.8);
-      if (s.simsek && s.simsek !== onceSimsek && s.disari) gurle();
-      onceSimsek = s.simsek || 0;
     },
     kapat() { ana.gain.setTargetAtTime(0, ctx.currentTime, 0.15); setTimeout(() => ctx.close(), 600); },
   };
