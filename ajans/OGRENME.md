@@ -40,6 +40,8 @@ Ders biçimi:
   sahne bazlı tam yazıya dökümle (±0,3 sn dolgu) karar ver. Aday seçiminde de geçerli: ~7,5 sn'den uzun cümlede
   sona ≥0,4 sn sessizlik ekle; karar tek Whisper geçişiyle değil, tam dosyada dolgulu yazımla verilir. Aday seçimi de iki ayrı dolguyla yapılır
   (`ajans/cikti/video/ruzgar-esiyor/aday.py`); tek geçişli puan yalnız ön elemedir. (D-053, D-061, D-069)
+- **K-014** Kurulumdan sonra `hyperframes doctor` çıktısında ✗ varsa üretime başlanmaz. Ortam yolları (headless tarayıcı, Playwright) tek ada bağlanmaz, bilinen adların hepsi denenir; Python paketleri de sürümle sabitlenir (`sherpa-onnx==1.13.8`). (D-091, D-092, D-093)
+- **K-015** İnce glif (=, −, ince çizgi) koyu haleyle yazılmaz, hale onu yer; vurgu işareti şekille (rect/path) çizilir. İlk karede çizim animasyonu (dash) ile gelen ana görsel K-004'ü bozar: ana görsel 0. karede tam durur, yalnız sayaç/etiket hareket eder. (D-095)
 - **K-010** Uzun (16:9) videolar için YouTube paketi: MP4 (H.264+AAC) + 1280×720 kapak + .srt + bölüm zaman damgaları. (D-010)
 
 ### Site
@@ -152,5 +154,11 @@ Ders biçimi:
 - [D-089 · 2026-10-07 · CEO] Olan: Soner turu "en az kredi, çok hızlı" diye kısıtladı · Karar: K-043 genişledi — denetçi ajanı yalnız rakam/güvenlik metni ve site diff'i için; raporlama/kayıt CEO'da tek betikle
 - [D-090 · 2026-10-07 · CEO] Olan: Soner güvenlik ifadesinde koşulsuz "rotor kilidi takılır"ı seçti; site 3 sayfada farklıydı · Karar: K-031'e not — sitedeki güvenlik ifadesi çeliştiğinde Soner'e sorulur, cevabı tüm sayfalara ve planlara aynı turda işlenir
 
+- [D-091 · 2026-10-29 · video-yapimci] Olan: kurulum.sh Chrome'u bulamadı (doctor ✗) · Neden: Playwright headless klasörü `chrome-headless-shell-linux64/chrome-headless-shell` oldu · Karar: K-014; kurulum.sh iki adı da dener
+- [D-092 · 2026-10-29 · video-yapimci] Olan: Piper boş ses döndü, anlatim.py IndexError · Neden: sherpa-onnx 2.0.1 espeak ön ucunu yüklemiyor · Karar: K-014; kurulum.sh 1.13.8'e sabit
+- [D-093 · 2026-10-29 · video-yapimci] Olan: tasma_kontrol.mjs açılmadı · Neden: Playwright `/opt/node-tools` altında · Karar: K-014; betik iki yolu dener
+- [D-094 · 2026-10-29 · CEO] Olan: yt-script skill'i eklendi; hookscore.py Türkçe kancaları İngilizce sözlükle puanlıyordu (gerçek kanca 46, "Merhaba arkadaşlar" 34) · Karar: reddedildi (kural gerekmez; Türkçe sözlük eklendi, puan karar değil yardımcı — `ajans/youtube/voice.md`)
+- [D-095 · 2026-10-29 · video-yapimci] Olan: ilk karede kule çizilmemişti, rotor havada; "=" haleyle incelip kayboldu · Neden: dash animasyonu 0. karede boş; 8 px hale ince glifi örttü · Karar: K-015 (K-003 kare kontrolü yakaladı)
+- [D-096 · 2026-10-29 · video-yapimci] Olan: B4'te cümle ortasındaki "türbinin" tam dosya doğrulamasında "tübinin" duyuldu · Karar: K-011'e not — "tübin" cümle ortasında da olur; dogrula.py farkı varsa aday.py (iki dolgu, tam eşleşme) ile o beat yeniden seçilir
 ## Emekli kurallar
 (yok)

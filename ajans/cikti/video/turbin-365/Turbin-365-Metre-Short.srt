@@ -1,0 +1,115 @@
+1
+00:00:00,160 --> 00:00:03,120
+Dünyanın en yüksek türbini 365 metre.
+
+2
+00:00:03,140 --> 00:00:06,590
+Sen olsan, 300 metrede arızalanan
+jeneratörü nasıl indirirdin?
+
+3
+00:00:06,790 --> 00:00:07,900
+Almanya, Schipkau.
+
+4
+00:00:08,030 --> 00:00:11,390
+Göbek 300 metrede, kanat ucu 365 metrede.
+
+5
+00:00:11,410 --> 00:00:13,080
+Eyfel Kulesi'nden yüksek.
+
+6
+00:00:13,200 --> 00:00:14,630
+Bana ilginç gelen şu:
+
+7
+00:00:14,660 --> 00:00:16,140
+rotoru 126 metre.
+
+8
+00:00:16,160 --> 00:00:19,820
+Bakımını yaptığım Vestas V126
+modelinin rotoru da öyle.
+
+9
+00:00:19,840 --> 00:00:23,950
+Ama onun göbeği, sürümüne göre
+87 ile 166 metre arasında.
+
+10
+00:00:24,200 --> 00:00:25,440
+Neden bu kadar yüksek?
+
+11
+00:00:25,460 --> 00:00:28,050
+Yükseklerde rüzgâr daha
+güçlü ve daha düzenli.
+
+12
+00:00:28,080 --> 00:00:31,840
+Firma, aynı rotorlu bir türbinin
+yaklaşık iki katı enerji bekliyor.
+
+13
+00:00:31,860 --> 00:00:33,370
+Ama bu henüz bir tahmin.
+
+14
+00:00:33,550 --> 00:00:35,230
+Benim aklıma ilk gelen soru başka:
+
+15
+00:00:35,250 --> 00:00:35,770
+bakım.
+
+16
+00:00:35,790 --> 00:00:39,020
+Makine dairesini oraya
+kaldırabilecek bir vinç, bugün yok.
+
+17
+00:00:39,220 --> 00:00:39,900
+Çözüm şu:
+
+18
+00:00:39,920 --> 00:00:41,060
+kule teleskop gibi.
+
+19
+00:00:41,080 --> 00:00:43,640
+İç kule, kafes kulenin
+içinde aşağı indirilir.
+
+20
+00:00:43,660 --> 00:00:44,920
+Vinç makineye yetişir.
+
+21
+00:00:44,940 --> 00:00:47,210
+İş bitince kule yeniden yükseltilir.
+
+22
+00:00:47,330 --> 00:00:49,150
+Kule boyu değişir, kural değişmez:
+
+23
+00:00:49,170 --> 00:00:51,230
+kuleye asla tek başınıza çıkmazsınız.
+
+24
+00:00:51,250 --> 00:00:52,360
+En az iki kişi.
+
+25
+00:00:52,560 --> 00:00:56,440
+V126 modelinin tüm verisi,
+sonersoylu.com sitesinde.
+
+26
+00:00:56,460 --> 00:00:57,440
+The Turbine Tech.
+
+27
+00:00:57,460 --> 00:00:59,470
+Sıradaki soru için takip et.

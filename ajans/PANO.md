@@ -24,6 +24,7 @@ Durum: `bekliyor` · `yapiliyor` · `onay-bekliyor` (Soner'e soruldu) · `bitti`
 | 16 | rehber:282 "Rotor kilidi takılır" koşulsuz; diğer sayfalar "gerekiyorsa" | site-bakimci → Soner | P1 | bitti (2026-10-07: Soner "rotor kilidi takılır" dedi; egitim/bu-is-ne-is + #6 planı B05 güncellendi. Yayındaki "Rüzgâr esiyor" Short'u "gerekiyorsa" diyor — yeniden üretilmedi) | Soner hangi ifadenin doğru olduğunu söyledi; sayfa ona göre | H4, K-031. Güvenlik metni Soner onayı olmadan değişmez |
 | 17 | nasil-olunur:384 "teknik İngilizce öğrenilemez" ↔ :523 "iki ayda öğrenilir" çelişkisi | site-bakimci | P2 | bekliyor | Soner'e tek cümlelik soru + düzeltme | Video planında bu çerçeve kullanılmadı |
 | 18 | MOTION.md'ye 16:9 bölümü (güvenli alan, altyazı boyu, bitiş ekranı) | video-yapimci | P2 | bekliyor | #6 üretiminden önce | |
+| 19 | Short: "365 metrelik türbin: rotoru V126 ile aynı" (gündem konusu) TR + EN | video-yapimci | P1 | üretildi (2026-10-29: Soner "Onay" → TR 59,8 sn + EN 56,1 sn, Whisper TR 8/8 + EN 8/8, taşma 0, kare kontrolü; metin paketi `cikti/metin-365-metre-2026-10-29.md`; MP4 depoda değil, Soner'e sohbette gönderildi) | Beat sheet + kaynaklar + EN sürüm → `cikti/plan-365-metre-2026-10-29.md` | 8 beat, ~72 sn, kanca 62 (hookscore). Onay gelince ses + render (TR + EN) |
 
 ## Hazır ürünler (Soner'e teslim edildi)
 - 2026-10-02 · Short · Türbin nasıl elektrik üretir (sessiz, 52 sn) — sitede "Son paylaşım"
@@ -34,3 +35,4 @@ Durum: `bekliyor` · `yapiliyor` · `onay-bekliyor` (Soner'e soruldu) · `bitti`
 - 2026-10-03 · Metin paketi · Saha vakası YouTube + LinkedIn (cikti/metin-saha-vakasi-2026-10-02.md, denetçi GEÇTİ, LinkedIn 1256 karakter)
 - 2026-10-03 · Short · Rüzgâr esiyor, türbin duruyor (sesli, 60 sn; MP4 depoda değil, build.py + .srt depoda)
 - 2026-10-03 · Short · Wind blowing, turbine stopped — İNGİLİZCE (63 sn, mph'li; MP4 depoda değil)
+- 2026-10-29 · Short · 365 metrelik türbin — TR (60 sn) + EN (56 sn), .srt + YouTube paketi (MP4 depoda değil, build betikleri `cikti/video/turbin-365*/`)
