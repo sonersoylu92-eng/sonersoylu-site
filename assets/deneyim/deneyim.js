@@ -370,8 +370,11 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   window.addEventListener('ss:hava', e => { hava = e.detail; havaSurum++; kareSakla = true; if (!icAyar) isik(); });
   /* körfez kapağında vardiya doğrudan İzmir'deki gerçek güneş yüksekliğinden (gok.js, 30 sn'de bir) okunur:
    * gün batımı anı sayfanın 10 dakikalık etiket yenilemesini beklemez. */
+  /* V42 · "Sahada bir gün": gerçek gök hesabıyla (Aliağa, bugünün tarihi) 24 saat hızlandırılmış oynatılır.
+   * Güneş, ay ve yıldızlar o anın gerçek konumunda; ışık kipi güneş yüksekliğinden okunur. Süre duvar saatiyle. */
+  let gunAkisi = null;
   function vardiyaSimdi() {
-    if (zorVardiya || !korfez || !gok) return zorVardiya || kok.dataset.vardiya;
+    if (!gunAkisi && (zorVardiya || !korfez || !gok)) return zorVardiya || kok.dataset.vardiya;
     const d = gok.durum, h = d.gunesH * 180 / Math.PI;
     if (h < -6) return 'gece';
     if (h < 0) return d.gunesYon.x > 0 ? 'safak' : 'aksam';   // güneş doğuda: sabah
@@ -438,7 +441,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (gecis.t >= 1) gecis = null;
   }
   function isik() {
-    const m = isikModu(), faz = korfez ? vardiyaSimdi() : null;
+    const m = isikModu(), faz = korfez || gunAkisi ? vardiyaSimdi() : null;
     if (m === sonMod && havaSurum === sonSurum && faz === sonFaz) return;
     const yumusat = !isikIlk && !icAyar && !az;
     const once = yumusat ? durumAl() : null;
@@ -1223,7 +1226,8 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     kule.kabinKapiAyarla(kabinAcik);
     kule.kilitDili.position.x = -KO.ASN.gen / 2 + 0.03 + 0.035 * (yumusak(0.279, 0.284, p) - yumusak(0.4, 0.4035, p));
     kule.pilot.material.color.setHex(asnHizYum > 0.05 ? 0xf2b233 : 0x46d06a);
-    if (cb.ses) cb.ses({ disari: kIcOnce ? 0 : 1, kule: sonKulede, asnHiz: asnHizYum, kapi: yumusak(0.186, 0.199, p), kabinKapi: kabinAcik, p });
+    if (cb.ses) cb.ses({ disari: kIcOnce ? 0 : 1, kule: sonKulede, asnHiz: asnHizYum, kapi: yumusak(0.186, 0.199, p), kabinKapi: kabinAcik, p,
+      rpm: rotorW * 60 / (2 * Math.PI), simsek: simsekT0, yagmur: hava && (hava.tur === 'yagmur' || hava.tur === 'firtina') ? 1 : 0 });
     // dış ortam ışığı içeride kısılır (nasel ya da kule)
     const cikis = yumusak(0.918, 0.948, p);
     const icPay = kulede ? 1 : (p > 0.915 && p < 0.948 ? 1 - cikis : icerde ? 1 : 0);
@@ -1238,6 +1242,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     // atmosfer geçişi (saat/hava): içeri girerken anında tamamlanır ki iç sis ayarı doğru değerden başlasın
     gecisAdim(kIc);
     if (GB && !kIc) gunesKarsi();
+    if (gunAkisi) gunAkisiAdim(t);
     if (gok && !GB && !kIc) gokIsik();
     const atmDt = sonAtmT ? Math.min(1, (t - sonAtmT) / 1000) : 0; sonAtmT = t;
     if (ege) { ege.grup.visible = icPay < 0.999; if (ege.grup.visible) ege.adim(atmDt, mt / 1000, !az && !duraklat); }
@@ -1676,6 +1681,33 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   Object.defineProperty(S, 'rotor', { get: () => ({ dk: rotorW * 60 / (2 * Math.PI), hedef: cssDevir * 60 / (2 * Math.PI) }) });   // tanı ve test: anlık ve hedef devir (d/dk)
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
+  // V42 · sahada bir gün: { acik, sure (ms) } → durum; durum(): { acik, oran 0–1, saat (Date) }
+  function gunAkisiAdim(t) {
+    const f = Math.min(1, (t - gunAkisi.t0) / gunAkisi.sure);
+    gunAkisi.oran = f;
+    gunAkisi.saat = new Date(gunAkisi.bas + f * 864e5);
+    gok.hesapla(gunAkisi.saat);
+    isik();
+    durgunT = t;
+    if (f >= 1) gunAkisiBitir();
+  }
+  function gunAkisiBitir() {
+    if (!gunAkisi) return;
+    gunAkisi = null; gok.hesapla(); isik(); durgunT = performance.now(); baslat();
+    if (cb.gunAkisi) cb.gunAkisi({ acik: false });
+  }
+  S.gunAkisi = o => {
+    o = o || {};
+    if (!gok || GB) return { acik: false };
+    if (o.acik === false) { gunAkisiBitir(); return { acik: false }; }
+    const simdi = Date.now();
+    // bugünün yerel gece yarısından değil, şimdiden başla: izleyici önce kendi saatini görür
+    gunAkisi = { t0: performance.now(), sure: Math.max(8000, +o.sure || 32000), bas: simdi, oran: 0, saat: new Date(simdi) };
+    durgunT = performance.now(); baslat();
+    if (cb.gunAkisi) cb.gunAkisi({ acik: true });
+    return { acik: true };
+  };
+  S.gunAkisiDurum = () => gunAkisi ? { acik: true, oran: gunAkisi.oran, saat: gunAkisi.saat } : { acik: false };
   S.noktaVurgula = id => { vurguNokta = id || null; if (rt.acik) { rt.secili = vurguNokta; rontgenVurgu(); } baslat(); };
   // röntgen: { acik, kabuk 0–1, patlat 0–1, aciEkle (radyan, sürükleme), secili (nokta kimliği) }
   S.rontgen = o => {

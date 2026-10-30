@@ -675,3 +675,26 @@ button.ea-d:hover{border-color:#a9cbc9}
 @media (max-width:820px){ .v-dsz-akis{margin-top:.45rem} .v-dsz-canli{margin-top:.3rem;font-size:.6875rem} }
 .v-dsz-durgun{display:none}
 .v-dsz-canli.durgun .v-dsz-durgun{display:inline}
+
+/* ---- V42 · sinema bantları, "Sahada bir gün" saati, durak adı harf açılışı ---- */
+.v-bant{position:absolute;left:0;right:0;z-index:0;height:9vh;background:#000;pointer-events:none;transform:scaleY(0);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.v-bant-ust{top:0;transform-origin:50% 0}
+.v-bant-alt{bottom:0;transform-origin:50% 100%}
+.dny-gecis .v-bant{transform:scaleY(.5)}
+.dny-gun .v-bant{transform:scaleY(1)}
+@media (max-width:820px){.v-bant{height:6vh}}
+.v-gun-saat{position:absolute;z-index:5;left:50%;top:calc(9vh + .6rem);transform:translate(-50%,-6px);margin:0;display:grid;justify-items:center;gap:.25rem;
+  pointer-events:none;opacity:0;visibility:hidden;transition:opacity .5s ease,transform .5s ease,visibility 0s .5s;color:#eef2f5;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.dny-gun .v-gun-saat{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .5s ease .25s,transform .5s ease .25s,visibility 0s}
+.v-gun-et{font-family:var(--mono);font-size:.5625rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,242,245,.7)}
+.v-gun-saat b{font-family:var(--mono);font-weight:500;font-size:clamp(1.4rem,2.6vw,2rem);letter-spacing:.04em;font-variant-numeric:tabular-nums;line-height:1}
+.v-gun-cubuk{display:block;width:7.5rem;height:2px;background:rgba(238,242,245,.22);overflow:hidden}
+.v-gun-cubuk>i{display:block;height:100%;background:var(--d-cyan,#7fd3ff);transform-origin:0 50%;transform:scaleX(0)}
+@media (max-width:820px){.v-gun-saat{top:calc(6vh + 4.6rem + env(safe-area-inset-top))}}
+.v-den-gun span{width:.8rem;height:.45rem;position:relative;box-sizing:border-box;border:2px solid currentColor;border-bottom:0;border-radius:.8rem .8rem 0 0;margin-top:.15rem}
+.v-den-gun span::after{content:"";position:absolute;left:-.2rem;right:-.2rem;bottom:-2px;height:2px;background:currentColor}
+.v-den-gun[aria-pressed="true"]{color:#eef2f5;border-color:var(--d-cyan)}
+.dny-hud h2 .vh-harf{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.dny-hud h2 .vh-harf>span{display:inline-block;animation:vhHarf .75s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i) * 32ms)}
+@keyframes vhHarf{from{transform:translateY(108%)}}
+@media (prefers-reduced-motion:reduce){.v-bant{transition:none}.dny-gecis .v-bant{transform:scaleY(0)}.dny-hud h2 .vh-harf>span{animation:none}}

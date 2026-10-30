@@ -9,6 +9,14 @@
   var kok = document.documentElement;
   var tuval = $('dnyTuval'), hud = $('dnyHud'), alt = $('dnyAlt'), son = $('dnySon');
   var eNo = $('dnyNo'), eEn = $('dnyEn'), eAd = $('dnyAd'), eBilgi = $('dnyBilgi');
+  /* V42 · durak adı harf harf maskeden yükselir (hareket azaltılmışsa düz metin) */
+  function harfYaz(el, metin) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = metin; el.removeAttribute('aria-label'); return; }
+    el.setAttribute('aria-label', metin);
+    el.innerHTML = metin.split('').map(function (h, i) {
+      return '<span class="vh-harf" aria-hidden="true" style="--i:' + i + '"><span>' + (h === ' ' ? '&nbsp;' : h.replace(/&/g, '&amp;').replace(/</g, '&lt;')) + '</span></span>';
+    }).join('');
+  }
   var eBolum = $('dnyBolum'), eKot = $('dnyKot');
   var kararti = $('dnyKararti'), cizgi = $('dnyIlerleme'), ray = $('dnyRay');
   var DURAKLAR = [];
@@ -240,7 +248,7 @@
     var goster = en >= 0 && fark < 0.019 && p < 0.934;
     if (goster && en !== sonDurak) {
       var d = DURAKLAR[en];
-      eNo.textContent = String(en + 1).padStart(2, '0'); eEn.textContent = d.en; eAd.textContent = d.ad; eBilgi.textContent = d.bilgi;
+      eNo.textContent = String(en + 1).padStart(2, '0'); eEn.textContent = d.en; harfYaz(eAd, d.ad); eBilgi.textContent = d.bilgi;
       sonDurak = en;
     }
     hud.classList.toggle('gor', goster);
@@ -497,7 +505,7 @@
   sesBtn.addEventListener('click', function () {
     if (sesMotor) { sesMotor.kapat(); sesMotor = null; sesBtn.setAttribute('aria-pressed', 'false'); sesBtn.lastChild.textContent = 'Ses kapalı'; sahaSesDuyur(false); return; }
     if (sesYukleniyor) return; sesYukleniyor = true;
-    import('/assets/deneyim/ses.js?v=9dd49f08').then(function (m) {
+    import('/assets/deneyim/ses.js?v=8e7d7a3d').then(function (m) {
       sesMotor = m.sesKur(); sesYukleniyor = false;
       if (sesMotor) { sesBtn.setAttribute('aria-pressed', 'true'); sesBtn.lastChild.textContent = 'Ses açık'; sahaSesDuyur(true); }
     }).catch(function () { sesYukleniyor = false; });
@@ -546,6 +554,54 @@
     '<button type="button" class="v-den-par" aria-haspopup="dialog" aria-controls="vParca" aria-expanded="false"><span aria-hidden="true"></span><b>Parçalar</b></button>' +
     '<button type="button" class="v-den-ea" aria-haspopup="dialog" aria-controls="vEnerji" aria-expanded="false"><span aria-hidden="true"></span><b>Enerji akışı</b></button>');
   var parBtn = denetim.querySelector('.v-den-par'), eaBtn = denetim.querySelector('.v-den-ea');
+
+  /* ---- V42 · Sahada bir gün: gerçek gök hesabıyla 24 saat, ~32 sn'de; sinema bantları ve hızlandırılmış saat ---- */
+  denetim.insertAdjacentHTML('beforeend', '<button type="button" class="v-den-gun" aria-pressed="false" aria-label="Sahada bir günü hızlandırılmış izle"><span aria-hidden="true"></span><b>Bir gün</b></button>');
+  var gunBtn = denetim.querySelector('.v-den-gun');
+  gunBtn.style.display = 'none';   // yalnız canlı 3B sahnede (film kipinde gök hesabı yok)
+  var bantUst = document.createElement('div'), bantAlt = document.createElement('div');
+  bantUst.className = 'v-bant v-bant-ust'; bantAlt.className = 'v-bant v-bant-alt';
+  bantUst.setAttribute('aria-hidden', 'true'); bantAlt.setAttribute('aria-hidden', 'true');
+  tuval.insertAdjacentElement('afterend', bantAlt); tuval.insertAdjacentElement('afterend', bantUst);
+  var gunSaat = document.createElement('p'); gunSaat.className = 'v-gun-saat'; gunSaat.setAttribute('aria-live', 'off');
+  gunSaat.innerHTML = '<span class="v-gun-et">Hızlandırılmış · gerçek gök</span><b>--:--</b><i class="v-gun-cubuk"><i></i></i>';
+  sahne.appendChild(gunSaat);
+  var gunSaatB = gunSaat.querySelector('b'), gunCubuk = gunSaat.querySelector('.v-gun-cubuk > i'), gunRaf = 0;
+  var saatYaz = new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Istanbul' });
+  function gunGoster(acik) {
+    bolum.classList.toggle('dny-gun', acik);
+    gunBtn.setAttribute('aria-pressed', acik ? 'true' : 'false');
+    gunBtn.lastChild.textContent = acik ? 'Günü durdur' : 'Bir gün';
+    gunBtn.setAttribute('aria-label', acik ? 'Hızlandırılmış günü durdur' : 'Sahada bir günü hızlandırılmış izle');
+    cancelAnimationFrame(gunRaf);
+    if (!acik) return;
+    (function dongu() {
+      var d = sahneS && sahneS.gunAkisiDurum ? sahneS.gunAkisiDurum() : null;
+      if (!d || !d.acik) return;
+      gunSaatB.textContent = saatYaz.format(d.saat);
+      gunCubuk.style.transform = 'scaleX(' + d.oran.toFixed(4) + ')';
+      gunRaf = requestAnimationFrame(dongu);
+    })();
+  }
+  gunBtn.addEventListener('click', function () {
+    if (!sahneS || !sahneS.gunAkisi) return;
+    var acik = gunBtn.getAttribute('aria-pressed') !== 'true';
+    if (acik) {
+      // gök yalnız dışarıdan görünür: kule ya da nasel içindeyken önce açılış görünümüne dön
+      var r = bolum.getBoundingClientRect(), oran = -r.top / Math.max(1, bolum.offsetHeight - innerHeight);
+      if (oran > 0.12 && oran < 0.96) window.scrollTo({ top: window.scrollY + r.top, behavior: hareketAz ? 'auto' : 'smooth' });
+      if (sahneS.duraklat && bolum.classList.contains('dny-duraklatildi')) { sahneS.duraklat(false); durGoster(false); }
+    }
+    sahneS.gunAkisi({ acik: acik, sure: 32000 });
+  });
+  // geçiş bantları: kamera duraklar arasında hızla akarken ince sinema bantları açılır, durakta çekilir
+  var bantP = -1, bantT = 0, bantZ = 0;
+  function bantGuncelle(p) {
+    var t = performance.now(), hiz = bantP < 0 ? 0 : Math.abs(p - bantP) / Math.max(16, t - bantT) * 1000;
+    bantP = p; bantT = t;
+    if (hareketAz || p < 0.02 || p > 0.985) return;
+    if (hiz > 0.035) { bolum.classList.add('dny-gecis'); clearTimeout(bantZ); bantZ = setTimeout(function () { bolum.classList.remove('dny-gecis'); }, 420); }
+  }
   /* V11: denetim katlanır; tek "Kontroller" düğmesi açar, sahne sade kalır */
   denetim.insertAdjacentHTML('afterbegin', '<button type="button" class="v-den-ac" aria-expanded="false" aria-label="Sahne kontrollerini aç"><span aria-hidden="true"></span><b>Kontroller</b></button>');
   var denAc = denetim.querySelector('.v-den-ac');
@@ -1000,13 +1056,14 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=e23bc187').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=b140a062').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
       return Promise.resolve((filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
         hafif: !!orta,
-        ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
+        ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); bantGuncelle(p); },
+        gunAkisi: function (d) { gunGoster(!!(d && d.acik)); },
         noktalar: noktalar,
         etiketler: etiketler,
         uzerinde: uzerinde,
@@ -1017,7 +1074,7 @@
         takilma: function (d) { if (!zorla3B && d.ms > 1500 && d.is > 1000 && hazirAni && performance.now() - hazirAni > 2500 && !filmKip && !gizlendi && !document.hidden && (d.ms > 4000 || ++donmaSay >= 3)) { zayifIsaretle('donma-' + d.ms); if (sahneS && sahneS.birak) setTimeout(function () { sahneS.birak('donma'); }, 0); } tani('takilma', { neden: 'p=' + d.p + ' ms=' + d.ms + ' is=' + d.is + ' prog+' + d.prog + ' geo+' + d.geo + ' tex+' + d.tex + ' vh=' + d.vh, kalite: d.kalite, sure_ms: d.ms }); },
         hata: function (neden, d) { d = d || {}; if (neden === 'yavas' && !filmKip) zayifIsaretle('yavas'); tani('birak', { neden: neden, kalite: d.kalite, kare_ms: d.kare_ms, sure_ms: Math.round(performance.now() - taniT0) }); birak(); }
       })).then(function (S) {
-      if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else { sahneS = S; if (kayitliDuraklat() && S.duraklat) S.duraklat(true); }
+      if (!S) { tani('hata', { neden: 'sahne-kurulamadi' }); statik(false); } else { sahneS = S; if (kayitliDuraklat() && S.duraklat) S.duraklat(true); gunBtn.style.display = S.gunAkisi ? '' : 'none'; }
       });
     }).catch(function (e) { console.error('deneyim yüklenemedi:', e); tani('hata', { neden: 'yukleme: ' + String(e && e.message || e).slice(0, 120) }); statik(false); });
     // 15 sn içinde ilk kare gelmezse bekletme: kapağa dön. Süre yalnız sekme görünürken işler;
@@ -1066,7 +1123,7 @@
    * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
    * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
    * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
-  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=e23bc187","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=b140a062","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
   if (!filmKip) try {
     var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
     ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {
