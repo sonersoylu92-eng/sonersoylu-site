@@ -117,7 +117,21 @@ export function gokKur(THREE, { lite = false, enlem = 38.85, boylam = 27.0, sabi
   const durum = { gunesYon: new THREE.Vector3(0, 1, 0), gunesH: 0, ayYon: new THREE.Vector3(0, 1, 0), ayH: 0, ayKesir: 0, ayEvre: 0, t: 0 };
   const _v = new THREE.Vector3();
 
-  function hesapla(tarih = sabitZaman ? new Date(sabitZaman) : new Date()) {
+  /* V42 · sanal saat: kapaktaki "bir gün" kaydırma senaryosu gökyüzünü kaydırmayla ileri sarar. Güneş, ay ve yıldızlar o
+   * anın gerçek konumundan hesaplanır (canlandırılan yalnız saatin akışıdır). null: gerçek saat. */
+  let sanal = null;
+  function zamanAyarla(ms) {
+    if (ms == null) { if (sanal !== null) { sanal = null; hesapla(); } return; }
+    if (sanal !== null && Math.abs(ms - sanal) < 15000) return;   // 15 sn'den küçük adımlar gökyüzünde görünmez
+    sanal = ms; hesapla(new Date(ms));
+  }
+  /* yan etkisiz güneş yüksekliği (radyan) ve yönü: senaryonun bölüm saatleri (doğuş, altın saat, alacakaranlık) için */
+  function gunesAl(ms, yonOut) {
+    const d = gunSay(ms), st = yildizZamani(d, lw), g = gunesKoord(d), gH = st - g.ra, h = yukseklik(gH, phi, g.dec);
+    if (yonOut) yonYaz(yonOut, azimut(gH, phi, g.dec), h);
+    return h;
+  }
+  function hesapla(tarih = sanal !== null ? new Date(sanal) : sabitZaman ? new Date(sabitZaman) : new Date()) {
     const d = gunSay(+tarih), st = yildizZamani(d, lw);
     const g = gunesKoord(d), gH = st - g.ra;
     durum.gunesH = yukseklik(gH, phi, g.dec); yonYaz(durum.gunesYon, azimut(gH, phi, g.dec), durum.gunesH);
@@ -145,7 +159,7 @@ export function gokKur(THREE, { lite = false, enlem = 38.85, boylam = 27.0, sabi
   const gor = { y: 0, a: 0 };
   /* ayCarpan: ay ufuktaki bir dağın ardındaysa 0 (kapak dünyası bildirir) */
   function adim(kamera, dt, gece, kapali, ayCarpan = 1) {
-    if (Date.now() - durum.t > 30000) hesapla();
+    if (sanal === null && Date.now() - durum.t > 30000) hesapla();
     grup.position.copy(kamera.position);
     const k = 1 - Math.exp(-dt * 1.5);
     const yHedef = gece * (1 - kapali);
@@ -158,5 +172,5 @@ export function gokKur(THREE, { lite = false, enlem = 38.85, boylam = 27.0, sabi
   }
 
   hesapla();
-  return { grup, durum, hesapla, adim };
+  return { grup, durum, hesapla, adim, zamanAyarla, gunesAl };
 }

@@ -160,6 +160,99 @@
   setInterval(havaCek, 10 * 60 * 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) havaCek(); });
 
+  /* ---- V42 · "Bir gün": kapaktan kule kapısına bir günlük kaydırma senaryosu (yalnız ana sayfa, canlı 3B) ----
+   * Kaydırma yolunun başına 600svh eklenir (deneyim.css, .dny-gun). Bu payın oranı (F) burada ölçülür ve sahneye verilir;
+   * yolculuğun eski p değerleri değişmez: p = (ham − F) / (1 − F). Bölüm kartı, sinema bantları, gün rayı ve yağmur
+   * katmanı yalnız DOM'dur (WebGL'e iş eklemez); her kare yalnız değişen değer yazılır. */
+  var gunAcik = bolum.classList.contains('dny-gun') && !filmKip;
+  if (!gunAcik) bolum.classList.remove('dny-gun');
+  var gunF = 0, gunKirli = true, gunOlcu = null;
+  function gunPay() {
+    if (!gunAcik || !bolum.classList.contains('uc-boyut')) return 0;
+    if (gunKirli) {
+      gunKirli = false;
+      if (!gunOlcu) { gunOlcu = document.createElement('i'); gunOlcu.className = 'gun-olcu'; gunOlcu.setAttribute('aria-hidden', 'true'); bolum.appendChild(gunOlcu); }
+      var yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight);
+      gunF = yol > 0 ? Math.min(0.8, gunOlcu.offsetHeight / yol) : 0;
+    }
+    return gunF;
+  }
+  window.__dnyGunPay = gunPay;
+  if ('ResizeObserver' in window) new ResizeObserver(function () { gunKirli = true; }).observe(bolum);
+  addEventListener('resize', function () { gunKirli = true; }, { passive: true });
+  // senaryo ölçüleri (deneyim.js ile aynı): ilk uçuş, beş bölüm (tutma + uçuş), varış
+  var GUN_U0 = 0.5, GUN_TUT = 0.55, GUN_N = 5, GUN_TOP = 0.5 + 5 * 1 + 0.42;
+  var GUN = [
+    { ad: 'ŞAFAK', et: 'Gün doğumu · Çandarlı Körfezi', m: 'Güneş doğudaki tepelerin ardından yükselir; ilk ışık kanat uçlarına düşer.' },
+    { ad: 'FIRTINA', et: 'Devreden çıkma · 25 m/s', m: 'Rüzgâr 25 m/s’yi aşınca kanatlar yelken konumuna döner ve rotor durur. Fırtınada üretim değil, türbin korunur.', canli: true },
+    { ad: 'ALTIN SAAT', et: 'Güneş batıya alçalırken · 6°', m: 'Işık alçalır ve ısınır; türbin doğudaki Aliağa kıyısının önünde altına boyanır.' },
+    { ad: 'ALACAKARANLIK', et: 'Bergama yönü · güneş ufkun 4° altında', m: 'Güneş battı ama gök hâlâ aydınlık: doğu ufkunda pembe bir kuşak, altında dünyanın gölgesi. Kıyıda ışıklar yanar.' },
+    { ad: 'GECE', et: 'İkaz lambaları', m: 'Rüzgâr gece de eser, üretim durmaz. Naselin üstündeki kırmızı lambalar kuleyi pilotlara gösterir.' },
+    { ad: 'ERTESİ SABAH', et: 'Vardiya · kule kapısı', m: 'Her bakım günü kule kapısında başlar: iş izni, kilitleme ve kişisel koruyucu donanım. Kaydırmaya devam et, türbinin içine gir.' }
+  ];
+  var GUN_NOT = 'Gökyüzü hesaplı: güneş ve ay bu saatteki gerçek yerinde', GUN_CANL = 'Canlandırma · gerçek hava değil';
+  var gunKart = null, gunBantU = null, gunBantA = null, gunYag = null, gunGolge = null, gunRay = null, gunRayLi = [];
+  var gs = { ici: null, sanal: null, bolum: -2, kart: null, bant: -1, yag: -1, dk: '', ray: -2 };
+  function gunKur() {
+    if (gunKart || !gunAcik) return;
+    gunBantU = document.createElement('div'); gunBantU.className = 'gun-bant gun-bant-ust'; gunBantU.setAttribute('aria-hidden', 'true');
+    gunBantA = document.createElement('div'); gunBantA.className = 'gun-bant gun-bant-alt'; gunBantA.setAttribute('aria-hidden', 'true');
+    gunYag = document.createElement('div'); gunYag.className = 'gun-yagmur'; gunYag.setAttribute('aria-hidden', 'true');
+    gunGolge = document.createElement('div'); gunGolge.className = 'gun-golge'; gunGolge.setAttribute('aria-hidden', 'true');   // fırtına bulutunun altı: gök de kararsın
+    gunKart = document.createElement('div'); gunKart.className = 'gun-kart'; gunKart.setAttribute('aria-live', 'polite');
+    gunKart.innerHTML = '<p class="gun-ust"><span class="gun-saat"></span><span class="gun-et"></span></p><p class="gun-ad"></p><p class="gun-metin"></p><p class="gun-not"></p>';
+    gunRay = document.createElement('ol'); gunRay.className = 'gun-ray'; gunRay.setAttribute('aria-label', 'Bir gün: bölümler');
+    gunRayLi = GUN.map(function (b, i) {
+      var li = document.createElement('li'), bt = document.createElement('button');
+      bt.type = 'button'; bt.textContent = b.ad.charAt(0) + b.ad.slice(1).toLocaleLowerCase('tr'); bt.setAttribute('aria-label', bt.textContent + ' bölümüne git');
+      bt.addEventListener('click', function () { gunGit(i); });
+      li.appendChild(bt); gunRay.appendChild(li); return li;
+    });
+    sahne.insertBefore(gunGolge, kararti); sahne.insertBefore(gunYag, kararti);
+    sahne.appendChild(gunBantU); sahne.appendChild(gunBantA); sahne.appendChild(gunKart); sahne.appendChild(gunRay);
+  }
+  // bölüm i'nin tutma ortası (ya da varış); kaydırma bölümün içine, kart okunur yere iner
+  function gunGit(i) {
+    var F = gunPay(); if (!F) return;
+    var u = i < GUN_N ? GUN_U0 + i + GUN_TUT * 0.5 : GUN_TOP - 0.15;
+    gitHam(F * u / GUN_TOP);
+  }
+  function gunSaat(ms) { var d = new Date(ms + 3 * 3600e3); return ('0' + d.getUTCHours()).slice(-2) + ':' + ('0' + d.getUTCMinutes()).slice(-2); }
+  function gunHarf(metin) {
+    var h = '';
+    for (var k = 0; k < metin.length; k++) h += metin[k] === ' ' ? '<span class="gun-bos"> </span>' : '<span class="gun-hf"><span style="--i:' + k + '">' + metin[k] + '</span></span>';
+    return h;
+  }
+  function gunGuncelle(G, p) {
+    if (!gunKart) gunKur();
+    var ici = G.q > 0.004 && p < 0.02;
+    if (ici !== gs.ici) { gs.ici = ici; bolum.classList.toggle('dny-gun-ici', ici); }
+    if (G.sanal !== gs.sanal) { gs.sanal = G.sanal; bolum.classList.toggle('dny-gun-sanal', !!G.sanal); }
+    var kart = !!(G.kart && p < 0.006 && G.bolum >= 0);
+    if (G.bolum >= 0 && G.bolum !== gs.bolum) {
+      gs.bolum = G.bolum; var b = GUN[G.bolum];
+      gunKart.querySelector('.gun-et').textContent = b.et;
+      var ad = gunKart.querySelector('.gun-ad'); ad.innerHTML = gunHarf(b.ad); ad.setAttribute('aria-label', b.ad);
+      gunKart.querySelector('.gun-metin').textContent = b.m;
+      var not = gunKart.querySelector('.gun-not'); not.textContent = b.canli ? GUN_CANL : GUN_NOT; not.classList.toggle('gun-canl', !!b.canli);
+      gs.dk = '';
+    }
+    if (kart !== gs.kart) { gs.kart = kart; gunKart.classList.toggle('gor', kart); }
+    if (kart && G.saat) { var dk = gunSaat(G.saat); if (dk !== gs.dk) { gs.dk = dk; gunKart.querySelector('.gun-saat').textContent = dk; } }
+    // sinema bantları: yalnız bölümler arası uçuşlarda (transform: düzen ve boyama yok, yalnız birleştirme)
+    var bant = ici ? Math.round(G.bant * 200) / 200 : 0;
+    if (bant !== gs.bant) { gs.bant = bant; gunBantU.style.transform = 'scaleY(' + bant + ')'; gunBantA.style.transform = 'scaleY(' + bant + ')'; }
+    var yag = ici ? Math.round(G.firtina * G.wv * 50) / 50 : 0;
+    if (yag !== gs.yag) { gs.yag = yag; gunYag.style.opacity = (yag * 0.62).toFixed(3); gunGolge.style.opacity = (yag * 0.6).toFixed(3); gunYag.classList.toggle('gor', yag > 0.01); }
+    // gün rayı: geçilen ve bulunulan bölüm
+    var ri = ici ? (G.bolum >= 0 ? G.bolum : gunRayIndex(G)) : -1;
+    if (ri !== gs.ray) { gs.ray = ri; gunRayLi.forEach(function (li, i) { li.classList.toggle('etkin', i === ri); li.classList.toggle('gecildi', ri >= 0 && i < ri); }); }
+  }
+  function gunRayIndex(G) {   // uçuş sırasında: bir önceki bölüm etkin kalır
+    var u = G.q * GUN_TOP - GUN_U0; if (u < 0) return -1;
+    return Math.min(GUN.length - 1, Math.floor(u));
+  }
+
   var DIS = [
     { p: 0.0, a: 0.035, b: 0.11, k: 'Uzaktan', t: 'Ege, rüzgâr çiftliği. Göbek yerden 120 metrede; rotorun çapı 116,8 metre.' },
     { p: 0.15, a: 0.143, b: 0.168, k: 'Kule kapısı', t: 'Her bakım günü bu kapının önünde başlar: iş izni, kilitleme ve kişisel koruyucu donanım.' },
@@ -190,10 +283,12 @@
   }
 
   var kesiyor = false, sonP = 0;
-  function git(p) {
+  // p: yolculuk ilerlemesi (kule kapısı 0,15 …); "bir gün" senaryosu varsa yolun başındaki payı atlanır
+  function git(p) { var F = gunPay(); gitHam(F + (1 - F) * p); }
+  function gitHam(h) {
     var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight);
-    var hedef = Math.round(scrollY + r.top + yol * p);
-    if (Math.abs(p - sonP) < 0.1 || kesiyor) { window.scrollTo({ top: hedef, behavior: 'instant' }); return; }   // yakın: kamera ataletle süzülür
+    var hedef = Math.round(scrollY + r.top + yol * h), simdi = yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0;
+    if (Math.abs(h - simdi) < 0.1 * (1 - gunPay()) || kesiyor) { window.scrollTo({ top: hedef, behavior: 'instant' }); return; }   // yakın: kamera ataletle süzülür
     // uzak bölüm: kısa kararma, kesme, açılma (film kurgusu gibi)
     kesiyor = true; kararti.style.transition = 'opacity .3s ease'; kararti.style.opacity = '1';
     setTimeout(function () {
@@ -220,7 +315,7 @@
     // WebGL hiç yoksa bağlantı /deneyim/ sayfasına gider
   });
   var basaDon = $('dnyBasaDon');
-  if (basaDon) basaDon.addEventListener('click', function () { git(0); });
+  if (basaDon) basaDon.addEventListener('click', function () { gitHam(0); });   // V42: başa = kapak (senaryonun başı)
 
   var soz = $('vSoz'), sozSatir = soz ? [].slice.call(soz.querySelectorAll('span')) : [];
   var sonDurak = -2, sonRay = -1, sonAlt = -1, sonBolumAdi = '', sonKot = '';
@@ -763,7 +858,7 @@
   var rotaNo = rota.querySelector('.v-rota-no b'), rotaAd = rota.querySelector('.v-rota-no span'), rotaDuyuru = rota.querySelector('#vRotaDuyuru');
   var rotaDevam = rota.querySelector('.v-rota-devam'), turZ = 0, turAcik = false, sonRotaDurak = -1, hashIslendi = false;
   // kaydırma konumu (kameranın ataletli konumu değil): çubuk ve adres parmakla aynı anda güncellenir
-  function kaydirmaP() { var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight); return yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0; }
+  function kaydirmaP() { var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight), h = yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0, F = gunPay(); return F ? Math.max(0, (h - F) / (1 - F)) : h; }
   var rotaRaf = 0; addEventListener('scroll', function () { if (!rotaRaf) rotaRaf = requestAnimationFrame(function () { rotaRaf = 0; rotaGuncelle(kaydirmaP()); }); }, { passive: true });
   function enYakinDurak(p) { var en = 0, f = 9; DURAKLAR.forEach(function (d, i) { var x = Math.abs(p - d.p); if (x < f) { f = x; en = i; } }); return en; }
   function durakGit(i, duyur) {
@@ -979,8 +1074,8 @@
   }
   document.addEventListener('visibilitychange', donguOynat);
   function statik(dugme) {
-    bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'dny-akis', 'hazir');
-    bolum.classList.add('statik');
+    bolum.classList.remove('uc-boyut', 'dny-hazirlaniyor', 'dny-akis', 'hazir', 'dny-gun-ici', 'dny-gun-sanal');
+    bolum.classList.add('statik'); gunKirli = true;
     bolum.removeAttribute('aria-busy');
     kuruluyor = false;
     acilabilir = !!dugme;
@@ -1006,6 +1101,8 @@
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
       return Promise.resolve((filmKip ? mod.filmBaslat : mod.deneyimBaslat)(tuval, bolum, {
         hafif: !!orta,
+        gunPay: filmKip ? null : gunPay,
+        gun: gunGuncelle,
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); },
         noktalar: noktalar,
         etiketler: etiketler,

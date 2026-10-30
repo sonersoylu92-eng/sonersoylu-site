@@ -56,7 +56,8 @@ export function sesKur() {
       if (ctx.state === 'suspended') ctx.resume();
       ruzgarlik += (Math.random() - 0.5) * 0.08; ruzgarlik = Math.max(-0.3, Math.min(0.3, ruzgarlik * 0.995));
       const disari = s.disari * (1 - 0.6 * s.kule);
-      hedef(ruzG.gain, disari * (0.28 + ruzgarlik * 0.25), 0.6); hedef(ruzF.frequency, 360 + ruzgarlik * 260, 0.8);
+      const firt = s.firtina || 0;   // V42: kapak senaryosundaki fırtına (canlandırma): rüzgâr sesi güçlenir ve tizleşir
+      hedef(ruzG.gain, disari * (0.28 + ruzgarlik * 0.25) * (1 + 1.3 * firt), 0.6); hedef(ruzF.frequency, 360 + ruzgarlik * 260 + 380 * firt, 0.8);
       hedef(kuleG.gain, s.kule * 0.22, 0.8); hedef(ugulG.gain, s.kule * 0.035, 0.8);
       const m = Math.min(1, s.asnHiz / 2.2);
       hedef(motorG.gain, m * 0.16, 0.35); hedef(motor.frequency, 46 + m * 12, 0.5);
