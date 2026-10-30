@@ -200,7 +200,8 @@
   var kesiyor = false, sonP = 0;
   function git(p) {
     var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight);
-    var hedef = Math.round(scrollY + r.top + yol * p);
+    var H = window.__dnyOnsoz || 0;   // V43: yolun ilk kısmı kapak hikâyesi
+    var hedef = Math.round(scrollY + r.top + yol * (H + (1 - H) * p));
     if (Math.abs(p - sonP) < 0.1 || kesiyor) { window.scrollTo({ top: hedef, behavior: 'instant' }); return; }   // yakın: kamera ataletle süzülür
     // uzak bölüm: kısa kararma, kesme, açılma (film kurgusu gibi)
     kesiyor = true; kararti.style.transition = 'opacity .3s ease'; kararti.style.opacity = '1';
@@ -589,11 +590,42 @@
     if (acik) {
       // gök yalnız dışarıdan görünür: kule ya da nasel içindeyken önce açılış görünümüne dön
       var r = bolum.getBoundingClientRect(), oran = -r.top / Math.max(1, bolum.offsetHeight - innerHeight);
-      if (oran > 0.12 && oran < 0.96) window.scrollTo({ top: window.scrollY + r.top, behavior: hareketAz ? 'auto' : 'smooth' });
+      if (oran > 0.02 && oran < 0.985) window.scrollTo({ top: window.scrollY + r.top, behavior: hareketAz ? 'auto' : 'smooth' });
       if (sahneS.duraklat && bolum.classList.contains('dny-duraklatildi')) { sahneS.duraklat(false); durGoster(false); }
     }
     sahneS.gunAkisi({ acik: acik, sure: 32000 });
   });
+  /* ---- V43 · kapak hikâyesi kartları: kamera önümüzdeki 24 saati gezerken bölüm adı, gerçek saat ve tek cümle ---- */
+  var HK_METIN = {
+    safak: ['Şafak', 'Güneş Ege sırtlarının ardından doğar. Sahada gün, kuleye çıkmadan önce rüzgâra bakarak başlar.'],
+    kiyi: ['Kıyı', 'Akşamüstü güneş denize iner. Denizden gelen rüzgâr rotoru yükte tutar.'],
+    alaca: ['Alacakaranlık', 'Güneş batınca nasellerin üstündeki kırmızı ikaz lambaları ufukta yanmaya başlar.'],
+    gece: ['Gece', 'Saha gece de üretir. Yıldızlar ve ay, bu gece Aliağa\'dan görünecekleri yerde.'],
+    firtina: ['Fırtına', 'Rüzgâr kesme hızını aşınca türbin kendini durdurur. Fırtınada üretim değil, türbin korunur.']
+  };
+  var hk = document.createElement('div'); hk.className = 'v-hikaye'; hk.setAttribute('aria-live', 'polite');
+  hk.innerHTML = '<p class="v-hk-ust"><b class="v-hk-saat"></b><span class="v-hk-et"></span></p><h2 class="v-hk-ad"></h2><p class="v-hk-metin"></p>';
+  sahne.appendChild(hk);
+  var hkSaat = hk.querySelector('.v-hk-saat'), hkEt = hk.querySelector('.v-hk-et'), hkAd = hk.querySelector('.v-hk-ad'), hkMetin = hk.querySelector('.v-hk-metin');
+  var hkSaatYaz = new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Istanbul' });
+  var hkKart = null, hkG = -1, hkT = 0, hkZ = 0;
+  function hikaye(d) {
+    var ici = d.g > 0.004 && d.g < 0.996;
+    bolum.classList.toggle('dny-hikayede', ici);
+    // hızlı akışta bantlar tam açılır
+    var t = performance.now(), hiz = hkG < 0 ? 0 : Math.abs(d.g - hkG) / Math.max(16, t - hkT) * 1000; hkG = d.g; hkT = t;
+    if (!hareketAz && hiz > 0.12) { bolum.classList.add('dny-gecis'); clearTimeout(hkZ); hkZ = setTimeout(function () { bolum.classList.remove('dny-gecis'); }, 420); }
+    if (d.kart && d.saat) hkSaat.textContent = d.kart === 'firtina' ? 'Canlandırma' : hkSaatYaz.format(d.saat);
+    if (d.kart !== hkKart) {
+      hkKart = d.kart;
+      if (d.kart && HK_METIN[d.kart]) {
+        hkEt.textContent = d.kart === 'firtina' ? 'gerçek hava değil' : 'hızlandırılmış · gerçek gök';
+        harfYaz(hkAd, HK_METIN[d.kart][0]); hkMetin.textContent = HK_METIN[d.kart][1];
+      }
+      hk.classList.toggle('gor', !!(d.kart && HK_METIN[d.kart]));
+    }
+  }
+
   // geçiş bantları: kamera duraklar arasında hızla akarken ince sinema bantları açılır, durakta çekilir
   var bantP = -1, bantT = 0, bantZ = 0;
   function bantGuncelle(p) {
@@ -819,7 +851,7 @@
   var rotaNo = rota.querySelector('.v-rota-no b'), rotaAd = rota.querySelector('.v-rota-no span'), rotaDuyuru = rota.querySelector('#vRotaDuyuru');
   var rotaDevam = rota.querySelector('.v-rota-devam'), turZ = 0, turAcik = false, sonRotaDurak = -1, hashIslendi = false;
   // kaydırma konumu (kameranın ataletli konumu değil): çubuk ve adres parmakla aynı anda güncellenir
-  function kaydirmaP() { var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight); return yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0; }
+  function kaydirmaP() { var r = bolum.getBoundingClientRect(), yol = bolum.offsetHeight - (sahne.clientHeight || innerHeight), H = window.__dnyOnsoz || 0; var ham = yol > 0 ? Math.max(0, Math.min(1, -r.top / yol)) : 0; return H ? Math.max(0, (ham - H) / (1 - H)) : ham; }
   var rotaRaf = 0; addEventListener('scroll', function () { if (!rotaRaf) rotaRaf = requestAnimationFrame(function () { rotaRaf = 0; rotaGuncelle(kaydirmaP()); }); }, { passive: true });
   function enYakinDurak(p) { var en = 0, f = 9; DURAKLAR.forEach(function (d, i) { var x = Math.abs(p - d.p); if (x < f) { f = x; en = i; } }); return en; }
   function durakGit(i, duyur) {
@@ -1056,7 +1088,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=b140a062').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=0cfefdd7').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
@@ -1064,6 +1096,7 @@
         hafif: !!orta,
         ilerleme: function (p, y, icerde) { ilerleme(p, y, icerde); irtifaGuncelle(p, y); bantGuncelle(p); },
         gunAkisi: function (d) { gunGoster(!!(d && d.acik)); },
+        hikaye: hikaye,
         noktalar: noktalar,
         etiketler: etiketler,
         uzerinde: uzerinde,
@@ -1123,7 +1156,7 @@
    * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
    * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
    * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
-  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=b140a062","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=0cfefdd7","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=d466d467","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
   if (!filmKip) try {
     var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
     ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {

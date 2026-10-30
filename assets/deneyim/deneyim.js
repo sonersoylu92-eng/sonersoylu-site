@@ -373,8 +373,15 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   /* V42 · "Sahada bir gün": gerçek gök hesabıyla (Aliağa, bugünün tarihi) 24 saat hızlandırılmış oynatılır.
    * Güneş, ay ve yıldızlar o anın gerçek konumunda; ışık kipi güneş yüksekliğinden okunur. Süre duvar saatiyle. */
   let gunAkisi = null;
+  /* V43 · Kapak hikâyesi: kaydırmanın ilk üçte birinde kamera kapaktan kalkar, önümüzdeki 24 saati gezer
+   * (şafak, kıyı, alacakaranlık, gece; sonda fırtına canlandırması) ve kapağa döner; iç yolculuk eski temposuyla sürer.
+   * Güneş, ay ve yıldızlar o saatlerin Aliağa'daki gerçek konumunda (gok.js). */
+  const ONSOZ = 1 / 3;
+  const hikayeVar = !!(gok && !GB);
+  let hikayeHam = 1, hg = 1, hikayeZamanda = false, hikayeHava = null, HK = null, hikayeKartOnce = null;
+  if (hikayeVar) { bolum.classList.add('dny-onsozlu'); window.__dnyOnsoz = ONSOZ; }
   function vardiyaSimdi() {
-    if (!gunAkisi && (zorVardiya || !korfez || !gok)) return zorVardiya || kok.dataset.vardiya;
+    if (!gunAkisi && !hikayeZamanda && (zorVardiya || !korfez || !gok)) return zorVardiya || kok.dataset.vardiya;
     const d = gok.durum, h = d.gunesH * 180 / Math.PI;
     if (h < -6) return 'gece';
     if (h < 0) return d.gunesYon.x > 0 ? 'safak' : 'aksam';   // güneş doğuda: sabah
@@ -441,12 +448,12 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     if (gecis.t >= 1) gecis = null;
   }
   function isik() {
-    const m = isikModu(), faz = korfez || gunAkisi ? vardiyaSimdi() : null;
+    const m = isikModu(), faz = korfez || gunAkisi || hikayeZamanda ? vardiyaSimdi() : null;
     if (m === sonMod && havaSurum === sonSurum && faz === sonFaz) return;
     const yumusat = !isikIlk && !icAyar && !az;
     const once = yumusat ? durumAl() : null;
     setLight(m); sonMod = m; sonSurum = havaSurum; sonFaz = faz;
-    const tur = hava && hava.tur;
+    const ehv = hikayeHava || hava, tur = ehv && ehv.tur;
     const u = S.sky.material.uniforms;
     // nasel kapağı: fotoğraftaki berrak gün ışığı yalnız gündüz ve açık/parçalı havada; akşam, gece, yağmur ve fırtınada gerçek koşul
     const ncAcik = NC && !korfez && m === 'day' && (!tur || tur === 'acik' || tur === 'parcali');
@@ -532,7 +539,10 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     // yol, yapışkan sahnenin kendi yüksekliğiyle (100svh) ölçülür: iPhone'da adres çubuğu açılıp kapanınca
     // innerHeight değişir ve kamera sıçrardı; sahne yüksekliği sabit kalır.
     const r = bolum.getBoundingClientRect(), yol = r.height - (sahneEl.clientHeight || innerHeight);
-    return yol <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / yol));
+    const ham = yol <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / yol));
+    if (!hikayeVar) { hikayeHam = 1; return ham; }
+    hikayeHam = Math.min(1, ham / ONSOZ);
+    return ham <= ONSOZ ? 0 : (ham - ONSOZ) / (1 - ONSOZ);
   }
   function olcek(zorla) {
     const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
@@ -1166,6 +1176,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
       _bakD.set(Math.sin(yA) * Math.cos(yE), Math.sin(yE), Math.cos(yA) * Math.cos(yE)).multiplyScalar(uz).add(kKonum);
       camera.lookAt(_bakD);
     } else camera.lookAt(bakH);
+    if (hikayeVar) hikayeKamera(dt, anlik, t, kKonum, bakH);
 
     // iç/dış geçişi
     naselYerel(camera.position, yerel);
@@ -1227,7 +1238,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     kule.kilitDili.position.x = -KO.ASN.gen / 2 + 0.03 + 0.035 * (yumusak(0.279, 0.284, p) - yumusak(0.4, 0.4035, p));
     kule.pilot.material.color.setHex(asnHizYum > 0.05 ? 0xf2b233 : 0x46d06a);
     if (cb.ses) cb.ses({ disari: kIcOnce ? 0 : 1, kule: sonKulede, asnHiz: asnHizYum, kapi: yumusak(0.186, 0.199, p), kabinKapi: kabinAcik, p,
-      rpm: rotorW * 60 / (2 * Math.PI), simsek: simsekT0, yagmur: hava && (hava.tur === 'yagmur' || hava.tur === 'firtina') ? 1 : 0 });
+      rpm: rotorW * 60 / (2 * Math.PI), simsek: simsekT0, yagmur: (hikayeHava || hava) && /^(yagmur|firtina)$/.test((hikayeHava || hava).tur) ? 1 : 0 });
     // dış ortam ışığı içeride kısılır (nasel ya da kule)
     const cikis = yumusak(0.918, 0.948, p);
     const icPay = kulede ? 1 : (p > 0.915 && p < 0.948 ? 1 - cikis : icerde ? 1 : 0);
@@ -1247,7 +1258,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     const atmDt = sonAtmT ? Math.min(1, (t - sonAtmT) / 1000) : 0; sonAtmT = t;
     if (ege) { ege.grup.visible = icPay < 0.999; if (ege.grup.visible) ege.adim(atmDt, mt / 1000, !az && !duraklat); }
     if (gok) {
-      const vv = vardiyaSimdi(), ht = hava && hava.tur;
+      const vv = vardiyaSimdi(), ehv = hikayeHava || hava, ht = ehv && ehv.tur;
       const gece = vv === 'gece' ? 1 : vv === 'aksam' ? 0.4 : vv === 'safak' ? 0.3 : 0;
       const kapali = ht === 'bulutlu' || ht === 'yagmur' || ht === 'firtina' || ht === 'kar' || ht === 'sis' ? 1 : ht === 'parcali' ? 0.3 : 0;
       let ayCarpan = 1;
@@ -1278,7 +1289,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     kIcOnce = kIc;
     pozAnlik += (pozHedef - pozAnlik) * (anlik ? 1 : 1 - Math.exp(-dt * (kIc ? 1.15 : 1.7)));
     renderer.toneMappingExposure = pozAnlik;
-    simsekAdim(t, hava && hava.tur === 'firtina' && !az && !kIc && !duraklat && !performans);
+    simsekAdim(t, (hikayeHava || hava) && (hikayeHava || hava).tur === 'firtina' && !az && !kIc && !duraklat && !performans);
     if (toz) toz.visible = !!icerde && yerel.y < ic.sinir.TAVAN - 0.3;
     if (gunes) gunes.intensity = gunesTaban * (1 - icPay);
     if (hemi) hemi.intensity = THREE.MathUtils.lerp(hemi.intensity, hemiTaban * THREE.MathUtils.lerp(1, kulede ? 0.24 : 0.1, icPay), 1 - Math.exp(-dt * 6));
@@ -1294,7 +1305,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     // mekanik: rotor gerçek devirde, ana mil onunla, hızlı taraf ~×100 (görsel olarak yavaşlatılmış)
     /* rotor eylemsizliği: 57 m'lik kanatlar devir değişimine anında uymaz. Sahne açılırken rotor durgundan kalkar ve
      * birkaç saniyede hedef devre oturur (kapak 'oynar'); canlı rüzgâr değişince de yumuşakça hızlanır ya da yavaşlar. */
-    const w = rotorW += (devirRad() - rotorW) * (1 - Math.exp(-dt / ROTOR_TAU));
+    const w = rotorW += ((hikayeHava ? 0 : devirRad()) - rotorW) * (1 - Math.exp(-dt / ROTOR_TAU));   // fırtına canlandırmasında rotor durur
     const hdt = duraklat ? 0 : dt;
     if (parts.spin) parts.spin.rotation.z -= w * hdt;
     if (ic.anaMil) ic.anaMil.rotation.z -= w * hdt;
@@ -1681,6 +1692,93 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
   Object.defineProperty(S, 'rotor', { get: () => ({ dk: rotorW * 60 / (2 * Math.PI), hedef: cssDevir * 60 / (2 * Math.PI) }) });   // tanı ve test: anlık ve hedef devir (d/dk)
   // Kullanıcı denetimi: duraklat / devam ve açılış sekansını baştan oynatma
   S.duraklat = v => { duraklat = !!v; durgunT = performance.now(); baslat(); return duraklat; };
+  /* ---- V43 · kapak hikâyesi ---- */
+  // Gerçek gökten bugünün güneş anları: hedef yükseklik (°) sabah yükselirken ya da akşam alçalırken
+  function gunesAni(bas, hedef, sabah) {
+    let once = null;
+    for (let m = 0; m <= 1440; m += 4) {
+      const z = bas + m * 6e4, h = gok.hesapla(new Date(z)).gunesH * 180 / Math.PI;
+      if (once !== null && (sabah ? once < hedef && h >= hedef : once > hedef && h <= hedef)) return z;
+      once = h;
+    }
+    return bas + (sabah ? 7 : 18) * 36e5;
+  }
+  function hikayeHazirla() {
+    const simdi = Date.now(), ist = new Date(simdi + 3 * 36e5);
+    const gun0 = Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate()) - 3 * 36e5;   // İstanbul gece yarısı
+    const sonraki = (f) => { for (let k = 0; k < 3; k++) { const z = f(gun0 + k * 864e5); if (z > simdi + 20 * 6e4) return z; } return f(gun0 + 3 * 864e5); };
+    // kamera duruşları: B (kule dibi, dünya) çevresinde; doğu +x, batı −x, kuzey −z, güney +z
+    const B = (x, y, z) => ({ x, y, z });
+    const bolumler = [
+      { id: 'safak', z: sonraki(g => gunesAni(g, 2, true) + 10 * 6e4), k: B(-250, 32, -70), h: B(40, 105, 10) },
+      { id: 'kiyi', z: sonraki(g => gunesAni(g, 7, false)), k: B(170, 185, -90), h: B(-850, 30, 260) },
+      { id: 'alaca', z: sonraki(g => gunesAni(g, -3.5, false)), k: B(75, 7, -95), h: B(-20, 118, 25) },
+      { id: 'gece', z: sonraki(g => g + 864e5 + 1.5 * 36e5), k: B(-210, 240, -230), h: B(70, 70, 140) },
+    ].sort((a, b) => a.z - b.z);
+    const firtina = { id: 'firtina', z: bolumler[bolumler.length - 1].z + 9 * 36e5, k: B(40, 4, 65), h: B(-5, 118, 0), hava: 'firtina' };
+    let son = simdi; while (son < firtina.z + 36e5) son += 864e5;
+    gok.hesapla();
+    const dizi = [{ id: 'kapak', z: simdi }, ...bolumler, firtina, { id: 'kapak', z: son }];
+    dizi.forEach((d, i) => { d.g = i / (dizi.length - 1); });
+    return dizi;
+  }
+  const _hB = new THREE.Vector3(), _hS = new THREE.Vector3(), _hF = new THREE.Vector3();
+  const _hk = [], _hh = [];
+  const _hP = new THREE.Vector3(), _hT = new THREE.Vector3(), _hTmp = new THREE.Vector3();
+  function cr(o, a, b, c, d, t) {
+    const t2 = t * t, t3 = t2 * t;
+    return o.set(0, 0, 0).addScaledVector(a, -0.5 * t3 + t2 - 0.5 * t).addScaledVector(b, 1.5 * t3 - 2.5 * t2 + 1)
+      .addScaledVector(c, -1.5 * t3 + 2 * t2 + 0.5 * t).addScaledVector(d, 0.5 * t3 - 0.5 * t2);
+  }
+  function yerAl(x, z) { return korfez ? korfez.yerY(x, z) : ege ? ege.yerY(araziY, x, z) : araziY(x, z); }
+  function hikayeKamera(dt, anlik, t, kapakK, kapakH) {
+    hg += (hikayeHam - hg) * (anlik ? 1 : 1 - Math.exp(-dt * (mobil ? 10 : 2.4)));
+    if (Math.abs(hikayeHam - hg) < 1e-5) hg = hikayeHam;
+    const aktif = hg > 1e-4 && hg < 0.9999 && !gunAkisi;
+    if (!aktif) {
+      if (hikayeZamanda || hikayeHava) {
+        hikayeZamanda = false; if (hikayeHava) { hikayeHava = null; havaSurum++; bolum.dataset.hava = hava ? hava.tur : ''; }
+        if (!gunAkisi) gok.hesapla(); isik(); HK = null;
+      }
+      if (hikayeKartOnce !== null) { hikayeKartOnce = null; if (cb.hikaye) cb.hikaye({ g: hg, kart: null }); }
+      return;
+    }
+    if (!HK) HK = hikayeHazirla();
+    // kule dibi ve ön yön (dünya)
+    yaw.getWorldPosition(_hTmp);
+    _hB.set(_hTmp.x, yerAl(_hTmp.x, _hTmp.z), _hTmp.z);
+    const n = HK.length;
+    for (let i = 0; i < n; i++) {
+      if (!_hk[i]) { _hk[i] = new THREE.Vector3(); _hh[i] = new THREE.Vector3(); }
+      const d = HK[i];
+      if (d.k) { _hk[i].set(_hB.x + d.k.x, _hB.y + d.k.y, _hB.z + d.k.z); _hh[i].set(_hB.x + d.h.x, _hB.y + d.h.y, _hB.z + d.h.z); }
+      else { _hk[i].copy(kapakK); _hh[i].copy(kapakH); }
+    }
+    let i = 0; while (i < n - 2 && hg > HK[i + 1].g) i++;
+    const f = Math.min(1, Math.max(0, (hg - HK[i].g) / (HK[i + 1].g - HK[i].g)));
+    const e = f * f * (3 - 2 * f), u = f * 0.4 + e * 0.6;   // bölümde hafif duraklama
+    const a = Math.max(0, i - 1), c = i + 1, d2 = Math.min(n - 1, i + 2);
+    cr(_hP, _hk[a], _hk[i], _hk[c], _hk[d2], u);
+    cr(_hT, _hh[a], _hh[i], _hh[c], _hh[d2], u);
+    const yer = yerAl(_hP.x, _hP.z) + 2; if (_hP.y < yer) _hP.y = yer;
+    if (!az) { _hP.y += Math.sin(mt / 2300) * 0.15; _hT.x += Math.sin(mt / 3100) * 0.3; }
+    camera.position.copy(_hP); camera.lookAt(_hT);
+    // zaman: anahtar kareler arasında aynı yumuşatmayla akar
+    const zaman = HK[i].z + (HK[c].z - HK[i].z) * u;
+    gok.hesapla(new Date(zaman)); hikayeZamanda = true;
+    // fırtına canlandırması: bölümün çevresinde
+    let firt = false;
+    HK.forEach(k => { if (k.hava && Math.abs(hg - k.g) < 0.075) firt = true; });
+    if (firt !== !!hikayeHava) { hikayeHava = firt ? { tur: 'firtina', canlandirma: true } : null; havaSurum++; bolum.dataset.hava = (hikayeHava || hava || {}).tur || ''; }
+    isik();
+    durgunT = t;
+    // bölüm kartı: anahtar kareye yakınken
+    let kart = null;
+    for (let k = 1; k < n - 1; k++) if (Math.abs(hg - HK[k].g) < 0.055) kart = HK[k].id;
+    if (cb.hikaye) cb.hikaye({ g: hg, kart, saat: new Date(zaman) });
+    hikayeKartOnce = kart;
+  }
+
   // V42 · sahada bir gün: { acik, sure (ms) } → durum; durum(): { acik, oran 0–1, saat (Date) }
   function gunAkisiAdim(t) {
     const f = Math.min(1, (t - gunAkisi.t0) / gunAkisi.sure);

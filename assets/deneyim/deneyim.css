@@ -698,3 +698,20 @@ button.ea-d:hover{border-color:#a9cbc9}
 .dny-hud h2 .vh-harf>span{display:inline-block;animation:vhHarf .75s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i) * 32ms)}
 @keyframes vhHarf{from{transform:translateY(108%)}}
 @media (prefers-reduced-motion:reduce){.v-bant{transition:none}.dny-gecis .v-bant{transform:scaleY(0)}.dny-hud h2 .vh-harf>span{animation:none}}
+
+/* ---- V43 · kapak hikâyesi: bölüm 1100 → 1600svh (ilk 500svh hikâye), kartlar, kapak sadeliği ---- */
+.dny-bolum.dny-onsozlu{height:1600svh}
+.dny-hikayede .v-bant{transform:scaleY(.62)}
+.dny-hikayede.dny-gecis .v-bant{transform:scaleY(1)}
+.dny-hikayede .dny-kapak-alt,.dny-hikayede .v-soz{opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.v-hikaye{position:absolute;z-index:4;left:var(--d-gut);bottom:calc(9vh + clamp(1.4rem,5vh,3.4rem));max-width:min(30rem,calc(100% - 2 * var(--d-gut)));margin:0;pointer-events:none;
+  opacity:0;transform:translateY(10px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1);color:var(--d-ink,#eef2f5)}
+.v-hikaye.gor{opacity:1;transform:none}
+.v-hk-ust{margin:0;display:flex;align-items:baseline;gap:.6rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(238,242,245,.72)}
+.v-hk-saat{font-weight:500;font-size:.8125rem;letter-spacing:.06em;color:#eef2f5;font-variant-numeric:tabular-nums;padding:.12rem .45rem;border:1px solid rgba(238,242,245,.32);border-radius:3px}
+.v-hikaye .v-hk-ad{margin:.6rem 0 0;font-family:var(--sans);font-weight:500;font-size:clamp(2.4rem,6vw,4.6rem);line-height:.98;letter-spacing:-.045em;text-shadow:0 2px 28px rgba(0,0,0,.55)}
+.v-hikaye .v-hk-ad .vh-harf{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.v-hikaye .v-hk-ad .vh-harf>span{display:inline-block;animation:vhHarf .8s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i) * 34ms)}
+.v-hk-metin{margin:.7rem 0 0;max-width:27rem;font-size:clamp(.95rem,1.2vw,1.06rem);line-height:1.55;color:rgba(238,242,245,.88);text-shadow:0 1px 16px rgba(0,0,0,.6)}
+@media (max-width:820px){.v-hikaye{bottom:calc(6vh + 1.2rem)}.v-hikaye .v-hk-ad{font-size:2.6rem}}
+@media (prefers-reduced-motion:reduce){.v-hikaye{transition:none}.v-hikaye .v-hk-ad .vh-harf>span{animation:none}}
