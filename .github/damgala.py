@@ -33,5 +33,21 @@ for tur in range(10):
         if t != s:
             open(yol, 'w', encoding='utf-8').write(t); degisen += 1; toplam.add(os.path.relpath(yol, KOK))
     if not degisen: break
+# V5: servis çalışanı sürümü damgalarla birlikte otomatik artar. Sürüm, sitedeki tüm damgalı varlık
+# adreslerinin özetidir: bir CSS/JS/JSON değişince SURUM değişir ve ziyaretçinin eski önbelleği silinir.
+imza = set()
+for yol in dosyalar():
+    try: s = open(yol, encoding='utf-8').read()
+    except UnicodeDecodeError: continue
+    for m in DESEN.finditer(s):
+        if m.group(1) != '/sw.js': imza.add(m.group(1) + '?v=' + m.group(2))
+sw = os.path.join(KOK, 'sw.js')
+if imza and os.path.isfile(sw):
+    s = open(sw, encoding='utf-8').read()
+    surum = 'kule-oto-' + hashlib.md5('\n'.join(sorted(imza)).encode()).hexdigest()[:8]
+    t = re.sub(r"const SURUM = '[^']*';", "const SURUM = '" + surum + "';", s, count=1)
+    if t != s:
+        open(sw, 'w', encoding='utf-8').write(t); toplam.add('sw.js')
+    print('servis çalışanı sürümü:', surum)
 print('damga yenilenen dosya:', len(toplam))
 for f in sorted(toplam): print(' ', f)

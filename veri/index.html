@@ -190,7 +190,7 @@ b.setAttribute("aria-expanded",String(!a));m.classList.toggle("open",!a)});})();
 
  function getir(){
   var k=anahtar(); if(!k){ kilit.hidden=false; pano.hidden=true; return; }
-  fetch('/api/olcum/rapor?gun='+gun+'&anahtar='+encodeURIComponent(k))
+  fetch('/api/olcum/rapor?gun='+gun,{headers:{Authorization:'Bearer '+k},cache:'no-store'})
    .then(function(r){ if(r.status===401) throw new Error('Anahtar doğru değil.');
                       if(r.status===503) throw new Error('Sunucuda anahtar tanımlı değil.');
                       if(!r.ok) throw new Error('Rapor alınamadı.'); return r.json() })

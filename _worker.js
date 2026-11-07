@@ -35,6 +35,19 @@ export default {
 
     // ajans çalışma klasörü ve ajan tanımları dışarıya kapalı (depoda durur, yayınlanmaz)
     if (/^\/(ajans|\.claude)(\/|$)/.test(url.pathname)) return new Response('Bulunamadı', { status: 404 });
+    // V5: depo ve yayın yapılandırması dışarıya kapalı (.github betikleri, wrangler, python dosyaları)
+    if (/^\/\.github(\/|$)/.test(url.pathname) || /^\/(wrangler\.jsonc?|_worker\.js)$/i.test(url.pathname) ||
+        /\.py$/i.test(url.pathname)) return new Response('Bulunamadı', { status: 404 });
+
+    // V5: başka sitelerden gönderilen POST istekleri reddedilir (Origin yoksa geçer: bazı tarayıcılar göndermez)
+    if (request.method === 'POST' && url.pathname.startsWith('/api/') && !kaynakUygun(request)) {
+      return json({ ok: false, hata: 'kaynak' }, 403);
+    }
+
+    if (url.pathname === '/api/csp') {
+      if (request.method === 'POST') return cspKaydet(request, env);
+      return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
+    }
 
     if (url.pathname === '/api/abone') {
       if (request.method === 'POST') return aboneKaydet(request, env);
@@ -78,7 +91,7 @@ export default {
     }
 
     if (url.pathname === '/api/olcum/rapor') {
-      if (request.method === 'GET') return olcumRapor(url, env);
+      if (request.method === 'GET') return olcumRapor(request, url, env);
       return json({ ok: false, hata: 'yontem-desteklenmiyor' }, 405);
     }
 
@@ -89,6 +102,47 @@ export default {
 // Statik yanıtlara güvenlik başlıkları ekler (clickjacking, HTTPS zorlaması,
 // yetki kısıtı). İçeriği değiştirmez; CSP bilinçli olarak eklenmedi (3B sahne,
 // gömülü video ve API çağrılarını bozmadan ayrı ve testli yapılmalı).
+const CSP_RAPOR = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.google.com https://*.gstatic.com https://*.doubleclick.net https://*.adtrafficquality.google https://static.cloudflareinsights.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' data: https://fonts.gstatic.com",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' blob:",
+  "connect-src 'self' https://formspree.io https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://cloudflareinsights.com",
+  "frame-src https://www.youtube-nocookie.com https://www.youtube.com https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net",
+  "worker-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self' https://formspree.io",
+  "frame-ancestors 'self'",
+  "report-uri /api/csp",
+  "report-to csp",
+].join('; ');
+
+// V5: Origin başlığı varsa yalnız kendi alan adlarımız (canlı, Pages önizleme, yerel test) kabul edilir.
+function kaynakUygun(request) {
+  const o = request.headers.get('origin');
+  if (!o) return true;
+  try {
+    const h = new URL(o).hostname;
+    return h === 'sonersoylu.com' || h === 'www.sonersoylu.com' || h === 'soner-portfolio.pages.dev' ||
+           h.endsWith('.soner-portfolio.pages.dev') || h === 'localhost' || h === '127.0.0.1';
+  } catch { return false; }
+}
+
+// V5: KV'ye yazmadan, aynı Worker örneği içinde en iyi çabayla hız sınırı (ücretsiz; kötüye kullanımı keser).
+const BELLEK_SAYAC = new Map();
+function bellekSinir(anahtar, tavan, pencereMs) {
+  const k = anahtar + ':' + Math.floor(Date.now() / pencereMs);
+  const n = (BELLEK_SAYAC.get(k) || 0) + 1;
+  BELLEK_SAYAC.set(k, n);
+  if (BELLEK_SAYAC.size > 5000) {
+    for (const x of BELLEK_SAYAC.keys()) { BELLEK_SAYAC.delete(x); if (BELLEK_SAYAC.size < 2500) break; }
+  }
+  return n > tavan;
+}
+
 function guvenlikle(res) {
   const h = new Headers(res.headers);
   h.set('X-Frame-Options', 'SAMEORIGIN');
@@ -96,6 +150,11 @@ function guvenlikle(res) {
   h.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), browsing-topics=()');
   if (!h.has('Referrer-Policy')) h.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   if (!h.has('X-Content-Type-Options')) h.set('X-Content-Type-Options', 'nosniff');
+  // V5: CSP önce yalnız RAPOR modunda — hiçbir şeyi engellemez, ihlalleri /api/csp'ye bildirir.
+  if ((h.get('content-type') || '').includes('text/html')) {
+    h.set('Content-Security-Policy-Report-Only', CSP_RAPOR);
+    h.set('Reporting-Endpoints', 'csp="/api/csp"');
+  }
   return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
 }
 
@@ -233,10 +292,22 @@ async function aboneKaydet(request, env) {
   try { body = await request.json(); } catch { return json({ ok: false, hata: 'gecersiz-istek' }, 400); }
 
   const email = String(body.email || '').trim().toLowerCase();
-  const kaynak = String(body.kaynak || 'site').slice(0, 40);
+  const kaynak = String(body.kaynak || 'site').replace(/[^\w\-:/.]/g, '').slice(0, 40) || 'site';
 
+  if (String(body.website || '')) return json({ ok: true });   // V5: bot tuzağı doluysa sessizce yut
   if (!MAIL.test(email) || email.length > 190) return json({ ok: false, hata: 'gecersiz-eposta' }, 400);
   if (!env.ABONE) return json({ ok: false, hata: 'depolama-yok' }, 503);
+
+  // V5: IP başına saatte 5 kayıt (bellek + KV); aynı adres ikinci kez yazılmaz (KV yazma bütçesi korunur)
+  const ip = request.headers.get('cf-connecting-ip') || '';
+  if (bellekSinir('abone:' + ip, 5, 3600000)) return json({ ok: false, hata: 'cok-fazla' }, 429);
+  try {
+    if (await env.ABONE.get('abone:' + email)) return json({ ok: true });
+    const kova = 'hiz:abone:' + (await ozet(ip)) + ':' + Math.floor(Date.now() / 3600000);
+    const n = parseInt((await env.ABONE.get(kova)) || '0', 10);
+    if (n >= 5) return json({ ok: false, hata: 'cok-fazla' }, 429);
+    await env.ABONE.put(kova, String(n + 1), { expirationTtl: 7200 });
+  } catch { /* sayaç okunamazsa kaydı yine de al */ }
 
   const kayit = {
     email, kaynak,
@@ -251,14 +322,21 @@ async function aboneKaydet(request, env) {
 }
 
 // Aranıp bulunamayan kelimeler. Kişisel veri tutulmaz; sadece kelime ve sayaç.
+const ARAMA_YERI = ['sozluk', 'site', 'ara', 'kodlar', 'asistan'];
+
 async function aramaKaydet(request, env) {
   let body;
   try { body = await request.json(); } catch { return json({ ok: false }, 400); }
 
   const q = String(body.q || '').trim().toLowerCase().slice(0, 60);
-  const nerede = String(body.nerede || 'sozluk').slice(0, 20);
+  const nerede = ARAMA_YERI.indexOf(body.nerede) >= 0 ? body.nerede : 'sozluk';   // V5: serbest metin yerine izin listesi
   if (q.length < 2 || !/[a-zçğıöşü0-9]/i.test(q)) return json({ ok: false, hata: 'gecersiz' }, 400);
   if (!env.ABONE) return json({ ok: false, hata: 'depolama-yok' }, 503);
+  // V5: IP başına saatte 20, örnek başına saatte 300 kayıt (KV yazma bütçesi korunur)
+  const ip = request.headers.get('cf-connecting-ip') || '';
+  if (bellekSinir('arama:' + ip, 20, 3600000) || bellekSinir('arama:toplam', 300, 3600000)) {
+    return json({ ok: false, hata: 'cok-fazla' }, 429);
+  }
 
   const anahtar = 'arama:' + nerede + ':' + q;
   try {
@@ -277,7 +355,7 @@ async function aramaKaydet(request, env) {
 // ---------------------------------------------------------------- ölçüm
 // Kişi bazlı kayıt yok: her istek yalnızca o günün sayaçlarına ekleniyor.
 const SURE_KOVA = ['0-10', '10-30', '30-60', '60-180', '180+'];
-const GUNLUK_TAVAN = 3000;                 // KV yazma bütçesini koruyan üst sınır
+const GUNLUK_TAVAN = 900;                  // V5: KV ücretsiz planı günde 1.000 yazma verir; abone/soru kayıtlarına yer kalsın
 
 function art(o, k) { if (k) o[k] = (o[k] || 0) + 1; }
 
@@ -322,9 +400,23 @@ function birlestir(hedef, kaynak) {
   for (const k in kaynak) hedef[k] = (hedef[k] || 0) + kaynak[k];
 }
 
-async function olcumRapor(url, env) {
+async function esitMi(a, b) {
+  const e = new TextEncoder();
+  const [x, y] = await Promise.all([crypto.subtle.digest('SHA-256', e.encode(String(a))),
+                                    crypto.subtle.digest('SHA-256', e.encode(String(b)))]);
+  const u = new Uint8Array(x), v = new Uint8Array(y);
+  let f = 0; for (let i = 0; i < u.length; i++) f |= u[i] ^ v[i];
+  return f === 0;
+}
+
+async function olcumRapor(request, url, env) {
   if (!env.OLCUM_ANAHTAR) return json({ ok: false, hata: 'anahtar-tanimsiz' }, 503);
-  if (url.searchParams.get('anahtar') !== env.OLCUM_ANAHTAR) {
+  // V5: anahtar Authorization başlığında gelir; URL'deki ?anahtar= yalnız geçiş dönemi için kabul edilir
+  const ip = request.headers.get('cf-connecting-ip') || '';
+  const yetki = request.headers.get('authorization') || '';
+  const verilen = yetki.startsWith('Bearer ') ? yetki.slice(7) : (url.searchParams.get('anahtar') || '');
+  if (!verilen || !(await esitMi(verilen, env.OLCUM_ANAHTAR))) {
+    if (bellekSinir('rapor-hata:' + ip, 10, 3600000)) return json({ ok: false, hata: 'cok-fazla' }, 429);
     return json({ ok: false, hata: 'yetkisiz' }, 401);
   }
   if (!env.ABONE) return json({ ok: false, hata: 'depolama-yok' }, 503);
@@ -523,7 +615,12 @@ async function asistan(request, env) {
     const anahtar = 'ai:' + (await ozet(ip)) + ':' + new Date().toISOString().slice(0, 13);
     const mevcut = Number((await env.ABONE.get(anahtar)) || 0);
     if (mevcut >= 12) return json({ ok: false, hata: 'cok-fazla-soru' }, 429);
+    // V5: tüm ziyaretçiler için günlük 300 soru — yapay zekâ bütçesini dağıtık kötüye kullanıma karşı korur
+    const gunK = 'ai:gun:' + new Date().toISOString().slice(0, 10);
+    const gunN = Number((await env.ABONE.get(gunK)) || 0);
+    if (gunN >= 300) return json({ ok: false, hata: 'cok-fazla-soru' }, 429);
     await env.ABONE.put(anahtar, String(mevcut + 1), { expirationTtl: 7200 });
+    await env.ABONE.put(gunK, String(gunN + 1), { expirationTtl: 172800 });
   }
 
   const parcalar = await indeksAl(env, dil);
@@ -724,6 +821,11 @@ function kisa(v, n) { return v == null ? null : String(v).replace(/[\u0000-\u001
 function sayi(v, alt, ust) { if (v == null || v === '') return null; const x = Number(v); return Number.isFinite(x) ? Math.max(alt, Math.min(ust, x)) : null; }
 async function taniKaydet(request, env) {
   if (!env.TANI) return new Response(null, { status: 204 });
+  // V5: IP başına saatte 120, örnek başına saatte 3000 olay (D1 tablosu şişmesin; sayfa hiçbir zaman etkilenmez)
+  const ip = request.headers.get('cf-connecting-ip') || '';
+  if (bellekSinir('tani:' + ip, 120, 3600000) || bellekSinir('tani:toplam', 3000, 3600000)) {
+    return new Response(null, { status: 204 });
+  }
   const metin = await request.text().catch(() => '');
   if (!metin || metin.length > 3000) return new Response(null, { status: 204 });
   let b; try { b = JSON.parse(metin); } catch { return new Response(null, { status: 204 }); }
@@ -748,5 +850,30 @@ async function taniKaydet(request, env) {
       sayi(b.sure_ms, 0, 3600000), kisa(b.oturum, 12), kisa(request.cf && request.cf.country, 4), kisa(b.surum, 20)
     ).run();
   } catch { /* tanı kaydı hiçbir zaman sayfayı etkilemez */ }
+  return new Response(null, { status: 204 });
+}
+
+// ---------------------------------------------------------------- V5: CSP ihlal raporları (yalnız rapor modu)
+// Tarayıcının gönderdiği ihlali D1 'olay' tablosuna olay='csp' olarak yazar. Sorgu dizgesi kaydedilmez.
+async function cspKaydet(request, env) {
+  const ip = request.headers.get('cf-connecting-ip') || '';
+  if (!env.TANI || bellekSinir('csp:' + ip, 20, 3600000) || bellekSinir('csp:toplam', 300, 3600000)) {
+    return new Response(null, { status: 204 });
+  }
+  const metin = (await request.text().catch(() => '')).slice(0, 8000);
+  let r; try { r = JSON.parse(metin); } catch { return new Response(null, { status: 204 }); }
+  const govdeler = Array.isArray(r) ? r.map((x) => x && x.body).filter(Boolean) : [r && r['csp-report']].filter(Boolean);
+  for (const b of govdeler.slice(0, 3)) {
+    const yonerge = b['effective-directive'] || b.effectiveDirective || b['violated-directive'] || '';
+    const engel = b['blocked-uri'] || b.blockedURL || '';
+    let yol = ''; try { yol = new URL(b['document-uri'] || b.documentURL || '').pathname; } catch { /* boş */ }
+    let kaynak = engel; try { const u = new URL(engel); kaynak = u.origin + u.pathname.slice(0, 40); } catch { /* inline, eval vb. */ }
+    try {
+      await env.TANI.prepare(
+        'INSERT INTO olay (t, sayfa, olay, neden, cihaz, tarayici, gpu, ekran, dpr, kalite, kare_ms, sure_ms, oturum, ulke, surum) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15)'
+      ).bind(Date.now(), kisa(yol, 40), 'csp', kisa(yonerge + ' ' + kaynak, 160), null, null, null, null, null, null, null, null, null,
+             kisa(request.cf && request.cf.country, 4), 'v5-csp').run();
+    } catch { /* rapor kaydı hiçbir zaman sayfayı etkilemez */ }
+  }
   return new Response(null, { status: 204 });
 }
