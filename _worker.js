@@ -33,6 +33,25 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // V6 GÜVENLİK DUVARI — her istek önce buradan geçer; normal ziyaretçi hiçbirini fark etmez.
+    const ip = request.headers.get('cf-connecting-ip') || '';
+    if (url.protocol === 'http:') { url.protocol = 'https:'; return Response.redirect(url.toString(), 301); }
+    if (!IZINLI_YONTEM.has(request.method)) return duvar(request, env, ip, 405, 'yontem');
+    if (request.url.length > 2048) return duvar(request, env, ip, 414, 'uzun-adres');
+    if (TARAMA_YOLU.test(url.pathname)) { kapanaAl(ip); return duvar(request, env, ip, 404, 'tarama'); }
+    let ham = url.pathname + url.search;
+    try { ham = decodeURIComponent(ham.replace(/\+/g, ' ')); } catch { return duvar(request, env, ip, 400, 'bozuk-kodlama'); }
+    if (KOTU_DESEN.test(ham)) { kapanaAl(ip); return duvar(request, env, ip, 403, 'saldiri-deseni'); }
+    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { 'cache-control': 'no-store' } });
+    if (request.method === 'POST' && !url.pathname.startsWith('/api/')) return duvar(request, env, ip, 405, 'yontem');
+    if (url.pathname.startsWith('/api/')) {
+      if (kapanda(ip)) return json({ ok: false, hata: 'engellendi' }, 403);   // tarama yapan IP 1 saat formlara giremez
+      if (request.method === 'POST') {
+        if (Number(request.headers.get('content-length') || 0) > 16384) return json({ ok: false, hata: 'cok-buyuk' }, 413);
+        if (bellekSinir('api:' + ip, 60, 60000)) return json({ ok: false, hata: 'cok-fazla' }, 429);
+      }
+    }
+
     // ajans çalışma klasörü ve ajan tanımları dışarıya kapalı (depoda durur, yayınlanmaz)
     if (/^\/(ajans|\.claude)(\/|$)/.test(url.pathname)) return new Response('Bulunamadı', { status: 404 });
     // V5: depo ve yayın yapılandırması dışarıya kapalı (.github betikleri, wrangler, python dosyaları)
@@ -102,6 +121,53 @@ export default {
 // Statik yanıtlara güvenlik başlıkları ekler (clickjacking, HTTPS zorlaması,
 // yetki kısıtı). İçeriği değiştirmez; CSP bilinçli olarak eklenmedi (3B sahne,
 // gömülü video ve API çağrılarını bozmadan ayrı ve testli yapılmalı).
+// ---------------------------------------------------------------- V6 güvenlik duvarı tanımları
+const IZINLI_YONTEM = new Set(['GET', 'HEAD', 'POST', 'OPTIONS']);
+// Saldırı tarayıcılarının yokladığı adresler: sitede hiçbiri yok, gerçek ziyaretçi asla istemez.
+const TARAMA_YOLU = new RegExp('^/(wp-admin|wp-login|wp-content|wp-includes|wp-json|wordpress|xmlrpc|phpmyadmin|pma|myadmin|adminer|' +
+  'cgi-bin|server-status|server-info|vendor/phpunit|actuator|telescope|_profiler|solr|owa|autodiscover|ecp|boaform|hnap1|' +
+  'manager/html|\\.env|\\.git|\\.svn|\\.hg|\\.aws|\\.ssh|\\.docker|\\.vscode|\\.idea|\\.ds_store|\\.htaccess|\\.htpasswd|' +
+  'config\\.(php|json|ya?ml)|backup|database|dump)(/|\\.|$)|\\.(php\\d?|phtml|asp|aspx|ashx|jsp|cgi|env|ini|sql|bak|old|swp|log|' +
+  'sh|bash|ya?ml|toml|pem|key|crt|sqlite|db|tar|gz|tgz|rar|7z|zip)$', 'i');
+// Adreste saldırı imzası: betik enjeksiyonu, SQL enjeksiyonu, dizin atlama, log4j vb.
+const KOTU_DESEN = /(<\s*script|<\s*svg[^>]*on\w+\s*=|javascript:|vbscript:|\bon(error|load)\s*=|\bunion\b[\s\S]{0,20}\bselect\b|information_schema|\bsleep\s*\(\s*\d|benchmark\s*\(|\.\.[\/\\]|\/etc\/(passwd|shadow)|proc\/self|\$\{jndi:|\u0000|base64_decode|<\?php)/i;
+
+// Tarama yapan IP'ler 1 saat formlara/API'ye giremez (Worker örneği belleğinde; KV'ye yazmaz).
+const KAPAN = new Map();
+function kapanaAl(ip) {
+  if (!ip) return;
+  KAPAN.set(ip, Date.now() + 3600000);
+  if (KAPAN.size > 5000) KAPAN.delete(KAPAN.keys().next().value);
+}
+function kapanda(ip) {
+  const t = KAPAN.get(ip);
+  if (!t) return false;
+  if (t < Date.now()) { KAPAN.delete(ip); return false; }
+  return true;
+}
+
+// Duvara takılan isteği kısa bir yanıtla geri çevirir ve (sınırlı sayıda) D1'e 'duvar' olayı olarak kaydeder.
+async function duvar(request, env, ip, durum, neden) {
+  if (env.TANI && !bellekSinir('duvar-kayit:' + ip, 5, 3600000) && !bellekSinir('duvar-kayit', 200, 3600000)) {
+    try {
+      const u = new URL(request.url);
+      await env.TANI.prepare(
+        'INSERT INTO olay (t, sayfa, olay, neden, cihaz, tarayici, gpu, ekran, dpr, kalite, kare_ms, sure_ms, oturum, ulke, surum) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15)'
+      ).bind(Date.now(), kisa(u.pathname, 40), 'duvar', kisa(durum + ' ' + neden + ' ' + request.method, 160), null,
+             kisa(request.headers.get('user-agent'), 40), null, null, null, null, null, null, null,
+             kisa(request.cf && request.cf.country, 4), 'v6-duvar').run();
+    } catch { /* kayıt hiçbir zaman yanıtı etkilemez */ }
+  }
+  return new Response(durum === 404 ? 'Bulunamadı' : 'Erişim engellendi', {
+    status: durum,
+    headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex',
+               'x-content-type-options': 'nosniff' },
+  });
+}
+
+// Zorunlu (engelleyen) CSP: yalnız reklamı, 3B sahneyi ve formları etkilemeyen yönergeler.
+const CSP_ZORUNLU = "object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://formspree.io; upgrade-insecure-requests";
+
 const CSP_RAPOR = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.google.com https://*.gstatic.com https://*.doubleclick.net https://*.adtrafficquality.google https://static.cloudflareinsights.com",
@@ -146,13 +212,17 @@ function bellekSinir(anahtar, tavan, pencereMs) {
 function guvenlikle(res) {
   const h = new Headers(res.headers);
   h.set('X-Frame-Options', 'SAMEORIGIN');
-  h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  h.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), browsing-topics=()');
+  h.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  h.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(), usb=(), ' +
+        'serial=(), hid=(), bluetooth=(), midi=(), display-capture=()');
+  h.set('X-Permitted-Cross-Domain-Policies', 'none');
   if (!h.has('Referrer-Policy')) h.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   if (!h.has('X-Content-Type-Options')) h.set('X-Content-Type-Options', 'nosniff');
   // V5: CSP önce yalnız RAPOR modunda — hiçbir şeyi engellemez, ihlalleri /api/csp'ye bildirir.
   if ((h.get('content-type') || '').includes('text/html')) {
     h.set('Content-Security-Policy-Report-Only', CSP_RAPOR);
+    h.set('Content-Security-Policy', CSP_ZORUNLU);                       // V6: engelleyen temel kurallar
+    h.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');    // V6: başka sekmeden pencereye erişim kapalı
     h.set('Reporting-Endpoints', 'csp="/api/csp"');
   }
   return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
@@ -456,7 +526,8 @@ async function olcumRapor(request, url, env) {
 function json(veri, status = 200) {
   return new Response(JSON.stringify(veri), {
     status,
-    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store',
+               'x-content-type-options': 'nosniff', 'cross-origin-resource-policy': 'same-origin', 'x-robots-tag': 'noindex' },
   });
 }
 
@@ -642,7 +713,9 @@ async function asistan(request, env) {
   const istem = (dil === 'tr' ? 'ALINTILAR:\n' : 'EXCERPTS:\n') + alintilar +
                 (dil === 'tr' ? '\n\nSORU: ' : '\n\nQUESTION: ') + soru;
 
-  const tani = body.tani === 'ac' ? [] : null;
+  // V6: iç hata ayrıntısı yalnız anahtar sahibine gösterilir (bilgi sızıntısı kapalı)
+  const tani = body.tani === 'ac' && env.OLCUM_ANAHTAR &&
+               request.headers.get('authorization') === 'Bearer ' + env.OLCUM_ANAHTAR ? [] : null;
   let cevap = null;
   try {
     cevap = env.CLAUDE_ANAHTAR
