@@ -1,0 +1,31 @@
+# Her yayından sonra önbellek damgalarını (?v=) dosya içeriğine göre yeniler ve gerekirse kaydeder.
+# Cloudflare statik dosyaları 4 saat önbellekte tuttuğu için damga eskirse yeni CSS/JS ziyaretçiye geç ulaşıyordu.
+name: damga
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: damga
+  cancel-in-progress: false
+jobs:
+  damga:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tek seferlik düzeltme (varsa çalıştırılır ve silinir)
+        run: |
+          if [ -f .github/tek-sefer.py ]; then python3 .github/tek-sefer.py . && git rm -q .github/tek-sefer.py; fi
+      - name: Damgaları yenile
+        run: python3 .github/damgala.py .
+      - name: Kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -q -m "Önbellek damgaları ve menü otomatik güncellendi"
+          git push
