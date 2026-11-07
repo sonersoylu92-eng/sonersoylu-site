@@ -14,8 +14,9 @@ jobs:
   damga:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2 (sabitlendi: tedarik zinciri güvenliği)
       - name: Tek seferlik düzeltme (varsa çalıştırılır ve silinir)
         run: |
           if [ -f .github/tek-sefer.py ]; then python3 .github/tek-sefer.py . && git rm -q .github/tek-sefer.py; fi
