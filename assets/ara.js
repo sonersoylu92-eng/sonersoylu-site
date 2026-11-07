@@ -39,7 +39,7 @@
   function dizinAl() {
     if (dizin) return Promise.resolve(dizin);
     if (yukleniyor) return yukleniyor;
-    yukleniyor = fetch('/assets/arama.json?v=3c76b522')
+    yukleniyor = fetch('/assets/arama.json?v=a86504c8')
       .then(function (r) { if (!r.ok) throw new Error('Arama dizini'); return r.json(); })
       .then(function (d) {
         if (!d || !Array.isArray(d.e) || !Array.isArray(d.k)) throw new Error('Geçersiz arama dizini');
