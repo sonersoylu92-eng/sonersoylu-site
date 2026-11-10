@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" data-tema="gunduz">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Soner Soylu, Rüzgâr Türbini Saha Servis Teknikeri</title>
-<meta name="description" content="Rüzgâr türbini saha servis teknikeri Soner Soylu: 13 yıllık saha deneyimi, gerçek arıza vakaları, 148 terimlik sözlük, arıza ağacı ve hesaplama araçları.">
+<meta name="description" content="Rüzgâr türbini saha servis teknikeri Soner Soylu: 13 yıllık saha deneyimi, temsili arıza vakaları, 148 terimlik sözlük, arıza ağacı ve hesaplama araçları.">
 <link rel="canonical" href="https://sonersoylu.com/">
 <meta property="og:type" content="profile">
 <meta property="og:locale" content="tr_TR">
@@ -15,7 +15,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#080A0C">
+<meta name="theme-color" content="#EDF2F5">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -23,25 +23,18 @@
 <link rel="alternate" hreflang="en" href="https://sonersoylu.com/en/">
 <link rel="alternate" hreflang="x-default" href="https://sonersoylu.com/">
 <link rel="alternate" type="text/markdown" title="llms.txt" href="https://sonersoylu.com/llms.txt">
-
-<script>/* LCP: kapak görseli CSS'te geç keşfediliyor, günün saati de gövdenin sonunda yazılıyordu (önce gündüz görseli, sonra
-   batım görseli iniyordu). Güneş yüksekliği burada hesaplanır; doğru görsel (yön + saat) ilk istekler arasında yüksek öncelikle iner. */
-(function(){try{var t=new Date(),r=Math.PI/180,g=(t-Date.UTC(t.getUTCFullYear(),0,0))/864e5,y=2*Math.PI/365*(g-1+(t.getUTCHours()-12)/24),
+<script>/* Tema: Aliağa'da güneş ufkun üstündeyse gündüz paftası (ozalit), altındaysa gece paftası (mavi kopya).
+   Ziyaretçi düğmeyle değiştirirse o seçim geçerli olur. İlk boyamadan önce çalışır: renk sıçraması olmaz. */
+(function(){try{var k=document.documentElement,q=/[?&]tema=(gece|gunduz)/.exec(location.search),t=new Date(),r=Math.PI/180,g=(t-Date.UTC(t.getUTCFullYear(),0,0))/864e5,y=2*Math.PI/365*(g-1+(t.getUTCHours()-12)/24),
 es=229.18*(0.000075+0.001868*Math.cos(y)-0.032077*Math.sin(y)-0.014615*Math.cos(2*y)-0.040849*Math.sin(2*y)),
 eg=0.006918-0.399912*Math.cos(y)+0.070257*Math.sin(y)-0.006758*Math.cos(2*y)+0.000907*Math.sin(2*y)-0.002697*Math.cos(3*y)+0.00148*Math.sin(3*y),
 sa=((t.getUTCHours()*60+t.getUTCMinutes()+es+4*27)/4-180)*r,cz=Math.sin(38.85*r)*Math.sin(eg)+Math.cos(38.85*r)*Math.cos(eg)*Math.cos(sa),
-h=90-Math.acos(Math.max(-1,Math.min(1,cz)))/r,v=h<-6?'gece':h<0?'aksam':h<8?'altin':'gunduz',k=document.documentElement;k.setAttribute('data-vardiya',v);
-var l=document.createElement('link');l.rel='preload';l.as='image';l.fetchPriority='high';
-l.href='/assets/saha/kapak-korfez-'+(v==='altin'||v==='aksam'?'batim-':'')+(matchMedia('(orientation:portrait)').matches?'dikey':'genis')+'-v1.webp';document.head.appendChild(l);}catch(e){}})();</script>
-<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/font/geist-latinext.woff2">
-<link rel="stylesheet" href="/style.css?v=ace71a53">
-<link rel="stylesheet" href="/ana.css?v=3ef56b72">
-<link rel="stylesheet" href="/assets/deneyim/deneyim.css?v=e7f3db82">
-<script>/* ?hikaye=2: ikinci kapak hikâyesinin stilleri */if(/[?&]hikaye=2\b/.test(location.search)){var l=document.querySelector('link[href*="/assets/deneyim/deneyim.css"]');if(l)l.href="/assets/deneyim/b/deneyim.css?v=08056cb7";}</script>
-<link rel="stylesheet" href="/assets/vitrin.css?v=660a38d0">
-<link rel="stylesheet" href="/assets/elemental.css?v=0aef2f86">
-<link rel="stylesheet" href="/assets/evren.css?v=02e61f98">
-
+h=90-Math.acos(Math.max(-1,Math.min(1,cz)))/r,oto=h<-1?'gece':'gunduz',s=null;try{s=localStorage.getItem('pafta-tema');}catch(e){}
+k.setAttribute('data-tema-oto',oto);k.setAttribute('data-tema',q?q[1]:(s==='gece'||s==='gunduz')?s:oto);}catch(e){}})();</script>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/pafta/archivo-latin.woff2?v=533b1392">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/pafta/archivo-latinext.woff2?v=559793e9">
+<link rel="modulepreload" href="/assets/vendor/three.module.min.js?v=3eb31ec4">
+<link rel="stylesheet" href="/assets/pafta/pafta.css?v=885c26d4">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"VideoObject","name":"Türbin nasıl elektrik üretir?","description":"Rüzgâr kanattan şebekeye: kaldırma kuvveti, dişli kutusu, jeneratör ve trafo. Rüzgâr türbini saha servis teknikeri Soner Soylu'dan 52 saniyelik anlatım.","thumbnailUrl":"https://sonersoylu.com/assets/video/turbin-elektrik.webp","contentUrl":"https://sonersoylu.com/assets/video/turbin-elektrik.mp4","uploadDate":"2026-10-02T07:30:00+03:00","duration":"PT52S","inLanguage":"tr","creator":{"@type":"Person","name":"Soner Soylu","url":"https://sonersoylu.com/"}}
 </script>
@@ -59,555 +52,256 @@ l.href='/assets/saha/kapak-korfez-'+(v==='altin'||v==='aksam'?'batim-':'')+(matc
  {"@type":"ProfilePage","@id":"https://sonersoylu.com/#sayfa","url":"https://sonersoylu.com/","name":"Soner Soylu, Rüzgâr Türbini Saha Servis Teknikeri","inLanguage":"tr-TR","isPartOf":{"@id":"https://sonersoylu.com/#site"},"mainEntity":{"@id":"https://sonersoylu.com/#soner"}}
 ]}
 </script>
-
-<script>/* Otomatik reklamlar: AdSense betiği sayfa yüklenip boşa çıkınca eklenir. Kapak açılırken ana iş parçacığını meşgul edip
-   ilk dokunuşları geciktiriyordu (INP). Reklamlar aynı kodla, birkaç saniye sonra yine gelir. */
+<script>/* Otomatik reklamlar: AdSense betiği sayfa yüklenip boşa çıkınca eklenir; kapak açılırken ana iş parçacığını meşgul etmez. */
 addEventListener('load',function(){var f=function(){var s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';
 s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186651222559424';document.head.appendChild(s);};
 setTimeout(function(){'requestIdleCallback' in window?requestIdleCallback(f,{timeout:4000}):f();},2500);});</script>
 </head>
+<body>
+<a class="atla" href="#saha">İçeriğe geç</a>
 
-<body class="ana-body">
-<a class="skip" href="#icerik">İçeriğe geç</a>
-
-<header>
-  <div class="wrap bar">
-    <a class="brand" href="/">Soner Soylu</a>
-    <nav class="desk">
-      <div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kaynak">Kaynaklar</button><div class="ddm" id="dd-kaynak"><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/">Sözlük<span>148 terim, Türkçe–İngilizce</span></a><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/">Saha notları<span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-turbin">Türbinler</button><div class="ddm" id="dd-turbin"><a href="/n90/">N90 montajı<span>Nordex N90/2500 · 7 aşamalı 3B montaj</span></a><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk · kaydırarak nasele gir</span></a><a href="/n117/">N117 turu<span>Nordex N117 Delta · 15 duraklık saha turu</span></a><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon · teknik özellik, bakım, arıza</span></a></div></div><div class="dd"><button class="ddb" type="button" aria-expanded="false" aria-controls="dd-kariyer">Kariyer</button><div class="ddm" id="dd-kariyer"><a href="/hakkimda/">Hakkımda<span>13 yıl sahada · nasıl çalışırım</span></a><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş — 12 aylık plan</span></a><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu · PDF</span></a><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a>
+<header class="ust">
+  <div class="ic ust-ic">
+    <a class="imza" href="/">Soner Soylu</a>
+    <nav class="menu" aria-label="Ana menü">
+    <div class="menu-g"><button type="button" class="menu-d" aria-expanded="false" aria-controls="mKaynak">Kaynaklar</button><div class="menu-p" id="mKaynak" hidden><a href="/lab/"><b>Saha laboratuvarı</b><span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a><a href="/rehber/"><b>Rehber</b><span>Mesleğe giriş, sahada bir gün</span></a><a href="/sozluk/"><b>Sözlük</b><span>148 terim, Türkçe ve İngilizce</span></a><a href="/araclar/"><b>Araçlar</b><span>Yedi saha hesaplayıcısı</span></a><a href="/ariza/"><b>Arıza ağacı</b><span>Belirtiden olası nedene</span></a><a href="/teshis/"><b>Teşhis simülatörü</b><span>Alarmdan kök nedene, adım adım</span></a><a href="/kodlar/"><b>Kod kütüphanesi</b><span>Durum ve alarm kodlarını okumak</span></a><a href="/sistemler/"><b>Sistemler</b><span>Pitch, yaw, dişli kutusu, jeneratör</span></a><a href="/saha-notlari/"><b>Saha notları</b><span>Temsili arıza vakaları, adım adım</span></a><a href="/asistan/"><b>Saha asistanı</b><span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></div></div>
+    <div class="menu-g"><button type="button" class="menu-d" aria-expanded="false" aria-controls="mTurbin">Türbinler</button><div class="menu-p" id="mTurbin" hidden><a href="/n90/"><b>N90 montajı</b><span>Nordex N90/2500, 7 aşamalı 3B montaj</span></a><a href="/deneyim/"><b>Türbinin içine</b><span>Sinematik yolculuk, kaydırarak nasele gir</span></a><a href="/n117/"><b>N117 turu</b><span>Nordex N117 Delta, 15 duraklık saha turu</span></a><a href="/turbinler/"><b>Model rehberi</b><span>Vestas ve Enercon: teknik özellik, bakım, arıza</span></a></div></div>
+    <div class="menu-g"><button type="button" class="menu-d" aria-expanded="false" aria-controls="mKariyer">Kariyer</button><div class="menu-p" id="mKariyer" hidden><a href="/hakkimda/"><b>Hakkımda</b><span>13 yıl sahada, nasıl çalışırım</span></a><a href="/nasil-olunur/"><b>Nasıl olunur</b><span>Okul, belge, ilk iş: 12 aylık plan</span></a><a href="/gwo/"><b>GWO sertifikası</b><span>BST, BTT, tazeleme ve WINDA</span></a><a href="/maas/"><b>Teknisyen maaşı</b><span>Rakam yerine formül: teklifini oku</span></a><a href="/egitim/"><b>Eğitim</b><span>Ücretsiz 8 bölüm, katılım belgesi</span></a><a href="/hazirlik-paketi/"><b>Hazırlık paketi</b><span>Plan, şablon, 40 mülakat sorusu (PDF)</span></a><a href="/mentorluk/"><b>Mentorluk</b><span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></div></div>
+    <a class="menu-b" href="/ruzgar/">Rüzgâr</a>
+    <a class="menu-b" href="/sor/">Sor</a>
+    <a class="menu-b" href="#iletisim">İletişim</a>
     </nav>
-    <div class="hd-right">
-      <button id="araBtn" class="ikon" type="button" aria-label="Sitede ara" title="Sitede ara (/)"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></button>
-      <a class="lang" href="/en/" hreflang="en" lang="en" title="English">EN</a>
-      <div class="hd-cta"><a class="plate" href="mailto:sonersoylu@yandex.com">İletişime geç</a></div>
-      <button id="burger" aria-expanded="false" aria-label="Menü" aria-controls="mobmenu"><span></span><span></span></button>
+    <div class="ust-sag">
+      <button type="button" class="ik" id="araBtn" aria-label="Sitede ara"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.8"/><path d="M13 13l4.6 4.6"/></svg></button>
+      <button type="button" class="ik" id="temaBtn" aria-label="Gece paftasına geç"><svg class="tema-gunes" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v2.4M10 15.8v2.4M1.8 10h2.4M15.8 10h2.4M4.2 4.2l1.7 1.7M14.1 14.1l1.7 1.7M4.2 15.8l1.7-1.7M14.1 5.9l1.7-1.7"/></svg><svg class="tema-ay" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M16.6 12.2A7.2 7.2 0 0 1 7.8 3.4a7.2 7.2 0 1 0 8.8 8.8z"/></svg></button>
+      <a class="ik" href="/en/" lang="en" hreflang="en" aria-label="English">EN</a>
+      <button type="button" class="ik menu-ac" id="menuAc" aria-label="Menüyü aç" aria-expanded="false" aria-controls="cekmece"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2.5 6.5h15M2.5 13.5h15"/></svg></button>
     </div>
   </div>
-  <div id="mobmenu"><nav class="wrap"><p class="mgrup">Kaynaklar</p><a href="/lab/">Saha laboratuvarı</a><a href="/rehber/">Rehber</a><a href="/sozluk/">Sözlük</a><a href="/araclar/">Araçlar</a><a href="/ariza/">Arıza ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/sistemler/">Sistemler</a><a href="/saha-notlari/">Saha notları</a><a href="/asistan/">Saha asistanı</a><p class="mgrup">Türbinler</p><a href="/n90/">N90 montajı</a><a href="/deneyim/">Türbinin içine</a><a href="/n117/">N117 turu</a><a href="/turbinler/">Model rehberi</a><p class="mgrup">Kariyer</p><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO sertifikası</a><a href="/maas/">Teknisyen maaşı</a><a href="/egitim/">Eğitim</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a><p class="mgrup">Site</p><a href="/ruzgar/">Rüzgâr</a><a href="/sor/">Sor</a><a href="/#iletisim">İletişim</a><a href="mailto:sonersoylu@yandex.com">İletişime geç</a></nav></div>
 </header>
+<div class="cekmece" id="cekmece" hidden>
+  <div class="ic">
+   <div class="cekmece-ust"><a class="imza" href="/">Soner Soylu</a><button type="button" class="ik" id="menuKapat" aria-label="Menüyü kapat"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg></button></div>
+   <h2>Kaynaklar</h2><ul><li><a href="/lab/">Saha laboratuvarı<span>Sekiz sistem: vaka, eğitim ve araç bir arada</span></a></li><li><a href="/rehber/">Rehber<span>Mesleğe giriş, sahada bir gün</span></a></li><li><a href="/sozluk/">Sözlük<span>148 terim, Türkçe ve İngilizce</span></a></li><li><a href="/araclar/">Araçlar<span>Yedi saha hesaplayıcısı</span></a></li><li><a href="/ariza/">Arıza ağacı<span>Belirtiden olası nedene</span></a></li><li><a href="/teshis/">Teşhis simülatörü<span>Alarmdan kök nedene, adım adım</span></a></li><li><a href="/kodlar/">Kod kütüphanesi<span>Durum ve alarm kodlarını okumak</span></a></li><li><a href="/sistemler/">Sistemler<span>Pitch, yaw, dişli kutusu, jeneratör</span></a></li><li><a href="/saha-notlari/">Saha notları<span>Temsili arıza vakaları, adım adım</span></a></li><li><a href="/asistan/">Saha asistanı<span>Soruyu sitenin kendi içeriğinden yanıtlar</span></a></li></ul>
+   <h2>Türbinler</h2><ul><li><a href="/n90/">N90 montajı<span>Nordex N90/2500, 7 aşamalı 3B montaj</span></a></li><li><a href="/deneyim/">Türbinin içine<span>Sinematik yolculuk, kaydırarak nasele gir</span></a></li><li><a href="/n117/">N117 turu<span>Nordex N117 Delta, 15 duraklık saha turu</span></a></li><li><a href="/turbinler/">Model rehberi<span>Vestas ve Enercon: teknik özellik, bakım, arıza</span></a></li></ul>
+   <h2>Kariyer</h2><ul><li><a href="/hakkimda/">Hakkımda<span>13 yıl sahada, nasıl çalışırım</span></a></li><li><a href="/nasil-olunur/">Nasıl olunur<span>Okul, belge, ilk iş: 12 aylık plan</span></a></li><li><a href="/gwo/">GWO sertifikası<span>BST, BTT, tazeleme ve WINDA</span></a></li><li><a href="/maas/">Teknisyen maaşı<span>Rakam yerine formül: teklifini oku</span></a></li><li><a href="/egitim/">Eğitim<span>Ücretsiz 8 bölüm, katılım belgesi</span></a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi<span>Plan, şablon, 40 mülakat sorusu (PDF)</span></a></li><li><a href="/mentorluk/">Mentorluk<span>Teknisyen adaylarına ücretsiz birebir sohbet</span></a></li></ul>
+   <h2>Site</h2><ul><li><a href="/ruzgar/">Rüzgâr<span>Aliağa, tahmin ve model</span></a></li><li><a href="/sor/">Sor<span>Merak ettiğini yaz</span></a></li><li><a href="#iletisim">İletişim<span>E-posta, LinkedIn, mesaj formu</span></a></li><li><a href="/en/" lang="en" hreflang="en">English<span>İngilizce sürüm</span></a></li></ul>
+  </div>
+</div>
 
-<main id="icerik" class="ana">
-
-<section id="deneyim" class="dny dny-bolum dny-ana dny-gun sw" aria-labelledby="kapak-b">
-<script>/* 3B yolunun yüksekliği ilk yerleşimde ayrılır: JS sonradan bölümü 1 ekrandan ~10 ekrana büyütünce, ortadan
-   yenilenen ya da geri dönülen sayfada bütün içerik kayıyordu (gerçek cihaz kaydında CLS 1,0). */
-(function(){try{var b=document.getElementById('deneyim'),c=navigator.connection;if(!b||(c&&c.saveData))return;
-var k=localStorage.getItem('dny-zayif-v7');if(k){var z=JSON.parse(k);if(z&&z.t&&(z.s||1)>=2&&Date.now()-z.t<6048e5)return;}var gz=localStorage.getItem('dny-gpu-zayif');if(gz&&gz!=='zayif-mobil-gpu'&&!/[?&]uc=1\b/.test(location.search))return;
-b.classList.add('dny-hazirlaniyor');}catch(e){}})();</script>
-  <div class="dny-sahne">
-    <div class="dny-poster" aria-hidden="true"></div>
-    <canvas id="dnyTuval" aria-hidden="true"></canvas>
-    <div class="v-izgara" aria-hidden="true"></div>
-    <canvas class="v-ruzgar" id="vRuzgar" aria-hidden="true"></canvas>
-    <div class="v-isik" aria-hidden="true"></div>
-    <div class="dny-kararti" id="dnyKararti" aria-hidden="true"></div>
-    <p class="v-soz" id="vSoz" aria-hidden="true"><span>Sahada geçen yıllar</span> <span>makineye bakışını</span> <span>değiştirir.</span> <em><span>Türbine yalnızca bakmazsın.</span> <span>Nasıl hareket ettiğini</span> <span>öğrenirsin.</span></em></p>
-
-
-    <div class="kule-alt dny-kapak-alt">
-      <div class="v-kimlik">
-        <h1 id="kapak-b" class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknikeri</h1>
-        <p class="sw-manset">Rüzgârın içinde.</p>
+<main>
+<section id="kapak" class="kp" data-asama="0" aria-labelledby="kapak-b">
+  <div class="kp-yapis">
+    <canvas id="kpTuval" aria-hidden="true"></canvas>
+    <svg class="kp-yedek" viewBox="0 0 300 400" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" aria-hidden="true"><circle cx="150" cy="150" r="116.8" stroke-dasharray="5 5" opacity=".45"/><path d="M146 390L147.2 156h5.6L154 390Z"/><path d="M147.6 150.0L152.4 150.0L150.6 33.2L149.4 33.2Z"/><path d="M151.2 152.1L148.8 147.9L48.5 207.9L49.1 208.9Z"/><path d="M151.2 147.9L148.8 152.1L250.9 208.9L251.5 207.9Z"/><circle cx="150" cy="150" r="4"/><path d="M10 390H290" opacity=".6"/></svg>
+    <div id="kpEtiket" class="kp-etiketler" aria-hidden="true"></div>
+    <p class="gizli">Üç boyutlu teknik çizim: rüzgârın içinde dönen bir Nordex N117/3000 türbini. Kaydırdıkça çizim önce ölçüleri (rotor çapı 116,8 metre, göbek yüksekliği 120 metre), sonra naselin içindeki göbek, ana mil, dişli kutusu ve jeneratörü gösterir.</p>
+    <div class="kp-metin">
+      <div class="kp-blok" data-a="0">
+        <h1 class="gizli">Soner Soylu, Rüzgâr Türbini Saha Servis Teknikeri</h1>
+        <p class="kp-baslik" id="kapak-b">Rüzgârın <br>içinde.</p>
+        <p class="kp-kim">Soner Soylu, rüzgâr türbini saha servis teknikeri. 2013'ten beri sahada.</p>
+        <div class="kp-eylem"><a class="dg" href="/deneyim/">Türbinin içine gir</a><a class="dg dg-cizgi" href="#iletisim">İletişime geç</a></div>
+        <p class="kp-ipucu">Kaydırın: önce ölçüler, sonra naselin içi.</p>
       </div>
-      <div class="dugmeler">
-        <a class="sw-cta" href="/deneyim/" id="dnySahaya">Keşfet<span class="sw-cta-ok" aria-hidden="true">&#8599;</span></a>
-        <span class="dny-basla" id="dnyBasla" hidden><button type="button" class="sw-cta" id="dnyBaslaBtn">Türbinin içine gir</button></span>
+      <div class="kp-blok" data-a="1">
+        <p class="kp-b2">Nordex N117/3000 Delta</p>
+        <p class="kp-a2">Çizim gerçek ölçekte, rotor gerçek zamanda döner. Ölçüler üretici verisinden.</p>
+        <p class="kp-not">Akış çizgileri ve uç girdapları temsilidir (ideal disk kuramı).</p>
       </div>
-      <p class="kaydir" aria-hidden="true"><span>Kaydır</span></p>
+      <div class="kp-blok" data-a="2">
+        <p class="kp-b2">Burası benim çalıştığım yer.</p>
+        <p class="kp-a2">Kurulum, bakım, arıza ve devreye alma.</p>
+        <p class="kp-not">Nasel içi yerleşim temsilidir.</p>
+      </div>
     </div>
-
-    <div class="dny-serit" aria-hidden="true">
-      <span class="bolum-ad"><b id="dnyBolum">Dışarıda</b></span>
-      <span class="dny-kot" id="dnyKot">Kot <b>0</b> m</span>
+    <div class="kp-yan">
+      <p class="kp-canli" id="kpCanli" hidden>Aliağa, 120 m: <b id="kpHiz">–</b> m/s, rotor <b id="kpDevir">–</b> d/dk<small>tahmin ve model</small></p>
+      <button type="button" class="kp-dur" id="kpDurakla" aria-pressed="false" hidden>Hareketi durdur</button>
     </div>
-    <a class="dny-atla" href="#giris">Deneyimi geç ↓</a>
-
-    <p class="dny-alt" id="dnyAlt" aria-hidden="true"></p>
-
-    <div class="dny-hud" id="dnyHud" aria-live="polite">
-      <p class="no"><span><span id="dnyNo">01</span> / 12 · <span id="dnyEn">ROTOR</span></span></p>
-      <h2 id="dnyAd">Rotor</h2>
-      <p class="bilgi" id="dnyBilgi"></p>
-    </div>
-
-    <nav aria-label="Deneyim bölümleri"><ol class="dny-ray" id="dnyRay"></ol></nav>
-
-    <div class="dny-son" id="dnySon">
-      <p class="ust">Teknik çizim · N117/3000 Delta</p>
-      <p class="dny-imza">Burası benim çalıştığım yer.</p>
-      <p class="alt"><b>2013'ten beri sahada.</b> Rüzgâr türbini saha servis teknikeri: kurulum, bakım, arıza ve devreye alma.</p>
-      <ul class="dny-sistem"><li>Mekanik</li><li>Elektrik</li><li>Devreye alma</li><li>Servis</li></ul>
-      <p class="dny-dg"><a class="birincil" href="#giris">Devam et ↓</a><button type="button" id="dnyBasaDon">Başa dön</button></p>
-      <nav class="dny-kapilar" aria-label="Yolculuktan sonra"><span>Sahadan devam</span><a href="/saha-notlari/">Gerçek arıza vakaları</a><a href="/ariza/">Arıza ağacı</a><a href="/rehber/">Mesleğe giriş</a></nav>
-    </div>
-
-    <div class="dny-ilerleme" aria-hidden="true"><i id="dnyIlerleme"></i></div>
-    <p class="dny-yuk" aria-hidden="true"><span>Saha sistemi</span><span class="dny-yuk-s">Başlatılıyor<i></i></span></p>
   </div>
 </section>
 
-<section id="giris" class="el-bolum el-giris" aria-labelledby="giris-b">
-  <div class="el-ic">
-    <p class="el-etiket"><span>01</span>Saha</p>
-    <h2 id="giris-b" class="el-giris-b">Bir arızayı alarm kodundan önce <em>sesinden</em>, titreşiminden ve ısısından tanırım.</h2>
-    <div class="el-kimlik">
-      <p class="el-unvan">Rüzgâr Türbini Saha Servis Teknikeri</p>
-      <p class="el-paragraf">2013'ten beri sahadayım. Enercon, Nordex, Nordex Acciona ve Vestas türbinlerinde mekanik ve elektrik sistemleri üzerine çalışıyorum. Bugün Aliağa ve Bergama rüzgâr santrallerindeyim.</p>
-      <dl class="rakam el-olcu">
-        <div><dt>Sahada</dt><dd>13</dd><dd class="el-olcu-a">yıl · 2013'ten bugüne</dd></div>
-        <div><dt>Türbin</dt><dd>300<small>+</small></dd><dd class="el-olcu-a">kurulum, bakım, arıza</dd></div>
-        <div><dt>Üretici</dt><dd>4</dd><dd class="el-olcu-a">Enercon · Nordex · Vestas · Acciona</dd></div>
-        <div><dt>Model</dt><dd>9</dd><dd class="el-olcu-a">E70 · E82 · E92 · Beta · Delta 111 · Delta 131 · V126 · V136 · 3 MW sınıfı</dd></div>
+<section id="saha" class="bl" aria-labelledby="saha-b">
+  <div class="ic">
+    <h2 class="bl-b" id="saha-b">Bir arızayı alarm kodundan önce sesinden, titreşiminden ve ısısından tanırım.</h2>
+    <div class="saha-iki">
+      <div class="saha-yazi">
+        <p>2013'ten beri sahadayım. Enercon, Nordex, Nordex Acciona ve Vestas türbinlerinde mekanik ve elektrik sistemleri üzerine çalışıyorum. Bugün Aliağa ve Bergama rüzgâr santrallerindeyim.</p>
+        <p>Toplamda 300'den fazla türbine dokunarak çeliğin ruhunu analiz edebilen bir teknisyenim.</p>
+        <a class="bag" href="/hakkimda/">Hakkımda ve nasıl çalışırım</a>
+      </div>
+      <dl class="kunye">
+        <div><dt>Sahada</dt><dd class="sayi">13 yıl</dd><dd class="ac">2013'ten bugüne</dd></div>
+        <div><dt>Türbin</dt><dd class="sayi">300+</dd><dd class="ac">Kurulum, bakım, arıza</dd></div>
+        <div><dt>Üretici</dt><dd class="sayi">4</dd><dd class="ac">Enercon, Nordex, Vestas, Acciona</dd></div>
+        <div><dt>Model</dt><dd class="sayi">9</dd><dd class="ac">E70, E82, E92, Beta, Delta 111, Delta 131, V126, V136, 3 MW sınıfı</dd></div>
       </dl>
-      <a class="el-bag" href="/hakkimda/">Hakkımda ve nasıl çalışırım<i aria-hidden="true">&#8594;</i></a>
     </div>
-    <div class="ralan el-ralan" id="ralan" role="group" aria-label="Aliağa canlı rüzgâr alanı" hidden>
-      <p class="ralan-ust"><span class="nabiz" aria-hidden="true"></span>Canlı rüzgâr<span class="ralan-alani"> alanı</span><span class="ralan-rozet">Tahmin·model</span></p>
-      <p class="ralan-yer">Aliağa<span>göbek 120 m</span></p>
-      <dl class="ralan-dl">
-        <div><dt>Rüzgâr</dt><dd><b id="rHiz">–</b><small>m/s</small></dd></div>
-        <div><dt>Yön</dt><dd><svg class="ralan-ok" id="rOk" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M8 1.5 11.5 13 8 10.6 4.5 13Z" fill="currentColor"/></svg><b id="rYon">–</b><small id="rYonAd"></small></dd></div>
-        <div><dt>Yoğunluk</dt><dd><b id="rRho">–</b><small>kg/m³</small></dd></div>
-        <div><dt>Rotor</dt><dd><b id="rDevir">–</b><small>d/dk</small></dd></div>
-        <div><dt>N117</dt><dd><b id="rGuc">–</b><small>MW</small></dd></div>
+  </div>
+</section>
+
+<section id="ruzgar" class="bl" aria-labelledby="ruzgar-b">
+  <div class="ic">
+    <div class="rz-bas">
+      <div><h2 class="bl-b" id="ruzgar-b">Şu an Aliağa'da rüzgâr</h2>
+      <p class="bl-a">Göbek yüksekliğinde, 120 metrede. Open-Meteo tahmini; güç ve devir modelden hesaplanır, saha ölçümü değildir.</p></div>
+      <p class="rz-durum"><span id="rzZaman" role="status">Tahmin alınıyor…</span><button type="button" id="rzYeniden" hidden>Yeniden dene</button></p>
+    </div>
+    <div class="rz" id="rz" data-veri="yok">
+      <dl class="rz-olcu">
+        <div class="canli"><dt>Rüzgâr hızı</dt><dd><b id="rzHiz">–</b><span>m/s</span></dd></div>
+        <div><dt>Geldiği yön</dt><dd><b id="rzYon">–</b><span id="rzYonAd"></span><svg class="rz-ok" id="rzOk" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 22V4M6.5 10.5L13 4l6.5 6.5"/></svg></dd></div>
+        <div><dt>Rotor devri</dt><dd><b id="rzDevir">–</b><span>d/dk</span></dd></div>
+        <div><dt>N117 gücü</dt><dd><b id="rzGuc">–</b><span>MW</span></dd></div>
+        <div><dt>Hava yoğunluğu</dt><dd><b id="rzRho">–</b><span>kg/m³</span></dd></div>
+        <div><dt>Kapasite faktörü, 24 sa</dt><dd><b id="rzKf">–</b><span>%</span></dd></div>
+        <div class="rz-uyari" id="rzUyari" hidden><b></b><span></span></div>
       </dl>
-      <p class="ralan-durum" id="rDurum" role="status" hidden><span class="ralan-durum-nokta" aria-hidden="true"></span><b id="rDurumAd"></b><span id="rDurumAc"></span></p>
-      <div class="ralan-egri">
-        <p><span>Güç eğrisi</span><b id="rYuk">–</b></p>
-        <div class="ralan-bar" id="rBar" role="img" aria-label="Anlık güç, anma gücüne oranı hesaplanıyor"></div>
-        <p class="ralan-olcek" aria-hidden="true"><span>0</span><span>3 MW</span></p>
-      </div>
-      <p class="ralan-kf" id="rKfSatir" hidden><span class="ralan-kf-ad">Kapasite faktörü<small>önümüzdeki 24 sa</small></span><abbr class="ralan-kf-kisa" title="Kapasite faktörü, önümüzdeki 24 saat">KF 24 sa</abbr><b id="rKf">–</b></p>
-      <p class="ralan-zaman"><span class="ralan-nokta" aria-hidden="true"></span><span id="rZaman">Güncellendi az önce</span></p>
-      <p class="ralan-hata" id="rHata" role="status" hidden><span id="rHataMetin"></span> <button type="button" id="rYeniden">Yeniden dene</button></p>
-      <p class="ralan-not"><span class="ralan-uzun">Open-Meteo tahmini; güç ve devir modelden hesaplanır, ölçüm değildir.</span><span class="ralan-kisa">Tahmin ve model, ölçüm değil.</span> <a href="/ruzgar/">Canlı rüzgâr &#8594;</a></p>
-    </div>
-  </div>
-</section>
-
-<section id="secilmis" class="el-bolum el-vitrin" aria-labelledby="secilmis-b">
-  <div class="el-ic el-vitrin-bas">
-    <p class="el-etiket"><span>02</span>Seçilmiş işler</p>
-    <h2 id="secilmis-b" class="el-baslik">Makineyi yakından tanı.</h2>
-  </div>
-  <a class="el-proje el-proje-ana" href="/n117/">
-    <figure><img src="/assets/saha/kule-ic-sinematik-v1.webp" width="1600" height="900" alt="" loading="lazy" decoding="async"><figcaption>Sinematik görselleştirme</figcaption></figure>
-    <div class="el-proje-yazi"><span class="el-no">01</span><span class="el-proje-ust">Nordex N117/3000 Delta</span><b>Türbinin içine</b><span class="el-proje-a">Kule kapısından kanat ucuna, 15 durak.</span></div>
-  </a>
-  <div class="el-ic el-proje-ikili">
-    <a class="el-proje el-proje-n90" href="/n90/">
-      <figure><img src="/assets/saha/hero-gun-batimi.webp" width="1500" height="2000" alt="" loading="lazy" decoding="async"></figure>
-      <div class="el-proje-yazi"><span class="el-no">02</span><span class="el-proje-ust">Nordex N90/2500</span><b>Montaj</b><span class="el-proje-a">Temelden devreye almaya yedi aşamalı 3B montaj.</span></div>
-    </a>
-    <a class="el-proje el-proje-lab" href="/lab/">
-      <figure><img src="/assets/saha/yildizlar.webp" width="1024" height="1536" alt="" loading="lazy" decoding="async"></figure>
-      <div class="el-proje-yazi"><span class="el-no">03</span><span class="el-proje-ust">Sekiz sistem</span><b>Saha laboratuvarı</b><span class="el-proje-a">Vaka, eğitim ve araç bir arada.</span></div>
-    </a>
-  </div>
-  <a class="el-proje el-proje-ana el-proje-evrim" href="/evrim/">
-    <figure><img src="/assets/evrim/evrim-dizilim-v1.webp" width="1920" height="823" alt="" loading="lazy" decoding="async"><figcaption>Temsili dizilim · ölçekli değil</figcaption></figure>
-    <div class="el-proje-yazi"><span class="el-no">04</span><span class="el-proje-ust">Bir sahne gösterisi · 13 makine</span><b>Rüzgârın evrimi</b><span class="el-proje-a">Yel değirmeninden 26 MW’lık türbine: parçacıklar kaydırdıkça bir makineden ötekine dönüşür.</span></div>
-  </a>
-</section>
-
-<section id="sahadan" class="el-bolum el-hikaye" aria-labelledby="sahadan-b">
-  <div class="el-ic el-hikaye-bas">
-    <p class="el-etiket"><span>03</span>Sahadan</p>
-    <h2 id="sahadan-b" class="el-baslik">Kendi çektiğim kareler</h2>
-    <p class="el-not">Ege'nin sırtlarında, sahadan iki kare.</p>
-  </div>
-  <div class="el-kareler el-deneme el-iki" aria-label="Saha fotoğrafları; büyütmek için dokunun">
-      <figure class="el-kare el-d1" data-full="/assets/saha/ege-makilik.webp"><img src="/assets/saha/ege-makilik.webp" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption><span>Kare 01</span> Ege makiliği</figcaption></figure>
-      <figure class="el-kare el-d4" data-full="/assets/saha/sahada.webp"><img src="/assets/saha/sahada.webp" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption><span>Kare 02</span> Sahada</figcaption></figure>
-  </div>
-  <div class="el-ic el-sahadan-alt">
-    <div class="an-video">
-      <div class="an-video-ikili">
-        <figure class="an-video-kart" data-son-video data-haric="8U_lQpNbrOc">
-          <div class="an-video-kutu"><video poster="/assets/video/turbin-elektrik.webp" controls playsinline preload="none" width="1080" height="1920" aria-label="Türbin nasıl elektrik üretir: rüzgârdan şebekeye 52 saniyelik anlatım videosu"><source src="/assets/video/turbin-elektrik.mp4" type="video/mp4"><source src="/assets/video/turbin-elektrik.webm" type="video/webm"></video></div>
-          <figcaption><span class="an-video-yeni">Son paylaşım</span> Türbin nasıl elektrik üretir · 52 sn</figcaption>
+      <div>
+        <figure class="rz-ciz">
+          <svg id="rzEgri" viewBox="0 0 640 320" role="img" aria-label="Modellenmiş N117/3000 güç eğrisi"></svg>
+          <figcaption>Modellenmiş N117/3000 güç eğrisi, o anki hava yoğunluğunda. Sarı nokta, veri geldiğinde şu anki tahmini gösterir.</figcaption>
         </figure>
-        <figure class="an-video-kart">
-          <div class="an-video-kutu"><iframe src="https://www.youtube-nocookie.com/embed/8U_lQpNbrOc" title="The Turbine Tech videosu" loading="lazy" allowfullscreen allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
-          <figcaption>Sahadan bir kesit · YouTube</figcaption>
+        <figure class="rz-ciz" id="rzSaatKutu" hidden>
+          <svg id="rzSaat" viewBox="0 0 640 150" role="img" aria-label="Önümüzdeki 24 saatin rüzgâr tahmini"></svg>
+          <figcaption>Önümüzdeki 24 saat, 120 m rüzgâr tahmini (m/s). Kesikli çizgi devreye girme hızıdır.</figcaption>
         </figure>
       </div>
-      <div class="an-video-yazi">
-        <p class="etiket">The Turbine Tech</p>
-        <p class="an-video-b">Rüzgârdan şebekeye: kanat, dişli kutusu, jeneratör ve trafo tek videoda</p>
-        <a class="ok" href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">Kanalı aç</a>
-      </div>
     </div>
-    <div class="el-yazilar">
-      <p class="el-etiket el-etiket-k">Sahadan yazılar</p>
-      <ul>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7500658918495449088/" target="_blank" rel="noreferrer noopener"><span>Sektör · Eylül 2026</span><b>Rüzgâr hedeflerini sahada kim gerçekleştirecek?</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7498094085245669376/" target="_blank" rel="noreferrer noopener"><span>İş güvenliği · Ağustos 2026</span><b>Türbin yangını: kimsenin konuşmak istemediği risk</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7496198260433547264/" target="_blank" rel="noreferrer noopener"><span>Bakım · Ağustos 2026</span><b>Rüzgâr var, peki türbin neden tam güçte değil?</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7495409166149353472/" target="_blank" rel="noreferrer noopener"><span>Sektör · Ağustos 2026</span><b>Megavat tabelada kalmasın</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7494844300825104385/" target="_blank" rel="noreferrer noopener"><span>Bakım · Ağustos 2026</span><b>Yaz duruşlarının kökü mayısta atılır</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7494131824885972992/" target="_blank" rel="noreferrer noopener"><span>Saha · Ağustos 2026</span><b>13 yıl sonra tek tavsiyem</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7410580809524629504/" target="_blank" rel="noreferrer noopener"><span>İş güvenliği · Ocak 2026</span><b>Soğuk hava ve buzlanma yönetimi</b></a></li>
-          <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7409546660566970368/" target="_blank" rel="noreferrer noopener"><span>Saha · Ocak 2026</span><b>Gece çalışmaları disiplin ister</b></a></li>
+    <p class="rz-alt"><span>Kapaktaki rotor bu devirde döner (veri gelene kadar anma devrinde, 12,6 d/dk). Işık ve gölge Aliağa'da güneşin o anki konumundan gelir.</span><a class="bag" href="/ruzgar/">On günlük tahmin ve saha seçimi</a></p>
+  </div>
+</section>
+
+<section id="isler" class="bl ters" aria-labelledby="isler-b">
+  <div class="ic">
+    <h2 class="bl-b" id="isler-b">Makineyi yakından tanı.</h2>
+    <ul class="is">
+      <li><a href="/n117/"><div><h3 class="is-ad">N117 turu</h3><p class="is-ne"><b>Nordex N117/3000 Delta.</b> Kule kapısından kanat ucuna 15 durak.</p></div><figure><img src="/assets/saha/kule-ic-sinematik-v1.webp" width="1600" height="900" alt="" loading="lazy" decoding="async"><figcaption>Sinematik görselleştirme</figcaption></figure></a></li>
+      <li><a href="/n90/"><div><h3 class="is-ad">N90 montajı</h3><p class="is-ne"><b>Nordex N90/2500.</b> Temelden devreye almaya yedi aşamalı 3B montaj.</p></div><figure><img src="/assets/saha/hero-gun-batimi.webp" width="1500" height="2000" alt="" loading="lazy" decoding="async"></figure></a></li>
+      <li><a href="/deneyim/"><div><h3 class="is-ad">Türbinin içine</h3><p class="is-ne"><b>Sinematik yolculuk.</b> Kaydırarak kuleden nasele çık.</p></div><figure><img src="/assets/saha/kapak-nasel-genis-v1.webp" width="1600" height="900" alt="" loading="lazy" decoding="async"><figcaption>Sinematik görselleştirme</figcaption></figure></a></li>
+      <li><a href="/lab/"><div><h3 class="is-ad">Saha laboratuvarı</h3><p class="is-ne"><b>Sekiz sistem.</b> Vaka, eğitim ve araç bir arada.</p></div><figure><img src="/assets/saha/yildizlar.webp" width="1024" height="1536" alt="" loading="lazy" decoding="async"></figure></a></li>
+      <li><a href="/evrim/"><div><h3 class="is-ad">Rüzgârın evrimi</h3><p class="is-ne"><b>13 makine.</b> Yel değirmeninden 26 MW’lık türbine; kaydırdıkça parçacıklar bir makineden ötekine dönüşür.</p></div><figure><img src="/assets/evrim/evrim-dizilim-v1.webp" width="1920" height="823" alt="" loading="lazy" decoding="async"><figcaption>Temsili dizilim, ölçekli değil</figcaption></figure></a></li>
       </ul>
-      <a class="el-bag" href="https://www.linkedin.com/in/soner-soylu/recent-activity/all/" target="_blank" rel="noreferrer noopener">Tüm yazılar<i aria-hidden="true">&#8599;</i></a>
-    </div>
   </div>
 </section>
 
-<section id="bilgi" class="el-bolum el-kutuphane" aria-labelledby="bilgi-b">
-  <div class="el-ic">
-    <p class="el-etiket"><span>04</span>Teknik kütüphane</p>
-    <h2 id="bilgi-b" class="el-baslik">Sahada işe yarayanlar</h2>
-    <div class="el-raflar">
-      <details class="el-raf" open>
-        <summary><span class="el-raf-no">A</span><span class="el-raf-ad">Türbin sistemleri</span><span class="el-raf-a">Makinenin nasıl çalıştığı, model model</span></summary>
-        <ul>
-          <li><a href="/sistemler/"><b>Türbin sistemleri</b><span>Pitch, yaw, dişli kutusu, jeneratör</span></a></li>
-          <li><a href="/sistemler/pitch/"><b>Pitch sistemi</b><span>Kanat açısı ve güç sınırlama</span></a></li>
-          <li><a href="/sistemler/yaw/"><b>Yaw sistemi</b><span>Nasel yönlendirme</span></a></li>
-          <li><a href="/sistemler/disli-kutusu/"><b>Dişli kutusu</b><span>Devir çevirme ve yağlama</span></a></li>
-          <li><a href="/sistemler/jenerator/"><b>Jeneratör</b><span>Mekanikten elektriğe</span></a></li>
-          <li><a href="/turbinler/"><b>Model rehberi</b><span>Vestas ve Enercon, model model</span></a></li>
-          <li><a href="/turbinler/karsilastir/"><b>Model karşılaştırma</b><span>İki türbini yan yana koy</span></a></li>
-          <li><a href="/n117/"><b>N117 turu</b><span>15 durakta Nordex Delta</span></a></li>
-          <li><a href="/n90/"><b>N90 montajı</b><span>Yedi aşamalı 3B montaj</span></a></li>
-          <li><a href="/deneyim/"><b>Türbinin içine</b><span>Sinematik yolculuk</span></a></li>
-          <li><a href="/deniz-ustu/"><b>Deniz üstü</b><span>Açık deniz türbinleri</span></a></li>
-          <li><a href="/evrim/"><b>Rüzgârın evrimi</b><span>Yel değirmeninden 26 MW’a</span></a></li>
-        </ul>
-      </details>
-      <details class="el-raf">
-        <summary><span class="el-raf-no">B</span><span class="el-raf-ad">Arıza ve teşhis</span><span class="el-raf-a">Belirtiden kök nedene</span></summary>
-        <ul>
-          <li><a href="/saha-notlari/"><b>Saha notları</b><span>Gerçek arızalar, adım adım</span></a></li>
-          <li><a href="/saha-notlari/vaka-tekrari/"><b>Vaka tekrarı</b><span>Üç vakayı kendin çöz</span></a></li>
-          <li><a href="/ariza/"><b>Arıza ağacı</b><span>On belirti, 63 düğüm</span></a></li>
-          <li><a href="/teshis/"><b>Teşhis simülatörü</b><span>Alarmdan kök nedene</span></a></li>
-          <li><a href="/kodlar/"><b>Kod kütüphanesi</b><span>12 aile, 50 koşul</span></a></li>
-          <li><a href="/asistan/"><b>Saha asistanı</b><span>Sahada hızlı yanıt</span></a></li>
-        </ul>
-      </details>
-      <details class="el-raf">
-        <summary><span class="el-raf-no">C</span><span class="el-raf-ad">Teknik hesaplamalar</span><span class="el-raf-a">Formülü açık, kayıt tutmayan araçlar</span></summary>
-        <ul>
-          <li><a href="/araclar/"><b>Saha hesaplayıcıları</b><span>Uç hızı, güç, kapasite faktörü, Weibull</span></a></li>
-          <li><a href="/araclar/civata-germe/"><b>Cıvata germe</b><span>Tork ve gerdirme hesabı</span></a></li>
-          <li><a href="/ruzgar/"><b>Canlı rüzgâr</b><span>Aliağa, tahmin ve model</span></a></li>
-          <li><a href="/lab/"><b>Saha laboratuvarı</b><span>Sekiz sistem: vaka, eğitim, araç</span></a></li>
-        </ul>
-      </details>
-      <details class="el-raf">
-        <summary><span class="el-raf-no">D</span><span class="el-raf-ad">Eğitim ve saha bilgisi</span><span class="el-raf-a">Mesleğe giriş ve terimler</span></summary>
-        <ul>
-          <li><a href="/egitim/"><b>Ücretsiz eğitim</b><span>8 bölüm, kısa sınavlar, katılım belgesi</span></a></li>
-          <li><a href="/nasil-olunur/"><b>Nasıl olunur</b><span>Okul, belge, ilk iş: 12 aylık plan</span></a></li>
-          <li><a href="/gwo/"><b>GWO eğitimleri</b><span>BST, BTT, tazeleme, WINDA</span></a></li>
-          <li><a href="/maas/"><b>Teklifini oku</b><span>Bir iş teklifini neye göre değerlendirirsin</span></a></li>
-          <li><a href="/rehber/"><b>Sahadan rehber</b><span>Mesleğe giriş, sahada bir gün</span></a></li>
-          <li><a href="/sozluk/"><b>Sözlük</b><span>148 terim, Türkçe–İngilizce</span></a></li>
-          <li><a href="/sor/"><b>Soru sor</b><span>Merak ettiğini yaz</span></a></li>
-        </ul>
-      </details>
+<section id="sahadan" class="bl" aria-labelledby="sahadan-b">
+  <div class="ic">
+    <h2 class="bl-b" id="sahadan-b">Sahadan</h2>
+    <p class="bl-a">Ege'nin sırtlarında, kendi çektiğim iki kare.</p>
+    <div class="sh-kare">
+      <figure><img src="/assets/saha/ege-makilik.webp" width="1179" height="1564" alt="Drone ile yukarıdan çekilmiş Ege makiliği; ön planda tek bir rüzgâr türbini, arkadaki sırtlarda onlarca türbin daha" loading="lazy" decoding="async"><figcaption>Ege makiliği</figcaption></figure>
+      <figure><img src="/assets/saha/sahada.webp" width="1200" height="1600" alt="Baret ve iş kıyafetiyle türbinin önünde duran teknisyen" loading="lazy" decoding="async"><figcaption>Sahada</figcaption></figure>
     </div>
-  </div>
-</section>
-
-<section id="iletisim" class="el-bolum el-iletisim iletisim" aria-label="İletişim">
-  <div class="el-ic">
-    <p class="el-etiket"><span>05</span>İletişim</p>
-    <div class="kanal el-kanal">
-      <div><span class="k-ust">E-posta</span><span class="d">sonersoylu@yandex.com</span><button type="button" class="kopya" id="epostaKopya">Kopyala</button></div>
-      <a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener"><span class="k-ust">LinkedIn</span><span class="d">soner-soylu</span></a>
-      <a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener"><span class="k-ust">YouTube</span><span class="d">The Turbine Tech</span></a>
-    </div>
-    <details class="el-mesaj">
-      <summary>Mesaj formu</summary>
-    <form class="v-form" id="vForm" novalidate aria-labelledby="vFormB">
-      <div class="v-form-bas"><h3 id="vFormB">Bir mesaj yazın</h3><p>Form, yazdıklarınızla hazır bir e-posta açar. Hiçbir bilgi bu sitede saklanmaz.</p></div>
-      <fieldset class="v-konu"><legend>Konu</legend>
-        <label><input type="radio" name="konu" value="Kariyer" checked><span>Kariyer</span></label>
-        <label><input type="radio" name="konu" value="Proje"><span>Proje</span></label>
-        <label><input type="radio" name="konu" value="Teknik"><span>Teknik soru</span></label>
-        <label><input type="radio" name="konu" value="İşbirliği"><span>İşbirliği</span></label>
-      </fieldset>
-      <div class="v-alanlar">
-        <div class="v-alan"><label for="vAd">Adınız</label><input id="vAd" name="ad" type="text" autocomplete="name" required maxlength="80"><p class="v-hata" id="vAdH" hidden></p></div>
-        <div class="v-alan"><label for="vEposta">E-posta adresiniz</label><input id="vEposta" name="eposta" type="email" autocomplete="email" inputmode="email" required maxlength="160"><p class="v-hata" id="vEpostaH" hidden></p></div>
-        <div class="v-alan v-genis"><label for="vMesaj">Mesajınız</label><textarea id="vMesaj" name="mesaj" rows="5" required maxlength="3000"></textarea><p class="v-hata" id="vMesajH" hidden></p></div>
+    <div class="sh-alt">
+      <div>
+        <h3 class="sh-h">The Turbine Tech</h3>
+        <div class="sh-video">
+          <figure class="an-video-kart" data-son-video data-haric="8U_lQpNbrOc">
+            <div class="an-video-kutu"><video poster="/assets/video/turbin-elektrik.webp" controls playsinline preload="none" width="1080" height="1920" aria-label="Türbin nasıl elektrik üretir: rüzgârdan şebekeye 52 saniyelik anlatım videosu"><source src="/assets/video/turbin-elektrik.mp4" type="video/mp4"><source src="/assets/video/turbin-elektrik.webm" type="video/webm"></video></div>
+            <figcaption><span class="an-video-yeni">Son paylaşım</span> Türbin nasıl elektrik üretir (52 sn)</figcaption>
+          </figure>
+          <figure class="an-video-kart">
+            <div class="an-video-kutu"><iframe src="https://www.youtube-nocookie.com/embed/8U_lQpNbrOc" title="The Turbine Tech videosu" loading="lazy" allowfullscreen allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+            <figcaption>Sahadan bir kesit</figcaption>
+          </figure>
+        </div>
+        <a class="bag sh-kanal" href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube kanalını aç</a>
       </div>
-      <div class="v-form-alt"><button type="submit" class="dg birincil v-miknatis">E-postayı hazırla<span class="dg-ok" aria-hidden="true">&#8599;</span></button><p class="v-durum" id="vDurum" role="status" aria-live="polite"></p></div>
-    </form>
+      <div>
+        <h3 class="sh-h">Sahadan yazılar</h3>
+        <ul class="yz">
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7500658918495449088/" target="_blank" rel="noreferrer noopener"><b>Rüzgâr hedeflerini sahada kim gerçekleştirecek?</b><span>Sektör, Eylül 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7498094085245669376/" target="_blank" rel="noreferrer noopener"><b>Türbin yangını: kimsenin konuşmak istemediği risk</b><span>İş güvenliği, Ağustos 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7496198260433547264/" target="_blank" rel="noreferrer noopener"><b>Rüzgâr var, peki türbin neden tam güçte değil?</b><span>Bakım, Ağustos 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7495409166149353472/" target="_blank" rel="noreferrer noopener"><b>Megavat tabelada kalmasın</b><span>Sektör, Ağustos 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7494844300825104385/" target="_blank" rel="noreferrer noopener"><b>Yaz duruşlarının kökü mayısta atılır</b><span>Bakım, Ağustos 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7494131824885972992/" target="_blank" rel="noreferrer noopener"><b>13 yıl sonra tek tavsiyem</b><span>Saha, Ağustos 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7410580809524629504/" target="_blank" rel="noreferrer noopener"><b>Soğuk hava ve buzlanma yönetimi</b><span>İş güvenliği, Ocak 2026</span></a></li>
+        <li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7409546660566970368/" target="_blank" rel="noreferrer noopener"><b>Gece çalışmaları disiplin ister</b><span>Saha, Ocak 2026</span></a></li>
+        </ul>
+        <a class="bag yz-tum" href="https://www.linkedin.com/in/soner-soylu/recent-activity/all/" target="_blank" rel="noreferrer noopener">Tüm yazılar LinkedIn'de</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kutuphane" class="bl" aria-labelledby="kutuphane-b">
+  <div class="ic">
+    <h2 class="bl-b" id="kutuphane-b">Sahada işe yarayanlar</h2>
+    <p class="bl-a">Teknik kütüphane: sistemler, arıza teşhisi, hesaplamalar ve mesleğe giriş. Hepsi ücretsiz.</p>
+    <div class="kt">
+      <details class="kt-g" open><summary><h3><i>A</i>Türbin sistemleri</h3><p>Makinenin nasıl çalıştığı, model model</p></summary><ul><li><a href="/sistemler/"><b>Türbin sistemleri</b><span>Pitch, yaw, dişli kutusu, jeneratör</span></a></li><li><a href="/sistemler/pitch/"><b>Pitch sistemi</b><span>Kanat açısı ve güç sınırlama</span></a></li><li><a href="/sistemler/yaw/"><b>Yaw sistemi</b><span>Nasel yönlendirme</span></a></li><li><a href="/sistemler/disli-kutusu/"><b>Dişli kutusu</b><span>Devir çevirme ve yağlama</span></a></li><li><a href="/sistemler/jenerator/"><b>Jeneratör</b><span>Mekanikten elektriğe</span></a></li><li><a href="/turbinler/"><b>Model rehberi</b><span>Vestas ve Enercon, model model</span></a></li><li><a href="/turbinler/karsilastir/"><b>Model karşılaştırma</b><span>İki türbini yan yana koy</span></a></li><li><a href="/n117/"><b>N117 turu</b><span>15 durakta Nordex Delta</span></a></li><li><a href="/n90/"><b>N90 montajı</b><span>Yedi aşamalı 3B montaj</span></a></li><li><a href="/deneyim/"><b>Türbinin içine</b><span>Sinematik yolculuk</span></a></li><li><a href="/deniz-ustu/"><b>Deniz üstü</b><span>Açık deniz türbinleri</span></a></li><li><a href="/evrim/"><b>Rüzgârın evrimi</b><span>Yel değirmeninden 26 MW’a</span></a></li></ul></details>
+      <details class="kt-g" open><summary><h3><i>B</i>Arıza ve teşhis</h3><p>Belirtiden kök nedene</p></summary><ul><li><a href="/saha-notlari/"><b>Saha notları</b><span>Temsili arıza vakaları, adım adım</span></a></li><li><a href="/saha-notlari/vaka-tekrari/"><b>Vaka tekrarı</b><span>Üç vakayı kendin çöz</span></a></li><li><a href="/ariza/"><b>Arıza ağacı</b><span>On belirti, 63 düğüm</span></a></li><li><a href="/teshis/"><b>Teşhis simülatörü</b><span>Alarmdan kök nedene</span></a></li><li><a href="/kodlar/"><b>Kod kütüphanesi</b><span>12 aile, 50 koşul</span></a></li><li><a href="/asistan/"><b>Saha asistanı</b><span>Sahada hızlı yanıt</span></a></li></ul></details>
+      <details class="kt-g" open><summary><h3><i>C</i>Teknik hesaplamalar</h3><p>Formülü açık, kayıt tutmayan araçlar</p></summary><ul><li><a href="/araclar/"><b>Saha hesaplayıcıları</b><span>Uç hızı, güç, kapasite faktörü, Weibull</span></a></li><li><a href="/araclar/civata-germe/"><b>Cıvata germe</b><span>Tork ve gerdirme hesabı</span></a></li><li><a href="/ruzgar/"><b>Canlı rüzgâr</b><span>Aliağa, tahmin ve model</span></a></li><li><a href="/lab/"><b>Saha laboratuvarı</b><span>Sekiz sistem: vaka, eğitim, araç</span></a></li></ul></details>
+      <details class="kt-g" open><summary><h3><i>D</i>Eğitim ve saha bilgisi</h3><p>Mesleğe giriş ve terimler</p></summary><ul><li><a href="/egitim/"><b>Ücretsiz eğitim</b><span>8 bölüm, kısa sınavlar, katılım belgesi</span></a></li><li><a href="/nasil-olunur/"><b>Nasıl olunur</b><span>Okul, belge, ilk iş: 12 aylık plan</span></a></li><li><a href="/gwo/"><b>GWO eğitimleri</b><span>BST, BTT, tazeleme, WINDA</span></a></li><li><a href="/maas/"><b>Teklifini oku</b><span>Bir iş teklifini neye göre değerlendirirsin</span></a></li><li><a href="/rehber/"><b>Sahadan rehber</b><span>Mesleğe giriş, sahada bir gün</span></a></li><li><a href="/sozluk/"><b>Sözlük</b><span>148 terim, Türkçe ve İngilizce</span></a></li><li><a href="/sor/"><b>Soru sor</b><span>Merak ettiğini yaz</span></a></li></ul></details>
+      </div>
+  </div>
+</section>
+
+<section id="iletisim" class="bl" aria-labelledby="iletisim-b">
+  <div class="ic">
+    <h2 class="bl-b" id="iletisim-b">Saha projeleri, servis ve danışmanlık için ulaşın.</h2>
+    <p class="il-posta"><a href="mailto:sonersoylu@yandex.com">sonersoylu@yandex.com</a><button type="button" class="dg dg-cizgi" id="epostaKopya" data-adres="sonersoylu@yandex.com">Adresi kopyala</button></p>
+    <p class="il-kanal"><a class="bag" href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn: soner-soylu</a><a class="bag" href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube: The Turbine Tech</a></p>
+    <details class="il-form">
+      <summary>Mesaj formu</summary>
+      <form id="vForm" novalidate aria-label="Mesaj formu">
+        <p>Form, yazdıklarınızla hazır bir e-posta açar. Hiçbir bilgi bu sitede saklanmaz.</p>
+        <fieldset class="v-konu"><legend>Konu</legend>
+          <label><input type="radio" name="konu" value="Kariyer" checked><span>Kariyer</span></label>
+          <label><input type="radio" name="konu" value="Proje"><span>Proje</span></label>
+          <label><input type="radio" name="konu" value="Teknik"><span>Teknik soru</span></label>
+          <label><input type="radio" name="konu" value="İşbirliği"><span>İşbirliği</span></label>
+        </fieldset>
+        <div class="v-alanlar">
+          <div class="v-alan"><label for="vAd">Adınız</label><input id="vAd" name="ad" type="text" autocomplete="name" required maxlength="80"><p class="v-hata" id="vAdH" hidden></p></div>
+          <div class="v-alan"><label for="vEposta">E-posta adresiniz</label><input id="vEposta" name="eposta" type="email" autocomplete="email" inputmode="email" required maxlength="160"><p class="v-hata" id="vEpostaH" hidden></p></div>
+          <div class="v-alan v-genis"><label for="vMesaj">Mesajınız</label><textarea id="vMesaj" name="mesaj" rows="5" required maxlength="3000"></textarea><p class="v-hata" id="vMesajH" hidden></p></div>
+        </div>
+        <div class="v-form-alt"><button type="submit" class="dg">E-postayı hazırla</button><p class="v-durum" id="vDurum" role="status" aria-live="polite"></p></div>
+      </form>
     </details>
   </div>
 </section>
-
 </main>
-<footer class="son">
- <div class="wrap">
-  <div class="son-final">
-   <p class="son-koord" aria-hidden="true"><span>38°51′ K · 27°00′ D</span><span>Aliağa · İzmir · Türkiye</span><span>2013 → bugün</span></p>
-   <p class="son-soz">Saha hiç durmaz.<br><em>Öğrenmek de.</em></p>
-   <a class="son-basa" href="#deneyim">Yolculuğa baştan başla <i aria-hidden="true">&#8593;</i></a>
+
+<footer class="antet">
+  <div class="ic">
+    <p class="antet-kapanis">Saha hiç durmaz.<br>Öğrenmek de.</p>
+    <dl class="antet-blok">
+      <div><dt>Çizen</dt><dd>Soner Soylu<small>Rüzgâr Türbini Saha Servis Teknikeri</small></dd></div>
+      <div><dt>Konum</dt><dd>Aliağa, İzmir, Türkiye<small>38°51′ K, 27°00′ D</small></dd></div>
+      <div><dt>Sahada</dt><dd>2013'ten bugüne</dd></div>
+      <div><dt>Ölçek</dt><dd>1 : 1<small>Kapak çizimi gerçek ölçekte</small></dd></div>
+    </dl>
+    <div class="antet-bag">
+      <nav aria-label="Saha"><h2>Saha</h2><a href="/deneyim/">Türbinin içine</a><a href="/ruzgar/">Canlı rüzgâr</a><a href="/saha-notlari/">Saha notları</a><a href="/deniz-ustu/">Deniz üstü</a></nav>
+      <nav aria-label="Teknik"><h2>Teknik</h2><a href="/lab/">Saha laboratuvarı</a><a href="/sistemler/">Türbin sistemleri</a><a href="/ariza/">Arıza teşhis ağacı</a><a href="/teshis/">Teşhis simülatörü</a><a href="/kodlar/">Kod kütüphanesi</a><a href="/araclar/">Hesaplayıcılar</a><a href="/sozluk/">Sözlük</a></nav>
+      <nav aria-label="Kariyer"><h2>Kariyer</h2><a href="/hakkimda/">Hakkımda</a><a href="/nasil-olunur/">Nasıl olunur</a><a href="/gwo/">GWO eğitimleri</a><a href="/maas/">Maaş ve teklif</a><a href="/egitim/">Ücretsiz eğitim</a><a href="/rehber/">Sahadan rehber</a><a href="/hazirlik-paketi/">Hazırlık paketi</a><a href="/mentorluk/">Mentorluk</a></nav>
+      <nav aria-label="İletişim"><h2>İletişim</h2><a href="/sor/">Soru sor</a><a href="mailto:sonersoylu@yandex.com">E-posta</a><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn</a><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube</a><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram</a></nav>
+      </div>
+    <p class="antet-alt"><span>© 2026 Soner Soylu</span><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" lang="en" hreflang="en">English</a></p>
   </div>
-  <div class="son-orta">
-   <div class="son-kimlik"><p class="son-ad">Soner Soylu</p><p class="son-unvan">Rüzgâr Türbini Saha Servis Teknikeri</p></div>
-   <nav class="son-nav" aria-label="Alt menü"><div><p class="son-bas">Saha</p><ul><li><a href="/deneyim/">Türbinin içine</a></li><li><a href="/ruzgar/">Canlı rüzgâr</a></li><li><a href="/saha-notlari/">Saha notları</a></li><li><a href="/deniz-ustu/">Deniz üstü</a></li></ul></div><div><p class="son-bas">Teknik</p><ul><li><a href="/lab/">Saha laboratuvarı</a></li><li><a href="/sistemler/">Türbin sistemleri</a></li><li><a href="/ariza/">Arıza teşhis ağacı</a></li><li><a href="/teshis/">Teşhis simülatörü</a></li><li><a href="/kodlar/">Kod kütüphanesi</a></li><li><a href="/araclar/">Hesaplayıcılar</a></li><li><a href="/sozluk/">Sözlük</a></li></ul></div><div><p class="son-bas">Kariyer</p><ul><li><a href="/hakkimda/">Hakkımda</a></li><li><a href="/nasil-olunur/">Nasıl olunur</a></li><li><a href="/gwo/">GWO eğitimleri</a></li><li><a href="/maas/">Maaş ve teklif</a></li><li><a href="/egitim/">Ücretsiz eğitim</a></li><li><a href="/rehber/">Sahadan rehber</a></li><li><a href="/hazirlik-paketi/">Hazırlık paketi</a></li><li><a href="/mentorluk/">Mentorluk</a></li></ul></div><div><p class="son-bas">İletişim</p><ul><li><a href="/sor/">Soru sor</a></li><li><a href="mailto:sonersoylu@yandex.com">E-posta</a></li><li><a href="https://www.linkedin.com/in/soner-soylu" target="_blank" rel="noreferrer noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.youtube.com/@TheTurbineTech" target="_blank" rel="noreferrer noopener">YouTube <span aria-hidden="true">&#8599;</span></a></li><li><a href="https://www.instagram.com/soyluubey" target="_blank" rel="noreferrer noopener">Instagram <span aria-hidden="true">&#8599;</span></a></li></ul></div></nav>
-  </div>
-  <div class="son-alt"><p>© 2026 Soner Soylu</p><p class="son-yasal"><a href="/gelir/">Reklam ve gelir politikası</a><a href="/sponsorluk/">Sponsorluk</a><a href="/iletisim/">İletişim</a><a href="/gizlilik/">Gizlilik politikası</a><a href="/en/" hreflang="en" lang="en">English</a></p></div>
- </div>
 </footer>
-<div id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf"><button type="button" id="lbx">KAPAT</button><button type="button" class="lb-ok" id="lbOnce" aria-label="Önceki fotoğraf">←</button><img alt="" src=""><button type="button" class="lb-ok" id="lbSonra" aria-label="Sonraki fotoğraf">→</button><p class="lb-alt" id="lbAlt"></p></div>
+
 <div id="araKat" role="dialog" aria-modal="true" aria-label="Sitede ara" hidden>
  <div class="ara-ic">
   <div class="ara-ust">
    <span class="ara-ik"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg></span>
-   <input id="araGiris" type="search" autocomplete="off" spellcheck="false"
-          placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
+   <input id="araGiris" type="search" autocomplete="off" spellcheck="false" placeholder="Terim, araç, arıza, durak, kod ara…" aria-label="Arama">
    <button id="araKapat" type="button" aria-label="Kapat">esc</button>
   </div>
   <div id="araSonuc" class="ara-sonuc" role="listbox" aria-label="Sonuçlar"></div>
-  <p class="ara-alt">Yukarı/aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
+  <p class="ara-alt">Yukarı ve aşağı ok ile gez, enter ile aç. Her yerde <b>/</b> tuşuyla açılır.</p>
  </div>
 </div>
-<script>/* V13: fotoğraf ve proje görselleri ekrana girerken yumuşakça açılır (hareket azaltılmışsa hiç gizlenmez) */
-(function(){var k=document.documentElement,u=function(){k.classList.toggle('el-ustte',scrollY<innerHeight*.55);};u();addEventListener('scroll',u,{passive:true});})();
-(function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
-document.documentElement.classList.add('el-js');
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('el-gor');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});
-document.querySelectorAll('.el-proje figure,.el-kare').forEach(function(el){io.observe(el);});})();</script>
+
+<script src="/assets/pafta/pafta.js?v=5d4fdd73" defer></script>
+<script type="module" src="/assets/pafta/kapak.js?v=1cd4604a"></script>
 <script src="/assets/site.js?v=c93d04fe" defer></script>
 <script src="/assets/ara.js?v=08dccb6e" defer></script>
-<script>
-(function () {
-  /* mobil menü */
-  var b = document.getElementById('burger'), m = document.getElementById('mobmenu');
-  if (b && m) {
-    b.addEventListener('click', function () { var o = b.getAttribute('aria-expanded') === 'true'; b.setAttribute('aria-expanded', String(!o)); m.classList.toggle('open', !o); });
-    m.addEventListener('click', function (e) { if (e.target.tagName === 'A') { m.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
-  }
-  /* ışık kutusu: ileri/geri, klavye ve kaydırma */
-  var lb = document.getElementById('lb'), li = lb.querySelector('img'), lbAlt = document.getElementById('lbAlt');
-  var kareler = [].slice.call(document.querySelectorAll('.el-kareler figure[data-full]')), sira = 0, onceki = null;
-  function goster(i) {
-    sira = (i + kareler.length) % kareler.length; var f = kareler[sira];
-    li.src = f.dataset.full; li.alt = f.querySelector('img').alt;
-    lbAlt.textContent = (sira + 1) + ' / ' + kareler.length + ' · ' + f.querySelector('figcaption').textContent;
-  }
-  function ac(i) { onceki = document.activeElement; goster(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('lbx').focus(); }
-  function kapat() { lb.classList.remove('open'); li.src = ''; document.body.style.overflow = ''; if (onceki) onceki.focus(); }
-  kareler.forEach(function (f, i) {
-    var fi = f.querySelector('img'); fi.tabIndex = 0; fi.setAttribute('role', 'button'); fi.setAttribute('aria-label', 'Büyüt: ' + fi.alt);
-    f.addEventListener('click', function () { ac(i); });
-    f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ac(i); } });
-  });
-  document.getElementById('lbOnce').addEventListener('click', function (e) { e.stopPropagation(); goster(sira - 1); });
-  document.getElementById('lbSonra').addEventListener('click', function (e) { e.stopPropagation(); goster(sira + 1); });
-  li.addEventListener('click', function (e) { e.stopPropagation(); goster(sira + 1); });
-  lb.addEventListener('click', kapat);
-  document.addEventListener('keydown', function (e) {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') kapat(); else if (e.key === 'ArrowRight') goster(sira + 1); else if (e.key === 'ArrowLeft') goster(sira - 1);
-  });
-  var dx0 = null;
-  lb.addEventListener('touchstart', function (e) { dx0 = e.touches[0].clientX; }, { passive: true });
-  lb.addEventListener('touchend', function (e) { if (dx0 === null) return; var d = e.changedTouches[0].clientX - dx0; if (Math.abs(d) > 45) goster(sira + (d < 0 ? 1 : -1)); dx0 = null; }, { passive: true });
-
-  /* e-posta kopyala */
-  var kop = document.getElementById('epostaKopya');
-  if (kop) kop.addEventListener('click', function () {
-    var adr = 'sonersoylu@yandex.com';
-    var bitti = function () { kop.textContent = 'Kopyalandı'; setTimeout(function () { kop.textContent = 'Kopyala'; }, 1800); };
-    if (navigator.clipboard) navigator.clipboard.writeText(adr).then(bitti, function () {});
-  });
-
-  /* rakamlar: görünür olunca sıfırdan say (hareket azaltılmışsa dokunma) */
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-    var sayac = new IntersectionObserver(function (es) {
-      es.forEach(function (en) {
-        if (!en.isIntersecting) return; sayac.unobserve(en.target);
-        var dd = en.target, dugum = dd.firstChild, hedef = parseInt(dugum.nodeValue, 10); if (!(hedef > 0)) return;
-        var t0 = performance.now(), sure = 1100;
-        (function adim(t) { var k = Math.max(0, Math.min(1, (t - t0) / sure)); dugum.nodeValue = String(Math.round(hedef * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(adim); })(t0);
-      });
-    }, { threshold: 0.6 });
-    document.querySelectorAll('.ana .rakam dd:not(.v-alt)').forEach(function (dd) { if (dd.firstChild && dd.firstChild.nodeType === 3) sayac.observe(dd); });
-  }
-
-  /* ---- kapak: türbinin içine (canlı güneş ve rüzgâr; sahne: assets/deneyim/arayuz.js) ---- */
-  var kok = document.documentElement;
-  /* ışık: Aliağa'da güneşin o anki yüksekliği (NOAA yaklaşımı) */
-  function gunesYuksekligi(enlem, boylam, t) {
-    var rad = Math.PI / 180, gun = (t - Date.UTC(t.getUTCFullYear(), 0, 0)) / 86400000;
-    var y = 2 * Math.PI / 365 * (gun - 1 + (t.getUTCHours() - 12) / 24);
-    var es = 229.18 * (0.000075 + 0.001868 * Math.cos(y) - 0.032077 * Math.sin(y) - 0.014615 * Math.cos(2 * y) - 0.040849 * Math.sin(2 * y));
-    var eg = 0.006918 - 0.399912 * Math.cos(y) + 0.070257 * Math.sin(y) - 0.006758 * Math.cos(2 * y) + 0.000907 * Math.sin(2 * y) - 0.002697 * Math.cos(3 * y) + 0.00148 * Math.sin(3 * y);
-    var dk = t.getUTCHours() * 60 + t.getUTCMinutes();
-    var sa = ((dk + es + 4 * boylam) / 4 - 180) * rad;
-    var cz = Math.sin(enlem * rad) * Math.sin(eg) + Math.cos(enlem * rad) * Math.cos(eg) * Math.cos(sa);
-    return 90 - Math.acos(Math.max(-1, Math.min(1, cz))) / rad;
-  }
-  function vardiya() {
-    var h = gunesYuksekligi(38.85, 27.0, new Date());
-    kok.setAttribute('data-vardiya', h < -6 ? 'gece' : h < 0 ? 'aksam' : h < 8 ? 'altin' : 'gunduz');
-  }
-  vardiya(); setInterval(vardiya, 10 * 60 * 1000);
-  kok.style.setProperty('--devir-sure', '4.76s');   // veri gelene kadar anma devri (12,6 d/dk)
-  /* canlı rüzgâr: Aliağa, göbek yüksekliği (Open-Meteo tahmini). Güç: Cp yaklaşımı, /ruzgar/ sayfasındaki N117 güç eğrisiyle
-     yoğunluk düzeltmeli karşılaştırmada ±%1 içinde (8,4 m/s: 1.688 kW her ikisinde); anma gücü 3.000 kW'ı asla aşmaz. */
-  var ALAN = Math.PI * 116.8 * 116.8 / 4, YARICAP = 58.4;
-  var YONLER = ['K','KKD','KD','DKD','D','DGD','GD','GGD','G','GGB','GB','BGB','B','BKB','KB','KKB'];
-  function guc(v, rho) {
-    if (v < 3 || v > 25) return 0;
-    var cp = v >= 6.5 ? 0.452 : (function (x) { return 0.10 + (0.452 - 0.10) * (3 * x * x - 2 * x * x * x); })((v - 3) / 3.5);
-    var ham = 0.5 * rho * ALAN * v * v * v * cp / 1000;
-    return ham / Math.pow(1 + Math.pow(ham / 3000, 6), 1 / 6);
-  }
-  function devir(v) { if (v < 3 || v > 25) return 0; return Math.max(7.9, Math.min(14.1, (8 * v / YARICAP) * 60 / (2 * Math.PI))); }
-  function virgul(x, n) { return x.toFixed(n).replace('.', ','); }
-  var az = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function $(i) { return document.getElementById(i); }
-  function yogunluk(sic, bas) {   /* 120 m'de hava yoğunluğu: barometrik indirgeme + ideal gaz */
-    var p120 = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15)));
-    return p120 / (287.05 * (sic - 0.78 + 273.15));
-  }
-  /* sayılar ilk gelişte sıfırdan akar; sonraki yenilemelerde eski değerden */
-  var onceki = {};
-  function yaz(id, x, n) {
-    var el = $(id), bas = onceki[id], son = x;
-    onceki[id] = x;
-    // arka plan sekmesinde kare gelmez: sayaç yarıda (0,0) kalmasın, değer doğrudan yazılır
-    if (az || !isFinite(x) || document.hidden) { el.textContent = isFinite(x) ? virgul(x, n) : '–'; return; }
-    var ilk = bas === undefined ? 0 : bas, t0 = performance.now(), sure = bas === undefined ? 1100 : 700;
-    (function adim(t) {
-      var k = Math.min(1, (t - t0) / sure), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = virgul(ilk + (son - ilk) * e, n);
-      if (k < 1) requestAnimationFrame(adim);
-    })(t0);
-  }
-  var BOLUT = 19, bar = $('rBar');
-  for (var i = 0; i < BOLUT; i++) bar.appendChild(document.createElement('i'));
-  var cekilen = 0, veriSaati = '', veriZamani = 0;
-  function zamanYaz() {
-    if (!cekilen) return;
-    var sn = Math.max(0, Math.round((Date.now() - cekilen) / 1000));
-    var eski = veriZamani && Date.now() - veriZamani > 2 * 3600 * 1000;   // tahmin adımı 2 saatten eskiyse uyar
-    if (eski && durum === 'basarili') durumYaz('eski', 'zaman');
-    $('ralan').classList.toggle('ralan-eski', !!eski || durum === 'eski');
-    $('rZaman').innerHTML = (durum === 'eski' ? '<span class="ralan-g">Son başarılı veri · </span>' : '') +
-      (veriSaati ? '<span class="ralan-g">Tahmin </span>' + veriSaati + (eski ? ' · eski veri' : '') + ' · ' : '<span class="ralan-g">Güncellendi </span>') +
-      (sn < 5 ? 'az önce' : sn < 60 ? sn + ' sn önce' : Math.floor(sn / 60) + ' dk önce') + '<span class="ralan-g"> alındı</span>';
-    $('rZaman').title = 'Kaynak: Open-Meteo model tahmini (ölçüm değil). Tahmin adımı ' + (veriSaati || '–') + ' (Türkiye saati); veri bu tarayıcıya ' + (sn < 60 ? sn + ' sn' : Math.floor(sn / 60) + ' dk') + ' önce alındı.';
-  }
-  function isle(d) {
-    var c = d && d.current; if (!c) throw 0;
-    var v = +c.wind_speed_120m, yon = +c.wind_direction_120m, sic = +c.temperature_2m, bas = +c.pressure_msl;
-    if (!isFinite(v)) throw 0;
-    var rho = isFinite(sic) && isFinite(bas) ? yogunluk(sic, bas) : 1.225;
-    var dv = devir(v), kw = guc(v, rho), oran = kw / 3000;
-    // beklemede (v < 3 m/s) kapak durgun görünmesin: rotor modelin en düşük işletme devrinde (7,9 d/dk) döner; bu yalnız
-    // görseldir ve durum satırında açıkça yazar (panelin devir ve güç değerleri gerçek kalır: 0). Fırtınada (v > 25) durur.
-    var BOSTA = 7.9;
-    kok.style.setProperty('--devir-sure', dv > 0 ? (60 / dv).toFixed(2) + 's' : v < 3 ? (60 / BOSTA).toFixed(2) + 's' : '0s');
-    yaz('rHiz', v, 1); yaz('rRho', rho, 2); yaz('rDevir', dv, 1); yaz('rGuc', kw / 1000, 2);
-    if (isFinite(yon)) {
-      $('rYon').textContent = Math.round(yon) + '°';
-      $('rYonAd').textContent = YONLER[Math.round(yon / 22.5) % 16];
-      kok.style.setProperty('--yon-derece', String(yon));
-      $('rOk').style.transform = 'rotate(' + (yon + 180) + 'deg)';
-    }
-    var yuzde = Math.round(oran * 100);
-    $('rYuk').textContent = '%' + yuzde;
-    var yanan = oran > 0 ? Math.max(1, Math.round(oran * BOLUT)) : 0;
-    [].forEach.call(bar.children, function (b, k) { b.className = k < yanan ? 'y' : ''; b.style.transitionDelay = az ? '0s' : (k * 0.035).toFixed(3) + 's'; });
-    bar.setAttribute('aria-label', 'Anlık tahmini güç, anma gücünün yüzde ' + yuzde + '’i');
-    kf(d.hourly);
-    /* türbin durumu: devreye girme 3 m/s, devreden çıkma 25 m/s (modelin sınırları) */
-    var durum = v < 3 ? 'beklemede' : v > 25 ? 'durdu' : 'uretimde';
-    var dEl = $('rDurum');
-    dEl.setAttribute('data-durum', durum);
-    if (durum === 'uretimde') dEl.hidden = true;
-    else {
-      $('rDurumAd').textContent = durum === 'beklemede' ? 'Rüzgâr yetersiz · türbin beklemede' : 'Fırtına · türbin güvenli duruşta';
-      $('rDurumAc').textContent = durum === 'beklemede' ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yok. Kapaktaki rotor sahne durgun kalmasın diye en düşük işletme devrinde (7,9 d/dk) döner; bu bir gösterimdir, ölçüm değildir.' : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar yelken konumuna alınır, üretim durur.';
-      dEl.hidden = false;
-    }
-    window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: durum, t: Date.now(), veriSaati: c.time || null };   // bütün değerler aynı tahmin adımından
-    try { window.dispatchEvent(new CustomEvent('ss:ruzgar', { detail: window.__sonerRuzgar })); } catch (e) {}
-    var vz = c.time ? new Date(c.time + ':00+03:00') : null;   // Open-Meteo yerel saat (Europe/Istanbul) verir
-    veriZamani = vz && isFinite(vz.getTime()) ? vz.getTime() : 0;
-    veriSaati = veriZamani ? String(c.time).slice(11, 16) : '';
-    cekilen = Date.now();
-    $('ralan').hidden = false;
-  }
-  /* kapasite faktörü: önümüzdeki 24 saatin saatlik tahmininden, aynı model ve saatlik yoğunlukla */
-  function kf(h) {
-    try {
-      if (!h || !h.time || !h.wind_speed_120m) return;
-      var simdi = Date.now(), i0 = 0, top = 0, n = 0;
-      for (var i = 0; i < h.time.length; i++) { if (new Date(h.time[i] + ':00+03:00').getTime() <= simdi) i0 = i; }
-      for (var k = i0; k < Math.min(h.time.length, i0 + 24); k++) {
-        var v = +h.wind_speed_120m[k]; if (!isFinite(v)) continue;
-        var t = +(h.temperature_2m || [])[k], p = +(h.pressure_msl || [])[k];
-        top += guc(v, isFinite(t) && isFinite(p) ? yogunluk(t, p) : 1.225) / 3000; n++;
-      }
-      if (n < 12) return;
-      $('rKf').textContent = '%' + virgul(top / n * 100, 1);
-      $('rKfSatir').hidden = false;
-    } catch (e) {}
-  }
-  /* Veri durum makinesi: bos → yukleniyor → basarili; basarili → eski (tahmin adımı 2 saatten eski ya da yenileme
-     başarısız) ; yukleniyor → hata (hiç veri yokken). Her isteğin bir numarası var: geç dönen eski bir istek yeni
-     sonucun üstüne yazamaz. Başarılı veride hata metni gösterilmez; 3 m/s altında üretimin sıfır olması hata değildir. */
-  var durum = 'bos', istekNo = 0, hataSay = 0, tekrarZ = 0, elle = false;
-  function durumYaz(d, neden) {
-    durum = d;
-    var r = $('ralan'), h = $('rHata');
-    r.setAttribute('data-veri', d);
-    window.__sonerRuzgarDurum = { durum: d, neden: neden || '', istek: istekNo, veriZamani: veriZamani || null };
-    var b = $('rYeniden'); b.disabled = d === 'yukleniyor'; b.textContent = d === 'yukleniyor' ? 'Deneniyor…' : 'Yeniden dene';
-    if (d === 'basarili' || d === 'yukleniyor' || d === 'bos') { if (d === 'basarili') { h.hidden = true; $('rHataMetin').textContent = ''; r.classList.remove('ralan-yok'); } return; }
-    // eski: son başarılı veri ekranda kalır, açıkça etiketlenir; hata: hiç veri yok
-    if (d === 'eski' && neden === 'yenilenemedi') { $('rHataMetin').textContent = 'Son başarılı veri gösteriliyor; yenileme başarısız.'; h.hidden = false; }
-    if (d === 'hata') { $('rHataMetin').textContent = 'Canlı rüzgâr verisi alınamadı (' + (neden === 'zaman-asimi' ? 'zaman aşımı' : neden === 'bos-veri' ? 'kaynak boş ya da eksik veri döndü' : 'ağ ya da kaynak hatası') + ').'; h.hidden = false; r.classList.add('ralan-yok'); r.hidden = false; }
-  }
-  function cek() {
-    var no = ++istekNo; clearTimeout(tekrarZ);
-    if (!cekilen) durumYaz('yukleniyor'); else { var b = $('rYeniden'); b.disabled = true; b.textContent = 'Deneniyor…'; }
-    var kesici = 'AbortController' in window ? new AbortController() : null;
-    var sure = setTimeout(function () { if (kesici) kesici.abort(); }, 12000);
-    return fetch('/api/ruzgar?s=aliaga', { headers: { accept: 'application/json' }, signal: kesici ? kesici.signal : undefined })
-      .then(function (r) { if (!r.ok) throw new Error('kaynak'); return r.json(); })
-      .then(function (d) {
-        if (no !== istekNo) return;   // daha yeni bir istek var: bu yanıt yok sayılır
-        try { isle(d); } catch (e) { throw new Error('bos-veri'); }
-        hataSay = 0; durumYaz('basarili'); zamanYaz();
-      })
-      .catch(function (e) {
-        if (no !== istekNo) return;
-        var neden = e && e.name === 'AbortError' ? 'zaman-asimi' : (e && e.message === 'bos-veri' ? 'bos-veri' : 'ag');
-        hataSay++;
-        if (cekilen) durumYaz('eski', 'yenilenemedi');
-        else if (hataSay >= 2 || elle) durumYaz('hata', neden);   // ilk kendiliğinden hatada kapağa uyarı basma
-        else durumYaz('bos');
-        if (hataSay <= 3) tekrarZ = setTimeout(cek, [0, 30, 60, 120][hataSay] * 1000);
-      })
-      .then(function () { clearTimeout(sure); if (no === istekNo) { elle = false; var b = $('rYeniden'); b.disabled = false; b.textContent = 'Yeniden dene'; } });
-  }
-  $('rYeniden').addEventListener('click', function () { hataSay = 0; elle = true; cek(); });
-  cek();
-  setInterval(zamanYaz, 1000);
-  /* on dakikada bir, sayfa görünürken ve kapaktayken yenile (kaynak uçta 15 dk önbellekli) */
-  setInterval(function () {
-    var s = $('deneyim');
-    if (!document.hidden && !(s && s.classList.contains('gecti'))) cek();
-  }, 10 * 60 * 1000);
-})();
-</script>
-<script src="/assets/deneyim/arayuz.js?v=21dc7a1a" defer></script>
-<script src="/assets/vitrin.js?v=sahakarari1" defer></script>
-<script src="/assets/cinematic-v5.js?v=490f0a77" defer></script>
-<script src="/assets/evren.js?v=bf5ee8f7" defer></script>
 <script src="/assets/son-video.js?v=a9095007" defer></script>
 <script src="/assets/akis-olcum.js?v=7319ac21" defer></script>
 </body>
