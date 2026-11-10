@@ -54,13 +54,9 @@
     function yogunluk(sic, bas) { var p = bas * 100 * Math.exp(-9.80665 * 120 / (287.05 * (sic + 273.15))); return p / (287.05 * (sic - 0.78 + 273.15)); }
     function vg(x, n) { return x.toFixed(n).replace('.', ','); }
 
-    var onceki = {};
-    function yaz(id, x, n) {
-      var el = $(id); if (!el) return; var bas = onceki[id]; onceki[id] = x;
-      if (hareketAz || !isFinite(x) || document.hidden || bas === undefined && !('requestAnimationFrame' in window)) { el.textContent = isFinite(x) ? vg(x, n) : '–'; return; }
-      var ilk = bas === undefined ? 0 : bas, t0 = performance.now(), sure = bas === undefined ? 1000 : 600;
-      (function adim(t) { var k = Math.min(1, (t - t0) / sure), e = 1 - Math.pow(1 - k, 3); el.textContent = vg(ilk + (x - ilk) * e, n); if (k < 1) requestAnimationFrame(adim); })(t0);
-    }
+    /* Sayılar doğrudan yazılır (sayaç efekti yok): arka plandaki sekmede kare gelmeyince ara değer (0,0) ekranda
+       kalıp yanlış veri gibi okunuyordu. */
+    function yaz(id, x, n) { var el = $(id); if (el) el.textContent = isFinite(x) ? vg(x, n) : '–'; }
 
     /* güç eğrisi (SVG): modellenmiş eğri + şu anki çalışma noktası */
     /* dar ekranda çizim alanı küçülür ki yazılar okunaklı kalsın (SVG ölçeklenince 13 px yazı 7 px'e düşüyordu) */
@@ -78,7 +74,7 @@
       h += '<path class="egri-alan" d="' + d + 'L' + ex(25).toFixed(1) + ' ' + ey(0).toFixed(1) + 'Z"/>';
       h += '<path class="egri-cizgi" d="M' + ex(0) + ' ' + ey(0) + 'L' + d.slice(1) + 'L' + ex(25).toFixed(1) + ' ' + ey(0).toFixed(1) + 'L' + ex(26) + ' ' + ey(0) + '"/>';
       h += '<path class="egri-eksen" d="M' + EL + ' ' + ET + 'V' + ey(0) + 'H' + (EW - ER) + '"/>';
-      h += '<text class="egri-yazi" x="' + ex(5.5).toFixed(1) + '" y="' + (ey(0) - 9) + '">3 m/s altında üretim yok</text><text class="egri-yazi" x="' + (ex(25) - 6) + '" y="' + (ey(1.5)) + '" text-anchor="end">devreden çıkma 25</text>';
+      h += (isFinite(v) && v < 6.5 ? '' : '<text class="egri-yazi" x="' + ex(5.5).toFixed(1) + '" y="' + (ey(0) - 9) + '">3 m/s altında üretim yok</text>') + '<text class="egri-yazi" x="' + (ex(25) - 6) + '" y="' + (ey(1.5)) + '" text-anchor="end">devreden çıkma 25</text>';
       if (isFinite(v)) {
         var px = ex(Math.min(26, v)), py = ey(kw / 1000), sol = px > EW * 0.62;
         h += '<path class="egri-iz" d="M' + px.toFixed(1) + ' ' + ey(0) + 'V' + py.toFixed(1) + 'H' + EL + '"/><circle class="egri-nokta" cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="6.5"/>';
@@ -134,12 +130,12 @@
       else {
         u.querySelector('b').textContent = dr === 'beklemede' ? 'Rüzgâr yetersiz, türbin beklemede.' : 'Fırtına, türbin güvenli duruşta.';
         u.querySelector('span').textContent = dr === 'beklemede'
-          ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yoktur. Kapaktaki rotor sahne durgun kalmasın diye en düşük işletme devrinde (7,9 d/dk) döner; bu bir gösterimdir.'
+          ? 'Devreye girme hızı 3 m/s; altında jeneratör şebekeye bağlanmaz, üretim yoktur. Kapaktaki rotor bu durumda çok yavaş döner; bu serbest dönüş bir gösterimdir, ölçüm değildir.'
           : 'Devreden çıkma hızı 25 m/s; üstünde kanatlar rüzgârdan çıkarılır ve rotor durur.';
         u.hidden = false;
       }
       var k = $('kpCanli');
-      if (k) { $('kpHiz').textContent = vg(v, 1); $('kpDevir').textContent = dr === 'uretimde' ? vg(dv, 1) : dr === 'durdu' ? '0' : '7,9'; k.hidden = false; }
+      if (k) { $('kpHiz').textContent = vg(v, 1); $('kpDevirYazi').innerHTML = dr === 'uretimde' ? 'rotor <b>' + vg(dv, 1) + '</b> d/dk' : dr === 'durdu' ? 'fırtına, türbin durdu' : 'türbin beklemede'; k.hidden = false; }
       window.__sonerRuzgar = { v: v, yon: yon, rho: rho, devir: dv, kw: kw, durum: dr, t: Date.now(), veriSaati: c.time || null };
       try { dispatchEvent(new CustomEvent('ss:ruzgar', { detail: window.__sonerRuzgar })); } catch (e) {}
       var vz = c.time ? new Date(c.time + ':00+03:00') : null;

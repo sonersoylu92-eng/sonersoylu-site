@@ -441,7 +441,7 @@ function baslat() {
   function veri(d) {
     if (!d || !isFinite(d.v)) return;
     hizHedef = Math.max(0.5, d.v); durdu = d.durum === 'durdu';
-    devirHedef = durdu ? 0 : (d.devir > 0 ? d.devir : 7.9);   // beklemede: en düşük işletme devri (gösterim; panelde açıkça yazar)
+    devirHedef = durdu ? 0 : (d.devir > 0 ? d.devir : 2);   // beklemede: çok yavaş serbest dönüş (gösterim; panelde açıkça yazar)
     if (isFinite(d.yon) && Math.abs(d.yon - ruzgarYon) > 0.5) { ruzgarYon = d.yon; isikKur(); }
     kirli = true;
   }
