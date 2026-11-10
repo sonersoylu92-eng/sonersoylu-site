@@ -13,7 +13,7 @@ Sitedeki bilgiler servis dokümanının yerine geçmez; türbin üzerinde çalı
 
 ## Teknik referans
 - [Arıza teşhis ağacı](https://sonersoylu.com/ariza/): 10 belirtiden olası nedene giden, marka bağımsız teşhis ağacı.
-- [Saha notları](https://sonersoylu.com/saha-notlari/): Gerçek arıza vakaları — belirti, ölçüm, kök neden, çözüm.
+- [Saha notları](https://sonersoylu.com/saha-notlari/): Temsili arıza vakaları — belirti, ölçüm, kök neden, çözüm.
 - [Kod kütüphanesi](https://sonersoylu.com/kodlar/): IEC 61400-26 durum modeli, 12 kod ailesi, 50 yaygın koşul (üretici kod listesi içermez).
 - [Türbin sistemleri](https://sonersoylu.com/sistemler/): Pitch, yaw, dişli kutusu ve jeneratör.
 - [Model rehberi](https://sonersoylu.com/turbinler/): Vestas V110/V126/V136, Enercon E70/E82/E92.

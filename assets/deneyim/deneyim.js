@@ -15,7 +15,7 @@ import { kuleIciKur, kapiBosluguAc } from '/assets/deneyim/kule-ic.js?v=5bb97e53
 import { RoomEnvironment } from '/assets/vendor/pp/RoomEnvironment.js';
 import { egeKur } from '/assets/deneyim/ege.js?v=843f70dd';
 import { gokKur } from '/assets/deneyim/gok.js?v=26534ba9';
-import { korfezKur } from '/assets/deneyim/korfez.js?v=5694f789';
+import { korfezKur } from '/assets/deneyim/korfez.js?v=2ca116a1';
 
 /* anlatı durakları: HUD ve bölüm göstergesi buradan beslenir (değerler N117/3000 Delta üretici verisi) */
 export { DURAKLAR } from '/assets/deneyim/duraklar.js?v=1';
@@ -73,6 +73,12 @@ export async function deneyimBaslat(canvas, bolum, cb = {}) {
   } catch (e) { console.warn('gök yok:', e); gok = null; }
   // nasel çatısı kapağında kamera ikaz lambasının birkaç metre yanında: yakın hale küçülür, başlığın arkasında kırmızı leke olmasın
   if (NC && parts.nacelle && parts.nacelle.userData.ikaz) parts.nacelle.userData.ikaz.forEach(k => k.children.forEach(o => { if (o.isSprite && o.scale.x > 1) o.scale.set(1.2, 1.2, 1); }));
+  /* İkaz lambaları gerçekten ışık verir (Kasım 2026): çakınca nasel çatısı, göbek ve kanat kökleri kızarır. Gündüz şiddeti
+   * sıfırdır; ışık sahnede hep durur ki ışık sayısı değişip gölgelendiriciler yolculukta yeniden derlenmesin. */
+  let ikazIsik = null; const _ik1 = new THREE.Vector3(), _ik2 = new THREE.Vector3();
+  if (parts.nacelle && parts.nacelle.userData.ikaz && parts.nacelle.userData.ikaz.length > 1) {
+    ikazIsik = new THREE.PointLight(0xff3a22, 0, 70, 1.4); ikazIsik.name = 'ikaz-isik'; scene.add(ikazIsik);
+  }
   // kanat uçlarında kırmızı ikaz şeridi (sahadaki türbinlerdeki gibi uçtaki son birkaç metre); renk kanat boyunca yerel y'ye göre
   const ucMat = new Map();
   const ucBoya = (mat, esik) => {
@@ -1457,6 +1463,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
             yawY: yaw.rotation.y, zamanSn: mt / 1000, hareket: !az && !duraklat, ruzgar: rz, dogrudan: !composer });
           gunes.color.copy(L.gunesRenk); gunesTaban = L.gunesG;
           hemi.color.copy(L.hemiRenk); hemi.groundColor.copy(L.hemiZemin); hemiTaban = L.hemiG; dolguTaban = L.dolguG; disPoz = L.poz;
+          if (dolgu && L.dolguRenk) { dolgu.color.copy(L.dolguRenk); dolgu.position.copy(L.dolguYon).multiplyScalar(210); }   // gece: Aliağa kıyı ışıması
           scene.fog.color.copy(L.sis); scene.background.copy(L.sis); scene.fog.near = L.sisYakin; scene.fog.far = L.sisUzak;
           ayCarpan = L.ayGor;
         }
@@ -1505,6 +1512,14 @@ diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.58, 0.02, 0.013), smoothstep(${(
     kuleDondur();
     if (parts.farm && !az && !duraklat) parts.farm.children.forEach(k => { if (k.userData.spin) k.userData.spin.rotation.z -= k.userData.speed * dt; });
     if (parts.ikaz) parts.ikaz.guncelle(mt / 1000);   // nasel üstündeki kırmızı uçak ikaz lambaları
+    if (ikazIsik) {
+      const fI = ((mt / 1000) % 1.5) / 1.5, yanikI = fI < 0.34 ? Math.sin(Math.min(1, fI / 0.34) * Math.PI) ** 0.35 : 0;
+      const hI = gok ? gok.durum.gunesH * 180 / Math.PI : (sonMod === 'night' ? -20 : 20);
+      const karanlik = 1 - THREE.MathUtils.smoothstep(hI, -9, 1);   // güneş ufkun altına indikçe lamba ışığı belirginleşir
+      const li = parts.nacelle.userData.ikaz; li[0].getWorldPosition(_ik1); li[1].getWorldPosition(_ik2);
+      ikazIsik.position.copy(_ik1).add(_ik2).multiplyScalar(0.5); ikazIsik.position.y += 1.6;
+      ikazIsik.intensity = yanikI * karanlik * 7 * (1 - icPay);
+    }
 
     // alan derinliği: bakılan noktaya odak
     if (bokeh) bokeh.enabled = !!icerde && kalite < 2;

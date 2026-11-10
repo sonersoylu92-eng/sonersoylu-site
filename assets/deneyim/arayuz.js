@@ -8,7 +8,7 @@
   // V45 · ?hikaye=2: Claude'un hazırladığı ikinci kapak hikâyesi (assets/deneyim/b/) aynı işaretlemeyle yüklenir
   if (/[?&]hikaye=2\b/.test(location.search) && !window.__dnyIkinci) {
     window.__dnyIkinci = 1;
-    var ikinci = document.createElement('script'); ikinci.src = '/assets/deneyim/b/arayuz.js?v=2c2dc8f6'; document.head.appendChild(ikinci);
+    var ikinci = document.createElement('script'); ikinci.src = '/assets/deneyim/b/arayuz.js?v=960ebfcd'; document.head.appendChild(ikinci);
     return;
   }
   var $ = function (id) { return document.getElementById(id); };
@@ -1101,7 +1101,7 @@
     if (basla) basla.hidden = true;
     acilabilir = false;
     if (filmKip) bolum.classList.add('dny-film');
-    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=465de84a').then(function (mod) {
+    import(filmKip ? '/assets/deneyim/film.js?v=667a9d53' : '/assets/deneyim/deneyim.js?v=09440d3e').then(function (mod) {
       kurulumT0 = performance.now();
       DURAKLAR = mod.DURAKLAR; rayKur();
       // deneyimBaslat artık parça parça kurulur (ana iş parçacığı dokunuşlara açık kalır) ve söz döndürür
@@ -1169,7 +1169,7 @@
    * sırayla keşfedildiğinde yavaş bağlantıda ilk ziyaret 7–8 sn yalnız indirme bekliyordu (23 Ekim tanı: Windows, ilk
    * ziyaret, sunucu yanıtı 1,6 sn; kapak 15,6 sn'de açıldı, bunun yarıdan fazlası kurulum başlamadan önce). Liste
    * sürüm betiğiyle deneyim.js'teki gerçek içe aktarmalardan üretilir; adresler birebir aynı olduğu için iki kez inmez. */
-  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=465de84a","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=26534ba9","/assets/deneyim/korfez.js?v=5694f789","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
+  var ONYUKLE = /*onyukle*/{"a":["/assets/deneyim/deneyim.js?v=09440d3e","/assets/vendor/three.module.min.js?v=3eb31ec4","/n117/n117.js?v=weather2","/assets/vendor/OrbitControls.js?v=d09a8a17","/assets/deneyim/nasel-ic.js?v=f0ed1943","/assets/deneyim/kule-ic.js?v=5bb97e53","/assets/vendor/pp/RoomEnvironment.js","/assets/deneyim/ege.js?v=843f70dd","/assets/deneyim/gok.js?v=26534ba9","/assets/deneyim/korfez.js?v=2ca116a1","/assets/deneyim/duraklar.js?v=1"],"pp":["/assets/vendor/pp/EffectComposer.js","/assets/vendor/pp/CopyShader.js","/assets/vendor/pp/ShaderPass.js","/assets/vendor/pp/Pass.js","/assets/vendor/pp/MaskPass.js","/assets/vendor/pp/RenderPass.js","/assets/vendor/pp/BokehPass.js","/assets/vendor/pp/BokehShader.js","/assets/vendor/pp/UnrealBloomPass.js","/assets/vendor/pp/LuminosityHighPassShader.js","/assets/vendor/pp/OutputPass.js","/assets/vendor/pp/OutputShader.js","/assets/vendor/pp/GTAOPass.js","/assets/vendor/pp/GTAOShader.js","/assets/vendor/pp/PoissonDenoiseShader.js","/assets/vendor/pp/SimplexNoise.js"]}/*onyukle*/;
   if (!filmKip) try {
     var ppDe = !(matchMedia('(max-width: 820px)').matches || matchMedia('(pointer: coarse)').matches);
     ONYUKLE.a.concat(ppDe ? ONYUKLE.pp : []).forEach(function (u, i) {

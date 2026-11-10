@@ -478,7 +478,14 @@ export function korfezKur(S, { lite = false } = {}) {
   const _c = new THREE.Color(), _c2 = new THREE.Color(), _c3 = new THREE.Color(), _v = new THREE.Vector3(), _ufuk = new THREE.Vector3();
   const _pus = new THREE.Color(), _pusTaban = new THREE.Color(0x8d969e), _ayRenk = new THREE.Color('#a9bde8');
   const cikti = { gunesRenk: new THREE.Color(), gunesG: 0, hemiRenk: new THREE.Color(), hemiZemin: new THREE.Color(), hemiG: 0, dolguG: 0,
-    poz: 1, sis: new THREE.Color(), sisYakin: 900, sisUzak: 9000, ayGor: 1 };
+    poz: 1, sis: new THREE.Color(), sisYakin: 900, sisUzak: 9000, ayGor: 1, dolguRenk: new THREE.Color(0xd6e4f2), dolguYon: new THREE.Vector3(120, 70, -140).normalize() };
+  /* GECE OKUNAKLILIĞI (Kasım 2026): aysız gecede türbin kapkara bir siluete dönüyordu (ortam ışığı 0,06). Gerçekte kıyı
+   * karanlık değil: doğuda Aliağa'nın sanayi ve rafineri ışıkları ufku aydınlatır, göz ve kamera da karanlığa uyum sağlar.
+   * Gece: ortam ışığı tabanı yükselir, pozlama uzar, dolgu ışığı Aliağa kıyısı yönünden (azimut ~100°) sıcak sodyum
+   * tonunda gelir; gündüz dolgu eski yerinde ve renginde kalır. Ay ışığı hesabı değişmedi. */
+  const _dolguGun = new THREE.Color(0xd6e4f2), _dolguGece = new THREE.Color('#ffc08a');
+  const _dolguYonGun = new THREE.Vector3(120, 70, -140).normalize();
+  const _dolguYonGece = new THREE.Vector3(Math.sin(100 * RAD) * Math.cos(7 * RAD), Math.sin(7 * RAD), -Math.cos(100 * RAD) * Math.cos(7 * RAD));
   const _sis = new THREE.Color(), _ortam = new THREE.Color(), _zemin = new THREE.Color('#33515f');   // denizden yansıyan ışık
   const yum = { kapali: 0, dag: 1, ilk: true };
   let sonYaw = null;
@@ -554,9 +561,11 @@ export function korfezKur(S, { lite = false } = {}) {
     const gunduz = THREE.MathUtils.smoothstep(h, -6, 18);
     cikti.hemiRenk.copy(_c).lerp(_c2, 0.3); const hm = Math.max(cikti.hemiRenk.r, cikti.hemiRenk.g, cikti.hemiRenk.b, 1e-4); cikti.hemiRenk.multiplyScalar(1 / hm);
     cikti.hemiZemin.copy(_zemin).multiplyScalar(0.6 + 0.4 * gunduz);
-    cikti.hemiG = 0.06 + 0.95 * gunduz * (1 - kp * 0.3) + 0.2 * kp;
-    cikti.dolguG = 0.05 + 0.2 * gunduz;
-    cikti.poz = 0.92 + 0.12 * (1 - gunduz);
+    cikti.hemiG = 0.06 + 0.95 * gunduz * (1 - kp * 0.3) + 0.2 * kp + 0.2 * gecT;
+    cikti.dolguG = 0.05 + 0.2 * gunduz + 0.09 * gecT * (1 - kp * 0.5);
+    cikti.dolguRenk.copy(_dolguGun).lerp(_dolguGece, gecT);
+    cikti.dolguYon.copy(_dolguYonGun).lerp(_dolguYonGece, gecT).normalize();
+    cikti.poz = 0.92 + 0.12 * (1 - gunduz) + 0.12 * gecT;
     if (d.dogrudan) acesSrgb(_sis, cikti.poz, cikti.sis); else cikti.sis.copy(_sis);
     cikti.sisYakin = 900 - kp * 600; cikti.sisUzak = 9000 - kp * 6500;
     return cikti;
