@@ -2,7 +2,7 @@
    Amaç: kule dibinde kapsama alanı yokken sözlük, araçlar, arıza ağacı ve
    rehberin açılabilmesi. Sürüm değişince eski önbellek silinir. */
 
-const SURUM = 'kule-oto-086f5784';
+const SURUM = 'kule-oto-334feaac';
 const KABUK = 'kabuk-' + SURUM;   // sayfa iskeleti ve stil
 const VARLIK = 'varlik-' + SURUM; // görsel, yazı tipi, betik
 
